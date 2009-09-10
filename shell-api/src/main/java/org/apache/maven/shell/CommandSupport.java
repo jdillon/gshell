@@ -27,5 +27,5 @@ package org.apache.maven.shell;
 public abstract class CommandSupport
     implements Command
 {
-    // TODO:
+    
 }

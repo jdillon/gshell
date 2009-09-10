@@ -21,20 +21,54 @@ package org.apache.maven.shell.commands;
 
 import org.apache.maven.shell.CommandSupport;
 import org.apache.maven.shell.CommandContext;
+import org.apache.maven.shell.io.IO;
+import org.apache.maven.shell.registry.AliasRegistry;
 
 /**
- * ???
+ * The <tt>alias</tt> command.
  *
  * @version $Rev$ $Date$
  */
 public class AliasCommand
     extends CommandSupport
 {
+    // @Requirement
+    @SuppressWarnings({"UnusedDeclaration"})
+    private AliasRegistry registry;
+    
     public String getName() {
-        return null;
+        return "alias";
     }
 
     public Object execute(final CommandContext context) throws Exception {
-        return null;
+        assert context != null;
+        assert registry != null;
+
+        IO io = context.getIo();
+        String[] args = context.getArguments();
+
+        if (args.length == 0) {
+            for (String name : registry.getAliasNames()) {
+                String alias = registry.getAlias(name);
+                io.info("alias {}={}", name, alias);
+            }
+        }
+        else {
+            for (String arg : args) {
+                int i = arg.indexOf("=");
+
+                if (i == -1) {
+                    String alias = registry.getAlias(arg);
+                    io.info("alias {}={}", arg, alias);
+                }
+                else {
+                    String name = arg.substring(0, i);
+                    String alias = arg.substring(i + 1, arg.length());
+                    registry.registerAlias(name, alias);
+                }
+            }
+        }
+
+        return Result.SUCCESS;
     }
 }

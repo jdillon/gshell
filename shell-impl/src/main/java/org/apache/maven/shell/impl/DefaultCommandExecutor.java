@@ -61,14 +61,14 @@ public class DefaultCommandExecutor
         }
     }
 
-    public Object execute(final ShellContext context, final Object... args) throws Exception {
+    public Object execute(final ShellContext context, final String... args) throws Exception {
         assert context != null;
         assert args != null;
 
         return execute(context, String.valueOf(args[0]), Arguments.shift(args));
     }
     
-    public Object execute(final ShellContext context, final String name, final Object[] args) throws Exception {
+    public Object execute(final ShellContext context, final String name, final String[] args) throws Exception {
         assert context != null;
         assert name != null;
         assert args != null;
@@ -82,7 +82,7 @@ public class DefaultCommandExecutor
         Object result;
         try {
             result = command.execute(new CommandContext() {
-                public Object[] getArguments() {
+                public String[] getArguments() {
                     return args;
                 }
 

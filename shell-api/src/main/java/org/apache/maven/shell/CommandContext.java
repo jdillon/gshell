@@ -22,7 +22,7 @@ package org.apache.maven.shell;
 import org.apache.maven.shell.io.IO;
 
 /**
- * Provides commands with the context of its execution.
+ * Provides commands with the context of it's execution.
  *
  * @version $Rev$ $Date$
  */
@@ -33,7 +33,7 @@ public interface CommandContext
      *
      * @return The command arguments; never null.
      */
-    Object[] getArguments();
+    String[] getArguments();
 
     /**
      * The Input/Output context for the command.

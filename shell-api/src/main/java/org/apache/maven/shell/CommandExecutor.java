@@ -47,7 +47,7 @@ public interface CommandExecutor
      *
      * @throws Exception    Command-line execution failed.
      */
-    Object execute(ShellContext context, String command, Object[] args) throws Exception;
+    Object execute(ShellContext context, String command, String[] args) throws Exception;
 
     /**
      * Execute a pre-processed command-line.
@@ -58,6 +58,6 @@ public interface CommandExecutor
      *
      * @throws Exception    Command-line execution failed.
      */
-    Object execute(ShellContext context, Object... args) throws Exception;
+    Object execute(ShellContext context, String... args) throws Exception;
 
 }

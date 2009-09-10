@@ -27,12 +27,22 @@
             <role>org.apache.maven.shell.Command</role>
             <role-hint>alias</role-hint>
             <implementation>org.apache.maven.shell.commands.AliasCommand</implementation>
+            <requirements>
+                <requirement>
+                    <role>org.apache.maven.shell.registry.AliasRegistry</role>
+                </requirement>
+            </requirements>
         </component>
 
         <component>
             <role>org.apache.maven.shell.Command</role>
             <role-hint>unalias</role-hint>
             <implementation>org.apache.maven.shell.commands.UnaliasCommand</implementation>
+            <requirements>
+                <requirement>
+                    <role>org.apache.maven.shell.registry.AliasRegistry</role>
+                </requirement>
+            </requirements>
         </component>
     </components>
 

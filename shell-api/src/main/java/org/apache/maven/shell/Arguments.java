@@ -29,15 +29,15 @@ import java.util.List;
  */
 public class Arguments
 {
-    public static Object[] shift(final Object[] args) {
+    public static String[] shift(final String[] args) {
         return shift(args, 1);
     }
 
-    public static Object[] shift(final Object[] source, int pos) {
+    public static String[] shift(final String[] source, int pos) {
         assert source != null;
         assert source.length >= pos;
 
-        Object[] target = (Object[])
+        String[] target = (String[])
             Array.newInstance(source.getClass().getComponentType(), source.length - pos);
 
         System.arraycopy(source, pos, target, 0, target.length);

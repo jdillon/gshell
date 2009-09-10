@@ -21,20 +21,47 @@ package org.apache.maven.shell.commands;
 
 import org.apache.maven.shell.CommandSupport;
 import org.apache.maven.shell.CommandContext;
+import org.apache.maven.shell.io.IO;
+import org.apache.maven.shell.registry.AliasRegistry;
+import org.apache.maven.shell.registry.NoSuchAliasException;
 
 /**
- * ???
+ * The <tt>unalias</tt> command.
  *
  * @version $Rev$ $Date$
  */
 public class UnaliasCommand
     extends CommandSupport
 {
+    // @Requirement
+    @SuppressWarnings({"UnusedDeclaration"})
+    private AliasRegistry registry;
+
     public String getName() {
-        return null;
+        return "unalias";
     }
 
     public Object execute(final CommandContext context) throws Exception {
-        return null;
+        assert context != null;
+        assert registry != null;
+        
+        IO io = context.getIo();
+        String[] args = context.getArguments();
+
+        if (args.length == 0) {
+            io.error("Command requires one or more arguments");
+        }
+        else {
+            for (String arg : args) {
+                try {
+                    registry.removeAlias(arg);
+                }
+                catch (NoSuchAliasException e) {
+                    io.error("{}", e);
+                }
+            }
+        }
+
+        return Result.SUCCESS;
     }
 }
