@@ -30,10 +30,12 @@
         <version>2.2.1</version>
     </parent>
 
+    <groupId>org.apache.maven.shell</groupId>
     <artifactId>shell</artifactId>
     <name>Maven Shell</name>
     <version>1.0-SNAPSHOT</version>
-
+    <packaging>pom</packaging>
+    
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -47,35 +49,27 @@
                 <artifactId>jline</artifactId>
                 <version>0.9.94</version>
             </dependency>
+            
+            <!-- INTERNAL -->
+            
+            <dependency>
+                <groupId>org.apache.maven.shell</groupId>
+                <artifactId>shell-api</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>org.apache.maven.shell</groupId>
+                <artifactId>shell-impl</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>commons-cli</groupId>
-            <artifactId>commons-cli</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>jline</groupId>
-            <artifactId>jline</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.codehaus.plexus</groupId>
-            <artifactId>plexus-container-default</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.codehaus.plexus</groupId>
-            <artifactId>plexus-utils</artifactId>
-        </dependency>
-    </dependencies>
+    <modules>
+        <module>shell-api</module>
+        <module>shell-impl</module>
+    </modules>
     
     <build>
         <defaultGoal>install</defaultGoal>
