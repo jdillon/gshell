@@ -34,7 +34,6 @@ public class UnaliasCommand
     extends CommandSupport
 {
     // @Requirement
-    @SuppressWarnings({"UnusedDeclaration"})
     private AliasRegistry registry;
 
     public String getName() {

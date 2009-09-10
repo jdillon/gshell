@@ -19,7 +19,9 @@
 
 package org.apache.maven.shell.testsuite;
 
+import org.apache.maven.shell.Command;
 import org.apache.maven.shell.Shell;
+import org.apache.maven.shell.notification.ExitNotification;
 import org.apache.maven.shell.registry.CommandRegistry;
 
 /**
@@ -27,48 +29,35 @@ import org.apache.maven.shell.registry.CommandRegistry;
  *
  * @version $Rev$ $Date$
  */
-public class BasicBootTest
+public class BasicCommandsTest
     extends PlexusTestSupport
 {
-    public void testBoot() throws Exception {
-        Shell shell = lookup(Shell.class);
-        assertNotNull(shell);
-    }
+    public void testRegisterAndExit() throws Exception {
+        CommandRegistry registry = lookup(CommandRegistry.class);
+        assertNotNull(registry);
+        registry.registerCommand(lookup(Command.class, "exit"));
 
-    public void testExecuteUnknownHi() throws Exception {
         Shell shell = lookup(Shell.class);
         assertNotNull(shell);
 
         try {
-            shell.execute("hi");
+            shell.execute("exit");
             fail();
         }
-        catch (Exception ignore) {
+        catch (ExitNotification e) {
             // expected
         }
     }
 
-    public void testLookupSingleton() throws Exception {
-        CommandRegistry r1 = lookup(CommandRegistry.class);
-        assertNotNull(r1);
+    public void testRegisterAliasAlias() throws Exception {
+        CommandRegistry registry = lookup(CommandRegistry.class);
+        assertNotNull(registry);
+        registry.registerCommand(lookup(Command.class, "alias"));
 
-        CommandRegistry r2 = lookup(CommandRegistry.class);
-        assertNotNull(r2);
+        Shell shell = lookup(Shell.class);
+        assertNotNull(shell);
 
-        assertEquals(r1, r2);
+        shell.execute("alias a=b");
+        shell.execute("alias");
     }
-
-    /*
-    NOTE: For some reason this doesn't work the same as ^^^
-
-    public void testLookupSingletonWithDefaultHint() throws Exception {
-        CommandRegistry r1 = lookup(CommandRegistry.class, "default");
-        assertNotNull(r1);
-
-        CommandRegistry r2 = lookup(CommandRegistry.class, "default");
-        assertNotNull(r2);
-
-        assertEquals(r1, r2);
-    }
-    */
 }

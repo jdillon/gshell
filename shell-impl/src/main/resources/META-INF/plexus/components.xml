@@ -37,9 +37,6 @@
             <role-hint>default</role-hint>
             -->
             <implementation>org.apache.maven.shell.impl.DefaultCommandRegistry</implementation>
-            <!--
-            <instantiation-strategy>singleton-keep-alive</instantiation-strategy>
-            -->
         </component>
 
         <component>

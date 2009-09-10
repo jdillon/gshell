@@ -33,13 +33,16 @@ public class AliasCommand
     extends CommandSupport
 {
     // @Requirement
-    @SuppressWarnings({"UnusedDeclaration"})
     private AliasRegistry registry;
     
     public String getName() {
         return "alias";
     }
 
+    //
+    // FIXME: Need to use "alias <name> <value...>" due to lack of shell quote parsing muck
+    //
+    
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
         assert registry != null;
