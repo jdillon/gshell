@@ -28,6 +28,8 @@ import org.apache.maven.shell.io.IO;
  */
 public interface CommandContext
 {
+    Shell getShell();
+    
     /**
      * Provides access to the arguments to the command.
      *

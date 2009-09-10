@@ -20,9 +20,10 @@
 package org.apache.maven.shell.impl.resolver;
 
 import org.apache.maven.shell.Command;
-import org.apache.maven.shell.CommandResolver;
+import org.apache.maven.shell.CommandContext;
 import org.apache.maven.shell.CommandException;
-import org.apache.maven.shell.registry.CommandRegistry;
+import org.apache.maven.shell.CommandResolver;
+import org.apache.maven.shell.CommandSupport;
 import org.apache.maven.shell.registry.AliasRegistry;
 
 /**
@@ -40,10 +41,20 @@ public class AliasResolver
         assert name != null;
         assert registry != null;
 
-        String alias = registry.getAlias(name);
+        final String alias = registry.getAlias(name);
 
-        // TODO: New execute alias command wrapper
+        return new CommandSupport() {
+            public String getName() {
+                return name;
+            }
 
-        return null;
+            public Object execute(final CommandContext context) throws Exception {
+                assert context != null;
+                
+                log.debug("Executing alias ({}) -> {}", name, alias);
+
+                return context.getShell().execute(alias);
+            }
+        };
     }
 }

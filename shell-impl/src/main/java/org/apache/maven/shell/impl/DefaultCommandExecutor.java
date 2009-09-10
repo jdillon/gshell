@@ -28,6 +28,7 @@ import org.apache.maven.shell.CommandException;
 import org.apache.maven.shell.CommandContext;
 import org.apache.maven.shell.CommandResolver;
 import org.apache.maven.shell.Arguments;
+import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.io.IO;
 
 import java.util.List;
@@ -82,6 +83,10 @@ public class DefaultCommandExecutor
         Object result;
         try {
             result = command.execute(new CommandContext() {
+                public Shell getShell() {
+                    return context.getShell();
+                }
+                
                 public String[] getArguments() {
                     return args;
                 }
