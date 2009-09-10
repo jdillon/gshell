@@ -33,4 +33,9 @@ public class PlexusTestSupport
         //noinspection unchecked
         return (T)super.lookup(type.getName());
     }
+
+    protected <T> T lookup(final Class<T> type, final String hint) throws Exception {
+        //noinspection unchecked
+        return (T)super.lookup(type.getName(), hint);
+    }
 }

@@ -41,7 +41,7 @@ public class DefaultCommandRegistry
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private final Map<String, Command> commands = new LinkedHashMap<String,Command>();
+    private final Map<String,Command> commands = new LinkedHashMap<String,Command>();
 
     public void registerCommand(final Command command) throws DuplicateCommandException {
         assert command != null;

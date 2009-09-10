@@ -17,18 +17,33 @@
  * under the License.
  */
 
-package org.apache.maven.shell;
+package org.apache.maven.shell.commands;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.maven.shell.CommandContext;
+import org.apache.maven.shell.CommandSupport;
+import org.apache.maven.shell.notification.ExitNotification;
 
 /**
- * Provides support for {@link Command} implementations.
+ * The <tt>exit</tt> command.
  *
  * @version $Rev$ $Date$
  */
-public abstract class CommandSupport
-    implements Command
+public class ExitCommand
+    extends CommandSupport
 {
-    protected Logger log = LoggerFactory.getLogger(getClass());
+    public String getName() {
+        return "exit";
+    }
+
+    public Object execute(final CommandContext context) throws Exception {
+        assert context != null;
+
+        // HACK: Default for now
+        int exitCode = 0;
+        
+        log.info("Exiting w/code: {}", exitCode);
+
+        // Do not call System.exit(), ask the shell to exit instead.
+        throw new ExitNotification(exitCode);
+    }
 }

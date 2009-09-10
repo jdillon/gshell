@@ -31,7 +31,7 @@
     </parent>
 
     <artifactId>shell-commands</artifactId>
-    <name>Maven Shell Commands</name>
+    <name>Maven Shell :: Commands</name>
 
     <dependencies>
         <dependency>

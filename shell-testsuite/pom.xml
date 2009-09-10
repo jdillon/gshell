@@ -31,7 +31,7 @@
     </parent>
 
     <artifactId>shell-testsuite</artifactId>
-    <name>Maven Shell Testsuite</name>
+    <name>Maven Shell :: Testsuite</name>
 
     <dependencies>
         <dependency>

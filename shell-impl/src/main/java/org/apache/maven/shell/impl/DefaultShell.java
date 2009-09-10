@@ -32,6 +32,8 @@ import org.apache.maven.shell.io.Closer;
 import org.apache.maven.shell.console.Console;
 import org.apache.maven.shell.console.JLineConsole;
 import org.apache.maven.shell.console.AggregateCompleter;
+import org.codehaus.plexus.personality.plexus.lifecycle.phase.Initializable;
+import org.codehaus.plexus.personality.plexus.lifecycle.phase.InitializationException;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -45,7 +47,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * @version $Rev$ $Date$
  */
 public class DefaultShell
-    implements Shell
+    implements Shell, Initializable
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -88,7 +90,7 @@ public class DefaultShell
                 return DefaultShell.this;
             }
 
-            // HACK:
+            // HACK: Should get this from somewhere, but for now fuck it
             private IO io = new IO();
 
             public IO getIo() {
@@ -99,6 +101,15 @@ public class DefaultShell
         loadProfileScripts();
 
         opened = true;
+    }
+
+    public void initialize() throws InitializationException {
+        try {
+            init();
+        }
+        catch (Exception e) {
+            throw new InitializationException(e.getMessage(), e);
+        }
     }
 
     public synchronized void close() {

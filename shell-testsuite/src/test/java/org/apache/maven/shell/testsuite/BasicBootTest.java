@@ -20,6 +20,9 @@
 package org.apache.maven.shell.testsuite;
 
 import org.apache.maven.shell.Shell;
+import org.apache.maven.shell.notification.ExitNotification;
+import org.apache.maven.shell.commands.ExitCommand;
+import org.apache.maven.shell.registry.CommandRegistry;
 
 /**
  * Tests that the shell can boot up.
@@ -33,4 +36,58 @@ public class BasicBootTest
         Shell shell = lookup(Shell.class);
         assertNotNull(shell);
     }
+
+    public void testExecuteHi() throws Exception {
+        Shell shell = lookup(Shell.class);
+        assertNotNull(shell);
+
+        try {
+            shell.execute("hi");
+            fail();
+        }
+        catch (Exception ignore) {
+            // expected
+        }
+    }
+
+    public void testRegisterAndExit() throws Exception {
+        CommandRegistry registry = lookup(CommandRegistry.class);
+        assertNotNull(registry);
+        registry.registerCommand(new ExitCommand());
+
+        Shell shell = lookup(Shell.class);
+        assertNotNull(shell);
+
+        try {
+            shell.execute("exit");
+            fail();
+        }
+        catch (ExitNotification e) {
+            // expectedc
+        }
+    }
+
+    public void testLookupSingleton() throws Exception {
+        CommandRegistry r1 = lookup(CommandRegistry.class);
+        assertNotNull(r1);
+
+        CommandRegistry r2 = lookup(CommandRegistry.class);
+        assertNotNull(r2);
+
+        assertEquals(r1, r2);
+    }
+
+    /*
+    NOTE: For some reason this doesn't work the same as ^^^
+
+    public void testLookupSingletonWithDefaultHint() throws Exception {
+        CommandRegistry r1 = lookup(CommandRegistry.class, "default");
+        assertNotNull(r1);
+
+        CommandRegistry r2 = lookup(CommandRegistry.class, "default");
+        assertNotNull(r2);
+
+        assertEquals(r1, r2);
+    }
+    */
 }

@@ -31,7 +31,7 @@
     </parent>
 
     <artifactId>shell-api</artifactId>
-    <name>Maven Shell API</name>
+    <name>Maven Shell :: API</name>
 
     <dependencies>
         <dependency>

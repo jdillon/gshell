@@ -25,6 +25,12 @@
     <components>
         <component>
             <role>org.apache.maven.shell.Command</role>
+            <role-hint>exit</role-hint>
+            <implementation>org.apache.maven.shell.commands.ExitCommand</implementation>
+        </component>
+
+        <component>
+            <role>org.apache.maven.shell.Command</role>
             <role-hint>alias</role-hint>
             <implementation>org.apache.maven.shell.commands.AliasCommand</implementation>
             <requirements>
