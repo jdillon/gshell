@@ -54,12 +54,16 @@ public class DefaultShell
     // @Requirement
     private CommandExecutor executor;
 
+    // @Requirement
     private History history;
 
+    // @Requirement
     private List<Completor> completers;
 
+    // @Requirement
     private Console.Prompter prompter;
 
+    // @Requirement
     private Console.ErrorHandler errorHandler;
 
     private ShellContext context;
