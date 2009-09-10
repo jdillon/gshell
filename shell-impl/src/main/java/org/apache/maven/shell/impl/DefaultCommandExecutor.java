@@ -108,12 +108,16 @@ public class DefaultCommandExecutor
 
         Command command = null;
         for (CommandResolver resolver : resolvers) {
+            //
+            // FIXME: Make resolver not throw an CommandException when not found, then below is log.error()
+            //
+
             try {
                 command = resolver.resolveCommand(name);
                 break;
             }
             catch (CommandException e) {
-                // TODO: Log or ignore
+                // TODO: Log or ignore, see above
             }
         }
 

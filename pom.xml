@@ -63,6 +63,18 @@
                 <artifactId>shell-impl</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.apache.maven.shell</groupId>
+                <artifactId>shell-commands</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.maven.shell</groupId>
+                <artifactId>shell-testsuite</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -70,6 +82,7 @@
         <module>shell-api</module>
         <module>shell-impl</module>
         <module>shell-commands</module>
+        <module>shell-testsuite</module>
     </modules>
     
     <build>
