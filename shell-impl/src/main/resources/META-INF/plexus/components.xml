@@ -67,7 +67,7 @@
         <component>
             <role>org.apache.maven.shell.CommandResolver</role>
             <role-hint>alias</role-hint>
-            <implementation>org.apache.maven.shell.impl.AliasResolver</implementation>
+            <implementation>org.apache.maven.shell.impl.resolver.AliasResolver</implementation>
             <requirements>
                 <requirement>
                     <role>org.apache.maven.shell.registry.AliasRegistry</role>
@@ -78,10 +78,21 @@
         <component>
             <role>org.apache.maven.shell.CommandResolver</role>
             <role-hint>registered</role-hint>
-            <implementation>org.apache.maven.shell.impl.RegisteredCommandResolver</implementation>
+            <implementation>org.apache.maven.shell.impl.resolver.RegisteredCommandResolver</implementation>
             <requirements>
                 <requirement>
                     <role>org.apache.maven.shell.registry.CommandRegistry</role>
+                </requirement>
+            </requirements>
+        </component>
+
+        <component>
+            <role>org.apache.maven.shell.Shell</role>
+            <role-hint>default</role-hint>
+            <implementation>org.apache.maven.shell.impl.DefaultShell</implementation>
+            <requirements>
+                <requirement>
+                    <role>org.apache.maven.shell.CommandExecutor</role>
                 </requirement>
             </requirements>
         </component>
