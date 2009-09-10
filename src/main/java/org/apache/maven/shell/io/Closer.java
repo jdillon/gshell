@@ -32,6 +32,8 @@ public class Closer
     public static void close(final Closeable... closeables) {
         if (closeables != null) {
             for (Closeable c : closeables) {
+                if (c == null) continue;
+
                 try {
                     c.close();
                 }

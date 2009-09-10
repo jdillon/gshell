@@ -20,7 +20,7 @@
 package org.apache.maven.shell;
 
 /**
- * ???
+ * Provides support for {@link Command} implementations.
  *
  * @version $Rev$ $Date$
  */

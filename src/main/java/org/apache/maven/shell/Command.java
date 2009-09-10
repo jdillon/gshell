@@ -28,9 +28,9 @@ import org.apache.maven.shell.notification.Notification;
  */
 public interface Command
 {
-    /*
-    String getName()
+    String getName();
 
+    /*
     String getShortcut()
 
     Completor getCompletor()

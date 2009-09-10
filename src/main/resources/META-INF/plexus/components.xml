@@ -22,6 +22,18 @@
 
 <component-set>
 
-    <!-- TODO -->
+    <components>
+        <component>
+            <role>org.apache.maven.shell.registry.AliasRegistry</role>
+            <role-hint>default</role-hint>
+            <implementation>org.apache.maven.shell.registry.DefaultAliasRegistry</implementation>
+        </component>
+
+        <component>
+            <role>org.apache.maven.shell.registry.CommandRegistry</role>
+            <role-hint>default</role-hint>
+            <implementation>org.apache.maven.shell.registry.DefaultCommandRegistry</implementation>
+        </component>
+    </components>
 
 </component-set>

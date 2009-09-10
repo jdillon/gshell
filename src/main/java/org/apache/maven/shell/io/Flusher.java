@@ -32,6 +32,8 @@ public class Flusher
     public static void flush(final Flushable... flushable) {
         if (flushable != null) {
             for (Flushable f : flushable) {
+                if (f == null) continue;
+                
                 try {
                     f.flush();
                 }
