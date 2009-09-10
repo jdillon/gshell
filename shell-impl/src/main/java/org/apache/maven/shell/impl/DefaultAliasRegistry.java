@@ -17,10 +17,12 @@
  * under the License.
  */
 
-package org.apache.maven.shell.registry;
+package org.apache.maven.shell.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.apache.maven.shell.registry.AliasRegistry;
+import org.apache.maven.shell.registry.NoSuchAliasException;
 
 import java.util.Collection;
 import java.util.Map;

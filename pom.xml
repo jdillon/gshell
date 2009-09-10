@@ -69,6 +69,7 @@
     <modules>
         <module>shell-api</module>
         <module>shell-impl</module>
+        <module>shell-commands</module>
     </modules>
     
     <build>

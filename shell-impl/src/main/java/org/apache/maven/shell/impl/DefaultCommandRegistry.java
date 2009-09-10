@@ -17,9 +17,12 @@
  * under the License.
  */
 
-package org.apache.maven.shell.registry;
+package org.apache.maven.shell.impl;
 
 import org.apache.maven.shell.Command;
+import org.apache.maven.shell.registry.CommandRegistry;
+import org.apache.maven.shell.registry.DuplicateCommandException;
+import org.apache.maven.shell.registry.NoSuchCommandException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
