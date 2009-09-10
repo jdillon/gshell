@@ -17,39 +17,26 @@
  * under the License.
  */
 
-package org.apache.maven.shell;
+package org.apache.maven.shell.registry;
+
+import org.apache.maven.shell.Command;
+
+import java.util.Collection;
 
 /**
- * Provides access to execute commands.
+ * Registry for commands.
  *
  * @version $Rev$ $Date$
  */
-public interface Shell
+public interface CommandRegistry
 {
-    Object execute(String line) throws Exception;
+    void registerCommand(Command command) throws DuplicateCommandException;
 
-    Object execute(String command, Object[] args) throws Exception;
+    void removeCommand(Command command) throws NoSuchCommandException;
 
-    Object execute(Object... args) throws Exception;
+    Command getCommand(String name) throws NoSuchCommandException;
 
-    boolean isOpened();
+    boolean containsCommand(String name);
 
-    void close();
-
-    /**
-     * Check if the shell can be run interactivly.
-     *
-     * @return  True if the shell is interactive.
-     */
-    boolean isInteractive();
-
-    /**
-     * Run the shell interactivly.
-     *
-     * @param args  The initial commands to execute interactivly.
-     *
-     * @throws Exception                        Failed to execute commands.
-     * @throws UnsupportedOperationException    The shell does not support interactive execution.
-     */
-    void run(Object... args) throws Exception;
+    Collection<String> getCommandNames();
 }

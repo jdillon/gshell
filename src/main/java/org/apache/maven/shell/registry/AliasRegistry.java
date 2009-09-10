@@ -17,39 +17,24 @@
  * under the License.
  */
 
-package org.apache.maven.shell;
+package org.apache.maven.shell.registry;
+
+import java.util.Collection;
 
 /**
- * Provides access to execute commands.
+ * Registry for command aliases.
  *
  * @version $Rev$ $Date$
  */
-public interface Shell
+public interface AliasRegistry
 {
-    Object execute(String line) throws Exception;
+    void registerAlias(String name, String alias);
 
-    Object execute(String command, Object[] args) throws Exception;
+    void removeAlias(String name) throws NoSuchAliasException;
 
-    Object execute(Object... args) throws Exception;
+    String getAlias(String name) throws NoSuchAliasException;
 
-    boolean isOpened();
+    boolean containsAlias(String name);
 
-    void close();
-
-    /**
-     * Check if the shell can be run interactivly.
-     *
-     * @return  True if the shell is interactive.
-     */
-    boolean isInteractive();
-
-    /**
-     * Run the shell interactivly.
-     *
-     * @param args  The initial commands to execute interactivly.
-     *
-     * @throws Exception                        Failed to execute commands.
-     * @throws UnsupportedOperationException    The shell does not support interactive execution.
-     */
-    void run(Object... args) throws Exception;
+    Collection<String> getAliasNames();
 }

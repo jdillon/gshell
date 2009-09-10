@@ -19,11 +19,59 @@
 
 package org.apache.maven.shell;
 
+import org.apache.maven.shell.notification.Notification;
+
 /**
- * ???
+ * Provides the user-action for a command.
  *
  * @version $Rev$ $Date$
  */
 public interface Command
 {
+    /*
+    String getName()
+
+    String getShortcut()
+
+    Completor getCompletor()
+
+    String getDescription()
+
+    String getUsage()
+
+    String getHelp()
+
+    List<CommandAlias> getAliases()
+
+    Object execute(List args)
+
+    boolean getHidden()
+    */
+
+    /**
+     * Execute the command action.
+     *
+     * @param context   The execution context of the command.
+     * @return          The result of the command execution.
+     *
+     * @throws Notifiaction     Inform the shell of some non-exception exit state.
+     * @throws Exception        Command execution failed.
+     */
+    Object execute(CommandContext context) throws Exception;
+
+    /**
+     * Enumeration for the basic return types of a command execution.
+     */
+    enum Result
+    {
+        /**
+         * The command execution was successful.
+         */
+        SUCCESS, // 0
+
+        /**
+         * The command exectuion failed.
+         */
+        FAILURE // 1
+    }
 }

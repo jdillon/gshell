@@ -17,13 +17,32 @@
  * under the License.
  */
 
-package org.apache.maven.shell;
+package org.apache.maven.shell.notification;
 
 /**
- * ???
+ * Thrown to indicate a notification state.
+ *
+ * <p>
+ * Extending from Error to prevent need to declare throwable.
  *
  * @version $Rev$ $Date$
  */
-public interface AliasRegistry
+public abstract class Notification
+    extends Error
 {
+    public Notification(final String msg, final Throwable cause) {
+        super(msg, cause);
+    }
+
+    public Notification(final String msg) {
+        super(msg);
+    }
+
+    public Notification(final Throwable cause) {
+        super(cause);
+    }
+
+    public Notification() {
+        super();
+    }
 }

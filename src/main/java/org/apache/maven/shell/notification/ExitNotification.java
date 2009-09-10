@@ -17,39 +17,39 @@
  * under the License.
  */
 
-package org.apache.maven.shell;
+package org.apache.maven.shell.notification;
 
 /**
- * Provides access to execute commands.
+ * Thrown to indicate that the current shell should exit.
  *
  * @version $Rev$ $Date$
  */
-public interface Shell
+public final class ExitNotification
+    extends Notification
 {
-    Object execute(String line) throws Exception;
+    private static final long serialVersionUID = 1;
 
-    Object execute(String command, Object[] args) throws Exception;
+    public static final int DEFAULT_CODE = 0;
 
-    Object execute(Object... args) throws Exception;
+    public static final int ERROR_CODE = 1;
 
-    boolean isOpened();
+    public static final int FATAL_CODE = 2;
 
-    void close();
+    public final int code;
 
-    /**
-     * Check if the shell can be run interactivly.
-     *
-     * @return  True if the shell is interactive.
-     */
-    boolean isInteractive();
+    public ExitNotification(final int code) {
+        this.code = code;
+    }
 
-    /**
-     * Run the shell interactivly.
-     *
-     * @param args  The initial commands to execute interactivly.
-     *
-     * @throws Exception                        Failed to execute commands.
-     * @throws UnsupportedOperationException    The shell does not support interactive execution.
-     */
-    void run(Object... args) throws Exception;
+    public ExitNotification() {
+        this(DEFAULT_CODE);
+    }
+
+    public static void exit(final int code) {
+        throw new ExitNotification(code);
+    }
+
+    public static void exit() {
+        throw new ExitNotification();
+    }
 }

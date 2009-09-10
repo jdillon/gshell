@@ -17,39 +17,21 @@
  * under the License.
  */
 
-package org.apache.maven.shell;
+package org.apache.maven.shell.registry;
+
+import org.apache.maven.shell.CommandException;
 
 /**
- * Provides access to execute commands.
+ * Thrown to indicate a duplicate command registration attempt has failed.
  *
  * @version $Rev$ $Date$
  */
-public interface Shell
+public class DuplicateCommandException
+    extends CommandException
 {
-    Object execute(String line) throws Exception;
+    private static final long serialVersionUID = 1;
 
-    Object execute(String command, Object[] args) throws Exception;
-
-    Object execute(Object... args) throws Exception;
-
-    boolean isOpened();
-
-    void close();
-
-    /**
-     * Check if the shell can be run interactivly.
-     *
-     * @return  True if the shell is interactive.
-     */
-    boolean isInteractive();
-
-    /**
-     * Run the shell interactivly.
-     *
-     * @param args  The initial commands to execute interactivly.
-     *
-     * @throws Exception                        Failed to execute commands.
-     * @throws UnsupportedOperationException    The shell does not support interactive execution.
-     */
-    void run(Object... args) throws Exception;
+    public DuplicateCommandException(final String msg) {
+        super(msg);
+    }
 }

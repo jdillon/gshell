@@ -17,13 +17,21 @@
  * under the License.
  */
 
-package org.apache.maven.shell;
+package org.apache.maven.shell.registry;
+
+import org.apache.maven.shell.CommandException;
 
 /**
- * ???
+ * Thrown to indicate that a requested named-alias was not found.
  *
  * @version $Rev$ $Date$
  */
-public interface ExitNotification
+public class NoSuchAliasException
+    extends CommandException
 {
+    private static final long serialVersionUID = 1;
+
+    public NoSuchAliasException(final String msg) {
+        super(msg);
+    }
 }

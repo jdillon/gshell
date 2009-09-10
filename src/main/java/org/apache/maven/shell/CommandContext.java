@@ -19,11 +19,26 @@
 
 package org.apache.maven.shell;
 
+import org.apache.maven.shell.io.IO;
+
 /**
- * ???
+ * Provides commands with the context of its execution.
  *
  * @version $Rev$ $Date$
  */
 public interface CommandContext
 {
+    /**
+     * Provides access to the arguments to the command.
+     *
+     * @return The command arguments; never null.
+     */
+    Object[] getArguments();
+
+    /**
+     * The Input/Output context for the command.
+     *
+     * @return Command Input/Output context; never null.
+     */
+    IO getIo();
 }

@@ -17,13 +17,21 @@
  * under the License.
  */
 
-package org.apache.maven.shell;
+package org.apache.maven.shell.registry;
+
+import org.apache.maven.shell.CommandException;
 
 /**
- * ???
+ * Thrown to indicate that a requested named-command was not found.
  *
  * @version $Rev$ $Date$
  */
-public interface CommandRegistry
+public class NoSuchCommandException
+    extends CommandException
 {
+    private static final long serialVersionUID = 1;
+
+    public NoSuchCommandException(final String msg) {
+        super(msg);
+    }
 }
