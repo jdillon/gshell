@@ -40,8 +40,8 @@
         </dependency>
 
         <dependency>
-            <groupId>jline</groupId>
-            <artifactId>jline</artifactId>
+            <groupId>org.apache.maven.shell</groupId>
+            <artifactId>shell-terminal</artifactId>
         </dependency>
     </dependencies>
 

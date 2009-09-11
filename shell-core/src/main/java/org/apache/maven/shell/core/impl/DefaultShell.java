@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.maven.shell.core;
+package org.apache.maven.shell.core.impl;
 
 import jline.Completor;
 import jline.History;

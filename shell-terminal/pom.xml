@@ -21,61 +21,30 @@
 <!-- $Rev$ $Date$ -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
+    
     <modelVersion>4.0.0</modelVersion>
-
+    
     <parent>
         <groupId>org.apache.maven.shell</groupId>
         <artifactId>shell</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>shell-core</artifactId>
-    <name>Maven Shell :: Core</name>
-
+    <artifactId>shell-terminal</artifactId>
+    <name>Maven Shell :: Terminal</name>
+    
     <dependencies>
         <dependency>
-            <groupId>org.apache.maven.shell</groupId>
-            <artifactId>shell-api</artifactId>
+            <groupId>jline</groupId>
+            <artifactId>jline</artifactId>
+            <version>0.9.94</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
-
-        <dependency>
-            <groupId>org.apache.maven.shell</groupId>
-            <artifactId>shell-terminal</artifactId>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.apache.maven.shell</groupId>
-            <artifactId>shell-console</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.maven.shell</groupId>
-            <artifactId>shell-i18n</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.maven.shell</groupId>
-            <artifactId>shell-cli</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.codehaus.plexus</groupId>
-            <artifactId>plexus-container-default</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.codehaus.plexus</groupId>
-            <artifactId>plexus-component-annotations</artifactId>
-        </dependency>
-
-        <!--
-        <dependency>
-            <groupId>org.apache.maven</groupId>
-            <artifactId>maven-core</artifactId>
-        </dependency>
-        -->
     </dependencies>
 
 </project>
-
