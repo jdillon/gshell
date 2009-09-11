@@ -21,13 +21,16 @@ package org.apache.maven.shell.commands;
 
 import org.apache.maven.shell.CommandContext;
 import org.apache.maven.shell.CommandSupport;
+import org.apache.maven.shell.Command;
 import org.apache.maven.shell.notification.ExitNotification;
+import org.codehaus.plexus.component.annotations.Component;
 
 /**
  * The <tt>exit</tt> command.
  *
  * @version $Rev$ $Date$
  */
+@Component(role=Command.class, hint="exit")
 public class ExitCommand
     extends CommandSupport
 {

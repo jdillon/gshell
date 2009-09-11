@@ -21,20 +21,22 @@ package org.apache.maven.shell.core;
 
 import jline.Completor;
 import jline.History;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.CommandExecutor;
+import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.ShellContext;
 import org.apache.maven.shell.Variables;
-import org.apache.maven.shell.io.IO;
-import org.apache.maven.shell.io.Closer;
-import org.apache.maven.shell.notification.ExitNotification;
-import org.apache.maven.shell.console.Console;
 import org.apache.maven.shell.console.AggregateCompleter;
+import org.apache.maven.shell.console.Console;
 import org.apache.maven.shell.console.JLineConsole;
+import org.apache.maven.shell.io.Closer;
+import org.apache.maven.shell.io.IO;
+import org.apache.maven.shell.notification.ExitNotification;
+import org.codehaus.plexus.component.annotations.Component;
+import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.personality.plexus.lifecycle.phase.Initializable;
 import org.codehaus.plexus.personality.plexus.lifecycle.phase.InitializationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -47,15 +49,16 @@ import java.util.concurrent.atomic.AtomicReference;
  *
  * @version $Rev$ $Date$
  */
+@Component(role=Shell.class)
 public class DefaultShell
     implements Shell, Initializable
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    // @Requirement
+    @Requirement
     private CommandExecutor executor;
 
-    // @Requirement
+    @Requirement
     private History history;
 
     // @Requirement

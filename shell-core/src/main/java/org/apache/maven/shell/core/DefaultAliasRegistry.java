@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.registry.NoSuchAliasException;
+import org.codehaus.plexus.component.annotations.Component;
 
 import java.util.Collection;
 import java.util.Map;
@@ -34,6 +35,7 @@ import java.util.Collections;
  *
  * @version $Rev$ $Date$
  */
+@Component(role=AliasRegistry.class)
 public class DefaultAliasRegistry
     implements AliasRegistry
 {

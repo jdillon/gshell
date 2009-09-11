@@ -19,35 +19,38 @@
 
 package org.apache.maven.shell.core;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.apache.maven.shell.CommandExecutor;
-import org.apache.maven.shell.ShellContext;
-import org.apache.maven.shell.Command;
-import org.apache.maven.shell.CommandException;
-import org.apache.maven.shell.CommandContext;
 import org.apache.maven.shell.Arguments;
-import org.apache.maven.shell.Shell;
-import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.Command;
+import org.apache.maven.shell.CommandContext;
+import org.apache.maven.shell.CommandException;
+import org.apache.maven.shell.CommandExecutor;
 import org.apache.maven.shell.CommandSupport;
+import org.apache.maven.shell.Shell;
+import org.apache.maven.shell.ShellContext;
+import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.registry.CommandRegistry;
-import org.apache.maven.shell.io.IO;
+import org.codehaus.plexus.component.annotations.Component;
+import org.codehaus.plexus.component.annotations.Requirement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The default {@link CommandLineExecutor} component.
  *
  * @version $Rev$ $Date$
  */
+@Component(role=CommandExecutor.class)
 public class DefaultCommandExecutor
     implements CommandExecutor
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    // @Requirement
+    @Requirement
     private AliasRegistry aliasRegistry;
 
-    // @Requirement
+    @Requirement
     private CommandRegistry commandRegistry;
     
     public Object execute(final ShellContext context, final String line) throws Exception {

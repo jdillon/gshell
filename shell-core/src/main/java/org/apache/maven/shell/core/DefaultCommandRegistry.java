@@ -23,6 +23,7 @@ import org.apache.maven.shell.Command;
 import org.apache.maven.shell.registry.CommandRegistry;
 import org.apache.maven.shell.registry.DuplicateCommandException;
 import org.apache.maven.shell.registry.NoSuchCommandException;
+import org.codehaus.plexus.component.annotations.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,6 +37,7 @@ import java.util.Map;
  *
  * @version $Rev$ $Date$
  */
+@Component(role=CommandRegistry.class)
 public class DefaultCommandRegistry
     implements CommandRegistry
 {

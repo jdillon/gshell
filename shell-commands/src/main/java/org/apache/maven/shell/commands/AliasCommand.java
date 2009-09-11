@@ -21,18 +21,22 @@ package org.apache.maven.shell.commands;
 
 import org.apache.maven.shell.CommandSupport;
 import org.apache.maven.shell.CommandContext;
+import org.apache.maven.shell.Command;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.registry.AliasRegistry;
+import org.codehaus.plexus.component.annotations.Component;
+import org.codehaus.plexus.component.annotations.Requirement;
 
 /**
  * The <tt>alias</tt> command.
  *
  * @version $Rev$ $Date$
  */
+@Component(role=Command.class, hint="alias")
 public class AliasCommand
     extends CommandSupport
 {
-    // @Requirement
+    @Requirement
     private AliasRegistry registry;
     
     public String getName() {

@@ -20,6 +20,7 @@
 package org.apache.maven.shell.core;
 
 import jline.History;
+import org.codehaus.plexus.component.annotations.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +32,7 @@ import java.io.IOException;
  *
  * @version $Rev$ $Date$
  */
+@Component(role=History.class)
 public class DefaultHistory
     extends History
 {
