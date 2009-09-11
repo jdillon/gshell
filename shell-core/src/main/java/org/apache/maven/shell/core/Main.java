@@ -41,6 +41,8 @@ import org.apache.maven.shell.terminal.UnixTerminal;
 import org.apache.maven.shell.terminal.AutoDetectedTerminal;
 import org.apache.maven.shell.notification.ExitNotification;
 import org.apache.maven.shell.Shell;
+import org.apache.maven.shell.Command;
+import org.apache.maven.shell.registry.CommandRegistry;
 
 /**
  * Command-line bootstrap for Maven Shell.
@@ -191,7 +193,7 @@ public class Main
         //
 
         if (help) {
-            io.out.println(System.getProperty("program.name") + " [options] <command> [args]");
+            io.out.println("mvnsh [options] <command> [args]");
             io.out.println();
 
             Printer printer = new Printer(clp);
@@ -232,6 +234,14 @@ public class Main
 
         try {
             PlexusContainer container = createContainer();
+
+            // HACK: Wire up some commands to test with here for now
+            CommandRegistry registry = container.lookup(CommandRegistry.class);
+            registry.registerCommand(container.lookup(Command.class, "exit"));
+            registry.registerCommand(container.lookup(Command.class, "alias"));
+            registry.registerCommand(container.lookup(Command.class, "unalias"));
+
+            // Boot up the shell instance
             Shell shell = container.lookup(Shell.class);
 
             // clp gives us a list, but we need an array

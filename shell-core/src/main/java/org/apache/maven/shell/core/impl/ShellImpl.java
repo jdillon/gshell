@@ -114,7 +114,7 @@ public class ShellImpl
             }
         };
 
-        // HACK: Err...
+        // HACK: ...
         ShellContextHolder.set(context);
         
         // vars.set("gshell.prompt", application.getModel().getBranding().getPrompt());
@@ -244,17 +244,16 @@ public class ShellImpl
             console.addCompleter(new AggregateCompleter(completers));
         }
 
-        /*
         // Unless the user wants us to shut up, then display a nice welcome banner
         if (!io.isQuiet()) {
-            String message = application.getModel().getBranding().getWelcomeMessage();
+            String message = "Maven Shell";
+
             if (message != null) {
-                io.out.print(message);
+                io.out.println(message);
                 io.out.println(repeat("-", io.getTerminal().getTerminalWidth() - 1));
                 io.out.flush();
             }
         }
-        */
 
         // Check if there are args, and run them and then enter interactive
         if (args.length != 0) {
@@ -309,8 +308,8 @@ public class ShellImpl
         log.debug("Loading profile scripts");
 
         // Load profile scripts if they exist
-        // loadSharedScript(application.getModel().getBranding().getProfileScriptName());
-        // loadUserScript(application.getModel().getBranding().getProfileScriptName());
+        loadSharedScript("mvnsh.rc");
+        loadUserScript("mvnsh.rc");
     }
 
     private void loadScript(final File file) throws Exception {
@@ -333,8 +332,9 @@ public class ShellImpl
     private void loadUserScript(final String fileName) throws Exception {
         assert fileName != null;
 
-        /*
-        File file = new File(application.getModel().getBranding().getUserDirectory(), fileName);
+        // HACK:
+        File dir = new File(new File(System.getProperty("user.home")), ".m2");
+        File file = new File(dir, fileName);
 
         if (file.exists()) {
             log.debug("Loading user-script: {}", file);
@@ -344,14 +344,14 @@ public class ShellImpl
         else {
             log.debug("User script is not present: {}", file);
         }
-        */
     }
 
     private void loadSharedScript(final String fileName) throws Exception {
         assert fileName != null;
 
-        /*
-        File file = new File(application.getModel().getBranding().getUserDirectory(), fileName);
+        // HACK:
+        File dir = new File("/etc/maven2");
+        File file = new File(dir, fileName);
 
         if (file.exists()) {
             log.debug("Loading shared-script: {}", file);
@@ -361,6 +361,5 @@ public class ShellImpl
         else {
             log.debug("Shared script is not present: {}", file);
         }
-        */
     }
 }
