@@ -19,30 +19,29 @@
 
 package org.apache.maven.shell.core;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
-
+import org.apache.maven.shell.Command;
+import org.apache.maven.shell.Shell;
+import org.apache.maven.shell.ansi.Ansi;
+import org.apache.maven.shell.cli.Argument;
+import org.apache.maven.shell.cli.CommandLineProcessor;
+import org.apache.maven.shell.cli.Option;
+import org.apache.maven.shell.cli.Printer;
+import org.apache.maven.shell.io.IO;
+import org.apache.maven.shell.notification.ExitNotification;
+import org.apache.maven.shell.registry.CommandRegistry;
+import org.apache.maven.shell.terminal.AutoDetectedTerminal;
+import org.apache.maven.shell.terminal.UnixTerminal;
+import org.apache.maven.shell.terminal.UnsupportedTerminal;
+import org.apache.maven.shell.terminal.WindowsTerminal;
 import org.codehaus.plexus.ContainerConfiguration;
 import org.codehaus.plexus.DefaultContainerConfiguration;
 import org.codehaus.plexus.DefaultPlexusContainer;
 import org.codehaus.plexus.PlexusContainer;
 import org.codehaus.plexus.PlexusContainerException;
 import org.codehaus.plexus.classworlds.ClassWorld;
-import org.apache.maven.shell.io.IO;
-import org.apache.maven.shell.cli.Option;
-import org.apache.maven.shell.cli.Argument;
-import org.apache.maven.shell.cli.CommandLineProcessor;
-import org.apache.maven.shell.cli.Printer;
-import org.apache.maven.shell.ansi.Ansi;
-import org.apache.maven.shell.terminal.UnsupportedTerminal;
-import org.apache.maven.shell.terminal.WindowsTerminal;
-import org.apache.maven.shell.terminal.UnixTerminal;
-import org.apache.maven.shell.terminal.AutoDetectedTerminal;
-import org.apache.maven.shell.notification.ExitNotification;
-import org.apache.maven.shell.Shell;
-import org.apache.maven.shell.Command;
-import org.apache.maven.shell.registry.CommandRegistry;
+
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Command-line bootstrap for Maven Shell.
@@ -51,17 +50,16 @@ import org.apache.maven.shell.registry.CommandRegistry;
  */
 public class Main
 {
-    ///CLOVER:OFF
-
     //
     // NOTE: Do not use logging from this class, as it is used to configure
-    //       the logging level with System properties, which will only get
-    //       picked up on the initial loading of Log4j
+    //       the logging level with System properties.
     //
 
     private final ClassWorld classWorld;
 
     private final IO io = new IO();
+
+    // private final MessageSource messages = new ResourceBundleMessageSource(getClass());
 
     public Main(final ClassWorld classWorld) {
         assert classWorld != null;
@@ -86,12 +84,7 @@ public class Main
     private void setConsoleLogLevel(final String level) {
         System.setProperty("gshell.log.console.level", level);
     }
-
-    //
-    // TODO: Add flag to show exception traces
-    //       https://issues.apache.org/jira/browse/GSHELL-46
-    //
-
+    
     @Option(name="-d", aliases={"--debug"}, description="Enable DEBUG logging output")
     private void setDebug(boolean flag) {
         if (flag) {
@@ -120,7 +113,7 @@ public class Main
     private String commands;
 
     @Argument(description="Command")
-    private List<String> commandArgs = new ArrayList<String>(0);
+    private List<String> commandArgs = null;
 
     @Option(name="-D", aliases={"--define"}, token="NAME=VALUE", description="Define system properties")
     private void setSystemProperty(final String nameValue) {
@@ -167,6 +160,13 @@ public class Main
         System.setProperty("jline.terminal", type);
     }
 
+    @Option(name="-e", aliases={"--exception"})
+    private void setException(boolean flag) {
+        if (flag) {
+            System.setProperty("gshell.show.stacktrace","true");
+        }
+    }
+
     private PlexusContainer createContainer() throws PlexusContainerException {
         // Boot up the container
         ContainerConfiguration config = new DefaultContainerConfiguration();
@@ -197,6 +197,7 @@ public class Main
             io.out.println();
 
             Printer printer = new Printer(clp);
+            // printer.setMessageSource(messages);
             printer.printUsage(io.out);
 
             io.out.println();
@@ -245,7 +246,10 @@ public class Main
             Shell shell = container.lookup(Shell.class);
 
             // clp gives us a list, but we need an array
-            String[] _args = commandArgs.toArray(new String[commandArgs.size()]);
+            String[] _args = {};
+            if (commandArgs != null) {
+                commandArgs.toArray(new String[commandArgs.size()]);
+            }
 
             if (commands != null) {
                 shell.execute(commands);

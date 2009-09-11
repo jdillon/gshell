@@ -85,54 +85,50 @@ public class ShellImpl
         return true;
     }
 
-    // @PostConstruct
-    public synchronized void init() throws Exception {
-        if (opened) {
-            throw new IllegalStateException("Shell is already opened");
-        }
-
-        log.debug("Initializing");
-
-        // Each shell gets its own variables, using application variables for defaults
-        final Variables vars = new Variables();
-
-        // HACK: Should get this from somewhere, but for now fuck it
-        final IO io = new IO();
-
-        context = new ShellContext()
-        {
-            public Shell getShell() {
-                return ShellImpl.this;
-            }
-
-            public IO getIo() {
-                return io;
-            }
-
-            public Variables getVariables() {
-                return vars;
-            }
-        };
-
-        // HACK: ...
-        ShellContextHolder.set(context);
-        
-        // vars.set("gshell.prompt", application.getModel().getBranding().getPrompt());
-        // vars.set(CommandResolver.GROUP, "/");
-        // vars.set("gshell.username", application.getUserName());
-        // vars.set("gshell.hostname", application.getLocalHost());
-
-        // HACK: Add history for the 'history' command, since its not part of the Shell intf it can't really access it
-        vars.set("shell.internal.history", getHistory(), true);
-
-        loadProfileScripts();
-
-        opened = true;
-    }
-
     public void initialize() throws InitializationException {
         try {
-            init();
+            if (opened) {
+                throw new IllegalStateException("Shell is already opened");
+            }
+
+            log.debug("Initializing");
+
+            // Each shell gets its own variables, using application variables for defaults
+            final Variables vars = new Variables();
+
+            // HACK: Should get this from somewhere, but for now fuck it
+            final IO io = new IO();
+
+            context = new ShellContext()
+            {
+                public Shell getShell() {
+                    return ShellImpl.this;
+                }
+
+                public IO getIo() {
+                    return io;
+                }
+
+                public Variables getVariables() {
+                    return vars;
+                }
+            };
+
+            // HACK: ...
+            ShellContextHolder.set(context);
+
+            // vars.set("gshell.prompt", application.getModel().getBranding().getPrompt());
+            // vars.set(CommandResolver.GROUP, "/");
+            // vars.set("gshell.username", application.getUserName());
+            // vars.set("gshell.hostname", application.getLocalHost());
+
+            // HACK: Add history for the 'history' command, since its not part of the Shell intf it can't really access it
+            assert history != null;
+            vars.set("shell.internal.history", history, true);
+
+            loadProfileScripts();
+
+            opened = true;
         }
         catch (Exception e) {
             throw new InitializationException(e.getMessage(), e);
@@ -152,24 +148,6 @@ public class ShellImpl
             throw new IllegalStateException("Shell context has not been initialized");
         }
         return context;
-    }
-
-
-    public void setCompleters(final List<Completor> completers) {
-        assert completers != null;
-
-        this.completers = completers;
-    }
-
-    public History getHistory() {
-        if (history == null) {
-            throw new IllegalStateException("Missing configuration property: history");
-        }
-        return history;
-    }
-
-    public void setHistory(final History history) {
-        this.history = history;
     }
 
     public boolean isInteractive() {
@@ -234,9 +212,15 @@ public class ShellImpl
         
         // Setup the console runner
         JLineConsole console = new JLineConsole(executor, io);
-        console.setPrompter(getPrompter());
-        console.setErrorHandler(getErrorHandler());
-        console.setHistory(getHistory());
+
+        assert prompter != null;
+        console.setPrompter(prompter);
+
+        assert errorHandler != null;
+        console.setErrorHandler(errorHandler);
+
+        assert history != null;
+        console.setHistory(history);
         
         // Attach completers if there are any
         if (completers != null) {
@@ -246,13 +230,9 @@ public class ShellImpl
 
         // Unless the user wants us to shut up, then display a nice welcome banner
         if (!io.isQuiet()) {
-            String message = "Maven Shell";
-
-            if (message != null) {
-                io.out.println(message);
-                io.out.println(repeat("-", io.getTerminal().getTerminalWidth() - 1));
-                io.out.flush();
-            }
+            io.out.println("Maven Shell");
+            io.out.println(repeat("-", io.getTerminal().getTerminalWidth() - 1));
+            io.out.flush();
         }
 
         // Check if there are args, and run them and then enter interactive
@@ -276,28 +256,6 @@ public class ShellImpl
             buffer.append(str);
         }
         return buffer.toString();
-    }
-
-    public Console.Prompter getPrompter() {
-        if (prompter == null) {
-            throw new IllegalStateException("Missing configuration property: prompter");
-        }
-        return prompter;
-    }
-
-    public void setPrompter(final Console.Prompter prompter) {
-        this.prompter = prompter;
-    }
-
-    public Console.ErrorHandler getErrorHandler() {
-        if (errorHandler == null) {
-            throw new IllegalStateException("Missing configuration property: errorHandler");
-        }
-        return errorHandler;
-    }
-
-    public void setErrorHandler(final Console.ErrorHandler handler) {
-        this.errorHandler = handler;
     }
 
     //
@@ -332,7 +290,7 @@ public class ShellImpl
     private void loadUserScript(final String fileName) throws Exception {
         assert fileName != null;
 
-        // HACK:
+        // HACK: Need to use settings or something for this?
         File dir = new File(new File(System.getProperty("user.home")), ".m2");
         File file = new File(dir, fileName);
 
@@ -349,7 +307,7 @@ public class ShellImpl
     private void loadSharedScript(final String fileName) throws Exception {
         assert fileName != null;
 
-        // HACK:
+        // HACK: Need to use settings or something for this?
         File dir = new File("/etc/maven2");
         File file = new File(dir, fileName);
 

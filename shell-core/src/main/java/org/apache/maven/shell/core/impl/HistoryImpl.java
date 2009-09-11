@@ -41,18 +41,13 @@ public class HistoryImpl
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    // @PostConstruct
-    public void init() throws Exception {
-        // HACK:
-        File dir = new File(new File(System.getProperty("user.home")), ".m2");
-        File file = new File(dir, "mvnsh.history");
-        setHistoryFile(file);
-    }
-
     @Override
     public void initialize() throws InitializationException {
         try {
-            init();
+            // HACK: Need to use settings or something for this?
+            File dir = new File(new File(System.getProperty("user.home")), ".m2");
+            File file = new File(dir, "mvnsh.history");
+            setHistoryFile(file);
         }
         catch (Exception e) {
             throw new InitializationException(e.getMessage(), e);

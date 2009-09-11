@@ -66,7 +66,7 @@ public class ConsoleErrorHandlerImpl
         String stackTraceProperty = System.getProperty("gshell.show.stacktrace");
         boolean stackTraceFlag = false;
         if (stackTraceProperty != null) {
-        	stackTraceFlag = stackTraceProperty.trim().equals("true");
+            stackTraceFlag = stackTraceProperty.trim().equals("true");
         }
 
         if (io.isDebug()) {
