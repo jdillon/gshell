@@ -30,18 +30,13 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>shell-cli</artifactId>
-    <name>Maven Shell :: CLI</name>
+    <artifactId>shell-i18n</artifactId>
+    <name>Maven Shell :: i18n</name>
 
     <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.apache.maven.shell</groupId>
-            <artifactId>shell-i18n</artifactId>
         </dependency>
     </dependencies>
 

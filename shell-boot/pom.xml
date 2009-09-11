@@ -30,18 +30,18 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>shell-cli</artifactId>
-    <name>Maven Shell :: CLI</name>
+    <artifactId>shell-boot</artifactId>
+    <name>Maven Shell :: Boot</name>
 
     <dependencies>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-        
-        <dependency>
             <groupId>org.apache.maven.shell</groupId>
-            <artifactId>shell-i18n</artifactId>
+            <artifactId>shell-impl</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-container-default</artifactId>
         </dependency>
     </dependencies>
 
