@@ -21,6 +21,8 @@ package org.apache.maven.shell.core;
 
 import org.apache.maven.shell.Command;
 import org.apache.maven.shell.Shell;
+import org.apache.maven.shell.i18n.MessageSource;
+import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
 import org.apache.maven.shell.ansi.Ansi;
 import org.apache.maven.shell.cli.Argument;
 import org.apache.maven.shell.cli.CommandLineProcessor;
@@ -59,7 +61,7 @@ public class Main
 
     private final IO io = new IO();
 
-    // private final MessageSource messages = new ResourceBundleMessageSource(getClass());
+    private final MessageSource messages = new ResourceBundleMessageSource(getClass());
 
     public Main(final ClassWorld classWorld) {
         assert classWorld != null;
@@ -72,20 +74,20 @@ public class Main
     //       https://issues.apache.org/jira/browse/GSHELL-47
     //
 
-    @Option(name="-h", aliases={"--help"}, requireOverride=true, description="Display this help message")
+    @Option(name="-h", aliases={"--help"}, requireOverride=true)
     private boolean help;
 
-    @Option(name="-V", aliases={"--version"}, requireOverride=true, description="Display program version")
+    @Option(name="-V", aliases={"--version"}, requireOverride=true)
     private boolean version;
 
-    @Option(name="-i", aliases={"--interactive"}, description="Run in interactive mode")
+    @Option(name="-i", aliases={"--interactive"})
     private boolean interactive = true;
 
     private void setConsoleLogLevel(final String level) {
         System.setProperty("gshell.log.console.level", level);
     }
     
-    @Option(name="-d", aliases={"--debug"}, description="Enable DEBUG logging output")
+    @Option(name="-d", aliases={"--debug"})
     private void setDebug(boolean flag) {
         if (flag) {
             setConsoleLogLevel("DEBUG");
@@ -93,7 +95,7 @@ public class Main
         }
     }
 
-    @Option(name="-v", aliases={"--verbose"}, description="Enable INFO logging output")
+    @Option(name="-v", aliases={"--verbose"})
     private void setVerbose(boolean flag) {
         if (flag) {
             setConsoleLogLevel("INFO");
@@ -101,7 +103,7 @@ public class Main
         }
     }
 
-    @Option(name="-q", aliases={"--quiet"}, description="Limit logging output to ERROR")
+    @Option(name="-q", aliases={"--quiet"})
     private void setQuiet(boolean flag) {
         if (flag) {
             setConsoleLogLevel("ERROR");
@@ -109,13 +111,13 @@ public class Main
         }
     }
 
-    @Option(name="-c", aliases={"--commands"}, description="Read commands from string")
+    @Option(name="-c", aliases={"--commands"})
     private String commands;
 
     @Argument(description="Command")
     private List<String> commandArgs = null;
 
-    @Option(name="-D", aliases={"--define"}, token="NAME=VALUE", description="Define system properties")
+    @Option(name="-D", aliases={"--define"})
     private void setSystemProperty(final String nameValue) {
         assert nameValue != null;
 
@@ -135,7 +137,7 @@ public class Main
         System.setProperty(name, value);
     }
 
-    @Option(name="-C", aliases={"--color"}, argumentRequired=true, description="Enable or disable use of ANSI colors")
+    @Option(name="-C", aliases={"--color"}, argumentRequired=true)
     private void enableAnsiColors(final boolean flag) {
         Ansi.setEnabled(flag);
     }
@@ -197,7 +199,7 @@ public class Main
             io.out.println();
 
             Printer printer = new Printer(clp);
-            // printer.setMessageSource(messages);
+            printer.setMessageSource(messages);
             printer.printUsage(io.out);
 
             io.out.println();
@@ -226,7 +228,7 @@ public class Main
                     // will set an exit code through the proper channels
 
                     io.err.println();
-                    io.err.println("WARNING: Abnormal JVM shutdown detected");
+                    io.err.println(messages.getMessage("warning.abnormalShutdown"));
                 }
 
                 io.flush();
@@ -276,6 +278,6 @@ public class Main
     }
 
     public static void main(final String[] args) throws Exception {
-        main(args, new ClassWorld("gshell", Thread.currentThread().getContextClassLoader()));
+        main(args, new ClassWorld("gshell.core", Thread.currentThread().getContextClassLoader()));
     }
 }
