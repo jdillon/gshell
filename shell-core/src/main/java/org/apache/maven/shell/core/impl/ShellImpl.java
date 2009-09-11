@@ -37,6 +37,7 @@ import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.personality.plexus.lifecycle.phase.Initializable;
 import org.codehaus.plexus.personality.plexus.lifecycle.phase.InitializationException;
+import org.codehaus.plexus.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -118,7 +119,7 @@ public class ShellImpl
             // HACK: Need to resolve this in the new mvnsh context
             ShellContextHolder.set(context);
 
-            vars.set("gshell.prompt", "@|bold maven|> ");
+            vars.set("gshell.prompt", "@|bold,red maven|> ");
 
             // HACK: Add history for the 'history' command, since its not part of the Shell intf it can't really access it
             assert history != null;
@@ -228,8 +229,8 @@ public class ShellImpl
 
         // Unless the user wants us to shut up, then display a nice welcome banner
         if (!io.isQuiet()) {
-            io.out.println("@|bold,red Maven| Shell");
-            io.out.println(repeat("-", io.getTerminal().getTerminalWidth() - 1));
+            io.out.println("@|bold,red Maven| Shell"); // TODO: Add mvn version here
+            io.out.println(StringUtils.repeat("-", io.getTerminal().getTerminalWidth() - 1));
             io.out.flush();
         }
 
@@ -247,15 +248,7 @@ public class ShellImpl
             throw n;
         }
     }
-
-    private static String repeat(final String str, final int repeat) {
-        StringBuilder buffer = new StringBuilder(repeat * str.length());
-        for (int i = 0; i < repeat; i++) {
-            buffer.append(str);
-        }
-        return buffer.toString();
-    }
-
+    
     //
     // Script Processing
     //
