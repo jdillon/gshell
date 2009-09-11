@@ -35,7 +35,7 @@ public class AliasesTest
     public void testDefineAliasExecute() throws Exception {
         CommandRegistry registry = lookup(CommandRegistry.class);
         assertNotNull(registry);
-        registry.registerCommand(lookup(Command.class, "alias"));
+        registry.registerCommand("alias");
 
         Shell shell = lookup(Shell.class);
         assertNotNull(shell);

@@ -19,8 +19,8 @@
 
 package org.apache.maven.shell.core;
 
-import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.Shell;
+import org.apache.maven.shell.core.impl.CommandRegistrationAgent;
 import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
 import org.apache.maven.shell.ansi.Ansi;
@@ -31,7 +31,6 @@ import org.apache.maven.shell.cli.Printer;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.io.IOHolder;
 import org.apache.maven.shell.notification.ExitNotification;
-import org.apache.maven.shell.registry.CommandRegistry;
 import org.apache.maven.shell.terminal.AutoDetectedTerminal;
 import org.apache.maven.shell.terminal.UnixTerminal;
 import org.apache.maven.shell.terminal.UnsupportedTerminal;
@@ -231,22 +230,13 @@ public class Main
         try {
             PlexusContainer container = createContainer();
 
-            // HACK: Wire up some commands to test with here for now
-            CommandRegistry registry = container.lookup(CommandRegistry.class);
-            registry.registerCommand(container.lookup(Command.class, "help"));
-            registry.registerCommand(container.lookup(Command.class, "exit"));
-            registry.registerCommand(container.lookup(Command.class, "clear"));
-            registry.registerCommand(container.lookup(Command.class, "set"));
-            registry.registerCommand(container.lookup(Command.class, "unset"));
-            registry.registerCommand(container.lookup(Command.class, "history"));
-            registry.registerCommand(container.lookup(Command.class, "source"));
-            registry.registerCommand(container.lookup(Command.class, "alias"));
-            registry.registerCommand(container.lookup(Command.class, "unalias"));
-            registry.registerCommand(container.lookup(Command.class, "mvn"));
-
             // Boot up the shell instance
             Shell shell = container.lookup(Shell.class);
 
+            // Register our commands
+            CommandRegistrationAgent agent = container.lookup(CommandRegistrationAgent.class);
+            agent.registerCommands();
+            
             // clp gives us a list, but we need an array
             String[] _args = {};
             if (commandArgs != null) {

@@ -35,7 +35,7 @@ public class BasicCommandsTest
     public void testRegisterAndExit() throws Exception {
         CommandRegistry registry = lookup(CommandRegistry.class);
         assertNotNull(registry);
-        registry.registerCommand(lookup(Command.class, "exit"));
+        registry.registerCommand("exit");
 
         Shell shell = lookup(Shell.class);
         assertNotNull(shell);
@@ -52,7 +52,7 @@ public class BasicCommandsTest
     public void testRegisterAliasAlias() throws Exception {
         CommandRegistry registry = lookup(CommandRegistry.class);
         assertNotNull(registry);
-        registry.registerCommand(lookup(Command.class, "alias"));
+        registry.registerCommand("alias");
 
         Shell shell = lookup(Shell.class);
         assertNotNull(shell);

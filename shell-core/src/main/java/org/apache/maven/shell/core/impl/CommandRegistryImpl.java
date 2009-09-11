@@ -32,8 +32,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * The default {@link CommandRegistry} component.
@@ -46,29 +46,25 @@ public class CommandRegistryImpl
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private final Map<String,Command> commands = new LinkedHashMap<String,Command>();
+    private final Set<String> commands = new LinkedHashSet<String>();
 
     @Requirement
     private PlexusContainer container;
 
-    public void registerCommand(final Command command) throws DuplicateCommandException {
-        assert command != null;
+    public void registerCommand(final String name) throws DuplicateCommandException {
+        assert name != null;
 
-        String name = command.getName();
-
-        log.debug("Registering command: {} -> {}", name, command);
+        log.info("Registering command: {}", name);
 
         if (containsCommand(name)) {
             throw new DuplicateCommandException(name);
         }
 
-        commands.put(name, command);
+        commands.add(name);
     }
 
-    public void removeCommand(final Command command) throws NoSuchCommandException {
-        assert command != null;
-
-        String name = command.getName();
+    public void removeCommand(final String name) throws NoSuchCommandException {
+        assert name != null;
 
         log.debug("Removing command: {}", name);
 
@@ -82,14 +78,14 @@ public class CommandRegistryImpl
     public Command getCommand(final String name) throws NoSuchCommandException {
         assert name != null;
 
-        /*
-        FIXME:
+        log.info("Getting command: {}", name);
+
         if (!containsCommand(name)) {
             throw new NoSuchCommandException(name);
         }
-        */
 
         try {
+            //noinspection unchecked
             return container.lookup(Command.class, name);
         }
         catch (ComponentLookupException e) {
@@ -100,10 +96,10 @@ public class CommandRegistryImpl
     public boolean containsCommand(final String name) {
         assert name != null;
 
-        return commands.containsKey(name);
+        return commands.contains(name);
     }
 
     public Collection<String> getCommandNames() {
-        return Collections.unmodifiableSet(commands.keySet());
+        return Collections.unmodifiableSet(commands);
     }
 }
