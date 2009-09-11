@@ -1,0 +1,169 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+package org.apache.maven.shell.commands.basic;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.apache.maven.shell.cli.Argument;
+import org.apache.maven.shell.CommandSupport;
+import org.apache.maven.shell.CommandContext;
+import org.apache.maven.shell.Command;
+import org.apache.maven.shell.registry.CommandRegistry;
+import org.apache.maven.shell.registry.AliasRegistry;
+import org.apache.maven.shell.ansi.AnsiRenderer;
+import org.apache.maven.shell.ansi.AnsiCode;
+import org.apache.maven.shell.io.IO;
+import org.codehaus.plexus.component.annotations.Component;
+import org.codehaus.plexus.component.annotations.Requirement;
+
+import java.util.Collection;
+import java.util.LinkedList;
+import java.io.PrintWriter;
+
+/**
+ * Display command help.
+ *
+ * @version $Rev$ $Date$
+ */
+@Component(role=Command.class, hint="help", instantiationStrategy="per-lookup")
+public class HelpCommand
+    extends CommandSupport
+{
+    @Requirement
+    private AliasRegistry aliasRegistry;
+
+    @Requirement
+    private CommandRegistry commandRegistry;
+
+    @Argument
+    private String commandName;
+
+    public String getName() {
+        return "help";
+    }
+
+    public Object execute(final CommandContext context) throws Exception {
+        assert context != null;
+        IO io = context.getIo();
+
+        if (commandName == null) {
+            return displayAvailableCommands(context);
+        }
+        else {
+            if (commandRegistry.containsCommand(commandName)) {
+                Command command = commandRegistry.getCommand(commandName);
+                renderManual(io.out, command);
+
+                return Result.SUCCESS;
+            }
+            else {
+                io.out.print("Command ");
+                io.out.print(AnsiRenderer.encode(commandName, AnsiCode.BOLD));
+                io.out.println(" not found.");
+
+                io.out.print("Try ");
+                io.out.print(AnsiRenderer.encode("help", AnsiCode.BOLD));
+                io.out.println(" for a list of available commands.");
+
+                return Result.FAILURE;
+            }
+        }
+    }
+
+    private Object displayAvailableCommands(final CommandContext context) throws Exception {
+        assert context != null;
+
+        log.debug("Listing brief help for commands");
+
+        Collection<Command> commands = new LinkedList<Command>();
+        for (String name : commandRegistry.getCommandNames()) {
+            commands.add(commandRegistry.getCommand(name));
+        }
+
+        // Determine the maximun name length
+        int maxNameLen = 0;
+        for (Command command : commands) {
+            int len = command.getName().length();
+            maxNameLen = Math.max(len, maxNameLen);
+        }
+
+        //
+        // TODO: Sort the list
+        //
+
+        IO io = context.getIo();
+        io.out.println("Available commands:");
+        for (Command command : commands) {
+            String formattedName = String.format("%-" + maxNameLen + "s", command.getName());
+            String desc = getDescription(command);
+
+            io.out.print("  ");
+            io.out.print(AnsiRenderer.encode(formattedName, AnsiCode.BOLD));
+
+            if (desc != null) {
+                io.out.print("  ");
+                io.out.println(desc);
+            }
+            else {
+                io.out.println();
+            }
+        }
+
+        return Result.SUCCESS;
+    }
+
+    public static final String COMMAND_DESCRIPTION = "command.description";
+
+    public static final String COMMAND_MANUAL = "command.manual";
+
+    public String getDescription(final Command command) {
+        return command.getMessages().getMessage(COMMAND_DESCRIPTION);
+    }
+
+    protected String getManual(final Command command) {
+        return command.getMessages().getMessage(COMMAND_MANUAL);
+    }
+
+    public void renderManual(final PrintWriter out, final Command command) {
+        assert out != null;
+
+        log.trace("Rendering command manual");
+
+        AnsiRenderer renderer = new AnsiRenderer();
+
+        out.println(renderer.render(AnsiRenderer.encode("NAME", AnsiCode.BOLD)));
+        out.print("  ");
+        out.println(command.getName());
+        out.println();
+
+        out.println(renderer.render(AnsiRenderer.encode("DESCRIPTION", AnsiCode.BOLD)));
+        out.print("  ");
+        out.println(getDescription(command));
+        out.println();
+
+        //
+        // TODO: Use a prefixing writer here, take the impl from shitty
+        //
+
+        out.println(renderer.render(AnsiRenderer.encode("MANUAL", AnsiCode.BOLD)));
+        out.println(getManual(command));
+        out.println();
+    }
+}

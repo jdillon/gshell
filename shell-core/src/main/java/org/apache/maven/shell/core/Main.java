@@ -228,6 +228,7 @@ public class Main
 
             // HACK: Wire up some commands to test with here for now
             CommandRegistry registry = container.lookup(CommandRegistry.class);
+            registry.registerCommand(container.lookup(Command.class, "help"));
             registry.registerCommand(container.lookup(Command.class, "exit"));
             registry.registerCommand(container.lookup(Command.class, "alias"));
             registry.registerCommand(container.lookup(Command.class, "unalias"));

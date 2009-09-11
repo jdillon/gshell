@@ -98,8 +98,6 @@ public class AliasCommand
                 io.out.print("Alias to: ");
                 io.out.println(alias);
             }
-            
-            io.out.flush();
         }
 
         return Result.SUCCESS;
