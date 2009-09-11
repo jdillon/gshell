@@ -90,7 +90,7 @@
             
             <dependency>
                 <groupId>org.apache.maven.shell</groupId>
-                <artifactId>shell-impl</artifactId>
+                <artifactId>shell-core</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
 
@@ -135,7 +135,7 @@
         <module>shell-cli</module>
         <module>shell-i18n</module>
         <module>shell-api</module>
-        <module>shell-impl</module>
+        <module>shell-core</module>
         <module>shell-commands</module>
         <module>shell-boot</module>
         <module>shell-assembly</module>

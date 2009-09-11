@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.maven.shell.impl;
+package org.apache.maven.shell.core;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

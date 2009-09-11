@@ -25,17 +25,17 @@
     <components>
         <component>
             <role>org.apache.maven.shell.registry.AliasRegistry</role>
-            <implementation>org.apache.maven.shell.impl.DefaultAliasRegistry</implementation>
+            <implementation>org.apache.maven.shell.core.DefaultAliasRegistry</implementation>
         </component>
 
         <component>
             <role>org.apache.maven.shell.registry.CommandRegistry</role>
-            <implementation>org.apache.maven.shell.impl.DefaultCommandRegistry</implementation>
+            <implementation>org.apache.maven.shell.core.DefaultCommandRegistry</implementation>
         </component>
 
         <component>
             <role>org.apache.maven.shell.CommandExecutor</role>
-            <implementation>org.apache.maven.shell.impl.DefaultCommandExecutor</implementation>
+            <implementation>org.apache.maven.shell.core.DefaultCommandExecutor</implementation>
             <requirements>
                 <requirement>
                     <role>org.apache.maven.shell.registry.AliasRegistry</role>
@@ -48,12 +48,12 @@
 
         <component>
             <role>jline.History</role>
-            <implementation>org.apache.maven.shell.impl.DefaultHistory</implementation>
+            <implementation>org.apache.maven.shell.core.DefaultHistory</implementation>
         </component>
 
         <component>
             <role>org.apache.maven.shell.Shell</role>
-            <implementation>org.apache.maven.shell.impl.DefaultShell</implementation>
+            <implementation>org.apache.maven.shell.core.DefaultShell</implementation>
             <requirements>
                 <requirement>
                     <role>org.apache.maven.shell.CommandExecutor</role>

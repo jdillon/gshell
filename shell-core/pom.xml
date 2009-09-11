@@ -30,8 +30,8 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>shell-impl</artifactId>
-    <name>Maven Shell :: Impl</name>
+    <artifactId>shell-core</artifactId>
+    <name>Maven Shell :: Core</name>
 
     <dependencies>
         <dependency>
