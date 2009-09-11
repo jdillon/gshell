@@ -57,7 +57,19 @@
                 <artifactId>shell-ansi</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
-
+            
+            <dependency>
+                <groupId>org.apache.maven.shell</groupId>
+                <artifactId>shell-io</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>org.apache.maven.shell</groupId>
+                <artifactId>shell-console</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            
             <dependency>
                 <groupId>org.apache.maven.shell</groupId>
                 <artifactId>shell-i18n</artifactId>
@@ -118,6 +130,8 @@
 
     <modules>
         <module>shell-ansi</module>
+        <module>shell-io</module>
+        <module>shell-console</module>
         <module>shell-cli</module>
         <module>shell-i18n</module>
         <module>shell-api</module>

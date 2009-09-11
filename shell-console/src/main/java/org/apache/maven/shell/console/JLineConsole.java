@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.maven.shell.impl;
+package org.apache.maven.shell.console;
 
 import jline.CandidateListCompletionHandler;
 import jline.Completor;
