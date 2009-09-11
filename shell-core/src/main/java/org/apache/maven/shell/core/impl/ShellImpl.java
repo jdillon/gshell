@@ -26,7 +26,7 @@ import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.ShellContext;
 import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.ShellContextHolder;
-import org.apache.maven.shell.console.AggregateCompleter;
+import org.apache.maven.shell.console.completer.AggregateCompleter;
 import org.apache.maven.shell.console.Console;
 import org.apache.maven.shell.console.JLineConsole;
 import org.apache.maven.shell.io.Closer;

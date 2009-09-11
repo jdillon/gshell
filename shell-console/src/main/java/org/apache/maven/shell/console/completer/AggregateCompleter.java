@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.maven.shell.console;
+package org.apache.maven.shell.console.completer;
 
 import jline.Completor;
 
