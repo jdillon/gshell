@@ -19,7 +19,7 @@
 
 package org.apache.maven.shell.registry;
 
-import org.apache.maven.shell.CommandException;
+import org.apache.maven.shell.command.CommandException;
 
 /**
  * Thrown to indicate that a requested named-alias was not found.

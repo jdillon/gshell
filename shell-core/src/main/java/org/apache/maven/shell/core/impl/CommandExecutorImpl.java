@@ -19,16 +19,16 @@
 
 package org.apache.maven.shell.core.impl;
 
-import org.apache.maven.shell.Arguments;
-import org.apache.maven.shell.Command;
-import org.apache.maven.shell.CommandContext;
-import org.apache.maven.shell.CommandException;
-import org.apache.maven.shell.CommandExecutor;
-import org.apache.maven.shell.CommandSupport;
+import org.apache.maven.shell.command.Arguments;
+import org.apache.maven.shell.command.Command;
+import org.apache.maven.shell.command.CommandContext;
+import org.apache.maven.shell.command.CommandException;
+import org.apache.maven.shell.command.CommandExecutor;
+import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.ShellContext;
 import org.apache.maven.shell.Variables;
-import org.apache.maven.shell.OpaqueArguments;
+import org.apache.maven.shell.command.OpaqueArguments;
 import org.apache.maven.shell.cli.CommandLineProcessor;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.registry.AliasRegistry;

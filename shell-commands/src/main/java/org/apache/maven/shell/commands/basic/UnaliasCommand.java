@@ -19,9 +19,9 @@
 
 package org.apache.maven.shell.commands.basic;
 
-import org.apache.maven.shell.CommandSupport;
-import org.apache.maven.shell.CommandContext;
-import org.apache.maven.shell.Command;
+import org.apache.maven.shell.command.CommandSupport;
+import org.apache.maven.shell.command.CommandContext;
+import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.cli.Argument;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.registry.AliasRegistry;
@@ -34,7 +34,7 @@ import org.codehaus.plexus.component.annotations.Requirement;
  *
  * @version $Rev$ $Date$
  */
-@Component(role=Command.class, hint="unalias", instantiationStrategy="per-lookup")
+@Component(role= Command.class, hint="unalias", instantiationStrategy="per-lookup")
 public class UnaliasCommand
     extends CommandSupport
 {

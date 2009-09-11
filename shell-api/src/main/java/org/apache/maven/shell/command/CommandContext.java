@@ -17,14 +17,39 @@
  * under the License.
  */
 
-package org.apache.maven.shell;
+package org.apache.maven.shell.command;
+
+import org.apache.maven.shell.io.IO;
+import org.apache.maven.shell.Shell;
+import org.apache.maven.shell.Variables;
 
 /**
- * Marker to indicate that arguments to a command should not be pre-processed.
+ * Provides commands with the context of it's execution.
  *
  * @version $Rev$ $Date$
  */
-public interface OpaqueArguments
+public interface CommandContext
 {
-    // empty
+    Shell getShell();
+    
+    /**
+     * Provides access to the arguments to the command.
+     *
+     * @return The command arguments; never null.
+     */
+    String[] getArguments();
+
+    /**
+     * The Input/Output context for the command.
+     *
+     * @return Command Input/Output context; never null.
+     */
+    IO getIo();
+
+    /**
+     * The variables for the command.
+     *
+     * @return Command variables; never null.
+     */
+    Variables getVariables();
 }

@@ -21,7 +21,7 @@ package org.apache.maven.shell.core.impl;
 
 import org.apache.maven.shell.ansi.AnsiCode;
 import org.apache.maven.shell.ansi.AnsiRenderer;
-import org.apache.maven.shell.Command;
+import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.i18n.PrefixingMessageSource;
 import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.i18n.AggregateMessageSource;

@@ -17,9 +17,8 @@
  * under the License.
  */
 
-package org.apache.maven.shell;
+package org.apache.maven.shell.command;
 
-import org.apache.maven.shell.notification.Notification;
 import org.apache.maven.shell.i18n.MessageSource;
 
 /**

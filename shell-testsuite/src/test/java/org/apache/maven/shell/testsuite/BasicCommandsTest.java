@@ -19,7 +19,7 @@
 
 package org.apache.maven.shell.testsuite;
 
-import org.apache.maven.shell.Command;
+import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.notification.ExitNotification;
 import org.apache.maven.shell.registry.CommandRegistry;

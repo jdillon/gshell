@@ -21,7 +21,7 @@ package org.apache.maven.shell.core.impl;
 
 import jline.Completor;
 import jline.History;
-import org.apache.maven.shell.CommandExecutor;
+import org.apache.maven.shell.command.CommandExecutor;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.ShellContext;
 import org.apache.maven.shell.ShellContextHolder;

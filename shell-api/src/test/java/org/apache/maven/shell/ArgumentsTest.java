@@ -20,6 +20,7 @@
 package org.apache.maven.shell;
 
 import junit.framework.TestCase;
+import org.apache.maven.shell.command.Arguments;
 
 /**
  * Tests for the {@link Arguments} class.

@@ -17,31 +17,14 @@
  * under the License.
  */
 
-package org.apache.maven.shell;
+package org.apache.maven.shell.command;
 
 /**
- * Thrown to indicate a command failure.
+ * Marker to indicate that arguments to a command should not be pre-processed.
  *
  * @version $Rev$ $Date$
  */
-public class CommandException
-    extends Exception
+public interface OpaqueArguments
 {
-    private static final long serialVersionUID = 1;
-
-    public CommandException(final String msg) {
-        super(msg);
-    }
-
-    public CommandException(final String msg, final Throwable cause) {
-        super(msg, cause);
-    }
-
-    public CommandException(final Throwable cause) {
-        super(cause);
-    }
-
-    public CommandException() {
-        super();
-    }
+    // empty
 }

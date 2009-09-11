@@ -19,7 +19,7 @@
 
 package org.apache.maven.shell.registry;
 
-import org.apache.maven.shell.Command;
+import org.apache.maven.shell.command.Command;
 
 import java.util.Collection;
 

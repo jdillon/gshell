@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.maven.shell;
+package org.apache.maven.shell.command;
 
 import java.lang.reflect.Array;
 import java.util.List;

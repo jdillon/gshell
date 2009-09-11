@@ -21,9 +21,9 @@ package org.apache.maven.shell.commands.basic;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.maven.shell.CommandSupport;
-import org.apache.maven.shell.Command;
-import org.apache.maven.shell.CommandContext;
+import org.apache.maven.shell.command.CommandSupport;
+import org.apache.maven.shell.command.Command;
+import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.cli.Option;
@@ -37,7 +37,7 @@ import java.util.List;
  *
  * @version $Rev$ $Date$
  */
-@Component(role=Command.class, hint="unset", instantiationStrategy="per-lookup")
+@Component(role= Command.class, hint="unset", instantiationStrategy="per-lookup")
 public class UnsetCommand
     extends CommandSupport
 {

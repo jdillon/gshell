@@ -17,30 +17,31 @@
  * under the License.
  */
 
-package org.apache.maven.shell;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.apache.maven.shell.i18n.MessageSource;
-import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
+package org.apache.maven.shell.command;
 
 /**
- * Provides support for {@link Command} implementations.
+ * Thrown to indicate a command failure.
  *
  * @version $Rev$ $Date$
  */
-public abstract class CommandSupport
-    implements Command
+public class CommandException
+    extends Exception
 {
-    protected Logger log = LoggerFactory.getLogger(getClass());
+    private static final long serialVersionUID = 1;
 
-    private MessageSource messages;
+    public CommandException(final String msg) {
+        super(msg);
+    }
 
-    public MessageSource getMessages() {
-        if (messages == null) {
-            messages = new ResourceBundleMessageSource(getClass());
-        }
+    public CommandException(final String msg, final Throwable cause) {
+        super(msg, cause);
+    }
 
-        return messages;
+    public CommandException(final Throwable cause) {
+        super(cause);
+    }
+
+    public CommandException() {
+        super();
     }
 }

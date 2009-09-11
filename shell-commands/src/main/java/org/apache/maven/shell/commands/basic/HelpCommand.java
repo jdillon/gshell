@@ -19,12 +19,10 @@
 
 package org.apache.maven.shell.commands.basic;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.maven.shell.cli.Argument;
-import org.apache.maven.shell.CommandSupport;
-import org.apache.maven.shell.CommandContext;
-import org.apache.maven.shell.Command;
+import org.apache.maven.shell.command.CommandSupport;
+import org.apache.maven.shell.command.CommandContext;
+import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.registry.CommandRegistry;
 import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.ansi.AnsiRenderer;

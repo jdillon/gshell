@@ -17,37 +17,30 @@
  * under the License.
  */
 
-package org.apache.maven.shell;
+package org.apache.maven.shell.command;
 
-import org.apache.maven.shell.io.IO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.apache.maven.shell.i18n.MessageSource;
+import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
 
 /**
- * Provides commands with the context of it's execution.
+ * Provides support for {@link Command} implementations.
  *
  * @version $Rev$ $Date$
  */
-public interface CommandContext
+public abstract class CommandSupport
+    implements Command
 {
-    Shell getShell();
-    
-    /**
-     * Provides access to the arguments to the command.
-     *
-     * @return The command arguments; never null.
-     */
-    String[] getArguments();
+    protected Logger log = LoggerFactory.getLogger(getClass());
 
-    /**
-     * The Input/Output context for the command.
-     *
-     * @return Command Input/Output context; never null.
-     */
-    IO getIo();
+    private MessageSource messages;
 
-    /**
-     * The variables for the command.
-     *
-     * @return Command variables; never null.
-     */
-    Variables getVariables();
+    public MessageSource getMessages() {
+        if (messages == null) {
+            messages = new ResourceBundleMessageSource(getClass());
+        }
+
+        return messages;
+    }
 }

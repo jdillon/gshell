@@ -19,7 +19,7 @@
 
 package org.apache.maven.shell.core.impl;
 
-import org.apache.maven.shell.Command;
+import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.registry.CommandRegistry;
 import org.apache.maven.shell.registry.DuplicateCommandException;
 import org.apache.maven.shell.registry.NoSuchCommandException;
