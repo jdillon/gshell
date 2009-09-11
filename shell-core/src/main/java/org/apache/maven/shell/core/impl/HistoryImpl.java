@@ -21,6 +21,8 @@ package org.apache.maven.shell.core.impl;
 
 import jline.History;
 import org.codehaus.plexus.component.annotations.Component;
+import org.codehaus.plexus.personality.plexus.lifecycle.phase.Initializable;
+import org.codehaus.plexus.personality.plexus.lifecycle.phase.InitializationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,19 +37,27 @@ import java.io.IOException;
 @Component(role=History.class)
 public class HistoryImpl
     extends History
+    implements Initializable
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    /*
-    FIXME: Need to get details about the mvn configuration to setHistoryFile()
-    
     // @PostConstruct
     public void init() throws Exception {
-        assert application != null;
-        File file = application.getModel().getBranding().getHistoryFile();
+        // HACK:
+        File dir = new File(new File(System.getProperty("user.home")), ".m2");
+        File file = new File(dir, "mvnsh.history");
         setHistoryFile(file);
     }
-    */
+
+    @Override
+    public void initialize() throws InitializationException {
+        try {
+            init();
+        }
+        catch (Exception e) {
+            throw new InitializationException(e.getMessage(), e);
+        }
+    }
 
     public void setHistoryFile(final File file) throws IOException {
         assert file != null;

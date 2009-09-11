@@ -179,6 +179,19 @@
                         </includes>
                     </configuration>
                 </plugin>
+
+                <!--
+                NOTE: Disable descriptors for more accurate size muck...
+                -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <configuration>
+                        <archive>
+                            <addMavenDescriptor>false</addMavenDescriptor>
+                        </archive>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
 

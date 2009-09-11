@@ -204,7 +204,7 @@ public class ShellImpl
 
         log.debug("Starting interactive console; args: {}", args);
 
-        // loadUserScript(application.getModel().getBranding().getInteractiveScriptName());
+        loadUserScript("mvnsh.rc");
 
         // Setup 2 final refs to allow our executor to pass stuff back to us
         final AtomicReference<ExitNotification> exitNotifHolder = new AtomicReference<ExitNotification>();
@@ -308,8 +308,8 @@ public class ShellImpl
         log.debug("Loading profile scripts");
 
         // Load profile scripts if they exist
-        loadSharedScript("mvnsh.rc");
-        loadUserScript("mvnsh.rc");
+        loadSharedScript("mvnsh.profile");
+        loadUserScript("mvnsh.profile");
     }
 
     private void loadScript(final File file) throws Exception {
