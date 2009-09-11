@@ -33,7 +33,7 @@ import java.io.IOException;
  * @version $Rev$ $Date$
  */
 @Component(role=History.class)
-public class DefaultHistory
+public class HistoryImpl
     extends History
 {
     private final Logger log = LoggerFactory.getLogger(getClass());

@@ -36,7 +36,7 @@ import java.util.Collections;
  * @version $Rev$ $Date$
  */
 @Component(role=AliasRegistry.class)
-public class DefaultAliasRegistry
+public class AliasRegistryImpl
     implements AliasRegistry
 {
     private final Logger log = LoggerFactory.getLogger(getClass());

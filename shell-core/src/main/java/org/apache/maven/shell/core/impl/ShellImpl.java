@@ -25,6 +25,7 @@ import org.apache.maven.shell.CommandExecutor;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.ShellContext;
 import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.ShellContextHolder;
 import org.apache.maven.shell.console.AggregateCompleter;
 import org.apache.maven.shell.console.Console;
 import org.apache.maven.shell.console.JLineConsole;
@@ -50,7 +51,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * @version $Rev$ $Date$
  */
 @Component(role=Shell.class)
-public class DefaultShell
+public class ShellImpl
     implements Shell, Initializable
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
@@ -64,10 +65,10 @@ public class DefaultShell
     // @Requirement
     private List<Completor> completers;
 
-    // @Requirement
+    @Requirement
     private Console.Prompter prompter;
 
-    // @Requirement
+    @Requirement
     private Console.ErrorHandler errorHandler;
 
     private ShellContext context;
@@ -101,7 +102,7 @@ public class DefaultShell
         context = new ShellContext()
         {
             public Shell getShell() {
-                return DefaultShell.this;
+                return ShellImpl.this;
             }
 
             public IO getIo() {
@@ -113,6 +114,9 @@ public class DefaultShell
             }
         };
 
+        // HACK: Err...
+        ShellContextHolder.set(context);
+        
         // vars.set("gshell.prompt", application.getModel().getBranding().getPrompt());
         // vars.set(CommandResolver.GROUP, "/");
         // vars.set("gshell.username", application.getUserName());
@@ -212,7 +216,7 @@ public class DefaultShell
                 assert line != null;
 
                 try {
-                    Object result = DefaultShell.this.execute(line);
+                    Object result = ShellImpl.this.execute(line);
 
                     lastResultHolder.set(result);
                 }
@@ -233,7 +237,7 @@ public class DefaultShell
         console.setPrompter(getPrompter());
         console.setErrorHandler(getErrorHandler());
         console.setHistory(getHistory());
-
+        
         // Attach completers if there are any
         if (completers != null) {
             // Have to use aggregate here to get the completion list to update properly

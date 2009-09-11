@@ -38,7 +38,7 @@ import java.util.Map;
  * @version $Rev$ $Date$
  */
 @Component(role=CommandRegistry.class)
-public class DefaultCommandRegistry
+public class CommandRegistryImpl
     implements CommandRegistry
 {
     private final Logger log = LoggerFactory.getLogger(getClass());

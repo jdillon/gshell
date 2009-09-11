@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
  * @version $Rev$ $Date$
  */
 @Component(role=CommandExecutor.class)
-public class DefaultCommandExecutor
+public class CommandExecutorImpl
     implements CommandExecutor
 {
     private final Logger log = LoggerFactory.getLogger(getClass());

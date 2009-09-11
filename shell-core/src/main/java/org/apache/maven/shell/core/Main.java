@@ -19,30 +19,37 @@
 
 package org.apache.maven.shell.core;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
+
+import org.codehaus.plexus.ContainerConfiguration;
+import org.codehaus.plexus.DefaultContainerConfiguration;
+import org.codehaus.plexus.DefaultPlexusContainer;
+import org.codehaus.plexus.PlexusContainer;
+import org.codehaus.plexus.PlexusContainerException;
+import org.codehaus.plexus.classworlds.ClassWorld;
 import org.apache.maven.shell.io.IO;
-import org.apache.maven.shell.i18n.MessageSource;
-import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
 import org.apache.maven.shell.cli.Option;
 import org.apache.maven.shell.cli.Argument;
 import org.apache.maven.shell.cli.CommandLineProcessor;
+import org.apache.maven.shell.cli.Printer;
 import org.apache.maven.shell.ansi.Ansi;
-import org.apache.maven.shell.notification.ExitNotification;
-import org.apache.maven.shell.terminal.AutoDetectedTerminal;
-import org.apache.maven.shell.terminal.UnixTerminal;
-import org.apache.maven.shell.terminal.WindowsTerminal;
 import org.apache.maven.shell.terminal.UnsupportedTerminal;
-
-import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
+import org.apache.maven.shell.terminal.WindowsTerminal;
+import org.apache.maven.shell.terminal.UnixTerminal;
+import org.apache.maven.shell.terminal.AutoDetectedTerminal;
+import org.apache.maven.shell.notification.ExitNotification;
+import org.apache.maven.shell.Shell;
 
 /**
  * Command-line bootstrap for Maven Shell.
  *
- * @version $Rev$ $Date$
+ * @version $Rev: 593403 $ $Date: 2007-11-09 09:43:59 +0700 (Fri, 09 Nov 2007) $
  */
 public class Main
 {
-    private static final boolean BYPASS_EXIT = Boolean.getBoolean(Main.class.getName() + ".bypassExit");
+    ///CLOVER:OFF
 
     //
     // NOTE: Do not use logging from this class, as it is used to configure
@@ -50,44 +57,40 @@ public class Main
     //       picked up on the initial loading of Log4j
     //
 
+    private final ClassWorld classWorld;
+
     private final IO io = new IO();
 
-    private final MessageSource messages = new ResourceBundleMessageSource(getClass());
+    public Main(final ClassWorld classWorld) {
+        assert classWorld != null;
+
+        this.classWorld = classWorld;
+    }
 
     //
     // TODO: Add flag to capture output to log file
     //       https://issues.apache.org/jira/browse/GSHELL-47
     //
 
-    //
-    // TODO: Add --file <file>, which will run: source <file>
-    //
-
-    //
-    // FIXME: Really need to allow the location of the application.xml to be passed in!
-    //
-
-    @Option(name="-h", aliases={"--help"}, requireOverride=true)
+    @Option(name="-h", aliases={"--help"}, requireOverride=true, description="Display this help message")
     private boolean help;
 
-    @Option(name="-V", aliases={"--version"}, requireOverride=true)
+    @Option(name="-V", aliases={"--version"}, requireOverride=true, description="Display program version")
     private boolean version;
 
-    @Option(name="-i", aliases={"--interactive"})
+    @Option(name="-i", aliases={"--interactive"}, description="Run in interactive mode")
     private boolean interactive = true;
 
     private void setConsoleLogLevel(final String level) {
         System.setProperty("gshell.log.console.level", level);
     }
 
-    @Option(name="-e", aliases={"--exception"})
-    private void setException(boolean flag) {
-        if (flag) {
-            System.setProperty("gshell.show.stacktrace","true");
-        }
-    }
+    //
+    // TODO: Add flag to show exception traces
+    //       https://issues.apache.org/jira/browse/GSHELL-46
+    //
 
-    @Option(name="-d", aliases={"--debug"})
+    @Option(name="-d", aliases={"--debug"}, description="Enable DEBUG logging output")
     private void setDebug(boolean flag) {
         if (flag) {
             setConsoleLogLevel("DEBUG");
@@ -95,15 +98,7 @@ public class Main
         }
     }
 
-    @Option(name="-X", aliases={"--trace"})
-    private void setTrace(boolean flag) {
-        if (flag) {
-            setConsoleLogLevel("TRACE");
-            io.setVerbosity(IO.Verbosity.DEBUG);
-        }
-    }
-
-    @Option(name="-v", aliases={"--verbose"})
+    @Option(name="-v", aliases={"--verbose"}, description="Enable INFO logging output")
     private void setVerbose(boolean flag) {
         if (flag) {
             setConsoleLogLevel("INFO");
@@ -111,7 +106,7 @@ public class Main
         }
     }
 
-    @Option(name="-q", aliases={"--quiet"})
+    @Option(name="-q", aliases={"--quiet"}, description="Limit logging output to ERROR")
     private void setQuiet(boolean flag) {
         if (flag) {
             setConsoleLogLevel("ERROR");
@@ -119,13 +114,13 @@ public class Main
         }
     }
 
-    @Option(name="-c", aliases={"--commands"})
+    @Option(name="-c", aliases={"--commands"}, description="Read commands from string")
     private String commands;
 
-    @Argument
-    private List<String> commandArgs = null;
+    @Argument(description="Command")
+    private List<String> commandArgs = new ArrayList<String>(0);
 
-    @Option(name="-D", aliases={"--define"})
+    @Option(name="-D", aliases={"--define"}, token="NAME=VALUE", description="Define system properties")
     private void setSystemProperty(final String nameValue) {
         assert nameValue != null;
 
@@ -145,7 +140,7 @@ public class Main
         System.setProperty(name, value);
     }
 
-    @Option(name="-C", aliases={"--color"}, argumentRequired=true)
+    @Option(name="-C", aliases={"--color"}, argumentRequired=true, description="Enable or disable use of ANSI colors")
     private void enableAnsiColors(final boolean flag) {
         Ansi.setEnabled(flag);
     }
@@ -170,7 +165,16 @@ public class Main
         System.setProperty("jline.terminal", type);
     }
 
-    public int boot(final String[] args) throws Exception {
+    private PlexusContainer createContainer() throws PlexusContainerException {
+        // Boot up the container
+        ContainerConfiguration config = new DefaultContainerConfiguration();
+        config.setName("gshell.core");
+        config.setClassWorld(classWorld);
+
+        return new DefaultPlexusContainer(config);
+    }
+
+    public void boot(final String[] args) throws Exception {
         assert args != null;
 
         System.setProperty("jline.terminal", AutoDetectedTerminal.class.getName());
@@ -182,20 +186,44 @@ public class Main
         clp.setStopAtNonOption(true);
         clp.process(args);
 
+        //
+        // TODO: Use methods to handle these...
+        //
+
+        if (help) {
+            io.out.println(System.getProperty("program.name") + " [options] <command> [args]");
+            io.out.println();
+
+            Printer printer = new Printer(clp);
+            printer.printUsage(io.out);
+
+            io.out.println();
+            io.out.flush();
+
+            System.exit(ExitNotification.DEFAULT_CODE);
+        }
+
+        if (version) {
+            // FIXME: !!!
+            io.out.println("FIXME: Version details unavailable ATM... sorry dude!"); // branding.getVersion());
+            io.out.println();
+            io.out.flush();
+
+            System.exit(ExitNotification.DEFAULT_CODE);
+        }
+
         // Setup a refereence for our exit code so our callback thread can tell if we've shutdown normally or not
         final AtomicReference<Integer> codeRef = new AtomicReference<Integer>();
         int code = ExitNotification.DEFAULT_CODE;
 
-        Runtime.getRuntime().addShutdownHook(new Thread("GShell Shutdown Hook") {
+        Runtime.getRuntime().addShutdownHook(new Thread("Shutdown Hook") {
             public void run() {
                 if (codeRef.get() == null) {
                     // Give the user a warning when the JVM shutdown abnormally, normal shutdown
                     // will set an exit code through the proper channels
 
-                    if (!io.isSilent()) {
-                        io.err.println();
-                        io.err.println(messages.getMessage("warning.abnormalShutdown"));
-                    }
+                    io.err.println();
+                    io.err.println("WARNING: Abnormal JVM shutdown detected");
                 }
 
                 io.flush();
@@ -203,56 +231,21 @@ public class Main
         });
 
         try {
-            System.out.println("HI");
-            
-            /*
-            ShellBuilder builder = new ShellBuilderImpl();
-            builder.setClassLoader(getClass().getClassLoader());
-            builder.setIo(io);
-
-            if (!io.isQuiet() && !io.isSilent()) {
-                // Configure the download monitor
-                ArtifactResolver artifactResolver = builder.getContainer().getBean(ArtifactResolver.class);
-                artifactResolver.setTransferListener(new ProgressSpinnerMonitor(io));
-            }
-
-            // --help and --version need access to the application's information, so we have to handle these options late
-            if (help|version) {
-                ApplicationModel applicationModel = builder.getApplicationModel();
-
-                if (help) {
-                    Printer printer = new Printer(clp);
-                    printer.setMessageSource(messages);
-                    printer.printUsage(io.out, applicationModel.getBranding().getProgramName());
-                }
-                else if (version) {
-                    io.out.println(applicationModel.getVersion());
-                }
-
-                io.out.flush();
-
-                throw new ExitNotification();
-            }
-
-            // Build the shell instance
-            Shell gshell = builder.create();
+            PlexusContainer container = createContainer();
+            Shell shell = container.lookup(Shell.class);
 
             // clp gives us a list, but we need an array
-            String[] _args = {};
-            if (commandArgs != null) {
-                _args = commandArgs.toArray(new String[commandArgs.size()]);
-            }
+            String[] _args = commandArgs.toArray(new String[commandArgs.size()]);
 
             if (commands != null) {
-                gshell.execute(commands);
+                shell.execute(commands);
             }
             else if (interactive) {
-                gshell.run(_args);
+                shell.run(_args);
             }
             else {
-                gshell.execute(_args);
+                shell.execute(_args);
             }
-            */
         }
         catch (ExitNotification n) {
             code = n.code;
@@ -260,17 +253,15 @@ public class Main
 
         codeRef.set(code);
 
-        return code;
+        System.exit(code);
+    }
+
+    public static void main(final String[] args, final ClassWorld world) throws Exception {
+        Main main = new Main(world);
+        main.boot(args);
     }
 
     public static void main(final String[] args) throws Exception {
-        Main main = new Main();
-
-        int code = main.boot(args);
-
-        if (!BYPASS_EXIT) {
-            System.exit(code);
-        }
+        main(args, new ClassWorld("gshell", Thread.currentThread().getContextClassLoader()));
     }
 }
-
