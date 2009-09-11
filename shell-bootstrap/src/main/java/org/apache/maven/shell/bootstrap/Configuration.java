@@ -17,14 +17,37 @@
  * under the License.
  */
 
-package org.apache.maven.shell.boot;
+package org.apache.maven.shell.bootstrap;
+
+import java.net.URL;
+import java.util.List;
 
 /**
- * ???
+ * Bootstrap configuration.
  *
  * @version $Rev$ $Date$
  */
-public class Main
+public interface Configuration
 {
+    String GSHELL_HOME_DETECTED = "gshell.home.detected";
 
+    String GSHELL_HOME = "gshell.home";
+
+    String GSHELL_ETC = "gshell.etc";
+
+    String GSHELL_LIB = "gshell.lib";
+
+    String GSHELL_PROGRAM = "gshell.program";
+
+    String GSHELL_PROPERTIES = "gshell.properties";
+
+    void configure() throws Exception;
+
+    List<URL> getClassPath() throws Exception;
+
+    String getMainClass();
+    
+    int getSuccessExitCode();
+
+    int getFailureExitCode();
 }

@@ -30,20 +30,25 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>shell-boot</artifactId>
-    <name>Maven Shell :: Boot</name>
+    <artifactId>shell-bootstrap</artifactId>
+    <name>Maven Shell :: Bootstrap</name>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.maven.shell</groupId>
-            <artifactId>shell-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.codehaus.plexus</groupId>
-            <artifactId>plexus-container-default</artifactId>
-        </dependency>
-    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>org.apache.maven.shell.bootstrap.Launcher</mainClass>
+                            <addClasspath>true</addClasspath>
+                        </manifest>
+                  </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
 

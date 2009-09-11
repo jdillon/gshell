@@ -36,6 +36,30 @@
                 <include>*.txt</include>
             </includes>
         </fileSet>
+
+        <fileSet>
+            <directory>src/main/underlay/bin</directory>
+            <outputDirectory>bin</outputDirectory>
+            <includes>
+                <include>mvnsh.bat</include>
+            </includes>
+            <lineEnding>dos</lineEnding>
+        </fileSet>
+
+        <fileSet>
+            <directory>src/main/underlay/bin</directory>
+            <outputDirectory>bin</outputDirectory>
+            <includes>
+                <include>mvnsh</include>
+            </includes>
+            <lineEnding>unix</lineEnding>
+            <fileMode>0755</fileMode>
+        </fileSet>
+
+        <fileSet>
+            <directory>src/main/underlay/etc</directory>
+            <outputDirectory>etc</outputDirectory>
+        </fileSet>
     </fileSets>
 
     <dependencySets>
@@ -46,7 +70,7 @@
                 <exclude>org.apache.maven.shell:shell-bootstrap</exclude>
             </excludes>
         </dependencySet>
-
+        
         <dependencySet>
             <outputDirectory>lib/boot</outputDirectory>
             <outputFileNameMapping>shell-bootstrap.jar</outputFileNameMapping>

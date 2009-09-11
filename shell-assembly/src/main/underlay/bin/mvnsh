@@ -53,7 +53,7 @@ if [ -z "$JAVACMD" ]; then
     fi
 fi
 
-BOOTJAR="$GSHELL_HOME/lib/boot/gshell-bootstrap.jar"
+BOOTJAR="$GSHELL_HOME/lib/boot/shell-bootstrap.jar"
 if $cygwin ; then
     BOOTJAR=`cygpath --windows "$BOOTJAR"`
 fi
