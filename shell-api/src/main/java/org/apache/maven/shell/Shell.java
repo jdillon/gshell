@@ -26,6 +26,8 @@ package org.apache.maven.shell;
  */
 public interface Shell
 {
+    String SHELL_INTERNAL = "_SHELL_INTERNAL.";
+
     ShellContext getContext();
     
     Object execute(String line) throws Exception;

@@ -20,16 +20,14 @@
 package org.apache.maven.shell.commands.basic;
 
 import jline.History;
+import org.apache.maven.shell.Command;
+import org.apache.maven.shell.CommandContext;
+import org.apache.maven.shell.CommandSupport;
+import org.apache.maven.shell.Shell;
+import org.apache.maven.shell.io.IO;
+import org.codehaus.plexus.component.annotations.Component;
 
 import java.util.List;
-
-import org.codehaus.plexus.component.annotations.Component;
-import org.apache.maven.shell.Command;
-import org.apache.maven.shell.CommandSupport;
-import org.apache.maven.shell.CommandContext;
-import org.apache.maven.shell.ansi.AnsiRenderer;
-import org.apache.maven.shell.ansi.AnsiCode;
-import org.apache.maven.shell.io.IO;
 
 /**
  * Display history.
@@ -53,7 +51,7 @@ public class HistoryCommand
         IO io = context.getIo();
 
         // HACK: Get at the shell's history from our variables
-        History history = context.getVariables().get("gshell.internal.history", History.class);
+        History history = context.getVariables().get(Shell.SHELL_INTERNAL + History.class.getName(), History.class);
         assert history != null;
 
         // noinspection unchecked
@@ -62,7 +60,7 @@ public class HistoryCommand
         int i = 0;
         for (String element : elements) {
             String index = String.format("%3d", i);
-            io.info("  {}  {}", AnsiRenderer.encode(index, AnsiCode.BOLD), element);
+            io.info("  @|bold {}| {}", index, element);
             i++;
         }
 

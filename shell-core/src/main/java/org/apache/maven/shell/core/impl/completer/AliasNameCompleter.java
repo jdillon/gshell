@@ -46,6 +46,7 @@ public class AliasNameCompleter
 
     @Override
     public void initialize() throws InitializationException {
+        assert aliasRegistry != null;
         Collection<String> names = aliasRegistry.getAliasNames();
         delegate.getStrings().addAll(names);
     }

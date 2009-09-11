@@ -46,6 +46,7 @@ public class CommandNameCompleter
 
     @Override
     public void initialize() throws InitializationException {
+        assert commandRegistry != null;
         Collection<String> names = commandRegistry.getCommandNames();
         delegate.getStrings().addAll(names);
     }

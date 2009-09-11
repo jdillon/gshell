@@ -26,6 +26,7 @@ import org.apache.maven.shell.Command;
 import org.apache.maven.shell.CommandContext;
 import org.apache.maven.shell.CommandSupport;
 import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.cli.Option;
@@ -130,7 +131,7 @@ public class SetCommand
                     String name = iter.next();
 
                     // HACK: Hide some internal muck for now
-                    if (name.startsWith("shell.internal")) {
+                    if (name.startsWith(Shell.SHELL_INTERNAL)) {
                         continue;
                     }
 

@@ -24,8 +24,6 @@ import jline.NullCompletor;
 /**
  * Null or terminal completer.
  *
- * Keeps up to date automatically by handling alias-related events.
- *
  * @version $Rev$ $Date$
  */
 public final class NullCompleter

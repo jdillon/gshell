@@ -25,6 +25,7 @@ import org.apache.maven.shell.CommandSupport;
 import org.apache.maven.shell.Command;
 import org.apache.maven.shell.CommandContext;
 import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.cli.Option;
 import org.apache.maven.shell.cli.Argument;
 import org.codehaus.plexus.component.annotations.Component;
@@ -90,7 +91,10 @@ public class UnsetCommand
     private void unsetVariable(final Variables vars, final String name) {
         log.info("Unsetting variable: {}", name);
 
-        // Command vars always has a parent, set only makes sence when setting in parent's scope
-        vars.parent().unset(name);
+        // Do not allow internals to be unset
+        if (!name.startsWith(Shell.SHELL_INTERNAL)) {
+            // Command vars always has a parent, set only makes sence when setting in parent's scope
+            vars.parent().unset(name);
+        }
     }
 }

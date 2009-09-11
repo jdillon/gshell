@@ -26,6 +26,7 @@ import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.ShellContext;
 import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.ShellContextHolder;
+import org.apache.maven.shell.ansi.AnsiRenderer;
 import org.apache.maven.shell.console.completer.AggregateCompleter;
 import org.apache.maven.shell.console.Console;
 import org.apache.maven.shell.console.JLineConsole;
@@ -62,7 +63,7 @@ public class ShellImpl
     @Requirement
     private History history;
 
-    // @Requirement
+    @Requirement(role=Completor.class, hints={"alias-name", "command-name"})
     private List<Completor> completers;
 
     @Requirement
@@ -114,17 +115,14 @@ public class ShellImpl
                 }
             };
 
-            // HACK: ...
+            // HACK: Need to resolve this in the new mvnsh context
             ShellContextHolder.set(context);
 
-            // vars.set("gshell.prompt", application.getModel().getBranding().getPrompt());
-            // vars.set(CommandResolver.GROUP, "/");
-            // vars.set("gshell.username", application.getUserName());
-            // vars.set("gshell.hostname", application.getLocalHost());
+            vars.set("gshell.prompt", "@|bold maven|> ");
 
             // HACK: Add history for the 'history' command, since its not part of the Shell intf it can't really access it
             assert history != null;
-            vars.set("shell.internal.history", history, true);
+            vars.set(SHELL_INTERNAL + History.class.getName(), history, true);
 
             loadProfileScripts();
 
@@ -230,7 +228,7 @@ public class ShellImpl
 
         // Unless the user wants us to shut up, then display a nice welcome banner
         if (!io.isQuiet()) {
-            io.out.println("Maven Shell");
+            io.out.println("@|bold,red Maven| Shell");
             io.out.println(repeat("-", io.getTerminal().getTerminalWidth() - 1));
             io.out.flush();
         }
