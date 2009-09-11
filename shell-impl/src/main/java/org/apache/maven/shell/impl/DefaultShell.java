@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.CommandExecutor;
 import org.apache.maven.shell.ShellContext;
+import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.notification.ExitNotification;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.io.Closer;
@@ -88,19 +89,34 @@ public class DefaultShell
 
         log.debug("Initializing");
 
+        // Each shell gets its own variables, using application variables for defaults
+        final Variables vars = new Variables();
+
+        // HACK: Should get this from somewhere, but for now fuck it
+        final IO io = new IO();
+
         context = new ShellContext()
         {
             public Shell getShell() {
                 return DefaultShell.this;
             }
 
-            // HACK: Should get this from somewhere, but for now fuck it
-            private IO io = new IO();
-
             public IO getIo() {
                 return io;
             }
+
+            public Variables getVariables() {
+                return vars;
+            }
         };
+
+        // vars.set("gshell.prompt", application.getModel().getBranding().getPrompt());
+        // vars.set(CommandResolver.GROUP, "/");
+        // vars.set("gshell.username", application.getUserName());
+        // vars.set("gshell.hostname", application.getLocalHost());
+
+        // HACK: Add history for the 'history' command, since its not part of the Shell intf it can't really access it
+        vars.set("shell.internal.history", getHistory(), true);
 
         loadProfileScripts();
 

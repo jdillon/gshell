@@ -30,5 +30,17 @@ public interface ShellContext
 {
     Shell getShell();
 
+    /**
+     * The Input/Output context for the shell.
+     *
+     * @return Command Input/Output context; never null.
+     */
     IO getIo();
+
+    /**
+     * The variables for the shell.
+     *
+     * @return Command variables; never null.
+     */
+    Variables getVariables();
 }

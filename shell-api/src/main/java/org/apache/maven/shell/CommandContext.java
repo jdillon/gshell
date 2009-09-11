@@ -43,4 +43,11 @@ public interface CommandContext
      * @return Command Input/Output context; never null.
      */
     IO getIo();
+
+    /**
+     * The variables for the command.
+     *
+     * @return Command variables; never null.
+     */
+    Variables getVariables();
 }

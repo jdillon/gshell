@@ -26,12 +26,13 @@ import org.apache.maven.shell.ShellContext;
 import org.apache.maven.shell.Command;
 import org.apache.maven.shell.CommandException;
 import org.apache.maven.shell.CommandContext;
-import org.apache.maven.shell.CommandResolver;
 import org.apache.maven.shell.Arguments;
 import org.apache.maven.shell.Shell;
+import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.CommandSupport;
+import org.apache.maven.shell.registry.AliasRegistry;
+import org.apache.maven.shell.registry.CommandRegistry;
 import org.apache.maven.shell.io.IO;
-
-import java.util.List;
 
 /**
  * The default {@link CommandLineExecutor} component.
@@ -44,8 +45,11 @@ public class DefaultCommandExecutor
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     // @Requirement
-    private List<CommandResolver> resolvers;
+    private AliasRegistry aliasRegistry;
 
+    // @Requirement
+    private CommandRegistry commandRegistry;
+    
     public Object execute(final ShellContext context, final String line) throws Exception {
         assert context != null;
         assert line != null;
@@ -94,6 +98,10 @@ public class DefaultCommandExecutor
                 public IO getIo() {
                     return io;
                 }
+
+                public Variables getVariables() {
+                    return context.getVariables();
+                }
             });
         }
         finally {
@@ -106,26 +114,16 @@ public class DefaultCommandExecutor
     private Command resolveCommand(final String name) throws CommandException {
         assert name != null;
 
-        assert resolvers != null;
-        assert !resolvers.isEmpty();
-
         log.debug("Resolving command for name: {}", name);
 
-        Command command = null;
-        for (CommandResolver resolver : resolvers) {
-            //
-            // FIXME: Make resolver not throw an CommandException when not found, then below is log.error()
-            //
+        Command command;
 
-            try {
-                command = resolver.resolveCommand(name);
-                break;
-            }
-            catch (CommandException e) {
-                // TODO: Log or ignore, see above
-            }
+        command = resolveAliasCommand(name);
+
+        if (command == null) {
+            command = resolveRegisteredCommand(name);
         }
-
+        
         if (command == null) {
             throw new CommandException("Unable to resolve command: " + name);
         }
@@ -133,5 +131,41 @@ public class DefaultCommandExecutor
         log.debug("Resolved command: {}", command);
 
         return command;
+    }
+
+    private Command resolveAliasCommand(final String name) throws CommandException {
+        assert name != null;
+        assert aliasRegistry != null;
+
+        if (aliasRegistry.containsAlias(name)) {
+            final String alias = aliasRegistry.getAlias(name);
+
+            return new CommandSupport() {
+                public String getName() {
+                    return name;
+                }
+
+                public Object execute(final CommandContext context) throws Exception {
+                    assert context != null;
+
+                    log.debug("Executing alias ({}) -> {}", name, alias);
+
+                    return context.getShell().execute(alias);
+                }
+            };
+        }
+
+        return null;
+    }
+
+    private Command resolveRegisteredCommand(final String name) throws CommandException {
+        assert name != null;
+        assert commandRegistry != null;
+
+        if (commandRegistry.containsCommand(name)) {
+            return commandRegistry.getCommand(name);
+        }
+
+        return null;
     }
 }
