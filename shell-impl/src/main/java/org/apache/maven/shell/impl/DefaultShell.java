@@ -31,7 +31,7 @@ import org.apache.maven.shell.notification.ExitNotification;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.io.Closer;
 import org.apache.maven.shell.console.Console;
-import org.apache.maven.shell.console.JLineConsole;
+import org.apache.maven.shell.impl.JLineConsole;
 import org.apache.maven.shell.console.AggregateCompleter;
 import org.codehaus.plexus.personality.plexus.lifecycle.phase.Initializable;
 import org.codehaus.plexus.personality.plexus.lifecycle.phase.InitializationException;

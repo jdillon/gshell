@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.maven.shell.console;
+package org.apache.maven.shell.impl;
 
 import jline.CandidateListCompletionHandler;
 import jline.Completor;
@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import org.apache.maven.shell.io.IO;
+import org.apache.maven.shell.console.Console;
 
 /**
  * Support for running console using the <a href="http://jline.sf.net">JLine</a> library.
