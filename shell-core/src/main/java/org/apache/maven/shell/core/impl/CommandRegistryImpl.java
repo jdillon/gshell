@@ -23,7 +23,10 @@ import org.apache.maven.shell.Command;
 import org.apache.maven.shell.registry.CommandRegistry;
 import org.apache.maven.shell.registry.DuplicateCommandException;
 import org.apache.maven.shell.registry.NoSuchCommandException;
+import org.codehaus.plexus.PlexusContainer;
 import org.codehaus.plexus.component.annotations.Component;
+import org.codehaus.plexus.component.annotations.Requirement;
+import org.codehaus.plexus.component.repository.exception.ComponentLookupException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,6 +47,9 @@ public class CommandRegistryImpl
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     private final Map<String,Command> commands = new LinkedHashMap<String,Command>();
+
+    @Requirement
+    private PlexusContainer container;
 
     public void registerCommand(final Command command) throws DuplicateCommandException {
         assert command != null;
@@ -76,11 +82,19 @@ public class CommandRegistryImpl
     public Command getCommand(final String name) throws NoSuchCommandException {
         assert name != null;
 
+        /*
+        FIXME:
         if (!containsCommand(name)) {
             throw new NoSuchCommandException(name);
         }
+        */
 
-        return commands.get(name);
+        try {
+            return container.lookup(Command.class, name);
+        }
+        catch (ComponentLookupException e) {
+            throw new NoSuchCommandException(name);
+        }
     }
 
     public boolean containsCommand(final String name) {

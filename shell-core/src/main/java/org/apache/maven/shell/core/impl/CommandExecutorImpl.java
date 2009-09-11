@@ -28,6 +28,7 @@ import org.apache.maven.shell.CommandSupport;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.ShellContext;
 import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.cli.CommandLineProcessor;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.registry.CommandRegistry;
@@ -89,23 +90,41 @@ public class CommandExecutorImpl
 
         Object result;
         try {
-            result = command.execute(new CommandContext() {
-                public Shell getShell() {
-                    return context.getShell();
-                }
+            CommandLineProcessor clp = new CommandLineProcessor(command);
+            CommandHelpSupport help = new CommandHelpSupport();
+            clp.addBean(help);
+
+            // Process the arguments
+            clp.process(Arguments.toStringArray(args));
+
+            // Render command-line usage
+            if (help.displayHelp) {
+                log.trace("Render command-line usage");
+
+                CommandDocumenter documenter = new CommandDocumenter(command);
+                documenter.renderUsage(io.out);
                 
-                public String[] getArguments() {
-                    return args;
-                }
+                result = Command.Result.SUCCESS;
+            }
+            else {
+                result = command.execute(new CommandContext() {
+                    public Shell getShell() {
+                        return context.getShell();
+                    }
 
-                public IO getIo() {
-                    return io;
-                }
+                    public String[] getArguments() {
+                        return args;
+                    }
 
-                public Variables getVariables() {
-                    return context.getVariables();
-                }
-            });
+                    public IO getIo() {
+                        return io;
+                    }
+
+                    public Variables getVariables() {
+                        return context.getVariables();
+                    }
+                });
+            }
         }
         finally {
             io.flush();

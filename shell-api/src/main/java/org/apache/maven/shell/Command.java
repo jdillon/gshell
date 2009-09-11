@@ -20,6 +20,7 @@
 package org.apache.maven.shell;
 
 import org.apache.maven.shell.notification.Notification;
+import org.apache.maven.shell.i18n.MessageSource;
 
 /**
  * Provides the user-action for a command.
@@ -29,6 +30,8 @@ import org.apache.maven.shell.notification.Notification;
 public interface Command
 {
     String getName();
+
+    MessageSource getMessages();
 
     /*
     String getShortcut()

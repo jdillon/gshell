@@ -17,37 +17,29 @@
  * under the License.
  */
 
-package org.apache.maven.shell.commands.basic;
+package org.apache.maven.shell.core.impl;
 
-import org.apache.maven.shell.CommandContext;
-import org.apache.maven.shell.CommandSupport;
-import org.apache.maven.shell.Command;
-import org.apache.maven.shell.cli.Argument;
-import org.apache.maven.shell.notification.ExitNotification;
-import org.codehaus.plexus.component.annotations.Component;
+import org.apache.maven.shell.cli.Option;
+import org.apache.maven.shell.i18n.MessageSource;
+import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
 
 /**
- * The <tt>exit</tt> command.
+ * Helper to inject <tt>--help<tt> support.
  *
  * @version $Rev$ $Date$
  */
-@Component(role=Command.class, hint="exit")
-public class ExitCommand
-    extends CommandSupport
+public class CommandHelpSupport
 {
-    @Argument
-    private int exitCode = 0;
+    @Option(name="-h", aliases={"--help"}, requireOverride=true)
+    public boolean displayHelp;
 
-    public String getName() {
-        return "exit";
-    }
+    private MessageSource messages;
 
-    public Object execute(final CommandContext context) throws Exception {
-        assert context != null;
+    public MessageSource getMessages() {
+        if (messages == null) {
+            messages = new ResourceBundleMessageSource(getClass());
+        }
 
-        log.info("Exiting w/code: {}", exitCode);
-
-        // Do not call System.exit(), ask the shell to exit instead.
-        throw new ExitNotification(exitCode);
+        return messages;
     }
 }

@@ -43,6 +43,11 @@
             <groupId>org.apache.maven.shell</groupId>
             <artifactId>shell-io</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.maven.shell</groupId>
+            <artifactId>shell-i18n</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
