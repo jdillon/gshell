@@ -17,28 +17,23 @@
  * under the License.
  */
 
-package org.apache.maven.shell.commands;
+package org.apache.maven.shell.ansi;
 
-import org.apache.maven.shell.CommandContext;
-import org.apache.maven.shell.CommandSupport;
-import org.apache.maven.shell.notification.ExitNotification;
+import junit.framework.TestCase;
 
 /**
- * The <tt>exit</tt> command.
+ * Tests for the {@link AnsiCode} class.
  *
  * @version $Rev$ $Date$
  */
-public class ExitCommand
-    extends CommandSupport
+public class CodeTest
+    extends TestCase
 {
-    public String getName() {
-        return "exit";
+    public void testForName() throws Exception {
+        assertEquals(AnsiCode.OFF, AnsiCode.valueOf("OFF"));
     }
 
-    public Object execute(final CommandContext context) throws Exception {
-        assert context != null;
-
-        // Do not call System.exit(), ask the shell to exit instead.
-        throw new ExitNotification();
+    public void testName() throws Exception {
+        assertEquals("OFF", AnsiCode.OFF.name());
     }
 }

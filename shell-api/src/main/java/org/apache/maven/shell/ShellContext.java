@@ -28,6 +28,11 @@ import org.apache.maven.shell.io.IO;
  */
 public interface ShellContext
 {
+    /**
+     * The invoking shell instance.
+     *
+     * @return The invoking shell instance; never null.
+     */
     Shell getShell();
 
     /**

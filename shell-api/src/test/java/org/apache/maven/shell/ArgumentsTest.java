@@ -17,28 +17,43 @@
  * under the License.
  */
 
-package org.apache.maven.shell.commands;
+package org.apache.maven.shell;
 
-import org.apache.maven.shell.CommandContext;
-import org.apache.maven.shell.CommandSupport;
-import org.apache.maven.shell.notification.ExitNotification;
+import junit.framework.TestCase;
 
 /**
- * The <tt>exit</tt> command.
+ * Tests for the {@link Arguments} class.
  *
  * @version $Rev$ $Date$
  */
-public class ExitCommand
-    extends CommandSupport
+public class ArgumentsTest
+    extends TestCase
 {
-    public String getName() {
-        return "exit";
+    public void testShift() {
+        String[] args = { "1", "2", "3", "4" };
+
+        String[] shifted = Arguments.shift(args);
+
+        assertEquals(args.length - 1, shifted.length);
+
+        assertEquals("2", shifted[0]);
+        assertEquals("3", shifted[1]);
+        assertEquals("4", shifted[2]);
     }
 
-    public Object execute(final CommandContext context) throws Exception {
-        assert context != null;
+    public void testShift2() {
+        String[] args = { "a", "b", "1", "2" };
 
-        // Do not call System.exit(), ask the shell to exit instead.
-        throw new ExitNotification();
+        String[] shifted = Arguments.shift(args);
+
+        assertEquals(args.length - 1, shifted.length);
+    }
+
+    public void testShift3() {
+        String[] args = { "a" };
+
+        Object[] shifted = Arguments.shift(args);
+
+        assertEquals(args.length - 1, shifted.length);
     }
 }

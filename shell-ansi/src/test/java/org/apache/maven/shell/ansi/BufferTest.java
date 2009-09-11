@@ -17,28 +17,29 @@
  * under the License.
  */
 
-package org.apache.maven.shell.commands;
+package org.apache.maven.shell.ansi;
 
-import org.apache.maven.shell.CommandContext;
-import org.apache.maven.shell.CommandSupport;
-import org.apache.maven.shell.notification.ExitNotification;
+import junit.framework.TestCase;
 
 /**
- * The <tt>exit</tt> command.
+ * Tests for the {@link AnsiCode} class.
  *
  * @version $Rev$ $Date$
  */
-public class ExitCommand
-    extends CommandSupport
+public class BufferTest
+    extends TestCase
 {
-    public String getName() {
-        return "exit";
-    }
+    public void testIsAnsiEnabledOverride() throws Exception {
+        boolean detected = Ansi.isEnabled();
+        AnsiBuffer buff = new AnsiBuffer();
 
-    public Object execute(final CommandContext context) throws Exception {
-        assert context != null;
+        // Make sure the buffer starts out with the system detected value
+        assertEquals(detected, buff.isAnsiEnabled());
 
-        // Do not call System.exit(), ask the shell to exit instead.
-        throw new ExitNotification();
+        // Then flip it
+        buff.ansiEnabled = !buff.ansiEnabled;
+
+        // And make sure it sticks
+        assertEquals(!detected, buff.isAnsiEnabled());
     }
 }
