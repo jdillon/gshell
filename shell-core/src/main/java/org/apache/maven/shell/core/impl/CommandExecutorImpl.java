@@ -28,6 +28,7 @@ import org.apache.maven.shell.CommandSupport;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.ShellContext;
 import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.OpaqueArguments;
 import org.apache.maven.shell.cli.CommandLineProcessor;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.registry.AliasRegistry;
@@ -88,25 +89,31 @@ public class CommandExecutorImpl
 
         final IO io = context.getIo();
 
-        Object result;
+        Object result = null;
         try {
-            CommandLineProcessor clp = new CommandLineProcessor(command);
-            CommandHelpSupport help = new CommandHelpSupport();
-            clp.addBean(help);
+            boolean execute = true;
 
-            // Process the arguments
-            clp.process(Arguments.toStringArray(args));
+            if (!(command instanceof OpaqueArguments)) {
+                CommandLineProcessor clp = new CommandLineProcessor(command);
+                CommandHelpSupport help = new CommandHelpSupport();
+                clp.addBean(help);
 
-            // Render command-line usage
-            if (help.displayHelp) {
-                log.trace("Render command-line usage");
+                // Process the arguments
+                clp.process(Arguments.toStringArray(args));
 
-                CommandDocumenter documenter = new CommandDocumenter(command);
-                documenter.renderUsage(io.out);
-                
-                result = Command.Result.SUCCESS;
+                // Render command-line usage
+                if (help.displayHelp) {
+                    log.trace("Render command-line usage");
+
+                    CommandDocumenter documenter = new CommandDocumenter(command);
+                    documenter.renderUsage(io.out);
+
+                    result = Command.Result.SUCCESS;
+                    execute = false;
+                }
             }
-            else {
+
+            if (execute) {
                 result = command.execute(new CommandContext() {
                     public Shell getShell() {
                         return context.getShell();

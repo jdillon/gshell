@@ -17,18 +17,30 @@
  * under the License.
  */
 
-package org.apache.maven.shell.commands.maven;
+package org.apache.maven.shell.testsuite;
 
-import org.codehaus.plexus.component.annotations.Component;
+import org.apache.maven.shell.Command;
+import org.apache.maven.shell.Shell;
+import org.apache.maven.shell.CommandException;
+import org.apache.maven.shell.notification.ExitNotification;
+import org.apache.maven.shell.registry.CommandRegistry;
 
 /**
- * The default {@link MavenRuntime} component.
+ * Tests that the shell can boot up.
  *
  * @version $Rev$ $Date$
  */
-@Component(role=MavenRuntime.class)
-public class MavenRuntimeImpl
-    implements MavenRuntime
+public class MavenTest
+    extends PlexusTestSupport
 {
+    public void testDefineAliasExecute() throws Exception {
+        CommandRegistry registry = lookup(CommandRegistry.class);
+        assertNotNull(registry);
+        registry.registerCommand(lookup(Command.class, "mvn"));
 
+        Shell shell = lookup(Shell.class);
+        assertNotNull(shell);
+
+        shell.execute("mvn");
+    }
 }

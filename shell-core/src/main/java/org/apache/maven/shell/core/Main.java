@@ -198,6 +198,8 @@ public class Main
 
         if (version) {
             // FIXME: !!!
+            // CLIReportingUtils.showVersion();
+                        
             io.out.println("FIXME: Version details unavailable ATM... sorry dude!"); // branding.getVersion());
             io.out.println();
             io.out.flush();
@@ -232,6 +234,7 @@ public class Main
             registry.registerCommand(container.lookup(Command.class, "exit"));
             registry.registerCommand(container.lookup(Command.class, "alias"));
             registry.registerCommand(container.lookup(Command.class, "unalias"));
+            registry.registerCommand(container.lookup(Command.class, "mvn"));
 
             // Boot up the shell instance
             Shell shell = container.lookup(Shell.class);
