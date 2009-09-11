@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.maven.shell.commands;
+package org.apache.maven.shell.commands.basic;
 
 import org.apache.maven.shell.CommandSupport;
 import org.apache.maven.shell.CommandContext;

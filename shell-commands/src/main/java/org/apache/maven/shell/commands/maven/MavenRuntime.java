@@ -17,31 +17,14 @@
  * under the License.
  */
 
-package org.apache.maven.shell.commands;
-
-import org.apache.maven.shell.CommandContext;
-import org.apache.maven.shell.CommandSupport;
-import org.apache.maven.shell.Command;
-import org.apache.maven.shell.notification.ExitNotification;
-import org.codehaus.plexus.component.annotations.Component;
+package org.apache.maven.shell.commands.maven;
 
 /**
- * The <tt>exit</tt> command.
+ * ???
  *
  * @version $Rev$ $Date$
  */
-@Component(role=Command.class, hint="exit")
-public class ExitCommand
-    extends CommandSupport
+public interface MavenRuntime
 {
-    public String getName() {
-        return "exit";
-    }
 
-    public Object execute(final CommandContext context) throws Exception {
-        assert context != null;
-
-        // Do not call System.exit(), ask the shell to exit instead.
-        throw new ExitNotification();
-    }
 }

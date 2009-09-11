@@ -19,18 +19,16 @@
 
 package org.apache.maven.shell.core.impl;
 
+import org.apache.maven.shell.ShellContextHolder;
+import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.ansi.AnsiRenderer;
+import org.apache.maven.shell.console.Console;
+import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.interpolation.InterpolationException;
 import org.codehaus.plexus.interpolation.Interpolator;
-import org.codehaus.plexus.interpolation.PrefixedObjectValueSource;
 import org.codehaus.plexus.interpolation.StringSearchInterpolator;
-import org.codehaus.plexus.interpolation.Interpolator;
-import org.codehaus.plexus.component.annotations.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.maven.shell.console.Console;
-import org.apache.maven.shell.ansi.AnsiRenderer;
-import org.apache.maven.shell.Variables;
-import org.apache.maven.shell.ShellContextHolder;
 
 /**
  * {@link Console.Prompter} component.
@@ -45,6 +43,7 @@ public class ConsolePrompterImpl
 
     private final Interpolator interp = new StringSearchInterpolator("%{", "}");
 
+    // FIXME:
     // private final VariablesValueSource variablesValueSource = new VariablesValueSource();
 
     private final AnsiRenderer renderer = new AnsiRenderer();
@@ -52,6 +51,8 @@ public class ConsolePrompterImpl
     private final String defaultPrompt = "maven> ";
 
     /*
+    FIXME:
+
     public ConsolePrompterImpl(final Application application) {
         assert application != null;
 
@@ -71,6 +72,7 @@ public class ConsolePrompterImpl
 
         if (pattern != null) {
             /*
+            FIXME:
             assert variablesValueSource != null;
             variablesValueSource.setVariables(vars);
             */

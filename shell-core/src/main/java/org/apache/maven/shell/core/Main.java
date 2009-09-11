@@ -52,11 +52,6 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class Main
 {
-    //
-    // NOTE: Do not use logging from this class, as it is used to configure
-    //       the logging level with System properties.
-    //
-
     private final ClassWorld classWorld;
 
     private final IO io = new IO();
@@ -71,7 +66,6 @@ public class Main
 
     //
     // TODO: Add flag to capture output to log file
-    //       https://issues.apache.org/jira/browse/GSHELL-47
     //
 
     @Option(name="-h", aliases={"--help"}, requireOverride=true)
@@ -80,17 +74,16 @@ public class Main
     @Option(name="-V", aliases={"--version"}, requireOverride=true)
     private boolean version;
 
-    @Option(name="-i", aliases={"--interactive"})
-    private boolean interactive = true;
-
-    private void setConsoleLogLevel(final String level) {
-        System.setProperty("gshell.log.console.level", level);
-    }
-    
     @Option(name="-d", aliases={"--debug"})
     private void setDebug(boolean flag) {
         if (flag) {
-            setConsoleLogLevel("DEBUG");
+            io.setVerbosity(IO.Verbosity.DEBUG);
+        }
+    }
+
+    @Option(name="-X", aliases={"--trace"})
+    private void setTrace(boolean flag) {
+        if (flag) {
             io.setVerbosity(IO.Verbosity.DEBUG);
         }
     }
@@ -98,7 +91,6 @@ public class Main
     @Option(name="-v", aliases={"--verbose"})
     private void setVerbose(boolean flag) {
         if (flag) {
-            setConsoleLogLevel("INFO");
             io.setVerbosity(IO.Verbosity.VERBOSE);
         }
     }
@@ -106,7 +98,6 @@ public class Main
     @Option(name="-q", aliases={"--quiet"})
     private void setQuiet(boolean flag) {
         if (flag) {
-            setConsoleLogLevel("ERROR");
             io.setVerbosity(IO.Verbosity.QUIET);
         }
     }
@@ -183,9 +174,6 @@ public class Main
 
         System.setProperty("jline.terminal", AutoDetectedTerminal.class.getName());
 
-        // Default is to be quiet
-        setConsoleLogLevel("WARN");
-
         CommandLineProcessor clp = new CommandLineProcessor(this);
         clp.setStopAtNonOption(true);
         clp.process(args);
@@ -256,11 +244,8 @@ public class Main
             if (commands != null) {
                 shell.execute(commands);
             }
-            else if (interactive) {
-                shell.run(_args);
-            }
             else {
-                shell.execute(_args);
+                shell.run(_args);
             }
         }
         catch (ExitNotification n) {
