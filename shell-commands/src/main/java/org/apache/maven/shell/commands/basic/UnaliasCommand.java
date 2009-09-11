@@ -22,6 +22,7 @@ package org.apache.maven.shell.commands.basic;
 import org.apache.maven.shell.CommandSupport;
 import org.apache.maven.shell.CommandContext;
 import org.apache.maven.shell.Command;
+import org.apache.maven.shell.cli.Argument;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.registry.NoSuchAliasException;
@@ -33,38 +34,35 @@ import org.codehaus.plexus.component.annotations.Requirement;
  *
  * @version $Rev$ $Date$
  */
-@Component(role=Command.class, hint="unalias")
+@Component(role=Command.class, hint="unalias", instantiationStrategy="per-lookup")
 public class UnaliasCommand
     extends CommandSupport
 {
     @Requirement
-    private AliasRegistry registry;
+    private AliasRegistry aliasRegistry;
+
+    @Argument(index=0, required=true)
+    private String name;
 
     public String getName() {
         return "unalias";
     }
 
-    public Object execute(final CommandContext context) throws Exception {
+    public Object execute(final CommandContext context) {
         assert context != null;
-        assert registry != null;
-        
         IO io = context.getIo();
-        String[] args = context.getArguments();
 
-        if (args.length == 0) {
-            io.error("Command requires one or more arguments");
-        }
-        else {
-            for (String arg : args) {
-                try {
-                    registry.removeAlias(arg);
-                }
-                catch (NoSuchAliasException e) {
-                    io.error("{}", e);
-                }
-            }
-        }
+        log.debug("Undefining alias: {}", name);
 
-        return Result.SUCCESS;
+        try {
+            aliasRegistry.removeAlias(name);
+
+            return Result.SUCCESS;
+        }
+        catch (NoSuchAliasException e) {
+            io.error("No alias defined: {}", name);
+
+            return Result.FAILURE;
+        }
     }
 }

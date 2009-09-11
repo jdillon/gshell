@@ -31,7 +31,7 @@ import org.codehaus.plexus.component.annotations.Component;
  *
  * @version $Rev$ $Date$
  */
-@Component(role=Command.class, hint="exit")
+@Component(role=Command.class, hint="exit", instantiationStrategy="per-lookup")
 public class ExitCommand
     extends CommandSupport
 {

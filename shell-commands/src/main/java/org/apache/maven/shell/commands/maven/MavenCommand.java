@@ -30,7 +30,7 @@ import org.codehaus.plexus.component.annotations.Requirement;
  *
  * @version $Rev$ $Date$
  */
-@Component(role=Command.class, hint="mvn")
+@Component(role=Command.class, hint="mvn", instantiationStrategy="per-lookup")
 public class MavenCommand
     extends CommandSupport
 {

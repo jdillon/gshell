@@ -105,7 +105,6 @@ public class IO
         //       be ANSI-aware instead of this...
         //
 
-
         this.out = new AnsiRenderWriter(outputStream, autoFlush);
 
         /// Don't rewrite the error stream if we have the same stream for out and error
