@@ -29,6 +29,7 @@ import org.apache.maven.shell.cli.CommandLineProcessor;
 import org.apache.maven.shell.cli.Option;
 import org.apache.maven.shell.cli.Printer;
 import org.apache.maven.shell.io.IO;
+import org.apache.maven.shell.io.IOHolder;
 import org.apache.maven.shell.notification.ExitNotification;
 import org.apache.maven.shell.registry.CommandRegistry;
 import org.apache.maven.shell.terminal.AutoDetectedTerminal;
@@ -174,6 +175,8 @@ public class Main
 
         System.setProperty("jline.terminal", AutoDetectedTerminal.class.getName());
 
+        IOHolder.set(io);
+        
         CommandLineProcessor clp = new CommandLineProcessor(this);
         clp.setStopAtNonOption(true);
         clp.process(args);

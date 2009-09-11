@@ -31,6 +31,7 @@ import org.apache.maven.shell.console.JLineConsole;
 import org.apache.maven.shell.console.completer.AggregateCompleter;
 import org.apache.maven.shell.io.Closer;
 import org.apache.maven.shell.io.IO;
+import org.apache.maven.shell.io.IOHolder;
 import org.apache.maven.shell.notification.ExitNotification;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
@@ -97,8 +98,7 @@ public class ShellImpl
             // Each shell gets its own variables, using application variables for defaults
             final Variables vars = new Variables();
 
-            // HACK: Should get this from somewhere, but for now fuck it
-            final IO io = new IO();
+            final IO io = IOHolder.get();
 
             context = new ShellContext()
             {
