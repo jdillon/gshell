@@ -50,5 +50,64 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <!--
+            NOTE: The following is just to get the rough size of the basic muck...
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>mvnsh-${project.version}-core</finalName>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <keepDependenciesWithProvidedScope>true</keepDependenciesWithProvidedScope>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ComponentsXmlResourceTransformer"/>
+                            </transformers>
+                            <artifactSet>
+                                <includes>
+                                    <include>org.apache.maven.shell:shell-ansi</include>
+                                    <include>org.apache.maven.shell:shell-io</include>
+                                    <include>org.apache.maven.shell:shell-console</include>
+                                    <include>org.apache.maven.shell:shell-api</include>
+                                    <include>org.apache.maven.shell:shell-core</include>
+                                    <include>org.apache.maven.shell:shell-commands</include>
+                                </includes>
+                            </artifactSet>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <!--
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>attached</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <descriptors>
+                        <descriptor>src/main/assembly/bin.xml</descriptor>
+                    </descriptors>
+                    <finalName>mvnsh-${version}</finalName>
+                </configuration>
+            </plugin>
+            -->
+        </plugins>
+    </build>
+
 </project>
 
