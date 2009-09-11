@@ -232,6 +232,11 @@ public class Main
             CommandRegistry registry = container.lookup(CommandRegistry.class);
             registry.registerCommand(container.lookup(Command.class, "help"));
             registry.registerCommand(container.lookup(Command.class, "exit"));
+            registry.registerCommand(container.lookup(Command.class, "clear"));
+            registry.registerCommand(container.lookup(Command.class, "set"));
+            registry.registerCommand(container.lookup(Command.class, "unset"));
+            registry.registerCommand(container.lookup(Command.class, "history"));
+            registry.registerCommand(container.lookup(Command.class, "source"));
             registry.registerCommand(container.lookup(Command.class, "alias"));
             registry.registerCommand(container.lookup(Command.class, "unalias"));
             registry.registerCommand(container.lookup(Command.class, "mvn"));
