@@ -55,6 +55,8 @@ public class ConfigurationImpl
 
     private String programName;
 
+    private String version;
+
     private void setSystemProperty(final String name, final String value) {
         assert name != null;
         assert value != null;
@@ -142,6 +144,7 @@ public class ConfigurationImpl
         // Export some configuration
         setSystemProperty(GSHELL_HOME, getHomeDir().getAbsolutePath());
         setSystemProperty(GSHELL_PROGRAM, getProgramName());
+        setSystemProperty(GSHELL_VERSION, getVersion());
     }
 
     private void ensureConfigured() {
@@ -190,6 +193,16 @@ public class ConfigurationImpl
         }
         
         return programName;
+    }
+
+    public String getVersion() {
+        ensureConfigured();
+
+        if (version == null) {
+            version = getProperty(GSHELL_VERSION);
+        }
+
+        return version;
     }
 
     public List<URL> getClassPath() throws Exception {

@@ -39,6 +39,8 @@ public interface Configuration
 
     String GSHELL_PROGRAM = "gshell.program";
 
+    String GSHELL_VERSION = "gshell.version";
+
     String GSHELL_PROPERTIES = "gshell.properties";
 
     void configure() throws Exception;
