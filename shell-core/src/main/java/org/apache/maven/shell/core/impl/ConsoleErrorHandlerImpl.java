@@ -63,7 +63,7 @@ public class ConsoleErrorHandlerImpl
         io.err.println(": @|bold,red " + cause.getMessage() + "|");
 
         // Determine if the stack trace flag is set
-        String stackTraceProperty = System.getProperty("gshell.show.stacktrace");
+        String stackTraceProperty = System.getProperty("mvnsh.show.stacktrace");
         boolean stackTraceFlag = false;
         if (stackTraceProperty != null) {
             stackTraceFlag = stackTraceProperty.trim().equals("true");
@@ -79,7 +79,7 @@ public class ConsoleErrorHandlerImpl
             StringBuilder buff = new StringBuilder();
 
             //
-            // TODO: Move this to helper in gshell-ansi
+            // TODO: Move this to helper in mvnsh-ansi
             //
 
             for (StackTraceElement e : trace) {

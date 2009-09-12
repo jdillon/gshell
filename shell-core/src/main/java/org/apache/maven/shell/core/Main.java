@@ -75,7 +75,7 @@ public class Main
     private boolean version;
 
     private void setConsoleLogLevel(final String level) {
-        System.setProperty("gshell.log.console.level", level);
+        System.setProperty("mvnsh.log.console.level", level);
     }
     
     @Option(name="-d", aliases={"--debug"})
@@ -164,13 +164,13 @@ public class Main
     @Option(name="-e", aliases={"--exception"})
     private void setException(boolean flag) {
         if (flag) {
-            System.setProperty("gshell.show.stacktrace","true");
+            System.setProperty("mvnsh.show.stacktrace","true");
         }
     }
 
     private PlexusContainer createContainer() throws PlexusContainerException {
         ContainerConfiguration config = new DefaultContainerConfiguration();
-        config.setName("gshell.core");
+        config.setName("mvnsh.core");
         config.setClassWorld(classWorld);
 
         DefaultPlexusContainer container = new DefaultPlexusContainer(config);
@@ -193,7 +193,7 @@ public class Main
         clp.process(args);
 
         if (help) {
-            io.out.println(System.getProperty("gshell.program") + " [options] <command> [args]");
+            io.out.println(System.getProperty("mvnsh.program") + " [options] <command> [args]");
             io.out.println();
 
             Printer printer = new Printer(clp);
@@ -207,7 +207,7 @@ public class Main
         }
 
         if (version) {
-            io.out.println(System.getProperty("gshell.version"));
+            io.out.println(System.getProperty("mvnsh.version"));
             io.out.println();
             io.out.flush();
 
@@ -272,6 +272,6 @@ public class Main
     }
 
     public static void main(final String[] args) throws Exception {
-        main(args, new ClassWorld("gshell.core", Thread.currentThread().getContextClassLoader()));
+        main(args, new ClassWorld("mvnsh.core", Thread.currentThread().getContextClassLoader()));
     }
 }

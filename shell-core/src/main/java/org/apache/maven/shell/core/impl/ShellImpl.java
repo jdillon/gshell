@@ -118,7 +118,7 @@ public class ShellImpl
             // HACK: Need to resolve this in the new mvnsh context
             ShellContextHolder.set(context);
 
-            vars.set("gshell.prompt", "@|bold,red maven|> ");
+            vars.set("mvnsh.prompt", "@|bold,red maven|> ");
 
             // HACK: Add history for the 'history' command, since its not part of the Shell intf it can't really access it
             assert history != null;

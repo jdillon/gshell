@@ -34,14 +34,14 @@ esac
 
 # For Cygwin, ensure paths are in UNIX format before anything is touched
 if $cygwin ; then
-    [ -n "$GSHELL_HOME" ] && GSHELL_HOME=`cygpath --unix "$GSHELL_HOME"`
+    [ -n "$MVNSH_HOME" ] && MVNSH_HOME=`cygpath --unix "$MVNSH_HOME"`
     [ -n "$JAVACMD" ] && JAVACMD=`cygpath --unix "$JAVACMD"`
     [ -n "$JAVA_HOME" ] && JAVA_HOME=`cygpath --unix "$JAVA_HOME"`
 fi
 
-# Locate GSHELL_HOME if not it is not set
-if [ "x$GSHELL_HOME" = "x" ]; then
-    GSHELL_HOME=`cd "$DIRNAME/.."; pwd`
+# Locate MVNSH_HOME if not it is not set
+if [ "x$MVNSH_HOME" = "x" ]; then
+    MVNSH_HOME=`cd "$DIRNAME/.."; pwd`
 fi
 
 # Determine the Java command to use to start the JVM
@@ -53,7 +53,7 @@ if [ -z "$JAVACMD" ]; then
     fi
 fi
 
-BOOTJAR="$GSHELL_HOME/lib/boot/shell-bootstrap.jar"
+BOOTJAR="$MVNSH_HOME/lib/boot/shell-bootstrap.jar"
 if $cygwin ; then
     BOOTJAR=`cygpath --windows "$BOOTJAR"`
 fi

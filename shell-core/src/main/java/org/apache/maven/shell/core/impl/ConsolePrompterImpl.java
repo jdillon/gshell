@@ -68,7 +68,7 @@ public class ConsolePrompterImpl
         String prompt = null;
 
         Variables vars = ShellContextHolder.get().getVariables();
-        String pattern = vars.get("gshell.prompt", String.class);
+        String pattern = vars.get("mvnsh.prompt", String.class);
 
         if (pattern != null) {
             /*

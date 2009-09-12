@@ -29,19 +29,19 @@ import java.util.List;
  */
 public interface Configuration
 {
-    String GSHELL_HOME_DETECTED = "gshell.home.detected";
+    String MVNSH_HOME_DETECTED = "mvnsh.home.detected";
 
-    String GSHELL_HOME = "gshell.home";
+    String MVNSH_HOME = "mvnsh.home";
 
-    String GSHELL_ETC = "gshell.etc";
+    String MVNSH_ETC = "mvnsh.etc";
 
-    String GSHELL_LIB = "gshell.lib";
+    String MVNSH_LIB = "mvnsh.lib";
 
-    String GSHELL_PROGRAM = "gshell.program";
+    String MVNSH_PROGRAM = "mvnsh.program";
 
-    String GSHELL_VERSION = "gshell.version";
+    String MVNSH_VERSION = "mvnsh.version";
 
-    String GSHELL_PROPERTIES = "gshell.properties";
+    String MVNSH_PROPERTIES = "mvnsh.properties";
 
     void configure() throws Exception;
 

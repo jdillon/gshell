@@ -86,10 +86,10 @@ public class ConfigurationImpl
             input.close();
         }
 
-        props.setProperty(GSHELL_HOME_DETECTED, detectHomeDir().getAbsolutePath());
+        props.setProperty(MVNSH_HOME_DETECTED, detectHomeDir().getAbsolutePath());
 
         //
-        // TODO: Load user configuration properties as configured via GSHELL_PROPERTIES
+        // TODO: Load user configuration properties as configured via MVNSH_PROPERTIES
         //
         
         if (Log.DEBUG) {
@@ -107,7 +107,7 @@ public class ConfigurationImpl
      */
     private File detectHomeDir() throws Exception {
         if (Log.DEBUG) {
-            Log.debug("Detecting " + GSHELL_HOME);
+            Log.debug("Detecting " + MVNSH_HOME);
         }
 
         String path = getClass().getProtectionDomain().getCodeSource().getLocation().getFile();
@@ -142,9 +142,9 @@ public class ConfigurationImpl
         this.props = loadProperties();
 
         // Export some configuration
-        setSystemProperty(GSHELL_HOME, getHomeDir().getAbsolutePath());
-        setSystemProperty(GSHELL_PROGRAM, getProgramName());
-        setSystemProperty(GSHELL_VERSION, getVersion());
+        setSystemProperty(MVNSH_HOME, getHomeDir().getAbsolutePath());
+        setSystemProperty(MVNSH_PROGRAM, getProgramName());
+        setSystemProperty(MVNSH_VERSION, getVersion());
     }
 
     private void ensureConfigured() {
@@ -157,7 +157,7 @@ public class ConfigurationImpl
         ensureConfigured();
 
         if (homeDir == null) {
-            homeDir = getPropertyAsFile(GSHELL_HOME);
+            homeDir = getPropertyAsFile(MVNSH_HOME);
         }
 
         return homeDir;
@@ -167,7 +167,7 @@ public class ConfigurationImpl
         ensureConfigured();
 
         if (libDir == null) {
-            libDir = getPropertyAsFile(GSHELL_LIB);
+            libDir = getPropertyAsFile(MVNSH_LIB);
             // TODO: If relative root under homeDir?
         }
 
@@ -178,7 +178,7 @@ public class ConfigurationImpl
         ensureConfigured();
 
         if (etcDir == null) {
-            etcDir = getPropertyAsFile(GSHELL_ETC);
+            etcDir = getPropertyAsFile(MVNSH_ETC);
             // TODO: If relative root under homeDir?
         }
 
@@ -189,7 +189,7 @@ public class ConfigurationImpl
         ensureConfigured();
 
         if (programName == null) {
-            programName = getProperty(GSHELL_PROGRAM);
+            programName = getProperty(MVNSH_PROGRAM);
         }
         
         return programName;
@@ -199,7 +199,7 @@ public class ConfigurationImpl
         ensureConfigured();
 
         if (version == null) {
-            version = getProperty(GSHELL_VERSION);
+            version = getProperty(MVNSH_VERSION);
         }
 
         return version;
