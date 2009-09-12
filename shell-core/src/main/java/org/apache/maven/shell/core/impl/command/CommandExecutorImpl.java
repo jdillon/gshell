@@ -173,21 +173,8 @@ public class CommandExecutorImpl
         assert aliasRegistry != null;
 
         if (aliasRegistry.containsAlias(name)) {
-            final String alias = aliasRegistry.getAlias(name);
-
-            return new CommandSupport() {
-                public String getName() {
-                    return name;
-                }
-
-                public Object execute(final CommandContext context) throws Exception {
-                    assert context != null;
-
-                    log.debug("Executing alias ({}) -> {}", name, alias);
-
-                    return context.getShell().execute(alias);
-                }
-            };
+            String alias = aliasRegistry.getAlias(name);
+            return new Alias(name, alias);
         }
 
         return null;
@@ -202,5 +189,43 @@ public class CommandExecutorImpl
         }
 
         return null;
+    }
+
+    private static class Alias
+        extends CommandSupport
+        implements OpaqueArguments
+    {
+        private final String name;
+
+        private final String target;
+
+        public Alias(final String name, final String target) {
+            assert name != null;
+            assert target != null;
+
+            this.name = name;
+            this.target = target;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        @Override
+        public Object execute(CommandContext context) throws Exception {
+            assert context != null;
+
+            String alias = target;
+
+            // Need to append any more arguments in the context
+            String[] args = context.getArguments();
+            if (args.length > 0) {
+                alias = target + " " + Arguments.asString(args, " ");    
+            }
+
+            log.debug("Executing alias ({}) -> {}", name, alias);
+
+            return context.getShell().execute(alias);
+        }
     }
 }

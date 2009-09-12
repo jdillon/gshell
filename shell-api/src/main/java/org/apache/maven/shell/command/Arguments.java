@@ -45,7 +45,7 @@ public class Arguments
         return target;
     }
 
-    public static String asString(final Object[] args) {
+    public static String asString(final Object[] args, final String delim) {
         assert args != null;
 
         StringBuilder buff = new StringBuilder();
@@ -53,11 +53,15 @@ public class Arguments
         for (int i=0; i<args.length; i++ ) {
             buff.append(args[i]);
             if (i + 1 < args.length) {
-                buff.append(", ");
+                buff.append(delim);
             }
         }
 
         return buff.toString();
+    }
+
+    public static String asString(final Object[] args) {
+        return asString(args, ", ");
     }
 
     public static String asString(final List args, final String delim) {

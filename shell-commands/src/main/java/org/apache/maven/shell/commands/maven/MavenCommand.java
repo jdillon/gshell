@@ -23,6 +23,7 @@ import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.command.OpaqueArguments;
+import org.apache.maven.shell.command.Arguments;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.cli.MavenCli;
 import org.codehaus.plexus.component.annotations.Component;
@@ -71,7 +72,11 @@ public class MavenCommand
         }
         */
 
+        String[] args = context.getArguments();
+
+        log.debug("Invoking maven with args: ", Arguments.asString(args));
+        
         ClassWorld classWorld = new ClassWorld("plexus.core", Thread.currentThread().getContextClassLoader());
-        return MavenCli.main(context.getArguments(), classWorld);
+        return MavenCli.main(args, classWorld);
     }
 }
