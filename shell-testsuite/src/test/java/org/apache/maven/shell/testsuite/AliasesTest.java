@@ -19,9 +19,10 @@
 
 package org.apache.maven.shell.testsuite;
 
-import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.command.CommandException;
+import org.apache.maven.shell.io.IO;
+import org.apache.maven.shell.io.IOHolder;
 import org.apache.maven.shell.registry.CommandRegistry;
 
 /**
@@ -32,6 +33,12 @@ import org.apache.maven.shell.registry.CommandRegistry;
 public class AliasesTest
     extends PlexusTestSupport
 {
+    protected void setUp() throws Exception {
+        super.setUp();
+
+        IOHolder.set(new IO());
+    }
+    
     public void testDefineAliasExecute() throws Exception {
         CommandRegistry registry = lookup(CommandRegistry.class);
         assertNotNull(registry);

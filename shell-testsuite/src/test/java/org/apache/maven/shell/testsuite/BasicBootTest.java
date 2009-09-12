@@ -20,6 +20,8 @@
 package org.apache.maven.shell.testsuite;
 
 import org.apache.maven.shell.Shell;
+import org.apache.maven.shell.io.IO;
+import org.apache.maven.shell.io.IOHolder;
 import org.apache.maven.shell.registry.CommandRegistry;
 
 /**
@@ -30,6 +32,12 @@ import org.apache.maven.shell.registry.CommandRegistry;
 public class BasicBootTest
     extends PlexusTestSupport
 {
+    protected void setUp() throws Exception {
+        super.setUp();
+
+        IOHolder.set(new IO());
+    }
+
     public void testBoot() throws Exception {
         Shell shell = lookup(Shell.class);
         assertNotNull(shell);
