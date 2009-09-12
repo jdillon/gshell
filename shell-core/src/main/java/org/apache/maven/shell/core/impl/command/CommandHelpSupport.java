@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.maven.shell.core.impl;
+package org.apache.maven.shell.core.impl.command;
 
 import org.apache.maven.shell.cli.Option;
 import org.apache.maven.shell.i18n.MessageSource;

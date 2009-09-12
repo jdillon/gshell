@@ -20,7 +20,7 @@
 package org.apache.maven.shell.core;
 
 import org.apache.maven.shell.Shell;
-import org.apache.maven.shell.core.impl.CommandRegistrationAgent;
+import org.apache.maven.shell.core.impl.registry.CommandRegistrationAgent;
 import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
 import org.apache.maven.shell.ansi.Ansi;

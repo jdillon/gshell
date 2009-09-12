@@ -17,13 +17,15 @@
  * under the License.
  */
 
-package org.apache.maven.shell.core.impl;
+package org.apache.maven.shell.core.impl.registry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.registry.NoSuchAliasException;
+import org.apache.maven.shell.event.EventManager;
 import org.codehaus.plexus.component.annotations.Component;
+import org.codehaus.plexus.component.annotations.Requirement;
 
 import java.util.Collection;
 import java.util.Map;
@@ -43,6 +45,9 @@ public class AliasRegistryImpl
 
     private final Map<String,String> aliases = new LinkedHashMap<String,String>();
 
+    @Requirement
+    private EventManager eventManager;
+
     public void registerAlias(final String name, final String alias) {
         assert name != null;
         assert alias != null;
@@ -54,6 +59,8 @@ public class AliasRegistryImpl
         }
 
         aliases.put(name, alias);
+
+        eventManager.publish(new AliasRegisteredEvent(name, alias));
     }
 
     public void removeAlias(final String name) throws NoSuchAliasException {
@@ -66,6 +73,8 @@ public class AliasRegistryImpl
         }
 
         aliases.remove(name);
+
+        eventManager.publish(new AliasRemovedEvent(name));
     }
 
     public String getAlias(final String name) throws NoSuchAliasException {

@@ -50,6 +50,11 @@
         </dependency>
 
         <dependency>
+            <groupId>org.apache.maven.shell</groupId>
+            <artifactId>shell-event</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.codehaus.plexus</groupId>
             <artifactId>plexus-container-default</artifactId>
         </dependency>

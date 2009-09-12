@@ -22,6 +22,10 @@ package org.apache.maven.shell.core.impl.completer;
 import jline.Completor;
 import org.apache.maven.shell.console.completer.StringsCompleter;
 import org.apache.maven.shell.registry.CommandRegistry;
+import org.apache.maven.shell.event.EventManager;
+import org.apache.maven.shell.event.EventListener;
+import org.apache.maven.shell.core.impl.registry.CommandRemovedEvent;
+import org.apache.maven.shell.core.impl.registry.CommandRegisteredEvent;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.personality.plexus.lifecycle.phase.Initializable;
@@ -29,9 +33,12 @@ import org.codehaus.plexus.personality.plexus.lifecycle.phase.InitializationExce
 
 import java.util.Collection;
 import java.util.List;
+import java.util.EventObject;
 
 /**
  * {@link Completor} for command names.
+ *
+ * Keeps up to date automatically by handling command-related events.
  *
  * @version $Rev$ $Date$
  */
@@ -39,6 +46,9 @@ import java.util.List;
 public class CommandNameCompleter
     implements Completor, Initializable
 {
+    @Requirement
+    private EventManager eventManager;
+
     @Requirement
     private CommandRegistry commandRegistry;
 
@@ -49,6 +59,20 @@ public class CommandNameCompleter
         assert commandRegistry != null;
         Collection<String> names = commandRegistry.getCommandNames();
         delegate.getStrings().addAll(names);
+
+        // Register for updates to command registrations
+        eventManager.addListener(new EventListener() {
+            public void onEvent(final EventObject event) throws Exception {
+                if (event instanceof CommandRegisteredEvent) {
+                    CommandRegisteredEvent targetEvent = (CommandRegisteredEvent)event;
+                    delegate.getStrings().add(targetEvent.getName());
+                }
+                else if (event instanceof CommandRemovedEvent) {
+                    CommandRemovedEvent targetEvent = (CommandRemovedEvent)event;
+                    delegate.getStrings().remove(targetEvent.getName());
+                }
+            }
+        });
     }
 
     public int complete(final String buffer, final int cursor, final List candidates) {

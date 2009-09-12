@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.maven.shell.core.impl;
+package org.apache.maven.shell.core.impl.registry;
 
 import org.apache.maven.shell.command.CommandException;
 import org.apache.maven.shell.registry.CommandRegistry;

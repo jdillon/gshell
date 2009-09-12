@@ -17,12 +17,13 @@
  * under the License.
  */
 
-package org.apache.maven.shell.core.impl;
+package org.apache.maven.shell.core.impl.registry;
 
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.registry.CommandRegistry;
 import org.apache.maven.shell.registry.DuplicateCommandException;
 import org.apache.maven.shell.registry.NoSuchCommandException;
+import org.apache.maven.shell.event.EventManager;
 import org.codehaus.plexus.PlexusContainer;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
@@ -51,6 +52,9 @@ public class CommandRegistryImpl
     @Requirement
     private PlexusContainer container;
 
+    @Requirement
+    private EventManager eventManager;
+
     public void registerCommand(final String name) throws DuplicateCommandException {
         assert name != null;
 
@@ -61,6 +65,8 @@ public class CommandRegistryImpl
         }
 
         commands.add(name);
+
+        eventManager.publish(new CommandRegisteredEvent(name));
     }
 
     public void removeCommand(final String name) throws NoSuchCommandException {
@@ -73,6 +79,8 @@ public class CommandRegistryImpl
         }
 
         commands.remove(name);
+
+        eventManager.publish(new CommandRemovedEvent(name));
     }
 
     public Command getCommand(final String name) throws NoSuchCommandException {
