@@ -21,12 +21,12 @@ package org.apache.maven.shell.core.impl.command;
 
 import org.apache.maven.shell.ansi.AnsiCode;
 import org.apache.maven.shell.ansi.AnsiRenderer;
-import org.apache.maven.shell.command.Command;
-import org.apache.maven.shell.i18n.PrefixingMessageSource;
-import org.apache.maven.shell.i18n.MessageSource;
-import org.apache.maven.shell.i18n.AggregateMessageSource;
 import org.apache.maven.shell.cli.CommandLineProcessor;
 import org.apache.maven.shell.cli.Printer;
+import org.apache.maven.shell.command.Command;
+import org.apache.maven.shell.i18n.AggregateMessageSource;
+import org.apache.maven.shell.i18n.MessageSource;
+import org.apache.maven.shell.i18n.PrefixingMessageSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

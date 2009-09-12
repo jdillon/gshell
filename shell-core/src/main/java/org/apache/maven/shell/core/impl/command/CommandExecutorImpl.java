@@ -19,17 +19,17 @@
 
 package org.apache.maven.shell.core.impl.command;
 
+import org.apache.maven.shell.Shell;
+import org.apache.maven.shell.ShellContext;
+import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.cli.CommandLineProcessor;
 import org.apache.maven.shell.command.Arguments;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandException;
 import org.apache.maven.shell.command.CommandExecutor;
 import org.apache.maven.shell.command.CommandSupport;
-import org.apache.maven.shell.Shell;
-import org.apache.maven.shell.ShellContext;
-import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.command.OpaqueArguments;
-import org.apache.maven.shell.cli.CommandLineProcessor;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.registry.CommandRegistry;
@@ -173,8 +173,7 @@ public class CommandExecutorImpl
         assert aliasRegistry != null;
 
         if (aliasRegistry.containsAlias(name)) {
-            String alias = aliasRegistry.getAlias(name);
-            return new Alias(name, alias);
+            return new Alias(name, aliasRegistry.getAlias(name));
         }
 
         return null;
@@ -212,7 +211,7 @@ public class CommandExecutorImpl
         }
 
         @Override
-        public Object execute(CommandContext context) throws Exception {
+        public Object execute(final CommandContext context) throws Exception {
             assert context != null;
 
             String alias = target;

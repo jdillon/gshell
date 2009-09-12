@@ -20,8 +20,8 @@
 package org.apache.maven.shell.core.impl.completer;
 
 import jline.Completor;
-import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.ShellContextHolder;
+import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.console.completer.StringsCompleter;
 
 import java.util.Collection;

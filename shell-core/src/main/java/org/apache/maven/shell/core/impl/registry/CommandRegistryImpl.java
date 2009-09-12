@@ -20,10 +20,10 @@
 package org.apache.maven.shell.core.impl.registry;
 
 import org.apache.maven.shell.command.Command;
+import org.apache.maven.shell.event.EventManager;
 import org.apache.maven.shell.registry.CommandRegistry;
 import org.apache.maven.shell.registry.DuplicateCommandException;
 import org.apache.maven.shell.registry.NoSuchCommandException;
-import org.apache.maven.shell.event.EventManager;
 import org.codehaus.plexus.PlexusContainer;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;

@@ -19,14 +19,14 @@
 
 package org.apache.maven.shell.commands.basic;
 
-import org.apache.maven.shell.command.CommandSupport;
-import org.apache.maven.shell.command.CommandContext;
-import org.apache.maven.shell.command.Command;
-import org.apache.maven.shell.command.Arguments;
-import org.apache.maven.shell.i18n.MessageSource;
-import org.apache.maven.shell.ansi.AnsiRenderer;
 import org.apache.maven.shell.ansi.AnsiCode;
+import org.apache.maven.shell.ansi.AnsiRenderer;
 import org.apache.maven.shell.cli.Argument;
+import org.apache.maven.shell.command.Arguments;
+import org.apache.maven.shell.command.Command;
+import org.apache.maven.shell.command.CommandContext;
+import org.apache.maven.shell.command.CommandSupport;
+import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.registry.AliasRegistry;
 import org.codehaus.plexus.component.annotations.Component;

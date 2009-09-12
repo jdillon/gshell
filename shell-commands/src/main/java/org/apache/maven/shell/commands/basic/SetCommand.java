@@ -19,18 +19,18 @@
 
 package org.apache.maven.shell.commands.basic;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.codehaus.plexus.component.annotations.Component;
+import org.apache.maven.shell.Shell;
+import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.cli.Argument;
+import org.apache.maven.shell.cli.Option;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
-import org.apache.maven.shell.Variables;
-import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.io.IO;
-import org.apache.maven.shell.cli.Option;
-import org.apache.maven.shell.cli.Argument;
+import org.codehaus.plexus.component.annotations.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Iterator;
 import java.util.Properties;

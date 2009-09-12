@@ -20,10 +20,10 @@
 package org.apache.maven.shell.commands.basic;
 
 import jline.ConsoleReader;
+import org.apache.maven.shell.ansi.Ansi;
+import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
-import org.apache.maven.shell.command.Command;
-import org.apache.maven.shell.ansi.Ansi;
 import org.apache.maven.shell.io.IO;
 import org.codehaus.plexus.component.annotations.Component;
 

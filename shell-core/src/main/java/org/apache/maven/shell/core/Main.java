@@ -20,14 +20,14 @@
 package org.apache.maven.shell.core;
 
 import org.apache.maven.shell.Shell;
-import org.apache.maven.shell.core.impl.registry.CommandRegistrationAgent;
-import org.apache.maven.shell.i18n.MessageSource;
-import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
 import org.apache.maven.shell.ansi.Ansi;
 import org.apache.maven.shell.cli.Argument;
 import org.apache.maven.shell.cli.CommandLineProcessor;
 import org.apache.maven.shell.cli.Option;
 import org.apache.maven.shell.cli.Printer;
+import org.apache.maven.shell.core.impl.registry.CommandRegistrationAgent;
+import org.apache.maven.shell.i18n.MessageSource;
+import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.io.IOHolder;
 import org.apache.maven.shell.notification.ExitNotification;

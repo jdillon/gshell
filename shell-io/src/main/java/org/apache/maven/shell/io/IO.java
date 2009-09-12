@@ -21,8 +21,8 @@ package org.apache.maven.shell.io;
 
 import jline.ConsoleReader;
 import jline.Terminal;
-import org.slf4j.helpers.MessageFormatter;
 import org.apache.maven.shell.ansi.AnsiRenderWriter;
+import org.slf4j.helpers.MessageFormatter;
 
 import java.io.IOException;
 import java.io.InputStream;

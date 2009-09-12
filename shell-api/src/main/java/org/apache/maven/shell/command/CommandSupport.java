@@ -19,10 +19,10 @@
 
 package org.apache.maven.shell.command;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provides support for {@link Command} implementations.

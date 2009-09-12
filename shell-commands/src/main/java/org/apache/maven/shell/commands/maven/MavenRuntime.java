@@ -19,30 +19,23 @@
 
 package org.apache.maven.shell.commands.maven;
 
+import org.apache.maven.artifact.InvalidRepositoryException;
+import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.embedder.Configuration;
 import org.apache.maven.embedder.DefaultConfiguration;
 import org.apache.maven.embedder.MavenEmbedder;
 import org.apache.maven.embedder.MavenEmbedderConsoleLogger;
 import org.apache.maven.embedder.MavenEmbedderException;
-import org.apache.maven.repository.RepositorySystem;
-import org.apache.maven.execution.MavenExecutionResult;
 import org.apache.maven.execution.MavenExecutionRequest;
-import org.apache.maven.artifact.repository.ArtifactRepository;
-import org.apache.maven.artifact.InvalidRepositoryException;
-import org.apache.maven.settings.Settings;
-import org.apache.maven.settings.MavenSettingsBuilder;
-import org.apache.maven.cli.CLIReportingUtils;
+import org.apache.maven.execution.MavenExecutionResult;
+import org.apache.maven.repository.RepositorySystem;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
-import org.codehaus.plexus.component.repository.exception.ComponentLifecycleException;
-import org.codehaus.plexus.component.repository.exception.ComponentLookupException;
-import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
 import java.util.Arrays;
-import java.io.IOException;
+import java.util.List;
 
 /**
  * The default {@link MavenRuntime} component.

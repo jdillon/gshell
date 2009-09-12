@@ -19,18 +19,18 @@
 
 package org.apache.maven.shell.core.impl.registry;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.maven.shell.event.EventManager;
 import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.registry.NoSuchAliasException;
-import org.apache.maven.shell.event.EventManager;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
-import java.util.Map;
-import java.util.LinkedHashMap;
 import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * The default {@link AliasRegistry} component.

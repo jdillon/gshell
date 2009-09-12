@@ -21,11 +21,11 @@ package org.apache.maven.shell.core.impl;
 
 import jline.Completor;
 import jline.History;
-import org.apache.maven.shell.command.CommandExecutor;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.ShellContext;
 import org.apache.maven.shell.ShellContextHolder;
 import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.command.CommandExecutor;
 import org.apache.maven.shell.console.Console;
 import org.apache.maven.shell.console.JLineConsole;
 import org.apache.maven.shell.console.completer.AggregateCompleter;

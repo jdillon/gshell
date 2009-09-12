@@ -19,9 +19,9 @@
 
 package org.apache.maven.shell.command;
 
-import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.io.IO;
 
 /**
  * Provides commands with the context of it's execution.

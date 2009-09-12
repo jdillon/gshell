@@ -19,13 +19,13 @@
 
 package org.apache.maven.shell.core.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.maven.shell.ShellContextHolder;
 import org.apache.maven.shell.console.Console;
 import org.apache.maven.shell.io.IO;
-import org.apache.maven.shell.ShellContextHolder;
 import org.apache.maven.shell.notification.ErrorNotification;
 import org.codehaus.plexus.component.annotations.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * {@link Console.ErrorHandler} component.

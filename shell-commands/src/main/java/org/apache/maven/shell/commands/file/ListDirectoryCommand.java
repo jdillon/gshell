@@ -19,12 +19,6 @@
 
 package org.apache.maven.shell.commands.file;
 
-import jline.ConsoleReader;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
 import org.apache.maven.shell.cli.Argument;
 import org.apache.maven.shell.cli.Option;
 import org.apache.maven.shell.command.CommandContext;

@@ -23,12 +23,10 @@ import jline.CandidateListCompletionHandler;
 import jline.Completor;
 import jline.ConsoleReader;
 import jline.History;
+import org.apache.maven.shell.io.IO;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-
-import org.apache.maven.shell.io.IO;
-import org.apache.maven.shell.console.Console;
 
 /**
  * Support for running console using the <a href="http://jline.sf.net">JLine</a> library.

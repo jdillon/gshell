@@ -19,15 +19,15 @@
 
 package org.apache.maven.shell.commands.maven;
 
+import org.apache.maven.cli.MavenCli;
+import org.apache.maven.shell.command.Arguments;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.command.OpaqueArguments;
-import org.apache.maven.shell.command.Arguments;
 import org.apache.maven.shell.io.IO;
-import org.apache.maven.cli.MavenCli;
-import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.classworlds.ClassWorld;
+import org.codehaus.plexus.component.annotations.Component;
 
 /**
  * The <tt>mvn</tt> command.

@@ -21,19 +21,19 @@ package org.apache.maven.shell.core.impl.completer;
 
 import jline.Completor;
 import org.apache.maven.shell.console.completer.StringsCompleter;
-import org.apache.maven.shell.registry.CommandRegistry;
-import org.apache.maven.shell.event.EventManager;
-import org.apache.maven.shell.event.EventListener;
-import org.apache.maven.shell.core.impl.registry.CommandRemovedEvent;
 import org.apache.maven.shell.core.impl.registry.CommandRegisteredEvent;
+import org.apache.maven.shell.core.impl.registry.CommandRemovedEvent;
+import org.apache.maven.shell.event.EventListener;
+import org.apache.maven.shell.event.EventManager;
+import org.apache.maven.shell.registry.CommandRegistry;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.personality.plexus.lifecycle.phase.Initializable;
 import org.codehaus.plexus.personality.plexus.lifecycle.phase.InitializationException;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.EventObject;
+import java.util.List;
 
 /**
  * {@link Completor} for command names.
