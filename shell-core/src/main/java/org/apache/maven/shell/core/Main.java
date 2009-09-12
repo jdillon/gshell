@@ -74,9 +74,14 @@ public class Main
     @Option(name="-V", aliases={"--version"}, requireOverride=true)
     private boolean version;
 
+    private void setConsoleLogLevel(final String level) {
+        System.setProperty("gshell.log.console.level", level);
+    }
+    
     @Option(name="-d", aliases={"--debug"})
     private void setDebug(boolean flag) {
         if (flag) {
+            setConsoleLogLevel("DEBUG");
             io.setVerbosity(IO.Verbosity.DEBUG);
         }
     }
@@ -84,6 +89,7 @@ public class Main
     @Option(name="-X", aliases={"--trace"})
     private void setTrace(boolean flag) {
         if (flag) {
+            setConsoleLogLevel("TRACE");
             io.setVerbosity(IO.Verbosity.DEBUG);
         }
     }
@@ -91,6 +97,7 @@ public class Main
     @Option(name="-v", aliases={"--verbose"})
     private void setVerbose(boolean flag) {
         if (flag) {
+            setConsoleLogLevel("INFO");
             io.setVerbosity(IO.Verbosity.VERBOSE);
         }
     }
@@ -98,6 +105,7 @@ public class Main
     @Option(name="-q", aliases={"--quiet"})
     private void setQuiet(boolean flag) {
         if (flag) {
+            setConsoleLogLevel("ERROR");
             io.setVerbosity(IO.Verbosity.QUIET);
         }
     }
@@ -174,7 +182,8 @@ public class Main
 
         System.setProperty("jline.terminal", AutoDetectedTerminal.class.getName());
 
-        IOHolder.set(io);
+        // Default is to be quiet
+        setConsoleLogLevel("WARN");
         
         CommandLineProcessor clp = new CommandLineProcessor(this);
         clp.setStopAtNonOption(true);
@@ -213,7 +222,7 @@ public class Main
         final AtomicReference<Integer> codeRef = new AtomicReference<Integer>();
         int code = ExitNotification.DEFAULT_CODE;
 
-        Runtime.getRuntime().addShutdownHook(new Thread("Shutdown Hook") {
+        Runtime.getRuntime().addShutdownHook(new Thread("Shell Shutdown Hook") {
             public void run() {
                 if (codeRef.get() == null) {
                     // Give the user a warning when the JVM shutdown abnormally, normal shutdown
@@ -229,6 +238,8 @@ public class Main
 
         try {
             PlexusContainer container = createContainer();
+
+            IOHolder.set(io);
 
             // Boot up the shell instance
             Shell shell = container.lookup(Shell.class);

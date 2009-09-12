@@ -35,11 +35,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-        
-        <dependency>
             <groupId>org.apache.maven.shell</groupId>
             <artifactId>shell-i18n</artifactId>
         </dependency>

@@ -33,12 +33,5 @@
     <artifactId>shell-i18n</artifactId>
     <name>Maven Shell :: i18n</name>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-    </dependencies>
-
 </project>
 
