@@ -52,7 +52,7 @@ public class ListDirectoryCommand
     private boolean recursive;
 
     public String getName() {
-        return "cd";
+        return "ls";
     }
 
     public Object execute(final CommandContext context) throws Exception {
