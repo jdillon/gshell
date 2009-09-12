@@ -169,12 +169,15 @@ public class Main
     }
 
     private PlexusContainer createContainer() throws PlexusContainerException {
-        // Boot up the container
         ContainerConfiguration config = new DefaultContainerConfiguration();
         config.setName("gshell.core");
         config.setClassWorld(classWorld);
 
-        return new DefaultPlexusContainer(config);
+        DefaultPlexusContainer container = new DefaultPlexusContainer(config);
+
+        // FIXME: Hookup Plexus logging to Slf4j
+
+        return container;
     }
 
     public void boot(final String[] args) throws Exception {
@@ -189,12 +192,8 @@ public class Main
         clp.setStopAtNonOption(true);
         clp.process(args);
 
-        //
-        // TODO: Use methods to handle these...
-        //
-
         if (help) {
-            io.out.println("mvnsh [options] <command> [args]");
+            io.out.println(System.getProperty("gshell.program") + " [options] <command> [args]");
             io.out.println();
 
             Printer printer = new Printer(clp);
@@ -208,10 +207,7 @@ public class Main
         }
 
         if (version) {
-            // FIXME: !!!
-            // CLIReportingUtils.showVersion();
-                        
-            io.out.println("FIXME: Version details unavailable ATM... sorry dude!"); // branding.getVersion());
+            io.out.println(System.getProperty("gshell.version"));
             io.out.println();
             io.out.flush();
 
