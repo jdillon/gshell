@@ -22,6 +22,7 @@ package org.apache.maven.shell.commands.basic;
 import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.Command;
+import org.apache.maven.shell.command.Arguments;
 import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.ansi.AnsiRenderer;
 import org.apache.maven.shell.ansi.AnsiCode;
@@ -32,6 +33,7 @@ import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * The <tt>alias</tt> command.
@@ -48,8 +50,8 @@ public class AliasCommand
     @Argument(index=0)
     private String name;
 
-    @Argument(index=1)
-    private String target;
+    @Argument(index=1, multiValued=true)
+    private List<String> target = null;
 
     public String getName() {
         return "alias";
@@ -114,9 +116,11 @@ public class AliasCommand
             return Result.FAILURE;
         }
 
-        log.debug("Defining alias: {} -> {}", name, target);
+        String alias = Arguments.asString(target, " ");
+        
+        log.debug("Defining alias: {} -> {}", name, alias);
 
-        aliasRegistry.registerAlias(name, target);
+        aliasRegistry.registerAlias(name, alias);
 
         return Result.SUCCESS;
     }

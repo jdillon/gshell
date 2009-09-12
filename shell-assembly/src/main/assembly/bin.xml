@@ -34,6 +34,7 @@
             <outputDirectory>/</outputDirectory>
             <includes>
                 <include>*.txt</include>
+                <include>examples/**</include>
             </includes>
         </fileSet>
 

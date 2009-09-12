@@ -60,7 +60,7 @@ public class Arguments
         return buff.toString();
     }
 
-    public static String asString(final List args) {
+    public static String asString(final List args, final String delim) {
         assert args != null;
 
         StringBuilder buff = new StringBuilder();
@@ -68,11 +68,15 @@ public class Arguments
         for (int i=0; i<args.size(); i++ ) {
             buff.append(args.get(i));
             if (i + 1 < args.size()) {
-                buff.append(", ");
+                buff.append(delim);
             }
         }
 
         return buff.toString();
+    }
+
+    public static String asString(final List args) {
+        return asString(args, ", ");
     }
 
     public static String[] toStringArray(final Object[] args) {

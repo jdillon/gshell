@@ -59,9 +59,15 @@ public class CommandExecutorImpl
         assert context != null;
         assert line != null;
 
-        log.debug("Parsing command from line: {}", line);
+        String trimmed = line.trim();
 
-        String[] elements = line.split(" ");
+        if (trimmed.length() == 0 || trimmed.startsWith("#")) {
+            return Command.Result.SUCCESS;
+        }
+
+        log.debug("Parsing command from line: {}", trimmed);
+
+        String[] elements = trimmed.split(" ");
 
         if (elements.length == 1) {
             return execute(context, elements[0], new String[0]);
