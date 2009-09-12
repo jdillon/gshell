@@ -48,7 +48,7 @@ public class ConsolePrompterImpl
 
     private final AnsiRenderer renderer = new AnsiRenderer();
 
-    private final String defaultPrompt = "maven> ";
+    private final String defaultPrompt = "mvnsh> ";
 
     /*
     FIXME:
