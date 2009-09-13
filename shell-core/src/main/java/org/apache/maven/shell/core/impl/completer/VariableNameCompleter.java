@@ -50,7 +50,7 @@ public class VariableNameCompleter
         while (iter.hasNext()) {
             String name = iter.next();
             if (!name.startsWith(Shell.SHELL_INTERNAL)) {
-                strings.add(iter.next());
+                strings.add(name);
             }
         }
 
