@@ -45,7 +45,6 @@ public class HistoryImpl
 
     private File historyFile;
 
-    @Override
     public void initialize() throws InitializationException {
         historyFile = getDefaultHistoryFile();
         log.debug("History file: {}", historyFile);

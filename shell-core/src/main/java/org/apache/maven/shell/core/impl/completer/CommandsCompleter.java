@@ -67,7 +67,6 @@ public class CommandsCompleter
 
     private final AggregateCompleter delegate = new AggregateCompleter();
 
-    @Override
     public void initialize() throws InitializationException {
         try {
             // Populate the initial list of completers from the currently registered commands

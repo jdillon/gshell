@@ -46,7 +46,6 @@ public class MavenCommand
         return "mvn";
     }
 
-    @Override
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
 

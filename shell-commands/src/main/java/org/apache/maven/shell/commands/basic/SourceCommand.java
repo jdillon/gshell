@@ -51,7 +51,6 @@ public class SourceCommand
     @Argument(required=true)
     private String path;
 
-    @Override
     public String getName() {
         return "source";
     }

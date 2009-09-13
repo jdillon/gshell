@@ -22,7 +22,9 @@ package org.apache.maven.shell.core.impl.completer;
 import jline.Completor;
 import org.apache.maven.shell.ShellContextHolder;
 import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.console.completer.StringsCompleter;
+import org.codehaus.plexus.component.annotations.Component;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -33,6 +35,7 @@ import java.util.List;
  *
  * @version $Rev$ $Date$
  */
+@Component(role=Completor.class, hint="variable-name")
 public class VariableNameCompleter
     implements Completor
 {
@@ -45,7 +48,10 @@ public class VariableNameCompleter
 
         Iterator<String> iter = vars.names();
         while (iter.hasNext()) {
-            strings.add(iter.next());
+            String name = iter.next();
+            if (!name.startsWith(Shell.SHELL_INTERNAL)) {
+                strings.add(iter.next());
+            }
         }
 
         return delegate.complete(buffer, cursor, candidates);

@@ -54,7 +54,6 @@ public class CommandNameCompleter
 
     private final StringsCompleter delegate = new StringsCompleter();
 
-    @Override
     public void initialize() throws InitializationException {
         assert commandRegistry != null;
         Collection<String> names = commandRegistry.getCommandNames();

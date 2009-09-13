@@ -21,16 +21,20 @@ package org.apache.maven.shell.commands.basic;
 
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.console.completer.AggregateCompleter;
 import org.apache.maven.shell.cli.Argument;
 import org.apache.maven.shell.cli.Option;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
 import org.codehaus.plexus.component.annotations.Component;
+import org.codehaus.plexus.component.annotations.Requirement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+
+import jline.Completor;
 
 /**
  * Unset a variable or property.
@@ -55,9 +59,21 @@ public class UnsetCommand
     @Argument(required=true)
     private List<String> args = null;
 
-    @Override
+    @Requirement(role= Completor.class, hints={"variable-name"})
+    private List<Completor> completers;
+
     public String getName() {
         return "unset";
+    }
+
+    @Override
+    public Completor[] getCompleters() {
+        assert completers != null;
+
+        return new Completor[] {
+            new AggregateCompleter(completers),
+            null
+        };
     }
 
     public Object execute(final CommandContext context) throws Exception {

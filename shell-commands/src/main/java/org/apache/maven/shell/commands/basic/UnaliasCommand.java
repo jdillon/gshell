@@ -26,8 +26,12 @@ import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.registry.NoSuchAliasException;
+import org.apache.maven.shell.console.completer.AggregateCompleter;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
+import jline.Completor;
+
+import java.util.List;
 
 /**
  * The <tt>unalias</tt> command.
@@ -44,10 +48,23 @@ public class UnaliasCommand
     @Argument(index=0, required=true)
     private String name;
 
+    @Requirement(role= Completor.class, hints={"variable-name"})
+    private List<Completor> completers;
+
     public String getName() {
         return "unalias";
     }
 
+    @Override
+    public Completor[] getCompleters() {
+        assert completers != null;
+
+        return new Completor[] {
+            new AggregateCompleter(completers),
+            null
+        };
+    }
+    
     public Object execute(final CommandContext context) {
         assert context != null;
         IO io = context.getIo();
