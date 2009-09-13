@@ -1,7 +1,16 @@
 #
-# Add some nice aliases
+# Example ~/.m2/mvnsh.rc
 #
 
+# Some niceties
+alias ? help
+alias ! recall
+alias . source
+alias quit exit
+alias bye exit
+alias print echo
+
+# Some aliases to run common goals
 alias help-system mvn org.apache.maven.plugins:maven-help-plugin:system
 alias install mvn org.apache.maven.plugins:maven-install-plugin:install
 alias resources mvn org.apache.maven.plugins:maven-resources-plugin:resources

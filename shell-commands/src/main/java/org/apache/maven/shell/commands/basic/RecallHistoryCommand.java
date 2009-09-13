@@ -22,7 +22,6 @@ package org.apache.maven.shell.commands.basic;
 import jline.History;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.cli.Argument;
-import org.apache.maven.shell.cli.Option;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
@@ -30,28 +29,21 @@ import org.apache.maven.shell.io.IO;
 import org.codehaus.plexus.component.annotations.Component;
 
 import java.util.List;
-import java.lang.reflect.Method;
 
 /**
- * Display history.
+ * Recall history.
  *
  * @version $Rev$ $Date$
  */
-@Component(role=Command.class, hint="history", instantiationStrategy="per-lookup")
-public class HistoryCommand
+@Component(role=Command.class, hint="recall", instantiationStrategy="per-lookup")
+public class RecallHistoryCommand
     extends CommandSupport
 {
-    @Option(name="-c", aliases={"--clear"})
-    private boolean clear = false;
-
-    @Option(name="-p", aliases={"--purge"})
-    private boolean purge = false;
-    
-    @Argument()
-    private String range;
+    @Argument(required=true)
+    private int index;
 
     public String getName() {
-        return "history";
+        return "recall";
     }
 
     private History getHistory(final CommandContext context) {
@@ -63,50 +55,21 @@ public class HistoryCommand
         }
         return history;
     }
+
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
         IO io = context.getIo();
-
         History history = getHistory(context);
 
-        if (clear) {
-            history.clear();
-            io.verbose("History clearend");
-        }
+        // noinspection unchecked
+        List<String> elements = history.getHistoryList();
 
-        if (purge) {
-            // HACK: purge is not accessible in this context
-            Class type = Thread.currentThread().getContextClassLoader().loadClass("org.apache.maven.shell.core.impl.HistoryImpl");
-            Method method = type.getMethod("purge");
-            method.invoke(history);
-            io.verbose("History purged");
-        }
-
-        return displayRange(context);
-    }
-
-    private Object displayRange(final CommandContext context) throws Exception {
-        assert context != null;
-        IO io = context.getIo();
-        History history = getHistory(context);
-
-        if (range == null) {
-            // noinspection unchecked
-            List<String> elements = history.getHistoryList();
-
-            int i = 0;
-            for (String element : elements) {
-                String index = String.format("%3d", i);
-                io.info("  @|bold {}| {}", index, element);
-                i++;
-            }
-        }
-        else {
-            // TODO: Handle range
-            io.error("Sorry range is not yet supported");
+        if (index < 0 || index > elements.size()) {
+            io.error("No such history index: {}", index);
             return Result.FAILURE;
         }
 
-        return Result.SUCCESS;
+        Shell shell = context.getShell();
+        return shell.execute(elements.get(index));
     }
 }

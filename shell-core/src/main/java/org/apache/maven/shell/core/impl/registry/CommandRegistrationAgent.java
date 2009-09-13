@@ -48,9 +48,11 @@ public class CommandRegistrationAgent
         commandRegistry.registerCommand("set");
         commandRegistry.registerCommand("unset");
         commandRegistry.registerCommand("history");
+        commandRegistry.registerCommand("recall");
         commandRegistry.registerCommand("source");
         commandRegistry.registerCommand("alias");
         commandRegistry.registerCommand("unalias");
+        commandRegistry.registerCommand("echo");
         commandRegistry.registerCommand("mvn");
     }
 }
