@@ -91,6 +91,8 @@ public class HistoryImpl
             log.warn("Unable to remove history file: {}", historyFile);
         }
         setHistoryFile(historyFile);
+        
+        //noinspection ResultOfMethodCallIgnored
         tmp.delete();
     }
 }
