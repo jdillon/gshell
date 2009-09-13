@@ -27,6 +27,14 @@ import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.io.IO;
 import org.codehaus.plexus.component.annotations.Component;
 
+import java.io.File;
+import java.io.FileFilter;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.LinkedList;
+
+import jline.ConsoleReader;
+
 /**
  * List the contents of a file or directory.
  *
@@ -56,66 +64,65 @@ public class ListDirectoryCommand
         assert context != null;
         IO io = context.getIo();
 
-        /*
-        FileObject file;
-        if (path != null) {
-            file = resolveFile(context, path);
+        File file;
+
+        File cwd = new File(System.getProperty("user.dir"));
+
+        if (path == null) {
+            file = cwd;
         }
         else {
-            file = getCurrentDirectory(context);
+            if (path.startsWith("~")) {
+                path = System.getProperty("user.home") + path.substring(1);
+            }
+
+            file = new File(path);
+            if (!file.isAbsolute()) {
+                file = new File(cwd, path);
+            }
+
+            file = file.getCanonicalFile();
         }
 
-        if (file.getType().hasChildren()) {
+        if (file.isDirectory()) {
             listChildren(io, file);
         }
         else {
-            io.info(file.getName().getPath());
+            io.info(file.getPath());
         }
-
-        FileObjects.close(file);
-        */
 
         return Result.SUCCESS;
     }
 
-    /*
-    private void listChildren(final IO io, final FileObject dir) throws Exception {
+    private void listChildren(final IO io, final File dir) throws Exception {
         assert io != null;
         assert dir != null;
 
-        FileObject[] files;
+        File[] files;
 
         if (includeHidden) {
-            files = dir.getChildren();
+            files = dir.listFiles();
         }
         else {
-            FileFilter filter = new FileFilter() {
-                public boolean accept(final FileSelectInfo selection) {
-                    assert selection != null;
-
-                    try {
-                        return !selection.getFile().isHidden();
-                    }
-                    catch (FileSystemException e) {
-                        throw new RuntimeException(e);
-                    }
+            files = dir.listFiles(new FileFilter() {
+                public boolean accept(final File file) {
+                    assert file != null;
+                    return !file.isHidden();
                 }
-            };
-
-            files = dir.findFiles(new FileFilterSelector(filter));
+            });
         }
         
         ConsoleReader reader = io.createConsoleReader();
         reader.setUsePagination(false);
 
         List<String> names = new ArrayList<String>(files.length);
-        List<FileObject> dirs = new LinkedList<FileObject>();
+        List<File> dirs = new LinkedList<File>();
 
-        for (FileObject file : files) {
-            String fileName = file.getName().getBaseName();
+        for (File file : files) {
+            String fileName = file.getName();
 
-            if (FileObjects.hasChildren(file)) {
-                fileName += FileName.SEPARATOR;
+            if (hasChildren(file)) {
+                fileName += File.separator;
 
                 if (recursive) {
                     dirs.add(file);
@@ -123,8 +130,6 @@ public class ListDirectoryCommand
             }
 
             names.add(fileName);
-
-            file.close();
         }
 
         if (longList) {
@@ -137,15 +142,26 @@ public class ListDirectoryCommand
         }
 
         if (!dirs.isEmpty()) {
-            for (FileObject subdir : dirs) {
+            for (File subdir : dirs) {
                 io.out.println();
-                io.out.print(subdir.getName().getBaseName());
+                io.out.print(subdir.getName());
                 io.out.print(":");
                 listChildren(io, subdir);
             }
         }
-
-        dir.close();
     }
-    */
+
+    private boolean hasChildren(final File file) {
+        assert file != null;
+
+        if (file.isDirectory()) {
+            File[] children = file.listFiles();
+
+            if (children != null && children.length != 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
