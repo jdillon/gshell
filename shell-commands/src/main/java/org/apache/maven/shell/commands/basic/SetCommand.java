@@ -21,6 +21,7 @@ package org.apache.maven.shell.commands.basic;
 
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.console.completer.AggregateCompleter;
 import org.apache.maven.shell.cli.Argument;
 import org.apache.maven.shell.cli.Option;
 import org.apache.maven.shell.command.Command;
@@ -30,12 +31,15 @@ import org.apache.maven.shell.command.Arguments;
 import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.io.IO;
 import org.codehaus.plexus.component.annotations.Component;
+import org.codehaus.plexus.component.annotations.Requirement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.List;
+
+import jline.Completor;
 
 /**
  * Set a variable or property.
@@ -54,6 +58,9 @@ public class SetCommand
         PROPERTY
     }
 
+    @Requirement(role=Completor.class, hints={"variable-name"})
+    private List<Completor> completers;
+
     @Option(name="-m", aliases={"--mode"})
     private Mode mode = Mode.VARIABLE;
 
@@ -70,6 +77,16 @@ public class SetCommand
         return "set";
     }
 
+    @Override
+    public Completor[] getCompleters() {
+        assert completers != null;
+
+        return new Completor[] {
+            new AggregateCompleter(completers),
+            null
+        };
+    }
+    
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
         IO io = context.getIo();
