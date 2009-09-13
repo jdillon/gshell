@@ -41,7 +41,7 @@ public class HistoryImpl
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    public static final String FILENAME = "mvnsh.history";
+    private static final String FILENAME = "mvnsh.history";
 
     private File historyFile;
 
