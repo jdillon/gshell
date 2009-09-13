@@ -41,17 +41,27 @@ public class HistoryImpl
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
+    public static final String FILENAME = "mvnsh.history";
+
+    private File historyFile;
+
     @Override
     public void initialize() throws InitializationException {
+        historyFile = getDefaultHistoryFile();
+        log.debug("History file: {}", historyFile);
+
         try {
-            // HACK: Need to use settings or something for this?
-            File dir = new File(new File(System.getProperty("user.home")), ".m2");
-            File file = new File(dir, "mvnsh.history");
-            setHistoryFile(file);
+            setHistoryFile(historyFile);
         }
         catch (Exception e) {
             throw new InitializationException(e.getMessage(), e);
         }
+    }
+
+    private File getDefaultHistoryFile() {
+        // HACK: Need to use settings or something for this?
+        File dir = new File(new File(System.getProperty("user.home")), ".m2");
+        return new File(dir, FILENAME);
     }
 
     public void setHistoryFile(final File file) throws IOException {
@@ -67,5 +77,20 @@ public class HistoryImpl
         log.debug("History file: {}", file);
 
         super.setHistoryFile(file);
+    }
+
+    public void purge() throws IOException {
+        clear();
+        flushBuffer();
+
+        File tmp = File.createTempFile(FILENAME, "temp");
+        tmp.deleteOnExit();
+        setHistoryFile(tmp);
+
+        if (!historyFile.delete()) {
+            log.warn("Unable to remove history file: {}", historyFile);
+        }
+        setHistoryFile(historyFile);
+        tmp.delete();
     }
 }

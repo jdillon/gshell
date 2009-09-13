@@ -21,6 +21,8 @@ package org.apache.maven.shell.commands.basic;
 
 import jline.History;
 import org.apache.maven.shell.Shell;
+import org.apache.maven.shell.cli.Argument;
+import org.apache.maven.shell.cli.Option;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
@@ -28,6 +30,7 @@ import org.apache.maven.shell.io.IO;
 import org.codehaus.plexus.component.annotations.Component;
 
 import java.util.List;
+import java.lang.reflect.Method;
 
 /**
  * Display history.
@@ -38,30 +41,69 @@ import java.util.List;
 public class HistoryCommand
     extends CommandSupport
 {
-    // TODO: Support displaying a range of history
-    
-    // TODO: Add clear and recall support
+    @Option(name="-c", aliases={"--clear"})
+    private boolean clear = false;
+
+    @Option(name="-p", aliases={"--purge"})
+    private boolean purge = false;
+
+    @Argument()
+    private String range;
 
     public String getName() {
         return "history";
     }
 
+    private History getHistory(final CommandContext context) {
+        assert context != null;
+        // HACK: Get at the shell's history from our variables
+        History history = context.getVariables().get(Shell.SHELL_INTERNAL + History.class.getName(), History.class);
+        if (history == null) {
+            throw new Error("History missing in shell variables");
+        }
+        return history;
+    }
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
         IO io = context.getIo();
 
-        // HACK: Get at the shell's history from our variables
-        History history = context.getVariables().get(Shell.SHELL_INTERNAL + History.class.getName(), History.class);
-        assert history != null;
+        History history = getHistory(context);
 
-        // noinspection unchecked
-        List<String> elements = history.getHistoryList();
+        if (clear) {
+            history.clear();
+            io.verbose("History clearend");
+        }
 
-        int i = 0;
-        for (String element : elements) {
-            String index = String.format("%3d", i);
-            io.info("  @|bold {}| {}", index, element);
-            i++;
+        if (purge) {
+            // HACK: purge is not accessible in this context
+            Class type = Thread.currentThread().getContextClassLoader().loadClass("org.apache.maven.shell.core.impl.HistoryImpl");
+            Method method = type.getMethod("purge");
+            method.invoke(history);
+            io.verbose("History purged");
+        }
+
+        return displayRange(context);
+    }
+
+    private Object displayRange(final CommandContext context) {
+        assert context != null;
+        IO io = context.getIo();
+        History history = getHistory(context);
+
+        if (range == null) {
+            // noinspection unchecked
+            List<String> elements = history.getHistoryList();
+
+            int i = 0;
+            for (String element : elements) {
+                String index = String.format("%3d", i);
+                io.info("  @|bold {}| {}", index, element);
+                i++;
+            }
+        }
+        else {
+            // TODO: Handle range and recall here
+            io.error("PENDING");
         }
 
         return Result.SUCCESS;
