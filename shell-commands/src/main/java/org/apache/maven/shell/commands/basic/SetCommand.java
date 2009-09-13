@@ -26,6 +26,7 @@ import org.apache.maven.shell.cli.Option;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
+import org.apache.maven.shell.command.Arguments;
 import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.io.IO;
 import org.codehaus.plexus.component.annotations.Component;
@@ -34,6 +35,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Iterator;
 import java.util.Properties;
+import java.util.List;
 
 /**
  * Set a variable or property.
@@ -61,8 +63,8 @@ public class SetCommand
     @Argument(index=0)
     private String name;
 
-    @Argument(index=1)
-    private String value;
+    @Argument(index=1, multiValued=true)
+    private List<String> values = null;
 
     public String getName() {
         return "set";
@@ -76,10 +78,12 @@ public class SetCommand
         if (name == null) {
             return displayList(context);
         }
-        else if (value == null) {
-            io.error("Missing required argument: {}", messages.getMessage("command.argument.value.token"));
+        else if (values == null) {
+            io.error("Missing required argument: {}", messages.getMessage("command.argument.values.token"));
             return Result.FAILURE;
         }
+
+        String value = Arguments.asString(values, " ");
 
         switch (mode) {
             case PROPERTY:
@@ -91,7 +95,7 @@ public class SetCommand
                 Variables vars = context.getVariables();
                 if (!name.startsWith(Shell.SHELL_INTERNAL)) {
                     log.info("Setting variable: {}={}", name, value);
-                    vars.parent().set(name, value);
+                    vars.set(name, value);
                 }
                 break;
         }
@@ -145,7 +149,7 @@ public class SetCommand
                     io.outputStream.flush();
                     io.outputStream.print("'");
 
-                    // When --verbose include the class details of the value
+                    // When --verbose include the class details of the values
                     if (verbose && value != null) {
                         io.outputStream.print(" (");
                         io.outputStream.print(value.getClass());

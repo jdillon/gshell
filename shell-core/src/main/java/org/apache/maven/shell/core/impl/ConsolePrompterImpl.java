@@ -27,6 +27,9 @@ import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.interpolation.InterpolationException;
 import org.codehaus.plexus.interpolation.Interpolator;
 import org.codehaus.plexus.interpolation.StringSearchInterpolator;
+import org.codehaus.plexus.interpolation.PropertiesBasedValueSource;
+import org.codehaus.plexus.personality.plexus.lifecycle.phase.Initializable;
+import org.codehaus.plexus.personality.plexus.lifecycle.phase.InitializationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,32 +40,20 @@ import org.slf4j.LoggerFactory;
  */
 @Component(role=Console.Prompter.class)
 public class ConsolePrompterImpl
-    implements Console.Prompter
+    implements Console.Prompter, Initializable
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     private final Interpolator interp = new StringSearchInterpolator("%{", "}");
 
-    // FIXME:
-    // private final VariablesValueSource variablesValueSource = new VariablesValueSource();
-
     private final AnsiRenderer renderer = new AnsiRenderer();
 
-    private final String defaultPrompt = "mvnsh> ";
+    private final String defaultPrompt = "> ";
 
-    /*
-    FIXME:
-
-    public ConsolePrompterImpl(final Application application) {
-        assert application != null;
-
-        interp.addValueSource(new PrefixedObjectValueSource("application", application));
-        interp.addValueSource(new PrefixedObjectValueSource("branding", application.getModel().getBranding()));
-        interp.addValueSource(variablesValueSource);
-
-        defaultPrompt = application.getModel().getBranding().getPrompt();
+    public void initialize() throws InitializationException {
+        interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));
+        interp.addValueSource(new VariablesValueSource());
     }
-    */
 
     public String prompt() {
         String prompt = null;
@@ -71,14 +62,7 @@ public class ConsolePrompterImpl
         String pattern = vars.get("mvnsh.prompt", String.class);
 
         if (pattern != null) {
-            /*
-            FIXME:
-            assert variablesValueSource != null;
-            variablesValueSource.setVariables(vars);
-            */
-
             try {
-                assert interp != null;
                 prompt = interp.interpolate(pattern);
             }
             catch (InterpolationException e) {

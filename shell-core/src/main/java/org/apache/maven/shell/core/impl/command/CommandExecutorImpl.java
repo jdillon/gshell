@@ -65,6 +65,8 @@ public class CommandExecutorImpl
             return Command.Result.SUCCESS;
         }
 
+        // FIXME: Really need quote handling here...
+        
         log.debug("Parsing command from line: {}", trimmed);
 
         String[] elements = trimmed.split(" ");

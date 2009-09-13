@@ -109,8 +109,7 @@ public class UnsetCommand
 
         // Do not allow internals to be unset
         if (!name.startsWith(Shell.SHELL_INTERNAL)) {
-            // Command vars always has a parent, set only makes sence when setting in parent's scope
-            vars.parent().unset(name);
+            vars.unset(name);
         }
     }
 }
