@@ -173,11 +173,9 @@ public class Main
         config.setName("mvnsh.core");
         config.setClassWorld(classWorld);
 
-        DefaultPlexusContainer container = new DefaultPlexusContainer(config);
-
         // FIXME: Hookup Plexus logging to Slf4j
 
-        return container;
+        return new DefaultPlexusContainer(config);
     }
 
     public void boot(final String[] args) throws Exception {

@@ -127,10 +127,6 @@ public class HelpCommand
             maxNameLen = Math.max(len, maxNameLen);
         }
 
-        //
-        // TODO: Sort the list
-        //
-
         IO io = context.getIo();
         io.out.println("Available commands:");
         for (Command command : commands) {

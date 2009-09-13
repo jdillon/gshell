@@ -19,23 +19,15 @@
 
 package org.apache.maven.shell.testsuite;
 
-import org.codehaus.plexus.PlexusTestCase;
+import org.apache.maven.shell.io.IO;
 
 /**
- * Support for Plexus tests.
- * 
+ * Tests that the shell can boot up.
+ *
  * @version $Rev$ $Date$
  */
-public class PlexusTestSupport
-    extends PlexusTestCase
+public class TestIO
+    extends IO
 {
-    protected <T> T lookup(final Class<T> type) throws Exception {
-        //noinspection unchecked
-        return (T)super.lookup(type.getName());
-    }
-
-    protected <T> T lookup(final Class<T> type, final String hint) throws Exception {
-        //noinspection unchecked
-        return (T)super.lookup(type.getName(), hint);
-    }
+    // TODO
 }

@@ -17,20 +17,22 @@
  * under the License.
  */
 
-package org.apache.maven.shell.testsuite;
+package org.apache.maven.shell.core.impl;
 
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.io.IOHolder;
 import org.apache.maven.shell.registry.CommandRegistry;
+import org.codehaus.plexus.PlexusTestCase;
+import junit.framework.Assert;
 
 /**
  * Tests that the shell can boot up.
  *
  * @version $Rev$ $Date$
  */
-public class BasicBootTest
-    extends PlexusTestSupport
+public class ShellImplTest
+    extends PlexusTestCase
 {
     protected void setUp() throws Exception {
         super.setUp();
@@ -40,16 +42,16 @@ public class BasicBootTest
 
     public void testBoot() throws Exception {
         Shell shell = lookup(Shell.class);
-        assertNotNull(shell);
+        Assert.assertNotNull(shell);
     }
 
     public void testExecuteUnknownHi() throws Exception {
         Shell shell = lookup(Shell.class);
-        assertNotNull(shell);
+        Assert.assertNotNull(shell);
 
         try {
             shell.execute("hi");
-            fail();
+            Assert.fail();
         }
         catch (Exception ignore) {
             // expected
@@ -58,25 +60,11 @@ public class BasicBootTest
 
     public void testLookupSingleton() throws Exception {
         CommandRegistry r1 = lookup(CommandRegistry.class);
-        assertNotNull(r1);
+        Assert.assertNotNull(r1);
 
         CommandRegistry r2 = lookup(CommandRegistry.class);
-        assertNotNull(r2);
+        Assert.assertNotNull(r2);
 
-        assertEquals(r1, r2);
+        Assert.assertEquals(r1, r2);
     }
-
-    /*
-    NOTE: For some reason this doesn't work the same as ^^^
-
-    public void testLookupSingletonWithDefaultHint() throws Exception {
-        CommandRegistry r1 = lookup(CommandRegistry.class, "default");
-        assertNotNull(r1);
-
-        CommandRegistry r2 = lookup(CommandRegistry.class, "default");
-        assertNotNull(r2);
-
-        assertEquals(r1, r2);
-    }
-    */
 }

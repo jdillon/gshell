@@ -19,43 +19,28 @@
 
 package org.apache.maven.shell.testsuite;
 
-import org.apache.maven.shell.Shell;
-import org.apache.maven.shell.command.CommandException;
-import org.apache.maven.shell.io.IO;
-import org.apache.maven.shell.io.IOHolder;
-import org.apache.maven.shell.registry.CommandRegistry;
+import org.apache.maven.shell.command.Command;
 
 /**
  * Tests that the shell can boot up.
  *
  * @version $Rev$ $Date$
  */
-public class AliasesTest
-    extends PlexusTestSupport
+public class HelpCommandTest
+    extends ShellTestSupport
 {
-    protected void setUp() throws Exception {
-        super.setUp();
-
-        IOHolder.set(new IO());
+    public void testDefault() throws Exception {
+        Object result = getShell().execute("help");
+        assertEquals(Command.Result.SUCCESS, result);
     }
-    
-    public void testDefineAliasExecute() throws Exception {
-        CommandRegistry registry = lookup(CommandRegistry.class);
-        assertNotNull(registry);
-        registry.registerCommand("alias");
 
-        Shell shell = lookup(Shell.class);
-        assertNotNull(shell);
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();    //To change body of overridden methods use File | Settings | File Templates.
+    }
 
-        shell.execute("alias a=b");
-        shell.execute("alias");
-
-        try {
-            shell.execute("a");
-            fail();
-        }
-        catch (CommandException e) {
-            // expected
-        }
+    public void testHelp_help() throws Exception {
+        Object result = getShell().execute("help --help");
+        assertEquals(Command.Result.SUCCESS, result);
     }
 }

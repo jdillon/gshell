@@ -20,51 +20,33 @@
 package org.apache.maven.shell.testsuite;
 
 import org.apache.maven.shell.Shell;
+import org.apache.maven.shell.core.impl.registry.CommandRegistrationAgent;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.io.IOHolder;
-import org.apache.maven.shell.notification.ExitNotification;
-import org.apache.maven.shell.registry.CommandRegistry;
+import org.codehaus.plexus.PlexusTestCase;
 
 /**
  * Tests that the shell can boot up.
  *
  * @version $Rev$ $Date$
  */
-public class BasicCommandsTest
-    extends PlexusTestSupport
+public abstract class ShellTestSupport
+    extends PlexusTestCase
 {
+    private Shell shell;
+
     protected void setUp() throws Exception {
         super.setUp();
 
-        IOHolder.set(new IO());
-    }
-    
-    public void testRegisterAndExit() throws Exception {
-        CommandRegistry registry = lookup(CommandRegistry.class);
-        assertNotNull(registry);
-        registry.registerCommand("exit");
+        IOHolder.set(new TestIO());
 
-        Shell shell = lookup(Shell.class);
-        assertNotNull(shell);
+        CommandRegistrationAgent agent = lookup(CommandRegistrationAgent.class);
+        agent.registerCommands();
 
-        try {
-            shell.execute("exit");
-            fail();
-        }
-        catch (ExitNotification e) {
-            // expected
-        }
+        shell = lookup(Shell.class);
     }
 
-    public void testRegisterAliasAlias() throws Exception {
-        CommandRegistry registry = lookup(CommandRegistry.class);
-        assertNotNull(registry);
-        registry.registerCommand("alias");
-
-        Shell shell = lookup(Shell.class);
-        assertNotNull(shell);
-
-        shell.execute("alias a=b");
-        shell.execute("alias");
+    public Shell getShell() {
+        return shell;
     }
 }
