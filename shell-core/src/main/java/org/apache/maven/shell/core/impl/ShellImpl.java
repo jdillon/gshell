@@ -64,7 +64,7 @@ public class ShellImpl
     @Requirement
     private History history;
 
-    @Requirement(role=Completor.class, hints={"alias-name", "command-name"})
+    @Requirement(role=Completor.class, hints={"alias-name", "commands"})
     private List<Completor> completers;
 
     @Requirement

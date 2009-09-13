@@ -28,12 +28,16 @@ import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.registry.CommandRegistry;
+import org.apache.maven.shell.console.completer.AggregateCompleter;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 
 import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
+
+import jline.Completor;
 
 /**
  * Display command help.
@@ -50,6 +54,9 @@ public class HelpCommand
     @Requirement
     private CommandRegistry commandRegistry;
 
+    @Requirement(role=Completor.class, hints={"alias-name", "command-name"})
+    private List<Completor> completers;
+
     @Argument
     private String commandName;
 
@@ -57,6 +64,16 @@ public class HelpCommand
         return "help";
     }
 
+    @Override
+    public Completor[] getCompleters() {
+        assert completers != null;
+
+        return new Completor[] {
+            new AggregateCompleter(completers),
+            null
+        };
+    }
+    
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
         IO io = context.getIo();
@@ -68,6 +85,14 @@ public class HelpCommand
             if (commandRegistry.containsCommand(commandName)) {
                 Command command = commandRegistry.getCommand(commandName);
                 renderManual(io.out, command);
+
+                return Result.SUCCESS;
+            }
+            else if (aliasRegistry.containsAlias(commandName)) {
+                io.out.print("Alias ");
+                io.out.print(AnsiRenderer.encode(commandName, AnsiCode.BOLD));
+                io.out.print(": ");
+                io.out.println(aliasRegistry.getAlias(commandName));
 
                 return Result.SUCCESS;
             }

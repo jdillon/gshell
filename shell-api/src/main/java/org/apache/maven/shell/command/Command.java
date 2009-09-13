@@ -20,6 +20,9 @@
 package org.apache.maven.shell.command;
 
 import org.apache.maven.shell.i18n.MessageSource;
+import jline.Completor;
+
+import java.util.Collection;
 
 /**
  * Provides the user-action for a command.
@@ -31,6 +34,8 @@ public interface Command
     String getName();
 
     MessageSource getMessages();
+
+    Completor[] getCompleters();
 
     /*
     String getShortcut()
@@ -44,9 +49,7 @@ public interface Command
     String getHelp()
 
     List<CommandAlias> getAliases()
-
-    Object execute(List args)
-
+    
     boolean getHidden()
     */
 

@@ -23,6 +23,9 @@ import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jline.Completor;
+
+import java.util.Collection;
 
 /**
  * Provides support for {@link Command} implementations.
@@ -42,5 +45,9 @@ public abstract class CommandSupport
         }
 
         return messages;
+    }
+
+    public Completor[] getCompleters() {
+        return null;
     }
 }

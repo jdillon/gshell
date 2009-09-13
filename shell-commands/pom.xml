@@ -45,6 +45,11 @@
         </dependency>
 
         <dependency>
+            <groupId>org.apache.maven.shell</groupId>
+            <artifactId>shell-console</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.codehaus.plexus</groupId>
             <artifactId>plexus-component-annotations</artifactId>
         </dependency>

@@ -63,6 +63,7 @@ public class HistoryCommand
         }
         return history;
     }
+    
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
         IO io = context.getIo();
