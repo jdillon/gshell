@@ -53,14 +53,14 @@ public class UnsetCommand
         PROPERTY
     }
 
+    @Requirement(role=Completor.class, hints={"variable-name"})
+    private List<Completor> completers;
+
     @Option(name="-m", aliases={"--mode"})
     private Mode mode = Mode.VARIABLE;
 
     @Argument(required=true)
     private List<String> args = null;
-
-    @Requirement(role= Completor.class, hints={"variable-name"})
-    private List<Completor> completers;
 
     public String getName() {
         return "unset";

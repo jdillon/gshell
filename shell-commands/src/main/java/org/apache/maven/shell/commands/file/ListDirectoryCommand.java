@@ -25,7 +25,9 @@ import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.io.IO;
+import org.apache.maven.shell.console.completer.AggregateCompleter;
 import org.codehaus.plexus.component.annotations.Component;
+import org.codehaus.plexus.component.annotations.Requirement;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -34,6 +36,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import jline.ConsoleReader;
+import jline.Completor;
 
 /**
  * List the contents of a file or directory.
@@ -44,6 +47,9 @@ import jline.ConsoleReader;
 public class ListDirectoryCommand
     extends CommandSupport
 {
+    @Requirement(role=Completor.class, hints={"file-name"})
+    private List<Completor> completers;
+
     @Argument
     private String path;
 
@@ -60,6 +66,16 @@ public class ListDirectoryCommand
         return "ls";
     }
 
+    @Override
+    public Completor[] getCompleters() {
+        assert completers != null;
+
+        return new Completor[] {
+            new AggregateCompleter(completers),
+            null
+        };
+    }
+    
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
         IO io = context.getIo();

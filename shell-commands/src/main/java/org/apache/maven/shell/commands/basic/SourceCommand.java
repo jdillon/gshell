@@ -20,12 +20,14 @@
 package org.apache.maven.shell.commands.basic;
 
 import org.apache.maven.shell.Shell;
+import org.apache.maven.shell.console.completer.AggregateCompleter;
 import org.apache.maven.shell.cli.Argument;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.io.Closer;
 import org.codehaus.plexus.component.annotations.Component;
+import org.codehaus.plexus.component.annotations.Requirement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,6 +38,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
+
+import jline.Completor;
 
 /**
  * Read and execute commands from a file in the current shell environment.
@@ -48,11 +53,24 @@ public class SourceCommand
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
+    @Requirement(role=Completor.class, hints={"file-name"})
+    private List<Completor> completers;
+
     @Argument(required=true)
     private String path;
 
     public String getName() {
         return "source";
+    }
+
+    @Override
+    public Completor[] getCompleters() {
+        assert completers != null;
+
+        return new Completor[] {
+            new AggregateCompleter(completers),
+            null
+        };
     }
 
     public Object execute(final CommandContext context) throws Exception {

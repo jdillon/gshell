@@ -45,11 +45,11 @@ public class UnaliasCommand
     @Requirement
     private AliasRegistry aliasRegistry;
 
+    @Requirement(role=Completor.class, hints={"variable-name"})
+    private List<Completor> completers;
+
     @Argument(index=0, required=true)
     private String name;
-
-    @Requirement(role= Completor.class, hints={"variable-name"})
-    private List<Completor> completers;
 
     public String getName() {
         return "unalias";

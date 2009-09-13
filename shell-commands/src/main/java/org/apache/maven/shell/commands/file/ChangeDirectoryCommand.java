@@ -24,9 +24,14 @@ import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.io.IO;
+import org.apache.maven.shell.console.completer.AggregateCompleter;
 import org.codehaus.plexus.component.annotations.Component;
+import org.codehaus.plexus.component.annotations.Requirement;
 
 import java.io.File;
+import java.util.List;
+
+import jline.Completor;
 
 /**
  * Changes the current directory.
@@ -37,11 +42,24 @@ import java.io.File;
 public class ChangeDirectoryCommand
     extends CommandSupport
 {
+    @Requirement(role=Completor.class, hints={"file-name"})
+    private List<Completor> completers;
+
     @Argument
     private String path;
 
     public String getName() {
         return "cd";
+    }
+
+    @Override
+    public Completor[] getCompleters() {
+        assert completers != null;
+
+        return new Completor[] {
+            new AggregateCompleter(completers),
+            null
+        };
     }
 
     public Object execute(final CommandContext context) throws Exception {
