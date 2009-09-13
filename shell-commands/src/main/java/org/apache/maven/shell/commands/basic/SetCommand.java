@@ -89,8 +89,10 @@ public class SetCommand
 
             case VARIABLE:
                 Variables vars = context.getVariables();
-                log.info("Setting variable: {}={}", name, value);
-                vars.parent().set(name, value);
+                if (!name.startsWith(Shell.SHELL_INTERNAL)) {
+                    log.info("Setting variable: {}={}", name, value);
+                    vars.parent().set(name, value);
+                }
                 break;
         }
 

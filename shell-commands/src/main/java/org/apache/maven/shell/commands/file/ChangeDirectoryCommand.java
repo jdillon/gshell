@@ -22,13 +22,18 @@ package org.apache.maven.shell.commands.file;
 import org.apache.maven.shell.cli.Argument;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
+import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.io.IO;
+import org.codehaus.plexus.component.annotations.Component;
+
+import java.io.File;
 
 /**
  * Changes the current directory.
  *
  * @version $Rev$ $Date$
  */
+@Component(role=Command.class, hint="cd", instantiationStrategy="per-lookup")
 public class ChangeDirectoryCommand
     extends CommandSupport
 {
@@ -43,21 +48,26 @@ public class ChangeDirectoryCommand
         assert context != null;
         IO io = context.getIo();
 
-        /*
         if (path == null) {
-            // TODO: May need to ask the Application for this, as it might be different depending on the context (ie. remote user, etc)
             path = System.getProperty("user.home");
         }
 
-        FileObject file = resolveFile(context, path);
+        if (path.startsWith("~")) {
+            path = System.getProperty("user.home") + path.substring(1);
+        }
 
-        ensureFileExists(file);
-        ensureFileHasChildren(file);
+        File cwd = new File(System.getProperty("user.dir"));
 
-        setCurrentDirectory(context, file);
+        File file = new File(path);
 
-        FileObjects.close(file);
-        */
+        if (!file.isAbsolute()) {
+            file = new File(cwd, path);
+        }
+
+        file = file.getCanonicalFile();
+        
+        System.setProperty("user.dir", file.getPath());
+        io.info(file.getPath());
 
         return Result.SUCCESS;
     }

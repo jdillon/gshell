@@ -21,13 +21,18 @@ package org.apache.maven.shell.commands.file;
 
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
+import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.io.IO;
+import org.codehaus.plexus.component.annotations.Component;
+
+import java.io.File;
 
 /**
  * Displays the current directory.
  *
  * @version $Rev$ $Date$
  */
+@Component(role=Command.class, hint="pwd", instantiationStrategy="per-lookup")
 public class CurrentDirectoryCommand
     extends CommandSupport
 {
@@ -39,12 +44,9 @@ public class CurrentDirectoryCommand
         assert context != null;
         IO io = context.getIo();
 
-        /*
-        FileObject dir = getCurrentDirectory(context);
-        io.info(dir.getName().getURI());
-
-        FileObjects.close(dir);
-        */
+        File dir = new File(System.getProperty("user.dir"));
+        dir = dir.getCanonicalFile();
+        io.info(dir.getPath());
 
         return Result.SUCCESS;
     }

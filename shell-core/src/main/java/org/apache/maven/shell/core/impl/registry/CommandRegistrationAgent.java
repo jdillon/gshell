@@ -53,6 +53,9 @@ public class CommandRegistrationAgent
         commandRegistry.registerCommand("alias");
         commandRegistry.registerCommand("unalias");
         commandRegistry.registerCommand("echo");
+        commandRegistry.registerCommand("ls");
+        commandRegistry.registerCommand("cd");
+        commandRegistry.registerCommand("pwd");
         commandRegistry.registerCommand("mvn");
     }
 }

@@ -23,13 +23,16 @@ import org.apache.maven.shell.cli.Argument;
 import org.apache.maven.shell.cli.Option;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
+import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.io.IO;
+import org.codehaus.plexus.component.annotations.Component;
 
 /**
  * List the contents of a file or directory.
  *
  * @version $Rev$ $Date$
  */
+@Component(role=Command.class, hint="ls", instantiationStrategy="per-lookup")
 public class ListDirectoryCommand
     extends CommandSupport
 {
