@@ -23,7 +23,6 @@ import org.apache.maven.shell.parser.ASTCommandLine;
 import org.apache.maven.shell.parser.ASTExpression;
 import org.apache.maven.shell.parser.ASTOpaqueString;
 import org.apache.maven.shell.parser.ASTPlainString;
-import org.apache.maven.shell.parser.ASTProcess;
 import org.apache.maven.shell.parser.ASTQuotedString;
 import org.apache.maven.shell.parser.CommandLineParserVisitor;
 import org.apache.maven.shell.parser.SimpleNode;
@@ -119,10 +118,6 @@ public class LoggingVisitor
 
     public Object visit(final ASTExpression node, Object data) {
         return log(ASTExpression.class, node, data);
-    }
-
-    public Object visit(ASTProcess node, Object data) {
-        return log(ASTProcess.class, node, data);
     }
 
     public Object visit(final ASTQuotedString node, Object data) {

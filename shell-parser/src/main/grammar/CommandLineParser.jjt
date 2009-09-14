@@ -173,13 +173,6 @@ ASTCommandLine commandLine() #CommandLine: {}
 
 void expression() #Expression: {}
 {
-    (
-        process() ( "|" [ process() ] )*
-    )
-}
-
-void process() #Process: {}
-{
     ( argument() )+
 }
 

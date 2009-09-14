@@ -72,6 +72,7 @@ public class CommandLineParserTest
         assertEquals(0, cl.jjtGetNumChildren());
     }
 
+    /*
     //
     // Strings
     //
@@ -305,15 +306,5 @@ public class CommandLineParserTest
 
         assertEquals(1, cl.jjtGetNumChildren());
     }
-
-    public void testProcesses1() throws Exception {
-        String input = "a b c | d e f";
-
-        ASTCommandLine cl = parse(input);
-
-        assertEquals(1, cl.jjtGetNumChildren());
-
-        Node child = cl.jjtGetChild(0);
-        assertEquals(2, child.jjtGetNumChildren());
-    }
+    */
 }

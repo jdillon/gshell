@@ -56,7 +56,6 @@ public class CommandLineParserVisitorTest
         assertNull(v.simpleNode);
         assertNotNull(v.commandLine);
         assertNotNull(v.expression);
-        assertNotNull(v.process);
         assertNotNull(v.quotedString);
         assertNotNull(v.opaqueString);
         assertNotNull(v.plainString);
@@ -68,7 +67,6 @@ public class CommandLineParserVisitorTest
         private SimpleNode simpleNode;
         private ASTCommandLine commandLine;
         private ASTExpression expression;
-        private ASTProcess process;
         private ASTQuotedString quotedString;
         private ASTOpaqueString opaqueString;
         private ASTPlainString plainString;
@@ -87,12 +85,6 @@ public class CommandLineParserVisitorTest
 
         public Object visit(ASTExpression node, Object data) {
             this.expression = node;
-
-            return node.childrenAccept(this, data);
-        }
-
-        public Object visit(ASTProcess node, Object data) {
-            this.process = node;
 
             return node.childrenAccept(this, data);
         }
