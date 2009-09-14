@@ -31,7 +31,7 @@ public class ASTQuotedString
         super(id);
     }
 
-    public ASTQuotedString(final CommandLineParser p, final int id) {
+    public ASTQuotedString(final Parser p, final int id) {
         super(p, id);
     }
 
@@ -40,7 +40,7 @@ public class ASTQuotedString
     }
 
     /** Accept the visitor. **/
-    public Object jjtAccept(final CommandLineParserVisitor visitor, final Object data) {
+    public Object jjtAccept(final ParserVisitor visitor, final Object data) {
         return visitor.visit(this, data);
     }
 }

@@ -24,8 +24,8 @@ import org.apache.maven.shell.parser.ASTExpression;
 import org.apache.maven.shell.parser.ASTOpaqueString;
 import org.apache.maven.shell.parser.ASTPlainString;
 import org.apache.maven.shell.parser.ASTQuotedString;
-import org.apache.maven.shell.parser.CommandLineParserVisitor;
 import org.apache.maven.shell.parser.SimpleNode;
+import org.apache.maven.shell.parser.ParserVisitor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
  * @version $Rev$ $Date$
  */
 public class LoggingVisitor
-    implements CommandLineParserVisitor
+    implements ParserVisitor
 {
     public static enum Level {
         INFO,

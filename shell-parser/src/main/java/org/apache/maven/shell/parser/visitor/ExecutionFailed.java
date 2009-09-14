@@ -17,30 +17,19 @@
  * under the License.
  */
 
-package org.apache.maven.shell.parser;
+package org.apache.maven.shell.parser.visitor;
 
 /**
- * Represents an <em>opaque</em> argument.
+ * Thrown when a command execution fails.
  *
  * @version $Rev$ $Date$
  */
-public class ASTOpaqueString
-    extends StringSupport
+public class ExecutionFailed
+    extends Exception
 {
-    public ASTOpaqueString(final int id) {
-        super(id);
-    }
+    private static final long serialVersionUID = 1;
 
-    public ASTOpaqueString(final Parser p, final int id) {
-        super(p, id);
-    }
-
-    public String getValue() {
-        return unquote(super.getValue());
-    }
-
-    /** Accept the visitor. **/
-    public Object jjtAccept(final ParserVisitor visitor, final Object data) {
-        return visitor.visit(this, data);
+    public ExecutionFailed(final Throwable cause) {
+        super(cause);
     }
 }

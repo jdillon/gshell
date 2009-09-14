@@ -29,16 +29,12 @@ import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandDocumenter;
 import org.apache.maven.shell.command.CommandException;
 import org.apache.maven.shell.command.CommandExecutor;
+import org.apache.maven.shell.command.CommandLineParser;
+import org.apache.maven.shell.command.CommandLineParser.CommandLine;
 import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.command.OpaqueArguments;
-import org.apache.maven.shell.io.Closer;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.notification.ErrorNotification;
-import org.apache.maven.shell.parser.ASTCommandLine;
-import org.apache.maven.shell.parser.CommandLineParser;
-import org.apache.maven.shell.parser.ParseException;
-import org.apache.maven.shell.parser.visitor.ExecutingVisitor;
-import org.apache.maven.shell.parser.visitor.LoggingVisitor;
 import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.registry.CommandRegistry;
 import org.codehaus.plexus.component.annotations.Component;
@@ -46,9 +42,6 @@ import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.Reader;
-import java.io.StringReader;
 
 /**
  * The default {@link CommandExecutor} component.
@@ -73,46 +66,14 @@ public class CommandExecutorImpl
     @Requirement
     private CommandDocumenter commandDocumeter;
 
-    private ASTCommandLine parse(final ShellContext context, final String input) throws ParseException {
-        assert context != null;
-        assert input != null;
-
-        Reader reader = new StringReader(input);
-        ASTCommandLine cl;
-        try {
-            assert parser != null;
-            cl = parser.parse(reader);
-        }
-        finally {
-            Closer.close(reader);
-        }
-
-        // If debug is enabled, the log the parse tree
-        if (log.isDebugEnabled()) {
-            LoggingVisitor logger = new LoggingVisitor(log);
-            cl.jjtAccept(logger, null);
-        }
-
-        return cl;
-    }
-
-
     public Object execute(final ShellContext context, final String line) throws Exception {
         assert context != null;
         assert line != null;
 
-        log.debug("Building command-line for: {}", line);
-
-        if (line.trim().length() == 0) {
-            log.trace("Ignoring empty line");
-            return null;
-        }
+        CommandLine cl = parser.parse(line);
 
         try {
-            ASTCommandLine root = parse(context, line);
-            ExecutingVisitor visitor = new ExecutingVisitor(context, this);
-
-            return root.jjtAccept(visitor, null);
+            return cl.execute(context, this);
         }
         catch (ErrorNotification n) {
             // Decode the error notification

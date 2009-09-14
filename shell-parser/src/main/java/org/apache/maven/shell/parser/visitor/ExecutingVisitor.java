@@ -28,13 +28,11 @@ import org.apache.maven.shell.parser.ASTExpression;
 import org.apache.maven.shell.parser.ASTOpaqueString;
 import org.apache.maven.shell.parser.ASTPlainString;
 import org.apache.maven.shell.parser.ASTQuotedString;
-import org.apache.maven.shell.parser.CommandLineParserVisitor;
+import org.apache.maven.shell.parser.ParserVisitor;
 import org.apache.maven.shell.parser.SimpleNode;
 import org.codehaus.plexus.interpolation.Interpolator;
 import org.codehaus.plexus.interpolation.PropertiesBasedValueSource;
 import org.codehaus.plexus.interpolation.StringSearchInterpolator;
-import org.codehaus.plexus.personality.plexus.lifecycle.phase.Initializable;
-import org.codehaus.plexus.personality.plexus.lifecycle.phase.InitializationException;
 import org.codehaus.plexus.util.StringUtils;
 
 import java.util.ArrayList;
@@ -47,7 +45,7 @@ import java.util.List;
  * @version $Rev$ $Date$
  */
 public class ExecutingVisitor
-    implements CommandLineParserVisitor, Initializable
+    implements ParserVisitor
 {
     private final ShellContext context;
 
@@ -61,9 +59,7 @@ public class ExecutingVisitor
 
         this.context = context;
         this.executor = executor;
-    }
 
-    public void initialize() throws InitializationException {
         interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));
         // interp.addValueSource(new VariablesValueSource());
     }

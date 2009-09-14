@@ -33,7 +33,7 @@ public abstract class StringSupport
         super(id);
     }
 
-    public StringSupport(final CommandLineParser p, final int id) {
+    public StringSupport(final Parser p, final int id) {
         super(p, id);
     }
 

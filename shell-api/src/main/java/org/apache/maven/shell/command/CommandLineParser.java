@@ -17,19 +17,21 @@
  * under the License.
  */
 
-package org.apache.maven.shell.parser.visitor;
+package org.apache.maven.shell.command;
+
+import org.apache.maven.shell.ShellContext;
 
 /**
- * Thrown when a command execution fails.
+ * Parse command lines for execution.
  *
  * @version $Rev$ $Date$
  */
-public class CommandLineExecutionFailed
-    extends Exception
+public interface CommandLineParser
 {
-    private static final long serialVersionUID = 1;
+    CommandLine parse(String line) throws Exception;
 
-    public CommandLineExecutionFailed(final Throwable cause) {
-        super(cause);
+    interface CommandLine
+    {
+        Object execute(ShellContext context, CommandExecutor executor) throws Exception;
     }
 }

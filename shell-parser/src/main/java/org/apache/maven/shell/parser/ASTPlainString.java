@@ -31,12 +31,12 @@ public class ASTPlainString
         super(id);
     }
 
-    public ASTPlainString(final CommandLineParser p, final int id) {
+    public ASTPlainString(final Parser p, final int id) {
         super(p, id);
     }
 
     /** Accept the visitor. **/
-    public Object jjtAccept(final CommandLineParserVisitor visitor, final Object data) {
+    public Object jjtAccept(final ParserVisitor visitor, final Object data) {
         return visitor.visit(this, data);
     }
 }
