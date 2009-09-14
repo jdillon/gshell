@@ -62,9 +62,23 @@ public class ChangeDirectoryCommand
         IO io = context.getIo();
         Variables vars = context.getVariables();
 
-        File userHome = getUserHomeDir(context);
-        File file = resolveFile(context, userHome, path);
-        
+        File file;
+        if (path == null) {
+            file = getUserHomeDir(context);
+        }
+        else {
+            file = resolveFile(context, path);
+        }
+
+        if (!file.exists()) {
+            io.error("File not found: {}", file);
+            return Result.FAILURE;
+        }
+        else if (!file.isDirectory()) {
+            io.error("Not a directory: {}", file);
+            return Result.FAILURE;
+        }
+
         vars.set(MVNSH_USER_DIR, file.getPath());
         io.info(file.getPath());
 

@@ -81,8 +81,7 @@ public abstract class FileCommandSupport
         }
         else if (path.startsWith("~")) {
             File userHome = getUserHomeDir(context);
-            String tmp = userHome.getPath() + path.substring(1);
-            file = new File(tmp);
+            file = new File(userHome.getPath() + path.substring(1));
         }
         else {
             file = new File(path);

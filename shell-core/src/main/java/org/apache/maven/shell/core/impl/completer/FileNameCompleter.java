@@ -34,6 +34,10 @@ import java.util.List;
 public class FileNameCompleter
     implements Completor
 {
+    //
+    // FIXME: Need to use mvnsh.user.dir etc for muck...
+    //
+    
     private final FileNameCompletor delegate = new FileNameCompletor();
 
     public int complete(final String buffer, final int cursor, final List candidates) {
