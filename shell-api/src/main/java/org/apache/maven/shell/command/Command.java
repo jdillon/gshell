@@ -75,7 +75,7 @@ public interface Command
         SUCCESS, // 0
 
         /**
-         * The command exectuion failed.
+         * The command execution failed.
          */
         FAILURE // 1
     }
