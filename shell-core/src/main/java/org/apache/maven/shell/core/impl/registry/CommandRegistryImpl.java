@@ -20,7 +20,7 @@
 package org.apache.maven.shell.core.impl.registry;
 
 import org.apache.maven.shell.command.Command;
-import org.apache.maven.shell.command.CommandNameAware;
+import org.apache.maven.shell.command.NameAware;
 import org.apache.maven.shell.event.EventManager;
 import org.apache.maven.shell.registry.CommandRegistry;
 import org.apache.maven.shell.registry.DuplicateCommandException;
@@ -102,8 +102,8 @@ public class CommandRegistryImpl
         }
 
         // Inject the name of the command
-        if (command instanceof CommandNameAware) {
-            ((CommandNameAware)command).setName(name);
+        if (command instanceof NameAware) {
+            ((NameAware)command).setName(name);
         }
 
         return command;

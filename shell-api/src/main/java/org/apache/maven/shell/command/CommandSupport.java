@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  * @version $Rev$ $Date$
  */
 public abstract class CommandSupport
-    implements Command, CommandNameAware
+    implements Command, NameAware
 {
     protected Logger log = LoggerFactory.getLogger(getClass());
 

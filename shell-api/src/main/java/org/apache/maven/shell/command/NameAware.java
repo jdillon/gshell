@@ -24,7 +24,7 @@ package org.apache.maven.shell.command;
  *
  * @version $Rev$ $Date$
  */
-public interface CommandNameAware
+public interface NameAware
 {
     void setName(String name);
 }
