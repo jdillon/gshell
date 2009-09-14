@@ -26,12 +26,14 @@ import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.console.completer.AggregateCompleter;
 import org.apache.maven.shell.io.IO;
+import org.apache.maven.shell.io.PrefixingStream;
 import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.registry.CommandRegistry;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 
 import java.io.PrintWriter;
+import java.io.OutputStreamWriter;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -81,7 +83,7 @@ public class HelpCommand
         else {
             if (commandRegistry.containsCommand(commandName)) {
                 Command command = commandRegistry.getCommand(commandName);
-                renderManual(io.out, command);
+                renderManual(io, command);
 
                 return Result.SUCCESS;
             }
@@ -146,27 +148,26 @@ public class HelpCommand
         return command.getMessages().getMessage(COMMAND_MANUAL);
     }
 
-    private void renderManual(final PrintWriter out, final Command command) {
-        assert out != null;
+    private void renderManual(final IO io, final Command command) {
+        assert io != null;
 
         log.trace("Rendering command manual");
 
-        out.println("@|bold NAME|");
-        out.print("  ");
-        out.println(command.getName());
-        out.println();
+        PrefixingStream prefixed = new PrefixingStream("   ", io.outputStream);
 
-        out.println("@|bold DESCRIPTION|");
-        out.print("  ");
-        out.println(getDescription(command));
-        out.println();
+        io.out.println("@|bold NAME|");
+        io.out.print("  ");
+        prefixed.println(command.getName());
+        io.out.println();
 
-        //
-        // TODO: Use a prefixing writer here, take the impl from shitty
-        //
+        io.out.println("@|bold DESCRIPTION|");
+        io.out.print("  ");
+        prefixed.println(getDescription(command));
+        io.out.println();
 
-        out.println("@|bold MANUAL|");
-        out.println(getManual(command));
-        out.println();
+        io.out.println("@|bold MANUAL|");
+
+        prefixed.println(getManual(command));
+        io.out.println();
     }
 }
