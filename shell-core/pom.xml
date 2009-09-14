@@ -68,13 +68,6 @@
             <groupId>org.codehaus.plexus</groupId>
             <artifactId>plexus-interpolation</artifactId>
         </dependency>
-
-        <!--
-        <dependency>
-            <groupId>org.apache.maven</groupId>
-            <artifactId>maven-core</artifactId>
-        </dependency>
-        -->
     </dependencies>
 
 </project>

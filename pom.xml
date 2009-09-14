@@ -179,7 +179,13 @@
                 <artifactId>shell-api</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
-            
+
+            <dependency>
+                <groupId>org.apache.maven.shell</groupId>
+                <artifactId>shell-parser</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.apache.maven.shell</groupId>
                 <artifactId>shell-core</artifactId>
@@ -229,6 +235,7 @@
         <module>shell-i18n</module>
         <module>shell-event</module>
         <module>shell-api</module>
+        <module>shell-parser</module>
         <module>shell-core</module>
         <module>shell-commands</module>
         <module>shell-bootstrap</module>
@@ -277,6 +284,12 @@
 
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>javacc-maven-plugin</artifactId>
+                    <version>2.5</version>
+                </plugin>
+                
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-shade-plugin</artifactId>
