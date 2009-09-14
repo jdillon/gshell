@@ -20,7 +20,6 @@
 package org.apache.maven.shell.command;
 
 import java.lang.reflect.Array;
-import java.util.List;
 
 /**
  * Utils for command-line arguments.
@@ -43,44 +42,6 @@ public class Arguments
         System.arraycopy(source, pos, target, 0, target.length);
 
         return target;
-    }
-
-    public static String asString(final Object[] args, final String delim) {
-        assert args != null;
-
-        StringBuilder buff = new StringBuilder();
-
-        for (int i=0; i<args.length; i++ ) {
-            buff.append(args[i]);
-            if (i + 1 < args.length) {
-                buff.append(delim);
-            }
-        }
-
-        return buff.toString();
-    }
-
-    public static String asString(final Object[] args) {
-        return asString(args, ", ");
-    }
-
-    public static String asString(final List args, final String delim) {
-        assert args != null;
-
-        StringBuilder buff = new StringBuilder();
-
-        for (int i=0; i<args.size(); i++ ) {
-            buff.append(args.get(i));
-            if (i + 1 < args.size()) {
-                buff.append(delim);
-            }
-        }
-
-        return buff.toString();
-    }
-
-    public static String asString(final List args) {
-        return asString(args, ", ");
     }
 
     public static String[] toStringArray(final Object[] args) {

@@ -297,7 +297,7 @@ public class ShellImpl
     private void loadSharedScript(final String fileName) throws Exception {
         assert fileName != null;
 
-        // HACK: Need to use settings or something for this?
+        // HACK: Need to use settings or something for this, or load from ${mvnsh.home}/etc
         File dir = new File("/etc/maven2");
         File file = new File(dir, fileName);
 

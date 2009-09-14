@@ -35,6 +35,7 @@ import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.registry.CommandRegistry;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
+import org.codehaus.plexus.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -93,7 +94,7 @@ public class CommandExecutorImpl
         assert name != null;
         assert args != null;
 
-        log.debug("Executing ({}): [{}]", name, Arguments.asString(args));
+        log.debug("Executing ({}): [{}]", name, StringUtils.join(args, ", "));
 
         Command command = resolveCommand(name);
 
@@ -222,7 +223,7 @@ public class CommandExecutorImpl
             // Need to append any more arguments in the context
             Object[] args = context.getArguments();
             if (args.length > 0) {
-                alias = target + " " + Arguments.asString(args, " ");    
+                alias = target + " " + StringUtils.join(args, " ");
             }
 
             log.debug("Executing alias ({}) -> {}", name, alias);

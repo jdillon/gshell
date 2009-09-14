@@ -22,7 +22,6 @@ package org.apache.maven.shell.commands.basic;
 import org.apache.maven.shell.ansi.AnsiCode;
 import org.apache.maven.shell.ansi.AnsiRenderer;
 import org.apache.maven.shell.cli.Argument;
-import org.apache.maven.shell.command.Arguments;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
@@ -31,6 +30,7 @@ import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.registry.AliasRegistry;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
+import org.codehaus.plexus.util.StringUtils;
 
 import java.util.Collection;
 import java.util.List;
@@ -116,7 +116,7 @@ public class AliasCommand
             return Result.FAILURE;
         }
 
-        String alias = Arguments.asString(target, " ");
+        String alias = StringUtils.join(target.toArray(), " ");
         
         log.debug("Defining alias: {} -> {}", name, alias);
 

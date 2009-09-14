@@ -19,27 +19,26 @@
 
 package org.apache.maven.shell.commands.basic;
 
+import jline.Completor;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.Variables;
-import org.apache.maven.shell.console.completer.AggregateCompleter;
 import org.apache.maven.shell.cli.Argument;
 import org.apache.maven.shell.cli.Option;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
-import org.apache.maven.shell.command.Arguments;
+import org.apache.maven.shell.console.completer.AggregateCompleter;
 import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.io.IO;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
+import org.codehaus.plexus.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Iterator;
-import java.util.Properties;
 import java.util.List;
-
-import jline.Completor;
+import java.util.Properties;
 
 /**
  * Set a variable or property.
@@ -100,7 +99,7 @@ public class SetCommand
             return Result.FAILURE;
         }
 
-        String value = Arguments.asString(values, " ");
+        String value = StringUtils.join(values.toArray(), " ");
 
         switch (mode) {
             case PROPERTY:

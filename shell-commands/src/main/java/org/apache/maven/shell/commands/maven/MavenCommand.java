@@ -28,6 +28,7 @@ import org.apache.maven.shell.command.OpaqueArguments;
 import org.apache.maven.shell.io.IO;
 import org.codehaus.plexus.classworlds.ClassWorld;
 import org.codehaus.plexus.component.annotations.Component;
+import org.codehaus.plexus.util.StringUtils;
 
 /**
  * The <tt>mvn</tt> command.
@@ -73,7 +74,7 @@ public class MavenCommand
 
         String[] args = Arguments.toStringArray(context.getArguments());
 
-        log.debug("Invoking maven with args: ", Arguments.asString(args));
+        log.debug("Invoking maven with args: ", StringUtils.join(args, " "));
         
         ClassWorld classWorld = new ClassWorld("plexus.core", Thread.currentThread().getContextClassLoader());
         int result = MavenCli.main(args, classWorld);
