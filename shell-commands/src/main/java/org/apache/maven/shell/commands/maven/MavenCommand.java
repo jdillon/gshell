@@ -76,6 +76,16 @@ public class MavenCommand
         log.debug("Invoking maven with args: ", Arguments.asString(args));
         
         ClassWorld classWorld = new ClassWorld("plexus.core", Thread.currentThread().getContextClassLoader());
-        return MavenCli.main(args, classWorld);
+        int result = MavenCli.main(args, classWorld);
+
+        if (result == 0) {
+            return Result.SUCCESS;    
+        }
+        else if (result == 1) {
+            return Result.FAILURE;
+        }
+        else {
+            return result;
+        }
     }
 }

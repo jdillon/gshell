@@ -17,25 +17,31 @@
  * under the License.
  */
 
-package org.apache.maven.shell.testsuite;
+package org.apache.maven.shell.testsuite.maven;
 
+import org.apache.maven.shell.testsuite.CommandTestSupport;
 import org.apache.maven.shell.command.Command;
 
 /**
- * Support for testing {@link Command} instances.
+ * Tests for the {@link MavenCommand}.
  *
  * @version $Rev$ $Date$
  */
-public abstract class CommandTestSupport
-    extends ShellTestSupport
+public class MavenCommandTest
+    extends CommandTestSupport
 {
-    protected final String name;
-
-    protected CommandTestSupport(final String name) {
-        assertNotNull(name);
-        this.name = name;
+    public MavenCommandTest() {
+        super("mvn");
     }
 
+    /*
+    public void testDefault() throws Exception {
+        Object result = execute(name);
+        assertEquals(Command.Result.SUCCESS, result);
+    }
+    */
+
+    @Override
     public void testHelp() throws Exception {
         Object result;
 

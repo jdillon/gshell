@@ -17,32 +17,30 @@
  * under the License.
  */
 
-package org.apache.maven.shell.testsuite;
+package org.apache.maven.shell.testsuite.basic;
 
-import org.apache.maven.shell.command.Command;
+import org.apache.maven.shell.notification.ExitNotification;
+import org.apache.maven.shell.testsuite.CommandTestSupport;
 
 /**
- * Support for testing {@link Command} instances.
+ * Tests for the {@link ExitCommand}.
  *
  * @version $Rev$ $Date$
  */
-public abstract class CommandTestSupport
-    extends ShellTestSupport
+public class ExitCommandTest
+    extends CommandTestSupport
 {
-    protected final String name;
-
-    protected CommandTestSupport(final String name) {
-        assertNotNull(name);
-        this.name = name;
+    public ExitCommandTest() {
+        super("exit");
     }
 
-    public void testHelp() throws Exception {
-        Object result;
-
-        result = execute(name + " --help");
-        assertEquals(Command.Result.SUCCESS, result);
-
-        result = execute(name + " -h");
-        assertEquals(Command.Result.SUCCESS, result);
+    public void testDefault() throws Exception {
+        try {
+            execute(name);
+            fail();
+        }
+        catch (ExitNotification n) {
+            // expected
+        }
     }
 }
