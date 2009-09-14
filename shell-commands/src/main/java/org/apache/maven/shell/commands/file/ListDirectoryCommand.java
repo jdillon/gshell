@@ -76,6 +76,11 @@ public class ListDirectoryCommand
 
         File file = resolveFile(context, path);
 
+        if (!file.exists()) {
+            io.error("File not found: {}", file);
+            return Result.FAILURE;
+        }
+
         if (file.isDirectory()) {
             listChildren(io, file);
         }
