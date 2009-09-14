@@ -36,8 +36,7 @@ public class Arguments
         assert source != null;
         assert source.length >= pos;
 
-        Object[] target = (Object[])
-            Array.newInstance(source.getClass().getComponentType(), source.length - pos);
+        Object[] target = (Object[])Array.newInstance(source.getClass().getComponentType(), source.length - pos);
 
         System.arraycopy(source, pos, target, 0, target.length);
 
