@@ -19,16 +19,17 @@
 
 package org.apache.maven.shell.parser;
 
-import org.codehaus.plexus.component.annotations.Component;
-import org.apache.maven.shell.command.CommandLineParser;
-import org.apache.maven.shell.command.CommandExecutor;
 import org.apache.maven.shell.ShellContext;
-import org.apache.maven.shell.notification.ErrorNotification;
-import org.apache.maven.shell.parser.visitor.LoggingVisitor;
-import org.apache.maven.shell.parser.visitor.ExecutingVisitor;
+import org.apache.maven.shell.command.CommandExecutor;
+import org.apache.maven.shell.command.CommandLineParser;
 import org.apache.maven.shell.io.Closer;
-import org.slf4j.LoggerFactory;
+import org.apache.maven.shell.parser.visitor.ExecutingVisitor;
+import org.apache.maven.shell.parser.visitor.LoggingVisitor;
+import org.apache.maven.shell.parser.impl.Parser;
+import org.apache.maven.shell.parser.impl.ASTCommandLine;
+import org.codehaus.plexus.component.annotations.Component;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Reader;
 import java.io.StringReader;

@@ -19,15 +19,15 @@
 
 package org.apache.maven.shell.parser.visitor;
 
-import org.apache.maven.shell.parser.ASTCommandLine;
-import org.apache.maven.shell.parser.ASTExpression;
-import org.apache.maven.shell.parser.ASTOpaqueString;
-import org.apache.maven.shell.parser.ASTPlainString;
-import org.apache.maven.shell.parser.ASTQuotedString;
-import org.apache.maven.shell.parser.SimpleNode;
-import org.apache.maven.shell.parser.ParserVisitor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.apache.maven.shell.parser.impl.ParserVisitor;
+import org.apache.maven.shell.parser.impl.SimpleNode;
+import org.apache.maven.shell.parser.impl.ASTCommandLine;
+import org.apache.maven.shell.parser.impl.ASTExpression;
+import org.apache.maven.shell.parser.impl.ASTQuotedString;
+import org.apache.maven.shell.parser.impl.ASTOpaqueString;
+import org.apache.maven.shell.parser.impl.ASTPlainString;
 
 /**
  * Visitor whichs logs nodes in the tree.

@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.maven.shell.parser;
+package org.apache.maven.shell.parser.impl;
 
 /**
  * Support for string types.

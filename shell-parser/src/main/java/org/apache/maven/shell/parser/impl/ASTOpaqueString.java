@@ -17,21 +17,21 @@
  * under the License.
  */
 
-package org.apache.maven.shell.parser;
+package org.apache.maven.shell.parser.impl;
 
 /**
- * Represents a quoted (with double quotes) argument.
+ * Represents an <em>opaque</em> argument.
  *
  * @version $Rev$ $Date$
  */
-public class ASTQuotedString
+public class ASTOpaqueString
     extends StringSupport
 {
-    public ASTQuotedString(final int id) {
+    public ASTOpaqueString(final int id) {
         super(id);
     }
 
-    public ASTQuotedString(final Parser p, final int id) {
+    public ASTOpaqueString(final Parser p, final int id) {
         super(p, id);
     }
 

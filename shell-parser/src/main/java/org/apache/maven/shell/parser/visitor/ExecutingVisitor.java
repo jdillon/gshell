@@ -20,16 +20,16 @@
 package org.apache.maven.shell.parser.visitor;
 
 import org.apache.maven.shell.ShellContext;
+import org.apache.maven.shell.parser.impl.ParserVisitor;
+import org.apache.maven.shell.parser.impl.SimpleNode;
+import org.apache.maven.shell.parser.impl.ASTCommandLine;
+import org.apache.maven.shell.parser.impl.ASTExpression;
+import org.apache.maven.shell.parser.impl.ASTQuotedString;
+import org.apache.maven.shell.parser.impl.ASTPlainString;
+import org.apache.maven.shell.parser.impl.ASTOpaqueString;
 import org.apache.maven.shell.command.Arguments;
 import org.apache.maven.shell.command.CommandExecutor;
 import org.apache.maven.shell.notification.ErrorNotification;
-import org.apache.maven.shell.parser.ASTCommandLine;
-import org.apache.maven.shell.parser.ASTExpression;
-import org.apache.maven.shell.parser.ASTOpaqueString;
-import org.apache.maven.shell.parser.ASTPlainString;
-import org.apache.maven.shell.parser.ASTQuotedString;
-import org.apache.maven.shell.parser.ParserVisitor;
-import org.apache.maven.shell.parser.SimpleNode;
 import org.codehaus.plexus.interpolation.Interpolator;
 import org.codehaus.plexus.interpolation.PropertiesBasedValueSource;
 import org.codehaus.plexus.interpolation.StringSearchInterpolator;

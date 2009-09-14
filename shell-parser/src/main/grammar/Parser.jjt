@@ -30,13 +30,10 @@ options {
 
 PARSER_BEGIN(Parser)
 
-package org.apache.maven.shell.parser;
+package org.apache.maven.shell.parser.impl;
 
 import java.io.Reader;
 import java.io.StringReader;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Support for command line parsing.
@@ -45,16 +42,12 @@ import org.slf4j.LoggerFactory;
  */
 public class Parser
 {
-    protected final Logger log = LoggerFactory.getLogger(getClass());
-
     public Parser() {
         this(new StringReader(""));
     }
 
     public ASTCommandLine parse(final Reader reader) throws ParseException {
         assert reader != null;
-
-        log.debug("Parsing from reader: {}", reader);
 
         this.ReInit(reader);
 
