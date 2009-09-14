@@ -22,6 +22,11 @@ package org.apache.maven.shell.core.impl.command;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.ShellContext;
 import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.parser.CommandLineParser;
+import org.apache.maven.shell.parser.ParseException;
+import org.apache.maven.shell.parser.ASTCommandLine;
+import org.apache.maven.shell.parser.visitor.LoggingVisitor;
+import org.apache.maven.shell.parser.visitor.ExecutingVisitor;
 import org.apache.maven.shell.cli.CommandLineProcessor;
 import org.apache.maven.shell.command.Arguments;
 import org.apache.maven.shell.command.Command;
@@ -32,6 +37,7 @@ import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.command.OpaqueArguments;
 import org.apache.maven.shell.command.CommandDocumenter;
 import org.apache.maven.shell.io.IO;
+import org.apache.maven.shell.io.Closer;
 import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.registry.CommandRegistry;
 import org.codehaus.plexus.component.annotations.Component;
@@ -39,6 +45,9 @@ import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.Reader;
+import java.io.StringReader;
 
 /**
  * The default {@link CommandExecutor} component.
@@ -58,32 +67,50 @@ public class CommandExecutorImpl
     private CommandRegistry commandRegistry;
 
     @Requirement
+    private CommandLineParser parser;
+
+    @Requirement
     private CommandDocumenter commandDocumeter;
     
     public Object execute(final ShellContext context, final String line) throws Exception {
         assert context != null;
         assert line != null;
 
-        String trimmed = line.trim();
+        log.debug("Building command-line for: {}", line);
 
-        if (trimmed.length() == 0 || trimmed.startsWith("#")) {
-            return Command.Result.SUCCESS;
+        if (line.trim().length() == 0) {
+            // throw new IllegalArgumentException("Command line is empty");
+            return null;
         }
 
-        // FIXME: Really need quote handling here...
+        ASTCommandLine root = parse(context, line);
 
-        // FIXME: Where to hack in support for ${...} bits?
-        
-        log.debug("Parsing command from line: {}", trimmed);
+        ExecutingVisitor visitor = new ExecutingVisitor(context, this);
 
-        String[] elements = trimmed.split(" ");
+        return root.jjtAccept(visitor, null);
+    }
 
-        if (elements.length == 1) {
-            return execute(context, elements[0], new String[0]);
+    private ASTCommandLine parse(final ShellContext context, final String input) throws ParseException {
+        assert context != null;
+        assert input != null;
+
+        Reader reader = new StringReader(input);
+        ASTCommandLine cl;
+        try {
+            assert parser != null;
+            cl = parser.parse(reader);
         }
-        else {
-            return execute(context, elements[0], Arguments.shift(elements));
+        finally {
+            Closer.close(reader);
         }
+
+        // If debug is enabled, the log the parse tree
+        if (log.isDebugEnabled()) {
+            LoggingVisitor logger = new LoggingVisitor(log);
+            cl.jjtAccept(logger, null);
+        }
+
+        return cl;
     }
 
     public Object execute(final ShellContext context, final Object... args) throws Exception {
