@@ -73,7 +73,7 @@ public class AliasCommand
         Collection<String> names = aliasRegistry.getAliasNames();
 
         if (names.isEmpty()) {
-            io.info("No aliases have been defined");
+            io.info("No aliases have been defined"); // TODO: i18n
         }
         else {
             // Determine the maximun name length
@@ -84,7 +84,7 @@ public class AliasCommand
                 }
             }
 
-            io.out.println("Defined aliases:");
+            io.out.println("Defined aliases:"); // TODO: i18n
             for (String name : names) {
                 String alias = aliasRegistry.getAlias(name);
                 String formattedName = String.format("%-" + maxNameLen + "s", name);
@@ -93,7 +93,7 @@ public class AliasCommand
                 io.out.print(AnsiRenderer.encode(formattedName, AnsiCode.BOLD));
 
                 io.out.print("  ");
-                io.out.print("Alias to: ");
+                io.out.print("Alias to: "); // TODO: i18n
                 io.out.println(alias);
             }
         }

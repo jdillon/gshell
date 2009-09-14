@@ -61,7 +61,7 @@ public class RecallHistoryCommand
         List<String> elements = history.getHistoryList();
 
         if (index < 0 || index > elements.size()) {
-            io.error("No such history index: {}", index);
+            io.error("No such history index: {}", index); // TODO: i18n
             return Result.FAILURE;
         }
 

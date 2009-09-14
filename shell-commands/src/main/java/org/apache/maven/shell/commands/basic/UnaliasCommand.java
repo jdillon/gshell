@@ -73,7 +73,7 @@ public class UnaliasCommand
             return Result.SUCCESS;
         }
         catch (NoSuchAliasException e) {
-            io.error("No alias defined: {}", name);
+            io.error("No alias defined: {}", name); // TODO: i18n
 
             return Result.FAILURE;
         }

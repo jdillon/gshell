@@ -71,11 +71,11 @@ public class ChangeDirectoryCommand
         }
 
         if (!file.exists()) {
-            io.error("File not found: {}", file);
+            io.error("File not found: {}", file); // TODO: i18n
             return Result.FAILURE;
         }
         else if (!file.isDirectory()) {
-            io.error("Not a directory: {}", file);
+            io.error("Not a directory: {}", file); // TODO: i18n
             return Result.FAILURE;
         }
 

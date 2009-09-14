@@ -84,7 +84,7 @@ public class HelpCommand
                 return Result.SUCCESS;
             }
             else if (aliasRegistry.containsAlias(commandName)) {
-                io.out.print("Alias ");
+                io.out.print("Alias "); // TODO: i18n
                 io.out.print(AnsiRenderer.encode(commandName, AnsiCode.BOLD));
                 io.out.print(": ");
                 io.out.println(aliasRegistry.getAlias(commandName));
@@ -92,13 +92,13 @@ public class HelpCommand
                 return Result.SUCCESS;
             }
             else {
-                io.out.print("Command ");
+                io.out.print("Command "); // TODO: i18n
                 io.out.print(AnsiRenderer.encode(commandName, AnsiCode.BOLD));
-                io.out.println(" not found.");
+                io.out.println(" not found."); // TODO: i18n
 
-                io.out.print("Try ");
+                io.out.print("Try "); // TODO: i18n
                 io.out.print(AnsiRenderer.encode("help", AnsiCode.BOLD));
-                io.out.println(" for a list of available commands.");
+                io.out.println(" for a list of available commands."); // TODO: i18n
 
                 return Result.FAILURE;
             }
@@ -123,7 +123,7 @@ public class HelpCommand
         }
 
         IO io = context.getIo();
-        io.out.println("Available commands:");
+        io.out.println("Available commands:"); // TODO: i18n
         for (Command command : commands) {
             String formattedName = String.format("%-" + maxNameLen + "s", command.getName());
             String desc = getDescription(command);

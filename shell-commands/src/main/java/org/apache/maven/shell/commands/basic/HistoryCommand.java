@@ -68,7 +68,7 @@ public class HistoryCommand
 
         if (clear) {
             history.clear();
-            io.verbose("History clearend");
+            io.verbose("History clearend"); // TODO: i18n
         }
 
         if (purge) {
@@ -76,7 +76,7 @@ public class HistoryCommand
             Class type = Thread.currentThread().getContextClassLoader().loadClass("org.apache.maven.shell.core.impl.HistoryImpl");
             Method method = type.getMethod("purge");
             method.invoke(history);
-            io.verbose("History purged");
+            io.verbose("History purged"); // TODO: i18n
         }
 
         return displayRange(context);
@@ -100,7 +100,7 @@ public class HistoryCommand
         }
         else {
             // TODO: Handle range
-            io.error("Sorry range is not yet supported");
+            log.error("Sorry range is not yet supported");
             return Result.FAILURE;
         }
 
