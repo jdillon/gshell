@@ -117,7 +117,7 @@ public class CommandExecutorImpl
                     log.trace("Render command-line usage");
 
                     CommandDocumenter documenter = new CommandDocumenter(command);
-                    documenter.renderUsage(io.out);
+                    documenter.renderUsage(io);
 
                     result = Command.Result.SUCCESS;
                     execute = false;

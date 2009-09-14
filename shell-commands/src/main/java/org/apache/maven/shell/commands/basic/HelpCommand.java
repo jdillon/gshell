@@ -26,14 +26,13 @@ import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.console.completer.AggregateCompleter;
 import org.apache.maven.shell.io.IO;
-import org.apache.maven.shell.io.PrefixingStream;
 import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.registry.CommandRegistry;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 
-import java.io.PrintWriter;
-import java.io.OutputStreamWriter;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -47,10 +46,6 @@ import java.util.List;
 public class HelpCommand
     extends CommandSupport
 {
-    private static final String COMMAND_DESCRIPTION = "command.description";
-
-    private static final String COMMAND_MANUAL = "command.manual";
-
     @Requirement
     private AliasRegistry aliasRegistry;
 
@@ -138,36 +133,32 @@ public class HelpCommand
         return Result.SUCCESS;
     }
 
-    // TODO: Should we expose this stuff on Command?
-    
-    private String getDescription(final Command command) {
-        return command.getMessages().getMessage(COMMAND_DESCRIPTION);
+    //
+    // HACK: CommandDocumenter is not accessible in this context
+    //
+
+    private Object createDocumenter(final Command command) throws Exception {
+        assert command != null;
+
+        Class type = Thread.currentThread().getContextClassLoader().loadClass("org.apache.maven.shell.core.impl.command.CommandDocumenter");
+        Constructor factory = type.getConstructor(Command.class);
+        return factory.newInstance(command);
     }
 
-    private String getManual(final Command command) {
-        return command.getMessages().getMessage(COMMAND_MANUAL);
+    private String getDescription(final Command command) throws Exception {
+        assert command != null;
+
+        Object doc = createDocumenter(command);
+        Method method = doc.getClass().getMethod("getDescription");
+        return (String)method.invoke(doc);
     }
 
-    private void renderManual(final IO io, final Command command) {
+    private void renderManual(final IO io, final Command command) throws Exception {
         assert io != null;
+        assert command != null;
 
-        log.trace("Rendering command manual");
-
-        PrefixingStream prefixed = new PrefixingStream("   ", io.outputStream);
-
-        io.out.println("@|bold NAME|");
-        io.out.print("  ");
-        prefixed.println(command.getName());
-        io.out.println();
-
-        io.out.println("@|bold DESCRIPTION|");
-        io.out.print("  ");
-        prefixed.println(getDescription(command));
-        io.out.println();
-
-        io.out.println("@|bold MANUAL|");
-
-        prefixed.println(getManual(command));
-        io.out.println();
+        Object doc = createDocumenter(command);
+        Method method = doc.getClass().getMethod("renderManual", IO.class);
+        method.invoke(doc, io);
     }
 }

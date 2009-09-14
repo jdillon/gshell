@@ -168,7 +168,6 @@ public class ConfigurationImpl
 
         if (libDir == null) {
             libDir = getPropertyAsFile(MVNSH_LIB);
-            // TODO: If relative root under homeDir?
         }
 
         return libDir;
@@ -179,7 +178,6 @@ public class ConfigurationImpl
 
         if (etcDir == null) {
             etcDir = getPropertyAsFile(MVNSH_ETC);
-            // TODO: If relative root under homeDir?
         }
 
         return etcDir;

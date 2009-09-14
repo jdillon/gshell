@@ -25,6 +25,7 @@ import org.codehaus.plexus.personality.plexus.lifecycle.phase.Initializable;
 import org.codehaus.plexus.personality.plexus.lifecycle.phase.InitializationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.apache.maven.shell.VariableNames;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,7 +38,7 @@ import java.io.IOException;
 @Component(role=History.class)
 public class HistoryImpl
     extends History
-    implements Initializable
+    implements Initializable, VariableNames
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -58,7 +59,7 @@ public class HistoryImpl
     }
 
     private File getDefaultHistoryFile() {
-        // HACK: Need to use settings or something for this?
+        // FIXME: Use MVNSH_USER_DIR here
         File dir = new File(new File(System.getProperty("user.home")), ".m2");
         return new File(dir, FILENAME);
     }

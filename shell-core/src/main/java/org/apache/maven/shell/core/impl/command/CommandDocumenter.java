@@ -19,18 +19,16 @@
 
 package org.apache.maven.shell.core.impl.command;
 
-import org.apache.maven.shell.ansi.AnsiCode;
-import org.apache.maven.shell.ansi.AnsiRenderer;
 import org.apache.maven.shell.cli.CommandLineProcessor;
 import org.apache.maven.shell.cli.Printer;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.i18n.AggregateMessageSource;
 import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.i18n.PrefixingMessageSource;
+import org.apache.maven.shell.io.IO;
+import org.apache.maven.shell.io.PrefixingStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.PrintWriter;
 
 /**
  * Support for command documenation.
@@ -41,6 +39,10 @@ public class CommandDocumenter
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
+    private static final String COMMAND_DESCRIPTION = "command.description";
+
+    private static final String COMMAND_MANUAL = "command.manual";
+
     private final Command command;
 
     public CommandDocumenter(final Command command) {
@@ -49,8 +51,8 @@ public class CommandDocumenter
         this.command = command;
     }
 
-    public void renderUsage(final PrintWriter out) {
-        assert out != null;
+    public void renderUsage(final IO io) {
+        assert io != null;
 
         log.trace("Rendering command usage");
 
@@ -64,8 +66,8 @@ public class CommandDocumenter
         clp.addBean(command);
 
         // Render the help
-        out.println(getDescription());
-        out.println();
+        io.out.println(getDescription());
+        io.out.println();
 
         Printer printer = new Printer(clp);
 
@@ -75,44 +77,37 @@ public class CommandDocumenter
         });
 
         printer.setMessageSource(new PrefixingMessageSource(messages, "command."));
-        printer.printUsage(out, command.getName());
+        printer.printUsage(io.out, command.getName());
     }
 
-    public void renderManual(final PrintWriter out) {
-        assert out != null;
+    public void renderManual(final IO io) {
+        assert io != null;
 
         log.trace("Rendering command manual");
 
-        AnsiRenderer renderer = new AnsiRenderer();
+        PrefixingStream prefixed = new PrefixingStream("   ", io.outputStream);
 
-        out.println(renderer.render(AnsiRenderer.encode("NAME", AnsiCode.BOLD)));
-        out.print("  ");
-        out.println(command.getName());
-        out.println();
+        io.out.println("@|bold NAME|");
+        io.out.print("  ");
+        prefixed.println(command.getName());
+        io.out.println();
 
-        out.println(renderer.render(AnsiRenderer.encode("DESCRIPTION", AnsiCode.BOLD)));
-        out.print("  ");
-        out.println(getDescription());
-        out.println();
+        io.out.println("@|bold DESCRIPTION|");
+        io.out.print("  ");
+        prefixed.println(getDescription());
+        io.out.println();
 
-        //
-        // TODO: Use a prefixing writer here, take the impl from shitty
-        //
+        io.out.println("@|bold MANUAL|");
 
-        out.println(renderer.render(AnsiRenderer.encode("MANUAL", AnsiCode.BOLD)));
-        out.println(getManual());
-        out.println();
+        prefixed.println(getManual());
+        io.out.println();
     }
-
-    public static final String COMMAND_DESCRIPTION = "command.description";
-
-    public static final String COMMAND_MANUAL = "command.manual";
 
     public String getDescription() {
         return command.getMessages().getMessage(COMMAND_DESCRIPTION);
     }
 
-    protected String getManual() {
+    public String getManual() {
         return command.getMessages().getMessage(COMMAND_MANUAL);
     }
 }

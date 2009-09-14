@@ -36,7 +36,7 @@ public class MavenCommandTest
 
     @Override
     public void testDefault() throws Exception {
-        // FIXME: FOr now ignore default test
+        // FIXME: For now ignore default test
     }
 
     @Override
