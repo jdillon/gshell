@@ -25,7 +25,6 @@ import org.apache.maven.shell.cli.Argument;
 import org.apache.maven.shell.cli.Option;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
-import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.console.completer.AggregateCompleter;
 import org.apache.maven.shell.io.IO;
 import org.codehaus.plexus.component.annotations.Component;
@@ -44,7 +43,7 @@ import java.util.List;
  */
 @Component(role=Command.class, hint="ls", instantiationStrategy="per-lookup")
 public class ListDirectoryCommand
-    extends CommandSupport
+    extends FileCommandSupport
 {
     @Requirement(role=Completor.class, hints={"file-name"})
     private List<Completor> completers;
@@ -75,25 +74,7 @@ public class ListDirectoryCommand
         assert context != null;
         IO io = context.getIo();
 
-        File file;
-
-        File cwd = new File(System.getProperty("user.dir"));
-
-        if (path == null) {
-            file = cwd;
-        }
-        else {
-            if (path.startsWith("~")) {
-                path = System.getProperty("user.home") + path.substring(1);
-            }
-
-            file = new File(path);
-            if (!file.isAbsolute()) {
-                file = new File(cwd, path);
-            }
-
-            file = file.getCanonicalFile();
-        }
+        File file = resolveFile(context, path);
 
         if (file.isDirectory()) {
             listChildren(io, file);
@@ -160,19 +141,5 @@ public class ListDirectoryCommand
                 listChildren(io, subdir);
             }
         }
-    }
-
-    private boolean hasChildren(final File file) {
-        assert file != null;
-
-        if (file.isDirectory()) {
-            File[] children = file.listFiles();
-
-            if (children != null && children.length != 0) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

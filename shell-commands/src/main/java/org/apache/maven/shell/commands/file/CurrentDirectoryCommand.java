@@ -21,7 +21,6 @@ package org.apache.maven.shell.commands.file;
 
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
-import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.io.IO;
 import org.codehaus.plexus.component.annotations.Component;
 
@@ -34,14 +33,13 @@ import java.io.File;
  */
 @Component(role=Command.class, hint="pwd", instantiationStrategy="per-lookup")
 public class CurrentDirectoryCommand
-    extends CommandSupport
+    extends FileCommandSupport
 {
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
         IO io = context.getIo();
 
-        File dir = new File(System.getProperty("user.dir"));
-        dir = dir.getCanonicalFile();
+        File dir = getUserDir(context);
         io.info(dir.getPath());
 
         return Result.SUCCESS;

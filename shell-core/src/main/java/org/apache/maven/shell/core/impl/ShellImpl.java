@@ -118,7 +118,11 @@ public class ShellImpl
             // HACK: Need to resolve this in the new mvnsh context
             ShellContextHolder.set(context);
 
-            vars.set("mvnsh.prompt", "@|bold mvnsh|:%{user.dir}> ");
+            vars.set("mvnsh.home", System.getProperty("mvnsh.home"), false);
+            vars.set("mvnsh.version", System.getProperty("mvnsh.version"), false);
+            vars.set("mvnsh.user.home", System.getProperty("user.home"), false);
+            vars.set("mvnsh.user.dir", System.getProperty("user.dir"));
+            vars.set("mvnsh.prompt", "@|bold mvnsh|:%{mvnsh.user.dir}> ");
 
             // HACK: Add history for the 'history' command, since its not part of the Shell intf it can't really access it
             assert history != null;

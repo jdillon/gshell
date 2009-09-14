@@ -20,10 +20,10 @@
 package org.apache.maven.shell.commands.file;
 
 import jline.Completor;
+import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.cli.Argument;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
-import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.console.completer.AggregateCompleter;
 import org.apache.maven.shell.io.IO;
 import org.codehaus.plexus.component.annotations.Component;
@@ -39,7 +39,7 @@ import java.util.List;
  */
 @Component(role=Command.class, hint="cd", instantiationStrategy="per-lookup")
 public class ChangeDirectoryCommand
-    extends CommandSupport
+    extends FileCommandSupport
 {
     @Requirement(role=Completor.class, hints={"file-name"})
     private List<Completor> completers;
@@ -60,26 +60,12 @@ public class ChangeDirectoryCommand
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
         IO io = context.getIo();
+        Variables vars = context.getVariables();
 
-        if (path == null) {
-            path = System.getProperty("user.home");
-        }
-
-        if (path.startsWith("~")) {
-            path = System.getProperty("user.home") + path.substring(1);
-        }
-
-        File cwd = new File(System.getProperty("user.dir"));
-
-        File file = new File(path);
-
-        if (!file.isAbsolute()) {
-            file = new File(cwd, path);
-        }
-
-        file = file.getCanonicalFile();
+        File userHome = getUserHomeDir(context);
+        File file = resolveFile(context, userHome, path);
         
-        System.setProperty("user.dir", file.getPath());
+        vars.set(MVNSH_USER_DIR, file.getPath());
         io.info(file.getPath());
 
         return Result.SUCCESS;

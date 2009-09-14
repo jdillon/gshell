@@ -26,6 +26,8 @@ import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.command.OpaqueArguments;
 import org.apache.maven.shell.io.IO;
+import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.commands.file.FileCommandSupport;
 import org.codehaus.plexus.classworlds.ClassWorld;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.util.StringUtils;
@@ -70,8 +72,12 @@ public class MavenCommand
 
         String[] args = Arguments.toStringArray(context.getArguments());
 
-        log.debug("Invoking maven with args: ", StringUtils.join(args, " "));
-        
+        log.debug("Invoking maven with args: {}", StringUtils.join(args, " "));
+
+        // Propagate mvnsh.user.dir to user.dir
+        Variables vars = context.getVariables();
+        System.setProperty("user.dir", vars.get(FileCommandSupport.MVNSH_USER_DIR, String.class));
+
         ClassWorld classWorld = new ClassWorld("plexus.core", Thread.currentThread().getContextClassLoader());
         int result = MavenCli.main(args, classWorld);
 
