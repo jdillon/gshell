@@ -37,16 +37,12 @@ public interface CommandContext
      */
     Shell getShell();
 
-    //
-    // FIXME: Make this Object[] again since shell-cli handles most conversion
-    //
-    
     /**
      * Provides access to the arguments to the command.
      *
      * @return The command arguments; never null.
      */
-    String[] getArguments();
+    Object[] getArguments();
 
     /**
      * The Input/Output context for the command.

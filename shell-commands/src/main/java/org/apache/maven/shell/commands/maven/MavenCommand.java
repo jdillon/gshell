@@ -71,7 +71,7 @@ public class MavenCommand
         }
         */
 
-        String[] args = context.getArguments();
+        String[] args = Arguments.toStringArray(context.getArguments());
 
         log.debug("Invoking maven with args: ", Arguments.asString(args));
         

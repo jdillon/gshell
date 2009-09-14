@@ -81,14 +81,14 @@ public class CommandExecutorImpl
         }
     }
 
-    public Object execute(final ShellContext context, final String... args) throws Exception {
+    public Object execute(final ShellContext context, final Object... args) throws Exception {
         assert context != null;
         assert args != null;
 
         return execute(context, String.valueOf(args[0]), Arguments.shift(args));
     }
     
-    public Object execute(final ShellContext context, final String name, final String[] args) throws Exception {
+    public Object execute(final ShellContext context, final String name, final Object[] args) throws Exception {
         assert context != null;
         assert name != null;
         assert args != null;
@@ -129,7 +129,7 @@ public class CommandExecutorImpl
                         return context.getShell();
                     }
 
-                    public String[] getArguments() {
+                    public Object[] getArguments() {
                         return args;
                     }
 
@@ -220,7 +220,7 @@ public class CommandExecutorImpl
             String alias = target;
 
             // Need to append any more arguments in the context
-            String[] args = context.getArguments();
+            Object[] args = context.getArguments();
             if (args.length > 0) {
                 alias = target + " " + Arguments.asString(args, " ");    
             }

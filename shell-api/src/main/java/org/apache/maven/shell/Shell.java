@@ -32,9 +32,9 @@ public interface Shell
     
     Object execute(String line) throws Exception;
 
-    Object execute(String command, String[] args) throws Exception;
+    Object execute(String command, Object[] args) throws Exception;
 
-    Object execute(String... args) throws Exception;
+    Object execute(Object... args) throws Exception;
 
     boolean isOpened();
 
@@ -55,5 +55,5 @@ public interface Shell
      * @throws Exception                        Failed to execute commands.
      * @throws UnsupportedOperationException    The shell does not support interactive execution.
      */
-    void run(String... args) throws Exception;
+    void run(Object... args) throws Exception;
 }

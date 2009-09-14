@@ -159,21 +159,21 @@ public class ShellImpl
         return executor.execute(getContext(), line);
     }
 
-    public Object execute(final String command, final String[] args) throws Exception {
+    public Object execute(final String command, final Object[] args) throws Exception {
         ensureOpened();
 
         assert executor != null;
         return executor.execute(getContext(), command, args);
     }
 
-    public Object execute(final String... args) throws Exception {
+    public Object execute(final Object... args) throws Exception {
         ensureOpened();
 
         assert executor != null;
         return executor.execute(getContext(), args);
     }
 
-    public void run(final String... args) throws Exception {
+    public void run(final Object... args) throws Exception {
         assert args != null;
 
         ensureOpened();

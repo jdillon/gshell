@@ -31,21 +31,21 @@ public class ArgumentsTest
     extends TestCase
 {
     public void testShift() {
-        String[] args = { "1", "2", "3", "4" };
+        Object[] args = { 1, 2, 3, 4 };
 
-        String[] shifted = Arguments.shift(args);
+        Object[] shifted = Arguments.shift(args);
 
         assertEquals(args.length - 1, shifted.length);
 
-        assertEquals("2", shifted[0]);
-        assertEquals("3", shifted[1]);
-        assertEquals("4", shifted[2]);
+        assertEquals(2, shifted[0]);
+        assertEquals(3, shifted[1]);
+        assertEquals(4, shifted[2]);
     }
 
     public void testShift2() {
-        String[] args = { "a", "b", "1", "2" };
+        Object[] args = { "a", "b", 1, 2 };
 
-        String[] shifted = Arguments.shift(args);
+        Object[] shifted = Arguments.shift(args);
 
         assertEquals(args.length - 1, shifted.length);
     }
