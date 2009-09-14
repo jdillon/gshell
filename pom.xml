@@ -232,8 +232,8 @@
         <module>shell-core</module>
         <module>shell-commands</module>
         <module>shell-bootstrap</module>
-        <module>shell-assembly</module>
         <module>shell-testsuite</module>
+        <module>shell-assembly</module>
     </modules>
     
     <build>

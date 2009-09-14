@@ -19,38 +19,30 @@
 
 package org.apache.maven.shell.testsuite;
 
-import org.apache.maven.shell.Shell;
-import org.apache.maven.shell.core.impl.registry.CommandRegistrationAgent;
-import org.apache.maven.shell.io.IOHolder;
-import org.codehaus.plexus.PlexusTestCase;
+import org.apache.maven.shell.command.Command;
 
 /**
- * Support for testing {@link Shell} instances.
+ * Support for testing {@link Command} instances.
  *
  * @version $Rev$ $Date$
  */
-public abstract class ShellTestSupport
-    extends PlexusTestCase
+public abstract class CommandTestSupport
+    extends ShellTestSupport
 {
-    private Shell shell;
+    protected final String name;
 
-    protected void setUp() throws Exception {
-        super.setUp();
-
-        IOHolder.set(new TestIO());
-
-        CommandRegistrationAgent agent = lookup(CommandRegistrationAgent.class);
-        agent.registerCommands();
-
-        shell = lookup(Shell.class);
+    protected CommandTestSupport(final String name) {
+        assertNotNull(name);
+        this.name = name;
     }
 
-    protected Shell getShell() {
-        return shell;
+    public void testHelp_help() throws Exception {
+        Object result = execute(name + " --help");
+        assertEquals(Command.Result.SUCCESS, result);
     }
 
-    protected Object execute(final String line) throws Exception {
-        assertNotNull(line);
-        return getShell().execute(line);
+    public void testHelp_h() throws Exception {
+        Object result = execute(name + " -h");
+        assertEquals(Command.Result.SUCCESS, result);
     }
 }

@@ -17,40 +17,25 @@
  * under the License.
  */
 
-package org.apache.maven.shell.testsuite;
+package org.apache.maven.shell.testsuite.basic;
 
-import org.apache.maven.shell.Shell;
-import org.apache.maven.shell.core.impl.registry.CommandRegistrationAgent;
-import org.apache.maven.shell.io.IOHolder;
-import org.codehaus.plexus.PlexusTestCase;
+import org.apache.maven.shell.command.Command;
+import org.apache.maven.shell.testsuite.CommandTestSupport;
 
 /**
- * Support for testing {@link Shell} instances.
+ * Tests for the {@link AliasCommand}.
  *
  * @version $Rev$ $Date$
  */
-public abstract class ShellTestSupport
-    extends PlexusTestCase
+public class AliasCommandTest
+    extends CommandTestSupport
 {
-    private Shell shell;
-
-    protected void setUp() throws Exception {
-        super.setUp();
-
-        IOHolder.set(new TestIO());
-
-        CommandRegistrationAgent agent = lookup(CommandRegistrationAgent.class);
-        agent.registerCommands();
-
-        shell = lookup(Shell.class);
+    public AliasCommandTest() {
+        super("alias");
     }
 
-    protected Shell getShell() {
-        return shell;
-    }
-
-    protected Object execute(final String line) throws Exception {
-        assertNotNull(line);
-        return getShell().execute(line);
+    public void testDefault() throws Exception {
+        Object result = execute(name);
+        assertEquals(Command.Result.SUCCESS, result);
     }
 }

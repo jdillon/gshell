@@ -20,28 +20,22 @@
 package org.apache.maven.shell.testsuite.basic;
 
 import org.apache.maven.shell.command.Command;
-import org.apache.maven.shell.testsuite.ShellTestSupport;
+import org.apache.maven.shell.testsuite.CommandTestSupport;
 
 /**
- * Tests that the shell can boot up.
+ * Tests for the {@link HelpCommand}.
  *
  * @version $Rev$ $Date$
  */
 public class HelpCommandTest
-    extends ShellTestSupport
+    extends CommandTestSupport
 {
+    public HelpCommandTest() {
+        super("help");
+    }
+
     public void testDefault() throws Exception {
-        Object result = execute("help");
-        assertEquals(Command.Result.SUCCESS, result);
-    }
-
-    public void testHelp_help() throws Exception {
-        Object result = execute("help --help");
-        assertEquals(Command.Result.SUCCESS, result);
-    }
-
-    public void testHelp_h() throws Exception {
-        Object result = execute("help -h");
+        Object result = execute(name);
         assertEquals(Command.Result.SUCCESS, result);
     }
 }

@@ -22,12 +22,12 @@ package org.apache.maven.shell.testsuite;
 import org.apache.maven.shell.io.IO;
 
 /**
- * Tests that the shell can boot up.
+ * Test {@link IO}.
  *
  * @version $Rev$ $Date$
  */
 public class TestIO
     extends IO
 {
-    // TODO
+    // TODO: Expose the content for test output/input validation
 }

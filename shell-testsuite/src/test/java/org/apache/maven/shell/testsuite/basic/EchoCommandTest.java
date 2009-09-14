@@ -20,28 +20,27 @@
 package org.apache.maven.shell.testsuite.basic;
 
 import org.apache.maven.shell.command.Command;
-import org.apache.maven.shell.testsuite.ShellTestSupport;
+import org.apache.maven.shell.testsuite.CommandTestSupport;
 
 /**
- * Tests that the shell can boot up.
+ * Tests for the {@link EchoCommand}.
  *
  * @version $Rev$ $Date$
  */
 public class EchoCommandTest
-    extends ShellTestSupport
+    extends CommandTestSupport
 {
-    public void testDefault() throws Exception {
-        Object result = execute("echo");
-        assertEquals(Command.Result.SUCCESS, result);
+    public EchoCommandTest() {
+        super("echo");
     }
 
-    public void test_help() throws Exception {
-        Object result = execute("echo --help");
+    public void testDefault() throws Exception {
+        Object result = execute(name);
         assertEquals(Command.Result.SUCCESS, result);
     }
 
     public void test_a_b_c() throws Exception {
-        Object result = execute("echo a b c");
+        Object result = execute(name + " a b c");
         assertEquals(Command.Result.SUCCESS, result);
     }
 }
