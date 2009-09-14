@@ -23,6 +23,7 @@ import jline.Completor;
 import org.apache.maven.shell.cli.Argument;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
+import org.apache.maven.shell.command.CommandDocumenter;
 import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.console.completer.AggregateCompleter;
 import org.apache.maven.shell.io.IO;
@@ -31,8 +32,6 @@ import org.apache.maven.shell.registry.CommandRegistry;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -51,6 +50,9 @@ public class HelpCommand
 
     @Requirement
     private CommandRegistry commandRegistry;
+
+    @Requirement
+    private CommandDocumenter commandDocumeter;
 
     @Requirement(role=Completor.class, hints={"alias-name", "command-name"})
     private List<Completor> completers;
@@ -78,7 +80,7 @@ public class HelpCommand
         else {
             if (commandRegistry.containsCommand(commandName)) {
                 Command command = commandRegistry.getCommand(commandName);
-                renderManual(io, command);
+                commandDocumeter.renderManual(command, io);
 
                 return Result.SUCCESS;
             }
@@ -118,7 +120,7 @@ public class HelpCommand
         io.out.println("Available commands:"); // TODO: i18n
         for (Command command : commands) {
             String formattedName = String.format("%-" + maxNameLen + "s", command.getName());
-            String desc = getDescription(command);
+            String desc = commandDocumeter.getDescription(command);
 
             io.out.print("  @|bold " + formattedName + "|");
             if (desc != null) {
@@ -131,34 +133,5 @@ public class HelpCommand
         }
 
         return Result.SUCCESS;
-    }
-
-    //
-    // HACK: CommandDocumenter is not accessible in this context
-    //
-
-    private Object createDocumenter(final Command command) throws Exception {
-        assert command != null;
-
-        Class type = Thread.currentThread().getContextClassLoader().loadClass("org.apache.maven.shell.core.impl.command.CommandDocumenter");
-        Constructor factory = type.getConstructor(Command.class);
-        return factory.newInstance(command);
-    }
-
-    private String getDescription(final Command command) throws Exception {
-        assert command != null;
-
-        Object doc = createDocumenter(command);
-        Method method = doc.getClass().getMethod("getDescription");
-        return (String)method.invoke(doc);
-    }
-
-    private void renderManual(final IO io, final Command command) throws Exception {
-        assert io != null;
-        assert command != null;
-
-        Object doc = createDocumenter(command);
-        Method method = doc.getClass().getMethod("renderManual", IO.class);
-        method.invoke(doc, io);
     }
 }

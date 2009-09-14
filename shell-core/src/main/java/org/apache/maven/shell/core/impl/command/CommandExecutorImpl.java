@@ -30,6 +30,7 @@ import org.apache.maven.shell.command.CommandException;
 import org.apache.maven.shell.command.CommandExecutor;
 import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.command.OpaqueArguments;
+import org.apache.maven.shell.command.CommandDocumenter;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.registry.CommandRegistry;
@@ -40,7 +41,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The default {@link CommandLineExecutor} component.
+ * The default {@link CommandExecutor} component.
  *
  * @version $Rev$ $Date$
  */
@@ -55,6 +56,9 @@ public class CommandExecutorImpl
 
     @Requirement
     private CommandRegistry commandRegistry;
+
+    @Requirement
+    private CommandDocumenter commandDocumeter;
     
     public Object execute(final ShellContext context, final String line) throws Exception {
         assert context != null;
@@ -115,10 +119,7 @@ public class CommandExecutorImpl
                 // Render command-line usage
                 if (help.displayHelp) {
                     log.trace("Render command-line usage");
-
-                    CommandDocumenter documenter = new CommandDocumenter(command);
-                    documenter.renderUsage(io);
-
+                    commandDocumeter.renderUsage(command, io);
                     result = Command.Result.SUCCESS;
                     execute = false;
                 }
