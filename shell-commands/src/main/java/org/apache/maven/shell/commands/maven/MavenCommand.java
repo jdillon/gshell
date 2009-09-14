@@ -20,14 +20,14 @@
 package org.apache.maven.shell.commands.maven;
 
 import org.apache.maven.cli.MavenCli;
+import org.apache.maven.shell.VariableNames;
+import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.command.Arguments;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.command.OpaqueArguments;
 import org.apache.maven.shell.io.IO;
-import org.apache.maven.shell.Variables;
-import org.apache.maven.shell.commands.file.FileCommandSupport;
 import org.codehaus.plexus.classworlds.ClassWorld;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.util.StringUtils;
@@ -40,7 +40,7 @@ import org.codehaus.plexus.util.StringUtils;
 @Component(role= Command.class, hint="mvn", instantiationStrategy="per-lookup")
 public class MavenCommand
     extends CommandSupport
-    implements OpaqueArguments
+    implements OpaqueArguments, VariableNames
 {
     // @Requirement
     // private MavenRuntime runtime;
@@ -74,7 +74,7 @@ public class MavenCommand
 
         // Propagate mvnsh.user.dir to user.dir for MavenCLI
         Variables vars = context.getVariables();
-        String dirname = vars.get(FileCommandSupport.MVNSH_USER_DIR, String.class);
+        String dirname = vars.get(MVNSH_USER_DIR, String.class);
         System.setProperty("user.dir", dirname);
 
         log.debug("Invoking maven with args: {}, in dir: {}", StringUtils.join(args, " "), dirname);

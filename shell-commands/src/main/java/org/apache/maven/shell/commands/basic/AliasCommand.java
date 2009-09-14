@@ -19,8 +19,6 @@
 
 package org.apache.maven.shell.commands.basic;
 
-import org.apache.maven.shell.ansi.AnsiCode;
-import org.apache.maven.shell.ansi.AnsiRenderer;
 import org.apache.maven.shell.cli.Argument;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
@@ -89,10 +87,9 @@ public class AliasCommand
                 String alias = aliasRegistry.getAlias(name);
                 String formattedName = String.format("%-" + maxNameLen + "s", name);
 
-                io.out.print("  ");
-                io.out.print(AnsiRenderer.encode(formattedName, AnsiCode.BOLD));
-
-                io.out.print("  ");
+                io.out.print("  @|bold ");
+                io.out.print(formattedName);
+                io.out.print("|  ");
                 io.out.print("Alias to: "); // TODO: i18n
                 io.out.println(alias);
             }
@@ -107,7 +104,7 @@ public class AliasCommand
 
         if (target == null) {
             MessageSource messages = getMessages();
-            io.error("Missing argument: {}", messages.getMessage("command.argument.target.token"));
+            io.error("Missing argument: {}", messages.getMessage("command.argument.target.token")); // TODO: i18n
 
             return Result.FAILURE;
         }

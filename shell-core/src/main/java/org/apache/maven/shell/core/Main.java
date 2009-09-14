@@ -164,6 +164,7 @@ public class Main
     @Option(name="-e", aliases={"--exception"})
     private void setException(boolean flag) {
         if (flag) {
+            // FIXME: Stuff this into variables not properties
             System.setProperty("mvnsh.show.stacktrace","true");
         }
     }
@@ -237,6 +238,8 @@ public class Main
 
             // Boot up the shell instance
             Shell shell = container.lookup(Shell.class);
+
+            // FIXME: Install default variables
 
             // Register our commands
             CommandRegistrationAgent agent = container.lookup(CommandRegistrationAgent.class);

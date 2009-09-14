@@ -20,6 +20,7 @@
 package org.apache.maven.shell.commands.file;
 
 import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.VariableNames;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
 
@@ -33,15 +34,8 @@ import java.io.IOException;
  */
 public abstract class FileCommandSupport
     extends CommandSupport
+    implements VariableNames
 {
-    // TODO: Put these into a common interface in shell-api
-    
-    public static final String MVNSH_HOME = "mvnsh.home";
-
-    public static final String MVNSH_USER_DIR = "mvnsh.user.dir";
-
-    public static final String MVNSH_USER_HOME = "mvnsh.user.home";
-
     private File resolveDir(final CommandContext context, final String name) throws IOException {
         assert context != null;
         assert name != null;

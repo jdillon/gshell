@@ -21,6 +21,7 @@ package org.apache.maven.shell.core.impl;
 
 import org.apache.maven.shell.ShellContextHolder;
 import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.VariableNames;
 import org.apache.maven.shell.ansi.AnsiRenderer;
 import org.apache.maven.shell.console.Console;
 import org.codehaus.plexus.component.annotations.Component;
@@ -40,7 +41,7 @@ import org.slf4j.LoggerFactory;
  */
 @Component(role=Console.Prompter.class)
 public class ConsolePrompterImpl
-    implements Console.Prompter, Initializable
+    implements Console.Prompter, Initializable, VariableNames
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -59,7 +60,7 @@ public class ConsolePrompterImpl
         String prompt = null;
 
         Variables vars = ShellContextHolder.get().getVariables();
-        String pattern = vars.get("mvnsh.prompt", String.class);
+        String pattern = vars.get(MVNSH_PROMPT, String.class);
 
         if (pattern != null) {
             try {

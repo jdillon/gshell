@@ -25,6 +25,7 @@ import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.ShellContext;
 import org.apache.maven.shell.ShellContextHolder;
 import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.VariableNames;
 import org.apache.maven.shell.command.CommandExecutor;
 import org.apache.maven.shell.console.Console;
 import org.apache.maven.shell.console.JLineConsole;
@@ -54,9 +55,15 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 @Component(role=Shell.class)
 public class ShellImpl
-    implements Shell, Initializable
+    implements Shell, Initializable, VariableNames
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
+
+    // FIXME: Find a better place for these
+    
+    private static final String MVNSH_PROFILE = "mvnsh.profile";
+
+    private static final String MVNSH_RC = "mvnsh.rc";
 
     @Requirement
     private CommandExecutor executor;
@@ -72,6 +79,8 @@ public class ShellImpl
 
     @Requirement
     private Console.ErrorHandler errorHandler;
+
+    private Variables vars;
 
     private ShellContext context;
 
@@ -96,7 +105,7 @@ public class ShellImpl
             log.debug("Initializing");
 
             // Each shell gets its own variables, using application variables for defaults
-            final Variables vars = new Variables();
+            vars = new Variables();
 
             final IO io = IOHolder.get();
 
@@ -118,15 +127,15 @@ public class ShellImpl
             // HACK: Need to resolve this in the new mvnsh context
             ShellContextHolder.set(context);
 
-            vars.set("mvnsh.home", System.getProperty("mvnsh.home"), false);
-            vars.set("mvnsh.version", System.getProperty("mvnsh.version"), false);
-            vars.set("mvnsh.user.home", System.getProperty("user.home"), false);
-            vars.set("mvnsh.user.dir", System.getProperty("user.dir"));
-            vars.set("mvnsh.prompt", "@|bold mvnsh|:%{mvnsh.user.dir}> ");
+            vars.set(MVNSH_HOME, System.getProperty(MVNSH_HOME), false);
+            vars.set(MVNSH_VERSION, System.getProperty(MVNSH_VERSION), false);
+            vars.set(MVNSH_USER_HOME, System.getProperty("user.home"), false);
+            vars.set(MVNSH_USER_DIR, System.getProperty("user.dir"));
+            vars.set(MVNSH_PROMPT, "@|bold mvnsh|:%{mvnsh.user.dir}> ");
 
             // HACK: Add history for the 'history' command, since its not part of the Shell intf it can't really access it
             assert history != null;
-            vars.set(SHELL_INTERNAL + History.class.getName(), history, true);
+            vars.set(SHELL_INTERNAL + History.class.getName(), history, false);
 
             loadProfileScripts();
 
@@ -184,7 +193,7 @@ public class ShellImpl
 
         log.debug("Starting interactive console; args: {}", args);
 
-        loadUserScript("mvnsh.rc");
+        loadUserScript(MVNSH_RC);
 
         // Setup 2 final refs to allow our executor to pass stuff back to us
         final AtomicReference<ExitNotification> exitNotifHolder = new AtomicReference<ExitNotification>();
@@ -260,8 +269,8 @@ public class ShellImpl
         log.debug("Loading profile scripts");
 
         // Load profile scripts if they exist
-        loadSharedScript("mvnsh.profile");
-        loadUserScript("mvnsh.profile");
+        loadSharedScript(MVNSH_PROFILE);
+        loadUserScript(MVNSH_PROFILE);
     }
 
     private void loadScript(final File file) throws Exception {
@@ -284,8 +293,7 @@ public class ShellImpl
     private void loadUserScript(final String fileName) throws Exception {
         assert fileName != null;
 
-        // HACK: Need to use settings or something for this?
-        File dir = new File(new File(System.getProperty("user.home")), ".m2");
+        File dir = new File(new File(vars.get(MVNSH_USER_HOME, String.class)), ".m2");
         File file = new File(dir, fileName);
 
         if (file.exists()) {
@@ -301,8 +309,7 @@ public class ShellImpl
     private void loadSharedScript(final String fileName) throws Exception {
         assert fileName != null;
 
-        // HACK: Need to use settings or something for this, or load from ${mvnsh.home}/etc
-        File dir = new File("/etc/maven2");
+        File dir = new File(new File(vars.get(MVNSH_HOME, String.class)), "etc");
         File file = new File(dir, fileName);
 
         if (file.exists()) {

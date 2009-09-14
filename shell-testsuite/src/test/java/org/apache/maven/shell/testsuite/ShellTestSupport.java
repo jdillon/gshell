@@ -20,6 +20,7 @@
 package org.apache.maven.shell.testsuite;
 
 import org.apache.maven.shell.Shell;
+import org.apache.maven.shell.VariableNames;
 import org.apache.maven.shell.core.impl.registry.CommandRegistrationAgent;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.io.IOHolder;
@@ -32,6 +33,7 @@ import org.codehaus.plexus.PlexusTestCase;
  */
 public abstract class ShellTestSupport
     extends PlexusTestCase
+    implements VariableNames
 {
     private IO io;
 
@@ -40,6 +42,8 @@ public abstract class ShellTestSupport
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+
+        System.setProperty(MVNSH_HOME, System.getProperty("user.dir"));
 
         io = new TestIO();
 
