@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.maven.shell.parser.visitor;
+package org.apache.maven.shell.parser.impl.visitor;
 
 /**
  * Thrown when a command execution fails.

@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.maven.shell.parser.visitor;
+package org.apache.maven.shell.parser.impl.visitor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
