@@ -48,10 +48,6 @@ public class ChangeDirectoryCommand
     @Argument
     private String path;
 
-    public String getName() {
-        return "cd";
-    }
-
     @Override
     public Completor[] getCompleters() {
         assert completers != null;

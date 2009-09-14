@@ -60,10 +60,6 @@ public class HelpCommand
     @Argument
     private String commandName;
 
-    public String getName() {
-        return "help";
-    }
-
     @Override
     public Completor[] getCompleters() {
         assert completers != null;

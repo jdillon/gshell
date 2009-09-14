@@ -25,8 +25,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jline.Completor;
 
-import java.util.Collection;
-
 /**
  * Provides support for {@link Command} implementations.
  *
@@ -37,7 +35,24 @@ public abstract class CommandSupport
 {
     protected Logger log = LoggerFactory.getLogger(getClass());
 
+    private String name;
+
     private MessageSource messages;
+
+    public String getName() {
+        if (name == null) {
+            throw new IllegalStateException("Name was not configured");
+        }
+        return name;
+    }
+
+    public void setName(final String name) {
+        assert name != null;
+        if (this.name != null) {
+            throw new IllegalStateException("Name was already configured");
+        }
+        this.name = name;
+    }
 
     public MessageSource getMessages() {
         if (messages == null) {

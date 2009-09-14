@@ -42,10 +42,6 @@ public class MavenCommand
 {
     // @Requirement
     // private MavenRuntime runtime;
-    
-    public String getName() {
-        return "mvn";
-    }
 
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;

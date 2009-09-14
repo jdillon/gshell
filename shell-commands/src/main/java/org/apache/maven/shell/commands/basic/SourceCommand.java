@@ -47,7 +47,7 @@ import jline.Completor;
  *
  * @version $Rev$ $Date$
  */
-@Component(role= Command.class, hint="source", instantiationStrategy="per-lookup")
+@Component(role=Command.class, hint="source", instantiationStrategy="per-lookup")
 public class SourceCommand
     extends CommandSupport
 {
@@ -58,10 +58,6 @@ public class SourceCommand
 
     @Argument(required=true)
     private String path;
-
-    public String getName() {
-        return "source";
-    }
 
     @Override
     public Completor[] getCompleters() {

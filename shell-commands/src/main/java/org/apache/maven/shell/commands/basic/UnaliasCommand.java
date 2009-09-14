@@ -34,11 +34,11 @@ import jline.Completor;
 import java.util.List;
 
 /**
- * The <tt>unalias</tt> command.
+ * Undefine an alias.
  *
  * @version $Rev$ $Date$
  */
-@Component(role= Command.class, hint="unalias", instantiationStrategy="per-lookup")
+@Component(role=Command.class, hint="unalias", instantiationStrategy="per-lookup")
 public class UnaliasCommand
     extends CommandSupport
 {
@@ -50,10 +50,6 @@ public class UnaliasCommand
 
     @Argument(index=0, required=true)
     private String name;
-
-    public String getName() {
-        return "unalias";
-    }
 
     @Override
     public Completor[] getCompleters() {

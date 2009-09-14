@@ -36,11 +36,11 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * The <tt>alias</tt> command.
+ * Define an alias or list defined aliases.
  *
  * @version $Rev$ $Date$
  */
-@Component(role= Command.class, hint="alias", instantiationStrategy="per-lookup")
+@Component(role=Command.class, hint="alias", instantiationStrategy="per-lookup")
 public class AliasCommand
     extends CommandSupport
 {
@@ -52,10 +52,6 @@ public class AliasCommand
 
     @Argument(index=1, multiValued=true)
     private List<String> target = null;
-
-    public String getName() {
-        return "alias";
-    }
 
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;

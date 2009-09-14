@@ -62,10 +62,6 @@ public class ListDirectoryCommand
     @Option(name="-r", aliases={"--recursive"})
     private boolean recursive;
 
-    public String getName() {
-        return "ls";
-    }
-
     @Override
     public Completor[] getCompleters() {
         assert completers != null;

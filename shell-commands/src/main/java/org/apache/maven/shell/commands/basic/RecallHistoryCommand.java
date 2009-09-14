@@ -42,10 +42,6 @@ public class RecallHistoryCommand
     @Argument(required=true)
     private int index;
 
-    public String getName() {
-        return "recall";
-    }
-
     private History getHistory(final CommandContext context) {
         assert context != null;
         // HACK: Get at the shell's history from our variables

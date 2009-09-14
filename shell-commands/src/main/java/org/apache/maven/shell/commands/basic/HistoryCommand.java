@@ -50,10 +50,6 @@ public class HistoryCommand
     @Argument()
     private String range;
 
-    public String getName() {
-        return "history";
-    }
-
     private History getHistory(final CommandContext context) {
         assert context != null;
         // HACK: Get at the shell's history from our variables

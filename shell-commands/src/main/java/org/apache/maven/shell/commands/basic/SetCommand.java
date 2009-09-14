@@ -72,10 +72,6 @@ public class SetCommand
     @Argument(index=1, multiValued=true)
     private List<String> values = null;
 
-    public String getName() {
-        return "set";
-    }
-
     @Override
     public Completor[] getCompleters() {
         assert completers != null;

@@ -32,14 +32,10 @@ import org.codehaus.plexus.component.annotations.Component;
  *
  * @version $Rev$ $Date$
  */
-@Component(role= Command.class, hint="clear")
+@Component(role=Command.class, hint="clear", instantiationStrategy="per-lookup")
 public class ClearCommand
     extends CommandSupport
 {
-    public String getName() {
-        return "clear";
-    }
-
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
         

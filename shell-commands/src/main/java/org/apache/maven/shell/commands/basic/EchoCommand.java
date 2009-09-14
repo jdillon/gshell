@@ -31,7 +31,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * A simple command to print all arguments to the commands standard output.
+ * Print all arguments to the commands standard output.
  *
  * @version $Rev$ $Date$
  */
@@ -44,10 +44,6 @@ public class EchoCommand
 
     @Argument
     private List<String> args = null;
-
-    public String getName() {
-        return "echo";
-    }
 
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;

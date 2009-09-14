@@ -41,7 +41,7 @@ import jline.Completor;
  *
  * @version $Rev$ $Date$
  */
-@Component(role= Command.class, hint="unset", instantiationStrategy="per-lookup")
+@Component(role=Command.class, hint="unset", instantiationStrategy="per-lookup")
 public class UnsetCommand
     extends CommandSupport
 {
@@ -61,10 +61,6 @@ public class UnsetCommand
 
     @Argument(required=true)
     private List<String> args = null;
-
-    public String getName() {
-        return "unset";
-    }
 
     @Override
     public Completor[] getCompleters() {

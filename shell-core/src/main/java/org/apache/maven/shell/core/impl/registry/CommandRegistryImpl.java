@@ -20,6 +20,7 @@
 package org.apache.maven.shell.core.impl.registry;
 
 import org.apache.maven.shell.command.Command;
+import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.event.EventManager;
 import org.apache.maven.shell.registry.CommandRegistry;
 import org.apache.maven.shell.registry.DuplicateCommandException;
@@ -63,7 +64,7 @@ public class CommandRegistryImpl
         if (containsCommand(name)) {
             throw new DuplicateCommandException(name);
         }
-
+        
         commands.add(name);
 
         eventManager.publish(new CommandRegisteredEvent(name));
@@ -92,13 +93,20 @@ public class CommandRegistryImpl
             throw new NoSuchCommandException(name);
         }
 
+        Command command;
         try {
-            //noinspection unchecked
-            return container.lookup(Command.class, name);
+            command = container.lookup(Command.class, name);
         }
         catch (ComponentLookupException e) {
             throw new NoSuchCommandException(name);
         }
+
+        // Inject the name of the command
+        if (command instanceof CommandSupport) {
+            ((CommandSupport)command).setName(name);
+        }
+
+        return command;
     }
 
     public boolean containsCommand(final String name) {

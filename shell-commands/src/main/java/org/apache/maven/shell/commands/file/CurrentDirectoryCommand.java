@@ -36,10 +36,6 @@ import java.io.File;
 public class CurrentDirectoryCommand
     extends CommandSupport
 {
-    public String getName() {
-        return "pwd";
-    }
-
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
         IO io = context.getIo();

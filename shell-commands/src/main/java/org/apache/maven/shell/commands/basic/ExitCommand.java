@@ -27,20 +27,16 @@ import org.apache.maven.shell.notification.ExitNotification;
 import org.codehaus.plexus.component.annotations.Component;
 
 /**
- * The <tt>exit</tt> command.
+ * Exit the current shell.
  *
  * @version $Rev$ $Date$
  */
-@Component(role= Command.class, hint="exit", instantiationStrategy="per-lookup")
+@Component(role=Command.class, hint="exit", instantiationStrategy="per-lookup")
 public class ExitCommand
     extends CommandSupport
 {
     @Argument
     private int exitCode = 0;
-
-    public String getName() {
-        return "exit";
-    }
 
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
