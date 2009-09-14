@@ -20,8 +20,6 @@
 package org.apache.maven.shell.commands.basic;
 
 import jline.Completor;
-import org.apache.maven.shell.ansi.AnsiCode;
-import org.apache.maven.shell.ansi.AnsiRenderer;
 import org.apache.maven.shell.cli.Argument;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
@@ -47,6 +45,10 @@ import java.util.List;
 public class HelpCommand
     extends CommandSupport
 {
+    private static final String COMMAND_DESCRIPTION = "command.description";
+
+    private static final String COMMAND_MANUAL = "command.manual";
+
     @Requirement
     private AliasRegistry aliasRegistry;
 
@@ -84,21 +86,14 @@ public class HelpCommand
                 return Result.SUCCESS;
             }
             else if (aliasRegistry.containsAlias(commandName)) {
-                io.out.print("Alias "); // TODO: i18n
-                io.out.print(AnsiRenderer.encode(commandName, AnsiCode.BOLD));
-                io.out.print(": ");
+                io.out.print("Alias @|bold " + commandName + "|: "); // TODO: i18n
                 io.out.println(aliasRegistry.getAlias(commandName));
 
                 return Result.SUCCESS;
             }
             else {
-                io.out.print("Command "); // TODO: i18n
-                io.out.print(AnsiRenderer.encode(commandName, AnsiCode.BOLD));
-                io.out.println(" not found."); // TODO: i18n
-
-                io.out.print("Try "); // TODO: i18n
-                io.out.print(AnsiRenderer.encode("help", AnsiCode.BOLD));
-                io.out.println(" for a list of available commands."); // TODO: i18n
+                io.out.println("Command @|bold " + commandName + "| not found."); // TODO: i18n
+                io.out.println("Try @|bold help| for a list of available commands."); // TODO: i18n
 
                 return Result.FAILURE;
             }
@@ -115,7 +110,7 @@ public class HelpCommand
             commands.add(commandRegistry.getCommand(name));
         }
 
-        // Determine the maximun name length
+        // Determine the maximum name length
         int maxNameLen = 0;
         for (Command command : commands) {
             int len = command.getName().length();
@@ -128,9 +123,7 @@ public class HelpCommand
             String formattedName = String.format("%-" + maxNameLen + "s", command.getName());
             String desc = getDescription(command);
 
-            io.out.print("  ");
-            io.out.print(AnsiRenderer.encode(formattedName, AnsiCode.BOLD));
-
+            io.out.print("  @|bold " + formattedName + "|");
             if (desc != null) {
                 io.out.print("  ");
                 io.out.println(desc);
@@ -143,31 +136,27 @@ public class HelpCommand
         return Result.SUCCESS;
     }
 
-    public static final String COMMAND_DESCRIPTION = "command.description";
-
-    public static final String COMMAND_MANUAL = "command.manual";
-
-    public String getDescription(final Command command) {
+    // TODO: Should we expose this stuff on Command?
+    
+    private String getDescription(final Command command) {
         return command.getMessages().getMessage(COMMAND_DESCRIPTION);
     }
 
-    protected String getManual(final Command command) {
+    private String getManual(final Command command) {
         return command.getMessages().getMessage(COMMAND_MANUAL);
     }
 
-    public void renderManual(final PrintWriter out, final Command command) {
+    private void renderManual(final PrintWriter out, final Command command) {
         assert out != null;
 
         log.trace("Rendering command manual");
 
-        AnsiRenderer renderer = new AnsiRenderer();
-
-        out.println(renderer.render(AnsiRenderer.encode("NAME", AnsiCode.BOLD)));
+        out.println("@|bold NAME|");
         out.print("  ");
         out.println(command.getName());
         out.println();
 
-        out.println(renderer.render(AnsiRenderer.encode("DESCRIPTION", AnsiCode.BOLD)));
+        out.println("@|bold DESCRIPTION|");
         out.print("  ");
         out.println(getDescription(command));
         out.println();
@@ -176,7 +165,7 @@ public class HelpCommand
         // TODO: Use a prefixing writer here, take the impl from shitty
         //
 
-        out.println(renderer.render(AnsiRenderer.encode("MANUAL", AnsiCode.BOLD)));
+        out.println("@|bold MANUAL|");
         out.println(getManual(command));
         out.println();
     }

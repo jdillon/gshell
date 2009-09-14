@@ -87,9 +87,7 @@ public class AliasCommand
                 String alias = aliasRegistry.getAlias(name);
                 String formattedName = String.format("%-" + maxNameLen + "s", name);
 
-                io.out.print("  @|bold ");
-                io.out.print(formattedName);
-                io.out.print("|  ");
+                io.out.print("  @|bold " + formattedName + "|  ");
                 io.out.print("Alias to: "); // TODO: i18n
                 io.out.println(alias);
             }
