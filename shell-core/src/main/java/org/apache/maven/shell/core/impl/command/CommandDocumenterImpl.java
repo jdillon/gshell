@@ -28,9 +28,9 @@ import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.i18n.PrefixingMessageSource;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.io.PrefixingStream;
+import org.codehaus.plexus.component.annotations.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.codehaus.plexus.component.annotations.Component;
 
 /**
  * The default {@link CommandDocumenter} component.

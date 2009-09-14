@@ -36,12 +36,12 @@ import org.apache.maven.shell.parser.ASTProcess;
 import org.apache.maven.shell.parser.ASTQuotedString;
 import org.apache.maven.shell.parser.CommandLineParserVisitor;
 import org.apache.maven.shell.parser.SimpleNode;
-import org.codehaus.plexus.util.StringUtils;
-import org.codehaus.plexus.interpolation.StringSearchInterpolator;
 import org.codehaus.plexus.interpolation.Interpolator;
 import org.codehaus.plexus.interpolation.PropertiesBasedValueSource;
-import org.codehaus.plexus.personality.plexus.lifecycle.phase.InitializationException;
+import org.codehaus.plexus.interpolation.StringSearchInterpolator;
 import org.codehaus.plexus.personality.plexus.lifecycle.phase.Initializable;
+import org.codehaus.plexus.personality.plexus.lifecycle.phase.InitializationException;
+import org.codehaus.plexus.util.StringUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -50,6 +50,7 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
@@ -92,15 +93,18 @@ public class ExecutingVisitor
     public Object visit(final ASTCommandLine node, final Object data) {
         assert node != null;
 
-        //
-        // NOTE: Visiting children will execute seperate commands in serial
-        //
+        // Visiting children will execute separate commands in serial
 
-        return node.childrenAccept(this, data);
+        List results = new LinkedList();
+        node.childrenAccept(this, results);
+
+        return results.get(results.size() - 1);
     }
 
     public Object visit(final ASTExpression node, final Object data) {
         assert node != null;
+
+        List results  = (List)data;
 
         Object[][] commands = new Object[node.jjtGetNumChildren()][];
 
@@ -112,8 +116,9 @@ public class ExecutingVisitor
             assert list.size() >= 1;
         }
 
+        Object result;
         try {
-            return executePiped(commands);
+            result =  executePiped(commands);
         }
         catch (Exception e) {
             String s = StringUtils.join(commands[0], ", ");
@@ -124,6 +129,11 @@ public class ExecutingVisitor
 
             throw new ErrorNotification("Shell execution failed; commands=" + s, e);
         }
+
+        //noinspection unchecked
+        results.add(result);
+        
+        return result;
     }
 
     public Object visit(ASTProcess node, Object data) {

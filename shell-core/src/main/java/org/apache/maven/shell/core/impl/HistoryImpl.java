@@ -20,12 +20,12 @@
 package org.apache.maven.shell.core.impl;
 
 import jline.History;
+import org.apache.maven.shell.VariableNames;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.personality.plexus.lifecycle.phase.Initializable;
 import org.codehaus.plexus.personality.plexus.lifecycle.phase.InitializationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.maven.shell.VariableNames;
 
 import java.io.File;
 import java.io.IOException;

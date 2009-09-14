@@ -20,8 +20,8 @@
 package org.apache.maven.shell.core.impl;
 
 import org.apache.maven.shell.ShellContextHolder;
-import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.VariableNames;
+import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.ansi.AnsiRenderer;
 import org.apache.maven.shell.console.Console;
 import org.codehaus.plexus.component.annotations.Component;

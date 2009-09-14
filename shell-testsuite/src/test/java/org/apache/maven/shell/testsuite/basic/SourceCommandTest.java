@@ -19,7 +19,7 @@
 
 package org.apache.maven.shell.testsuite.basic;
 
-import org.apache.maven.shell.cli.ProcessingException;
+import org.apache.maven.shell.parser.visitor.CommandLineExecutionFailed;
 import org.apache.maven.shell.testsuite.CommandTestSupport;
 
 /**
@@ -40,7 +40,7 @@ public class SourceCommandTest
             super.testDefault();
             fail();
         }
-        catch (ProcessingException e) {
+        catch (CommandLineExecutionFailed e) {
             // expected
         }
     }
