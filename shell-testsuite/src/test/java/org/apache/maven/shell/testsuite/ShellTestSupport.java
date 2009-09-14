@@ -22,6 +22,7 @@ package org.apache.maven.shell.testsuite;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.core.impl.registry.CommandRegistrationAgent;
 import org.apache.maven.shell.io.IOHolder;
+import org.apache.maven.shell.io.IO;
 import org.codehaus.plexus.PlexusTestCase;
 
 /**
@@ -32,12 +33,17 @@ import org.codehaus.plexus.PlexusTestCase;
 public abstract class ShellTestSupport
     extends PlexusTestCase
 {
+    private IO io;
+
     private Shell shell;
 
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
 
-        IOHolder.set(new TestIO());
+        io = new TestIO();
+
+        IOHolder.set(io);
 
         CommandRegistrationAgent agent = lookup(CommandRegistrationAgent.class);
         agent.registerCommands();
@@ -45,7 +51,19 @@ public abstract class ShellTestSupport
         shell = lookup(Shell.class);
     }
 
+    @Override
+    protected void tearDown() throws Exception {
+        io.flush();
+        io = null;
+
+        shell.close();
+        shell = null;
+
+        super.tearDown();
+    }
+
     protected Shell getShell() {
+        assertNotNull(shell);
         return shell;
     }
 
