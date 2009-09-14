@@ -19,12 +19,13 @@
 
 package org.apache.maven.shell.commands.basic;
 
+import jline.Completor;
 import org.apache.maven.shell.Shell;
-import org.apache.maven.shell.console.completer.AggregateCompleter;
 import org.apache.maven.shell.cli.Argument;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
+import org.apache.maven.shell.console.completer.AggregateCompleter;
 import org.apache.maven.shell.io.Closer;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
@@ -39,8 +40,6 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
-
-import jline.Completor;
 
 /**
  * Read and execute commands from a file in the current shell environment.

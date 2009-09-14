@@ -19,16 +19,17 @@
 
 package org.apache.maven.shell.commands.basic;
 
+import jline.Completor;
 import org.apache.maven.shell.ansi.AnsiCode;
 import org.apache.maven.shell.ansi.AnsiRenderer;
 import org.apache.maven.shell.cli.Argument;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
+import org.apache.maven.shell.console.completer.AggregateCompleter;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.registry.CommandRegistry;
-import org.apache.maven.shell.console.completer.AggregateCompleter;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 
@@ -36,8 +37,6 @@ import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-
-import jline.Completor;
 
 /**
  * Display command help.

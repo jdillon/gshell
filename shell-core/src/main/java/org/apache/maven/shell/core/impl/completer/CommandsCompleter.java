@@ -21,6 +21,7 @@ package org.apache.maven.shell.core.impl.completer;
 
 import jline.ArgumentCompletor;
 import jline.Completor;
+import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.console.completer.AggregateCompleter;
 import org.apache.maven.shell.console.completer.NullCompleter;
 import org.apache.maven.shell.console.completer.StringsCompleter;
@@ -29,7 +30,6 @@ import org.apache.maven.shell.core.impl.registry.CommandRemovedEvent;
 import org.apache.maven.shell.event.EventListener;
 import org.apache.maven.shell.event.EventManager;
 import org.apache.maven.shell.registry.CommandRegistry;
-import org.apache.maven.shell.command.Command;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.personality.plexus.lifecycle.phase.Initializable;

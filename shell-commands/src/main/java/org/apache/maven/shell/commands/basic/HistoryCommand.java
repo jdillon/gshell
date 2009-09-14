@@ -29,8 +29,8 @@ import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.io.IO;
 import org.codehaus.plexus.component.annotations.Component;
 
-import java.util.List;
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * Display history.

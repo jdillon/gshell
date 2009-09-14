@@ -19,12 +19,12 @@
 
 package org.apache.maven.shell.core.impl;
 
+import junit.framework.Assert;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.io.IOHolder;
 import org.apache.maven.shell.registry.CommandRegistry;
 import org.codehaus.plexus.PlexusTestCase;
-import junit.framework.Assert;
 
 /**
  * Tests that the shell can boot up.

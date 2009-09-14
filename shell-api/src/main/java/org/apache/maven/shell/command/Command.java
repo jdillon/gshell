@@ -19,10 +19,8 @@
 
 package org.apache.maven.shell.command;
 
-import org.apache.maven.shell.i18n.MessageSource;
 import jline.Completor;
-
-import java.util.Collection;
+import org.apache.maven.shell.i18n.MessageSource;
 
 /**
  * Provides the user-action for a command.

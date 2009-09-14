@@ -19,11 +19,11 @@
 
 package org.apache.maven.shell.command;
 
+import jline.Completor;
 import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jline.Completor;
 
 /**
  * Provides support for {@link Command} implementations.
