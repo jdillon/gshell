@@ -19,8 +19,8 @@
 
 package org.apache.maven.shell.commands.file;
 
-import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.VariableNames;
+import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
 
