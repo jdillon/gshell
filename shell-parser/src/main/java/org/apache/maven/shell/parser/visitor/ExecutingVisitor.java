@@ -82,7 +82,10 @@ public class ExecutingVisitor
         List results = new LinkedList();
         node.childrenAccept(this, results);
 
-        return results.get(results.size() - 1);
+        if (!results.isEmpty()) {
+            return results.get(results.size() - 1);
+        }
+        return null;
     }
 
     public Object visit(final ASTExpression node, final Object data) {
