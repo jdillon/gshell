@@ -22,6 +22,7 @@ package org.apache.maven.shell.core.impl.command;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.ShellContext;
 import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.notification.ErrorNotification;
 import org.apache.maven.shell.parser.CommandLineParser;
 import org.apache.maven.shell.parser.ParseException;
 import org.apache.maven.shell.parser.ASTCommandLine;
@@ -71,23 +72,6 @@ public class CommandExecutorImpl
 
     @Requirement
     private CommandDocumenter commandDocumeter;
-    
-    public Object execute(final ShellContext context, final String line) throws Exception {
-        assert context != null;
-        assert line != null;
-
-        log.debug("Building command-line for: {}", line);
-
-        if (line.trim().length() == 0) {
-            return null;
-        }
-
-        ASTCommandLine root = parse(context, line);
-
-        ExecutingVisitor visitor = new ExecutingVisitor(context, this);
-
-        return root.jjtAccept(visitor, null);
-    }
 
     private ASTCommandLine parse(final ShellContext context, final String input) throws ParseException {
         assert context != null;
@@ -110,6 +94,40 @@ public class CommandExecutorImpl
         }
 
         return cl;
+    }
+
+
+    public Object execute(final ShellContext context, final String line) throws Exception {
+        assert context != null;
+        assert line != null;
+
+        log.debug("Building command-line for: {}", line);
+
+        if (line.trim().length() == 0) {
+            log.trace("Ignoring empty line");
+            return null;
+        }
+
+        try {
+            ASTCommandLine root = parse(context, line);
+            ExecutingVisitor visitor = new ExecutingVisitor(context, this);
+
+            return root.jjtAccept(visitor, null);
+        }
+        catch (ErrorNotification n) {
+            // Decode the error notification
+            Throwable cause = n.getCause();
+
+            if (cause instanceof Exception) {
+                throw (Exception)cause;
+            }
+            else if (cause instanceof Error) {
+                throw (Error)cause;
+            }
+            else {
+                throw n;
+            }
+        }
     }
 
     public Object execute(final ShellContext context, final Object... args) throws Exception {
@@ -174,6 +192,8 @@ public class CommandExecutorImpl
         finally {
             io.flush();
         }
+
+        log.debug("Result: {}", result);
 
         return result;
     }

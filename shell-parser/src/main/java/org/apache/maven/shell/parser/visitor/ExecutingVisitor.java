@@ -252,7 +252,7 @@ public class ExecutingVisitor
         if (!errors.isEmpty()) {
             Throwable t = errors.get(0);
 
-            // Always preserve the type of notication throwables, reguardless of the trace
+            // Always preserve the type of notication throwables, regardless of the trace
             if (t instanceof Notification) {
                 throw (Notification)t;
             }
