@@ -34,23 +34,7 @@ public interface Command
     MessageSource getMessages();
 
     Completor[] getCompleters();
-
-    /*
-    String getShortcut()
-
-    Completor getCompletor()
-
-    String getDescription()
-
-    String getUsage()
-
-    String getHelp()
-
-    List<CommandAlias> getAliases()
     
-    boolean getHidden()
-    */
-
     /**
      * Execute the command action.
      *
