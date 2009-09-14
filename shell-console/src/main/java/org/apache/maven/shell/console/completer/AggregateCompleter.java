@@ -66,7 +66,7 @@ public class AggregateCompleter
             completions.add(completion);
         }
 
-        // Append candiates from completions which have the same cursor position as max
+        // Append candidates from completions which have the same cursor position as max
         for (Completion completion : completions) {
             if (completion.cursor == max) {
                 // noinspection unchecked

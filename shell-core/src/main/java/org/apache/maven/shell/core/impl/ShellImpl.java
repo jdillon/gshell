@@ -254,7 +254,7 @@ public class ShellImpl
         // And then spin up the console and go for a jog
         console.run();
 
-        // If any exit notification occured while running, then puke it up
+        // If any exit notification occurred while running, then puke it up
         ExitNotification n = exitNotifHolder.get();
         if (n != null) {
             throw n;

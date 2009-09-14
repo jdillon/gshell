@@ -280,7 +280,7 @@ public class CommandLineProcessor
                     requireOverride = d.isRequireOverride();
                 }
                 
-                // Invoker the handler and then skip arguments which it has eatten up
+                // Invoker the handler and then skip arguments which it has eaten up
                 int consumed = handler.handle(params);
                 params.skip(consumed);
             }
@@ -292,7 +292,7 @@ public class CommandLineProcessor
             present.add(handler);
         }
         
-        // Ensure that all required option handlers are present, unless a processed option has overridden requirments
+        // Ensure that all required option handlers are present, unless a processed option has overridden requirements
         if (!requireOverride) {
             for (Handler handler : optionHandlers) {
                 if (handler.descriptor.isRequired() && !present.contains(handler)) {

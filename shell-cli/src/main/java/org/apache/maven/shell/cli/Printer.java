@@ -257,13 +257,13 @@ public class Printer
         out.print(prefix);
         out.print(nameAndToken);
 
-        // Render the seperator
+        // Render the separator
         for (int i = nameAndToken.length(); i < len; ++i) {
             out.print(' ');
        	}
         out.print(separator);
 
-        // Render the description splitting it over multipule lines if its longer than column size
+        // Render the description splitting it over multiple lines if its longer than column size
         while (desc != null && desc.length() > 0) {
             //
             // FIXME: Only split on words

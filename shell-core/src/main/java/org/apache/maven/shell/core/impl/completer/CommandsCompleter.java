@@ -110,6 +110,7 @@ public class CommandsCompleter
         Completor[] completers = command.getCompleters();
         if (completers != null) {
             for (Completor completer : completers) {
+                log.debug("Adding completer: {}", completer);
                 children.add(completer != null ? completer : NullCompleter.INSTANCE);
             }
         }

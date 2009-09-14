@@ -74,7 +74,7 @@ public class AliasCommand
             io.info("No aliases have been defined"); // TODO: i18n
         }
         else {
-            // Determine the maximun name length
+            // Determine the maximum name length
             int maxNameLen = 0;
             for (String name : names) {
                 if (name.length() > maxNameLen) {

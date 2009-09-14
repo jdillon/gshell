@@ -178,7 +178,7 @@ public abstract class Console
             line = line.trim();
         }
 
-        // Ingore empty lines (maybe)
+        // Ignore empty lines (maybe)
         if (ignoreEmpty && line.length() == 0) {
             return true;
         }

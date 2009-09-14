@@ -64,7 +64,7 @@ public class ExpressionEvaluator
                 if (i == 0) { // this is a simple string
                     return input;
                 }
-                else { // add the tail string which contails no variables and return the result.
+                else { // add the tail string which contains no variables and return the result.
                     sbuf.append(input.substring(i, input.length()));
                     return sbuf.toString();
                 }
