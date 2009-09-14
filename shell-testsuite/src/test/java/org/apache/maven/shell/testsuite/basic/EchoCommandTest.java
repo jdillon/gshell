@@ -17,30 +17,31 @@
  * under the License.
  */
 
-package org.apache.maven.shell.testsuite;
+package org.apache.maven.shell.testsuite.basic;
 
 import org.apache.maven.shell.command.Command;
+import org.apache.maven.shell.testsuite.ShellTestSupport;
 
 /**
  * Tests that the shell can boot up.
  *
  * @version $Rev$ $Date$
  */
-public class HelpCommandTest
+public class EchoCommandTest
     extends ShellTestSupport
 {
     public void testDefault() throws Exception {
-        Object result = getShell().execute("help");
+        Object result = execute("echo");
         assertEquals(Command.Result.SUCCESS, result);
     }
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();    //To change body of overridden methods use File | Settings | File Templates.
+    public void test_help() throws Exception {
+        Object result = execute("echo --help");
+        assertEquals(Command.Result.SUCCESS, result);
     }
 
-    public void testHelp_help() throws Exception {
-        Object result = getShell().execute("help --help");
+    public void test_a_b_c() throws Exception {
+        Object result = execute("echo a b c");
         assertEquals(Command.Result.SUCCESS, result);
     }
 }

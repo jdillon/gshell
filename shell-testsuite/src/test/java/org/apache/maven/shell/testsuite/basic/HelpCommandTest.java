@@ -17,41 +17,31 @@
  * under the License.
  */
 
-package org.apache.maven.shell.testsuite;
+package org.apache.maven.shell.testsuite.basic;
 
-import org.apache.maven.shell.Shell;
-import org.apache.maven.shell.core.impl.registry.CommandRegistrationAgent;
-import org.apache.maven.shell.io.IO;
-import org.apache.maven.shell.io.IOHolder;
-import org.codehaus.plexus.PlexusTestCase;
+import org.apache.maven.shell.command.Command;
+import org.apache.maven.shell.testsuite.ShellTestSupport;
 
 /**
  * Tests that the shell can boot up.
  *
  * @version $Rev$ $Date$
  */
-public abstract class ShellTestSupport
-    extends PlexusTestCase
+public class HelpCommandTest
+    extends ShellTestSupport
 {
-    private Shell shell;
-
-    protected void setUp() throws Exception {
-        super.setUp();
-
-        IOHolder.set(new TestIO());
-
-        CommandRegistrationAgent agent = lookup(CommandRegistrationAgent.class);
-        agent.registerCommands();
-
-        shell = lookup(Shell.class);
+    public void testDefault() throws Exception {
+        Object result = execute("help");
+        assertEquals(Command.Result.SUCCESS, result);
     }
 
-    protected Shell getShell() {
-        return shell;
+    public void testHelp_help() throws Exception {
+        Object result = execute("help --help");
+        assertEquals(Command.Result.SUCCESS, result);
     }
 
-    protected Object execute(final String line) throws Exception {
-        assertNotNull(line);
-        return getShell().execute(line);
+    public void testHelp_h() throws Exception {
+        Object result = execute("help -h");
+        assertEquals(Command.Result.SUCCESS, result);
     }
 }
