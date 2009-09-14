@@ -19,7 +19,6 @@
 
 package org.apache.maven.shell.testsuite.file;
 
-import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.testsuite.CommandTestSupport;
 
 /**
@@ -34,8 +33,5 @@ public class ListDirectoryCommandTest
         super("ls");
     }
 
-    public void testDefault() throws Exception {
-        Object result = execute(name);
-        assertEquals(Command.Result.SUCCESS, result);
-    }
+    // TODO: Add more tests
 }

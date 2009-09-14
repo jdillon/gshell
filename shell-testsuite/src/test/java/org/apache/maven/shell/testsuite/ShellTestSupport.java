@@ -21,8 +21,8 @@ package org.apache.maven.shell.testsuite;
 
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.core.impl.registry.CommandRegistrationAgent;
-import org.apache.maven.shell.io.IOHolder;
 import org.apache.maven.shell.io.IO;
+import org.apache.maven.shell.io.IOHolder;
 import org.codehaus.plexus.PlexusTestCase;
 
 /**

@@ -19,7 +19,6 @@
 
 package org.apache.maven.shell.testsuite.basic;
 
-import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.testsuite.CommandTestSupport;
 
 /**
@@ -34,13 +33,8 @@ public class EchoCommandTest
         super("echo");
     }
 
-    public void testDefault() throws Exception {
-        Object result = execute(name);
-        assertEquals(Command.Result.SUCCESS, result);
-    }
-
     public void test_a_b_c() throws Exception {
-        Object result = execute(name + " a b c");
-        assertEquals(Command.Result.SUCCESS, result);
+        Object result = executeWithArgs("a b c");
+        assertEqualsSuccess(result);
     }
 }

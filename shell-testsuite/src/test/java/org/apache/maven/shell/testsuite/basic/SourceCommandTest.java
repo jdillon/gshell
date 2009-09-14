@@ -20,6 +20,7 @@
 package org.apache.maven.shell.testsuite.basic;
 
 import org.apache.maven.shell.testsuite.CommandTestSupport;
+import org.apache.maven.shell.cli.ProcessingException;
 
 /**
  * Tests for the {@link SourceCommand}.
@@ -33,10 +34,14 @@ public class SourceCommandTest
         super("source");
     }
 
-    /*
+    @Override
     public void testDefault() throws Exception {
-        Object result = execute(name);
-        assertEquals(Command.Result.SUCCESS, result);
+        try {
+            super.testDefault();
+            fail();
+        }
+        catch (ProcessingException e) {
+            // expected
+        }
     }
-    */
 }

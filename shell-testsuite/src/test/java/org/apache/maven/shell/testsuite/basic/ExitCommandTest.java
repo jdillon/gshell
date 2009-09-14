@@ -34,6 +34,7 @@ public class ExitCommandTest
         super("exit");
     }
 
+    @Override
     public void testDefault() throws Exception {
         try {
             execute(name);

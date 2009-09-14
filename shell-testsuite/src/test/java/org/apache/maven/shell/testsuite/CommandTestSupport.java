@@ -36,13 +36,31 @@ public abstract class CommandTestSupport
         this.name = name;
     }
 
+    protected Object executeWithArgs(final String args) throws Exception {
+        assertNotNull(args);
+        return execute(name + " " + args);
+    }
+
+    protected void assertEqualsSuccess(final Object result) {
+        assertEquals(Command.Result.SUCCESS, result);
+    }
+
+    protected void assertEqualsFailure(final Object result) {
+        assertEquals(Command.Result.FAILURE, result);
+    }
+
     public void testHelp() throws Exception {
         Object result;
 
-        result = execute(name + " --help");
-        assertEquals(Command.Result.SUCCESS, result);
+        result = executeWithArgs("--help");
+        assertEqualsSuccess(result);
 
-        result = execute(name + " -h");
-        assertEquals(Command.Result.SUCCESS, result);
+        result = executeWithArgs("-h");
+        assertEqualsSuccess(result);
+    }
+
+    public void testDefault() throws Exception {
+        Object result = execute(name);
+        assertEqualsSuccess(result);
     }
 }
