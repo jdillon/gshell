@@ -30,7 +30,16 @@ import org.apache.maven.shell.io.IO;
  */
 public interface CommandContext
 {
+    /**
+     * The invoking shell instance.
+     *
+     * @return The invoking shell instance; never null.
+     */
     Shell getShell();
+
+    //
+    // FIXME: Make this Object[] again since shell-cli handles most conversion
+    //
     
     /**
      * Provides access to the arguments to the command.

@@ -66,6 +66,8 @@ public class CommandExecutorImpl
         }
 
         // FIXME: Really need quote handling here...
+
+        // FIXME: Where to hack in support for ${...} bits?
         
         log.debug("Parsing command from line: {}", trimmed);
 
