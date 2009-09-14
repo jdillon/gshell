@@ -79,7 +79,6 @@ public class CommandExecutorImpl
         log.debug("Building command-line for: {}", line);
 
         if (line.trim().length() == 0) {
-            // throw new IllegalArgumentException("Command line is empty");
             return null;
         }
 
