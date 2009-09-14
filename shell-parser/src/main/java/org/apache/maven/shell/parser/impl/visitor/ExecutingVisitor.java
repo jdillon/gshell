@@ -20,16 +20,20 @@
 package org.apache.maven.shell.parser.impl.visitor;
 
 import org.apache.maven.shell.ShellContext;
-import org.apache.maven.shell.parser.impl.ParserVisitor;
-import org.apache.maven.shell.parser.impl.SimpleNode;
-import org.apache.maven.shell.parser.impl.ASTCommandLine;
-import org.apache.maven.shell.parser.impl.ASTExpression;
-import org.apache.maven.shell.parser.impl.ASTQuotedString;
-import org.apache.maven.shell.parser.impl.ASTPlainString;
-import org.apache.maven.shell.parser.impl.ASTOpaqueString;
+import org.apache.maven.shell.ShellContextHolder;
+import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.command.Arguments;
 import org.apache.maven.shell.command.CommandExecutor;
 import org.apache.maven.shell.notification.ErrorNotification;
+import org.apache.maven.shell.parser.impl.ASTCommandLine;
+import org.apache.maven.shell.parser.impl.ASTExpression;
+import org.apache.maven.shell.parser.impl.ASTOpaqueString;
+import org.apache.maven.shell.parser.impl.ASTPlainString;
+import org.apache.maven.shell.parser.impl.ASTQuotedString;
+import org.apache.maven.shell.parser.impl.ParserVisitor;
+import org.apache.maven.shell.parser.impl.SimpleNode;
+import org.codehaus.plexus.interpolation.AbstractValueSource;
+import org.codehaus.plexus.interpolation.InterpolationException;
 import org.codehaus.plexus.interpolation.Interpolator;
 import org.codehaus.plexus.interpolation.PropertiesBasedValueSource;
 import org.codehaus.plexus.interpolation.StringSearchInterpolator;
@@ -61,8 +65,15 @@ public class ExecutingVisitor
         this.executor = executor;
 
         interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));
-        // interp.addValueSource(new VariablesValueSource());
+
+        interp.addValueSource(new AbstractValueSource(false) {
+            public Object getValue(final String expression) {
+                Variables vars = ShellContextHolder.get().getVariables();
+                return vars.get(expression);
+            }
+        });
     }
+
 
     public Object visit(final SimpleNode node, final Object data) {
         assert node != null;
@@ -123,10 +134,13 @@ public class ExecutingVisitor
         return value;
     }
 
-    private String interpolate(final Object value) {
-        // FIXME:
-        // return interp.interpolate(value);
-        return String.valueOf(value);
+    private String interpolate(final String value) {
+        try {
+            return interp.interpolate(value);
+        }
+        catch (InterpolationException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Object visit(final ASTQuotedString node, final Object data) {

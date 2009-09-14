@@ -70,6 +70,11 @@ public class CommandExecutorImpl
         assert context != null;
         assert line != null;
 
+        if (line.trim().length() == 0) {
+            log.trace("Ignoring empty line");
+            return null;
+        }
+
         CommandLine cl = parser.parse(line);
 
         try {

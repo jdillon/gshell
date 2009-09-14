@@ -52,11 +52,6 @@ public class CommandLineParserImpl
 
         log.debug("Building command-line for: {}", line);
 
-        if (line.trim().length() == 0) {
-            log.trace("Ignoring empty line");
-            return null;
-        }
-
         Reader reader = new StringReader(line);
         final ASTCommandLine root;
         try {

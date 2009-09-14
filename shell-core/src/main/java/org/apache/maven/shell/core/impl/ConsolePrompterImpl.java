@@ -29,6 +29,7 @@ import org.codehaus.plexus.interpolation.InterpolationException;
 import org.codehaus.plexus.interpolation.Interpolator;
 import org.codehaus.plexus.interpolation.PropertiesBasedValueSource;
 import org.codehaus.plexus.interpolation.StringSearchInterpolator;
+import org.codehaus.plexus.interpolation.AbstractValueSource;
 import org.codehaus.plexus.personality.plexus.lifecycle.phase.Initializable;
 import org.codehaus.plexus.personality.plexus.lifecycle.phase.InitializationException;
 import org.slf4j.Logger;
@@ -53,7 +54,13 @@ public class ConsolePrompterImpl
 
     public void initialize() throws InitializationException {
         interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));
-        interp.addValueSource(new VariablesValueSource());
+
+        interp.addValueSource(new AbstractValueSource(false) {
+            public Object getValue(final String expression) {
+                Variables vars = ShellContextHolder.get().getVariables();
+                return vars.get(expression);
+            }
+        });
     }
 
     public String prompt() {
