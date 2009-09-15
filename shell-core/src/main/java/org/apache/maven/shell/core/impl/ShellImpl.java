@@ -184,6 +184,8 @@ public class ShellImpl
         return context;
     }
 
+    // FIXME: History should still be appended if not running inside of a JLineConsole
+    
     public Object execute(final String line) throws Exception {
         ensureOpened();
 
@@ -255,7 +257,7 @@ public class ShellImpl
 
         // Unless the user wants us to shut up, then display a nice welcome banner
         if (!io.isQuiet()) {
-            io.out.println("@|bold,red Maven| Shell"); // TODO: Add mvn version here
+            io.out.println("@|bold,red Apache Maven| @|cyan Shell|");
             io.out.println(StringUtils.repeat("-", io.getTerminal().getTerminalWidth() - 1));
             io.out.flush();
         }

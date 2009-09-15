@@ -41,21 +41,28 @@ public class CommandRegistrationAgent
 
     public void registerCommands() throws CommandException {
         log.debug("Registering commands");
-        
-        commandRegistry.registerCommand("help");
-        commandRegistry.registerCommand("exit");
-        commandRegistry.registerCommand("clear");
-        commandRegistry.registerCommand("set");
-        commandRegistry.registerCommand("unset");
-        commandRegistry.registerCommand("history");
-        commandRegistry.registerCommand("recall");
-        commandRegistry.registerCommand("source");
-        commandRegistry.registerCommand("alias");
-        commandRegistry.registerCommand("unalias");
-        commandRegistry.registerCommand("echo");
-        commandRegistry.registerCommand("ls");
-        commandRegistry.registerCommand("cd");
-        commandRegistry.registerCommand("pwd");
-        commandRegistry.registerCommand("mvn");
+
+        String[] names = {
+            "help",
+            "about",
+            "exit",
+            "clear",
+            "set",
+            "unset",
+            "history",
+            "recall",
+            "source",
+            "alias",
+            "unalias",
+            "echo",
+            "ls",
+            "cd",
+            "pwd",
+            "mvn",
+        };
+
+        for (String name : names) {
+            commandRegistry.registerCommand(name);
+        }
     }
 }
