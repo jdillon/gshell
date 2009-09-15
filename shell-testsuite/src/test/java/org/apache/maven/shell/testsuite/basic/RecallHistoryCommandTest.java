@@ -23,7 +23,7 @@ import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.testsuite.CommandTestSupport;
 
 /**
- * Tests for the {@link HistoryRecallCommand}.
+ * Tests for the {@link RecallHistoryCommand}.
  *
  * @version $Rev$ $Date$
  */
