@@ -20,6 +20,7 @@
 package org.apache.maven.shell.testsuite.basic;
 
 import org.apache.maven.shell.testsuite.CommandTestSupport;
+import org.apache.maven.shell.Variables;
 
 /**
  * Tests for the {@link SetCommand}.
@@ -29,9 +30,45 @@ import org.apache.maven.shell.testsuite.CommandTestSupport;
 public class SetCommandTest
     extends CommandTestSupport
 {
+    private Variables vars;
+
     public SetCommandTest() {
         super("set");
     }
 
-    // TODO: Add more tests
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+
+        vars = getShell().getContext().getVariables();
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        vars = null;
+
+        super.tearDown();
+    }
+
+    public void testDefineVariable() throws Exception {
+        assertFalse(vars.contains("foo"));
+        Object result = executeWithArgs("foo bar");
+        assertEqualsSuccess(result);
+
+        assertTrue(vars.contains("foo"));
+        Object value = vars.get("foo");
+        assertEquals(value, "bar");
+    }
+
+    public void testRedefineVariable() throws Exception {
+        testDefineVariable();
+        assertTrue(vars.contains("foo"));
+
+        Object result = executeWithArgs("foo baz");
+        assertEqualsSuccess(result);
+
+        assertTrue(vars.contains("foo"));
+        Object value = vars.get("foo");
+        assertEquals(value, "baz");
+    }
 }

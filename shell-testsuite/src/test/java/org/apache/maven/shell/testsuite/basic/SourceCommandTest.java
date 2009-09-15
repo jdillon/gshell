@@ -44,4 +44,14 @@ public class SourceCommandTest
             // expected
         }
     }
+
+    public void testTooManyArguments() throws Exception {
+        try {
+            executeWithArgs("1 2");
+            fail();
+        }
+        catch (ProcessingException e) {
+            // expected
+        }
+    }
 }

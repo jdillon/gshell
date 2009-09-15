@@ -36,6 +36,10 @@ public abstract class CommandTestSupport
         this.name = name;
     }
 
+    protected Object execute() throws Exception {
+        return execute(name);
+    }
+
     protected Object executeWithArgs(final String args) throws Exception {
         assertNotNull(args);
         return execute(name + " " + args);
@@ -60,7 +64,7 @@ public abstract class CommandTestSupport
     }
 
     public void testDefault() throws Exception {
-        Object result = execute(name);
+        Object result = execute();
         assertEqualsSuccess(result);
     }
 }

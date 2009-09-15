@@ -21,6 +21,7 @@ package org.apache.maven.shell.testsuite.basic;
 
 import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.testsuite.CommandTestSupport;
+import org.apache.maven.shell.registry.AliasRegistry;
 
 /**
  * Tests for the {@link UnaliasCommand}.
@@ -30,9 +31,26 @@ import org.apache.maven.shell.testsuite.CommandTestSupport;
 public class UnaliasCommandTest
     extends CommandTestSupport
 {
+    private AliasRegistry aliasRegistry;
+
     public UnaliasCommandTest() {
         super("unalias");
     }
+
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+
+        aliasRegistry = lookup(AliasRegistry.class);
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        aliasRegistry = null;
+
+        super.tearDown();
+    }
+
 
     @Override
     public void testDefault() throws Exception {
@@ -43,5 +61,24 @@ public class UnaliasCommandTest
         catch (ProcessingException e) {
             // expected
         }
+    }
+
+    public void testTooManyArguments() throws Exception {
+        try {
+            executeWithArgs("1 2");
+            fail();
+        }
+        catch (ProcessingException e) {
+            // expected
+        }
+    }
+
+    public void testUndefineAlias() throws Exception {
+        assertFalse(aliasRegistry.containsAlias("foo"));
+        aliasRegistry.registerAlias("foo", "bar");
+        
+        Object result = executeWithArgs("foo");
+        assertEqualsSuccess(result);
+        assertFalse(aliasRegistry.containsAlias("foo"));
     }
 }

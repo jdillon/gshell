@@ -20,6 +20,7 @@
 package org.apache.maven.shell.testsuite.basic;
 
 import org.apache.maven.shell.testsuite.CommandTestSupport;
+import org.apache.maven.shell.registry.AliasRegistry;
 
 /**
  * Tests for the {@link AliasCommand}.
@@ -29,9 +30,48 @@ import org.apache.maven.shell.testsuite.CommandTestSupport;
 public class AliasCommandTest
     extends CommandTestSupport
 {
+    private AliasRegistry aliasRegistry;
+
     public AliasCommandTest() {
         super("alias");
     }
 
-    // TODO: Add more tests
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+
+        aliasRegistry = lookup(AliasRegistry.class);
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        aliasRegistry = null;
+
+        super.tearDown();
+    }
+
+    public void testDefineAlias() throws Exception {
+        assertFalse(aliasRegistry.containsAlias("foo"));
+
+        Object result = executeWithArgs("foo bar");
+        assertEqualsSuccess(result);
+
+        assertTrue(aliasRegistry.containsAlias("foo"));
+
+        String alias = aliasRegistry.getAlias(("foo"));
+        assertEquals(alias, "bar");
+    }
+
+    public void testRedefineAlias() throws Exception {
+        testDefineAlias();
+        assertTrue(aliasRegistry.containsAlias("foo"));
+        
+        Object result = executeWithArgs("foo baz");
+        assertEqualsSuccess(result);
+
+        assertTrue(aliasRegistry.containsAlias("foo"));
+
+        String alias = aliasRegistry.getAlias(("foo"));
+        assertEquals(alias, "baz");
+    }
 }

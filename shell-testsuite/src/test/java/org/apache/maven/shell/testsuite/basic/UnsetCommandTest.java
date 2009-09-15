@@ -21,6 +21,7 @@ package org.apache.maven.shell.testsuite.basic;
 
 import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.testsuite.CommandTestSupport;
+import org.apache.maven.shell.Variables;
 
 /**
  * Tests for the {@link UnsetCommand}.
@@ -30,8 +31,24 @@ import org.apache.maven.shell.testsuite.CommandTestSupport;
 public class UnsetCommandTest
     extends CommandTestSupport
 {
+    private Variables vars;
+
     public UnsetCommandTest() {
         super("unset");
+    }
+
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+
+        vars = getShell().getContext().getVariables();
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        vars = null;
+
+        super.tearDown();
     }
 
     @Override
@@ -43,5 +60,21 @@ public class UnsetCommandTest
         catch (ProcessingException e) {
             // expected
         }
+    }
+
+    public void testUndefineVariable() throws Exception {
+        vars.set("foo", "bar");
+        assertTrue(vars.contains("foo"));
+        Object result = executeWithArgs("foo");
+        assertEqualsSuccess(result);
+        assertFalse(vars.contains("foo"));
+    }
+
+    public void testUndefineUndefinedVariable() throws Exception {
+        assertFalse(vars.contains("foo"));
+        Object result = executeWithArgs("foo");
+
+        // Unsetting undefined should not return any errors
+        assertEqualsSuccess(result);
     }
 }

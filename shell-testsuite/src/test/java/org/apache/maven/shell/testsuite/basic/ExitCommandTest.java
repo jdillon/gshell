@@ -21,6 +21,7 @@ package org.apache.maven.shell.testsuite.basic;
 
 import org.apache.maven.shell.notification.ExitNotification;
 import org.apache.maven.shell.testsuite.CommandTestSupport;
+import org.apache.maven.shell.cli.ProcessingException;
 
 /**
  * Tests for the {@link ExitCommand}.
@@ -37,10 +38,40 @@ public class ExitCommandTest
     @Override
     public void testDefault() throws Exception {
         try {
-            execute(name);
+            execute();
             fail();
         }
         catch (ExitNotification n) {
+            assertEquals(ExitNotification.DEFAULT_CODE, n.code);
+        }
+    }
+
+    public void testTooManyArguments() throws Exception {
+        try {
+            executeWithArgs("1 2");
+            fail();
+        }
+        catch (ProcessingException e) {
+            // expected
+        }
+    }
+
+    public void testExitWithCode() throws Exception {
+        try {
+            executeWithArgs("57");
+            fail();
+        }
+        catch (ExitNotification n) {
+            assertEquals(57, n.code);
+        }
+    }
+
+    public void testExitWithInvalidCode() throws Exception {
+        try {
+            executeWithArgs("foo");
+            fail();
+        }
+        catch (NumberFormatException e) {
             // expected
         }
     }

@@ -20,6 +20,7 @@
 package org.apache.maven.shell.testsuite.basic;
 
 import org.apache.maven.shell.testsuite.CommandTestSupport;
+import org.apache.maven.shell.cli.ProcessingException;
 
 /**
  * Tests for the {@link HistoryCommand}.
@@ -33,5 +34,13 @@ public class HistoryCommandTest
         super("history");
     }
 
-    // TODO: Add more tests
+    public void testTooManyArguments() throws Exception {
+        try {
+            executeWithArgs("1 2");
+            fail();
+        }
+        catch (ProcessingException e) {
+            // expected
+        }
+    }
 }

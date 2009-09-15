@@ -20,6 +20,8 @@
 package org.apache.maven.shell.testsuite.basic;
 
 import org.apache.maven.shell.testsuite.CommandTestSupport;
+import org.apache.maven.shell.registry.AliasRegistry;
+import org.apache.maven.shell.registry.CommandRegistry;
 
 /**
  * Tests for the {@link HelpCommand}.
@@ -29,9 +31,41 @@ import org.apache.maven.shell.testsuite.CommandTestSupport;
 public class HelpCommandTest
     extends CommandTestSupport
 {
+    private AliasRegistry aliasRegistry;
+
+    private CommandRegistry commandRegistry;
+
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+
+        aliasRegistry = lookup(AliasRegistry.class);
+        commandRegistry = lookup(CommandRegistry.class);
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        aliasRegistry = null;
+        commandRegistry = null;
+
+        super.tearDown();
+    }
+
     public HelpCommandTest() {
         super("help");
     }
 
-    // TODO: Add more tests
+    public void testHelpHelp() throws Exception {
+        assertTrue(commandRegistry.containsCommand("help"));
+        assertFalse(aliasRegistry.containsAlias("foo"));
+        Object result = executeWithArgs("help");
+        assertEqualsSuccess(result);
+    }
+
+    public void testHelpFoo() throws Exception {
+        assertFalse(commandRegistry.containsCommand("foo"));
+        assertFalse(aliasRegistry.containsAlias("foo"));
+        Object result = executeWithArgs("foo");
+        assertEqualsFailure(result);
+    }
 }

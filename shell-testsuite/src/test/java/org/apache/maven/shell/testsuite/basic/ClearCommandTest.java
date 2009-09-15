@@ -20,6 +20,8 @@
 package org.apache.maven.shell.testsuite.basic;
 
 import org.apache.maven.shell.testsuite.CommandTestSupport;
+import org.apache.maven.shell.ansi.Ansi;
+import org.apache.maven.shell.cli.ProcessingException;
 
 /**
  * Tests for the {@link ClearCommand}.
@@ -33,5 +35,37 @@ public class ClearCommandTest
         super("clear");
     }
 
-    // TODO: Add more tests
+    @Override
+    protected void tearDown() throws Exception {
+        // Reset the Ansi state back to whatever is detected
+        Ansi.setEnabled(Ansi.isDetected());
+        super.tearDown();
+    }
+
+    @Override
+    public void testDefault() throws Exception {
+        // ignore, tests below will handle
+    }
+
+    public void testTooManyArguments() throws Exception {
+        try {
+            executeWithArgs("1");
+            fail();
+        }
+        catch (ProcessingException e) {
+            // expected
+        }
+    }
+
+    public void testAnsiEnabled() throws Exception {
+        Ansi.setEnabled(true);
+        Object result = execute();
+        assertEqualsSuccess(result);
+    }
+
+    public void testAnsiDisabled() throws Exception {
+        Ansi.setEnabled(false);
+        Object result = execute();
+        assertEqualsFailure(result);
+    }
 }
