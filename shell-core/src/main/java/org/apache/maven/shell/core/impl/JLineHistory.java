@@ -42,6 +42,18 @@ public class JLineHistory
 
     private File storeFile;
 
+    public JLineHistory() {
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {
+                try {
+                    delegate.flushBuffer();
+                } catch (IOException e) {
+                    log.error("Failed to flush history buffer", e);
+                }
+            }
+        });
+    }
+
     public jline.History getDelegate() {
         return delegate;
     }

@@ -23,7 +23,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 
 /**
- * Prefixes printed lines as instructed to by a given prefix rendering closure.
+ * Prefixes printed lines.
  *
  * @version $Rev$ $Date$
  */

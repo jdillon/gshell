@@ -216,7 +216,7 @@ public class Main
         final AtomicReference<Integer> codeRef = new AtomicReference<Integer>();
         int code = ExitNotification.DEFAULT_CODE;
 
-        Runtime.getRuntime().addShutdownHook(new Thread("Shell Shutdown Hook") {
+        Runtime.getRuntime().addShutdownHook(new Thread() {
             public void run() {
                 if (codeRef.get() == null) {
                     // Give the user a warning when the JVM shutdown abnormally, normal shutdown

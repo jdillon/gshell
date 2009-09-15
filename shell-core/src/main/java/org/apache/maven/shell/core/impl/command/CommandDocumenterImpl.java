@@ -28,7 +28,17 @@ import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.i18n.PrefixingMessageSource;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.io.PrefixingStream;
+import org.apache.maven.shell.io.PrefixingWriter;
+import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.ShellContextHolder;
+import org.apache.maven.shell.ansi.AnsiRenderer;
 import org.codehaus.plexus.component.annotations.Component;
+import org.codehaus.plexus.interpolation.InterpolationException;
+import org.codehaus.plexus.interpolation.Interpolator;
+import org.codehaus.plexus.interpolation.PropertiesBasedValueSource;
+import org.codehaus.plexus.interpolation.StringSearchInterpolator;
+import org.codehaus.plexus.interpolation.PrefixedObjectValueSource;
+import org.codehaus.plexus.interpolation.AbstractValueSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,16 +57,45 @@ public class CommandDocumenterImpl
 
     private static final String COMMAND_MANUAL = "command.manual";
 
+    private String interpolate(final Command command, final String text) {
+        assert command != null;
+        assert text != null;
+
+        if (text.indexOf("${") != -1) {
+            Interpolator interp = new StringSearchInterpolator("${", "}");
+            interp.addValueSource(new PrefixedObjectValueSource("command", command));
+            interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));
+            interp.addValueSource(new AbstractValueSource(false) {
+                public Object getValue(final String expression) {
+                    Variables vars = ShellContextHolder.get().getVariables();
+                    return vars.get(expression);
+                }
+            });
+
+            try {
+                return interp.interpolate(text);
+            }
+            catch (InterpolationException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else {
+            return text;
+        }
+    }
+
     public String getDescription(final Command command) {
         assert command != null;
 
-        return command.getMessages().getMessage(COMMAND_DESCRIPTION);
+        String text = command.getMessages().getMessage(COMMAND_DESCRIPTION);
+        return interpolate(command, text);
     }
 
     public String getManual(final Command command) {
         assert command != null;
         
-        return command.getMessages().getMessage(COMMAND_MANUAL);
+        String text = command.getMessages().getMessage(COMMAND_MANUAL);
+        return interpolate(command, text);
     }
 
     public void renderUsage(final Command command, final IO io) {
@@ -96,20 +135,29 @@ public class CommandDocumenterImpl
         log.trace("Rendering command manual");
 
         PrefixingStream prefixed = new PrefixingStream("   ", io.outputStream);
+        AnsiRenderer renderer = new AnsiRenderer();
 
         io.out.println("@|bold NAME|");
         io.out.print("  ");
         prefixed.println(command.getName());
         io.out.println();
 
+        String text;
+
+        text = getDescription(command);
+        text = renderer.render(text);
+
         io.out.println("@|bold DESCRIPTION|");
         io.out.print("  ");
-        prefixed.println(getDescription(command));
+        prefixed.println(text);
         io.out.println();
 
         io.out.println("@|bold MANUAL|");
 
-        prefixed.println(getManual(command));
+        text = getManual(command);
+        text = renderer.render(text);
+        
+        prefixed.println(text);
         io.out.println();
     }
 }
