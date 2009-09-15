@@ -86,16 +86,6 @@ public class ShellImpl
 
     private boolean opened;
 
-    private synchronized void ensureOpened() {
-        if (!opened) {
-            throw new IllegalStateException("Shell has not been opened or has been closed");
-        }
-    }
-
-    public synchronized boolean isOpened() {
-        return true;
-    }
-
     public void initialize() throws InitializationException {
         try {
             if (opened) {
@@ -144,6 +134,16 @@ public class ShellImpl
         catch (Exception e) {
             throw new InitializationException(e.getMessage(), e);
         }
+    }
+
+    private synchronized void ensureOpened() {
+        if (!opened) {
+            throw new IllegalStateException("Shell has not been opened or has been closed");
+        }
+    }
+
+    public synchronized boolean isOpened() {
+        return true;
     }
 
     public synchronized void close() {
