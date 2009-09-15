@@ -19,8 +19,7 @@
 
 package org.apache.maven.shell.commands.basic;
 
-import jline.History;
-import org.apache.maven.shell.Shell;
+import org.apache.maven.shell.History;
 import org.apache.maven.shell.cli.Argument;
 import org.apache.maven.shell.cli.Option;
 import org.apache.maven.shell.command.Command;
@@ -29,7 +28,6 @@ import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.io.IO;
 import org.codehaus.plexus.component.annotations.Component;
 
-import java.lang.reflect.Method;
 import java.util.List;
 
 /**
@@ -50,21 +48,9 @@ public class HistoryCommand
     @Argument()
     private String range;
 
-    private History getHistory(final CommandContext context) {
-        assert context != null;
-        // HACK: Get at the shell's history from our variables
-        History history = context.getVariables().get(Shell.SHELL_INTERNAL + History.class.getName(), History.class);
-        if (history == null) {
-            throw new Error("History missing in shell variables");
-        }
-        return history;
-    }
-    
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
-        IO io = context.getIo();
-
-        History history = getHistory(context);
+        History history = context.getShell().getHistory();
 
         if (clear) {
             history.clear();
@@ -72,10 +58,7 @@ public class HistoryCommand
         }
 
         if (purge) {
-            // HACK: purge is not accessible in this context
-            Class type = Thread.currentThread().getContextClassLoader().loadClass("org.apache.maven.shell.core.impl.HistoryImpl");
-            Method method = type.getMethod("purge");
-            method.invoke(history);
+            history.purge();
             log.debug("History purged");
         }
 
@@ -85,12 +68,10 @@ public class HistoryCommand
     private Object displayRange(final CommandContext context) throws Exception {
         assert context != null;
         IO io = context.getIo();
-        History history = getHistory(context);
+        History history = context.getShell().getHistory();
 
         if (range == null) {
-            // noinspection unchecked
-            List<String> elements = history.getHistoryList();
-
+            List<String> elements = history.elements();
             int i = 0;
             for (String element : elements) {
                 String index = String.format("%3d", i);

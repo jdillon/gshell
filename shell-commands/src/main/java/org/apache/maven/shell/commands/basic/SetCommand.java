@@ -20,7 +20,6 @@
 package org.apache.maven.shell.commands.basic;
 
 import jline.Completor;
-import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.cli.Argument;
 import org.apache.maven.shell.cli.Option;
@@ -105,10 +104,8 @@ public class SetCommand
 
             case VARIABLE:
                 Variables vars = context.getVariables();
-                if (!name.startsWith(Shell.SHELL_INTERNAL)) {
-                    log.info("Setting variable: {}={}", name, value);
-                    vars.set(name, value);
-                }
+                log.info("Setting variable: {}={}", name, value);
+                vars.set(name, value);
                 break;
         }
 
@@ -147,12 +144,6 @@ public class SetCommand
 
                 while (iter.hasNext()) {
                     String name = iter.next();
-
-                    // HACK: Hide some internal muck for now
-                    if (name.startsWith(Shell.SHELL_INTERNAL)) {
-                        continue;
-                    }
-
                     Object value = variables.get(name);
 
                     io.outputStream.print(name);

@@ -20,7 +20,6 @@
 package org.apache.maven.shell.commands.basic;
 
 import jline.Completor;
-import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.cli.Argument;
 import org.apache.maven.shell.cli.Option;
@@ -102,9 +101,6 @@ public class UnsetCommand
     private void unsetVariable(final Variables vars, final String name) {
         log.info("Unsetting variable: {}", name);
 
-        // Do not allow internals to be unset
-        if (!name.startsWith(Shell.SHELL_INTERNAL)) {
-            vars.unset(name);
-        }
+        vars.unset(name);
     }
 }

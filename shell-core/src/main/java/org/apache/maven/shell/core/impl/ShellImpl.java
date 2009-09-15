@@ -20,7 +20,7 @@
 package org.apache.maven.shell.core.impl;
 
 import jline.Completor;
-import jline.History;
+import org.apache.maven.shell.History;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.ShellContext;
 import org.apache.maven.shell.ShellContextHolder;
@@ -123,10 +123,6 @@ public class ShellImpl
             vars.set(MVNSH_USER_DIR, System.getProperty("user.dir"));
             vars.set(MVNSH_PROMPT, "@|bold mvnsh|:%{mvnsh.user.dir}> ");
 
-            // HACK: Add history for the 'history' command, since its not part of the Shell intf it can't really access it
-            assert history != null;
-            vars.set(SHELL_INTERNAL + History.class.getName(), history, false);
-
             loadProfileScripts();
 
             opened = true;
@@ -150,6 +146,12 @@ public class ShellImpl
         log.debug("Closing");
 
         opened = false;
+    }
+
+    public History getHistory() {
+        ensureOpened();
+
+        return history;
     }
 
     public ShellContext getContext() {
@@ -230,8 +232,9 @@ public class ShellImpl
         assert errorHandler != null;
         console.setErrorHandler(errorHandler);
 
+        // HACK: Jline's history kinda sucks so we have our own intf, but have to stuff the delegate into the console
         assert history != null;
-        console.setHistory(history);
+        console.setHistory(((HistoryImpl)history).getDelegate());
         
         // Attach completers if there are any
         if (completers != null) {

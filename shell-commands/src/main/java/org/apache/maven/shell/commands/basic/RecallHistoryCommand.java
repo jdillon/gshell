@@ -19,7 +19,7 @@
 
 package org.apache.maven.shell.commands.basic;
 
-import jline.History;
+import org.apache.maven.shell.History;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.cli.Argument;
 import org.apache.maven.shell.command.Command;
@@ -42,24 +42,12 @@ public class RecallHistoryCommand
     @Argument(required=true)
     private int index;
 
-    private History getHistory(final CommandContext context) {
-        assert context != null;
-        // HACK: Get at the shell's history from our variables
-        History history = context.getVariables().get(Shell.SHELL_INTERNAL + History.class.getName(), History.class);
-        if (history == null) {
-            throw new Error("History missing in shell variables");
-        }
-        return history;
-    }
-
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
         IO io = context.getIo();
-        History history = getHistory(context);
+        History history = context.getShell().getHistory();
 
-        // noinspection unchecked
-        List<String> elements = history.getHistoryList();
-
+        List<String> elements = history.elements();
         if (index < 0 || index > elements.size()) {
             io.error(getMessages().format("error.no-such-index", index));
             return Result.FAILURE;

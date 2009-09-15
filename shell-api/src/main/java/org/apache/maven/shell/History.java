@@ -19,41 +19,32 @@
 
 package org.apache.maven.shell;
 
+import java.io.IOException;
+import java.util.List;
+
 /**
- * Provides access to execute commands.
+ * Provides access to a shells history.
  *
  * @version $Rev$ $Date$
  */
-public interface Shell
+public interface History
 {
-    ShellContext getContext();
-
-    History getHistory();
-    
-    Object execute(String line) throws Exception;
-
-    Object execute(String command, Object[] args) throws Exception;
-
-    Object execute(Object... args) throws Exception;
-
-    boolean isOpened();
-
-    void close();
+    /**
+     * Clear the history elements for the current shell's context.
+     */
+    void clear();
 
     /**
-     * Check if the shell can be run interactivly.
+     * Clear the history elements for the current shell's context and purge any persistent storage.
      *
-     * @return  True if the shell is interactive.
+     * @throws IOException
      */
-    boolean isInteractive();
+    void purge() throws IOException;
 
     /**
-     * Run the shell interactivly.
-     *
-     * @param args  The initial commands to execute interactivly.
-     *
-     * @throws Exception                        Failed to execute commands.
-     * @throws UnsupportedOperationException    The shell does not support interactive execution.
+     * Returns a list of all history elements.
+     * 
+     * @return  List of history elements; never null
      */
-    void run(Object... args) throws Exception;
+    List<String> elements();
 }

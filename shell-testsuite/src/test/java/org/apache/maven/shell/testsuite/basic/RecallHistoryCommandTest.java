@@ -27,10 +27,10 @@ import org.apache.maven.shell.testsuite.CommandTestSupport;
  *
  * @version $Rev$ $Date$
  */
-public class HistoryRecallCommandTest
+public class RecallHistoryCommandTest
     extends CommandTestSupport
 {
-    public HistoryRecallCommandTest() {
+    public RecallHistoryCommandTest() {
         super("recall");
     }
 
