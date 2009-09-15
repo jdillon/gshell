@@ -62,6 +62,11 @@ public class JLineHistory
         delegate.setHistoryFile(storeFile);
     }
 
+    public void add(final String element) {
+        assert element != null;
+        delegate.addToHistory(element);
+    }
+
     public void clear() {
         delegate.clear();
     }

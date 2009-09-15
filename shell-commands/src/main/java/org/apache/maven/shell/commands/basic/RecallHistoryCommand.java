@@ -53,7 +53,10 @@ public class RecallHistoryCommand
             return Result.FAILURE;
         }
 
+        String element = elements.get(index);
+        log.debug("Recalling from history: {}", element);
+        
         Shell shell = context.getShell();
-        return shell.execute(elements.get(index));
+        return shell.execute(element);
     }
 }

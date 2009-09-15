@@ -46,6 +46,4 @@ public class EchoCommandTest
 
         // FIXME: Need to verify the result
     }
-
-    // TODO: Add more tests
 }

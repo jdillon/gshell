@@ -99,6 +99,4 @@ public class HistoryCommandTest
 
         // TODO: Verify output
     }
-
-    // TODO: Add more tests
 }

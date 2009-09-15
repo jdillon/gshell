@@ -29,6 +29,8 @@ import java.util.List;
  */
 public interface History
 {
+    void add(String element);
+
     /**
      * Clear the history elements for the current shell's context.
      */

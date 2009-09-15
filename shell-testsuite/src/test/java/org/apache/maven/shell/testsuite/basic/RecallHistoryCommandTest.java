@@ -21,6 +21,7 @@ package org.apache.maven.shell.testsuite.basic;
 
 import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.testsuite.CommandTestSupport;
+import org.apache.maven.shell.History;
 
 /**
  * Tests for the {@link RecallHistoryCommand}.
@@ -35,8 +36,7 @@ public class RecallHistoryCommandTest
     }
 
     public void testDependenciesRegistered() throws Exception {
-        assertTrue(commandRegistry.containsCommand("echo"));
-        assertTrue(commandRegistry.containsCommand("history"));
+        assertTrue(commandRegistry.containsCommand("set"));
     }
 
     @Override
@@ -74,6 +74,25 @@ public class RecallHistoryCommandTest
             // expected
         }
     }
-    
-    // TODO: Add more tests
+
+    public void testRecallElement() throws Exception {
+        History history = getShell().getHistory();
+
+        // Clear history and make sure there is no foo variable
+        history.clear();
+        assertFalse(vars.contains("foo"));
+
+        // Then add 2 elements, both setting foo
+        history.add("set foo bar");
+        history.add("set foo baz");
+
+        assertEquals(2, getShell().getHistory().size());
+
+        // Recall the first, which sets foo to bar
+        Object result = executeWithArgs("0");
+        assertEqualsSuccess(result);
+
+        // Make sure it executed
+        assertEquals("bar", vars.get("foo"));
+    }
 }
