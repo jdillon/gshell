@@ -23,7 +23,6 @@ import org.apache.maven.shell.cli.Argument;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
-import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.registry.AliasRegistry;
 import org.codehaus.plexus.component.annotations.Component;
@@ -71,7 +70,7 @@ public class AliasCommand
         Collection<String> names = aliasRegistry.getAliasNames();
 
         if (names.isEmpty()) {
-            io.info("No aliases have been defined"); // TODO: i18n
+            io.info(getMessages().format("info.no-aliases"));
         }
         else {
             // Determine the maximum name length
@@ -82,14 +81,13 @@ public class AliasCommand
                 }
             }
 
-            io.out.println("Defined aliases:"); // TODO: i18n
+            io.out.println(getMessages().format("info.defined-aliases"));
             for (String name : names) {
                 String alias = aliasRegistry.getAlias(name);
                 String formattedName = String.format("%-" + maxNameLen + "s", name);
 
                 io.out.print("  @|bold " + formattedName + "|  ");
-                io.out.print("Alias to: "); // TODO: i18n
-                io.out.println(alias);
+                io.out.println(getMessages().format("info.alias-to", alias));
             }
         }
 
@@ -101,9 +99,7 @@ public class AliasCommand
         IO io = context.getIo();
 
         if (target == null) {
-            MessageSource messages = getMessages();
-            io.error("Missing argument: {}", messages.getMessage("command.argument.target.token")); // TODO: i18n
-
+            io.error(getMessages().format("error.missing-arg"), getMessages().getMessage("command.argument.target.token"));
             return Result.FAILURE;
         }
 

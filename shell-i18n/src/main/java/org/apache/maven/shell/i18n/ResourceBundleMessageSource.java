@@ -81,10 +81,14 @@ public class ResourceBundleMessageSource
      * given objects as arguments.
      */
     public String format(final String code, final Object... args) {
-        assert args != null;
+        // args may be null
 
         String pattern = getMessage(code);
-
-        return String.format(pattern, args);
+        if (args != null) {
+            return String.format(pattern, args);
+        }
+        else {
+            return pattern;
+        }
     }
 }

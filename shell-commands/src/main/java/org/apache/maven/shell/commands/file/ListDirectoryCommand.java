@@ -77,7 +77,7 @@ public class ListDirectoryCommand
         File file = resolveFile(context, path);
 
         if (!file.exists()) {
-            io.error("File not found: {}", file); // TODO: i18n
+            io.error(getMessages().format("error.file-not-found", file));
             return Result.FAILURE;
         }
 

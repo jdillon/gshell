@@ -36,7 +36,6 @@ public class AggregateMessageSource
         this.sources = sources;
     }
 
-    @Override
     public String getMessage(final String code) {
         String result = null;
 
@@ -57,7 +56,6 @@ public class AggregateMessageSource
         return result;
     }
 
-    @Override
     public String format(final String code, final Object... args) {
         String result = null;
 

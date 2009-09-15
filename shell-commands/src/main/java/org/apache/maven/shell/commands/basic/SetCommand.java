@@ -91,7 +91,7 @@ public class SetCommand
             return displayList(context);
         }
         else if (values == null) {
-            io.error("Missing required argument: {}", messages.getMessage("command.argument.values.token")); // TODO: i18n
+            io.error(getMessages().format("error.missing-arg", messages.getMessage("command.argument.values.token")));
             return Result.FAILURE;
         }
 

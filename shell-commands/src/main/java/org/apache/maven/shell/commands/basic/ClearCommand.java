@@ -43,7 +43,7 @@ public class ClearCommand
 
         // We can only clear the screen if ANSI is enabled, so complain and fail otherwise
         if (!Ansi.isEnabled()) {
-            io.error("ANSI is not enabled.  The clear command is not functional"); // TODO: i18n
+            io.error(getMessages().format("error.ansi-disabled"));
             return Result.FAILURE;
         }
 

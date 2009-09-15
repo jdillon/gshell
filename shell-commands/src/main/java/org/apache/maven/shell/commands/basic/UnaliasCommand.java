@@ -73,8 +73,7 @@ public class UnaliasCommand
             return Result.SUCCESS;
         }
         catch (NoSuchAliasException e) {
-            io.error("No alias defined: {}", name); // TODO: i18n
-
+            io.error(getMessages().format("error.alias-not-defined", name));
             return Result.FAILURE;
         }
     }

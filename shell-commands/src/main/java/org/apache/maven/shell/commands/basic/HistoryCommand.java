@@ -68,7 +68,7 @@ public class HistoryCommand
 
         if (clear) {
             history.clear();
-            io.verbose("History clearend"); // TODO: i18n
+            log.debug("History clearend");
         }
 
         if (purge) {
@@ -76,7 +76,7 @@ public class HistoryCommand
             Class type = Thread.currentThread().getContextClassLoader().loadClass("org.apache.maven.shell.core.impl.HistoryImpl");
             Method method = type.getMethod("purge");
             method.invoke(history);
-            io.verbose("History purged"); // TODO: i18n
+            log.debug("History purged");
         }
 
         return displayRange(context);
