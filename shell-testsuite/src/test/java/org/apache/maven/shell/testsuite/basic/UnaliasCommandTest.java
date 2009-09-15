@@ -20,7 +20,6 @@
 package org.apache.maven.shell.testsuite.basic;
 
 import org.apache.maven.shell.cli.ProcessingException;
-import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.testsuite.CommandTestSupport;
 
 /**
@@ -31,27 +30,10 @@ import org.apache.maven.shell.testsuite.CommandTestSupport;
 public class UnaliasCommandTest
     extends CommandTestSupport
 {
-    private AliasRegistry aliasRegistry;
-
     public UnaliasCommandTest() {
         super("unalias");
     }
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-
-        aliasRegistry = lookup(AliasRegistry.class);
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        aliasRegistry = null;
-
-        super.tearDown();
-    }
-
-
+    
     @Override
     public void testDefault() throws Exception {
         try {

@@ -22,6 +22,9 @@ package org.apache.maven.shell.testsuite.basic;
 import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.testsuite.CommandTestSupport;
 
+import java.io.FileNotFoundException;
+import java.net.URL;
+
 /**
  * Tests for the {@link SourceCommand}.
  *
@@ -33,7 +36,7 @@ public class SourceCommandTest
     public SourceCommandTest() {
         super("source");
     }
-
+    
     @Override
     public void testDefault() throws Exception {
         try {
@@ -43,6 +46,10 @@ public class SourceCommandTest
         catch (ProcessingException e) {
             // expected
         }
+    }
+
+    public void testDependenciesRegistered() throws Exception {
+        assertTrue(commandRegistry.containsCommand("set"));
     }
 
     public void testTooManyArguments() throws Exception {
@@ -55,5 +62,33 @@ public class SourceCommandTest
         }
     }
 
-    // TODO: Add more tests
+    public void testNoSuchFile() throws Exception {
+        try {
+            executeWithArgs("no-such-file");
+            fail();
+        }
+        catch (FileNotFoundException e) {
+            // expected
+        }
+    }
+    
+    public void test1() throws Exception {
+        URL script = getClass().getResource("test1.mvnsh");
+        assertNotNull(script);
+        Object result = executeWithArgs(script.toExternalForm());
+        assertEqualsSuccess(result);
+    }
+
+    public void test2() throws Exception {
+        assertFalse(vars.contains("foo"));
+
+        URL script = getClass().getResource("test2.mvnsh");
+        assertNotNull(script);
+        Object result = executeWithArgs(script.toExternalForm());
+        assertEqualsSuccess(result);
+
+        assertTrue(vars.contains("foo"));
+        Object value = vars.get("foo");
+        assertEquals(value, "bar");
+    }
 }

@@ -55,5 +55,20 @@ public class HistoryRecallCommandTest
         }
     }
 
+    public void testIndexOutOfRange() throws Exception {
+        Object result = executeWithArgs(String.valueOf(Integer.MAX_VALUE));
+        assertEqualsFailure(result);
+    }
+
+    public void testInvalidIndex() throws Exception {
+        try {
+            executeWithArgs("foo");
+            fail();
+        }
+        catch (NumberFormatException e) {
+            // expected
+        }
+    }
+    
     // TODO: Add more tests
 }

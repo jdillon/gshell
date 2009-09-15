@@ -44,5 +44,17 @@ public class HistoryCommandTest
         }
     }
 
+    public void testIndexOutOfRange() throws Exception {
+        Object result = executeWithArgs(String.valueOf(Integer.MAX_VALUE));
+        assertEqualsFailure(result);
+    }
+
+    public void testInvalidIndex() throws Exception {
+        Object result = executeWithArgs("foo");
+        assertEqualsFailure(result);
+
+        // NOTE: Needs to be updated when range support is added
+    }
+
     // TODO: Add more tests
 }

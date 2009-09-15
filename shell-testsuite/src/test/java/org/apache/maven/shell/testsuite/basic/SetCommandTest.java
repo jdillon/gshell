@@ -19,7 +19,6 @@
 
 package org.apache.maven.shell.testsuite.basic;
 
-import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.testsuite.CommandTestSupport;
 
 /**
@@ -30,24 +29,8 @@ import org.apache.maven.shell.testsuite.CommandTestSupport;
 public class SetCommandTest
     extends CommandTestSupport
 {
-    private Variables vars;
-
     public SetCommandTest() {
         super("set");
-    }
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-
-        vars = getShell().getContext().getVariables();
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        vars = null;
-
-        super.tearDown();
     }
 
     public void testDefineVariable() throws Exception {
@@ -70,5 +53,15 @@ public class SetCommandTest
         assertTrue(vars.contains("foo"));
         Object value = vars.get("foo");
         assertEquals(value, "baz");
+    }
+
+    public void testDefineVariableWithExpression() throws Exception {
+        assertFalse(vars.contains("foo"));
+        Object result = executeWithArgs("foo ${mvnsh.home}");
+        assertEqualsSuccess(result);
+
+        assertTrue(vars.contains("foo"));
+        Object value = vars.get("foo");
+        assertEquals(value, vars.get("mvnsh.home"));
     }
 }

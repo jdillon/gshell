@@ -19,7 +19,6 @@
 
 package org.apache.maven.shell.testsuite.file;
 
-import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.testsuite.CommandTestSupport;
 
@@ -31,26 +30,10 @@ import org.apache.maven.shell.testsuite.CommandTestSupport;
 public class ListDirectoryCommandTest
     extends CommandTestSupport
 {
-    private Variables vars;
-
     public ListDirectoryCommandTest() {
         super("ls");
     }
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-
-        vars = getShell().getContext().getVariables();
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        vars = null;
-
-        super.tearDown();
-    }
-
+    
     public void testTooManyArguments() throws Exception {
         try {
             executeWithArgs("1 2");

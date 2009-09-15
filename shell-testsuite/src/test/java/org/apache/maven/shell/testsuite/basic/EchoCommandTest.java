@@ -33,9 +33,18 @@ public class EchoCommandTest
         super("echo");
     }
 
-    public void test_a_b_c() throws Exception {
+    public void testEcho_a_b_c() throws Exception {
         Object result = executeWithArgs("a b c");
         assertEqualsSuccess(result);
+
+        // FIXME: Need to verify the result
+    }
+
+    public void testEcho_$mvnsh_home() throws Exception {
+        Object result = executeWithArgs("${mvnsh.home}");
+        assertEqualsSuccess(result);
+
+        // FIXME: Need to verify the result
     }
 
     // TODO: Add more tests

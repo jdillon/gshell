@@ -19,7 +19,9 @@
 
 package org.apache.maven.shell.testsuite;
 
+import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.command.Command;
+import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.registry.CommandRegistry;
 
 /**
@@ -32,18 +34,27 @@ public abstract class CommandTestSupport
 {
     protected final String name;
 
-    private CommandRegistry commandRegistry;
+    protected AliasRegistry aliasRegistry;
+
+    protected CommandRegistry commandRegistry;
+
+    protected Variables vars;
+
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
 
+        vars = getShell().getContext().getVariables();
+        aliasRegistry = lookup(AliasRegistry.class);
         commandRegistry = lookup(CommandRegistry.class);
     }
 
     @Override
     protected void tearDown() throws Exception {
         commandRegistry = null;
+        aliasRegistry = null;
+        vars = null;
 
         super.tearDown();
     }
@@ -73,6 +84,7 @@ public abstract class CommandTestSupport
     public void testRegistered() throws Exception {
         assertTrue(commandRegistry.containsCommand(name));
     }
+    
     public void testHelp() throws Exception {
         Object result;
 
