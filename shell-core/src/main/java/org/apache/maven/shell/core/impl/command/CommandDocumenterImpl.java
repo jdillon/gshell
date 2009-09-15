@@ -28,7 +28,6 @@ import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.i18n.PrefixingMessageSource;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.io.PrefixingStream;
-import org.apache.maven.shell.io.PrefixingWriter;
 import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.ShellContextHolder;
 import org.apache.maven.shell.ansi.AnsiRenderer;
