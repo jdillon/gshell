@@ -45,7 +45,7 @@ public abstract class CommandTestSupport
     protected void setUp() throws Exception {
         super.setUp();
 
-        vars = getShell().getContext().getVariables();
+        vars = getShell().getVariables();
         aliasRegistry = lookup(AliasRegistry.class);
         commandRegistry = lookup(CommandRegistry.class);
     }

@@ -30,21 +30,15 @@ import org.apache.maven.shell.command.CommandExecutor;
 import org.apache.maven.shell.console.Console;
 import org.apache.maven.shell.console.JLineConsole;
 import org.apache.maven.shell.console.completer.AggregateCompleter;
-import org.apache.maven.shell.io.Closer;
 import org.apache.maven.shell.io.IO;
-import org.apache.maven.shell.io.IOHolder;
 import org.apache.maven.shell.notification.ExitNotification;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
-import org.codehaus.plexus.personality.plexus.lifecycle.phase.Initializable;
-import org.codehaus.plexus.personality.plexus.lifecycle.phase.InitializationException;
 import org.codehaus.plexus.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -55,21 +49,12 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 @Component(role=Shell.class)
 public class ShellImpl
-    implements Shell, Initializable, VariableNames
+    implements Shell, VariableNames
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    // FIXME: Find a better place for these
-    
-    private static final String MVNSH_PROFILE = "mvnsh.profile";
-
-    private static final String MVNSH_RC = "mvnsh.rc";
-
     @Requirement
     private CommandExecutor executor;
-
-    @Requirement
-    private History history;
 
     @Requirement(role=Completor.class, hints={"alias-name", "commands"})
     private List<Completor> completers;
@@ -80,112 +65,144 @@ public class ShellImpl
     @Requirement
     private Console.ErrorHandler errorHandler;
 
-    private Variables vars;
+    private IO io = new IO();
 
-    private ShellContext context;
+    private Variables variables = new Variables();
+
+    private JLineHistory history = new JLineHistory();
+
+    private ScriptLoader scriptLoader = new ScriptLoader(this);
 
     private boolean opened;
 
-    public void initialize() throws InitializationException {
-        try {
-            if (opened) {
-                throw new IllegalStateException("Shell is already opened");
-            }
+    public IO getIo() {
+        return io;
+    }
 
-            log.debug("Initializing");
+    public void setIo(final IO io) {
+        assert io != null;
+        this.io = io;
+    }
 
-            // Each shell gets its own variables, using application variables for defaults
-            vars = new Variables();
+    public Variables getVariables() {
+        return variables;
+    }
 
-            final IO io = IOHolder.get();
+    public void setVariables(final Variables variables) {
+        assert variables != null;
+        this.variables = variables;
+    }
 
-            context = new ShellContext()
-            {
-                public Shell getShell() {
-                    return ShellImpl.this;
-                }
+    public History getHistory() {
+        return history;
+    }
 
-                public IO getIo() {
-                    return io;
-                }
+    public synchronized boolean isOpened() {
+        return opened;
+    }
 
-                public Variables getVariables() {
-                    return vars;
-                }
-            };
-
-            // HACK: Need to resolve this in the new mvnsh context
-            ShellContextHolder.set(context);
-
-            vars.set(MVNSH_HOME, System.getProperty(MVNSH_HOME), false);
-            vars.set(MVNSH_VERSION, System.getProperty(MVNSH_VERSION), false);
-            vars.set(MVNSH_USER_HOME, System.getProperty("user.home"), false);
-            vars.set(MVNSH_USER_DIR, System.getProperty("user.dir"));
-            vars.set(MVNSH_PROMPT, "@|bold mvnsh|:%{mvnsh.user.dir}> ");
-
-            loadProfileScripts();
-
-            opened = true;
-        }
-        catch (Exception e) {
-            throw new InitializationException(e.getMessage(), e);
-        }
+    public synchronized void close() {
+        opened = false;
     }
 
     private synchronized void ensureOpened() {
         if (!opened) {
-            throw new IllegalStateException("Shell has not been opened or has been closed");
+            try {
+                open();
+            }
+            catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
-    public synchronized boolean isOpened() {
-        return true;
-    }
+    private synchronized void open() throws Exception {
+        log.debug("Opening");
 
-    public synchronized void close() {
-        log.debug("Closing");
-
-        opened = false;
-    }
-
-    public History getHistory() {
-        ensureOpened();
-
-        return history;
-    }
-
-    public ShellContext getContext() {
-        ensureOpened();
-
-        if (context == null) {
-            throw new IllegalStateException("Shell context has not been initialized");
+        // Setup default variables
+        if (!variables.contains(MVNSH_HOME)) {
+            variables.set(MVNSH_HOME, System.getProperty(MVNSH_HOME), false);
         }
-        return context;
+        if (!variables.contains(MVNSH_VERSION)) {
+            variables.set(MVNSH_VERSION, System.getProperty(MVNSH_VERSION), false);
+        }
+        if (!variables.contains(MVNSH_USER_HOME)) {
+            variables.set(MVNSH_USER_HOME, System.getProperty("user.home"), false);
+        }
+        if (!variables.contains(MVNSH_USER_DIR)) {
+            variables.set(MVNSH_USER_DIR, System.getProperty("user.dir"));
+        }
+        if (!variables.contains(MVNSH_PROMPT)) {
+            variables.set(MVNSH_PROMPT, "@|bold mvnsh|:%{mvnsh.user.dir}> ");
+        }
+
+        // Configure history storage
+        if (!variables.contains(MVNSH_HISTORY)) {
+            File dir = new File(variables.get(MVNSH_USER_HOME, String.class), ".m2");
+            File file = new File(dir, MVNSH_HISTORY);
+            history.setFile(file);
+            variables.set(MVNSH_HISTORY, file.getCanonicalFile(), false);
+        }
+        else {
+            File file = new File(variables.get(MVNSH_HISTORY, String.class));
+            history.setFile(file);
+        }
+        
+        // Load profile scripts
+        scriptLoader.loadProfileScripts();
+
+        opened = true;
+
+        log.debug("Opened");
     }
+
 
     public boolean isInteractive() {
         return true;
+    }
+
+    private ShellContext createShellContext() {
+        ShellContext context = new ShellContext()
+        {
+            public Shell getShell() {
+                return ShellImpl.this;
+            }
+
+            public IO getIo() {
+                return ShellImpl.this.getIo();
+            }
+
+            public Variables getVariables() {
+                return ShellImpl.this.getVariables();
+            }
+        };
+
+        log.debug("Created shell context: {}", context);
+
+        ShellContextHolder.set(context);
+
+        return context;
     }
 
     public Object execute(final String line) throws Exception {
         ensureOpened();
 
         assert executor != null;
-        return executor.execute(getContext(), line);
+        return executor.execute(createShellContext(), line);
     }
 
     public Object execute(final String command, final Object[] args) throws Exception {
         ensureOpened();
 
         assert executor != null;
-        return executor.execute(getContext(), command, args);
+        return executor.execute(createShellContext(), command, args);
     }
 
     public Object execute(final Object... args) throws Exception {
         ensureOpened();
 
         assert executor != null;
-        return executor.execute(getContext(), args);
+        return executor.execute(createShellContext(), args);
     }
 
     public void run(final Object... args) throws Exception {
@@ -195,7 +212,7 @@ public class ShellImpl
 
         log.debug("Starting interactive console; args: {}", args);
 
-        loadUserScript(MVNSH_RC);
+        scriptLoader.loadInteractiveScripts();
 
         // Setup 2 final refs to allow our executor to pass stuff back to us
         final AtomicReference<ExitNotification> exitNotifHolder = new AtomicReference<ExitNotification>();
@@ -221,10 +238,11 @@ public class ShellImpl
             }
         };
 
-        IO io = getContext().getIo();
+        IO io = getIo();
         
         // Setup the console runner
         JLineConsole console = new JLineConsole(executor, io);
+        console.setHistory(history.getDelegate());
 
         assert prompter != null;
         console.setPrompter(prompter);
@@ -232,10 +250,6 @@ public class ShellImpl
         assert errorHandler != null;
         console.setErrorHandler(errorHandler);
 
-        // HACK: Jline's history kinda sucks so we have our own intf, but have to stuff the delegate into the console
-        assert history != null;
-        console.setHistory(((HistoryImpl)history).getDelegate());
-        
         // Attach completers if there are any
         if (completers != null) {
             // Have to use aggregate here to get the completion list to update properly
@@ -261,67 +275,6 @@ public class ShellImpl
         ExitNotification n = exitNotifHolder.get();
         if (n != null) {
             throw n;
-        }
-    }
-    
-    //
-    // Script Processing
-    //
-
-    private void loadProfileScripts() throws Exception {
-        log.debug("Loading profile scripts");
-
-        // Load profile scripts if they exist
-        loadSharedScript(MVNSH_PROFILE);
-        loadUserScript(MVNSH_PROFILE);
-    }
-
-    private void loadScript(final File file) throws Exception {
-        assert file != null;
-
-        BufferedReader reader = new BufferedReader(new FileReader(file));
-
-        try {
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                execute(line);
-            }
-        }
-        finally {
-            Closer.close(reader);
-        }
-    }
-
-    private void loadUserScript(final String fileName) throws Exception {
-        assert fileName != null;
-
-        File dir = new File(new File(vars.get(MVNSH_USER_HOME, String.class)), ".m2");
-        File file = new File(dir, fileName);
-
-        if (file.exists()) {
-            log.debug("Loading user-script: {}", file);
-
-            loadScript(file);
-        }
-        else {
-            log.debug("User script is not present: {}", file);
-        }
-    }
-
-    private void loadSharedScript(final String fileName) throws Exception {
-        assert fileName != null;
-
-        File dir = new File(new File(vars.get(MVNSH_HOME, String.class)), "etc");
-        File file = new File(dir, fileName);
-
-        if (file.exists()) {
-            log.debug("Loading shared-script: {}", file);
-
-            loadScript(file);
-        }
-        else {
-            log.debug("Shared script is not present: {}", file);
         }
     }
 }

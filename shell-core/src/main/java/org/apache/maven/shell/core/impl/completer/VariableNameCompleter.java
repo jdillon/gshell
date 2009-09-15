@@ -20,7 +20,6 @@
 package org.apache.maven.shell.core.impl.completer;
 
 import jline.Completor;
-import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.ShellContextHolder;
 import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.console.completer.StringsCompleter;
@@ -49,9 +48,7 @@ public class VariableNameCompleter
         Iterator<String> iter = vars.names();
         while (iter.hasNext()) {
             String name = iter.next();
-            if (!name.startsWith(Shell.SHELL_INTERNAL)) {
-                strings.add(name);
-            }
+            strings.add(name);
         }
 
         return delegate.complete(buffer, cursor, candidates);

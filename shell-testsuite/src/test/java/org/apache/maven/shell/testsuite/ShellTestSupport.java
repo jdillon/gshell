@@ -23,7 +23,6 @@ import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.VariableNames;
 import org.apache.maven.shell.core.impl.registry.CommandRegistrationAgent;
 import org.apache.maven.shell.io.IO;
-import org.apache.maven.shell.io.IOHolder;
 import org.codehaus.plexus.PlexusTestCase;
 
 /**
@@ -39,20 +38,23 @@ public abstract class ShellTestSupport
 
     private Shell shell;
 
+    public ShellTestSupport() {
+        super();    //To change body of overridden methods use File | Settings | File Templates.
+    }
+
     @Override
     protected void setUp() throws Exception {
         super.setUp();
 
         System.setProperty(MVNSH_HOME, System.getProperty("user.dir"));
 
-        io = new TestIO();
-
-        IOHolder.set(io);
-
         CommandRegistrationAgent agent = lookup(CommandRegistrationAgent.class);
         agent.registerCommands();
 
         shell = lookup(Shell.class);
+
+        io = new TestIO();
+        shell.setIo(io);
 
         // FIXME: Need to provide a way to disable inclusion of profile scripts
     }

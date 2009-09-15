@@ -21,9 +21,6 @@ package org.apache.maven.shell.core.impl;
 
 import org.apache.maven.shell.History;
 import org.apache.maven.shell.VariableNames;
-import org.codehaus.plexus.component.annotations.Component;
-import org.codehaus.plexus.personality.plexus.lifecycle.phase.Initializable;
-import org.codehaus.plexus.personality.plexus.lifecycle.phase.InitializationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,56 +29,35 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Default implementation of the {@link History} component, wraps a {@link jline.History}.
+ * Implementation of {@link History} for <a href="http://jline.sf.net">JLine</a>.
  *
  * @version $Rev$ $Date$
  */
-@Component(role= History.class)
-public class HistoryImpl
-    implements History, Initializable, VariableNames
+public class JLineHistory
+    implements History, VariableNames
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private static final String FILENAME = "mvnsh.history";
+    private jline.History delegate = new jline.History();
 
-    private jline.History delegate;
-
-    private File historyFile;
+    private File file;
 
     public jline.History getDelegate() {
         return delegate;
     }
 
-    public void initialize() throws InitializationException {
-        delegate = new jline.History();
-        
-        historyFile = getDefaultHistoryFile();
-        log.debug("History file: {}", historyFile);
-
-        try {
-            setHistoryFile(historyFile);
-        }
-        catch (Exception e) {
-            throw new InitializationException(e.getMessage(), e);
-        }
-    }
-
-    private File getDefaultHistoryFile() {
-        // FIXME: Use MVNSH_USER_DIR here
-        File dir = new File(new File(System.getProperty("user.home")), ".m2");
-        return new File(dir, FILENAME);
-    }
-
-    public void setHistoryFile(final File file) throws IOException {
+    public void setFile(final File file) throws IOException {
         assert file != null;
 
         File dir = file.getParentFile();
 
         if (!dir.exists()) {
-            // noinspection ResultOfMethodCallIgnored
-            dir.mkdirs();
+            if (!dir.mkdirs()) {
+                log.debug("Unable to create directory: {}", dir);
+            }
         }
 
+        this.file = file;
         log.debug("History file: {}", file);
 
         delegate.setHistoryFile(file);
@@ -93,19 +69,26 @@ public class HistoryImpl
 
     public void purge() throws IOException {
         clear();
-        delegate.flushBuffer();
 
-        File tmp = File.createTempFile(FILENAME, "temp");
-        tmp.deleteOnExit();
-        setHistoryFile(tmp);
-
-        if (!historyFile.delete()) {
-            log.warn("Unable to remove history file: {}", historyFile);
+        if (file == null) {
+            log.warn("History storage file not configured; nothig to purge");
         }
-        setHistoryFile(historyFile);
-        
-        //noinspection ResultOfMethodCallIgnored
-        tmp.delete();
+        else {
+            delegate.flushBuffer();
+
+            File tmp = File.createTempFile(getClass().getSimpleName(), "temp");
+            tmp.deleteOnExit();
+            setFile(tmp);
+
+            if (!file.delete()) {
+                log.warn("Unable to remove history file: {}", file);
+            }
+            setFile(file);
+
+            if (!tmp.delete()) {
+                log.warn("Unable to remove file: {}", tmp);
+            }
+        }
     }
 
     public List<String> elements() {

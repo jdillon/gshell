@@ -22,8 +22,6 @@ package org.apache.maven.shell.core.impl;
 import junit.framework.Assert;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.VariableNames;
-import org.apache.maven.shell.io.IO;
-import org.apache.maven.shell.io.IOHolder;
 import org.apache.maven.shell.registry.CommandRegistry;
 import org.codehaus.plexus.PlexusTestCase;
 
@@ -40,8 +38,6 @@ public class ShellImplTest
         super.setUp();
 
         System.setProperty(MVNSH_HOME, System.getProperty("user.dir"));
-        
-        IOHolder.set(new IO());
     }
 
     public void testBoot() throws Exception {

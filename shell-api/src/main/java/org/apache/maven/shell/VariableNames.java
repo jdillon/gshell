@@ -35,4 +35,6 @@ public interface VariableNames
     String MVNSH_USER_HOME = "mvnsh.user.home";
 
     String MVNSH_PROMPT = "mvnsh.prompt";
+
+    String MVNSH_HISTORY = "mvnsh.history";
 }

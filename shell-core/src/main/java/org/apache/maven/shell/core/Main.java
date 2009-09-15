@@ -29,7 +29,6 @@ import org.apache.maven.shell.core.impl.registry.CommandRegistrationAgent;
 import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
 import org.apache.maven.shell.io.IO;
-import org.apache.maven.shell.io.IOHolder;
 import org.apache.maven.shell.notification.ExitNotification;
 import org.apache.maven.shell.terminal.AutoDetectedTerminal;
 import org.apache.maven.shell.terminal.UnixTerminal;
@@ -234,10 +233,9 @@ public class Main
         try {
             PlexusContainer container = createContainer();
 
-            IOHolder.set(io);
-
             // Boot up the shell instance
             Shell shell = container.lookup(Shell.class);
+            shell.setIo(io);
 
             // FIXME: Install default variables
 

@@ -19,6 +19,8 @@
 
 package org.apache.maven.shell;
 
+import org.apache.maven.shell.io.IO;
+
 /**
  * Provides access to execute commands.
  *
@@ -26,19 +28,25 @@ package org.apache.maven.shell;
  */
 public interface Shell
 {
-    ShellContext getContext();
+    IO getIo();
+
+    void setIo(IO io);
+    
+    Variables getVariables();
+
+    void setVariables(Variables vars);
 
     History getHistory();
+
+    boolean isOpened();
+
+    void close();
     
     Object execute(String line) throws Exception;
 
     Object execute(String command, Object[] args) throws Exception;
 
     Object execute(Object... args) throws Exception;
-
-    boolean isOpened();
-
-    void close();
 
     /**
      * Check if the shell can be run interactivly.
