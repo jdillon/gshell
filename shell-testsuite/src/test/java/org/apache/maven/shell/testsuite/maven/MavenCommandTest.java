@@ -36,17 +36,8 @@ public class MavenCommandTest
 
     @Override
     public void testDefault() throws Exception {
-        // FIXME: For now ignore default test
+        // Ignore, default execution is meaningless to test
     }
 
-    @Override
-    public void testHelp() throws Exception {
-        Object result;
-
-        result = execute(name + " --help");
-        assertEquals(Command.Result.SUCCESS, result);
-
-        result = execute(name + " -h");
-        assertEquals(Command.Result.SUCCESS, result);
-    }
+    // TODO: Add more tests
 }

@@ -20,6 +20,7 @@
 package org.apache.maven.shell.testsuite.file;
 
 import org.apache.maven.shell.testsuite.CommandTestSupport;
+import org.apache.maven.shell.cli.ProcessingException;
 
 /**
  * Tests for the {@link CurrentDirectoryCommand}.
@@ -31,6 +32,16 @@ public class CurrentDirectoryCommandTest
 {
     public CurrentDirectoryCommandTest() {
         super("pwd");
+    }
+
+    public void testTooManyArguments() throws Exception {
+        try {
+            executeWithArgs("1");
+            fail();
+        }
+        catch (ProcessingException e) {
+            // expected
+        }
     }
 
     // TODO: Add more tests

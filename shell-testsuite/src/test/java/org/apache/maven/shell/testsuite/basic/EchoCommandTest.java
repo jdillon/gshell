@@ -37,4 +37,6 @@ public class EchoCommandTest
         Object result = executeWithArgs("a b c");
         assertEqualsSuccess(result);
     }
+
+    // TODO: Add more tests
 }
