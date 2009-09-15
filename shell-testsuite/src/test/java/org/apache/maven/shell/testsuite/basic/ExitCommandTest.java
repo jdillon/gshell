@@ -19,9 +19,9 @@
 
 package org.apache.maven.shell.testsuite.basic;
 
+import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.notification.ExitNotification;
 import org.apache.maven.shell.testsuite.CommandTestSupport;
-import org.apache.maven.shell.cli.ProcessingException;
 
 /**
  * Tests for the {@link ExitCommand}.

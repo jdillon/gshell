@@ -19,8 +19,8 @@
 
 package org.apache.maven.shell.testsuite.basic;
 
-import org.apache.maven.shell.testsuite.CommandTestSupport;
 import org.apache.maven.shell.registry.AliasRegistry;
+import org.apache.maven.shell.testsuite.CommandTestSupport;
 
 /**
  * Tests for the {@link AliasCommand}.
@@ -58,7 +58,7 @@ public class AliasCommandTest
 
         assertTrue(aliasRegistry.containsAlias("foo"));
 
-        String alias = aliasRegistry.getAlias(("foo"));
+        String alias = aliasRegistry.getAlias("foo");
         assertEquals(alias, "bar");
     }
 
@@ -71,7 +71,25 @@ public class AliasCommandTest
 
         assertTrue(aliasRegistry.containsAlias("foo"));
 
-        String alias = aliasRegistry.getAlias(("foo"));
+        String alias = aliasRegistry.getAlias("foo");
         assertEquals(alias, "baz");
+    }
+
+    public void testExecuteAlias() throws Exception {
+        assertFalse(aliasRegistry.containsAlias("make-alias"));
+
+        Object result = executeWithArgs("make-alias alias");
+        assertEqualsSuccess(result);
+
+        assertTrue(aliasRegistry.containsAlias("make-alias"));
+        String alias = aliasRegistry.getAlias(("make-alias"));
+        assertEquals(alias, "alias");
+
+        result = execute("make-alias foo bar");
+        assertEqualsSuccess(result);
+
+        assertTrue(aliasRegistry.containsAlias("foo"));
+        alias = aliasRegistry.getAlias("foo");
+        assertEquals(alias, "bar");
     }
 }

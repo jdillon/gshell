@@ -19,9 +19,9 @@
 
 package org.apache.maven.shell.testsuite.basic;
 
-import org.apache.maven.shell.testsuite.CommandTestSupport;
 import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.registry.CommandRegistry;
+import org.apache.maven.shell.testsuite.CommandTestSupport;
 
 /**
  * Tests for the {@link HelpCommand}.

@@ -53,6 +53,8 @@ public abstract class ShellTestSupport
         agent.registerCommands();
 
         shell = lookup(Shell.class);
+
+        // FIXME: Need to provide a way to disable inclusion of profile scripts
     }
 
     @Override

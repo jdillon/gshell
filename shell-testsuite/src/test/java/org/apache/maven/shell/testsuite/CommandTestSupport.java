@@ -20,6 +20,7 @@
 package org.apache.maven.shell.testsuite;
 
 import org.apache.maven.shell.command.Command;
+import org.apache.maven.shell.registry.CommandRegistry;
 
 /**
  * Support for testing {@link Command} instances.
@@ -30,6 +31,22 @@ public abstract class CommandTestSupport
     extends ShellTestSupport
 {
     protected final String name;
+
+    private CommandRegistry commandRegistry;
+
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+
+        commandRegistry = lookup(CommandRegistry.class);
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        commandRegistry = null;
+
+        super.tearDown();
+    }
 
     protected CommandTestSupport(final String name) {
         assertNotNull(name);
@@ -53,6 +70,9 @@ public abstract class CommandTestSupport
         assertEquals(Command.Result.FAILURE, result);
     }
 
+    public void testRegistered() throws Exception {
+        assertTrue(commandRegistry.containsCommand(name));
+    }
     public void testHelp() throws Exception {
         Object result;
 

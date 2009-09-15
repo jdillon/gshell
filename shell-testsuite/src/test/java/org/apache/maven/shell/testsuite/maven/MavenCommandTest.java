@@ -19,7 +19,7 @@
 
 package org.apache.maven.shell.testsuite.maven;
 
-import org.apache.maven.shell.command.Command;
+import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.testsuite.CommandTestSupport;
 
 /**
@@ -32,6 +32,22 @@ public class MavenCommandTest
 {
     public MavenCommandTest() {
         super("mvn");
+    }
+
+    private Variables vars;
+
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+
+        vars = getShell().getContext().getVariables();
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        vars = null;
+
+        super.tearDown();
     }
 
     @Override

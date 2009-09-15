@@ -19,8 +19,9 @@
 
 package org.apache.maven.shell.testsuite.file;
 
-import org.apache.maven.shell.testsuite.CommandTestSupport;
+import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.cli.ProcessingException;
+import org.apache.maven.shell.testsuite.CommandTestSupport;
 
 /**
  * Tests for the {@link CurrentDirectoryCommand}.
@@ -34,6 +35,30 @@ public class CurrentDirectoryCommandTest
         super("pwd");
     }
 
+    private Variables vars;
+    
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+
+        vars = getShell().getContext().getVariables();
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        vars = null;
+
+        super.tearDown();
+    }
+
+    /*
+    @Override
+    public void testDefault() throws Exception {
+        Object result = execute();
+        assertEqualsSuccess(result);
+    }
+    */
+    
     public void testTooManyArguments() throws Exception {
         try {
             executeWithArgs("1");
@@ -43,6 +68,4 @@ public class CurrentDirectoryCommandTest
             // expected
         }
     }
-
-    // TODO: Add more tests
 }

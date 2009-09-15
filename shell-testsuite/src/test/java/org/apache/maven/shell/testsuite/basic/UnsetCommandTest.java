@@ -19,9 +19,9 @@
 
 package org.apache.maven.shell.testsuite.basic;
 
+import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.testsuite.CommandTestSupport;
-import org.apache.maven.shell.Variables;
 
 /**
  * Tests for the {@link UnsetCommand}.
