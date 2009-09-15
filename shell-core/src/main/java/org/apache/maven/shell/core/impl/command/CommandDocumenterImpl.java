@@ -27,7 +27,7 @@ import org.apache.maven.shell.i18n.AggregateMessageSource;
 import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.i18n.PrefixingMessageSource;
 import org.apache.maven.shell.io.IO;
-import org.apache.maven.shell.io.PrefixingStream;
+import org.apache.maven.shell.io.PrefixingOutputStream;
 import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.ShellContextHolder;
 import org.apache.maven.shell.ansi.AnsiRenderer;
@@ -40,6 +40,8 @@ import org.codehaus.plexus.interpolation.PrefixedObjectValueSource;
 import org.codehaus.plexus.interpolation.AbstractValueSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.PrintStream;
 
 /**
  * The default {@link CommandDocumenter} component.
@@ -133,30 +135,33 @@ public class CommandDocumenterImpl
 
         log.trace("Rendering command manual");
 
-        PrefixingStream prefixed = new PrefixingStream("   ", io.outputStream);
+        PrintStream out = new PrintStream(new PrefixingOutputStream(io.outputStream, "   "));
         AnsiRenderer renderer = new AnsiRenderer();
 
+        //
+        // HACK: PrefixingOutputStream has a problem with state and using io.out, so we have to
+        //       add more println()s to compensate for now
+        //
+
         io.out.println("@|bold NAME|");
-        io.out.print("  ");
-        prefixed.println(command.getName());
+        io.out.println();
+        out.println(command.getName());
         io.out.println();
 
         String text;
 
+        io.out.println("@|bold DESCRIPTION|");
         text = getDescription(command);
         text = renderer.render(text);
-
-        io.out.println("@|bold DESCRIPTION|");
-        io.out.print("  ");
-        prefixed.println(text);
+        out.println();
+        out.println(text);
         io.out.println();
-
+        
         io.out.println("@|bold MANUAL|");
-
         text = getManual(command);
         text = renderer.render(text);
-        
-        prefixed.println(text);
+        out.println();
+        out.println(text);
         io.out.println();
     }
 }
