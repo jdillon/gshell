@@ -34,6 +34,11 @@ public class RecallHistoryCommandTest
         super("recall");
     }
 
+    public void testDependenciesRegistered() throws Exception {
+        assertTrue(commandRegistry.containsCommand("echo"));
+        assertTrue(commandRegistry.containsCommand("history"));
+    }
+
     @Override
     public void testDefault() throws Exception {
         try {
@@ -56,7 +61,7 @@ public class RecallHistoryCommandTest
     }
 
     public void testIndexOutOfRange() throws Exception {
-        Object result = executeWithArgs(String.valueOf(Integer.MAX_VALUE));
+        Object result = executeWithArgs(String.valueOf(getShell().getHistory().size()));
         assertEqualsFailure(result);
     }
 

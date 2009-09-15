@@ -38,15 +38,12 @@ public abstract class ShellTestSupport
 
     private Shell shell;
 
-    public ShellTestSupport() {
-        super();    //To change body of overridden methods use File | Settings | File Templates.
-    }
-
     @Override
     protected void setUp() throws Exception {
         super.setUp();
 
         System.setProperty(MVNSH_HOME, System.getProperty("user.dir"));
+        System.setProperty(MVNSH_USER_HOME, System.getProperty("user.dir"));
 
         CommandRegistrationAgent agent = lookup(CommandRegistrationAgent.class);
         agent.registerCommands();
@@ -55,8 +52,6 @@ public abstract class ShellTestSupport
 
         io = new TestIO();
         shell.setIo(io);
-
-        // FIXME: Need to provide a way to disable inclusion of profile scripts
     }
 
     @Override

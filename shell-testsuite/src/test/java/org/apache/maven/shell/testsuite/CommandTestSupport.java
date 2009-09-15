@@ -20,6 +20,7 @@
 package org.apache.maven.shell.testsuite;
 
 import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.ansi.Ansi;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.registry.CommandRegistry;
@@ -45,6 +46,9 @@ public abstract class CommandTestSupport
     protected void setUp() throws Exception {
         super.setUp();
 
+        // For simplicity of output verification disable ANSI
+        Ansi.setEnabled(false);
+        
         vars = getShell().getVariables();
         aliasRegistry = lookup(AliasRegistry.class);
         commandRegistry = lookup(CommandRegistry.class);

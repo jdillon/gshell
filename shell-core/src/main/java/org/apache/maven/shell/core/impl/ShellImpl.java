@@ -133,19 +133,19 @@ public class ShellImpl
             variables.set(MVNSH_USER_DIR, System.getProperty("user.dir"));
         }
         if (!variables.contains(MVNSH_PROMPT)) {
-            variables.set(MVNSH_PROMPT, "@|bold mvnsh|:%{mvnsh.user.dir}> ");
+            variables.set(MVNSH_PROMPT, "@|bold mvnsh|:%{" + MVNSH_USER_DIR + "}> ");
         }
 
         // Configure history storage
         if (!variables.contains(MVNSH_HISTORY)) {
             File dir = new File(variables.get(MVNSH_USER_HOME, String.class), ".m2");
             File file = new File(dir, MVNSH_HISTORY);
-            history.setFile(file);
+            history.setStoreFile(file);
             variables.set(MVNSH_HISTORY, file.getCanonicalFile(), false);
         }
         else {
             File file = new File(variables.get(MVNSH_HISTORY, String.class));
-            history.setFile(file);
+            history.setStoreFile(file);
         }
         
         // Load profile scripts
@@ -187,21 +187,18 @@ public class ShellImpl
     public Object execute(final String line) throws Exception {
         ensureOpened();
 
-        assert executor != null;
         return executor.execute(createShellContext(), line);
     }
 
     public Object execute(final String command, final Object[] args) throws Exception {
         ensureOpened();
 
-        assert executor != null;
         return executor.execute(createShellContext(), command, args);
     }
 
     public Object execute(final Object... args) throws Exception {
         ensureOpened();
 
-        assert executor != null;
         return executor.execute(createShellContext(), args);
     }
 

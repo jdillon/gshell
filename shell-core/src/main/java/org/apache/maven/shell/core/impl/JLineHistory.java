@@ -40,27 +40,26 @@ public class JLineHistory
 
     private jline.History delegate = new jline.History();
 
-    private File file;
+    private File storeFile;
 
     public jline.History getDelegate() {
         return delegate;
     }
 
-    public void setFile(final File file) throws IOException {
+    public void setStoreFile(final File file) throws IOException {
         assert file != null;
 
         File dir = file.getParentFile();
-
         if (!dir.exists()) {
             if (!dir.mkdirs()) {
                 log.debug("Unable to create directory: {}", dir);
             }
         }
 
-        this.file = file;
-        log.debug("History file: {}", file);
+        this.storeFile = file;
+        log.debug("History file: {}", storeFile);
 
-        delegate.setHistoryFile(file);
+        delegate.setHistoryFile(storeFile);
     }
 
     public void clear() {
@@ -70,25 +69,33 @@ public class JLineHistory
     public void purge() throws IOException {
         clear();
 
-        if (file == null) {
-            log.warn("History storage file not configured; nothig to purge");
+        if (storeFile == null) {
+            log.warn("History storage file not configured; nothing to purge");
         }
         else {
             delegate.flushBuffer();
 
+            File originalFile = storeFile;
+
+            // Create and install a new history file
             File tmp = File.createTempFile(getClass().getSimpleName(), "temp");
             tmp.deleteOnExit();
-            setFile(tmp);
+            setStoreFile(tmp);
 
-            if (!file.delete()) {
-                log.warn("Unable to remove history file: {}", file);
+            // Delete the original then re-install it
+            if (!originalFile.delete()) {
+                log.warn("Unable to remove history file: {}", originalFile);
             }
-            setFile(file);
+            setStoreFile(originalFile);
 
             if (!tmp.delete()) {
                 log.warn("Unable to remove file: {}", tmp);
             }
         }
+    }
+
+    public int size() {
+        return delegate.size();
     }
 
     public List<String> elements() {

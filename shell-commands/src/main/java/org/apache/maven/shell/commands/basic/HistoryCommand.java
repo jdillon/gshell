@@ -71,20 +71,33 @@ public class HistoryCommand
         History history = context.getShell().getHistory();
 
         if (range == null) {
+            // Display all elements
             List<String> elements = history.elements();
             int i = 0;
             for (String element : elements) {
-                String index = String.format("%3d", i);
-                io.info("  @|bold {}| {}", index, element);
+                renderElement(io, i, element);
                 i++;
             }
         }
         else {
-            // TODO: Handle range
-            log.error("Sorry range is not yet supported");
-            return Result.FAILURE;
+            // Display elements in range
+            int n = Integer.parseInt(range);
+            List<String> elements = history.elements();
+            if (n > elements.size()) {
+                n = 0;
+            }
+            int i = elements.size() - n;
+            while (i < elements.size()) {
+                renderElement(io, i, elements.get(i));
+                i++;
+            }
         }
 
         return Result.SUCCESS;
+    }
+
+    private void renderElement(final IO io, final int i, final String element) {
+        String index = String.format("%3d", i);
+        io.info("  @|bold {}| {}", index, element);
     }
 }

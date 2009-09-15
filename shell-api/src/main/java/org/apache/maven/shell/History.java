@@ -41,6 +41,8 @@ public interface History
      */
     void purge() throws IOException;
 
+    int size();
+    
     /**
      * Returns a list of all history elements.
      * 

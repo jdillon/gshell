@@ -38,6 +38,7 @@ public class ShellImplTest
         super.setUp();
 
         System.setProperty(MVNSH_HOME, System.getProperty("user.dir"));
+        System.setProperty(MVNSH_USER_HOME, System.getProperty("user.dir"));
     }
 
     public void testBoot() throws Exception {

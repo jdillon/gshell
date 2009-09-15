@@ -48,7 +48,7 @@ public class RecallHistoryCommand
         History history = context.getShell().getHistory();
 
         List<String> elements = history.elements();
-        if (index < 0 || index > elements.size()) {
+        if (index < 0 || index >= elements.size()) {
             io.error(getMessages().format("error.no-such-index", index));
             return Result.FAILURE;
         }

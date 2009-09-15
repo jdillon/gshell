@@ -34,6 +34,10 @@ public class HistoryCommandTest
         super("history");
     }
 
+    public void testDependenciesRegistered() throws Exception {
+        assertTrue(commandRegistry.containsCommand("echo"));
+    }
+
     public void testTooManyArguments() throws Exception {
         try {
             executeWithArgs("1 2");
@@ -44,16 +48,56 @@ public class HistoryCommandTest
         }
     }
 
-    public void testIndexOutOfRange() throws Exception {
-        Object result = executeWithArgs(String.valueOf(Integer.MAX_VALUE));
-        assertEqualsFailure(result);
+    public void testInvalidIndex() throws Exception {
+        try {
+            executeWithArgs("foo");
+        }
+        catch (NumberFormatException e) {
+            // expected
+        }
     }
 
-    public void testInvalidIndex() throws Exception {
-        Object result = executeWithArgs("foo");
-        assertEqualsFailure(result);
+    public void testPurge() throws Exception {
+        // Make sure there is going to be more than one item in history
+        execute("echo 1");
+        execute("echo 2");
 
-        // NOTE: Needs to be updated when range support is added
+        // Then purge and expect history to be empty
+        Object result = executeWithArgs("-p");
+        assertEqualsSuccess(result);
+        assertEquals(0, getShell().getHistory().size());
+    }
+
+    public void testListSubset() throws Exception {
+        // first purge
+        testPurge();
+
+        // Then seed 10 elements
+        for (int i=0; i<10; i++) {
+            execute("echo " + i);
+        }
+
+        // And then ask for the last 5
+        Object result = executeWithArgs("5");
+        assertEqualsSuccess(result);
+
+        // TODO: Verify output
+    }
+
+    public void testListOverset() throws Exception {
+        // first purge
+        testPurge();
+
+        // Then seed 10 elements
+        for (int i=0; i<10; i++) {
+            execute("echo " + i);
+        }
+
+        // And then ask for the last 15
+        Object result = executeWithArgs("15");
+        assertEqualsSuccess(result);
+
+        // TODO: Verify output
     }
 
     // TODO: Add more tests
