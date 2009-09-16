@@ -22,6 +22,7 @@ package org.apache.maven.shell.testsuite.file;
 import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.testsuite.CommandTestSupport;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link CurrentDirectoryCommand}.
@@ -55,4 +56,6 @@ public class CurrentDirectoryCommandTest
             // expected
         }
     }
+
+    // TODO: Add more tests
 }

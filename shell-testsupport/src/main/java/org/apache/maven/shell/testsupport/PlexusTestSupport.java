@@ -34,7 +34,7 @@ import java.io.File;
 import java.io.InputStream;
 
 //
-// NOTE: Augmented version of PlexusTestCase to remove dependency on JUnit
+// NOTE: Augmented version of PlexusTestCase to remove dependency on JUnit 3.x style test executions.
 //
 
 /**

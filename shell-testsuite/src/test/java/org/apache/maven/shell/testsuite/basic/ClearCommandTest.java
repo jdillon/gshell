@@ -22,6 +22,7 @@ package org.apache.maven.shell.testsuite.basic;
 import org.apache.maven.shell.ansi.Ansi;
 import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.testsuite.CommandTestSupport;
+import static org.junit.Assert.fail;
 import org.junit.Test;
 
 /**
@@ -35,13 +36,6 @@ public class ClearCommandTest
 {
     public ClearCommandTest() {
         super("clear");
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        // Reset the Ansi state back to whatever is detected
-        Ansi.setEnabled(Ansi.isDetected());
-        super.tearDown();
     }
 
     @Override

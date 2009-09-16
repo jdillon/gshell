@@ -19,13 +19,21 @@
 
 package org.apache.maven.shell.testsuite;
 
+import org.apache.maven.shell.Shell;
+import org.apache.maven.shell.VariableNames;
 import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.ansi.Ansi;
 import org.apache.maven.shell.command.Command;
+import org.apache.maven.shell.core.impl.registry.CommandRegistrationAgent;
 import org.apache.maven.shell.io.SystemInputOutputHijacker;
 import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.registry.CommandRegistry;
+import org.apache.maven.shell.testsupport.PlexusTestSupport;
+import org.apache.maven.shell.testsupport.TestIO;
 import org.junit.Test;
+import org.junit.Before;
+import org.junit.After;
+import static org.junit.Assert.*;
 
 /**
  * Support for testing {@link Command} instances.
@@ -34,9 +42,15 @@ import org.junit.Test;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public abstract class CommandTestSupport
-    extends ShellTestSupport
+    implements VariableNames
 {
     protected final String name;
+
+    private PlexusTestSupport plexus;
+
+    private TestIO io;
+
+    private Shell shell;
 
     protected AliasRegistry aliasRegistry;
 
@@ -44,9 +58,24 @@ public abstract class CommandTestSupport
 
     protected Variables vars;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    protected CommandTestSupport(final String name) {
+        assertNotNull(name);
+        this.name = name;
+    }
+
+    @Before
+    public void setUp() throws Exception {
+        plexus = new PlexusTestSupport(this);
+
+        System.setProperty(MVNSH_HOME, System.getProperty("user.dir"));
+        System.setProperty(MVNSH_USER_HOME, System.getProperty("user.dir"));
+
+        CommandRegistrationAgent agent = plexus.lookup(CommandRegistrationAgent.class);
+        agent.registerCommands();
+
+        shell = plexus.lookup(Shell.class);
+        io = new TestIO();
+        shell.setIo(io);
 
         // Hijack the system output streams
         if (!SystemInputOutputHijacker.isInstalled()) {
@@ -56,25 +85,38 @@ public abstract class CommandTestSupport
         // For simplicity of output verification disable ANSI
         Ansi.setEnabled(false);
         
-        vars = getShell().getVariables();
-        aliasRegistry = lookup(AliasRegistry.class);
-        commandRegistry = lookup(CommandRegistry.class);
+        vars = shell.getVariables();
+        aliasRegistry = plexus.lookup(AliasRegistry.class);
+        commandRegistry = plexus.lookup(CommandRegistry.class);
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         commandRegistry = null;
         aliasRegistry = null;
         vars = null;
 
         SystemInputOutputHijacker.uninstall();
 
-        super.tearDown();
+        io = null;
+        shell.close();
+        shell = null;
+        plexus = null;
     }
 
-    protected CommandTestSupport(final String name) {
-        assertNotNull(name);
-        this.name = name;
+    protected Shell getShell() {
+        assertNotNull(shell);
+        return shell;
+    }
+
+    protected TestIO getIo() {
+        assertNotNull(io);
+        return io;
+    }
+
+    protected Object execute(final String line) throws Exception {
+        assertNotNull(line);
+        return getShell().execute(line);
     }
 
     protected Object execute() throws Exception {
@@ -86,6 +128,10 @@ public abstract class CommandTestSupport
         return execute(name + " " + args);
     }
 
+    //
+    // Assertion helpers
+    //
+    
     protected void assertEqualsSuccess(final Object result) {
         assertEquals(Command.Result.SUCCESS, result);
     }
@@ -101,6 +147,10 @@ public abstract class CommandTestSupport
     protected void assertErrorOutputEquals(final String expected) {
         assertEquals(getIo().getErrorString(), expected);
     }
+
+    //
+    // Some default tests for all commands
+    //
 
     @Test
     public void testRegistered() throws Exception {

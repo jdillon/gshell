@@ -25,6 +25,7 @@ import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.net.URL;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link SourceCommand}.
