@@ -54,8 +54,10 @@ public class AliasRegistryImpl
 
         log.debug("Registering alias: {} -> {}", name, alias);
 
-        if (containsAlias(name)) {
-            log.debug("Replacing alias: {}", name);
+        if (log.isDebugEnabled()) {
+            if (containsAlias(name)) {
+                log.debug("Replacing alias: {}", name);
+            }
         }
 
         aliases.put(name, alias);
