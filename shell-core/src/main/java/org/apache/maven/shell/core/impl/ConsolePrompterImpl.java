@@ -19,19 +19,15 @@
 
 package org.apache.maven.shell.core.impl;
 
-import org.apache.maven.shell.ShellContextHolder;
 import org.apache.maven.shell.VariableNames;
 import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.ansi.AnsiRenderer;
 import org.apache.maven.shell.console.Console;
-import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.interpolation.AbstractValueSource;
 import org.codehaus.plexus.interpolation.InterpolationException;
 import org.codehaus.plexus.interpolation.Interpolator;
 import org.codehaus.plexus.interpolation.PropertiesBasedValueSource;
 import org.codehaus.plexus.interpolation.StringSearchInterpolator;
-import org.codehaus.plexus.personality.plexus.lifecycle.phase.Initializable;
-import org.codehaus.plexus.personality.plexus.lifecycle.phase.InitializationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,9 +37,8 @@ import org.slf4j.LoggerFactory;
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-@Component(role=Console.Prompter.class)
 public class ConsolePrompterImpl
-    implements Console.Prompter, Initializable, VariableNames
+    implements Console.Prompter, VariableNames
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -53,12 +48,16 @@ public class ConsolePrompterImpl
 
     private final String defaultPrompt = "> ";
 
-    public void initialize() throws InitializationException {
+    private final Variables vars;
+
+    public ConsolePrompterImpl(final Variables vars) {
+        assert vars != null;
+        this.vars = vars;
+
         interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));
 
         interp.addValueSource(new AbstractValueSource(false) {
             public Object getValue(final String expression) {
-                Variables vars = ShellContextHolder.get().getVariables();
                 return vars.get(expression);
             }
         });
@@ -66,8 +65,6 @@ public class ConsolePrompterImpl
 
     public String prompt() {
         String prompt = null;
-
-        Variables vars = ShellContextHolder.get().getVariables();
         String pattern = vars.get(MVNSH_PROMPT, String.class);
 
         if (pattern != null) {

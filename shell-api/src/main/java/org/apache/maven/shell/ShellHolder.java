@@ -19,34 +19,40 @@
 
 package org.apache.maven.shell;
 
-import org.apache.maven.shell.io.IO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Provides the execution context of a shell.
+ * {@link Shell} thread context holder.
  *
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public interface ShellContext
+public class ShellHolder
 {
-    /**
-     * The invoking shell instance.
-     *
-     * @return The invoking shell instance; never null.
-     */
-    Shell getShell();
+    private static final Logger log = LoggerFactory.getLogger(ShellHolder.class);
 
-    /**
-     * The Input/Output context for the shell.
-     *
-     * @return Command Input/Output context; never null.
-     */
-    IO getIo();
+    private static final InheritableThreadLocal<Shell> holder = new InheritableThreadLocal<Shell>();
 
-    /**
-     * The variables for the shell.
-     *
-     * @return Command variables; never null.
-     */
-    Variables getVariables();
+    public static void set(final Shell shell) {
+        log.trace("Setting shell: {}", shell);
+
+        holder.set(shell);
+    }
+
+    public static Shell get(final boolean allowNull) {
+        Shell shell = holder.get();
+
+        log.trace("Getting shell ({}): {}", allowNull, shell);
+
+        if (!allowNull && shell == null) {
+            throw new IllegalStateException("Shell not initialized for thread: " + Thread.currentThread());
+        }
+
+        return shell;
+    }
+
+    public static Shell get() {
+        return get(false);
+    }
 }

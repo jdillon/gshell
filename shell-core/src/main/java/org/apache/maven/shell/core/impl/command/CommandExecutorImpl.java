@@ -20,7 +20,6 @@
 package org.apache.maven.shell.core.impl.command;
 
 import org.apache.maven.shell.Shell;
-import org.apache.maven.shell.ShellContext;
 import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.cli.Processor;
 import org.apache.maven.shell.command.Arguments;
@@ -69,8 +68,8 @@ public class CommandExecutorImpl
     @Requirement
     private CommandDocumenter commandDocumeter;
 
-    public Object execute(final ShellContext context, final String line) throws Exception {
-        assert context != null;
+    public Object execute(final Shell shell, final String line) throws Exception {
+        assert shell != null;
         assert line != null;
 
         if (line.trim().length() == 0) {
@@ -81,7 +80,7 @@ public class CommandExecutorImpl
         CommandLine cl = parser.parse(line);
 
         try {
-            return cl.execute(context, this);
+            return cl.execute(shell, this);
         }
         catch (ErrorNotification n) {
             // Decode the error notification
@@ -99,15 +98,15 @@ public class CommandExecutorImpl
         }
     }
 
-    public Object execute(final ShellContext context, final Object... args) throws Exception {
-        assert context != null;
+    public Object execute(final Shell shell, final Object... args) throws Exception {
+        assert shell != null;
         assert args != null;
 
-        return execute(context, String.valueOf(args[0]), Arguments.shift(args));
+        return execute(shell, String.valueOf(args[0]), Arguments.shift(args));
     }
     
-    public Object execute(final ShellContext context, final String name, final Object[] args) throws Exception {
-        assert context != null;
+    public Object execute(final Shell shell, final String name, final Object[] args) throws Exception {
+        assert shell != null;
         assert name != null;
         assert args != null;
 
@@ -115,7 +114,7 @@ public class CommandExecutorImpl
 
         Command command = resolveCommand(name);
 
-        final IO io = context.getIo();
+        final IO io = shell.getIo();
 
         SystemInputOutputHijacker.register(io.streams);
         
@@ -145,7 +144,7 @@ public class CommandExecutorImpl
             if (execute) {
                 result = command.execute(new CommandContext() {
                     public Shell getShell() {
-                        return context.getShell();
+                        return shell;
                     }
 
                     public Object[] getArguments() {
@@ -157,7 +156,7 @@ public class CommandExecutorImpl
                     }
 
                     public Variables getVariables() {
-                        return context.getVariables();
+                        return shell.getVariables();
                     }
                 });
             }

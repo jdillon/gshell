@@ -19,7 +19,7 @@
 
 package org.apache.maven.shell.parser;
 
-import org.apache.maven.shell.ShellContext;
+import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.command.CommandExecutor;
 import org.apache.maven.shell.command.CommandLineParser;
 import org.apache.maven.shell.io.Closer;
@@ -69,10 +69,9 @@ public class CommandLineParserImpl
 
         return new CommandLine()
         {
-            public Object execute(final ShellContext context, final CommandExecutor executor) throws Exception {
-                assert context != null;
-
-                ExecutingVisitor visitor = new ExecutingVisitor(context, executor);
+            public Object execute(final Shell shell, final CommandExecutor executor) throws Exception {
+                assert shell != null;
+                ExecutingVisitor visitor = new ExecutingVisitor(shell, executor);
                 return root.jjtAccept(visitor, null);
             }
         };

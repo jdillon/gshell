@@ -20,7 +20,7 @@
 package org.apache.maven.shell.core.impl.completer;
 
 import jline.Completor;
-import org.apache.maven.shell.ShellContextHolder;
+import org.apache.maven.shell.ShellHolder;
 import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.console.completer.StringsCompleter;
 import org.codehaus.plexus.component.annotations.Component;
@@ -40,7 +40,7 @@ public class VariableNameCompleter
     implements Completor
 {
     public int complete(final String buffer, final int cursor, final List candidates) {
-        Variables vars = ShellContextHolder.get().getVariables();
+        Variables vars = ShellHolder.get().getVariables();
 
         // There are no events for variables muck, so each time we have to rebuild the list.
         StringsCompleter delegate = new StringsCompleter();

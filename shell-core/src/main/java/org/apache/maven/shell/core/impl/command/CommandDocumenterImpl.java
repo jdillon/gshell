@@ -19,7 +19,7 @@
 
 package org.apache.maven.shell.core.impl.command;
 
-import org.apache.maven.shell.ShellContextHolder;
+import org.apache.maven.shell.ShellHolder;
 import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.ansi.AnsiRenderer;
 import org.apache.maven.shell.cli.Printer;
@@ -68,7 +68,7 @@ public class CommandDocumenterImpl
             interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));
             interp.addValueSource(new AbstractValueSource(false) {
                 public Object getValue(final String expression) {
-                    Variables vars = ShellContextHolder.get().getVariables();
+                    Variables vars = ShellHolder.get().getVariables();
                     return vars.get(expression);
                 }
             });

@@ -19,7 +19,7 @@
 
 package org.apache.maven.shell.command;
 
-import org.apache.maven.shell.ShellContext;
+import org.apache.maven.shell.Shell;
 
 /**
  * Parse command lines for execution.
@@ -33,6 +33,6 @@ public interface CommandLineParser
 
     interface CommandLine
     {
-        Object execute(ShellContext context, CommandExecutor executor) throws Exception;
+        Object execute(Shell shell, CommandExecutor executor) throws Exception;
     }
 }

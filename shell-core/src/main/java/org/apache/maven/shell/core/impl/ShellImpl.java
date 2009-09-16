@@ -22,8 +22,6 @@ package org.apache.maven.shell.core.impl;
 import jline.Completor;
 import org.apache.maven.shell.History;
 import org.apache.maven.shell.Shell;
-import org.apache.maven.shell.ShellContext;
-import org.apache.maven.shell.ShellContextHolder;
 import org.apache.maven.shell.VariableNames;
 import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.command.CommandExecutor;
@@ -59,12 +57,6 @@ public class ShellImpl
 
     @Requirement(role=Completor.class, hints={"alias-name", "commands"})
     private List<Completor> completers;
-
-    @Requirement
-    private Console.Prompter prompter;
-
-    @Requirement
-    private Console.ErrorHandler errorHandler;
 
     private IO io = new IO();
 
@@ -162,47 +154,24 @@ public class ShellImpl
         return true;
     }
 
-    private ShellContext createShellContext() {
-        ShellContext context = new ShellContext()
-        {
-            public Shell getShell() {
-                return ShellImpl.this;
-            }
-
-            public IO getIo() {
-                return ShellImpl.this.getIo();
-            }
-
-            public Variables getVariables() {
-                return ShellImpl.this.getVariables();
-            }
-        };
-
-        log.debug("Created shell context: {}", context);
-
-        ShellContextHolder.set(context);
-
-        return context;
-    }
-
     // FIXME: History should still be appended if not running inside of a JLineConsole
     
     public Object execute(final String line) throws Exception {
         ensureOpened();
 
-        return executor.execute(createShellContext(), line);
+        return executor.execute(this, line);
     }
 
     public Object execute(final String command, final Object[] args) throws Exception {
         ensureOpened();
 
-        return executor.execute(createShellContext(), command, args);
+        return executor.execute(this, command, args);
     }
 
     public Object execute(final Object... args) throws Exception {
         ensureOpened();
 
-        return executor.execute(createShellContext(), args);
+        return executor.execute(this, args);
     }
 
     public void run(final Object... args) throws Exception {
@@ -244,11 +213,9 @@ public class ShellImpl
         JLineConsole console = new JLineConsole(executor, io);
         console.setHistory(history.getDelegate());
 
-        assert prompter != null;
-        console.setPrompter(prompter);
+        console.setPrompter(new ConsolePrompterImpl(getVariables()));
 
-        assert errorHandler != null;
-        console.setErrorHandler(errorHandler);
+        console.setErrorHandler(new ConsoleErrorHandlerImpl(io));
 
         // Attach completers if there are any
         if (completers != null) {

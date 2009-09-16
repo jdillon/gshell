@@ -19,7 +19,7 @@
 
 package org.apache.maven.shell.command;
 
-import org.apache.maven.shell.ShellContext;
+import org.apache.maven.shell.Shell;
 
 /**
  * Provides the ability to execute commands.
@@ -32,35 +32,35 @@ public interface CommandExecutor
     /**
      * Execute a command-line, parsing out valid recognized syntax.
      *
-     * @param context   The executing shell's context.
+     * @param shell     The executing shell.
      * @param line      Raw command-line to parse and execute.
      * @return          Command execution result.
      *
      * @throws Exception    Command-line execution failed.
      */
-    Object execute(ShellContext context, String line) throws Exception;
+    Object execute(Shell shell, String line) throws Exception;
 
     /**
      * Execute command name/path with the given arguments.
      *
-     * @param context   The executing shell's context.
+     * @param shell     The executing shell.
      * @param command   Name of the command/path to execute.
      * @param args      Command arguments.
      * @return          Command execution result.
      *
      * @throws Exception    Command-line execution failed.
      */
-    Object execute(ShellContext context, String command, Object[] args) throws Exception;
+    Object execute(Shell shell, String command, Object[] args) throws Exception;
 
     /**
      * Execute a pre-processed command-line.
      *
-     * @param context   The executing shell's context.
+     * @param shell     The executing shell.
      * @param args      Command arguments, first argument is expected to be the command/path to execute.
      * @return          Command execution result.
      *
      * @throws Exception    Command-line execution failed.
      */
-    Object execute(ShellContext context, Object... args) throws Exception;
+    Object execute(Shell shell, Object... args) throws Exception;
 
 }

@@ -20,6 +20,7 @@
 package org.apache.maven.shell.core;
 
 import org.apache.maven.shell.Shell;
+import org.apache.maven.shell.ShellHolder;
 import org.apache.maven.shell.ansi.Ansi;
 import org.apache.maven.shell.cli.Argument;
 import org.apache.maven.shell.cli.Processor;
@@ -244,9 +245,12 @@ public class Main
             // Register the IO streams
             SystemInputOutputHijacker.register(io.streams);
 
-            // Boot up the shell instance
+            // Create the shell instance
             Shell shell = container.lookup(Shell.class);
             shell.setIo(io);
+
+            // Install shell into thread context
+            ShellHolder.set(shell);
 
             // FIXME: Install default variables
 

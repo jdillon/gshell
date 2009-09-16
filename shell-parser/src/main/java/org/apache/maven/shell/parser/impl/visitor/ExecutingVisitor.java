@@ -19,8 +19,8 @@
 
 package org.apache.maven.shell.parser.impl.visitor;
 
-import org.apache.maven.shell.ShellContext;
-import org.apache.maven.shell.ShellContextHolder;
+import org.apache.maven.shell.Shell;
+import org.apache.maven.shell.ShellHolder;
 import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.command.Arguments;
 import org.apache.maven.shell.command.CommandExecutor;
@@ -30,9 +30,9 @@ import org.apache.maven.shell.parser.impl.ASTExpression;
 import org.apache.maven.shell.parser.impl.ASTOpaqueString;
 import org.apache.maven.shell.parser.impl.ASTPlainString;
 import org.apache.maven.shell.parser.impl.ASTQuotedString;
+import org.apache.maven.shell.parser.impl.ASTWhitespace;
 import org.apache.maven.shell.parser.impl.ParserVisitor;
 import org.apache.maven.shell.parser.impl.SimpleNode;
-import org.apache.maven.shell.parser.impl.ASTWhitespace;
 import org.codehaus.plexus.interpolation.AbstractValueSource;
 import org.codehaus.plexus.interpolation.InterpolationException;
 import org.codehaus.plexus.interpolation.Interpolator;
@@ -53,17 +53,17 @@ import java.util.List;
 public class ExecutingVisitor
     implements ParserVisitor
 {
-    private final ShellContext context;
+    private final Shell shell;
 
     private final CommandExecutor executor;
 
     private Interpolator interp;
 
-    public ExecutingVisitor(final ShellContext context, final CommandExecutor executor) {
-        assert context != null;
+    public ExecutingVisitor(final Shell shell, final CommandExecutor executor) {
+        assert shell != null;
         assert executor != null;
 
-        this.context = context;
+        this.shell = shell;
         this.executor = executor;
     }
 
@@ -99,7 +99,7 @@ public class ExecutingVisitor
 
         Object result;
         try {
-            result = executor.execute(context, path, args);
+            result = executor.execute(shell, path, args);
         }
         catch (Exception e) {
             throw new ErrorNotification("Shell execution failed; path=" + path + "; args=" + StringUtils.join(args, ", "), e);
@@ -152,7 +152,7 @@ public class ExecutingVisitor
             interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));
             interp.addValueSource(new AbstractValueSource(false) {
                 public Object getValue(final String expression) {
-                    Variables vars = ShellContextHolder.get().getVariables();
+                    Variables vars = ShellHolder.get().getVariables();
                     return vars.get(expression);
                 }
             });

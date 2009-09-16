@@ -19,11 +19,9 @@
 
 package org.apache.maven.shell.core.impl;
 
-import org.apache.maven.shell.ShellContextHolder;
 import org.apache.maven.shell.console.Console;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.notification.ErrorNotification;
-import org.codehaus.plexus.component.annotations.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,11 +31,17 @@ import org.slf4j.LoggerFactory;
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-@Component(role=Console.ErrorHandler.class)
 public class ConsoleErrorHandlerImpl
     implements Console.ErrorHandler
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
+
+    private final IO io;
+
+    public ConsoleErrorHandlerImpl(final IO io) {
+        assert io != null;
+        this.io = io;
+    }
 
     public Result handleError(final Throwable error) {
         assert error != null;
@@ -55,8 +59,6 @@ public class ConsoleErrorHandlerImpl
         if (error instanceof ErrorNotification) {
             cause = error.getCause();
         }
-
-        IO io = ShellContextHolder.get().getIo();
 
         // Spit out the terse reason why we've failed
         io.err.print("@|bold,red ERROR| ");
