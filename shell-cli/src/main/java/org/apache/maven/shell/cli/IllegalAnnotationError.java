@@ -28,6 +28,8 @@ package org.apache.maven.shell.cli;
 public class IllegalAnnotationError
     extends Error
 {
+    ///CLOVER:OFF
+    
     private static final long serialVersionUID = 1;
 
     public IllegalAnnotationError(String msg) {
