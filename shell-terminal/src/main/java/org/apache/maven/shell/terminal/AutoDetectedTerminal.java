@@ -34,72 +34,76 @@ import java.io.InputStream;
 public class AutoDetectedTerminal
     extends jline.Terminal
 {
-    private final Terminal terminal;
+    private final Terminal delegate;
 
     public AutoDetectedTerminal() {
         String os = System.getProperty("os.name").toLowerCase();
 
         if (os.indexOf("windows") != -1) {
-            terminal = new WindowsTerminal();
+            delegate = new WindowsTerminal();
         }
         else {
-            terminal = new UnixTerminal();
+            delegate = new UnixTerminal();
         }
+    }
+
+    public Terminal getDelegate() {
+        return delegate;
     }
 
     public boolean isANSISupported() {
-        return terminal.isANSISupported();
+        return delegate.isANSISupported();
     }
 
     public int readCharacter(InputStream in) throws IOException {
-        return terminal.readCharacter(in);
+        return delegate.readCharacter(in);
     }
 
     public int readVirtualKey(InputStream in) throws IOException {
-        return terminal.readVirtualKey(in);
+        return delegate.readVirtualKey(in);
     }
 
     public void initializeTerminal() throws Exception {
-        terminal.initializeTerminal();
+        delegate.initializeTerminal();
     }
 
     public int getTerminalWidth() {
-        return terminal.getTerminalWidth();
+        return delegate.getTerminalWidth();
     }
 
     public int getTerminalHeight() {
-        return terminal.getTerminalHeight();
+        return delegate.getTerminalHeight();
     }
 
     public boolean isSupported() {
-        return terminal.isSupported();
+        return delegate.isSupported();
     }
 
     public boolean getEcho() {
-        return terminal.getEcho();
+        return delegate.getEcho();
     }
 
     public void beforeReadLine(ConsoleReader reader, String prompt, Character mask) {
-        terminal.beforeReadLine(reader, prompt, mask);
+        delegate.beforeReadLine(reader, prompt, mask);
     }
 
     public void afterReadLine(ConsoleReader reader, String prompt, Character mask) {
-        terminal.afterReadLine(reader, prompt, mask);
+        delegate.afterReadLine(reader, prompt, mask);
     }
 
     public boolean isEchoEnabled() {
-        return terminal.isEchoEnabled();
+        return delegate.isEchoEnabled();
     }
 
     public void enableEcho() {
-        terminal.enableEcho();
+        delegate.enableEcho();
     }
 
     public void disableEcho() {
-        terminal.disableEcho();
+        delegate.disableEcho();
     }
 
     public InputStream getDefaultBindings() {
-        return terminal.getDefaultBindings();
+        return delegate.getDefaultBindings();
     }
 }
