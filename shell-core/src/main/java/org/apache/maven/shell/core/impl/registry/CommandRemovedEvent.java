@@ -29,6 +29,8 @@ import java.util.EventObject;
 public class CommandRemovedEvent
     extends EventObject
 {
+    //CLOVER: OFF
+    
     private final String name;
 
     public CommandRemovedEvent(final String name) {

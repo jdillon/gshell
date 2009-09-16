@@ -29,6 +29,8 @@ import java.util.EventObject;
 public class AliasRemovedEvent
     extends EventObject
 {
+    //CLOVER: OFF
+    
     private final String name;
 
     public AliasRemovedEvent(final String name) {

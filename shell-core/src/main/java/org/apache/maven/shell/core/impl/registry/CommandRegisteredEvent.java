@@ -29,6 +29,8 @@ import java.util.EventObject;
 public class CommandRegisteredEvent
     extends EventObject
 {
+    //CLOVER: OFF
+
     private final String name;
 
     public CommandRegisteredEvent(final String name) {

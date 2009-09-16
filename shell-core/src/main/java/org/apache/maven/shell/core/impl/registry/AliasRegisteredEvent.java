@@ -29,6 +29,8 @@ import java.util.EventObject;
 public class AliasRegisteredEvent
     extends EventObject
 {
+    //CLOVER: OFF
+    
     private final String name;
 
     private final String alias;
