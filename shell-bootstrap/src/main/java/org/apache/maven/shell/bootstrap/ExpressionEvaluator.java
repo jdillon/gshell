@@ -25,10 +25,15 @@ import java.util.Properties;
 // NOTE: Most of this stuff came from org.apache.log4j.helpers.OptionConverter.
 //
 
+//
+// FIXME: Change to plexus-interpolation
+//
+
 /**
  * Simple expression evaluator for handling <tt>${variable}</tt> expansion.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class ExpressionEvaluator
 {
@@ -109,7 +114,7 @@ public class ExpressionEvaluator
             return System.getProperty(key, def);
         }
         catch (Throwable e) {
-            Log.debug("Was not allowed to read system property: " + key);
+            Log.debug("Was not allowed to read system property: ", key);
             return def;
         }
     }

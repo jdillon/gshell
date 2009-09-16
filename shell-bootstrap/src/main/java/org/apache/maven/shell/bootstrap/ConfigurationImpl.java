@@ -33,6 +33,7 @@ import java.util.Properties;
  * Bootstrap configuration implementation.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class ConfigurationImpl
     implements Configuration
@@ -62,7 +63,7 @@ public class ConfigurationImpl
         assert value != null;
 
         if (Log.DEBUG) {
-            Log.debug(name + ": " + value);
+            Log.debug(name, ": ", value);
         }
 
         System.setProperty(name, value);
@@ -75,7 +76,7 @@ public class ConfigurationImpl
         assert defaults != null;
 
         if (Log.DEBUG) {
-            Log.debug("Merging default properties from: " + defaults);
+            Log.debug("Merging default properties from: ", defaults);
         }
 
         InputStream input = defaults.openStream();
@@ -95,7 +96,7 @@ public class ConfigurationImpl
         if (Log.DEBUG) {
             Log.debug("Properties:");
             for (Map.Entry entry : props.entrySet()) {
-                Log.debug("    " + entry.getKey() + "=" + entry.getValue());    
+                Log.debug("    ",  entry.getKey(), "=", entry.getValue());
             }
         }
 
@@ -107,7 +108,7 @@ public class ConfigurationImpl
      */
     private File detectHomeDir() throws Exception {
         if (Log.DEBUG) {
-            Log.debug("Detecting " + MVNSH_HOME);
+            Log.debug("Detecting ", MVNSH_HOME);
         }
 
         String path = getClass().getProtectionDomain().getCodeSource().getLocation().getFile();
@@ -210,7 +211,7 @@ public class ConfigurationImpl
         classPath.add(getEtcDir().toURI().toURL());
 
         if (Log.DEBUG) {
-            Log.debug("Finding jars under: " + getLibDir());
+            Log.debug("Finding jars under: ", getLibDir());
         }
 
         File[] files = getLibDir().listFiles(new FileFilter() {

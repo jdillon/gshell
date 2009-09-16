@@ -29,6 +29,8 @@ import java.util.List;
  * Bootstrap launcher.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
  */
 public class Launcher
 {
@@ -60,7 +62,7 @@ public class Launcher
             System.exit(config.getSuccessExitCode());
         }
         catch (Throwable t) {
-            Log.debug("Failure: " + t);
+            Log.debug("Failure: ", t);
             
             t.printStackTrace(System.err);
             System.err.flush();
@@ -82,7 +84,7 @@ public class Launcher
         Thread.currentThread().setContextClassLoader(cl);
 
         if (Log.DEBUG) {
-            Log.debug("Invoking: " + method);
+            Log.debug("Invoking: ", method);
         }
         
         method.invoke(null, new Object[] { args });
@@ -94,7 +96,7 @@ public class Launcher
         if (Log.DEBUG) {
             Log.debug("Classpath:");
             for (URL url : classPath) {
-                Log.debug("    " + url);
+                Log.debug("    ", url);
             }
         }
 

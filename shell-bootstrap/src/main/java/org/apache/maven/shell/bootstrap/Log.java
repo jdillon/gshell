@@ -23,14 +23,23 @@ package org.apache.maven.shell.bootstrap;
  * Bootstrap logger.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class Log
 {
     public static final boolean DEBUG = Boolean.getBoolean(Log.class.getName() + ".debug");
 
-    public static void debug(final String message) {
+    public static void debug(final Object... messages) {
         if (DEBUG) {
-            System.err.println("[DEBUG] " + message);
+            synchronized (System.err) {
+                System.err.print("[DEBUG] ");
+
+                for (Object message : messages) {
+                    System.err.print(message);
+                }
+
+                System.err.println();
+            }
         }
     }
 }
