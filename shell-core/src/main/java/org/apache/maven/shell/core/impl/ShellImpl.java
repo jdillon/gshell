@@ -257,7 +257,7 @@ public class ShellImpl
 
         // Unless the user wants us to shut up, then display a nice welcome banner
         if (!io.isQuiet()) {
-            io.out.println("@|bold,red Apache Maven| @|cyan Shell|");
+            io.out.println("@|bold,red Apache Maven| @|bold Shell|");
             io.out.println(StringUtils.repeat("-", io.getTerminal().getTerminalWidth() - 1));
             io.out.flush();
         }

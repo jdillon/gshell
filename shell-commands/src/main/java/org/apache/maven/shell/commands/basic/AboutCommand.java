@@ -48,7 +48,7 @@ public class AboutCommand
         assert context != null;
         IO io = context.getIo();
 
-        io.out.println("@|bold,red Apache Maven| @|cyan Shell|");
+        io.out.println("@|bold,red Apache Maven| @|bold Shell|");
         io.out.println(StringUtils.repeat("-", io.getTerminal().getTerminalWidth() - 1));
 
         Properties properties = getBuildProperties();
