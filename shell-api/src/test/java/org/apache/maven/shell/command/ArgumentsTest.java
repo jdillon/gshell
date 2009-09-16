@@ -17,10 +17,10 @@
  * under the License.
  */
 
-package org.apache.maven.shell;
+package org.apache.maven.shell.command;
 
-import junit.framework.TestCase;
-import org.apache.maven.shell.command.Arguments;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link Arguments} class.
@@ -28,8 +28,8 @@ import org.apache.maven.shell.command.Arguments;
  * @version $Rev$ $Date$
  */
 public class ArgumentsTest
-    extends TestCase
 {
+    @Test
     public void testShift() {
         Object[] args = { 1, 2, 3, 4 };
 
@@ -42,6 +42,7 @@ public class ArgumentsTest
         assertEquals(4, shifted[2]);
     }
 
+    @Test
     public void testShift2() {
         Object[] args = { "a", "b", 1, 2 };
 
@@ -50,6 +51,7 @@ public class ArgumentsTest
         assertEquals(args.length - 1, shifted.length);
     }
 
+    @Test
     public void testShift3() {
         String[] args = { "a" };
 

@@ -29,6 +29,8 @@ import org.apache.maven.shell.command.CommandException;
 public class DuplicateCommandException
     extends CommandException
 {
+    //CLOVER:OFF
+    
     private static final long serialVersionUID = 1;
 
     public DuplicateCommandException(final String msg) {

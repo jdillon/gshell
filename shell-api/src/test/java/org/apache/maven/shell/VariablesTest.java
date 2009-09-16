@@ -19,7 +19,9 @@
 
 package org.apache.maven.shell;
 
-import junit.framework.TestCase;
+import org.junit.Test;
+import org.junit.Before;
+import static org.junit.Assert.*;
 
 import java.util.Iterator;
 
@@ -29,14 +31,15 @@ import java.util.Iterator;
  * @version $Rev$ $Date$
  */
 public class VariablesTest
-    extends TestCase
 {
     private Variables vars;
 
-    protected void setUp() throws Exception {
+    @Before
+    public void setup() {
         vars = new Variables();
     }
 
+    @Test
     public void testSet() throws Exception {
         String name = "a";
         Object value = new Object();
@@ -52,6 +55,7 @@ public class VariablesTest
         assertEquals(name, str);
     }
 
+    @Test
     public void testSetAsImmutable() throws Exception {
         String name = "a";
         Object value = new Object();
@@ -69,6 +73,7 @@ public class VariablesTest
         }
     }
 
+    @Test
     public void testSetAsImmutableInParent() throws Exception {
         Variables parent = new Variables();
         Variables vars = new Variables(parent);
@@ -88,6 +93,7 @@ public class VariablesTest
         }
     }
 
+    @Test
     public void testSetParentFromChild() throws Exception {
         Variables parent = new Variables();
         Variables vars = new Variables(parent);
@@ -102,6 +108,7 @@ public class VariablesTest
         assertTrue(vars.names().hasNext());
     }
 
+    @Test
     public void testGet() throws Exception {
         String name = "a";
         Object value = new Object();
@@ -114,6 +121,7 @@ public class VariablesTest
         assertSame(value, obj2);
     }
 
+    @Test
     public void testGetUsingDefault() throws Exception {
         String name = "a";
         Object value = new Object();
@@ -125,6 +133,7 @@ public class VariablesTest
         assertSame(value, obj2);
     }
 
+    @Test
     public void testGetCloaked() throws Exception {
         Variables parent = new Variables();
         Variables vars = new Variables(parent);
@@ -143,6 +152,7 @@ public class VariablesTest
         assertNotSame(value, obj2);
     }
 
+    @Test
     public void testUnsetAsImmutable() throws Exception {
         String name = "a";
         Object value = new Object();
@@ -160,6 +170,7 @@ public class VariablesTest
         }
     }
 
+    @Test
     public void testUnsetAsImmutableInParent() throws Exception {
         Variables parent = new Variables();
         Variables vars = new Variables(parent);
@@ -179,6 +190,7 @@ public class VariablesTest
         }
     }
 
+    @Test
     public void testCloaking() throws Exception {
         Variables parent = new Variables();
         Variables vars = new Variables(parent);
@@ -193,6 +205,7 @@ public class VariablesTest
         assertTrue(vars.isCloaked(name));
     }
 
+    @Test
     public void testParent() throws Exception {
         Variables parent = new Variables();
         assertNull(parent.parent());
@@ -203,12 +216,14 @@ public class VariablesTest
         assertEquals(parent, vars.parent());
     }
 
+    @Test
     public void testNames() throws Exception {
         Iterator<String> iter = vars.names();
         assertNotNull(iter);
         assertFalse(iter.hasNext());
     }
 
+    @Test
     public void testNamesImmutable() throws Exception {
         vars.set("a", "b");
 
