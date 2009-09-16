@@ -83,10 +83,8 @@ public class Launcher
 
         Thread.currentThread().setContextClassLoader(cl);
 
-        if (Log.DEBUG) {
-            Log.debug("Invoking: ", method);
-        }
-        
+        Log.debug("Invoking: ", method);
+
         method.invoke(null, new Object[] { args });
     }
 

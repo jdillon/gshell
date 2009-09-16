@@ -62,9 +62,7 @@ public class ConfigurationImpl
         assert name != null;
         assert value != null;
 
-        if (Log.DEBUG) {
-            Log.debug(name, ": ", value);
-        }
+        Log.debug(name, ": ", value);
 
         System.setProperty(name, value);
     }
@@ -75,9 +73,7 @@ public class ConfigurationImpl
         URL defaults = getClass().getResource(DEFAULT_PROPERTIES);
         assert defaults != null;
 
-        if (Log.DEBUG) {
-            Log.debug("Merging default properties from: ", defaults);
-        }
+        Log.debug("Merging default properties from: ", defaults);
 
         InputStream input = defaults.openStream();
         try {
@@ -107,9 +103,7 @@ public class ConfigurationImpl
      * Attempt to detect the home directory, which is expected to be <tt>../../</tt> from the location of the jar containing this class.
      */
     private File detectHomeDir() throws Exception {
-        if (Log.DEBUG) {
-            Log.debug("Detecting ", MVNSH_HOME);
-        }
+        Log.debug("Detecting ", MVNSH_HOME);
 
         String path = getClass().getProtectionDomain().getCodeSource().getLocation().getFile();
         path = URLDecoder.decode(path, "UTF-8");
@@ -210,9 +204,7 @@ public class ConfigurationImpl
 
         classPath.add(getEtcDir().toURI().toURL());
 
-        if (Log.DEBUG) {
-            Log.debug("Finding jars under: ", getLibDir());
-        }
+        Log.debug("Finding jars under: ", getLibDir());
 
         File[] files = getLibDir().listFiles(new FileFilter() {
             public boolean accept(final File file) {

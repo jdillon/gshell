@@ -73,4 +73,9 @@ public abstract class StringSupport
 
         return value.substring(1, value.length() - 1);
     }
+
+    /** Accept the visitor. **/
+    public Object jjtAccept(final ParserVisitor visitor, final Object data) {
+        return visitor.visit(this, data);
+    }
 }

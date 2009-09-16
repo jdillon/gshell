@@ -28,6 +28,7 @@ import org.apache.maven.shell.parser.impl.ParserVisitor;
 import org.apache.maven.shell.parser.impl.SimpleNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.codehaus.plexus.util.StringUtils;
 
 /**
  * Visitor whichs logs nodes in the tree.
@@ -81,11 +82,7 @@ public class LoggingVisitor
                 break;
         }
 
-        StringBuilder buff = new StringBuilder();
-
-        for (int i=0; i<indent; i++) {
-            buff.append(" ");
-        }
+        StringBuilder buff = new StringBuilder(StringUtils.repeat(" ", indent));
 
         buff.append(node).append(" (").append(type.getName()).append(")");
         if (data != null) {

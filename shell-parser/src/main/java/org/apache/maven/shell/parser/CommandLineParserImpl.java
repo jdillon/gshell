@@ -64,8 +64,7 @@ public class CommandLineParserImpl
 
         // If debug is enabled, the log the parse tree
         if (log.isDebugEnabled()) {
-            LoggingVisitor logger = new LoggingVisitor(log);
-            root.jjtAccept(logger, null);
+            root.jjtAccept(new LoggingVisitor(log), null);
         }
 
         return new CommandLine()

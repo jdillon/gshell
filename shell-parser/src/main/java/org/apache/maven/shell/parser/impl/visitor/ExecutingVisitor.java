@@ -56,7 +56,7 @@ public class ExecutingVisitor
 
     private final CommandExecutor executor;
 
-    private final Interpolator interp = new StringSearchInterpolator("${", "}");
+    private Interpolator interp;
 
     public ExecutingVisitor(final ShellContext context, final CommandExecutor executor) {
         assert context != null;
@@ -64,15 +64,6 @@ public class ExecutingVisitor
 
         this.context = context;
         this.executor = executor;
-
-        interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));
-
-        interp.addValueSource(new AbstractValueSource(false) {
-            public Object getValue(final String expression) {
-                Variables vars = ShellContextHolder.get().getVariables();
-                return vars.get(expression);
-            }
-        });
     }
 
 
@@ -136,6 +127,17 @@ public class ExecutingVisitor
     }
 
     private String interpolate(final String value) {
+        if (interp == null) {
+            interp = new StringSearchInterpolator();
+            interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));
+            interp.addValueSource(new AbstractValueSource(false) {
+                public Object getValue(final String expression) {
+                    Variables vars = ShellContextHolder.get().getVariables();
+                    return vars.get(expression);
+                }
+            });
+        }
+        
         try {
             return interp.interpolate(value);
         }
@@ -148,7 +150,6 @@ public class ExecutingVisitor
         assert node != null;
 
         String value = interpolate(node.getValue());
-
         return appendString(value, data);
     }
 
@@ -156,7 +157,6 @@ public class ExecutingVisitor
         assert node != null;
 
         String value = interpolate(node.getValue());
-
         return appendString(value, data);
     }
 

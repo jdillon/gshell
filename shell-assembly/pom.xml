@@ -121,9 +121,9 @@
                                             <include>org.apache.maven.shell:shell-i18n</include>
                                             <include>org.apache.maven.shell:shell-cli</include>
                                             <include>org.apache.maven.shell:shell-api</include>
-                                            <include>org.apache.maven.shell:shell-event</include>
                                             <include>org.apache.maven.shell:shell-core</include>
                                             <include>org.apache.maven.shell:shell-commands</include>
+                                            <include>org.apache.maven.shell:shell-parser</include>
                                             <include>org.apache.maven.shell:shell-bootstrap</include>
                                         </includes>
                                     </artifactSet>
