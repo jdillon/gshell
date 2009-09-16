@@ -19,21 +19,49 @@
 
 package org.apache.maven.shell.ansi;
 
-import junit.framework.TestCase;
+import org.junit.Test;
+import org.junit.Before;
+import org.junit.After;
+import static org.junit.Assert.*;
 
 /**
- * Tests for the {@link AnsiCode} class.
+ * Tests for the {@link AnsiRenderer} class.
  *
  * @version $Rev$ $Date$
  */
-public class CodeTest
-    extends TestCase
+public class AnsiRendererTest
 {
-    public void testForName() throws Exception {
-        assertEquals(AnsiCode.OFF, AnsiCode.valueOf("OFF"));
+    private AnsiRenderer renderer;
+
+    @Before
+    public void setup() {
+        renderer = new AnsiRenderer();
     }
 
-    public void testName() throws Exception {
-        assertEquals("OFF", AnsiCode.OFF.name());
+    @After
+    public void teardown() {
+        renderer = null;
+    }
+
+    @Test
+    public void testTest() throws Exception {
+        assertFalse(AnsiRenderer.test("foo"));
+        assertTrue(AnsiRenderer.test("@|foo|"));
+    }
+
+    @Test
+    public void testRenderNothing() {
+        assertEquals("foo", renderer.render("foo"));
+    }
+
+    @Test
+    public void testRenderMissingEndToken() {
+        try {
+            renderer.render("@|foo");
+            fail();
+        }
+        catch (AnsiRenderer.RenderException e) {
+            // expected;
+        }
     }
 }

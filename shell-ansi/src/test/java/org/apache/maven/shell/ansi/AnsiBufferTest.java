@@ -19,16 +19,17 @@
 
 package org.apache.maven.shell.ansi;
 
-import junit.framework.TestCase;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
- * Tests for the {@link AnsiCode} class.
+ * Tests for the {@link AnsiBuffer} class.
  *
  * @version $Rev$ $Date$
  */
-public class BufferTest
-    extends TestCase
+public class AnsiBufferTest
 {
+    @Test
     public void testIsAnsiEnabledOverride() throws Exception {
         boolean detected = Ansi.isEnabled();
         AnsiBuffer buff = new AnsiBuffer();
