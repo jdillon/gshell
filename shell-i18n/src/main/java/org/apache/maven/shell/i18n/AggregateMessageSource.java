@@ -30,7 +30,7 @@ public class AggregateMessageSource
 {
     private final MessageSource[] sources;
 
-    public AggregateMessageSource(final MessageSource[] sources) {
+    public AggregateMessageSource(final MessageSource... sources) {
         assert sources != null;
         assert sources.length > 1;
 

@@ -20,10 +20,10 @@
 package org.apache.maven.shell.cli;
 
 import org.apache.maven.shell.cli.handler.Handler;
-import org.apache.maven.shell.cli.handler.StopHandler;
 import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
 import org.apache.maven.shell.i18n.ResourceNotFoundException;
+import org.apache.maven.shell.i18n.AggregateMessageSource;
 
 import java.io.PrintWriter;
 import java.io.Writer;
@@ -40,30 +40,51 @@ import java.util.List;
  */
 public class Printer
 {
-    private Processor processor;
+    private final Processor processor;
 
-    //
-    // FIXME: Refactor all this stuff to simplify the API
-    //
-    
-    //
-    // TODO: Combine these into 1 dynamic MS
-    //
+    private MessageSource messages = new ResourceBundleMessageSource(Printer.class);
 
-    private MessageSource printerMessages = new ResourceBundleMessageSource(Printer.class);
+    private int terminalWidth = jline.Terminal.getTerminal().getTerminalWidth();
 
-    private MessageSource messages;
+    private String prefix = "  ";
+
+    private String separator = "    ";
 
     public Printer(final Processor processor) {
         assert processor != null;
-        
         this.processor = processor;
     }
 
     public void setMessageSource(final MessageSource messages) {
         assert messages != null;
+        this.messages = new AggregateMessageSource(this.messages, messages);
+    }
 
-        this.messages = messages;
+    public int getTerminalWidth() {
+        return terminalWidth;
+    }
+
+    public void setTerminalWidth(final int terminalWidth) {
+        assert terminalWidth > 0;
+        this.terminalWidth = terminalWidth;
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(final String prefix) {
+        assert prefix != null;
+        this.prefix = prefix;
+    }
+
+    public String getSeparator() {
+        return separator;
+    }
+
+    public void setSeparator(final String separator) {
+        assert separator != null;
+        this.separator = separator;
     }
 
     /**
@@ -183,12 +204,12 @@ public class Printer
         });
 
         if (name != null) {
-            String syntax = printerMessages.format("syntax", name);
+            String syntax = messages.format("syntax", name);
             if (!optionHandlers.isEmpty()) {
-                syntax = printerMessages.format("syntax.hasOptions", syntax);
+                syntax = messages.format("syntax.hasOptions", syntax);
             }
             if (!argumentHandlers.isEmpty()) {
-                syntax = printerMessages.format("syntax.hasArguments", syntax);
+                syntax = messages.format("syntax.hasArguments", syntax);
             }
             out.println(syntax);
             out.println();
@@ -209,7 +230,7 @@ public class Printer
 
         // And then render the handler usage
         if (!argumentHandlers.isEmpty()) {
-            out.println(printerMessages.getMessage("arguments.header"));
+            out.println(messages.getMessage("arguments.header"));
 
             for (Handler handler : argumentHandlers) {
                 printHandler(out, handler, len);
@@ -219,7 +240,7 @@ public class Printer
         }
 
         if (!optionHandlers.isEmpty()) {
-            out.println(printerMessages.getMessage("options.header"));
+            out.println(messages.getMessage("options.header"));
             
             for (Handler handler : optionHandlers) {
                 printHandler(out, handler, len);
@@ -239,13 +260,6 @@ public class Printer
         assert out != null;
         assert handler != null;
 
-        //
-        // TODO: Expose these as configurables
-        //
-        
-        int terminalWidth = 80;
-        String prefix = "  ";
-        String separator = "    ";
         int prefixSeperatorWidth = prefix.length() + separator.length();
         int descriptionWidth = terminalWidth - len - prefixSeperatorWidth;
 
@@ -266,34 +280,20 @@ public class Printer
         }
         out.print(separator);
 
-        // Render the description splitting it over multiple lines if its longer than column size
-        while (desc != null && desc.length() > 0) {
-            //
-            // FIXME: Only split on words
-            //
+        String[] words = desc.split("\\b");
+        StringBuilder buff = new StringBuilder();
 
-            int i = desc.indexOf('\n');
-
-            if (i >= 0 && i <= descriptionWidth) {
-                out.println(desc.substring(0, i));
-                desc = desc.substring(i + 1);
-
-                if (desc.length() > 0) {
-                    indent(out, len + prefixSeperatorWidth);
-                }
-
-                continue;
+        for (String word : words) {
+            if (word.length() + buff.length() > descriptionWidth) {
+                // spit out the current buffer and indent
+                out.println(buff);
+                indent(out, len + prefixSeperatorWidth);
+                buff.setLength(0);
             }
-
-            if (desc.length() <= descriptionWidth) {
-                out.println(desc);
-                break;
-            }
-
-            out.println(desc.substring(0, descriptionWidth));
-            desc = desc.substring(descriptionWidth);
-            indent(out, len + prefixSeperatorWidth);
+            buff.append(word);
         }
+
+        out.println(buff);
     }
 
     private void indent(final PrintWriter out, int i) {

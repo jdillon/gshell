@@ -63,7 +63,7 @@ public class PrinterTest
         @Option(name="-1", aliases={"--foo", "-bar"}, description="this is a test")
         String a;
 
-        @Option(name="-2", aliases={"--2", "-2"}, description="this is a really, really, really, really, really, really, really, really, really, really, really, really, really, really, really, really, really, really, really, really, really, really, really, really long description")
+        @Option(name="-2", aliases={"--2", "-2"}, description="this is a reallya, reallyb, reallyc, reallyd, reallye, reallyf, reallyg, reallyh, reallyi, reallyj, reallyk, reallyl, reallym, reallyn, reallyo, reallyp, reallyq, reallyr, reallys, reallyt, reallyu, reallyv, reallyw, reallyx long description")
         String b;
 
         @Argument(description="these are arguments")

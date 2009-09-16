@@ -22,12 +22,11 @@ package org.apache.maven.shell.core.impl.command;
 import org.apache.maven.shell.ShellContextHolder;
 import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.ansi.AnsiRenderer;
-import org.apache.maven.shell.cli.Processor;
 import org.apache.maven.shell.cli.Printer;
+import org.apache.maven.shell.cli.Processor;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandDocumenter;
 import org.apache.maven.shell.i18n.AggregateMessageSource;
-import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.i18n.PrefixingMessageSource;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.io.PrefixingOutputStream;
@@ -64,7 +63,7 @@ public class CommandDocumenterImpl
         assert text != null;
 
         if (text.indexOf("${") != -1) {
-            Interpolator interp = new StringSearchInterpolator("${", "}");
+            Interpolator interp = new StringSearchInterpolator();
             interp.addValueSource(new PrefixedObjectValueSource("command", command));
             interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));
             interp.addValueSource(new AbstractValueSource(false) {
@@ -120,12 +119,7 @@ public class CommandDocumenterImpl
         io.out.println();
 
         Printer printer = new Printer(clp);
-
-        AggregateMessageSource messages = new AggregateMessageSource(new MessageSource[] {
-            command.getMessages(),
-            help.getMessages()
-        });
-
+        AggregateMessageSource messages = new AggregateMessageSource(command.getMessages(), help.getMessages());
         printer.setMessageSource(new PrefixingMessageSource(messages, "command."));
         printer.printUsage(io.out, command.getName());
     }
