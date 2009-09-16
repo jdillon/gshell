@@ -33,7 +33,8 @@ public class PrefixedOutputStreamTest
     extends TestCase
 {
     public void testStream() {
-        PrefixingOutputStream prefixed = new PrefixingOutputStream(System.out, "FUCK");
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrefixingOutputStream prefixed = new PrefixingOutputStream(baos, "TEST");
         PrintStream out = new PrintStream(prefixed);
 
         out.println("HI");
@@ -41,5 +42,16 @@ public class PrefixedOutputStreamTest
         out.print("foo");
         out.print("bar");
         out.println("baz");
+        out.flush();
+
+        String tmp = new String(baos.toByteArray());
+        System.out.println(tmp);
+
+        String expected = "TESTHI\n" +
+                "TESTthere\n" +
+                "TESTfoobarbaz\n" +
+                "TEST";
+
+        assertEquals(expected, tmp);
     }
 }
