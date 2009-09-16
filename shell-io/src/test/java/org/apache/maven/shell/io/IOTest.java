@@ -33,7 +33,7 @@ public class IOTest
     public void testConstructorArgs() throws Exception {
         try {
             new IO(null, null, null);
-            fail("Accepted null value");
+            fail();
         }
         catch (AssertionError expected) {
             // ignore
@@ -41,7 +41,7 @@ public class IOTest
 
         try {
             new IO(System.in, null, null);
-            fail("Accepted null value");
+            fail();
         }
         catch (AssertionError expected) {
             // ignore
@@ -49,7 +49,7 @@ public class IOTest
 
         try {
             new IO(System.in, System.out, null);
-            fail("Accepted null value");
+            fail();
         }
         catch (AssertionError expected) {
             // ignore

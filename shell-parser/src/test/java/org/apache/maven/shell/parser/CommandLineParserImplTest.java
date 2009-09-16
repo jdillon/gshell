@@ -55,7 +55,7 @@ public class CommandLineParserImplTest
     public void testParseNull() throws Exception {
         try {
             clp.parse(null);
-            fail("Accepted null value");
+            fail();
         }
         catch (AssertionError expected) {
             // ignore
