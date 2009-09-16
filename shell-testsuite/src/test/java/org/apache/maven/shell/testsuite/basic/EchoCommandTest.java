@@ -50,4 +50,12 @@ public class EchoCommandTest
 
         // FIXME: Need to verify the result
     }
+
+    @Test
+    public void testEchoWithStop() throws Exception {
+        Object result = executeWithArgs("-- -D");
+        assertEqualsSuccess(result);
+
+        // FIXME: Need to verify the result
+    }
 }

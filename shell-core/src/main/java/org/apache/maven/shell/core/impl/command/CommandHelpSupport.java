@@ -20,6 +20,7 @@
 package org.apache.maven.shell.core.impl.command;
 
 import org.apache.maven.shell.cli.Option;
+import org.apache.maven.shell.cli.handler.StopHandler;
 import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
 
@@ -35,6 +36,9 @@ public class CommandHelpSupport
     
     @Option(name="-h", aliases={"--help"}, requireOverride=true)
     public boolean displayHelp;
+
+    @Option(name="--", handler=StopHandler.class)
+    boolean stop;
 
     private MessageSource messages;
 
