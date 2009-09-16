@@ -38,13 +38,13 @@ public class AnsiRenderWriterTest
     private AnsiRenderWriter out;
 
     @Before
-    public void setup() {
+    public void setUp() {
         baos = new ByteArrayOutputStream();
         out = new AnsiRenderWriter(baos);
     }
 
     @After
-    public void teardown() {
+    public void tearDown() {
         out = null;
         baos = null;
     }

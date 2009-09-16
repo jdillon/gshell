@@ -33,7 +33,7 @@ public class ResourceBundleMessageSourceTest
     private MessageSource messages;
 
     @Before
-    public void setup() {
+    public void setUp() {
         messages = new ResourceBundleMessageSource(getClass());
     }
 

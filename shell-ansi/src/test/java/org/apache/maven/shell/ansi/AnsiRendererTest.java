@@ -37,12 +37,12 @@ public class AnsiRendererTest
     private AnsiRenderer renderer;
 
     @Before
-    public void setup() {
+    public void setUp() {
         renderer = new AnsiRenderer();
     }
 
     @After
-    public void teardown() {
+    public void tearDown() {
         renderer = null;
     }
 

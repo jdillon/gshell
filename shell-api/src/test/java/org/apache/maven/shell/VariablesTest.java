@@ -35,7 +35,7 @@ public class VariablesTest
     private Variables vars;
 
     @Before
-    public void setup() {
+    public void setUp() {
         vars = new Variables();
     }
 

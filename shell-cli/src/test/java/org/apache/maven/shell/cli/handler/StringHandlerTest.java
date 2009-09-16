@@ -38,7 +38,7 @@ public class StringHandlerTest
     CommandLineProcessor clp;
 
     @Before
-    public void setup() {
+    public void setUp() {
         bean = new TestBean();
         clp = new CommandLineProcessor(bean);
 
@@ -47,7 +47,7 @@ public class StringHandlerTest
     }
 
     @After
-    public void teardown() {
+    public void tearDown() {
         bean = null;
         clp = null;
     }

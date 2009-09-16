@@ -119,7 +119,7 @@ public class ShellImpl
     private synchronized void open() throws Exception {
         log.debug("Opening");
 
-        // Setup default variables
+        // setUp default variables
         if (!variables.contains(MVNSH_HOME)) {
             variables.set(MVNSH_HOME, System.getProperty(MVNSH_HOME), false);
         }
@@ -213,7 +213,7 @@ public class ShellImpl
 
         scriptLoader.loadInteractiveScripts();
 
-        // Setup 2 final refs to allow our executor to pass stuff back to us
+        // setUp 2 final refs to allow our executor to pass stuff back to us
         final AtomicReference<ExitNotification> exitNotifHolder = new AtomicReference<ExitNotification>();
         final AtomicReference<Object> lastResultHolder = new AtomicReference<Object>();
 
@@ -239,7 +239,7 @@ public class ShellImpl
 
         IO io = getIo();
         
-        // Setup the console runner
+        // setUp the console runner
         JLineConsole console = new JLineConsole(executor, io);
         console.setHistory(history.getDelegate());
 

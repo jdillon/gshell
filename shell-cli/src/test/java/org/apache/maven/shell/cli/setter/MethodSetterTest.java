@@ -39,7 +39,7 @@ public class MethodSetterTest
     CommandLineProcessor clp;
 
     @Before
-    public void setup() {
+    public void setUp() {
         bean = new TestBean();
         clp = new CommandLineProcessor(bean);
 
@@ -48,7 +48,7 @@ public class MethodSetterTest
     }
 
     @After
-    public void teardown() {
+    public void tearDown() {
         bean = null;
         clp = null;
     }

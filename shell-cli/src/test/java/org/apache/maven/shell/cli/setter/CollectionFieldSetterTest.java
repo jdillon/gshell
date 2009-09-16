@@ -41,7 +41,7 @@ public class CollectionFieldSetterTest
     CommandLineProcessor clp;
 
     @Before
-    public void setup() {
+    public void setUp() {
         bean = new TestBean();
         clp = new CommandLineProcessor(bean);
 
@@ -50,7 +50,7 @@ public class CollectionFieldSetterTest
     }
 
     @After
-    public void teardown() {
+    public void tearDown() {
         bean = null;
         clp = null;
     }

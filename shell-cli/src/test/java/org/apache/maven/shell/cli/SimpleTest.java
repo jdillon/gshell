@@ -39,7 +39,7 @@ public class SimpleTest
     private CommandLineProcessor clp;
 
     @Before
-    public void setup() {
+    public void setUp() {
         bean = new Simple();
         clp = new CommandLineProcessor(bean);
 

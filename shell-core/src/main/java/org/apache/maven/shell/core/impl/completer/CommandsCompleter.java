@@ -118,7 +118,7 @@ public class CommandsCompleter
             children.add(NullCompleter.INSTANCE);
         }
 
-        // Setup the root completer for the command
+        // setUp the root completer for the command
         Completor root = new ArgumentCompletor(children);
 
         // Track and attach
