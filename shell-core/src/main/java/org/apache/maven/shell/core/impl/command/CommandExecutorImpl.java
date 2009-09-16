@@ -42,6 +42,7 @@ import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 /**
  * The default {@link CommandExecutor} component.
@@ -115,6 +116,8 @@ public class CommandExecutorImpl
 
         final IO io = context.getIo();
 
+        MDC.put(Command.class.getName(), name);
+
         Object result = null;
         try {
             boolean execute = true;
@@ -158,6 +161,8 @@ public class CommandExecutorImpl
         }
         finally {
             io.flush();
+
+            MDC.remove(Command.class.getName());
         }
 
         log.debug("Result: {}", result);
