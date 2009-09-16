@@ -23,6 +23,7 @@ package org.apache.maven.shell.ansi;
  * <tt>ANSI</tt> color codes.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public enum AnsiCode
 {

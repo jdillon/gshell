@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
  * Adapts the Plexus logging system to SLF4J.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class Slf4jLoggerManager
     extends BaseLoggerManager

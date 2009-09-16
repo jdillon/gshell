@@ -30,6 +30,7 @@ import java.lang.annotation.Target;
  * Configures a field or method for processing as a command-line option.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.METHOD})

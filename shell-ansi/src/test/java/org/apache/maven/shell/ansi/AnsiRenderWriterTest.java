@@ -30,6 +30,7 @@ import java.io.ByteArrayOutputStream;
  * Tests for the {@link AnsiRenderWriter} class.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class AnsiRenderWriterTest
 {

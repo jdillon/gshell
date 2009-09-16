@@ -36,6 +36,7 @@ import java.util.List;
  * Define an alias or list defined aliases.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 @Component(role=Command.class, hint="alias", instantiationStrategy="per-lookup")
 public class AliasCommand

@@ -22,9 +22,10 @@ package org.apache.maven.shell.event;
 import java.util.EventObject;
 
 /**
- * Manages event subscriptions.
+ * Manages event subscriptions and publishes events.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public interface EventManager
 {

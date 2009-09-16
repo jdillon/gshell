@@ -31,6 +31,7 @@ import java.io.IOException;
  * Support for file-related commands.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public abstract class FileCommandSupport
     extends CommandSupport

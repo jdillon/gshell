@@ -40,6 +40,7 @@ import java.util.List;
  * List the contents of a file or directory.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 @Component(role=Command.class, hint="ls", instantiationStrategy="per-lookup")
 public class ListDirectoryCommand

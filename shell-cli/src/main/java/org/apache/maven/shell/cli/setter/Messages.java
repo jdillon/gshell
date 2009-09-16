@@ -25,6 +25,7 @@ import java.util.ResourceBundle;
  * Messages for the {@link org.apache.maven.shell.cli.setter} package.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 enum Messages
 {

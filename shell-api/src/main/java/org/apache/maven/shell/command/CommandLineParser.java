@@ -25,6 +25,7 @@ import org.apache.maven.shell.ShellContext;
  * Parse command lines for execution.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public interface CommandLineParser
 {

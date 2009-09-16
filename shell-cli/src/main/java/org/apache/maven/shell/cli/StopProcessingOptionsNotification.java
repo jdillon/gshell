@@ -23,9 +23,10 @@ package org.apache.maven.shell.cli;
  * Thrown by a handler to instruct the processor to treat all remaining tokens as arguments.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class StopProcessingOptionsNotification
     extends Error
 {
-    // empty
+    ///CLOVER:OFF
 }

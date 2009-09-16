@@ -29,6 +29,7 @@ import org.apache.maven.shell.cli.setter.Setter;
  * Handler for boolean types.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class BooleanHandler
     extends Handler<Boolean>

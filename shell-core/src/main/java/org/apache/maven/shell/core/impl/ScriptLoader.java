@@ -33,9 +33,10 @@ import java.io.FileReader;
  * Helper to load profile scripts.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class ScriptLoader
-    implements  VariableNames
+    implements VariableNames
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 

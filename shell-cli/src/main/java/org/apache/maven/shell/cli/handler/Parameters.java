@@ -25,6 +25,7 @@ import org.apache.maven.shell.cli.ProcessingException;
  * Provides handlers with access to parameters to be consumed while processing.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public interface Parameters
 {

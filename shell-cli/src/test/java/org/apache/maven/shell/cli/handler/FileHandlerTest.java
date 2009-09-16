@@ -32,6 +32,7 @@ import java.io.File;
  * Tests for the {@link FileHandler} class.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class FileHandlerTest
 {

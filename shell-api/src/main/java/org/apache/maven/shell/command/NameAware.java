@@ -23,6 +23,7 @@ package org.apache.maven.shell.command;
  * Allow {@link Command} implementations to discover their bound names.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public interface NameAware
 {

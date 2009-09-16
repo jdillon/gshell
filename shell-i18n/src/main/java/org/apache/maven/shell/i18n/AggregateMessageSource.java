@@ -23,6 +23,7 @@ package org.apache.maven.shell.i18n;
  * A message source which aggregates messages sources in order.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class AggregateMessageSource
     implements MessageSource

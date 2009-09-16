@@ -36,6 +36,7 @@ import java.util.List;
  * Changes the current directory.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 @Component(role=Command.class, hint="cd", instantiationStrategy="per-lookup")
 public class ChangeDirectoryCommand

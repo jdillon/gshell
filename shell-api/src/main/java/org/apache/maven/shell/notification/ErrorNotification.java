@@ -23,6 +23,7 @@ package org.apache.maven.shell.notification;
  * Thrown to indicate an error notification state.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public final class ErrorNotification
     extends Notification

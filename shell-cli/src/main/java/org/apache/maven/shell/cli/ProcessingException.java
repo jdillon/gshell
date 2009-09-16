@@ -23,10 +23,13 @@ package org.apache.maven.shell.cli;
  * Thrown to indicate a problem processing command line arguments and options.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class ProcessingException
     extends Exception
 {
+    ///CLOVER:OFF
+
     private static final long serialVersionUID = 1;
 
     public ProcessingException(String msg) {

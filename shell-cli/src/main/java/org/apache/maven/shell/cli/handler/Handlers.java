@@ -35,6 +35,7 @@ import java.util.Map;
  * Provides access to handlers.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class Handlers
 {

@@ -25,6 +25,7 @@ import java.lang.reflect.Field;
  * Setter for fields.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class FieldSetter
     implements Setter

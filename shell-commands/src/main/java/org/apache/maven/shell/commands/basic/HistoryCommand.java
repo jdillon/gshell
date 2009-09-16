@@ -34,6 +34,7 @@ import java.util.List;
  * Display history.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 @Component(role=Command.class, hint="history", instantiationStrategy="per-lookup")
 public class HistoryCommand

@@ -25,6 +25,7 @@ import jline.Terminal;
  * Provides support for using ANSI color escape codes.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class Ansi
 {

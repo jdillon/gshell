@@ -23,6 +23,7 @@ package org.apache.maven.shell.cli;
  * Descriptor for {@link Argument} annotations.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class ArgumentDescriptor
     extends Descriptor

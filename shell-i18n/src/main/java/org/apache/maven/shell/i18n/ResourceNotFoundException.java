@@ -23,10 +23,13 @@ package org.apache.maven.shell.i18n;
  * Thrown to indicate a required resource was not found.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class ResourceNotFoundException
     extends RuntimeException
 {
+    ///CLOVER:OFF
+
     public ResourceNotFoundException(final String code) {
         super("Resource not found for code: " + code);
     }

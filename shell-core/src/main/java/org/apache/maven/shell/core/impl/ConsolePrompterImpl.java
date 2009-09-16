@@ -39,6 +39,7 @@ import org.slf4j.LoggerFactory;
  * {@link Console.Prompter} component.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 @Component(role=Console.Prompter.class)
 public class ConsolePrompterImpl

@@ -29,6 +29,7 @@ import java.io.InputStream;
  * Auto-detected terminal.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class AutoDetectedTerminal
     extends jline.Terminal

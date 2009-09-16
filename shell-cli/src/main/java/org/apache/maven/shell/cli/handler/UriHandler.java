@@ -30,6 +30,7 @@ import java.net.URISyntaxException;
  * Handler for file types.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class UriHandler
     extends Handler<URI>

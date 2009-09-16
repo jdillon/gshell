@@ -30,6 +30,7 @@ import java.io.File;
  * Displays the current directory.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 @Component(role=Command.class, hint="pwd", instantiationStrategy="per-lookup")
 public class CurrentDirectoryCommand

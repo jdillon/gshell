@@ -46,6 +46,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * The default {@link Shell} component.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 @Component(role=Shell.class)
 public class ShellImpl

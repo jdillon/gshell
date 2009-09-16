@@ -31,6 +31,7 @@ import org.junit.Test;
  * Some simple tests to validate basic functionality.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class SimpleTest
 {

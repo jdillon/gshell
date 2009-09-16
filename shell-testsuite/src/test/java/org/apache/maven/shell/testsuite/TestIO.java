@@ -25,6 +25,7 @@ import org.apache.maven.shell.io.IO;
  * Test {@link IO}.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class TestIO
     extends IO

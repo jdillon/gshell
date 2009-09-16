@@ -23,6 +23,7 @@ package org.apache.maven.shell.command;
  * Thrown to indicate a command failure.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class CommandException
     extends Exception

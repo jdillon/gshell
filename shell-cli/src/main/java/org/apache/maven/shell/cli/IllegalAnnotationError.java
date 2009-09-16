@@ -23,6 +23,7 @@ package org.apache.maven.shell.cli;
  * Thrown to indicate that while processing an illegal annotation definition was discovered.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class IllegalAnnotationError
     extends Error

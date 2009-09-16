@@ -29,6 +29,7 @@ import java.util.Set;
  * Provides a nested-namespace for command variables.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class Variables
 {

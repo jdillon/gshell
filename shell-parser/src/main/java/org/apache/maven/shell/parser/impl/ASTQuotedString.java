@@ -23,6 +23,7 @@ package org.apache.maven.shell.parser.impl;
  * Represents a quoted (with double quotes) argument.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class ASTQuotedString
     extends StringSupport

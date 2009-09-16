@@ -47,6 +47,7 @@ import java.io.PrintStream;
  * The default {@link CommandDocumenter} component.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 @Component(role=CommandDocumenter.class)
 public class CommandDocumenterImpl

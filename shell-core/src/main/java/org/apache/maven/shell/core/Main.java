@@ -47,7 +47,8 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * Command-line bootstrap for Maven Shell.
  *
- * @version $Rev: 593403 $ $Date: 2007-11-09 09:43:59 +0700 (Fri, 09 Nov 2007) $
+ * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class Main
 {

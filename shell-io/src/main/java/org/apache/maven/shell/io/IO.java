@@ -36,6 +36,7 @@ import java.io.Reader;
  * Container for input/output handles.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class IO
 {

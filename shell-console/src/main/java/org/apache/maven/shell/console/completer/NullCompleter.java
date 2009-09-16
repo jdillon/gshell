@@ -25,6 +25,7 @@ import jline.NullCompletor;
  * Null or terminal completer.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public final class NullCompleter
     extends NullCompletor

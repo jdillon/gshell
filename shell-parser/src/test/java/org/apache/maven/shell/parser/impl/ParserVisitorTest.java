@@ -27,7 +27,8 @@ import java.io.StringReader;
 /**
  * Unit tests for the {@link ParserVisitor} usage.
  *
- * @version $Rev: 572187 $ $Date: 2007-09-03 06:19:30 +0700 (Mon, 03 Sep 2007) $
+ * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class ParserVisitorTest
     extends TestCase

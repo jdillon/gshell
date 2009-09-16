@@ -27,6 +27,7 @@ import java.io.Writer;
  * Print writer implementation which supports automatic ANSI color rendering
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class AnsiRenderWriter
     extends PrintWriter

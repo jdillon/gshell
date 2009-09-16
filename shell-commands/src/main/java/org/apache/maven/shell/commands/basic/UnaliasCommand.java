@@ -37,6 +37,7 @@ import java.util.List;
  * Undefine an alias.
  *
  * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 @Component(role=Command.class, hint="unalias", instantiationStrategy="per-lookup")
 public class UnaliasCommand
