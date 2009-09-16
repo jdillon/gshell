@@ -30,6 +30,8 @@ import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
  */
 public class CommandHelpSupport
 {
+    //CLOVER: OFF
+    
     @Option(name="-h", aliases={"--help"}, requireOverride=true)
     public boolean displayHelp;
 
