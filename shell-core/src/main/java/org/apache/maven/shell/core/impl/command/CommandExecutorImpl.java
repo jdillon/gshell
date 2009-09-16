@@ -117,7 +117,7 @@ public class CommandExecutorImpl
 
         final IO io = context.getIo();
 
-        SystemInputOutputHijacker.register(io.getStreamSet());
+        SystemInputOutputHijacker.register(io.streams);
         
         MDC.put(Command.class.getName(), name);
 

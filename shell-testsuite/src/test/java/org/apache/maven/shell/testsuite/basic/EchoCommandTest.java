@@ -39,23 +39,20 @@ public class EchoCommandTest
     public void testEcho_a_b_c() throws Exception {
         Object result = executeWithArgs("a b c");
         assertEqualsSuccess(result);
-
-        // FIXME: Need to verify the result
+        assertOutputEquals("a b c\n");
     }
 
     @Test
     public void testEcho_$mvnsh_home() throws Exception {
         Object result = executeWithArgs("${mvnsh.home}");
         assertEqualsSuccess(result);
-
-        // FIXME: Need to verify the result
+        assertOutputEquals(getShell().getVariables().get("mvnsh.home") + "\n");
     }
 
     @Test
     public void testEchoWithStop() throws Exception {
         Object result = executeWithArgs("-- -D");
         assertEqualsSuccess(result);
-
-        // FIXME: Need to verify the result
+        assertOutputEquals("-D\n");
     }
 }

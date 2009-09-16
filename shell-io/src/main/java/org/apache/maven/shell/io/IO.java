@@ -26,7 +26,6 @@ import org.slf4j.helpers.MessageFormatter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.Reader;
@@ -39,39 +38,20 @@ import java.io.Reader;
  */
 public class IO
 {
-    /**
-     * Raw input stream.
-     *
-     * @see #in     For general usage, please use the reader.
-     */
-    public final InputStream inputStream;
+    public final StreamSet streams;
 
     /**
-     * Raw output stream.
-     *
-     * @see #out    For general usage, please use the writer.
-     */
-    public final PrintStream outputStream;
-
-    /**
-     * Raw error output stream.
-     *
-     * @see #err    For general usage, please use the writer.
-     */
-    public final PrintStream errorStream;
-
-    /**
-     * Prefered input reader.
+     * Input reader.
      */
     public final Reader in;
 
     /**
-     * Prefered output writer.
+     * Output writer.
      */
     public final PrintWriter out;
 
     /**
-     * Prefered error output writer.
+     * Error output writer.
      */
     public final PrintWriter err;
 
@@ -81,34 +61,27 @@ public class IO
      */
     private Verbosity verbosity = Verbosity.INFO;
 
-    /**
-     * Construct a new IO container.
-     *
-     * @param in            The input steam; must not be null
-     * @param out           The output stream; must not be null
-     * @param err           The error output stream; must not be null
-     * @param autoFlush     True to enable auto-flushing off writers.
-     */
-    public IO(final InputStream in, final PrintStream out, final PrintStream err, final boolean autoFlush) {
-        assert in != null;
-        assert out != null;
-        assert err != null;
+    public IO(final StreamSet streams, final boolean autoFlush) {
+        assert streams != null;
 
-        this.inputStream = in;
-        this.outputStream = out;
-        this.errorStream = err;
-
-        this.in = createReader(in);
-        
-        this.out = createWriter(outputStream, autoFlush);
+        this.streams = streams;
+        this.in = createReader(streams.in);
+        this.out = createWriter(streams.out, autoFlush);
 
         /// Don't rewrite the error stream if we have the same stream for out and error
-        if (isCombinedOutput()) {
+        if (streams.isCombinedOutput()) {
             this.err = this.out;
         }
         else {
-            this.err = createWriter(errorStream, autoFlush);
+            this.err = createWriter(streams.err, autoFlush);
         }
+    }
+
+    /**
+     * Helper which uses current values from {@link System}.
+     */
+    public IO() {
+        this(StreamSet.SYSTEM, true);
     }
 
     protected Reader createReader(final InputStream in) {
@@ -122,63 +95,7 @@ public class IO
 
         return new PrintWriter(out, autoFlush);
     }
-
-    public IO(final InputStream in, final OutputStream out, final OutputStream err, final boolean autoFlush) {
-        this(in, new PrintStream(out, autoFlush), new PrintStream(err, autoFlush), autoFlush);
-    }
-
-    public IO(final InputStream in, final OutputStream out, final boolean autoFlush) {
-        this(in, new PrintStream(out, autoFlush), autoFlush);
-    }
-
-    /**
-     * Construct a new IO container.
-     *
-     * @param in    The input steam; must not be null
-     * @param out   The output stream; must not be null
-     * @param err   The error output stream; must not be null
-     */
-    public IO(final InputStream in, final PrintStream out, final PrintStream err) {
-        this(in, out, err, true);
-    }
-
-    /**
-     * Construct a new IO container.
-     *
-     * @param in            The input steam; must not be null
-     * @param out           The output stream and error stream; must not be null
-     * @param autoFlush     True to enable auto-flushing off writers.
-     */
-    public IO(final InputStream in, final PrintStream out, final boolean autoFlush) {
-        this(in, out, out, autoFlush);
-    }
-
-    /**
-     * Construct a new IO container.
-     *
-     * @param in    The input steam; must not be null
-     * @param out   The output stream and error stream; must not be null
-     */
-    public IO(final InputStream in, final PrintStream out) {
-        this(in, out, out);
-    }
-
-
-    /**
-     * Helper which uses current values from {@link System}.
-     */
-    public IO() {
-        this(System.in, System.out, System.err);
-    }
-
-    public boolean isCombinedOutput() {
-        return outputStream == errorStream;
-    }
-
-    public StreamSet getStreamSet() {
-        return new StreamSet(inputStream, outputStream, errorStream);
-    }
-
+    
     /**
      * Set the verbosity level.
      *
@@ -242,7 +159,7 @@ public class IO
         Flusher.flush(out);
 
         // Only attempt to flush the err stream if we aren't sharing it with out
-        if (!isCombinedOutput()) {
+        if (!streams.isCombinedOutput()) {
             Flusher.flush(err);
         }
     }
@@ -254,7 +171,7 @@ public class IO
         Closer.close(in, out);
 
         // Only attempt to close the err stream if we aren't sharing it with out
-        if (!isCombinedOutput()) {
+        if (!streams.isCombinedOutput()) {
             Closer.close(err);
         }
     }
@@ -335,21 +252,14 @@ public class IO
         err.println(MessageFormatter.arrayFormat(format, args));
     }
 
-    //
-    // HACK: Expose the terminal instance here, need to refactor all this muck!!!
-    //
     public Terminal getTerminal() {
         return Terminal.getTerminal();
     }
 
-    //
-    // HACK: Expose creation of a configured ConsoleReader, really need to rethink this class soon.
-    //
-
     public ConsoleReader createConsoleReader() throws IOException {
         return new ConsoleReader(
-            inputStream,
-            new PrintWriter(outputStream, true),
+            streams.in,
+            new PrintWriter(streams.out, true),
             null, // bindings
             getTerminal());
     }

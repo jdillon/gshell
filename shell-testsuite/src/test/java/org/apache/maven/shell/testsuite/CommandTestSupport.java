@@ -94,6 +94,14 @@ public abstract class CommandTestSupport
         assertEquals(Command.Result.FAILURE, result);
     }
 
+    protected void assertOutputEquals(final String expected) {
+        assertEquals(getIo().getOutputString(), expected);
+    }
+
+    protected void assertErrorOutputEquals(final String expected) {
+        assertEquals(getIo().getErrorString(), expected);
+    }
+
     @Test
     public void testRegistered() throws Exception {
         assertTrue(commandRegistry.containsCommand(name));

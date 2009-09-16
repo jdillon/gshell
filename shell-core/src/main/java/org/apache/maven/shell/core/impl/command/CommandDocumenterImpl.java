@@ -130,7 +130,7 @@ public class CommandDocumenterImpl
 
         log.trace("Rendering command manual");
 
-        PrintStream out = new PrintStream(new PrefixingOutputStream(io.outputStream, "   "));
+        PrintStream out = new PrintStream(new PrefixingOutputStream(io.streams.out, "   "));
         AnsiRenderer renderer = new AnsiRenderer();
 
         //

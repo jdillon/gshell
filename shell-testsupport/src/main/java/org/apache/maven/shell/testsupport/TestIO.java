@@ -17,9 +17,13 @@
  * under the License.
  */
 
-package org.apache.maven.shell.testsuite;
+package org.apache.maven.shell.testsupport;
 
 import org.apache.maven.shell.io.IO;
+import org.apache.maven.shell.io.StreamSet;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
 /**
  * Test {@link IO}.
@@ -30,5 +34,34 @@ import org.apache.maven.shell.io.IO;
 public class TestIO
     extends IO
 {
-    // TODO: Expose the content for test output/input validation
+    private ByteArrayOutputStream output;
+
+    private ByteArrayOutputStream error;
+
+    public TestIO() {
+        this(new ByteArrayOutputStream(), new ByteArrayOutputStream());
+    }
+
+    private TestIO(ByteArrayOutputStream output, ByteArrayOutputStream error) {
+        super(new StreamSet(System.in, new PrintStream(output), new PrintStream(error)), true);
+
+        this.output = output;
+        this.error = error;
+    }
+
+    public ByteArrayOutputStream getOutput() {
+        return output;
+    }
+
+    public String getOutputString() {
+        return new String(getOutput().toByteArray());
+    }
+
+    public ByteArrayOutputStream getError() {
+        return error;
+    }
+
+    public String getErrorString() {
+        return new String(getError().toByteArray());
+    }
 }

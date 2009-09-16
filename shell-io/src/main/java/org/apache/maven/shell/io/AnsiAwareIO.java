@@ -21,8 +21,6 @@ package org.apache.maven.shell.io;
 
 import org.apache.maven.shell.ansi.AnsiRenderWriter;
 
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 
@@ -35,34 +33,14 @@ import java.io.PrintWriter;
 public class AnsiAwareIO
     extends IO
 {
-    public AnsiAwareIO(final InputStream in, final PrintStream out, final PrintStream err, final boolean autoFlush) {
-        super(in, out, err, autoFlush);
-    }
-
-    public AnsiAwareIO(final InputStream in, final OutputStream out, final OutputStream err, final boolean autoFlush) {
-        super(in, out, err, autoFlush);
-    }
-
-    public AnsiAwareIO(final InputStream in, final OutputStream out, final boolean autoFlush) {
-        super(in, out, autoFlush);
-    }
-
-    public AnsiAwareIO(final InputStream in, final PrintStream out, final PrintStream err) {
-        super(in, out, err);
-    }
-
-    public AnsiAwareIO(final InputStream in, final PrintStream out, final boolean autoFlush) {
-        super(in, out, autoFlush);
-    }
-
-    public AnsiAwareIO(final InputStream in, final PrintStream out) {
-        super(in, out);
+    public AnsiAwareIO(StreamSet streams, boolean autoFlush) {
+        super(streams, autoFlush);
     }
 
     public AnsiAwareIO() {
         super();
     }
-    
+
     @Override
     protected PrintWriter createWriter(final PrintStream out, final boolean autoFlush) {
         assert out != null;

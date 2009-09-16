@@ -21,8 +21,9 @@ package org.apache.maven.shell.testsuite;
 
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.VariableNames;
+import org.apache.maven.shell.testsupport.TestIO;
 import org.apache.maven.shell.core.impl.registry.CommandRegistrationAgent;
-import org.apache.maven.shell.io.IO;
+
 import org.codehaus.plexus.PlexusTestCase;
 
 /**
@@ -39,7 +40,7 @@ public abstract class ShellTestSupport
     // FIXME: Convert to JUnit 4
     //
     
-    private IO io;
+    private TestIO io;
 
     private Shell shell;
 
@@ -73,6 +74,10 @@ public abstract class ShellTestSupport
     protected Shell getShell() {
         assertNotNull(shell);
         return shell;
+    }
+
+    public TestIO getIo() {
+        return io;
     }
 
     protected Object execute(final String line) throws Exception {

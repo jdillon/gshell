@@ -26,7 +26,6 @@ import jline.History;
 import org.apache.maven.shell.io.IO;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  * Support for running console using the <a href="http://jline.sf.net">JLine</a> library.
@@ -70,7 +69,7 @@ public class JLineConsole
         }
         */
 
-        reader = new ConsoleReader(io.inputStream, new PrintWriter(io.outputStream, true), /*bindings*/null, io.getTerminal());
+        reader = io.createConsoleReader();
         reader.setUsePagination(true);
         if (Boolean.getBoolean("jline.nobell")) {
             reader.setBellEnabled(false);

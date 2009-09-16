@@ -242,7 +242,7 @@ public class Main
             }
             
             // Register the IO streams
-            SystemInputOutputHijacker.register(io.getStreamSet());
+            SystemInputOutputHijacker.register(io.streams);
 
             // Boot up the shell instance
             Shell shell = container.lookup(Shell.class);

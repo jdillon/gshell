@@ -127,14 +127,14 @@ public class SetCommand
                     String name = (String) o;
                     String value = props.getProperty(name);
 
-                    io.outputStream.print(name);
-                    io.outputStream.print("='");
-                    io.outputStream.print(value);
-                    io.outputStream.print("'");
+                    io.streams.out.print(name);
+                    io.streams.out.print("='");
+                    io.streams.out.print(value);
+                    io.streams.out.print("'");
 
                     // Value is always a string, so no need to add muck here for --verbose
 
-                    io.outputStream.println();
+                    io.streams.out.println();
                 }
                 break;
             }
@@ -147,27 +147,27 @@ public class SetCommand
                     String name = iter.next();
                     Object value = variables.get(name);
 
-                    io.outputStream.print(name);
-                    io.outputStream.print("='");
-                    io.outputStream.print(value);
-                    io.outputStream.flush();
-                    io.outputStream.print("'");
+                    io.streams.out.print(name);
+                    io.streams.out.print("='");
+                    io.streams.out.print(value);
+                    io.streams.out.flush();
+                    io.streams.out.print("'");
 
                     // When --verbose include the class details of the values
                     if (verbose && value != null) {
-                        io.outputStream.print(" (");
-                        io.outputStream.print(value.getClass());
-                        io.outputStream.print(")");
+                        io.streams.out.print(" (");
+                        io.streams.out.print(value.getClass());
+                        io.streams.out.print(")");
                     }
 
-                    io.outputStream.println();
+                    io.streams.out.println();
                 }
                 break;
             }
         }
 
         // Manually flush the stream, normally framework only flushes io.out
-        io.outputStream.flush();
+        io.streams.out.flush();
 
         return Result.SUCCESS;
     }

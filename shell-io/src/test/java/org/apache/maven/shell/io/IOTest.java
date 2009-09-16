@@ -32,30 +32,11 @@ public class IOTest
     @Test
     public void testConstructorArgs() throws Exception {
         try {
-            new IO(null, null, null);
+            new IO(null, true);
             fail();
         }
         catch (AssertionError expected) {
             // ignore
         }
-
-        try {
-            new IO(System.in, null, null);
-            fail();
-        }
-        catch (AssertionError expected) {
-            // ignore
-        }
-
-        try {
-            new IO(System.in, System.out, null);
-            fail();
-        }
-        catch (AssertionError expected) {
-            // ignore
-        }
-
-        // Happy day...
-        new IO(System.in, System.out, System.err);
     }
 }
