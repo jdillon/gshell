@@ -30,7 +30,7 @@ public interface EventManager
 {
     void addListener(EventListener listener);
 
-    void removeListneer(EventListener listener);
+    void removeListener(EventListener listener);
 
     void publish(EventObject event);
 }

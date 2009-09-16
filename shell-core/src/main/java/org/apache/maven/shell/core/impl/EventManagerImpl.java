@@ -56,7 +56,7 @@ public class EventManagerImpl
         }
     }
 
-    public void removeListneer(final EventListener listener) {
+    public void removeListener(final EventListener listener) {
         assert listener != null;
         
         log.trace("Removing listener: {}", listener);

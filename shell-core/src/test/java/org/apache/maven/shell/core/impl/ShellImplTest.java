@@ -26,7 +26,7 @@ import org.codehaus.plexus.PlexusTestCase;
 import org.junit.Test;
 
 /**
- * Tests that the shell can boot up.
+ * Tests for the {@link ShellImpl}.
  *
  * @version $Rev$ $Date$
  */
