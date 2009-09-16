@@ -26,6 +26,7 @@ import org.apache.maven.shell.parser.impl.ASTPlainString;
 import org.apache.maven.shell.parser.impl.ASTQuotedString;
 import org.apache.maven.shell.parser.impl.ParserVisitor;
 import org.apache.maven.shell.parser.impl.SimpleNode;
+import org.apache.maven.shell.parser.impl.ASTWhitespace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.codehaus.plexus.util.StringUtils;
@@ -116,6 +117,10 @@ public class LoggingVisitor
 
     public Object visit(final ASTExpression node, Object data) {
         return log(ASTExpression.class, node, data);
+    }
+
+    public Object visit(final ASTWhitespace node, Object data) {
+        return log(ASTWhitespace.class, node, data);
     }
 
     public Object visit(final ASTQuotedString node, Object data) {

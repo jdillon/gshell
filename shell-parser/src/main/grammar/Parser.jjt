@@ -67,13 +67,9 @@ PARSER_END(Parser)
 // WHITE SPACE
 //
 
-<DEFAULT> SKIP :
+<DEFAULT> TOKEN :
 {
-    " "
-|   "\t"
-|   "\n"
-|   "\r"
-|   "\f"
+    < WHITESPACE: ( " " | "\t" | "\n" | "\r" | "\f" ) >
 }
 
 //
@@ -98,12 +94,6 @@ PARSER_END(Parser)
             | ["0"-"7"] ( ["0"-"7"] )?
             | ["0"-"3"] ["0"-"7"] ["0"-"7"]
             )
-          )
-        | ( "="
-            ( <QUOTED_STRING> )
-          )
-        | ( "="
-            ( <OPAQUE_STRING> )
           )
       )+
     >
@@ -133,9 +123,6 @@ PARSER_END(Parser)
       )*
       "\""
     >
-    
-|
-    < SET_QUOTED_STRING >
 }
 
 //
@@ -165,21 +152,19 @@ ASTCommandLine commandLine() #CommandLine: {}
     }
 }
 
+void whitespace() #Whitespace: {}
+{
+    <WHITESPACE>
+}
+
 void expression() #Expression: {}
 {
-    ( argument() )+
+    ( argument() | whitespace() )+
 }
 
 void argument() #void: {}
 {
     string()
-
-    //
-    // TODO: Add variable() to resolve raw $xxx or ${xxx}
-    //       quoted string will have to post parse these values
-    //       into strings, but raw could potentially return object
-    //       references
-    //
 }
 
 void string() #void: {}

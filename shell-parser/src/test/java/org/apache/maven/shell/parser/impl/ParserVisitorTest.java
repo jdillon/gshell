@@ -19,10 +19,8 @@
 
 package org.apache.maven.shell.parser.impl;
 
-import java.io.Reader;
-import java.io.StringReader;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import org.junit.Test;
 
 /**
@@ -32,19 +30,8 @@ import org.junit.Test;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class ParserVisitorTest
+    extends ParserTestSupport
 {
-    private ASTCommandLine parse(final String input) throws ParseException {
-        assertNotNull(input);
-
-        Reader reader = new StringReader(input);
-        Parser parser = new Parser();
-        ASTCommandLine cl = parser.parse(reader);
-
-        assertNotNull(cl);
-
-        return cl;
-    }
-
     @Test
     public void testVisitor1() throws Exception {
         String input = "a \"b\" 'c' d";
@@ -61,6 +48,7 @@ public class ParserVisitorTest
         assertNotNull(v.quotedString);
         assertNotNull(v.opaqueString);
         assertNotNull(v.plainString);
+        assertNotNull(v.whitespace);
     }
 
     private static class MockCommandLineVisitor
@@ -72,6 +60,7 @@ public class ParserVisitorTest
         private ASTQuotedString quotedString;
         private ASTOpaqueString opaqueString;
         private ASTPlainString plainString;
+        private ASTWhitespace whitespace;
 
         public Object visit(SimpleNode node, Object data) {
             this.simpleNode = node;
@@ -88,6 +77,11 @@ public class ParserVisitorTest
         public Object visit(ASTExpression node, Object data) {
             this.expression = node;
 
+            return node.childrenAccept(this, data);
+        }
+
+        public Object visit(ASTWhitespace node, Object data) {
+            this.whitespace = node;
             return node.childrenAccept(this, data);
         }
 

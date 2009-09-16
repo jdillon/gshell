@@ -32,6 +32,7 @@ import org.apache.maven.shell.parser.impl.ASTPlainString;
 import org.apache.maven.shell.parser.impl.ASTQuotedString;
 import org.apache.maven.shell.parser.impl.ParserVisitor;
 import org.apache.maven.shell.parser.impl.SimpleNode;
+import org.apache.maven.shell.parser.impl.ASTWhitespace;
 import org.codehaus.plexus.interpolation.AbstractValueSource;
 import org.codehaus.plexus.interpolation.InterpolationException;
 import org.codehaus.plexus.interpolation.Interpolator;
@@ -66,7 +67,6 @@ public class ExecutingVisitor
         this.executor = executor;
     }
 
-
     public Object visit(final SimpleNode node, final Object data) {
         assert node != null;
 
@@ -90,13 +90,10 @@ public class ExecutingVisitor
     public Object visit(final ASTExpression node, final Object data) {
         assert node != null;
 
-        // Create the argument list (cmd name + args)
-        List<Object> list = new ArrayList<Object>(node.jjtGetNumChildren());
-        node.childrenAccept(this, list);
+        ExpressionState state = new ExpressionState(node);
+        node.childrenAccept(this, state);
 
-        Object[] args = list.toArray(new Object[list.size()]);
-        assert list.size() >= 1;
-
+        Object[] args = state.getArguments();
         String path = String.valueOf(args[0]);
         args = Arguments.shift(args);
 
@@ -108,22 +105,38 @@ public class ExecutingVisitor
             throw new ErrorNotification("Shell execution failed; path=" + path + "; args=" + StringUtils.join(args, ", "), e);
         }
 
-        List results  = (List)data;
+        List results = (List)data;
         //noinspection unchecked
         results.add(result);
 
         return result;
     }
 
-    @SuppressWarnings({"unchecked"})
-    private Object appendString(final String value, final Object data) {
+    public Object visit(final ASTWhitespace node, final Object data) {
+        assert node != null;
         assert data != null;
-        assert data instanceof List;
 
-        List<Object> args = (List<Object>)data;
-        args.add(value);
+        ExpressionState state = (ExpressionState)data;
+        state.next();
+        return data;
+    }
 
-        return value;
+    public Object visit(final ASTQuotedString node, final Object data) {
+        assert node != null;
+        assert data != null;
+
+        ExpressionState state = (ExpressionState)data;
+        String value = interpolate(node.getValue());
+        return state.append(value);
+    }
+
+    public Object visit(final ASTPlainString node, final Object data) {
+        assert node != null;
+        assert data != null;
+
+        ExpressionState state = (ExpressionState)data;
+        String value = interpolate(node.getValue());
+        return state.append(value);
     }
 
     private String interpolate(final String value) {
@@ -137,7 +150,7 @@ public class ExecutingVisitor
                 }
             });
         }
-        
+
         try {
             return interp.interpolate(value);
         }
@@ -146,23 +159,46 @@ public class ExecutingVisitor
         }
     }
 
-    public Object visit(final ASTQuotedString node, final Object data) {
-        assert node != null;
-
-        String value = interpolate(node.getValue());
-        return appendString(value, data);
-    }
-
-    public Object visit(final ASTPlainString node, final Object data) {
-        assert node != null;
-
-        String value = interpolate(node.getValue());
-        return appendString(value, data);
-    }
-
     public Object visit(final ASTOpaqueString node, final Object data) {
         assert node != null;
 
-        return appendString(node.getValue(), data);
+        ExpressionState state = (ExpressionState)data;
+        return state.append(node.getValue());
+    }
+
+    //
+    // ExpressionState
+    //
+
+    private static class ExpressionState
+    {
+        private final StringBuilder buff = new StringBuilder();
+
+        private final List<Object> args;
+
+        public ExpressionState(final ASTExpression root) {
+            assert root != null;
+            args = new ArrayList<Object>(root.jjtGetNumChildren());
+        }
+
+        public String append(final String value) {
+            assert value != null;
+            buff.append(value);
+            return value;
+        }
+
+        public void next() {
+            // If there is something in the buffer, then add it as the next argument and reset the buffer
+            if (buff.length() != 0) {
+                args.add(buff.toString());
+                buff.setLength(0);
+            }
+        }
+
+        public Object[] getArguments() {
+            // If there is something still on the buffer it is the last argument
+            next();
+            return args.toArray();
+        }
     }
 }
