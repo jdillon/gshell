@@ -19,7 +19,13 @@
 
 package org.apache.maven.shell.cli;
 
-import junit.framework.TestCase;
+import org.junit.After;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Some simple tests to validate basic functionality.
@@ -27,13 +33,13 @@ import junit.framework.TestCase;
  * @version $Rev$ $Date$
  */
 public class SimpleTest
-    extends TestCase
 {
-    Simple bean;
+    private Simple bean;
 
-    CommandLineProcessor clp;
+    private CommandLineProcessor clp;
 
-    protected void setUp() throws Exception {
+    @Before
+    public void setup() {
         bean = new Simple();
         clp = new CommandLineProcessor(bean);
 
@@ -41,29 +47,34 @@ public class SimpleTest
         assertEquals(1, clp.getArgumentHandlers().size());
     }
 
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
         bean = null;
         clp = null;
     }
 
+    @Test
     public void testSimple0() throws Exception {
         clp.process("-v");
 
         assertFalse(bean.help);
     }
 
+    @Test
     public void testSimple1() throws Exception {
         clp.process("--help");
 
         assertTrue(bean.help);
     }
 
+    @Test
     public void testSimple2() throws Exception {
         clp.process("-h");
 
         assertTrue(bean.help);
     }
 
+    @Test
     public void testSimple3() throws Exception {
         try {
             clp.process("-f");
@@ -74,12 +85,14 @@ public class SimpleTest
         assertFalse(bean.help);
     }
 
+    @Test
     public void testSimple4() throws Exception {
        clp.process("-h");
 
        assertFalse(bean.verbose);
     }
 
+    @Test
     public void testSimple5() throws Exception {
        clp.process("foo");
 

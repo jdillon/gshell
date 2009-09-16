@@ -20,6 +20,7 @@
 package org.apache.maven.shell.testsuite.basic;
 
 import org.apache.maven.shell.testsuite.CommandTestSupport;
+import org.junit.Test;
 
 /**
  * Tests for the {@link HelpCommand}.
@@ -33,6 +34,7 @@ public class HelpCommandTest
         super("help");
     }
 
+    @Test
     public void testHelpHelp() throws Exception {
         assertTrue(commandRegistry.containsCommand("help"));
         assertFalse(aliasRegistry.containsAlias("foo"));
@@ -40,6 +42,7 @@ public class HelpCommandTest
         assertEqualsSuccess(result);
     }
 
+    @Test
     public void testHelpFoo() throws Exception {
         assertFalse(commandRegistry.containsCommand("foo"));
         assertFalse(aliasRegistry.containsAlias("foo"));

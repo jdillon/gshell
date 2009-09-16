@@ -19,7 +19,8 @@
 
 package org.apache.maven.shell.io;
 
-import junit.framework.TestCase;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  * Unit tests for the {@link IO} class.
@@ -27,8 +28,8 @@ import junit.framework.TestCase;
  * @version $Rev$ $Date$
  */
 public class IOTest
-    extends TestCase
 {
+    @Test
     public void testConstructorArgs() throws Exception {
         try {
             new IO(null, null, null);

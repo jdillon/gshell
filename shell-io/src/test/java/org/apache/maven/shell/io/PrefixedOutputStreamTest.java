@@ -19,19 +19,20 @@
 
 package org.apache.maven.shell.io;
 
-import junit.framework.TestCase;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 /**
- * Unit tests for the {@link org.apache.maven.shell.io.IO} class.
+ * Unit tests for the {@link PrefixedOutputStream} class.
  *
  * @version $Rev$ $Date$
  */
 public class PrefixedOutputStreamTest
-    extends TestCase
 {
+    @Test
     public void testStream() {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PrefixingOutputStream prefixed = new PrefixingOutputStream(baos, "TEST");

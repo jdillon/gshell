@@ -20,6 +20,7 @@
 package org.apache.maven.shell.testsuite.basic;
 
 import org.apache.maven.shell.testsuite.CommandTestSupport;
+import org.junit.Test;
 
 /**
  * Tests for the {@link EchoCommand}.
@@ -33,6 +34,7 @@ public class EchoCommandTest
         super("echo");
     }
 
+    @Test
     public void testEcho_a_b_c() throws Exception {
         Object result = executeWithArgs("a b c");
         assertEqualsSuccess(result);
@@ -40,6 +42,7 @@ public class EchoCommandTest
         // FIXME: Need to verify the result
     }
 
+    @Test
     public void testEcho_$mvnsh_home() throws Exception {
         Object result = executeWithArgs("${mvnsh.home}");
         assertEqualsSuccess(result);

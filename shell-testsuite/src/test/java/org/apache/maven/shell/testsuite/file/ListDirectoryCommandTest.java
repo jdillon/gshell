@@ -21,6 +21,7 @@ package org.apache.maven.shell.testsuite.file;
 
 import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.testsuite.CommandTestSupport;
+import org.junit.Test;
 
 /**
  * Tests for the {@link ListDirectoryCommand}.
@@ -33,7 +34,8 @@ public class ListDirectoryCommandTest
     public ListDirectoryCommandTest() {
         super("ls");
     }
-    
+
+    @Test
     public void testTooManyArguments() throws Exception {
         try {
             executeWithArgs("1 2");

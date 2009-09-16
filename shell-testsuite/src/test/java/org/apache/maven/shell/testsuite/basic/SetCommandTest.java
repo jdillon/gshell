@@ -20,6 +20,7 @@
 package org.apache.maven.shell.testsuite.basic;
 
 import org.apache.maven.shell.testsuite.CommandTestSupport;
+import org.junit.Test;
 
 /**
  * Tests for the {@link SetCommand}.
@@ -33,6 +34,7 @@ public class SetCommandTest
         super("set");
     }
 
+    @Test
     public void testDefineVariable() throws Exception {
         assertFalse(vars.contains("foo"));
         Object result = executeWithArgs("foo bar");
@@ -43,6 +45,7 @@ public class SetCommandTest
         assertEquals(value, "bar");
     }
 
+    @Test
     public void testRedefineVariable() throws Exception {
         testDefineVariable();
         assertTrue(vars.contains("foo"));
@@ -55,6 +58,7 @@ public class SetCommandTest
         assertEquals(value, "baz");
     }
 
+    @Test
     public void testDefineVariableWithExpression() throws Exception {
         assertFalse(vars.contains("foo"));
         Object result = executeWithArgs("foo ${mvnsh.home}");

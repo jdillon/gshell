@@ -21,6 +21,7 @@ package org.apache.maven.shell.testsuite.basic;
 
 import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.testsuite.CommandTestSupport;
+import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.net.URL;
@@ -38,6 +39,7 @@ public class SourceCommandTest
     }
     
     @Override
+    @Test
     public void testDefault() throws Exception {
         try {
             super.testDefault();
@@ -48,10 +50,12 @@ public class SourceCommandTest
         }
     }
 
+    @Test
     public void testDependenciesRegistered() throws Exception {
         assertTrue(commandRegistry.containsCommand("set"));
     }
 
+    @Test
     public void testTooManyArguments() throws Exception {
         try {
             executeWithArgs("1 2");
@@ -62,6 +66,7 @@ public class SourceCommandTest
         }
     }
 
+    @Test
     public void testNoSuchFile() throws Exception {
         try {
             executeWithArgs("no-such-file");
@@ -71,7 +76,8 @@ public class SourceCommandTest
             // expected
         }
     }
-    
+
+    @Test
     public void test1() throws Exception {
         URL script = getClass().getResource("test1.mvnsh");
         assertNotNull(script);
@@ -79,6 +85,7 @@ public class SourceCommandTest
         assertEqualsSuccess(result);
     }
 
+    @Test
     public void test2() throws Exception {
         assertFalse(vars.contains("foo"));
 

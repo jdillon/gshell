@@ -22,6 +22,7 @@ package org.apache.maven.shell.testsuite.basic;
 import org.apache.maven.shell.History;
 import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.testsuite.CommandTestSupport;
+import org.junit.Test;
 
 /**
  * Tests for the {@link RecallHistoryCommand}.
@@ -35,11 +36,13 @@ public class RecallHistoryCommandTest
         super("recall");
     }
 
+    @Test
     public void testDependenciesRegistered() throws Exception {
         assertTrue(commandRegistry.containsCommand("set"));
     }
 
     @Override
+    @Test
     public void testDefault() throws Exception {
         try {
             super.testDefault();
@@ -50,6 +53,7 @@ public class RecallHistoryCommandTest
         }
     }
 
+    @Test
     public void testTooManyArguments() throws Exception {
         try {
             executeWithArgs("1 2");
@@ -60,11 +64,13 @@ public class RecallHistoryCommandTest
         }
     }
 
+    @Test
     public void testIndexOutOfRange() throws Exception {
         Object result = executeWithArgs(String.valueOf(getShell().getHistory().size()));
         assertEqualsFailure(result);
     }
 
+    @Test
     public void testInvalidIndex() throws Exception {
         try {
             executeWithArgs("foo");
@@ -75,6 +81,7 @@ public class RecallHistoryCommandTest
         }
     }
 
+    @Test
     public void testRecallElement() throws Exception {
         History history = getShell().getHistory();
 

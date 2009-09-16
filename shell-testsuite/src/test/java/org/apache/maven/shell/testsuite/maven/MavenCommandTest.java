@@ -20,6 +20,7 @@
 package org.apache.maven.shell.testsuite.maven;
 
 import org.apache.maven.shell.testsuite.CommandTestSupport;
+import org.junit.Test;
 
 /**
  * Tests for the {@link MavenCommand}.
@@ -34,6 +35,7 @@ public class MavenCommandTest
     }
 
     @Override
+    @Test
     public void testDefault() throws Exception {
         // Ignore, default execution is meaningless to test
     }

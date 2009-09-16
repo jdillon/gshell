@@ -22,6 +22,7 @@ package org.apache.maven.shell.testsuite.basic;
 import org.apache.maven.shell.ansi.Ansi;
 import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.testsuite.CommandTestSupport;
+import org.junit.Test;
 
 /**
  * Tests for the {@link ClearCommand}.
@@ -43,10 +44,12 @@ public class ClearCommandTest
     }
 
     @Override
+    @Test
     public void testDefault() throws Exception {
         // ignore, tests below will handle
     }
 
+    @Test
     public void testTooManyArguments() throws Exception {
         try {
             executeWithArgs("1");
@@ -57,12 +60,14 @@ public class ClearCommandTest
         }
     }
 
+    @Test
     public void testAnsiEnabled() throws Exception {
         Ansi.setEnabled(true);
         Object result = execute();
         assertEqualsSuccess(result);
     }
 
+    @Test
     public void testAnsiDisabled() throws Exception {
         Ansi.setEnabled(false);
         Object result = execute();

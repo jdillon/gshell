@@ -115,8 +115,8 @@ public class JLineHistory
         return delegate.size();
     }
 
+    @SuppressWarnings({"unchecked"})
     public List<String> elements() {
-        //noinspection unchecked
         return (List<String>)delegate.getHistoryList();
     }
 }

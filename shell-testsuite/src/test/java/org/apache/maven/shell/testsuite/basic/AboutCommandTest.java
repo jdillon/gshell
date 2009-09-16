@@ -21,6 +21,7 @@ package org.apache.maven.shell.testsuite.basic;
 
 import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.testsuite.CommandTestSupport;
+import org.junit.Test;
 
 /**
  * Tests for the {@link AboutCommand}.
@@ -34,6 +35,7 @@ public class AboutCommandTest
         super("about");
     }
 
+    @Test
     public void testTooManyArguments() throws Exception {
         try {
             executeWithArgs("1");

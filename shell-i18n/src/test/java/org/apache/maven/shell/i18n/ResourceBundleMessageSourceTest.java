@@ -19,7 +19,9 @@
 
 package org.apache.maven.shell.i18n;
 
-import junit.framework.TestCase;
+import org.junit.Test;
+import org.junit.Before;
+import static org.junit.Assert.*;
 
 /**
  * Unit tests for the {@link ResourceBundleMessageSource} class.
@@ -27,14 +29,15 @@ import junit.framework.TestCase;
  * @version $Rev$ $Date$
  */
 public class ResourceBundleMessageSourceTest
-    extends TestCase
 {
-    MessageSource messages;
+    private MessageSource messages;
 
-    protected void setUp() throws Exception {
+    @Before
+    public void setup() {
         messages = new ResourceBundleMessageSource(getClass());
     }
 
+    @Test
     public void testLoadAndGetMessage() {
         String a = messages.getMessage("a");
         assertEquals("1", a);
@@ -49,10 +52,13 @@ public class ResourceBundleMessageSourceTest
         assertEquals("1 2 3", f);
     }
 
+    @Test
     public void testMissingResource() throws Exception {
         try {
             messages.getMessage("no-such-code");
         }
-        catch (ResourceNotFoundException expected) {}
+        catch (ResourceNotFoundException e) {
+            // ignore
+        }
     }
 }

@@ -19,6 +19,9 @@
 
 package org.apache.maven.shell.core.impl.command;
 
+import org.apache.maven.shell.ShellContextHolder;
+import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.ansi.AnsiRenderer;
 import org.apache.maven.shell.cli.CommandLineProcessor;
 import org.apache.maven.shell.cli.Printer;
 import org.apache.maven.shell.command.Command;
@@ -28,16 +31,13 @@ import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.i18n.PrefixingMessageSource;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.io.PrefixingOutputStream;
-import org.apache.maven.shell.Variables;
-import org.apache.maven.shell.ShellContextHolder;
-import org.apache.maven.shell.ansi.AnsiRenderer;
 import org.codehaus.plexus.component.annotations.Component;
+import org.codehaus.plexus.interpolation.AbstractValueSource;
 import org.codehaus.plexus.interpolation.InterpolationException;
 import org.codehaus.plexus.interpolation.Interpolator;
+import org.codehaus.plexus.interpolation.PrefixedObjectValueSource;
 import org.codehaus.plexus.interpolation.PropertiesBasedValueSource;
 import org.codehaus.plexus.interpolation.StringSearchInterpolator;
-import org.codehaus.plexus.interpolation.PrefixedObjectValueSource;
-import org.codehaus.plexus.interpolation.AbstractValueSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

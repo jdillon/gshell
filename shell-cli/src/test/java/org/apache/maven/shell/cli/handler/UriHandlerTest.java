@@ -19,9 +19,12 @@
 
 package org.apache.maven.shell.cli.handler;
 
-import junit.framework.TestCase;
 import org.apache.maven.shell.cli.CommandLineProcessor;
 import org.apache.maven.shell.cli.Option;
+import org.junit.After;
+import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.net.URI;
 
@@ -31,13 +34,13 @@ import java.net.URI;
  * @version $Rev$ $Date$
  */
 public class UriHandlerTest
-    extends TestCase
 {
     TestBean bean;
 
     CommandLineProcessor clp;
 
-    protected void setUp() throws Exception {
+    @Before
+    public void setup() {
         bean = new TestBean();
         clp = new CommandLineProcessor(bean);
 
@@ -45,11 +48,13 @@ public class UriHandlerTest
         assertEquals(0, clp.getArgumentHandlers().size());
     }
 
-    protected void tearDown() throws Exception {
+    @After
+    public void teardown() {
         bean = null;
         clp = null;
     }
 
+    @Test
     public void test1() throws Exception {
         clp.process("-1", "foo:bar");
 

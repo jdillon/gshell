@@ -21,6 +21,7 @@ package org.apache.maven.shell.testsuite.file;
 
 import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.testsuite.CommandTestSupport;
+import org.junit.Test;
 
 /**
  * Tests for the {@link CurrentDirectoryCommand}.
@@ -36,12 +37,14 @@ public class CurrentDirectoryCommandTest
     
     /*
     @Override
+    @Test
     public void testDefault() throws Exception {
         Object result = execute();
         assertEqualsSuccess(result);
     }
     */
-    
+
+    @Test
     public void testTooManyArguments() throws Exception {
         try {
             executeWithArgs("1");

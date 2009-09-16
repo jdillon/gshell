@@ -21,6 +21,7 @@ package org.apache.maven.shell.testsuite.basic;
 
 import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.testsuite.CommandTestSupport;
+import org.junit.Test;
 
 /**
  * Tests for the {@link UnsetCommand}.
@@ -35,6 +36,7 @@ public class UnsetCommandTest
     }
 
     @Override
+    @Test
     public void testDefault() throws Exception {
         try {
             super.testDefault();
@@ -45,6 +47,7 @@ public class UnsetCommandTest
         }
     }
 
+    @Test
     public void testUndefineVariable() throws Exception {
         vars.set("foo", "bar");
         assertTrue(vars.contains("foo"));
@@ -53,6 +56,7 @@ public class UnsetCommandTest
         assertFalse(vars.contains("foo"));
     }
 
+    @Test
     public void testUndefineUndefinedVariable() throws Exception {
         assertFalse(vars.contains("foo"));
         Object result = executeWithArgs("foo");

@@ -21,6 +21,7 @@ package org.apache.maven.shell.testsuite.basic;
 
 import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.testsuite.CommandTestSupport;
+import org.junit.Test;
 
 /**
  * Tests for the {@link UnaliasCommand}.
@@ -35,6 +36,7 @@ public class UnaliasCommandTest
     }
     
     @Override
+    @Test
     public void testDefault() throws Exception {
         try {
             super.testDefault();
@@ -45,6 +47,7 @@ public class UnaliasCommandTest
         }
     }
 
+    @Test
     public void testTooManyArguments() throws Exception {
         try {
             executeWithArgs("1 2");
@@ -55,6 +58,7 @@ public class UnaliasCommandTest
         }
     }
 
+    @Test
     public void testUndefineAlias() throws Exception {
         assertFalse(aliasRegistry.containsAlias("foo"));
         aliasRegistry.registerAlias("foo", "bar");

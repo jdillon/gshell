@@ -24,6 +24,7 @@ import org.apache.maven.shell.ansi.Ansi;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.registry.CommandRegistry;
+import org.junit.Test;
 
 /**
  * Support for testing {@link Command} instances.
@@ -85,10 +86,12 @@ public abstract class CommandTestSupport
         assertEquals(Command.Result.FAILURE, result);
     }
 
+    @Test
     public void testRegistered() throws Exception {
         assertTrue(commandRegistry.containsCommand(name));
     }
-    
+
+    @Test
     public void testHelp() throws Exception {
         Object result;
 
@@ -99,6 +102,7 @@ public abstract class CommandTestSupport
         assertEqualsSuccess(result);
     }
 
+    @Test
     public void testDefault() throws Exception {
         Object result = execute();
         assertEqualsSuccess(result);

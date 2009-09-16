@@ -19,11 +19,11 @@
 
 package org.apache.maven.shell.core.impl;
 
-import junit.framework.Assert;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.VariableNames;
 import org.apache.maven.shell.registry.CommandRegistry;
 import org.codehaus.plexus.PlexusTestCase;
+import org.junit.Test;
 
 /**
  * Tests that the shell can boot up.
@@ -41,31 +41,34 @@ public class ShellImplTest
         System.setProperty(MVNSH_USER_HOME, System.getProperty("user.dir"));
     }
 
+    @Test
     public void testBoot() throws Exception {
         Shell shell = lookup(Shell.class);
-        Assert.assertNotNull(shell);
+        assertNotNull(shell);
     }
 
+    @Test
     public void testExecuteUnknownHi() throws Exception {
         Shell shell = lookup(Shell.class);
-        Assert.assertNotNull(shell);
+        assertNotNull(shell);
 
         try {
             shell.execute("hi");
-            Assert.fail();
+            fail();
         }
         catch (Exception ignore) {
             // expected
         }
     }
 
+    @Test
     public void testLookupSingleton() throws Exception {
         CommandRegistry r1 = lookup(CommandRegistry.class);
-        Assert.assertNotNull(r1);
+        assertNotNull(r1);
 
         CommandRegistry r2 = lookup(CommandRegistry.class);
-        Assert.assertNotNull(r2);
+        assertNotNull(r2);
 
-        Assert.assertEquals(r1, r2);
+        assertEquals(r1, r2);
     }
 }

@@ -21,6 +21,7 @@ package org.apache.maven.shell.testsuite.file;
 
 import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.testsuite.CommandTestSupport;
+import org.junit.Test;
 
 /**
  * Tests for the {@link ChangeDirectoryCommand}.
@@ -34,6 +35,7 @@ public class ChangeDirectoryCommandTest
         super("cd");
     }
 
+    @Test
     public void testTooManyArguments() throws Exception {
         try {
             executeWithArgs("1 2");

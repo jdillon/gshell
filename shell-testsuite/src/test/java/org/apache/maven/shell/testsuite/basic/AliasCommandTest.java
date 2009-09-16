@@ -20,6 +20,7 @@
 package org.apache.maven.shell.testsuite.basic;
 
 import org.apache.maven.shell.testsuite.CommandTestSupport;
+import org.junit.Test;
 
 /**
  * Tests for the {@link AliasCommand}.
@@ -33,6 +34,7 @@ public class AliasCommandTest
         super("alias");
     }
 
+    @Test
     public void testDefineAlias() throws Exception {
         assertFalse(aliasRegistry.containsAlias("foo"));
 
@@ -45,6 +47,7 @@ public class AliasCommandTest
         assertEquals(alias, "bar");
     }
 
+    @Test
     public void testRedefineAlias() throws Exception {
         testDefineAlias();
         assertTrue(aliasRegistry.containsAlias("foo"));
@@ -58,6 +61,7 @@ public class AliasCommandTest
         assertEquals(alias, "baz");
     }
 
+    @Test
     public void testExecuteAlias() throws Exception {
         assertFalse(aliasRegistry.containsAlias("make-alias"));
 

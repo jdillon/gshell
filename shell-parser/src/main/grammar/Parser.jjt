@@ -23,6 +23,9 @@ options {
     ERROR_REPORTING = true;
     MULTI = true;
     VISITOR = true;
+    VISITOR_DATA_TYPE = "Object";
+    VISITOR_RETURN_TYPE = "Object";
+    VISITOR_EXCEPTION = "";
     NODE_DEFAULT_VOID = true;
 }
 

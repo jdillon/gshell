@@ -21,6 +21,7 @@ package org.apache.maven.shell.testsuite.basic;
 
 import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.testsuite.CommandTestSupport;
+import org.junit.Test;
 
 /**
  * Tests for the {@link HistoryCommand}.
@@ -34,10 +35,12 @@ public class HistoryCommandTest
         super("history");
     }
 
+    @Test
     public void testDependenciesRegistered() throws Exception {
         assertTrue(commandRegistry.containsCommand("echo"));
     }
 
+    @Test
     public void testTooManyArguments() throws Exception {
         try {
             executeWithArgs("1 2");
@@ -48,6 +51,7 @@ public class HistoryCommandTest
         }
     }
 
+    @Test
     public void testInvalidIndex() throws Exception {
         try {
             executeWithArgs("foo");
@@ -57,6 +61,7 @@ public class HistoryCommandTest
         }
     }
 
+    @Test
     public void testPurge() throws Exception {
         // Make sure there is going to be more than one item in history
         execute("echo 1");
@@ -68,6 +73,7 @@ public class HistoryCommandTest
         assertEquals(0, getShell().getHistory().size());
     }
 
+    @Test
     public void testListSubset() throws Exception {
         // first purge
         testPurge();
@@ -84,6 +90,7 @@ public class HistoryCommandTest
         // TODO: Verify output
     }
 
+    @Test
     public void testListOverset() throws Exception {
         // first purge
         testPurge();
