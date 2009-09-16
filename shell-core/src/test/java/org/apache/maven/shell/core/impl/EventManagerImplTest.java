@@ -19,10 +19,14 @@
 
 package org.apache.maven.shell.core.impl;
 
+import org.junit.Test;
+import org.junit.Before;
+import org.junit.After;
+import static org.junit.Assert.*;
+
 import org.apache.maven.shell.event.EventListener;
 import org.apache.maven.shell.event.EventManager;
-import org.codehaus.plexus.PlexusTestCase;
-import org.junit.Test;
+import org.apache.maven.shell.testsupport.PlexusTestSupport;
 
 import java.util.EventObject;
 
@@ -32,26 +36,26 @@ import java.util.EventObject;
  * @version $Rev$ $Date$
  */
 public class EventManagerImplTest
-    extends PlexusTestCase
 {
+    private PlexusTestSupport plexus;
+
     private EventManagerImpl manager;
 
     private MockEventListener listener;
 
-    // @Before
-    protected void setUp() throws Exception {
-        super.setUp();
-
-        manager = (EventManagerImpl)lookup(EventManager.class);
+    @Before
+    public void setUp() throws Exception {
+        plexus = new PlexusTestSupport(this);
+        manager = (EventManagerImpl)plexus.lookup(EventManager.class);
         listener = new MockEventListener();
     }
 
-    // @After
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
         manager = null;
         listener = null;
-
-        super.tearDown();
+        plexus.destroy();
+        plexus = null;
     }
 
     @Test
