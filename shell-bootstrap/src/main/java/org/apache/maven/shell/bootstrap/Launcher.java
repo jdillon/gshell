@@ -76,7 +76,7 @@ public class Launcher
 
         ClassLoader cl = getClassLoader();
 
-        Class type = cl.loadClass(config.getMainClass());
+        Class<?> type = cl.loadClass(config.getMainClass());
         Method method = getMainMethod(type);
 
         Thread.currentThread().setContextClassLoader(cl);
@@ -102,14 +102,14 @@ public class Launcher
         return new URLClassLoader(classPath.toArray(new URL[classPath.size()]), parent);
     }
 
-    private Method getMainMethod(final Class type) throws Exception {
+    private Method getMainMethod(final Class<?> type) throws Exception {
         assert type != null;
 
         Method method = type.getMethod("main", String[].class);
         int modifiers = method.getModifiers();
 
         if (Modifier.isStatic(modifiers) && Modifier.isPublic(modifiers)) {
-            Class returns = method.getReturnType();
+            Class<?> returns = method.getReturnType();
             if (returns == Integer.TYPE || returns == Void.TYPE) {
                 return method;
             }
