@@ -140,6 +140,13 @@ public class ExecutingVisitor
     }
 
     private String interpolate(final String value) {
+        assert value != null;
+
+        // Skip interpolation if there is no start token
+        if (value.indexOf("${" )== -1) {
+            return value;
+        }
+
         if (interp == null) {
             interp = new StringSearchInterpolator();
             interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));
