@@ -32,7 +32,7 @@ import org.apache.maven.shell.cli.setter.Setter;
 public class StringHandler
     extends Handler<String>
 {
-    public StringHandler(Descriptor desc, Setter<? super String> setter) {
+    public StringHandler(final Descriptor desc, Setter<? super String> setter) {
         super(desc, setter);
     }
 

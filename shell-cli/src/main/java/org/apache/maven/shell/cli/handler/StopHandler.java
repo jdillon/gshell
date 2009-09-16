@@ -33,7 +33,7 @@ import org.apache.maven.shell.cli.setter.Setter;
 public class StopHandler
     extends Handler<String>
 {
-    public StopHandler(Descriptor desc, Setter<? super String> setter) {
+    public StopHandler(final Descriptor desc, Setter<? super String> setter) {
         super(desc, setter);
     }
 
@@ -43,7 +43,7 @@ public class StopHandler
     }
 
     @Override
-    public String getDefaultToken() {
-        return "ARGUMENTS";
+    public final String getDefaultToken() {
+        return null;
     }
 }

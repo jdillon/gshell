@@ -35,7 +35,7 @@ import org.apache.maven.shell.cli.setter.Setter;
 public class ObjectHandler
     extends Handler<Object>
 {
-    public ObjectHandler(Descriptor desc, Setter<? super Object> setter) {
+    public ObjectHandler(final Descriptor desc, Setter<? super Object> setter) {
         super(desc, setter);
     }
 

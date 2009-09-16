@@ -20,6 +20,7 @@
 package org.apache.maven.shell.cli;
 
 import org.apache.maven.shell.cli.handler.Handler;
+import org.apache.maven.shell.cli.handler.StopHandler;
 import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
 import org.apache.maven.shell.i18n.ResourceNotFoundException;
@@ -139,14 +140,14 @@ public class Printer
         assert handler != null;
 
         String str = (handler.descriptor instanceof ArgumentDescriptor) ? "" : handler.descriptor.toString();
-    	String token = getToken(handler);
+        String token = getToken(handler);
 
         if (token != null) {
             if (str.length() > 0) {
                 str += " ";
             }
             str += token;
-    	}
+        }
         
         return str;
     }
@@ -173,7 +174,8 @@ public class Printer
         List<Handler> optionHandlers = new ArrayList<Handler>();
         optionHandlers.addAll(processor.getOptionHandlers());
 
-        // For display purposes, we like the argument handlers in argument order, but the option handlers in alphabetical order
+        // For display purposes, we like the argument handlers in argument order,
+        // but the option handlers in alphabetical order
         Collections.sort(optionHandlers, new Comparator<Handler>() {
             public int compare(Handler a, Handler b) {
                 return a.descriptor.toString().compareTo(b.descriptor.toString());
@@ -181,15 +183,15 @@ public class Printer
         });
 
         if (name != null) {
-        	String syntax = printerMessages.format("syntax", name);
+            String syntax = printerMessages.format("syntax", name);
             if (!optionHandlers.isEmpty()) {
                 syntax = printerMessages.format("syntax.hasOptions", syntax);
-        	}
-        	if (!argumentHandlers.isEmpty()) {
+            }
+            if (!argumentHandlers.isEmpty()) {
                 syntax = printerMessages.format("syntax.hasArguments", syntax);
-        	}
-        	out.println(syntax);
-        	out.println();
+            }
+            out.println(syntax);
+            out.println();
         }
 
         // Compute the maximum length of the syntax column
@@ -207,7 +209,7 @@ public class Printer
 
         // And then render the handler usage
         if (!argumentHandlers.isEmpty()) {
-        	out.println(printerMessages.getMessage("arguments.header"));
+            out.println(printerMessages.getMessage("arguments.header"));
 
             for (Handler handler : argumentHandlers) {
                 printHandler(out, handler, len);
@@ -261,7 +263,7 @@ public class Printer
         // Render the separator
         for (int i = nameAndToken.length(); i < len; ++i) {
             out.print(' ');
-       	}
+        }
         out.print(separator);
 
         // Render the description splitting it over multiple lines if its longer than column size
