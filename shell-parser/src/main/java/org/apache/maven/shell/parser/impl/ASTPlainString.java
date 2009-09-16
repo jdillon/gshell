@@ -35,4 +35,9 @@ public class ASTPlainString
     public ASTPlainString(final Parser p, final int id) {
         super(p, id);
     }
+
+    /** Accept the visitor. **/
+    public Object jjtAccept(final ParserVisitor visitor, final Object data) {
+        return visitor.visit(this, data);
+    }
 }

@@ -28,6 +28,8 @@ package org.apache.maven.shell.terminal;
 public class UnsupportedTerminal
     extends jline.UnsupportedTerminal
 {
+    ///CLOVER:OFF
+    
     @Override
     public boolean isANSISupported() {
         return false;

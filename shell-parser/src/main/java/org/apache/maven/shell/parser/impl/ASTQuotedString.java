@@ -39,4 +39,9 @@ public class ASTQuotedString
     public String getValue() {
         return unquote(super.getValue());
     }
+
+    /** Accept the visitor. **/
+    public Object jjtAccept(final ParserVisitor visitor, final Object data) {
+        return visitor.visit(this, data);
+    }
 }

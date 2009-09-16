@@ -29,6 +29,8 @@ import java.util.ResourceBundle;
  */
 enum Messages
 {
+    ///CLOVER:OFF
+    
     ILLEGAL_OPERAND,
     ILLEGAL_BOOLEAN,
     ;

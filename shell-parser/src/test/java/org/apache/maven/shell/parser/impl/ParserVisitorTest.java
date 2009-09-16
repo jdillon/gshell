@@ -19,10 +19,11 @@
 
 package org.apache.maven.shell.parser.impl;
 
-import junit.framework.TestCase;
-
 import java.io.Reader;
 import java.io.StringReader;
+
+import static org.junit.Assert.*;
+import org.junit.Test;
 
 /**
  * Unit tests for the {@link ParserVisitor} usage.
@@ -31,10 +32,9 @@ import java.io.StringReader;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class ParserVisitorTest
-    extends TestCase
 {
     private ASTCommandLine parse(final String input) throws ParseException {
-        assert input != null;
+        assertNotNull(input);
 
         Reader reader = new StringReader(input);
         Parser parser = new Parser();
@@ -45,6 +45,7 @@ public class ParserVisitorTest
         return cl;
     }
 
+    @Test
     public void testVisitor1() throws Exception {
         String input = "a \"b\" 'c' d";
 

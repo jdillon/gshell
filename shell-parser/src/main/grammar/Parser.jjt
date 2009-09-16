@@ -100,11 +100,11 @@ PARSER_END(Parser)
             )
           )
         | ( "="
-        	( <QUOTED_STRING> )
+            ( <QUOTED_STRING> )
           )
         | ( "="
-        	( <OPAQUE_STRING> )
-          )        	
+            ( <OPAQUE_STRING> )
+          )
       )+
     >
 |
@@ -135,7 +135,7 @@ PARSER_END(Parser)
     >
     
 |
-	< SET_QUOTED_STRING >
+    < SET_QUOTED_STRING >
 }
 
 //

@@ -19,7 +19,8 @@
 
 package org.apache.maven.shell.parser.impl;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.*;
+import org.junit.Test;
 
 import java.io.Reader;
 import java.io.StringReader;
@@ -31,10 +32,9 @@ import java.io.StringReader;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class ParserTest
-    extends TestCase
 {
     private ASTCommandLine parse(final String input) throws ParseException {
-        assert input != null;
+        assertNotNull(input);
 
         Reader reader = new StringReader(input);
         Parser parser = new Parser();
@@ -45,10 +45,21 @@ public class ParserTest
         return cl;
     }
 
+    public void testParseNull() throws Exception {
+        try {
+            new Parser().parse(null);
+            fail();
+        }
+        catch (AssertionError e) {
+            // expected
+        }
+    }
+    
     //
     // Comments
     //
 
+    @Test
     public void testSingleComment1() throws Exception {
         String input = "# this should be completly ignored";
 
@@ -57,6 +68,7 @@ public class ParserTest
         assertEquals(0, cl.jjtGetNumChildren());
     }
 
+    @Test
     public void testSingleComment2() throws Exception {
         String input = "####";
 
@@ -65,6 +77,7 @@ public class ParserTest
         assertEquals(0, cl.jjtGetNumChildren());
     }
 
+    @Test
     public void testSingleComment3() throws Exception {
         String input = "# ignored; this too";
 
@@ -77,6 +90,7 @@ public class ParserTest
     // Strings
     //
 
+    @Test
     public void testStrings1() throws Exception {
         String input = "a b c";
 
@@ -99,6 +113,7 @@ public class ParserTest
         assertEquals("c", ((ASTPlainString)child.jjtGetChild(2)).getValue());
     }
 
+    @Test
     public void testStrings2() throws Exception {
         String input = "a -b --c d";
 
@@ -122,6 +137,7 @@ public class ParserTest
         assertEquals("d", ((ASTPlainString)child.jjtGetChild(3)).getValue());
     }
 
+    @Test
     public void testQuotedStrings1() throws Exception {
         String input = "a \"b -c\" d";
 
@@ -150,6 +166,7 @@ public class ParserTest
         assertEquals("d", ((StringSupport)node).getValue());
     }
 
+    @Test
     public void testOpaqueStrings1() throws Exception {
         String input = "a 'b -c' d";
 
@@ -177,6 +194,7 @@ public class ParserTest
         assertEquals(ASTPlainString.class, node.getClass());
     }
 
+    @Test
     public void testMoreStrings1() throws Exception {
         String input = "a 'b -c' \"d\" e";
 
@@ -208,6 +226,7 @@ public class ParserTest
         assertEquals(ASTPlainString.class, node.getClass());
     }
 
+    @Test
     public void testMoreStrings2() throws Exception {
         String input = "a \"b -c\" 'd' e";
 
@@ -243,6 +262,7 @@ public class ParserTest
     // Compound
     //
 
+    @Test
     public void testCompoundCommandLine1() throws Exception {
         String input = "a b c; d e f";
 
@@ -255,6 +275,7 @@ public class ParserTest
         //
     }
 
+    @Test
     public void testCompoundCommandLine2() throws Exception {
         String input = "a b c;";
 
@@ -267,6 +288,7 @@ public class ParserTest
         //
     }
 
+    @Test
     public void testCompoundCommandLine3() throws Exception {
         String input = "a b c;;;;";
 
@@ -279,6 +301,7 @@ public class ParserTest
         //
     }
 
+    @Test
     public void testCompoundCommandLine4() throws Exception {
         String input = "a b c;;;;d e f";
 
@@ -291,6 +314,7 @@ public class ParserTest
         //
     }
 
+    @Test
     public void testNotCompoundCommandLine1() throws Exception {
         String input = "a b c\\; d e f";
 

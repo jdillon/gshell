@@ -28,6 +28,8 @@ package org.apache.maven.shell.notification;
 public class ResultNotification
     extends Notification
 {
+    ///CLOVER:OFF
+
     private static final long serialVersionUID = 1;
 
     private final Object result;

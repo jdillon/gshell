@@ -28,6 +28,8 @@ package org.apache.maven.shell.terminal;
 public class WindowsTerminal
     extends jline.WindowsTerminal
 {
+    ///CLOVER:OFF
+    
     @Override
     public int getTerminalWidth() {
         int width = super.getTerminalWidth();

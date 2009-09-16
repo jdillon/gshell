@@ -28,6 +28,8 @@ package org.apache.maven.shell.terminal;
 public class UnixTerminal
     extends jline.UnixTerminal
 {
+    ///CLOVER:OFF
+    
     @Override
     public int getTerminalWidth() {
         int width = super.getTerminalWidth();

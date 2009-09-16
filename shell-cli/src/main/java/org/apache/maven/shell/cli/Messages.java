@@ -29,6 +29,8 @@ import java.util.ResourceBundle;
  */
 enum Messages
 {
+    ///CLOVER:OFF
+
     MISSING_OPERAND,
     UNDEFINED_OPTION,
     NO_ARGUMENT_ALLOWED,

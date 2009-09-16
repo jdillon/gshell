@@ -27,6 +27,8 @@ package org.apache.maven.shell.bootstrap;
  */
 public class Log
 {
+    ///CLOVER:OFF
+    
     public static final boolean DEBUG = Boolean.getBoolean(Log.class.getName() + ".debug");
 
     public static void debug(final Object... messages) {
