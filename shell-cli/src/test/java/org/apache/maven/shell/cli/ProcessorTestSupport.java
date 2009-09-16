@@ -17,51 +17,36 @@
  * under the License.
  */
 
-package org.apache.maven.shell.cli.handler;
+package org.apache.maven.shell.cli;
 
-import org.apache.maven.shell.cli.Option;
-import org.apache.maven.shell.cli.ProcessorTestSupport;
+import org.junit.After;
 import static org.junit.Assert.assertEquals;
-import org.junit.Test;
+import org.junit.Before;
 
 /**
- * Tests for the {@link DoubleHandler} class.
+ * Support for {@link Processor} tests.
  *
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class DoubleHandlerTest
-    extends ProcessorTestSupport
+public abstract class ProcessorTestSupport
 {
-    private TestBean bean;
+    protected Processor clp;
 
-    protected Object createBean() {
-        bean = new TestBean();
-        return bean;
+    @Before
+    public void setUp() {
+        clp = new Processor(createBean());
     }
 
-    @Test
-    public void testOptionsArgumentsSize() {
-        assertOptionsArgumentsSize(1, 0);
+    @After
+    public void tearDown() {
+        clp = null;
     }
 
-    @Test
-    public void test1() throws Exception {
-        clp.process("-1", "1");
+    protected abstract Object createBean();
 
-        assertEquals(1.0, bean.d, 0);
-    }
-
-    @Test
-    public void test2() throws Exception {
-        clp.process("-1", "1.1");
-
-        assertEquals(1.1, bean.d, 0);
-    }
-
-    private static class TestBean
-    {
-        @Option(name="-1")
-        double d;
+    protected void assertOptionsArgumentsSize(final int expectedOptions, final int expectedArguments) {
+        assertEquals(expectedOptions, clp.getOptionHandlers().size());
+        assertEquals(expectedArguments, clp.getArgumentHandlers().size());
     }
 }

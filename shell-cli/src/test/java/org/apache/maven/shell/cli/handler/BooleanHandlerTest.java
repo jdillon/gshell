@@ -19,13 +19,10 @@
 
 package org.apache.maven.shell.cli.handler;
 
-import org.apache.maven.shell.cli.Processor;
 import org.apache.maven.shell.cli.Option;
-import org.junit.After;
-import static org.junit.Assert.assertEquals;
+import org.apache.maven.shell.cli.ProcessorTestSupport;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -35,24 +32,18 @@ import org.junit.Test;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class BooleanHandlerTest
+    extends ProcessorTestSupport
 {
-    TestBean bean;
-    
-    Processor clp;
+    private TestBean bean;
 
-    @Before
-    public void setUp() {
+    protected Object createBean() {
         bean = new TestBean();
-        clp = new Processor(bean);
-        
-        assertEquals(2, clp.getOptionHandlers().size());
-        assertEquals(0, clp.getArgumentHandlers().size());
+        return bean;
     }
 
-    @After
-    public void tearDown() {
-        bean = null;
-        clp = null;
+    @Test
+    public void testOptionsArgumentsSize() {
+        assertOptionsArgumentsSize(2, 0);
     }
 
     @Test

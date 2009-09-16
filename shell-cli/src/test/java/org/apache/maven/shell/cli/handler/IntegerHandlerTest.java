@@ -19,11 +19,9 @@
 
 package org.apache.maven.shell.cli.handler;
 
-import org.apache.maven.shell.cli.Processor;
 import org.apache.maven.shell.cli.Option;
-import org.junit.After;
+import org.apache.maven.shell.cli.ProcessorTestSupport;
 import static org.junit.Assert.assertEquals;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -33,26 +31,20 @@ import org.junit.Test;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class IntegerHandlerTest
+    extends ProcessorTestSupport
 {
-    TestBean bean;
+    private TestBean bean;
 
-    Processor clp;
-
-    @Before
-    public void setUp() {
+    protected Object createBean() {
         bean = new TestBean();
-        clp = new Processor(bean);
-
-        assertEquals(2, clp.getOptionHandlers().size());
-        assertEquals(0, clp.getArgumentHandlers().size());
+        return bean;
     }
 
-    @After
-    public void tearDown() {
-        bean = null;
-        clp = null;
+    @Test
+    public void testOptionsArgumentsSize() {
+        assertOptionsArgumentsSize(2, 0);
     }
-
+    
     @Test
     public void test1() throws Exception {
         clp.process("-1", "1");

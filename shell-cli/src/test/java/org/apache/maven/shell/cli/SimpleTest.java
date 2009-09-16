@@ -19,12 +19,10 @@
 
 package org.apache.maven.shell.cli;
 
-import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -34,24 +32,18 @@ import org.junit.Test;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class SimpleTest
+    extends ProcessorTestSupport
 {
     private Simple bean;
 
-    private Processor clp;
-
-    @Before
-    public void setUp() {
+    protected Object createBean() {
         bean = new Simple();
-        clp = new Processor(bean);
-
-        assertEquals(2, clp.getOptionHandlers().size());
-        assertEquals(1, clp.getArgumentHandlers().size());
+        return bean;
     }
 
-    @After
-    public void tearDown() {
-        bean = null;
-        clp = null;
+    @Test
+    public void testOptionsArgumentsSize() {
+        assertOptionsArgumentsSize(2, 1);
     }
 
     @Test

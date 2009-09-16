@@ -20,11 +20,9 @@
 package org.apache.maven.shell.cli.setter;
 
 import org.apache.maven.shell.cli.Argument;
-import org.apache.maven.shell.cli.Processor;
-import org.junit.After;
+import org.apache.maven.shell.cli.ProcessorTestSupport;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
@@ -36,24 +34,18 @@ import java.util.List;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class CollectionFieldSetterTest
+    extends ProcessorTestSupport
 {
-    TestBean bean;
+    private TestBean bean;
 
-    Processor clp;
-
-    @Before
-    public void setUp() {
+    protected Object createBean() {
         bean = new TestBean();
-        clp = new Processor(bean);
-
-        assertEquals(0, clp.getOptionHandlers().size());
-        assertEquals(1, clp.getArgumentHandlers().size());
+        return bean;
     }
 
-    @After
-    public void tearDown() {
-        bean = null;
-        clp = null;
+    @Test
+    public void testOptionsArgumentsSize() {
+        assertOptionsArgumentsSize(0, 1);
     }
 
     @Test

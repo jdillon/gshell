@@ -19,9 +19,7 @@
 
 package org.apache.maven.shell.cli;
 
-import org.junit.After;
 import static org.junit.Assert.assertNotNull;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.StringWriter;
@@ -34,21 +32,18 @@ import java.util.List;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class PrinterTest
+    extends ProcessorTestSupport
 {
-    TestBean bean;
+    private TestBean bean;
 
-    Processor clp;
-
-    @Before
-    public void setUp() {
+    protected Object createBean() {
         bean = new TestBean();
-        clp = new Processor(bean);
+        return bean;
     }
 
-    @After
-    public void tearDown() {
-        bean = null;
-        clp = null;
+    @Test
+    public void testOptionsArgumentsSize() {
+        assertOptionsArgumentsSize(2, 1);
     }
 
     @Test
