@@ -39,7 +39,7 @@ import java.util.List;
  */
 public class Printer
 {
-    private CommandLineProcessor processor;
+    private Processor processor;
 
     //
     // FIXME: Refactor all this stuff to simplify the API
@@ -53,7 +53,7 @@ public class Printer
 
     private MessageSource messages;
 
-    public Printer(final CommandLineProcessor processor) {
+    public Printer(final Processor processor) {
         assert processor != null;
         
         this.processor = processor;

@@ -22,7 +22,7 @@ package org.apache.maven.shell.core.impl.command;
 import org.apache.maven.shell.ShellContextHolder;
 import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.ansi.AnsiRenderer;
-import org.apache.maven.shell.cli.CommandLineProcessor;
+import org.apache.maven.shell.cli.Processor;
 import org.apache.maven.shell.cli.Printer;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandDocumenter;
@@ -106,7 +106,7 @@ public class CommandDocumenterImpl
 
         log.trace("Rendering command usage");
 
-        CommandLineProcessor clp = new CommandLineProcessor();
+        Processor clp = new Processor();
 
         // Attach our helper to inject --help
         CommandHelpSupport help = new CommandHelpSupport();

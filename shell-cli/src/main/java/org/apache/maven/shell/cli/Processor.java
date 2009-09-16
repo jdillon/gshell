@@ -44,7 +44,7 @@ import java.util.TreeMap;
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class CommandLineProcessor
+public class Processor
 {
     private final List<Handler> optionHandlers = new ArrayList<Handler>();
 
@@ -52,9 +52,9 @@ public class CommandLineProcessor
 
     private boolean stopAtNonOption = false;
 
-    public CommandLineProcessor() {}
+    public Processor() {}
     
-    public CommandLineProcessor(final Object bean) {
+    public Processor(final Object bean) {
         assert bean != null;
 
         addBean(bean);

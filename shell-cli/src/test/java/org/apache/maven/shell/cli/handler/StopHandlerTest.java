@@ -20,7 +20,7 @@
 package org.apache.maven.shell.cli.handler;
 
 import org.apache.maven.shell.cli.Argument;
-import org.apache.maven.shell.cli.CommandLineProcessor;
+import org.apache.maven.shell.cli.Processor;
 import org.apache.maven.shell.cli.Option;
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
@@ -40,12 +40,12 @@ public class StopHandlerTest
 {
     TestBean bean;
 
-    CommandLineProcessor clp;
+    Processor clp;
 
     @Before
     public void setUp() {
         bean = new TestBean();
-        clp = new CommandLineProcessor(bean);
+        clp = new Processor(bean);
 
         assertEquals(2, clp.getOptionHandlers().size());
         assertEquals(1, clp.getArgumentHandlers().size());

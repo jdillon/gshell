@@ -37,12 +37,12 @@ public class SimpleTest
 {
     private Simple bean;
 
-    private CommandLineProcessor clp;
+    private Processor clp;
 
     @Before
     public void setUp() {
         bean = new Simple();
-        clp = new CommandLineProcessor(bean);
+        clp = new Processor(bean);
 
         assertEquals(2, clp.getOptionHandlers().size());
         assertEquals(1, clp.getArgumentHandlers().size());

@@ -28,21 +28,21 @@ import org.junit.Test;
 import java.util.List;
 
 /**
- * Tests for the {@link CommandLineProcessor} class.
+ * Tests for the {@link Processor} class.
  *
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class CommandLineProcessorTest
+public class ProcessorTest
 {
     TestBean bean;
 
-    CommandLineProcessor clp;
+    Processor clp;
 
     @Before
     public void setUp() {
         bean = new TestBean();
-        clp = new CommandLineProcessor(bean);
+        clp = new Processor(bean);
 
         assertEquals(1, clp.getOptionHandlers().size());
         assertEquals(1, clp.getArgumentHandlers().size());

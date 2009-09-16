@@ -20,7 +20,7 @@
 package org.apache.maven.shell.cli.setter;
 
 import org.apache.maven.shell.cli.Argument;
-import org.apache.maven.shell.cli.CommandLineProcessor;
+import org.apache.maven.shell.cli.Processor;
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -39,12 +39,12 @@ public class CollectionFieldSetterTest
 {
     TestBean bean;
 
-    CommandLineProcessor clp;
+    Processor clp;
 
     @Before
     public void setUp() {
         bean = new TestBean();
-        clp = new CommandLineProcessor(bean);
+        clp = new Processor(bean);
 
         assertEquals(0, clp.getOptionHandlers().size());
         assertEquals(1, clp.getArgumentHandlers().size());

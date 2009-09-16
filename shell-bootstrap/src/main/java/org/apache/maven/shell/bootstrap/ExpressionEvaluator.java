@@ -25,10 +25,6 @@ import java.util.Properties;
 // NOTE: Most of this stuff came from org.apache.log4j.helpers.OptionConverter.
 //
 
-//
-// FIXME: Change to plexus-interpolation
-//
-
 /**
  * Simple expression evaluator for handling <tt>${variable}</tt> expansion.
  *

@@ -37,12 +37,12 @@ public class PrinterTest
 {
     TestBean bean;
 
-    CommandLineProcessor clp;
+    Processor clp;
 
     @Before
     public void setUp() {
         bean = new TestBean();
-        clp = new CommandLineProcessor(bean);
+        clp = new Processor(bean);
     }
 
     @After

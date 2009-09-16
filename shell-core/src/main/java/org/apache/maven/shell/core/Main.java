@@ -22,7 +22,7 @@ package org.apache.maven.shell.core;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.ansi.Ansi;
 import org.apache.maven.shell.cli.Argument;
-import org.apache.maven.shell.cli.CommandLineProcessor;
+import org.apache.maven.shell.cli.Processor;
 import org.apache.maven.shell.cli.Option;
 import org.apache.maven.shell.cli.Printer;
 import org.apache.maven.shell.core.impl.registry.CommandRegistrationAgent;
@@ -187,7 +187,7 @@ public class Main
         // Default is to be quiet
         setConsoleLogLevel("WARN");
         
-        CommandLineProcessor clp = new CommandLineProcessor(this);
+        Processor clp = new Processor(this);
         clp.setStopAtNonOption(true);
         clp.process(args);
 
