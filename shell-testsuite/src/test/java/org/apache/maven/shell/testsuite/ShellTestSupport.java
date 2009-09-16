@@ -76,7 +76,7 @@ public abstract class ShellTestSupport
         return shell;
     }
 
-    public TestIO getIo() {
+    protected TestIO getIo() {
         return io;
     }
 
