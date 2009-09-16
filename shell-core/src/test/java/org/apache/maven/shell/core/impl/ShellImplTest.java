@@ -21,9 +21,13 @@ package org.apache.maven.shell.core.impl;
 
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.VariableNames;
+import org.apache.maven.shell.testsupport.PlexusTestSupport;
 import org.apache.maven.shell.registry.CommandRegistry;
-import org.codehaus.plexus.PlexusTestCase;
+
+import static org.junit.Assert.*;
 import org.junit.Test;
+import org.junit.Before;
+import org.junit.After;
 
 /**
  * Tests for the {@link ShellImpl}.
@@ -31,25 +35,33 @@ import org.junit.Test;
  * @version $Rev$ $Date$
  */
 public class ShellImplTest
-    extends PlexusTestCase
     implements VariableNames
 {
-    protected void setUp() throws Exception {
-        super.setUp();
+    private PlexusTestSupport plexus;
+
+    @Before
+    public void setUp() throws Exception {
+        plexus = new PlexusTestSupport(this);
 
         System.setProperty(MVNSH_HOME, System.getProperty("user.dir"));
         System.setProperty(MVNSH_USER_HOME, System.getProperty("user.dir"));
     }
 
+    @After
+    public void tearDown() {
+        plexus.destroy();
+        plexus = null;
+    }
+
     @Test
     public void testBoot() throws Exception {
-        Shell shell = lookup(Shell.class);
+        Shell shell = plexus.lookup(Shell.class);
         assertNotNull(shell);
     }
 
     @Test
     public void testExecuteUnknownHi() throws Exception {
-        Shell shell = lookup(Shell.class);
+        Shell shell = plexus.lookup(Shell.class);
         assertNotNull(shell);
 
         try {
@@ -63,10 +75,10 @@ public class ShellImplTest
 
     @Test
     public void testLookupSingleton() throws Exception {
-        CommandRegistry r1 = lookup(CommandRegistry.class);
+        CommandRegistry r1 = plexus.lookup(CommandRegistry.class);
         assertNotNull(r1);
 
-        CommandRegistry r2 = lookup(CommandRegistry.class);
+        CommandRegistry r2 = plexus.lookup(CommandRegistry.class);
         assertNotNull(r2);
 
         assertEquals(r1, r2);

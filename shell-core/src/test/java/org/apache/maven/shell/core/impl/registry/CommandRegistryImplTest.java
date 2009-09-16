@@ -20,8 +20,11 @@
 package org.apache.maven.shell.core.impl.registry;
 
 import org.apache.maven.shell.registry.CommandRegistry;
-import org.codehaus.plexus.PlexusTestCase;
+import org.apache.maven.shell.testsupport.PlexusTestSupport;
+import static org.junit.Assert.*;
 import org.junit.Test;
+import org.junit.Before;
+import org.junit.After;
 
 /**
  * Tests for the {@link CommandRegistryImpl}.
@@ -29,22 +32,22 @@ import org.junit.Test;
  * @version $Rev$ $Date$
  */
 public class CommandRegistryImplTest
-    extends PlexusTestCase
 {
+    private PlexusTestSupport plexus;
+
     private CommandRegistryImpl registry;
 
-    // @Before
-    protected void setUp() throws Exception {
-        super.setUp();
-
-        registry = (CommandRegistryImpl)lookup(CommandRegistry.class);
+    @Before
+    public void setUp() throws Exception {
+        plexus = new PlexusTestSupport(this);
+        registry = (CommandRegistryImpl)plexus.lookup(CommandRegistry.class);
     }
 
-    // @After
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
         registry = null;
-
-        super.tearDown();
+        plexus.destroy();
+        plexus = null;
     }
 
     @Test

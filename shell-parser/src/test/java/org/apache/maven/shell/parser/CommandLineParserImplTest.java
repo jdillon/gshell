@@ -20,7 +20,11 @@
 package org.apache.maven.shell.parser;
 
 import org.apache.maven.shell.command.CommandLineParser;
-import org.codehaus.plexus.PlexusTestCase;
+import org.apache.maven.shell.testsupport.PlexusTestSupport;
+import org.junit.Before;
+import org.junit.After;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  * Unit tests for the {@link CommandLineParserImpl} class.
@@ -28,24 +32,25 @@ import org.codehaus.plexus.PlexusTestCase;
  * @version $Rev: 572187 $ $Date: 2007-09-03 06:19:30 +0700 (Mon, 03 Sep 2007) $
  */
 public class CommandLineParserImplTest
-    extends PlexusTestCase
 {
+    private PlexusTestSupport plexus;
+
     private CommandLineParserImpl clp;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-
-        clp = (CommandLineParserImpl)lookup(CommandLineParser.class);
+    @Before
+    public void setUp() throws Exception {
+        plexus = new PlexusTestSupport(this);
+        clp = (CommandLineParserImpl)plexus.lookup(CommandLineParser.class);
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
         clp = null;
-
-        super.tearDown();
+        plexus.destroy();
+        plexus = null;
     }
 
+    @Test
     public void testParseNull() throws Exception {
         try {
             clp.parse(null);

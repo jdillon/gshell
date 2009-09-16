@@ -21,8 +21,11 @@ package org.apache.maven.shell.core.impl.registry;
 
 import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.registry.NoSuchAliasException;
-import org.codehaus.plexus.PlexusTestCase;
+import org.apache.maven.shell.testsupport.PlexusTestSupport;
+import static org.junit.Assert.*;
 import org.junit.Test;
+import org.junit.Before;
+import org.junit.After;
 
 import java.util.Collection;
 
@@ -32,22 +35,22 @@ import java.util.Collection;
  * @version $Rev$ $Date$
  */
 public class AliasRegistryImplTest
-    extends PlexusTestCase
 {
+    private PlexusTestSupport plexus;
+
     private AliasRegistryImpl registry;
 
-    // @Before
-    protected void setUp() throws Exception {
-        super.setUp();
-
-        registry = (AliasRegistryImpl)lookup(AliasRegistry.class);
+    @Before
+    public void setUp() throws Exception {
+        plexus = new PlexusTestSupport(this);
+        registry = (AliasRegistryImpl)plexus.lookup(AliasRegistry.class);
     }
 
-    // @After
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
         registry = null;
-
-        super.tearDown();
+        plexus.destroy();
+        plexus = null;
     }
 
     @Test
