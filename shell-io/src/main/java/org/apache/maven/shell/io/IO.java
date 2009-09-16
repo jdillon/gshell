@@ -21,7 +21,6 @@ package org.apache.maven.shell.io;
 
 import jline.ConsoleReader;
 import jline.Terminal;
-import org.apache.maven.shell.ansi.AnsiRenderWriter;
 import org.slf4j.helpers.MessageFormatter;
 
 import java.io.IOException;
@@ -33,7 +32,7 @@ import java.io.PrintWriter;
 import java.io.Reader;
 
 /**
- * Container for input/output handles.
+ * Provides access to input/output handles.
  *
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
@@ -99,20 +98,29 @@ public class IO
         this.outputStream = out;
         this.errorStream = err;
 
-        this.in = new InputStreamReader(in);
+        this.in = createReader(in);
         
-        this.out = new AnsiRenderWriter(outputStream, autoFlush);
+        this.out = createWriter(outputStream, autoFlush);
 
         /// Don't rewrite the error stream if we have the same stream for out and error
-        if (isSharedOutputStreams()) {
+        if (isCombinedOutput()) {
             this.err = this.out;
         }
         else {
-            this.err = new AnsiRenderWriter(errorStream, autoFlush);
+            this.err = createWriter(errorStream, autoFlush);
         }
+    }
 
-        // this.out = new PrintWriter(out, autoFlush);
-        // this.err = new PrintWriter(err, autoFlush);
+    protected Reader createReader(final InputStream in) {
+        assert in != null;
+
+        return new InputStreamReader(in);
+    }
+
+    protected PrintWriter createWriter(final PrintStream out, final boolean autoFlush) {
+        assert out != null;
+
+        return new PrintWriter(out, autoFlush);
     }
 
     public IO(final InputStream in, final OutputStream out, final OutputStream err, final boolean autoFlush) {
@@ -163,19 +171,12 @@ public class IO
         this(System.in, System.out, System.err);
     }
 
-    //
-    // FIXME: Find a better name for this method.
-    //
-
-    public boolean isSharedOutputStreams() {
+    public boolean isCombinedOutput() {
         return outputStream == errorStream;
     }
 
-    //
-    // HACK: Expose the terminal instance here, need to refactor all this muck!!!
-    //
-    public Terminal getTerminal() {
-        return Terminal.getTerminal();
+    public StreamSet getStreamSet() {
+        return new StreamSet(inputStream, outputStream, errorStream);
     }
 
     /**
@@ -241,7 +242,7 @@ public class IO
         Flusher.flush(out);
 
         // Only attempt to flush the err stream if we aren't sharing it with out
-        if (!isSharedOutputStreams()) {
+        if (!isCombinedOutput()) {
             Flusher.flush(err);
         }
     }
@@ -253,7 +254,7 @@ public class IO
         Closer.close(in, out);
 
         // Only attempt to close the err stream if we aren't sharing it with out
-        if (!isSharedOutputStreams()) {
+        if (!isCombinedOutput()) {
             Closer.close(err);
         }
     }
@@ -332,6 +333,13 @@ public class IO
 
     public void error(final String format, final Object... args) {
         err.println(MessageFormatter.arrayFormat(format, args));
+    }
+
+    //
+    // HACK: Expose the terminal instance here, need to refactor all this muck!!!
+    //
+    public Terminal getTerminal() {
+        return Terminal.getTerminal();
     }
 
     //

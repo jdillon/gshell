@@ -22,6 +22,7 @@ package org.apache.maven.shell.testsuite;
 import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.ansi.Ansi;
 import org.apache.maven.shell.command.Command;
+import org.apache.maven.shell.io.SystemInputOutputHijacker;
 import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.registry.CommandRegistry;
 import org.junit.Test;
@@ -43,10 +44,14 @@ public abstract class CommandTestSupport
 
     protected Variables vars;
 
-
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+
+        // Hijack the system output streams
+        if (!SystemInputOutputHijacker.isInstalled()) {
+            SystemInputOutputHijacker.install();
+        }
 
         // For simplicity of output verification disable ANSI
         Ansi.setEnabled(false);
@@ -61,6 +66,8 @@ public abstract class CommandTestSupport
         commandRegistry = null;
         aliasRegistry = null;
         vars = null;
+
+        SystemInputOutputHijacker.uninstall();
 
         super.tearDown();
     }

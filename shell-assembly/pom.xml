@@ -94,7 +94,7 @@
             <build>
                 <plugins>
                     <!--
-                    NOTE: The following is just to get the rough size of the basic muck...
+                    NOTE: The following is just to getOutput the rough size of the basic muck...
                     -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>

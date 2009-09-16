@@ -35,6 +35,10 @@ public abstract class ShellTestSupport
     extends PlexusTestCase
     implements VariableNames
 {
+    //
+    // FIXME: Convert to JUnit 4
+    //
+    
     private IO io;
 
     private Shell shell;

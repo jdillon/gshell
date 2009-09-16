@@ -60,7 +60,7 @@ public class MavenCommand
             ExceptionSummary es = result.getExceptionSummary();
 
             if (es == null) {
-                io.error("", result.getExceptions().get(0));
+                io.error("", result.getExceptions().getOutput(0));
             }
             else {
                 //noinspection ThrowableResultOfMethodCallIgnored

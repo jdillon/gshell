@@ -29,6 +29,8 @@ import org.apache.maven.shell.core.impl.registry.CommandRegistrationAgent;
 import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
 import org.apache.maven.shell.io.IO;
+import org.apache.maven.shell.io.SystemInputOutputHijacker;
+import org.apache.maven.shell.io.AnsiAwareIO;
 import org.apache.maven.shell.notification.ExitNotification;
 import org.apache.maven.shell.terminal.AutoDetectedTerminal;
 import org.apache.maven.shell.terminal.UnixTerminal;
@@ -54,7 +56,7 @@ public class Main
 {
     private final ClassWorld classWorld;
 
-    private final IO io = new IO();
+    private final IO io = new AnsiAwareIO();
 
     private final MessageSource messages = new ResourceBundleMessageSource(getClass());
 
@@ -233,6 +235,14 @@ public class Main
 
         try {
             PlexusContainer container = createContainer();
+
+            // Hijack the system output streams
+            if (!SystemInputOutputHijacker.isInstalled()) {
+                SystemInputOutputHijacker.install();
+            }
+            
+            // Register the IO streams
+            SystemInputOutputHijacker.register(io.getStreamSet());
 
             // Boot up the shell instance
             Shell shell = container.lookup(Shell.class);

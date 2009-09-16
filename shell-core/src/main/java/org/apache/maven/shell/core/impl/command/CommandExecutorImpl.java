@@ -34,6 +34,7 @@ import org.apache.maven.shell.command.CommandLineParser.CommandLine;
 import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.command.OpaqueArguments;
 import org.apache.maven.shell.io.IO;
+import org.apache.maven.shell.io.SystemInputOutputHijacker;
 import org.apache.maven.shell.notification.ErrorNotification;
 import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.registry.CommandRegistry;
@@ -116,6 +117,8 @@ public class CommandExecutorImpl
 
         final IO io = context.getIo();
 
+        SystemInputOutputHijacker.register(io.getStreamSet());
+        
         MDC.put(Command.class.getName(), name);
 
         Object result = null;
@@ -162,6 +165,8 @@ public class CommandExecutorImpl
         finally {
             io.flush();
 
+            SystemInputOutputHijacker.deregister();
+            
             MDC.remove(Command.class.getName());
         }
 

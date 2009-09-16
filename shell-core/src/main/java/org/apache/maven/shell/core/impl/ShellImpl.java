@@ -252,7 +252,7 @@ public class ShellImpl
 
         // Attach completers if there are any
         if (completers != null) {
-            // Have to use aggregate here to get the completion list to update properly
+            // Have to use aggregate here to getOutput the completion list to update properly
             console.addCompleter(new AggregateCompleter(completers));
         }
 
