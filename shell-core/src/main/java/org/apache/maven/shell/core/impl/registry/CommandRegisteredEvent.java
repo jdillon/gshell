@@ -29,7 +29,7 @@ import java.util.EventObject;
 public class CommandRegisteredEvent
     extends EventObject
 {
-    //CLOVER: OFF
+    ///CLOVER:OFF
 
     private final String name;
 

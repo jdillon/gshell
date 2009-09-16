@@ -66,7 +66,7 @@ public class RecallHistoryCommandTest
 
     @Test
     public void testIndexOutOfRange() throws Exception {
-        Object result = executeWithArgs(String.valueOf(getShell().getHistory().size()));
+        Object result = executeWithArgs(String.valueOf(Integer.MAX_VALUE));
         assertEqualsFailure(result);
     }
 

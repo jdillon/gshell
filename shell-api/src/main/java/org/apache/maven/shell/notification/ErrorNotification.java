@@ -27,7 +27,7 @@ package org.apache.maven.shell.notification;
 public final class ErrorNotification
     extends Notification
 {
-    //CLOVER:OFF
+    ///CLOVER:OFF
 
     private static final long serialVersionUID = 1;
 

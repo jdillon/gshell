@@ -27,7 +27,7 @@ package org.apache.maven.shell.command;
 public class CommandException
     extends Exception
 {
-    //CLOVER:OFF
+    ///CLOVER:OFF
     
     private static final long serialVersionUID = 1;
 

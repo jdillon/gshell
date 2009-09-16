@@ -30,7 +30,7 @@ package org.apache.maven.shell.notification;
 public abstract class Notification
     extends Error
 {
-    //CLOVER:OFF
+    ///CLOVER:OFF
     
     public Notification(final String msg, final Throwable cause) {
         super(msg, cause);

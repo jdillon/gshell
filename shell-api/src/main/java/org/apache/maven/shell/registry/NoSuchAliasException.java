@@ -29,7 +29,7 @@ import org.apache.maven.shell.command.CommandException;
 public class NoSuchAliasException
     extends CommandException
 {
-    //CLOVER:OFF
+    ///CLOVER:OFF
     
     private static final long serialVersionUID = 1;
 
