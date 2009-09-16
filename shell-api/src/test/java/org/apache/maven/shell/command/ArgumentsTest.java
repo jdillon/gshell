@@ -19,8 +19,8 @@
 
 package org.apache.maven.shell.command;
 
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link Arguments} class.

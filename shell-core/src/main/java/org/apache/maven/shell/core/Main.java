@@ -253,7 +253,7 @@ public class Main
                 shell.execute(commands);
             }
             else {
-                shell.run(_args);
+                shell.run((Object[])_args);
             }
         }
         catch (ExitNotification n) {

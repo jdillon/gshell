@@ -19,9 +19,9 @@
 
 package org.apache.maven.shell.io;
 
+import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.FilterOutputStream;
 
 /**
  * Prefixes printed lines.

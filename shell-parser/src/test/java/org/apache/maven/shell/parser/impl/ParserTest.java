@@ -19,18 +19,10 @@
 
 package org.apache.maven.shell.parser.impl;
 
+import junit.framework.TestCase;
+
 import java.io.Reader;
 import java.io.StringReader;
-
-import junit.framework.TestCase;
-import org.apache.maven.shell.parser.impl.ASTCommandLine;
-import org.apache.maven.shell.parser.impl.ParseException;
-import org.apache.maven.shell.parser.impl.Parser;
-import org.apache.maven.shell.parser.impl.Node;
-import org.apache.maven.shell.parser.impl.ASTPlainString;
-import org.apache.maven.shell.parser.impl.StringSupport;
-import org.apache.maven.shell.parser.impl.ASTQuotedString;
-import org.apache.maven.shell.parser.impl.ASTOpaqueString;
 
 /**
  * Unit tests for the {@link Parser} class.

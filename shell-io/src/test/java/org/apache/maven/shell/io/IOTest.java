@@ -19,8 +19,8 @@
 
 package org.apache.maven.shell.io;
 
+import static org.junit.Assert.fail;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  * Unit tests for the {@link IO} class.

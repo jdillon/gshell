@@ -19,9 +19,9 @@
 
 package org.apache.maven.shell.i18n;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 /**
  * Unit tests for the {@link ResourceBundleMessageSource} class.
