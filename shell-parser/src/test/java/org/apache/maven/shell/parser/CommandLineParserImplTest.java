@@ -21,10 +21,10 @@ package org.apache.maven.shell.parser;
 
 import org.apache.maven.shell.command.CommandLineParser;
 import org.apache.maven.shell.testsupport.PlexusTestSupport;
-import org.junit.Before;
 import org.junit.After;
+import static org.junit.Assert.fail;
+import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  * Unit tests for the {@link CommandLineParserImpl} class.

@@ -21,8 +21,8 @@ package org.apache.maven.shell.testsuite.file;
 
 import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.testsuite.CommandTestSupport;
+import static org.junit.Assert.fail;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link ChangeDirectoryCommand}.

@@ -22,10 +22,10 @@ package org.apache.maven.shell.core.impl.registry;
 import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.registry.NoSuchAliasException;
 import org.apache.maven.shell.testsupport.PlexusTestSupport;
-import static org.junit.Assert.*;
-import org.junit.Test;
-import org.junit.Before;
 import org.junit.After;
+import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.Collection;
 

@@ -19,7 +19,7 @@
 
 package org.apache.maven.shell.terminal;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 
 /**

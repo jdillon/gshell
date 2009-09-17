@@ -21,11 +21,11 @@ package org.apache.maven.shell.testsuite.basic;
 
 import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.testsuite.CommandTestSupport;
+import static org.junit.Assert.*;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.net.URL;
-import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link SourceCommand}.

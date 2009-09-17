@@ -19,14 +19,16 @@
 
 package org.apache.maven.shell.io;
 
-import static org.junit.Assert.*;
-import org.junit.Before;
 import org.junit.After;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.io.InputStream;
+import java.io.PrintStream;
 
 /**
  * Tests for the {@link SystemInputOutputHijacker} class.

@@ -21,13 +21,14 @@ package org.apache.maven.shell.core.impl;
 
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.VariableNames;
-import org.apache.maven.shell.testsupport.PlexusTestSupport;
 import org.apache.maven.shell.registry.CommandRegistry;
-
-import static org.junit.Assert.*;
-import org.junit.Test;
-import org.junit.Before;
+import org.apache.maven.shell.testsupport.PlexusTestSupport;
 import org.junit.After;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the {@link ShellImpl}.

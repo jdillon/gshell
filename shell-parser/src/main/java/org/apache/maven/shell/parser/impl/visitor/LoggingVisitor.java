@@ -24,12 +24,12 @@ import org.apache.maven.shell.parser.impl.ASTExpression;
 import org.apache.maven.shell.parser.impl.ASTOpaqueString;
 import org.apache.maven.shell.parser.impl.ASTPlainString;
 import org.apache.maven.shell.parser.impl.ASTQuotedString;
+import org.apache.maven.shell.parser.impl.ASTWhitespace;
 import org.apache.maven.shell.parser.impl.ParserVisitor;
 import org.apache.maven.shell.parser.impl.SimpleNode;
-import org.apache.maven.shell.parser.impl.ASTWhitespace;
+import org.codehaus.plexus.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.codehaus.plexus.util.StringUtils;
 
 /**
  * Visitor whichs logs nodes in the tree.

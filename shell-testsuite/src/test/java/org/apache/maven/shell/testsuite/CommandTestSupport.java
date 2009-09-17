@@ -30,10 +30,12 @@ import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.registry.CommandRegistry;
 import org.apache.maven.shell.testsupport.PlexusTestSupport;
 import org.apache.maven.shell.testsupport.TestIO;
-import org.junit.Test;
-import org.junit.Before;
 import org.junit.After;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Support for testing {@link Command} instances.

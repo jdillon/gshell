@@ -22,8 +22,11 @@ package org.apache.maven.shell.testsuite.basic;
 import org.apache.maven.shell.History;
 import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.testsuite.CommandTestSupport;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link RecallHistoryCommand}.

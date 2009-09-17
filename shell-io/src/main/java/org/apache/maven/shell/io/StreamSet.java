@@ -19,8 +19,8 @@
 
 package org.apache.maven.shell.io;
 
-import java.io.PrintStream;
 import java.io.InputStream;
+import java.io.PrintStream;
 
 /**
  * A set of input, output and error streams.

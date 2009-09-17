@@ -24,8 +24,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.io.InputStream;
+import java.io.PrintStream;
 
 /**
  * Hijacks the systems standard output and error streams on a per-thread basis

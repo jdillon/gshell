@@ -19,13 +19,12 @@
 
 package org.apache.maven.shell.core.impl;
 
+import org.apache.maven.shell.ShellHolder;
+import org.apache.maven.shell.VariableNames;
+import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.console.Console;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.notification.ErrorNotification;
-import org.apache.maven.shell.ShellHolder;
-import org.apache.maven.shell.Shell;
-import org.apache.maven.shell.Variables;
-import org.apache.maven.shell.VariableNames;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

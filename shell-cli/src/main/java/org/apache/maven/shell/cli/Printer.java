@@ -20,12 +20,10 @@
 package org.apache.maven.shell.cli;
 
 import org.apache.maven.shell.cli.handler.Handler;
+import org.apache.maven.shell.i18n.AggregateMessageSource;
 import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
 import org.apache.maven.shell.i18n.ResourceNotFoundException;
-import org.apache.maven.shell.i18n.AggregateMessageSource;
-
-import org.codehaus.plexus.util.StringUtils;
 
 import java.io.PrintWriter;
 import java.io.Writer;

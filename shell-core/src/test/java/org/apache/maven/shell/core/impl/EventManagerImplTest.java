@@ -19,14 +19,14 @@
 
 package org.apache.maven.shell.core.impl;
 
-import org.junit.Test;
-import org.junit.Before;
-import org.junit.After;
-import static org.junit.Assert.*;
-
 import org.apache.maven.shell.event.EventListener;
 import org.apache.maven.shell.event.EventManager;
 import org.apache.maven.shell.testsupport.PlexusTestSupport;
+import org.junit.After;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.EventObject;
 
