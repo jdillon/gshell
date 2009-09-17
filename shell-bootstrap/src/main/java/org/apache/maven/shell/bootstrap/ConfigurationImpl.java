@@ -85,10 +85,6 @@ public class ConfigurationImpl
 
         props.setProperty(SHELL_HOME_DETECTED, detectHomeDir().getAbsolutePath());
 
-        //
-        // TODO: Load user configuration properties as configured via SHELL_PROPERTIES
-        //
-        
         if (Log.DEBUG) {
             Log.debug("Properties:");
             for (Map.Entry entry : props.entrySet()) {

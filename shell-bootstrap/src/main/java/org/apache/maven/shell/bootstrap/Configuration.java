@@ -42,16 +42,13 @@ public interface Configuration
 
     String SHELL_VERSION = "shell.version";
 
-    String SHELL_PROPERTIES = "shell.properties";
-
     String[] VARIABLES = {
         SHELL_HOME_DETECTED,
         SHELL_HOME,
         SHELL_ETC,
         SHELL_LIB,
         SHELL_PROGRAM,
-        SHELL_VERSION,
-        SHELL_PROPERTIES
+        SHELL_VERSION
     };
 
     void configure() throws Exception;
