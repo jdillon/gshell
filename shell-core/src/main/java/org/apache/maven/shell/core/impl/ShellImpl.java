@@ -159,6 +159,7 @@ public class ShellImpl
         if (!variables.contains(SHELL_USER_HOME)) {
             variables.set(SHELL_USER_HOME, branding.getUserHomeDir(), false);
         }
+
         if (!variables.contains(SHELL_PROMPT)) {
             variables.set(SHELL_PROMPT, branding.getPrompt());
         }

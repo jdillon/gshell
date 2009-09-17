@@ -84,13 +84,12 @@ public class Main
     private boolean showErrorTraces = false;
 
     private void setConsoleLogLevel(final String level) {
-        // TODO: Use a variable to control this instead of a property
-        //       may require some magic to make it dynamic?
         System.setProperty(SHELL_LOGGING, level);
+        vars.set(SHELL_LOGGING, level);
     }
 
     @Option(name="-d", aliases={"--debug"})
-    private void setDebug(boolean flag) {
+    private void setDebug(final boolean flag) {
         if (flag) {
             setConsoleLogLevel(DEBUG);
             io.setVerbosity(IO.Verbosity.DEBUG);
@@ -98,7 +97,7 @@ public class Main
     }
 
     @Option(name="-X", aliases={"--trace"})
-    private void setTrace(boolean flag) {
+    private void setTrace(final boolean flag) {
         if (flag) {
             setConsoleLogLevel(TRACE);
             io.setVerbosity(IO.Verbosity.DEBUG);
@@ -106,7 +105,7 @@ public class Main
     }
 
     @Option(name="-v", aliases={"--verbose"})
-    private void setVerbose(boolean flag) {
+    private void setVerbose(final boolean flag) {
         if (flag) {
             setConsoleLogLevel(INFO);
             io.setVerbosity(IO.Verbosity.VERBOSE);
@@ -114,7 +113,7 @@ public class Main
     }
 
     @Option(name="-q", aliases={"--quiet"})
-    private void setQuiet(boolean flag) {
+    private void setQuiet(final boolean flag) {
         if (flag) {
             setConsoleLogLevel(ERROR);
             io.setVerbosity(IO.Verbosity.QUIET);
