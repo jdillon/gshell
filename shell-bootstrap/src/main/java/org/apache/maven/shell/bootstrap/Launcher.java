@@ -21,6 +21,7 @@ package org.apache.maven.shell.bootstrap;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.List;
@@ -77,7 +78,6 @@ public class Launcher
         Log.debug("Launching");
 
         ClassLoader cl = getClassLoader();
-
         Class<?> type = cl.loadClass(config.getMainClass());
         Method method = getMainMethod(type);
 
@@ -85,7 +85,23 @@ public class Launcher
 
         Log.debug("Invoking: ", method);
 
-        method.invoke(null, new Object[] { args });
+        try {
+            method.invoke(null, new Object[] { args });
+        }
+        catch (InvocationTargetException e) {
+            Log.debug("Invoke failed", e);
+            
+            Throwable cause = e.getTargetException();
+            if (cause instanceof Exception) {
+                throw (Exception)cause;
+            }
+            if (cause instanceof Error) {
+                throw (Error)cause;
+            }
+            else {
+                throw e;
+            }
+        }
     }
 
     private ClassLoader getClassLoader() throws Exception {
