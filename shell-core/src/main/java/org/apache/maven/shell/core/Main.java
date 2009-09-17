@@ -134,7 +134,7 @@ public class Main
     private List<String> commandArgs = null;
 
     //
-    // TODO: Expose setting variables via the command-line
+    // TODO: Expose setting variables via the command-line, maybe -P for property -D for variable?
     //
     
     @Option(name="-D", aliases={"--define"})
@@ -177,12 +177,12 @@ public class Main
 
         // Process command line options & arguments
         Processor clp = new Processor(this);
+        clp.setMessages(messages);
         clp.setStopAtNonOption(true);
         clp.process(args);
 
         if (help) {
             Printer printer = new Printer(clp);
-            printer.setMessageSource(messages);
             printer.printUsage(io.out, System.getProperty(MVNSH_PROGRAM));
             io.flush();
             System.exit(ExitNotification.DEFAULT_CODE);

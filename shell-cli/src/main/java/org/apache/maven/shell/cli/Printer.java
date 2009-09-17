@@ -42,7 +42,7 @@ public class Printer
 {
     private final Processor processor;
 
-    private MessageSource messages = new ResourceBundleMessageSource(Printer.class);
+    private AggregateMessageSource messages = new AggregateMessageSource(new ResourceBundleMessageSource(getClass()));
 
     private int terminalWidth = jline.Terminal.getTerminal().getTerminalWidth();
 
@@ -53,11 +53,16 @@ public class Printer
     public Printer(final Processor processor) {
         assert processor != null;
         this.processor = processor;
+
+        // Add messages from the processor
+        MessageSource messages = processor.getMessages();
+        if (messages != null) {
+            addMessages(messages);
+        }
     }
 
-    public void setMessageSource(final MessageSource messages) {
-        assert messages != null;
-        this.messages = new AggregateMessageSource(this.messages, messages);
+    public void addMessages(final MessageSource messages) {
+        this.messages.getSources().add(messages);
     }
 
     public int getTerminalWidth() {
@@ -121,47 +126,11 @@ public class Printer
         return message;
     }
 
-    private String getToken(final Handler handler) {
-        assert handler != null;
-
-        Descriptor descriptor = handler.descriptor;
-        String token = descriptor.getToken();
-
-        // If we have i18n messages for the command, then try to resolve the token further
-        if (messages != null) {
-            String code = token;
-
-            // If there is no coded, then generate one
-            if (code == null) {
-                if (descriptor instanceof ArgumentDescriptor) {
-                    code = String.format("argument.%s.token", descriptor.getId());
-                }
-                else {
-                    code = String.format("option.%s.token", descriptor.getId());
-                }
-            }
-
-            // Resolve the text in the message source
-            try {
-                token = messages.getMessage(code);
-            }
-            catch (ResourceNotFoundException e) {
-                // Just use the code as the message
-            }
-        }
-
-        if (token == null) {
-            token = handler.getDefaultToken();
-        }
-
-        return token;
-    }
-
     private String getNameAndToken(final Handler handler) {
         assert handler != null;
 
         String str = (handler.descriptor instanceof ArgumentDescriptor) ? "" : handler.descriptor.toString();
-        String token = getToken(handler);
+        String token = handler.getToken(messages);
 
         if (token != null) {
             if (str.length() > 0) {

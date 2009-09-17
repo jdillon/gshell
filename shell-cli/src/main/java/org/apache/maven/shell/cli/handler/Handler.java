@@ -19,9 +19,12 @@
 
 package org.apache.maven.shell.cli.handler;
 
+import org.apache.maven.shell.cli.ArgumentDescriptor;
 import org.apache.maven.shell.cli.Descriptor;
 import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.cli.setter.Setter;
+import org.apache.maven.shell.i18n.MessageSource;
+import org.apache.maven.shell.i18n.ResourceNotFoundException;
 
 /**
  * Provides the basic mechanism to handle custom option and argument processing.
@@ -48,4 +51,39 @@ public abstract class Handler<T>
     public abstract int handle(Parameters params) throws ProcessingException;
 
     public abstract String getDefaultToken();
+
+    public String getToken(final MessageSource messages) { 
+        // messages may be null
+
+        String token = descriptor.getToken();
+
+        // If we have i18n messages for the command, then try to resolve the token further
+        if (messages != null) {
+            String code = token;
+
+            // If there is no coded, then generate one
+            if (code == null) {
+                if (descriptor instanceof ArgumentDescriptor) {
+                    code = String.format("argument.%s.token", descriptor.getId());
+                }
+                else {
+                    code = String.format("option.%s.token", descriptor.getId());
+                }
+            }
+
+            // Resolve the text in the message source
+            try {
+                token = messages.getMessage(code);
+            }
+            catch (ResourceNotFoundException e) {
+                // Just use the code as the message
+            }
+        }
+
+        if (token == null) {
+            token = getDefaultToken();
+        }
+
+        return token;
+    }
 }

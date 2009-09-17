@@ -120,7 +120,7 @@ public class CommandDocumenterImpl
 
         Printer printer = new Printer(clp);
         AggregateMessageSource messages = new AggregateMessageSource(command.getMessages(), help.getMessages());
-        printer.setMessageSource(new PrefixingMessageSource(messages, "command."));
+        printer.addMessages(new PrefixingMessageSource(messages, "command."));
         printer.printUsage(io.out, command.getName());
     }
 

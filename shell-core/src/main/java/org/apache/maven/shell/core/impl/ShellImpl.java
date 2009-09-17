@@ -137,6 +137,10 @@ public class ShellImpl
     private synchronized void open() throws Exception {
         log.debug("Opening");
 
+        //
+        // TODO: Bring branding back
+        //
+        
         // setUp default variables
         if (!variables.contains(MVNSH_HOME)) {
             variables.set(MVNSH_HOME, System.getProperty(MVNSH_HOME), false);

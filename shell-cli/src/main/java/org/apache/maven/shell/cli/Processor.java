@@ -26,6 +26,7 @@ import org.apache.maven.shell.cli.setter.CollectionFieldSetter;
 import org.apache.maven.shell.cli.setter.FieldSetter;
 import org.apache.maven.shell.cli.setter.MethodSetter;
 import org.apache.maven.shell.cli.setter.Setter;
+import org.apache.maven.shell.i18n.MessageSource;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -52,12 +53,22 @@ public class Processor
 
     private boolean stopAtNonOption = false;
 
+    private MessageSource messages;
+
     public Processor() {}
     
     public Processor(final Object bean) {
         assert bean != null;
 
         addBean(bean);
+    }
+
+    public void setMessages(final MessageSource messages) {
+        this.messages = messages;
+    }
+
+    public MessageSource getMessages() {
+        return messages;
     }
 
     public List<Handler> getOptionHandlers() {
@@ -78,7 +89,6 @@ public class Processor
 
     public void addBean(final Object bean) {
         assert bean != null;
-
         discoverDescriptors(bean);
     }
 
@@ -203,13 +213,9 @@ public class Processor
             pos += n;
         }
 
-        private String getOptionName() {
-            return handler.descriptor.toString();
-        }
-
         public String get(final int idx) throws ProcessingException {
             if (pos + idx >= args.length) {
-                throw new ProcessingException(Messages.MISSING_OPERAND.format(getOptionName()));
+                throw new ProcessingException(Messages.MISSING_OPERAND.format(handler.descriptor.toString(), handler.getToken(messages)));
             }
 
             return args[pos + idx];
@@ -297,22 +303,14 @@ public class Processor
         if (!requireOverride) {
             for (Handler handler : optionHandlers) {
                 if (handler.descriptor.isRequired() && !present.contains(handler)) {
-                    //
-                    // FIXME: This needs to be i18n aware
-                    //
-
-                    throw new ProcessingException(Messages.REQUIRED_OPTION_MISSING.format(handler.descriptor.toString()));
+                    throw new ProcessingException(Messages.REQUIRED_OPTION_MISSING.format(handler.getToken(messages)));
                 }
             }
 
             // Ensure that all required argument handlers are present
             for (Handler handler : argumentHandlers) {
                 if (handler.descriptor.isRequired() && !present.contains(handler)) {
-                    //
-                    // FIXME: This needs to be i18n aware
-                    //
-                    
-                    throw new ProcessingException(Messages.REQUIRED_ARGUMENT_MISSING.format(handler.descriptor.toString()));
+                    throw new ProcessingException(Messages.REQUIRED_ARGUMENT_MISSING.format(handler.getToken(messages)));
                 }
             }
         }
