@@ -43,10 +43,10 @@ public class EchoCommandTest
     }
 
     @Test
-    public void testEcho_$mvnsh_home() throws Exception {
-        Object result = executeWithArgs("${mvnsh.home}");
+    public void testEcho_$shell_home() throws Exception {
+        Object result = executeWithArgs("${shell.home}");
         assertEqualsSuccess(result);
-        assertOutputEquals(getShell().getVariables().get("mvnsh.home") + "\n");
+        assertOutputEquals(getShell().getVariables().get("shell.home") + "\n");
     }
 
     @Test

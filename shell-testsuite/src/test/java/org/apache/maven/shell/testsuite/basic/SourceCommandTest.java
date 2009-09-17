@@ -81,7 +81,7 @@ public class SourceCommandTest
 
     @Test
     public void test1() throws Exception {
-        URL script = getClass().getResource("test1.mvnsh");
+        URL script = getClass().getResource("test1.tsh");
         assertNotNull(script);
         Object result = executeWithArgs(script.toExternalForm());
         assertEqualsSuccess(result);
@@ -91,7 +91,7 @@ public class SourceCommandTest
     public void test2() throws Exception {
         assertFalse(vars.contains("foo"));
 
-        URL script = getClass().getResource("test2.mvnsh");
+        URL script = getClass().getResource("test2.tsh");
         assertNotNull(script);
         Object result = executeWithArgs(script.toExternalForm());
         assertEqualsSuccess(result);

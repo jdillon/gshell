@@ -66,7 +66,7 @@ public class ConsolePrompterImpl
 
     public String prompt() {
         String prompt = null;
-        String pattern = vars.get(MVNSH_PROMPT, String.class);
+        String pattern = vars.get(SHELL_PROMPT, String.class);
 
         if (pattern != null) {
             try {

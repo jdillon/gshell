@@ -72,8 +72,8 @@ public class ConsoleErrorHandlerImpl
 
         // Determine if the stack trace flag is set
         boolean showTrace = false;
-        if (vars.contains(MVNSH_SHOW_STACKTRACE)) {
-            String tmp = vars.get(MVNSH_SHOW_STACKTRACE, String.class);
+        if (vars.contains(SHELL_ERRORS)) {
+            String tmp = vars.get(SHELL_ERRORS, String.class);
             showTrace = Boolean.parseBoolean(tmp.trim());
         }
 

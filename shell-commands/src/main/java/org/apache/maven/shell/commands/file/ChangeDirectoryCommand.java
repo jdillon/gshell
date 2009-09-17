@@ -80,7 +80,7 @@ public class ChangeDirectoryCommand
             return Result.FAILURE;
         }
 
-        vars.set(MVNSH_USER_DIR, file.getPath());
+        vars.set(SHELL_USER_DIR, file.getPath());
         io.info(file.getPath());
 
         return Result.SUCCESS;

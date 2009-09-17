@@ -45,6 +45,11 @@ public class TestBranding
     }
 
     @Override
+    public String getScriptExtension() {
+        return "tsh";
+    }
+
+    @Override
     public String getVersion() {
         return "1.0-TEST";
     }

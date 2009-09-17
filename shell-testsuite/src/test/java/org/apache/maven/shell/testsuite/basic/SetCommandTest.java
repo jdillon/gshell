@@ -65,11 +65,11 @@ public class SetCommandTest
     @Test
     public void testDefineVariableWithExpression() throws Exception {
         assertFalse(vars.contains("foo"));
-        Object result = executeWithArgs("foo ${mvnsh.home}");
+        Object result = executeWithArgs("foo ${shell.home}");
         assertEqualsSuccess(result);
 
         assertTrue(vars.contains("foo"));
         Object value = vars.get("foo");
-        assertEquals(value, vars.get("mvnsh.home", String.class));
+        assertEquals(value, vars.get("shell.home", String.class));
     }
 }

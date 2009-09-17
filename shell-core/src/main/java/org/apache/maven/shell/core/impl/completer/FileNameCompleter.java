@@ -36,7 +36,7 @@ public class FileNameCompleter
     implements Completor
 {
     //
-    // FIXME: Need to use mvnsh.user.dir etc for muck...
+    // FIXME: Need to use shell.user.dir etc for muck...
     //
     
     private final FileNameCompletor delegate = new FileNameCompletor();

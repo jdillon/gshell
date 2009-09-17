@@ -150,33 +150,33 @@ public class ShellImpl
         //
 
         // Setup default variables
-        if (!variables.contains(MVNSH_HOME)) {
-            variables.set(MVNSH_HOME, branding.getShellHomeDir(), false);
+        if (!variables.contains(SHELL_HOME)) {
+            variables.set(SHELL_HOME, branding.getShellHomeDir(), false);
         }
-        if (!variables.contains(MVNSH_VERSION)) {
-            variables.set(MVNSH_VERSION, branding.getVersion(), false);
+        if (!variables.contains(SHELL_VERSION)) {
+            variables.set(SHELL_VERSION, branding.getVersion(), false);
         }
-        if (!variables.contains(MVNSH_USER_HOME)) {
-            variables.set(MVNSH_USER_HOME, branding.getUserHomeDir(), false);
+        if (!variables.contains(SHELL_USER_HOME)) {
+            variables.set(SHELL_USER_HOME, branding.getUserHomeDir(), false);
         }
-        if (!variables.contains(MVNSH_PROMPT)) {
-            variables.set(MVNSH_PROMPT, branding.getDefaultPrompt());
+        if (!variables.contains(SHELL_PROMPT)) {
+            variables.set(SHELL_PROMPT, branding.getPrompt());
         }
 
         // Configure history storage
-        if (!variables.contains(MVNSH_HISTORY)) {
+        if (!variables.contains(SHELL_HISTORY)) {
             File file = new File(branding.getUserContextDir(), branding.getHistoryFileName());
             history.setStoreFile(file);
-            variables.set(MVNSH_HISTORY, file, false);
+            variables.set(SHELL_HISTORY, file, false);
         }
         else {
-            File file = new File(variables.get(MVNSH_HISTORY, String.class));
+            File file = new File(variables.get(SHELL_HISTORY, String.class));
             history.setStoreFile(file);
         }
 
         // Setup context cwd
-        if (!variables.contains(MVNSH_USER_DIR)) {
-            variables.set(MVNSH_USER_DIR, new File(".").getCanonicalPath());
+        if (!variables.contains(SHELL_USER_DIR)) {
+            variables.set(SHELL_USER_DIR, new File(".").getCanonicalPath());
         }
 
         // Load profile scripts

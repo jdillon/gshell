@@ -30,19 +30,29 @@ import java.util.List;
  */
 public interface Configuration
 {
-    String MVNSH_HOME_DETECTED = "mvnsh.home.detected";
+    String SHELL_HOME_DETECTED = "shell.home.detected";
 
-    String MVNSH_HOME = "mvnsh.home";
+    String SHELL_HOME = "shell.home";
 
-    String MVNSH_ETC = "mvnsh.etc";
+    String SHELL_ETC = "shell.etc";
 
-    String MVNSH_LIB = "mvnsh.lib";
+    String SHELL_LIB = "shell.lib";
 
-    String MVNSH_PROGRAM = "mvnsh.program";
+    String SHELL_PROGRAM = "shell.program";
 
-    String MVNSH_VERSION = "mvnsh.version";
+    String SHELL_VERSION = "shell.version";
 
-    String MVNSH_PROPERTIES = "mvnsh.properties";
+    String SHELL_PROPERTIES = "shell.properties";
+
+    String[] VARIABLES = {
+        SHELL_HOME_DETECTED,
+        SHELL_HOME,
+        SHELL_ETC,
+        SHELL_LIB,
+        SHELL_PROGRAM,
+        SHELL_VERSION,
+        SHELL_PROPERTIES
+    };
 
     void configure() throws Exception;
 

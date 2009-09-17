@@ -42,11 +42,16 @@ public class BrandingImpl
     }
 
     public String getProgramName() {
-        return System.getProperty(MVNSH_PROGRAM);
+        return System.getProperty(SHELL_PROGRAM);
+    }
+
+    @Override
+    public String getScriptExtension() {
+        return "mvnsh";
     }
 
     public String getVersion() {
-        return System.getProperty(MVNSH_VERSION);
+        return System.getProperty(SHELL_VERSION);
     }
 
     public String getAboutMessage() {
@@ -72,8 +77,8 @@ public class BrandingImpl
         return "Goodbye!"; // TODO: i18n
     }
 
-    public String getDefaultPrompt() {
-        return String.format("@|bold %s|:%%{%s}> ", getProgramName(), MVNSH_USER_DIR);
+    public String getPrompt() {
+        return String.format("@|bold %s|:%%{%s}> ", getProgramName(), SHELL_USER_DIR);
     }
 
     public String getProfileScriptName() {
@@ -104,7 +109,7 @@ public class BrandingImpl
     }
 
     public File getShellHomeDir() {
-        return resolveFile(System.getProperty(MVNSH_HOME));
+        return resolveFile(System.getProperty(SHELL_HOME));
     }
 
     public File getShellContextDir() {

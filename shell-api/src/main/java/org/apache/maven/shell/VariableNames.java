@@ -27,23 +27,23 @@ package org.apache.maven.shell;
  */
 public interface VariableNames
 {
-    String MVNSH_HOME = "mvnsh.home";
+    String SHELL_HOME = "shell.home";
 
-    String MVNSH_PROGRAM = "mvnsh.program";
+    String SHELL_PROGRAM = "shell.program";
 
-    String MVNSH_VERSION = "mvnsh.version";
+    String SHELL_VERSION = "shell.version";
 
-    String MVNSH_USER_DIR = "mvnsh.user.dir";
+    String SHELL_USER_DIR = "shell.user.dir";
 
-    String MVNSH_USER_HOME = "mvnsh.user.home";
+    String SHELL_USER_HOME = "shell.user.home";
 
-    String MVNSH_PROMPT = "mvnsh.prompt";
+    String SHELL_PROMPT = "shell.prompt";
 
-    String MVNSH_HISTORY = "mvnsh.history";
+    String SHELL_HISTORY = "shell.history";
 
-    String MVNSH_SHOW_STACKTRACE = "mvnsh.show.stacktrace";
+    String SHELL_ERRORS = "shell.errors";
 
-    String MVNSH_LOG_CONSOLE_LEVEL = "mvnsh.log.console.level";
+    String SHELL_LOGGING = "shell.logging";
 
     String LAST_RESULT = "_";
 }

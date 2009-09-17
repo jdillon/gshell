@@ -73,9 +73,9 @@ public class MavenCommand
 
         String[] args = Arguments.toStringArray(context.getArguments());
 
-        // Propagate mvnsh.user.dir to user.dir for MavenCLI
+        // Propagate shell.user.dir to user.dir for MavenCLI
         Variables vars = context.getVariables();
-        String dirname = vars.get(MVNSH_USER_DIR, String.class);
+        String dirname = vars.get(SHELL_USER_DIR, String.class);
         System.setProperty("user.dir", dirname);
 
         log.debug("Invoking maven with args: {}, in dir: {}", StringUtils.join(args, " "), dirname);

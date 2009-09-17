@@ -83,10 +83,10 @@ public class ConfigurationImpl
             input.close();
         }
 
-        props.setProperty(MVNSH_HOME_DETECTED, detectHomeDir().getAbsolutePath());
+        props.setProperty(SHELL_HOME_DETECTED, detectHomeDir().getAbsolutePath());
 
         //
-        // TODO: Load user configuration properties as configured via MVNSH_PROPERTIES
+        // TODO: Load user configuration properties as configured via SHELL_PROPERTIES
         //
         
         if (Log.DEBUG) {
@@ -103,7 +103,7 @@ public class ConfigurationImpl
      * Attempt to detect the home directory, which is expected to be <tt>../../</tt> from the location of the jar containing this class.
      */
     private File detectHomeDir() throws Exception {
-        Log.debug("Detecting ", MVNSH_HOME);
+        Log.debug("Detecting ", SHELL_HOME);
 
         String path = getClass().getProtectionDomain().getCodeSource().getLocation().getFile();
         path = URLDecoder.decode(path, "UTF-8");
@@ -137,9 +137,9 @@ public class ConfigurationImpl
         this.props = loadProperties();
 
         // Export some configuration
-        setSystemProperty(MVNSH_HOME, getHomeDir().getAbsolutePath());
-        setSystemProperty(MVNSH_PROGRAM, getProgramName());
-        setSystemProperty(MVNSH_VERSION, getVersion());
+        setSystemProperty(SHELL_HOME, getHomeDir().getAbsolutePath());
+        setSystemProperty(SHELL_PROGRAM, getProgramName());
+        setSystemProperty(SHELL_VERSION, getVersion());
     }
 
     private void ensureConfigured() {
@@ -152,7 +152,7 @@ public class ConfigurationImpl
         ensureConfigured();
 
         if (homeDir == null) {
-            homeDir = getPropertyAsFile(MVNSH_HOME);
+            homeDir = getPropertyAsFile(SHELL_HOME);
         }
 
         return homeDir;
@@ -162,7 +162,7 @@ public class ConfigurationImpl
         ensureConfigured();
 
         if (libDir == null) {
-            libDir = getPropertyAsFile(MVNSH_LIB);
+            libDir = getPropertyAsFile(SHELL_LIB);
         }
 
         return libDir;
@@ -172,7 +172,7 @@ public class ConfigurationImpl
         ensureConfigured();
 
         if (etcDir == null) {
-            etcDir = getPropertyAsFile(MVNSH_ETC);
+            etcDir = getPropertyAsFile(SHELL_ETC);
         }
 
         return etcDir;
@@ -182,7 +182,7 @@ public class ConfigurationImpl
         ensureConfigured();
 
         if (programName == null) {
-            programName = getProperty(MVNSH_PROGRAM);
+            programName = getProperty(SHELL_PROGRAM);
         }
         
         return programName;
@@ -192,7 +192,7 @@ public class ConfigurationImpl
         ensureConfigured();
 
         if (version == null) {
-            version = getProperty(MVNSH_VERSION);
+            version = getProperty(SHELL_VERSION);
         }
 
         return version;

@@ -33,6 +33,8 @@ public interface Branding
 
     String getProgramName();
 
+    String getScriptExtension();
+
     String getVersion();
 
     String getAboutMessage();
@@ -41,7 +43,7 @@ public interface Branding
 
     String getGoodbyeMessage();
 
-    String getDefaultPrompt();
+    String getPrompt();
 
     String getProfileScriptName();
 

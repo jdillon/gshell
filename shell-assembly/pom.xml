@@ -77,7 +77,7 @@
                     <descriptors>
                         <descriptor>src/main/assembly/bin.xml</descriptor>
                     </descriptors>
-                    <finalName>mvnsh-${version}</finalName>
+                    <finalName>mvnsh-${project.version}</finalName>
                 </configuration>
             </plugin>
         </plugins>

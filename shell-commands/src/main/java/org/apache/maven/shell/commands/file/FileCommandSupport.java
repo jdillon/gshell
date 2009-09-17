@@ -48,15 +48,15 @@ public abstract class FileCommandSupport
     }
 
     protected File getShellHomeDir(final CommandContext context) throws IOException {
-        return resolveDir(context, MVNSH_HOME);
+        return resolveDir(context, SHELL_HOME);
     }
 
     protected File getUserDir(final CommandContext context) throws IOException {
-        return resolveDir(context, MVNSH_USER_DIR);
+        return resolveDir(context, SHELL_USER_DIR);
     }
 
     protected File getUserHomeDir(final CommandContext context) throws IOException {
-        return resolveDir(context, MVNSH_USER_HOME);
+        return resolveDir(context, SHELL_USER_HOME);
     }
 
     protected File resolveFile(final CommandContext context, File baseDir, final String path) throws IOException {

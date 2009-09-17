@@ -31,19 +31,19 @@ set DIRNAME=%~dp0
 if "%DIRNAME%" == "" set DIRNAME=.\
 
 :check_JAVACMD
-if not "%JAVACMD%" == "" goto check_MVNSH_HOME
+if not "%JAVACMD%" == "" goto check_SHELL_HOME
 
 :check_JAVA_HOME
 if not "%JAVA_HOME%" == "" goto have_JAVA_HOME
 set JAVACMD=java
-goto check_MVNSH_HOME
+goto check_SHELL_HOME
 
 :have_JAVA_HOME
 set JAVACMD=%JAVA_HOME%\bin\java
-goto check_MVNSH_HOME
+goto check_SHELL_HOME
 
-:check_MVNSH_HOME
-if "%MVNSH_HOME%" == "" set MVNSH_HOME=%DIRNAME%..
+:check_SHELL_HOME
+if "%SHELL_HOME%" == "" set SHELL_HOME=%DIRNAME%..
 
 :init
 @REM Get command-line arguments, handling Windowz variants
@@ -70,7 +70,7 @@ set ARGS=%$
 
 :execute
 
-set BOOTJAR=%MVNSH_HOME%\lib\boot\shell-bootstrap.jar
+set BOOTJAR=%SHELL_HOME%\lib\boot\shell-bootstrap.jar
 
 @REM Start the JVM
 "%JAVACMD%" %JAVA_OPTS% -jar "%BOOTJAR%" %ARGS%
@@ -78,5 +78,5 @@ set BOOTJAR=%MVNSH_HOME%\lib\boot\shell-bootstrap.jar
 :end
 
 if "%OS%"=="Windows_NT" endlocal
-if "%MVNSH_BATCH_PAUSE%" == "on" pause
+if "%SHELL_BATCH_PAUSE%" == "on" pause
 

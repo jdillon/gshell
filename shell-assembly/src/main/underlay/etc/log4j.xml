@@ -26,14 +26,14 @@
 
     <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
         <param name="Target" value="System.out"/>
-        <param name="Threshold" value="${mvnsh.log.console.level}"/>
+        <param name="Threshold" value="${shell.log.console.level}"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%-5p %-25.30c{1} [%t] %m%n"/>
         </layout>
     </appender>
 
     <appender name="FILE" class="org.apache.log4j.FileAppender">
-        <param name="File" value="${mvnsh.home}/var/log/mvnsh.log"/>
+        <param name="File" value="${shell.home}/var/log/shell.log"/>
         <param name="Append" value="false"/>
         <param name="Threshold" value="DEBUG"/>
         <layout class="org.apache.log4j.PatternLayout">
@@ -42,7 +42,7 @@
     </appender>
     
     <root>
-        <level value="${mvnsh.log.console.level}"/>
+        <level value="${shell.log.console.level}"/>
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>
     </root>

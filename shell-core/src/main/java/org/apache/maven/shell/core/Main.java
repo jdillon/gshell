@@ -46,7 +46,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * Command-line bootstrap for Apache Maven Shell (<tt>mvnsh</tt>).
+ * Command-line bootstrap for Apache Maven Shell (<tt>shell</tt>).
  *
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
@@ -86,7 +86,7 @@ public class Main
     private void setConsoleLogLevel(final String level) {
         // TODO: Use a variable to control this instead of a property
         //       may require some magic to make it dynamic?
-        System.setProperty(MVNSH_LOG_CONSOLE_LEVEL, level);
+        System.setProperty(SHELL_LOGGING, level);
     }
 
     @Option(name="-d", aliases={"--debug"})
@@ -214,7 +214,7 @@ public class Main
             // Create the container instance, we need it to look up some components to configure the shell
             PlexusContainer container = ShellBuilder.createContainer();
 
-            vars.set(MVNSH_SHOW_STACKTRACE, showErrorTraces);
+            vars.set(SHELL_ERRORS, showErrorTraces);
 
             // Build a shell instance
             Shell shell = new ShellBuilder()
