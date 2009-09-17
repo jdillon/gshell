@@ -26,8 +26,10 @@ import jline.History;
 import org.apache.maven.shell.console.Console;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.terminal.AutoDetectedTerminal;
+import org.apache.maven.shell.terminal.Constants;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Support for running console using the <a href="http://jline.sf.net">JLine</a> library.
@@ -37,46 +39,24 @@ import java.io.IOException;
  */
 public class JLineConsole
     extends Console
+    implements Constants
 {
     private final ConsoleReader reader;
 
-    public JLineConsole(final Executor executor, final IO io) throws IOException {
+    public JLineConsole(final Executor executor, final IO io, final InputStream bindings) throws IOException {
         super(executor);
-
         assert io != null;
 
-        // TODO: Expose bindings, and/or setup the default to load from our configuration
-        /*
-        This is what ConsoleReader is doing related to bindings...
-
-        if (bindings == null) {
-            try {
-                String bindingFile = System.getProperty("jline.keybindings",
-                    new File(System.getProperty("user.home",
-                        ".jlinebindings.properties")).getAbsolutePath());
-
-                if (new File(bindingFile).isFile()) {
-                    bindings = new FileInputStream(new File(bindingFile));
-                }
-            } catch (Exception e) {
-                // swallow exceptions with option debugging
-                if (debugger != null) {
-                    e.printStackTrace(debugger);
-                }
-            }
-        }
-
-        if (bindings == null) {
-            bindings = terminal.getDefaultBindings();
-        }
-        */
-
-        reader = io.createConsoleReader();
+        reader = io.createConsoleReader(bindings);
         reader.setUsePagination(true);
-        if (Boolean.getBoolean(AutoDetectedTerminal.JLINE_NOBELL)) {
+        if (Boolean.getBoolean(JLINE_NOBELL)) {
             reader.setBellEnabled(false);
         }
         reader.setCompletionHandler(new CandidateListCompletionHandler());
+    }
+
+    public JLineConsole(final Executor executor, final IO io) throws IOException {
+        this(executor, io, null);
     }
 
     public void addCompleter(final Completor completer) {

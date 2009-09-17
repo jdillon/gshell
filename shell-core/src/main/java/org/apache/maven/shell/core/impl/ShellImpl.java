@@ -31,10 +31,15 @@ import org.apache.maven.shell.console.Console;
 import org.apache.maven.shell.core.impl.console.JLineConsole;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.notification.ExitNotification;
+import org.apache.maven.shell.terminal.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -45,7 +50,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class ShellImpl
-    implements Shell, VariableNames
+    implements Shell, VariableNames, Constants
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -66,7 +71,7 @@ public class ShellImpl
     private Console.ErrorHandler errorHandler;
 
     private boolean opened;
-
+    
     public ShellImpl(final Branding branding, final CommandExecutor executor, final IO io, final Variables variables) {
         assert branding != null;
         assert executor != null;
@@ -235,9 +240,9 @@ public class ShellImpl
         };
 
         IO io = getIo();
-        
+
         // Setup the console
-        JLineConsole console = new JLineConsole(executor, io);
+        JLineConsole console = new JLineConsole(executor, io, loadBindings());
         console.setHistory(history.getDelegate());
 
         if (prompter != null) {
@@ -280,6 +285,41 @@ public class ShellImpl
         if (n != null) {
             throw n;
         }
+    }
+
+    private InputStream loadBindings() throws IOException {
+        File file = new File(branding.getUserContextDir(), JLINE_KEYBINDINGS);
+
+        if (!file.exists() || !file.isFile()) {
+            file = new File(branding.getShellContextDir(), JLINE_KEYBINDINGS);
+            if (!file.exists() || file.isFile()) {
+                try {
+                    String fileName = System.getProperty(JLINE_KEYBINDINGS);
+                    if (fileName != null) {
+                        file = new File(fileName);
+                    }
+                    if (!file.exists() || file.isFile()) {
+                        file = new File(System.getProperty("user.home", JLINEBINDINGS_PROPERTIES));
+                    }
+                }
+                catch (Exception e) {
+                    log.warn("Failed to load keybindings", e);
+                }
+            }
+        }
+
+        InputStream bindings = null;
+        
+        if (file.exists() && file.isFile() && file.canRead()) {
+            log.debug("Using bindings from file: {}", file);
+            bindings = new BufferedInputStream(new FileInputStream(file));
+        }
+        else {
+            log.debug("Using default bindings");
+            bindings = io.getTerminal().getDefaultBindings();
+        }
+
+        return bindings;
     }
 
     protected void setLastResult(final Object result) {

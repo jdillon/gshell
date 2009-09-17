@@ -256,11 +256,15 @@ public class IO
         return Terminal.getTerminal();
     }
 
-    public ConsoleReader createConsoleReader() throws IOException {
+    public ConsoleReader createConsoleReader(final InputStream bindings) throws IOException {
         return new ConsoleReader(
             streams.in,
             new PrintWriter(streams.out, true),
-            null, // bindings
+            bindings,
             getTerminal());
+    }
+
+    public ConsoleReader createConsoleReader() throws IOException {
+        return createConsoleReader(null);
     }
 }

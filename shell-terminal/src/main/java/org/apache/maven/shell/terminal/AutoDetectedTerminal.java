@@ -34,25 +34,8 @@ import java.io.InputStream;
  */
 public class AutoDetectedTerminal
     extends jline.Terminal
+    implements Constants
 {
-    public static final String JLINE_TERMINAL = "jline.terminal";
-
-    public static final String JLINE_NOBELL = "jline.nobell";
-
-    public static final String AUTO = "auto";
-
-    public static final String UNIX = "unix";
-
-    public static final String WIN = "win";
-
-    public static final String WINDOWS = "windows";
-
-    public static final String OFF = "off";
-
-    public static final String NONE = "none";
-
-    public static final String FALSE = Boolean.FALSE.toString();
-
     private final Terminal delegate;
 
     public AutoDetectedTerminal() {
