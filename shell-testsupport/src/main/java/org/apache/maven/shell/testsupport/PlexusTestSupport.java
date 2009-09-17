@@ -111,11 +111,11 @@ public class PlexusTestSupport
     }
 
     @SuppressWarnings({ "UnusedDeclaration" })
-    protected void customizeContainerConfiguration(ContainerConfiguration config) {
+    protected void customizeContainerConfiguration(final ContainerConfiguration config) {
     }
 
     @SuppressWarnings({ "UnusedDeclaration" })
-    protected void customizeContext(Context context) {
+    protected void customizeContext(final Context context) {
     }
 
     protected PlexusConfiguration customizeComponentConfiguration() {
@@ -126,7 +126,7 @@ public class PlexusTestSupport
         return getConfiguration(null);
     }
 
-    protected InputStream getConfiguration(String subname) throws Exception {
+    protected InputStream getConfiguration(final String subname) throws Exception {
         return getResourceAsStream(getConfigurationName(subname));
     }
 
@@ -134,7 +134,7 @@ public class PlexusTestSupport
         return null;
     }
 
-    protected String getConfigurationName(String subname) {
+    protected String getConfigurationName(final String subname) {
         return getOwner().getClass().getName().replace('.', '/') + ".xml";
     }
 
@@ -158,23 +158,23 @@ public class PlexusTestSupport
         return container;
     }
 
-    public Object lookup(String key) throws Exception {
+    public Object lookup(final String key) throws Exception {
         return getContainer().lookup(key);
     }
 
-    public Object lookup(String role, String roleHint) throws Exception {
+    public Object lookup(final String role, final String roleHint) throws Exception {
         return getContainer().lookup(role, roleHint);
     }
 
-    public <T> T lookup(Class<T> type) throws Exception {
+    public <T> T lookup(final Class<T> type) throws Exception {
         return getContainer().lookup(type);
     }
 
-    public <T> T lookup(Class<T> type, String roleHint) throws Exception {
+    public <T> T lookup(final Class<T> type, final String roleHint) throws Exception {
         return getContainer().lookup(type, roleHint);
     }
 
-    public void release(Object component) throws Exception {
+    public void release(final Object component) throws Exception {
         getContainer().release(component);
     }
 
@@ -203,11 +203,11 @@ public class PlexusTestSupport
         return basedir;
     }
 
-    public static File getTestFile(String path) {
+    public static File getTestFile(final String path) {
         return new File(getBasedir(), path);
     }
 
-    public static File getTestFile(String basedir, String path) {
+    public static File getTestFile(final String basedir, final String path) {
         File basedirFile = new File(basedir);
 
         if (!basedirFile.isAbsolute()) {
@@ -217,11 +217,11 @@ public class PlexusTestSupport
         return new File(basedirFile, path);
     }
 
-    public static String getTestPath(String path) {
+    public static String getTestPath(final String path) {
         return getTestFile(path).getAbsolutePath();
     }
 
-    public static String getTestPath(String basedir, String path) {
+    public static String getTestPath(final String basedir, final String path) {
         return getTestFile(basedir, path).getAbsolutePath();
     }
 
@@ -229,7 +229,7 @@ public class PlexusTestSupport
         return getTestConfiguration(getOwner().getClass());
     }
 
-    public static String getTestConfiguration(Class<?> clazz) {
+    public static String getTestConfiguration(final Class<?> clazz) {
         String s = clazz.getName().replace('.', '/');
         return s.substring(0, s.indexOf('$')) + ".xml";
     }
