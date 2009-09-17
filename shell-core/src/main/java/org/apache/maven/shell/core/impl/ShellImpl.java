@@ -176,6 +176,11 @@ public class ShellImpl
         return executor.execute(this, args);
     }
 
+    private void setLastResult(final Object result) {
+        // result may be null
+        getVariables().set("_", result);
+    }
+
     public void run(final Object... args) throws Exception {
         assert args != null;
 
@@ -196,8 +201,8 @@ public class ShellImpl
 
                 try {
                     Object result = ShellImpl.this.execute(line);
-
                     lastResultHolder.set(result);
+                    setLastResult(result);
                 }
                 catch (ExitNotification n) {
                     exitNotifHolder.set(n);

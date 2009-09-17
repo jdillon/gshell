@@ -19,9 +19,9 @@
 
 package org.apache.maven.shell;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -41,28 +41,22 @@ public class Variables
 
     public Variables(final Map<String,Object> map, final Variables parent) {
         assert map != null;
-        assert parent != null;
+        // parent may be null
 
         this.map = map;
         this.parent = parent;
     }
 
     public Variables(final Variables parent) {
-        assert parent != null;
-
-        this.map = new HashMap<String,Object>();
-        this.parent = parent;
+        this(new LinkedHashMap<String,Object>(), parent);
     }
 
     public Variables(final Map<String,Object> map) {
-        assert map != null;
-
-        this.map = map;
-        this.parent = null;
+        this(map, null);
     }
 
     public Variables() {
-        this(new HashMap<String,Object>());
+        this(new LinkedHashMap<String,Object>());
     }
 
     public void set(final String name, final Object value) {
