@@ -26,7 +26,6 @@ import org.apache.maven.shell.VariableNames;
 import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.command.CommandExecutor;
 import org.apache.maven.shell.console.Console;
-import org.apache.maven.shell.console.completer.AggregateCompleter;
 import org.apache.maven.shell.core.impl.console.JLineConsole;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.notification.ExitNotification;
@@ -61,7 +60,6 @@ public class ShellImpl
     @Requirement
     private CommandExecutor executor;
 
-    @Requirement(role=Completor.class, hints={"alias-name", "commands"})
     private List<Completor> completers;
 
     private IO io = new IO();
@@ -114,6 +112,14 @@ public class ShellImpl
 
     public void setErrorHandler(final Console.ErrorHandler errorHandler) {
         this.errorHandler = errorHandler;
+    }
+
+    public List<Completor> getCompleters() {
+        return completers;
+    }
+
+    public void setCompleters(final List<Completor> completers) {
+        this.completers = completers;
     }
 
     public synchronized boolean isOpened() {
@@ -243,12 +249,15 @@ public class ShellImpl
         if (prompter != null) {
             console.setPrompter(prompter);
         }
+        
         if (errorHandler != null) {
             console.setErrorHandler(errorHandler);
         }
-        if (completers != null) {
-            // Have to use aggregate here to get the completion list to update properly
-            console.addCompleter(new AggregateCompleter(completers));
+
+        if (completers != null && !completers.isEmpty()) {
+            for (Completor completer : completers) {
+                console.addCompleter(completer);
+            }
         }
 
         // Unless the user wants us to shut up, then display a nice welcome banner

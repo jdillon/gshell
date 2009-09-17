@@ -30,8 +30,13 @@ import org.codehaus.plexus.ContainerConfiguration;
 import org.codehaus.plexus.DefaultContainerConfiguration;
 import org.codehaus.plexus.DefaultPlexusContainer;
 import org.codehaus.plexus.PlexusContainer;
+import org.codehaus.plexus.PlexusContainerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jline.Completor;
+
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Builds {@link Shell} instances.
@@ -43,17 +48,36 @@ public class ShellBuilder
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
+    private PlexusContainer container;
+
     private IO io;
 
     private Variables variables;
-
-    private PlexusContainer container;
 
     private boolean registerCommands = true;
 
     private Console.Prompter prompter;
 
     private Console.ErrorHandler errorHandler;
+
+    private final List<Completor> completers = new ArrayList<Completor>();
+
+    public ShellBuilder setContainer(final PlexusContainer container) {
+        this.container = container;
+        return this;
+    }
+
+    private PlexusContainer getContainer() throws PlexusContainerException {
+        if (container == null) {
+            createContainer();
+        }
+        return container;
+    }
+
+    public static PlexusContainer createContainer() throws PlexusContainerException {
+        ContainerConfiguration config = new DefaultContainerConfiguration();
+        return new DefaultPlexusContainer(config);
+    }
 
     public ShellBuilder setIo(final IO io) {
         this.io = io;
@@ -62,11 +86,6 @@ public class ShellBuilder
 
     public ShellBuilder setVariables(final Variables variables) {
         this.variables = variables;
-        return this;
-    }
-
-    public ShellBuilder setContainer(final PlexusContainer container) {
-        this.container = container;
         return this;
     }
 
@@ -85,28 +104,29 @@ public class ShellBuilder
         return this;
     }
 
-    public Shell create() throws Exception {
-        if (container == null) {
-            // Create the container
-            ContainerConfiguration config = new DefaultContainerConfiguration();
-            container = new DefaultPlexusContainer(config);
-        }
+    public ShellBuilder addCompleter(final Completor completer) {
+        assert completer != null;
+        completers.add(completer);
+        return this;
+    }
 
+    public Shell create() throws Exception {
         // Hijack the system output streams
         if (!SystemInputOutputHijacker.isInstalled()) {
             SystemInputOutputHijacker.install();
         }
         
         // Create the shell instance
-        ShellImpl shell = (ShellImpl)container.lookup(Shell.class);
+        ShellImpl shell = (ShellImpl)getContainer().lookup(Shell.class);
         shell.setIo(io != null ? io : new IO());
         shell.setVariables(variables != null ? variables : new Variables());
         shell.setPrompter(prompter);
         shell.setErrorHandler(errorHandler);
-
+        shell.setCompleters(completers);
+        
         // Maybe register default commands
         if (registerCommands) {
-            container.lookup(CommandRegistrationAgent.class).registerCommands();
+            getContainer().lookup(CommandRegistrationAgent.class).registerCommands();
         }
 
         log.debug("Created shell: {}", shell);

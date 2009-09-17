@@ -80,19 +80,16 @@ public class JLineConsole
 
     public void addCompleter(final Completor completer) {
         assert completer != null;
-
         reader.addCompletor(completer);
     }
 
     public void setHistory(final History history) {
         assert history != null;
-
         reader.setHistory(history);
     }
 
     protected String readLine(final String prompt) throws IOException {
         // prompt may be null
-
         return reader.readLine(prompt);
     }
 }

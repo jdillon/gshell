@@ -45,6 +45,14 @@ public class AggregateCompleter
         getCompleters().addAll(completers);
     }
 
+    public AggregateCompleter(final Completor... completers) {
+        assert completers != null;
+
+        for (Completor completer : completers) {
+            getCompleters().add(completer);
+        }
+    }
+
     public Collection<Completor> getCompleters() {
         return completers;
     }

@@ -23,6 +23,7 @@ import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.ShellHolder;
 import org.apache.maven.shell.VariableNames;
 import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.console.completer.AggregateCompleter;
 import org.apache.maven.shell.core.impl.console.ConsolePrompterImpl;
 import org.apache.maven.shell.core.impl.console.ConsoleErrorHandlerImpl;
 import org.apache.maven.shell.ansi.Ansi;
@@ -37,9 +38,12 @@ import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.io.SystemInputOutputHijacker;
 import org.apache.maven.shell.notification.ExitNotification;
 import org.apache.maven.shell.terminal.AutoDetectedTerminal;
+import org.codehaus.plexus.PlexusContainer;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
+
+import jline.Completor;
 
 /**
  * Command-line bootstrap for Apache Maven Shell (<tt>mvnsh</tt>).
@@ -210,12 +214,20 @@ public class Main
         });
 
         try {
+            // Create the container instance, we need it to look up some components to configure the shell
+            PlexusContainer container = ShellBuilder.createContainer();
+            
             // Build a shell instance
             Shell shell = new ShellBuilder()
+                    .setContainer(container)
                     .setIo(io)
                     .setVariables(vars)
                     .setPrompter(new ConsolePrompterImpl(vars))
                     .setErrorHandler(new ConsoleErrorHandlerImpl(io))
+                    .addCompleter(new AggregateCompleter(
+                            container.lookup(Completor.class, "alias-name"),
+                            container.lookup(Completor.class, "commands")
+                    ))
                     .create();
 
             // FIXME: Should hide install/register inside of the framework
