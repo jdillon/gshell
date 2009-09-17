@@ -44,10 +44,7 @@ public class TestLoggerManager
         // Ignore
     }
 
-    /**
-     * Adapts the Plexus {@link org.codehaus.plexus.logging.Logger} interface to SLF4J
-     */
-    public static class LoggerImpl
+    private static class LoggerImpl
         extends AbstractLogger
     {
         private final Logger log;
