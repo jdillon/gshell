@@ -25,7 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Adapts the Plexus logging system to SLF4J.
+ * Test {@link LoggerManager}.
  *
  * @version $Rev$ $Date$
  */
@@ -54,7 +54,6 @@ public class TestLoggerManager
 
         public LoggerImpl(final int threshold, final Logger logger) {
             super(threshold, logger.getName());
-
             this.log = logger;
         }
 
