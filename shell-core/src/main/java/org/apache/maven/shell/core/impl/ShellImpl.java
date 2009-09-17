@@ -211,7 +211,7 @@ public class ShellImpl
 
         new ScriptLoader(this).loadInteractiveScripts();
 
-        // setUp 2 final refs to allow our executor to pass stuff back to us
+        // Setup 2 final refs to allow our executor to pass stuff back to us
         final AtomicReference<ExitNotification> exitNotifHolder = new AtomicReference<ExitNotification>();
         final AtomicReference<Object> lastResultHolder = new AtomicReference<Object>();
 

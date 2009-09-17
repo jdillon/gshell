@@ -192,7 +192,7 @@ public class Main
             exit(ExitNotification.DEFAULT_CODE);
         }
 
-        // setUp a reference for our exit code so our callback thread can tell if we've shutdown normally or not
+        // Setup a reference for our exit code so our callback thread can tell if we've shutdown normally or not
         final AtomicReference<Integer> codeRef = new AtomicReference<Integer>();
         int code = ExitNotification.DEFAULT_CODE;
 

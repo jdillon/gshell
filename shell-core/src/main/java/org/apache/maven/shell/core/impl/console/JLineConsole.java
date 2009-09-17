@@ -45,7 +45,7 @@ public class JLineConsole
 
         assert io != null;
 
-        // TODO: Expose bindings, and/or setUp the default to load from our configuration
+        // TODO: Expose bindings, and/or setup the default to load from our configuration
         /*
         This is what ConsoleReader is doing related to bindings...
 

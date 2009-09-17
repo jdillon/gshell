@@ -119,7 +119,7 @@ public class CommandsCompleter
             }
         }
 
-        // setUp the root completer for the command
+        // Setup the root completer for the command
         Completor root = new ArgumentCompletor(children);
 
         // Track and attach
