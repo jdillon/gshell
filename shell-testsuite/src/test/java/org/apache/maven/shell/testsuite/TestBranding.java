@@ -40,6 +40,16 @@ public class TestBranding
     }
 
     @Override
+    public String getProgramName() {
+        return "testsh";
+    }
+
+    @Override
+    public String getVersion() {
+        return "1.0-TEST";
+    }
+
+    @Override
     public File getShellHomeDir() {
         return baseDir;
     }
