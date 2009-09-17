@@ -96,7 +96,15 @@ public class Variables
     public <T> T get(final String name, final Class<T> type) {
         assert type != null;
 
-        return (T)get(name);
+        Object value = get(name);
+
+        // Support coercion to string by default
+        if (type == String.class) {
+            return (T)String.valueOf(value);
+        }
+        else {
+            return (T)value;
+        }
     }
     
     public Object get(final String name, final Object _default) {

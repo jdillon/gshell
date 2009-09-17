@@ -83,7 +83,7 @@ public class Main
     @Option(name="-e", aliases={"--exception"})
     private void setShowExceptionTraces(final boolean flag) {
         if (flag) {
-            vars.set(MVNSH_SHOW_STACKTRACE, Boolean.TRUE.toString());
+            vars.set(MVNSH_SHOW_STACKTRACE, Boolean.TRUE);
         }
     }
 
