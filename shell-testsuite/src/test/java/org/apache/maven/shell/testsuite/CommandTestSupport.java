@@ -116,7 +116,7 @@ public abstract class CommandTestSupport
         return execute(name);
     }
 
-    protected Object execute(String... args) throws Exception {
+    protected Object execute(final String... args) throws Exception {
         return execute(StringUtils.join(args, " "));
     }
 

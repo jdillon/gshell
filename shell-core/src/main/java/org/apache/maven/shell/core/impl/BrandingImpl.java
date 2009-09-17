@@ -21,6 +21,8 @@ package org.apache.maven.shell.core.impl;
 
 import org.apache.maven.shell.Branding;
 import org.apache.maven.shell.VariableNames;
+import org.apache.maven.shell.i18n.MessageSource;
+import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
 import org.codehaus.plexus.util.StringUtils;
 
 import java.io.File;
@@ -37,6 +39,8 @@ import java.io.PrintWriter;
 public class BrandingImpl
     implements Branding, VariableNames
 {
+    private final MessageSource messages = new ResourceBundleMessageSource(getClass());
+
     public String getDisplayName() {
         return "@|bold,red Apache Maven| @|bold Shell|";
     }
@@ -45,9 +49,8 @@ public class BrandingImpl
         return System.getProperty(SHELL_PROGRAM);
     }
 
-    @Override
     public String getScriptExtension() {
-        return "mvnsh";
+        return getProgramName();
     }
 
     public String getVersion() {
@@ -74,7 +77,7 @@ public class BrandingImpl
     }
 
     public String getGoodbyeMessage() {
-        return "Goodbye!"; // TODO: i18n
+        return messages.format("goodbye");
     }
 
     public String getPrompt() {
