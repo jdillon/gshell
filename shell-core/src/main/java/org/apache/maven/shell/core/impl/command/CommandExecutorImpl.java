@@ -114,11 +114,11 @@ public class CommandExecutorImpl
 
         Command command = resolveCommand(name);
 
+        MDC.put(Command.class.getName(), name);
+
         final IO io = shell.getIo();
 
         SystemInputOutputHijacker.register(io.streams);
-        
-        MDC.put(Command.class.getName(), name);
 
         Object result = null;
         try {
@@ -173,6 +173,10 @@ public class CommandExecutorImpl
 
         return result;
     }
+
+    //
+    // Command resolution
+    //
 
     private Command resolveCommand(final String name) throws CommandException {
         assert name != null;
@@ -246,7 +250,7 @@ public class CommandExecutorImpl
             // Need to append any more arguments in the context
             Object[] args = context.getArguments();
             if (args.length > 0) {
-                alias = target + ' ' + StringUtils.join(args, " ");
+                alias = String.format("%s %s", target, StringUtils.join(args, " "));
             }
 
             log.debug("Executing alias ({}) -> {}", name, alias);
