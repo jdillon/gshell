@@ -21,7 +21,6 @@ package org.apache.maven.shell.core.impl.command;
 
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.Variables;
-import org.apache.maven.shell.i18n.PrefixingMessageSource;
 import org.apache.maven.shell.cli.Processor;
 import org.apache.maven.shell.command.Arguments;
 import org.apache.maven.shell.command.Command;
@@ -33,6 +32,7 @@ import org.apache.maven.shell.command.CommandLineParser;
 import org.apache.maven.shell.command.CommandLineParser.CommandLine;
 import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.command.OpaqueArguments;
+import org.apache.maven.shell.i18n.PrefixingMessageSource;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.io.SystemInputOutputHijacker;
 import org.apache.maven.shell.notification.ErrorNotification;
@@ -119,8 +119,14 @@ public class CommandExecutorImpl
 
         final IO io = shell.getIo();
 
-        SystemInputOutputHijacker.register(io.streams);
-
+        // Hijack the system output streams
+        if (!SystemInputOutputHijacker.isInstalled()) {
+            SystemInputOutputHijacker.install(io.streams);
+        }
+        else {
+            SystemInputOutputHijacker.register(io.streams);
+        }
+        
         Object result = null;
         try {
             boolean execute = true;

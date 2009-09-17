@@ -19,32 +19,30 @@
 
 package org.apache.maven.shell.core;
 
+import jline.Completor;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.ShellHolder;
 import org.apache.maven.shell.VariableNames;
 import org.apache.maven.shell.Variables;
-import org.apache.maven.shell.console.completer.AggregateCompleter;
-import org.apache.maven.shell.core.impl.console.ConsolePrompterImpl;
-import org.apache.maven.shell.core.impl.console.ConsoleErrorHandlerImpl;
 import org.apache.maven.shell.ansi.Ansi;
 import org.apache.maven.shell.cli.Argument;
 import org.apache.maven.shell.cli.Option;
 import org.apache.maven.shell.cli.Printer;
-import org.apache.maven.shell.cli.Processor;
 import org.apache.maven.shell.cli.ProcessingException;
+import org.apache.maven.shell.cli.Processor;
+import org.apache.maven.shell.console.completer.AggregateCompleter;
+import org.apache.maven.shell.core.impl.console.ConsoleErrorHandlerImpl;
+import org.apache.maven.shell.core.impl.console.ConsolePrompterImpl;
 import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
 import org.apache.maven.shell.io.AnsiAwareIO;
 import org.apache.maven.shell.io.IO;
-import org.apache.maven.shell.io.SystemInputOutputHijacker;
 import org.apache.maven.shell.notification.ExitNotification;
 import org.apache.maven.shell.terminal.AutoDetectedTerminal;
 import org.codehaus.plexus.PlexusContainer;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
-
-import jline.Completor;
 
 /**
  * Command-line bootstrap for Apache Maven Shell (<tt>mvnsh</tt>).
@@ -240,9 +238,6 @@ public class Main
                             container.lookup(Completor.class, "commands")
                     ))
                     .create();
-
-            // FIXME: Should hide install/register inside of the framework
-            SystemInputOutputHijacker.register(io.streams);
 
             // FIXME: Need to find the right location to stuff this puppy inside of the framework
             ShellHolder.set(shell);

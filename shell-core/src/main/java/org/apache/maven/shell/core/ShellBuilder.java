@@ -19,14 +19,14 @@
 
 package org.apache.maven.shell.core;
 
+import jline.Completor;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.command.CommandExecutor;
 import org.apache.maven.shell.console.Console;
-import org.apache.maven.shell.core.impl.ShellImpl;
 import org.apache.maven.shell.core.impl.CommandRegistrationAgent;
+import org.apache.maven.shell.core.impl.ShellImpl;
 import org.apache.maven.shell.io.IO;
-import org.apache.maven.shell.io.SystemInputOutputHijacker;
 import org.codehaus.plexus.ContainerConfiguration;
 import org.codehaus.plexus.DefaultContainerConfiguration;
 import org.codehaus.plexus.DefaultPlexusContainer;
@@ -34,10 +34,9 @@ import org.codehaus.plexus.PlexusContainer;
 import org.codehaus.plexus.PlexusContainerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jline.Completor;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Builds {@link Shell} instances.
@@ -112,11 +111,6 @@ public class ShellBuilder
     }
 
     public Shell create() throws Exception {
-        // Hijack the system output streams
-        if (!SystemInputOutputHijacker.isInstalled()) {
-            SystemInputOutputHijacker.install();
-        }
-
         // Create the shell instance
         CommandExecutor executor = container.lookup(CommandExecutor.class);
         ShellImpl shell = new ShellImpl(executor, io, variables);

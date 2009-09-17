@@ -50,7 +50,9 @@ public class SystemInputOutputHijackerTest
         buff = new ByteArrayOutputStream();
         out = new PrintStream(buff);
 
-        assertFalse(SystemInputOutputHijacker.isInstalled());
+        if (SystemInputOutputHijacker.isInstalled()) {
+            SystemInputOutputHijacker.uninstall();
+        }
     }
 
     @After
@@ -58,7 +60,9 @@ public class SystemInputOutputHijackerTest
         buff = null;
         out = null;
 
-        assertFalse(SystemInputOutputHijacker.isInstalled());
+        if (SystemInputOutputHijacker.isInstalled()) {
+            SystemInputOutputHijacker.uninstall();
+        }
     }
 
     private void installOut() throws Exception {

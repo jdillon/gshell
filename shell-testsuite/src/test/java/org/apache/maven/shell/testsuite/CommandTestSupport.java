@@ -80,7 +80,7 @@ public abstract class CommandTestSupport
                 .setContainer(plexus.getContainer())
                 .create();
 
-        SystemInputOutputHijacker.register(io.streams);
+        // SystemInputOutputHijacker.register(io.streams);
 
         // For simplicity of output verification disable ANSI
         Ansi.setEnabled(false);
@@ -96,7 +96,7 @@ public abstract class CommandTestSupport
         aliasRegistry = null;
         vars = null;
 
-        SystemInputOutputHijacker.uninstall();
+        // SystemInputOutputHijacker.uninstall();
 
         io = null;
         shell.close();
