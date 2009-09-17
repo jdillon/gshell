@@ -46,7 +46,7 @@ public class StringsCompleter
         getStrings().addAll(strings);
     }
 
-    public StringsCompleter(final String[] strings) {
+    public StringsCompleter(final String... strings) {
         this(Arrays.asList(strings));
     }
 

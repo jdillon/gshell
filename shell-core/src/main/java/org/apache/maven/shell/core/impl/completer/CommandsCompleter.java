@@ -23,7 +23,7 @@ import jline.ArgumentCompletor;
 import jline.Completor;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.console.completer.AggregateCompleter;
-import org.apache.maven.shell.console.completer.NullCompleter;
+import org.apache.maven.shell.console.completer.TerminalCompleter;
 import org.apache.maven.shell.console.completer.StringsCompleter;
 import org.apache.maven.shell.core.impl.registry.CommandRegisteredEvent;
 import org.apache.maven.shell.core.impl.registry.CommandRemovedEvent;
@@ -112,11 +112,11 @@ public class CommandsCompleter
         if (completers != null) {
             for (Completor completer : completers) {
                 log.debug("Adding completer: {}", completer);
-                children.add(completer != null ? completer : NullCompleter.INSTANCE);
+                children.add(completer != null ? completer : TerminalCompleter.INSTANCE);
             }
         }
         else {
-            children.add(NullCompleter.INSTANCE);
+            children.add(TerminalCompleter.INSTANCE);
         }
 
         // setUp the root completer for the command

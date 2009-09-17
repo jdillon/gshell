@@ -19,16 +19,22 @@
 
 package org.apache.maven.shell.console.completer;
 
-import jline.NullCompletor;
+import jline.Completor;
+
+import java.util.List;
 
 /**
- * Null or terminal completer.
+ * Terminal completer.
  *
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public final class NullCompleter
-    extends NullCompletor
+public final class TerminalCompleter
+    implements Completor
 {
-    public static final NullCompleter INSTANCE = new NullCompleter();
+    public static final TerminalCompleter INSTANCE = new TerminalCompleter();
+
+    public int complete(final String buffer, final int cursor, final List candidates) {
+        return -1;
+    }
 }
