@@ -70,11 +70,11 @@ public class AutoDetectedTerminal
         return delegate.isANSISupported();
     }
 
-    public int readCharacter(InputStream in) throws IOException {
+    public int readCharacter(final InputStream in) throws IOException {
         return delegate.readCharacter(in);
     }
 
-    public int readVirtualKey(InputStream in) throws IOException {
+    public int readVirtualKey(final InputStream in) throws IOException {
         return delegate.readVirtualKey(in);
     }
 
@@ -98,11 +98,11 @@ public class AutoDetectedTerminal
         return delegate.getEcho();
     }
 
-    public void beforeReadLine(ConsoleReader reader, String prompt, Character mask) {
+    public void beforeReadLine(final ConsoleReader reader, final String prompt, final Character mask) {
         delegate.beforeReadLine(reader, prompt, mask);
     }
 
-    public void afterReadLine(ConsoleReader reader, String prompt, Character mask) {
+    public void afterReadLine(final ConsoleReader reader, final String prompt, final Character mask) {
         delegate.afterReadLine(reader, prompt, mask);
     }
 
