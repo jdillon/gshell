@@ -25,7 +25,6 @@ import jline.ConsoleReader;
 import jline.History;
 import org.apache.maven.shell.console.Console;
 import org.apache.maven.shell.io.IO;
-import org.apache.maven.shell.terminal.AutoDetectedTerminal;
 import org.apache.maven.shell.terminal.Constants;
 
 import java.io.IOException;

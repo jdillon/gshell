@@ -23,7 +23,11 @@ import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.registry.NoSuchAliasException;
 import org.apache.maven.shell.testsupport.PlexusTestSupport;
 import org.junit.After;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 

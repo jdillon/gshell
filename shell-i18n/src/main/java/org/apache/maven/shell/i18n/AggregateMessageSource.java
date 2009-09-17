@@ -19,9 +19,9 @@
 
 package org.apache.maven.shell.i18n;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * A message source which aggregates messages sources in order.

@@ -19,9 +19,9 @@
 
 package org.apache.maven.shell.core.impl;
 
+import org.apache.maven.shell.Branding;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.VariableNames;
-import org.apache.maven.shell.Branding;
 import org.apache.maven.shell.io.Closer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

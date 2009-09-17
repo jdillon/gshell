@@ -22,10 +22,10 @@ package org.apache.maven.shell.console.completer;
 import jline.Completor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Arrays;
 
 /**
  * Completer which contains multipule completers and aggregates them together.

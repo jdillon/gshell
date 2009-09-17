@@ -22,8 +22,8 @@ package org.apache.maven.shell.cli;
 import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 
-import java.io.StringWriter;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.List;
 
 /**

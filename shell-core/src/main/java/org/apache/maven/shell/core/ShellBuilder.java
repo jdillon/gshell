@@ -20,9 +20,9 @@
 package org.apache.maven.shell.core;
 
 import jline.Completor;
+import org.apache.maven.shell.Branding;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.Variables;
-import org.apache.maven.shell.Branding;
 import org.apache.maven.shell.command.CommandExecutor;
 import org.apache.maven.shell.console.Console;
 import org.apache.maven.shell.core.impl.CommandRegistrationAgent;
