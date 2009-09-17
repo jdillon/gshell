@@ -300,7 +300,7 @@ public class ShellImpl
                         file = new File(fileName);
                     }
                     if (!file.exists() || file.isFile()) {
-                        file = new File(System.getProperty("user.home", JLINEBINDINGS_PROPERTIES));
+                        file = new File(branding.getUserHomeDir(), JLINEBINDINGS_PROPERTIES);
                     }
                 }
                 catch (Exception e) {
