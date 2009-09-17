@@ -36,6 +36,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
+import org.codehaus.plexus.util.StringUtils;
 
 /**
  * Support for testing {@link Command} instances.
@@ -122,9 +123,18 @@ public abstract class CommandTestSupport
         return execute(name);
     }
 
+    protected Object execute(String... args) throws Exception {
+        return execute(StringUtils.join(args, " "));
+    }
+
     protected Object executeWithArgs(final String args) throws Exception {
         assertNotNull(args);
-        return execute(name + " " + args);
+        return execute(name, args);
+    }
+
+    protected Object executeWithArgs(final String... args) throws Exception {
+        assertNotNull(args);
+        return execute(name, StringUtils.join(args, " "));
     }
 
     //
