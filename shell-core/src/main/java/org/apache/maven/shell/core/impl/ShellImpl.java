@@ -308,7 +308,7 @@ public class ShellImpl
             }
         }
 
-        InputStream bindings = null;
+        InputStream bindings;
         
         if (file.exists() && file.isFile() && file.canRead()) {
             log.debug("Using bindings from file: {}", file);
