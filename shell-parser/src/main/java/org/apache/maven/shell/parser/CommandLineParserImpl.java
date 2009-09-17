@@ -62,8 +62,8 @@ public class CommandLineParserImpl
             Closer.close(reader);
         }
 
-        // If debug is enabled, the log the parse tree
-        if (log.isDebugEnabled()) {
+        // If trace is enabled, the log the parse tree
+        if (log.isTraceEnabled()) {
             root.jjtAccept(new LoggingVisitor(log), null);
         }
 

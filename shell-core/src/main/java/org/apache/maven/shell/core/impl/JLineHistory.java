@@ -48,7 +48,8 @@ public class JLineHistory
             public void run() {
                 try {
                     delegate.flushBuffer();
-                } catch (IOException e) {
+                }
+                catch (IOException e) {
                     log.error("Failed to flush history buffer", e);
                 }
             }
@@ -91,6 +92,8 @@ public class JLineHistory
             log.warn("History storage file not configured; nothing to purge");
         }
         else {
+            log.debug("Purging history file: {}", storeFile);
+
             delegate.flushBuffer();
 
             File originalFile = storeFile;
