@@ -23,6 +23,7 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 
 import java.io.StringWriter;
+import java.io.PrintWriter;
 import java.util.List;
 
 /**
@@ -51,7 +52,7 @@ public class PrinterTest
         Printer printer = new Printer(clp);
 
         StringWriter out = new StringWriter();
-        printer.printUsage(out);
+        printer.printUsage(new PrintWriter(out));
 
         String tmp = out.getBuffer().toString();
         System.out.println(tmp);

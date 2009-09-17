@@ -26,7 +26,6 @@ import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
 import org.apache.maven.shell.i18n.ResourceNotFoundException;
 
 import java.io.PrintWriter;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -153,10 +152,8 @@ public class Printer
         return getNameAndToken(handler).length();
     }
 
-    public void printUsage(final Writer writer, final String name) {
-        assert writer != null;
-
-        PrintWriter out = new PrintWriter(writer);
+    public void printUsage(final PrintWriter out, final String name) {
+        assert out != null;
 
         List<Handler> argumentHandlers = new ArrayList<Handler>();
         argumentHandlers.addAll(processor.getArgumentHandlers());
@@ -221,7 +218,7 @@ public class Printer
         out.flush();
     }
 
-    public void printUsage(final Writer writer) {
+    public void printUsage(final PrintWriter writer) {
         printUsage(writer, null);
     }
 
