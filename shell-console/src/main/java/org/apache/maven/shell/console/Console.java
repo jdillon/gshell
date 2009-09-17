@@ -59,7 +59,6 @@ public abstract class Console
 
     public Console(final Executor executor) {
         assert executor != null;
-
         this.executor = executor;
     }
 
@@ -154,19 +153,7 @@ public abstract class Console
 
         // Log the line as HEX if trace is enabled
         if (log.isTraceEnabled()) {
-            StringBuilder idx = new StringBuilder();
-            StringBuilder hex = new StringBuilder();
-
-            byte[] bytes = line.getBytes();
-            for (byte b : bytes) {
-                String h = Integer.toHexString(b);
-
-                hex.append('x').append(h).append(' ');
-                idx.append(' ').append((char)b).append("  ");
-            }
-
-            log.trace("HEX: {}", hex);
-            log.trace("     {}", idx);
+            traceLine(line);
         }
 
         // Stop on null (maybe, else ignore)
@@ -194,6 +181,24 @@ public abstract class Console
         }
 
         return true;
+    }
+
+    protected void traceLine(final String line) {
+        assert line != null;
+        
+        StringBuilder idx = new StringBuilder();
+        StringBuilder hex = new StringBuilder();
+
+        byte[] bytes = line.getBytes();
+        for (byte b : bytes) {
+            String h = Integer.toHexString(b);
+
+            hex.append('x').append(h).append(' ');
+            idx.append(' ').append((char)b).append("  ");
+        }
+
+        log.trace("HEX: {}", hex);
+        log.trace("     {}", idx);
     }
 
     protected abstract String readLine(String prompt) throws IOException;
