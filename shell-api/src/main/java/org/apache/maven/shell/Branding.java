@@ -20,7 +20,6 @@
 package org.apache.maven.shell;
 
 import java.io.File;
-import java.io.IOException;
 
 /**
  * Defines the basic elements for branding a shell.
@@ -51,23 +50,11 @@ public interface Branding
 
     String getHistoryFileName();
 
-    // shell home, where the lib/ & bin/ are
     File getShellHomeDir();
 
-    // shell shared dir, ~/<shell_home>/etc
     File getShellContextDir();
 
-    // user home, ~/
     File getUserHomeDir();
 
-    // user state, ~/.foo
     File getUserContextDir();
-
-    /*
-    String getPropertyName(String name);
-
-    String getProperty(String name);
-
-    String getProperty(String name, String defaultValue);
-    */
 }
