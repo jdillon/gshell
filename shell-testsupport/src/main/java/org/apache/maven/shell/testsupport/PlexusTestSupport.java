@@ -47,7 +47,7 @@ public class PlexusTestSupport
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private PlexusContainer container;
+    private DefaultPlexusContainer container;
 
     private static String basedir;
 
@@ -69,7 +69,7 @@ public class PlexusTestSupport
         return owner;
     }
 
-    protected void setupContainer() {
+    protected void setupContainer() throws PlexusContainerException {
         DefaultContext context = new DefaultContext();
         context.put("basedir", getBasedir());
         customizeContext(context);
@@ -86,28 +86,23 @@ public class PlexusTestSupport
             context.put("plexus.home", dir.getAbsolutePath());
         }
 
-        String config = getCustomConfigurationName();
+        String configName = getCustomConfigurationName();
         @SuppressWarnings({ "unchecked" })
-        ContainerConfiguration containerConfiguration = new DefaultContainerConfiguration()
+        ContainerConfiguration config = new DefaultContainerConfiguration()
                 .setName("test")
                 .setContext(context.getContextData());
 
-        if (config != null) {
-            containerConfiguration.setContainerConfiguration(config);
+        if (configName != null) {
+            config.setContainerConfiguration(configName);
         }
         else {
             String resource = getConfigurationName(null);
-            containerConfiguration.setContainerConfiguration(resource);
+            config.setContainerConfiguration(resource);
         }
 
-        customizeContainerConfiguration(containerConfiguration);
+        customizeContainerConfiguration(config);
 
-        try {
-            container = new DefaultPlexusContainer(containerConfiguration);
-        }
-        catch (PlexusContainerException e) {
-            throw new RuntimeException("Failed to create plexus container", e);
-        }
+        container = new DefaultPlexusContainer(config);
     }
 
     @SuppressWarnings({ "UnusedDeclaration" })
@@ -152,7 +147,12 @@ public class PlexusTestSupport
 
     public PlexusContainer getContainer() {
         if (container == null) {
-            setupContainer();
+            try {
+                setupContainer();
+            }
+            catch (PlexusContainerException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         return container;

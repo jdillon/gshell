@@ -79,7 +79,8 @@ public class ShellBuilder
 
     public static PlexusContainer createContainer() throws PlexusContainerException {
         ContainerConfiguration config = new DefaultContainerConfiguration();
-        return new DefaultPlexusContainer(config);
+        DefaultPlexusContainer c = new DefaultPlexusContainer(config);
+        return c;
     }
 
     public ShellBuilder setBranding(final Branding branding) {
