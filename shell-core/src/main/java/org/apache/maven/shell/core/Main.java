@@ -31,6 +31,7 @@ import org.apache.maven.shell.cli.Argument;
 import org.apache.maven.shell.cli.Option;
 import org.apache.maven.shell.cli.Printer;
 import org.apache.maven.shell.cli.Processor;
+import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
 import org.apache.maven.shell.io.AnsiAwareIO;
@@ -81,11 +82,7 @@ public class Main
     private boolean version;
 
     @Option(name="-e", aliases={"--errors"})
-    private void setShowExceptionTraces(final boolean flag) {
-        if (flag) {
-            vars.set(MVNSH_SHOW_STACKTRACE, Boolean.TRUE);
-        }
-    }
+    private boolean showErrorTraces = false;
 
     private void setConsoleLogLevel(final String level) {
         //
@@ -171,7 +168,6 @@ public class Main
         assert args != null;
 
         // Setup environment defaults
-        setShowExceptionTraces(false);
         setTerminalType(AutoDetectedTerminal.AUTO);
         setConsoleLogLevel(WARN);
 
@@ -179,7 +175,20 @@ public class Main
         Processor clp = new Processor(this);
         clp.setMessages(messages);
         clp.setStopAtNonOption(true);
-        clp.process(args);
+
+        try {
+            clp.process(args);
+        }
+        catch (ProcessingException e) {
+            if (showErrorTraces) {
+                e.printStackTrace(io.err);
+            }
+            else {
+                io.err.println(e);
+            }
+            io.flush();
+            System.exit(ExitNotification.FATAL_CODE);
+        }
 
         if (help) {
             Printer printer = new Printer(clp);
@@ -216,7 +225,9 @@ public class Main
         try {
             // Create the container instance, we need it to look up some components to configure the shell
             PlexusContainer container = ShellBuilder.createContainer();
-            
+
+            vars.set(MVNSH_SHOW_STACKTRACE, showErrorTraces);
+
             // Build a shell instance
             Shell shell = new ShellBuilder()
                     .setContainer(container)
