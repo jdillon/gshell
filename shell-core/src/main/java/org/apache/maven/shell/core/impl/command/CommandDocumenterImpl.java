@@ -28,6 +28,8 @@ import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandDocumenter;
 import org.apache.maven.shell.i18n.AggregateMessageSource;
 import org.apache.maven.shell.i18n.PrefixingMessageSource;
+import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
+import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.io.PrefixingOutputStream;
 import org.codehaus.plexus.component.annotations.Component;
@@ -61,6 +63,8 @@ public class CommandDocumenterImpl
     private static final String COMMAND_DOT = "command.";
 
     private static final String COMMAND = "command";
+
+    private final MessageSource messages = new ResourceBundleMessageSource(getClass());
 
     private String interpolate(final Command command, final String text) {
         assert command != null;
@@ -142,21 +146,21 @@ public class CommandDocumenterImpl
         //       add more println()s to compensate for now
         //
 
-        io.out.println("@|bold NAME|"); // TODO: i18n
+        io.out.format("@|bold %s|", messages.getMessage("section.name")).println();
         io.out.println();
         out.println(command.getName());
         io.out.println();
 
         String text;
 
-        io.out.println("@|bold DESCRIPTION|"); // TODO: i18n
+        io.out.format("@|bold %s|", messages.getMessage("section.description")).println();
         text = getDescription(command);
         text = renderer.render(text);
         out.println();
         out.println(text);
         io.out.println();
-        
-        io.out.println("@|bold MANUAL|"); // TODO: i18n
+
+        io.out.format("@|bold %s|", messages.getMessage("section.manual")).println();
         text = getManual(command);
         text = renderer.render(text);
         out.println();
