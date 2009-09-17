@@ -107,10 +107,10 @@ public class Variables
         }
     }
     
-    public Object get(final String name, final Object _default) {
+    public Object get(final String name, final Object defaultValue) {
         Object value = get(name);
         if (value == null) {
-            return _default;
+            return defaultValue;
         }
 
         return value;
