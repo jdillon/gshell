@@ -19,6 +19,10 @@
 
 package org.apache.maven.shell.i18n;
 
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * A message source which aggregates messages sources in order.
  *
@@ -28,13 +32,19 @@ package org.apache.maven.shell.i18n;
 public class AggregateMessageSource
     implements MessageSource
 {
-    private final MessageSource[] sources;
+    private final List<MessageSource> sources = new ArrayList<MessageSource>();
+
+    public AggregateMessageSource(final List<MessageSource> sources) {
+        assert sources != null;
+        this.sources.addAll(sources);
+    }
 
     public AggregateMessageSource(final MessageSource... sources) {
-        assert sources != null;
-        assert sources.length > 1;
+        this(Arrays.asList(sources));
+    }
 
-        this.sources = sources;
+    public List<MessageSource> getSources() {
+        return sources;
     }
 
     public String getMessage(final String code) {

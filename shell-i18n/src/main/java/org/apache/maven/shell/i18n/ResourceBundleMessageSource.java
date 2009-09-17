@@ -39,7 +39,7 @@ public class ResourceBundleMessageSource
 
     private final Locale locale;
 
-    public ResourceBundleMessageSource(final Class[] types) {
+    public ResourceBundleMessageSource(final Class... types) {
         assert types != null;
 
         locale = Locale.getDefault();
@@ -49,13 +49,8 @@ public class ResourceBundleMessageSource
         }
     }
 
-    public ResourceBundleMessageSource(final Class type) {
-        this(new Class[] { type });
-    }
-
     private void loadBundle(final Class type) {
         assert type != null;
-
         ResourceBundle bundle = ResourceBundle.getBundle(type.getName(), locale, type.getClassLoader());
         bundles.add(bundle);
     }
