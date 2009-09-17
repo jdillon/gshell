@@ -231,6 +231,6 @@ public class PlexusTestSupport
 
     public static String getTestConfiguration(Class<?> clazz) {
         String s = clazz.getName().replace('.', '/');
-        return s.substring(0, s.indexOf("$")) + ".xml";
+        return s.substring(0, s.indexOf('$')) + ".xml";
     }
 }

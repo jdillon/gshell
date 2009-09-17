@@ -117,17 +117,17 @@ public class ListDirectoryCommand
         List<File> dirs = new LinkedList<File>();
 
         for (File file : files) {
-            String fileName = file.getName();
+            StringBuilder fileName = new StringBuilder(file.getName());
 
             if (hasChildren(file)) {
-                fileName += File.separator;
+                fileName.append(File.separator);
 
                 if (recursive) {
                     dirs.add(file);
                 }
             }
 
-            names.add(fileName);
+            names.add(fileName.toString());
         }
 
         if (longList) {

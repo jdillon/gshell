@@ -72,8 +72,7 @@ public class Slf4jLoggerManager
         }
 
         public org.codehaus.plexus.logging.Logger getChildLogger(final String name) {
-            String childName = log.getName() + "." + name;
-
+            String childName = String.format("%s.%s", log.getName(), name);
             return new LoggerImpl(getThreshold(), LoggerFactory.getLogger(childName));
         }
 

@@ -86,11 +86,11 @@ public class HelpCommand
                 return Result.SUCCESS;
             }
             else if (aliasRegistry.containsAlias(commandName)) {
-                io.out.println(getMessages().format("info.explain-alias", "@|bold " + commandName + "|", commandName));
+                io.out.println(getMessages().format("info.explain-alias", "@|bold " + commandName + '|', commandName));
                 return Result.SUCCESS;
             }
             else {
-                io.out.println(getMessages().format("info.command-not-found", "@|bold " + commandName + "|", "help"));
+                io.out.println(getMessages().format("info.command-not-found", "@|bold " + commandName + '|', "help"));
                 return Result.FAILURE;
             }
         }
@@ -112,14 +112,15 @@ public class HelpCommand
             int len = command.getName().length();
             maxNameLen = Math.max(len, maxNameLen);
         }
+        String nameFormat = "%-" + maxNameLen + 's';
 
         IO io = context.getIo();
         io.out.println(getMessages().format("info.available-commands"));
         for (Command command : commands) {
-            String formattedName = String.format("%-" + maxNameLen + "s", command.getName());
+            String formattedName = String.format(nameFormat, command.getName());
             String desc = commandDocumeter.getDescription(command);
 
-            io.out.print("  @|bold " + formattedName + "|");
+            io.out.format("  @|bold %s|", formattedName);
             if (desc != null) {
                 io.out.print("  ");
                 io.out.println(desc);

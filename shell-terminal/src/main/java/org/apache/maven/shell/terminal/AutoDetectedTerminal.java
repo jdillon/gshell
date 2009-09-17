@@ -21,6 +21,7 @@ package org.apache.maven.shell.terminal;
 
 import jline.ConsoleReader;
 import jline.Terminal;
+import org.codehaus.plexus.util.Os;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,12 +35,26 @@ import java.io.InputStream;
 public class AutoDetectedTerminal
     extends jline.Terminal
 {
+    public static final String JLINE_TERMINAL = "jline.terminal";
+
+    public static final String AUTO = "auto";
+
+    public static final String UNIX = "unix";
+
+    public static final String WIN = "win";
+
+    public static final String WINDOWS = "windows";
+
+    public static final String OFF = "off";
+
+    public static final String NONE = "none";
+
+    public static final String FALSE = Boolean.FALSE.toString();
+
     private final Terminal delegate;
 
     public AutoDetectedTerminal() {
-        String os = System.getProperty("os.name").toLowerCase();
-
-        if (os.indexOf("windows") != -1) {
+        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
             delegate = new WindowsTerminal();
         }
         else {
@@ -105,5 +120,30 @@ public class AutoDetectedTerminal
 
     public InputStream getDefaultBindings() {
         return delegate.getDefaultBindings();
+    }
+
+    public static String configure(String type) {
+        if (type == null) {
+            type = AUTO;
+        }
+
+        type = type.toLowerCase();
+
+        if (AUTO.equals(type)) {
+            type = AutoDetectedTerminal.class.getName();
+        }
+        else if (UNIX.equals(type)) {
+            type = UnixTerminal.class.getName();
+        }
+        else if (WIN.equals(type) || WINDOWS.equals(type)) {
+            type = WindowsTerminal.class.getName();
+        }
+        else if (FALSE.equals(type) || OFF.equals(type) || NONE.equals(type)) {
+            type = UnsupportedTerminal.class.getName();
+        }
+
+        System.setProperty(JLINE_TERMINAL, type);
+
+        return type;
     }
 }

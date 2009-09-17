@@ -53,7 +53,7 @@ public class ExpressionEvaluator
     }
     
     public static String evaluate(final String input, final Properties props) throws IllegalArgumentException {
-        StringBuffer sbuf = new StringBuffer();
+        StringBuilder buff = new StringBuilder();
 
         int i = 0;
         int j, k;
@@ -66,12 +66,12 @@ public class ExpressionEvaluator
                     return input;
                 }
                 else { // add the tail string which contains no variables and return the result.
-                    sbuf.append(input.substring(i, input.length()));
-                    return sbuf.toString();
+                    buff.append(input.substring(i, input.length()));
+                    return buff.toString();
                 }
             }
             else {
-                sbuf.append(input.substring(i, j));
+                buff.append(input.substring(i, j));
                 k = input.indexOf(DELIM_STOP, j);
 
                 if (k == -1) {
@@ -96,7 +96,7 @@ public class ExpressionEvaluator
                         // x1=p1
                         // x2=${x1}
                         String recursiveReplacement = evaluate(replacement, props);
-                        sbuf.append(recursiveReplacement);
+                        buff.append(recursiveReplacement);
                     }
 
                     i = k + DELIM_STOP_LEN;

@@ -22,6 +22,7 @@ package org.apache.maven.shell.ansi;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.util.Locale;
 
 /**
  * Print writer implementation which supports automatic ANSI color rendering
@@ -57,5 +58,21 @@ public class AnsiRenderWriter
         else {
             super.write(s);
         }
+    }
+
+    //
+    // Need to prevent partial output from being written while formatting or we will get rendering exceptons
+    //
+    
+    @Override
+    public PrintWriter format(final String format, final Object... args) {
+        print(String.format(format, args));
+        return this;
+    }
+
+    @Override
+    public PrintWriter format(final Locale l, final String format, final Object... args) {
+        print(String.format(l, format, args));
+        return this;
     }
 }

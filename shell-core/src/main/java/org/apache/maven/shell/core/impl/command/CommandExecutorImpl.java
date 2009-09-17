@@ -246,7 +246,7 @@ public class CommandExecutorImpl
             // Need to append any more arguments in the context
             Object[] args = context.getArguments();
             if (args.length > 0) {
-                alias = target + " " + StringUtils.join(args, " ");
+                alias = target + ' ' + StringUtils.join(args, " ");
             }
 
             log.debug("Executing alias ({}) -> {}", name, alias);

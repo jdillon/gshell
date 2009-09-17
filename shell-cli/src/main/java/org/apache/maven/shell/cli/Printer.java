@@ -25,6 +25,8 @@ import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
 import org.apache.maven.shell.i18n.ResourceNotFoundException;
 import org.apache.maven.shell.i18n.AggregateMessageSource;
 
+import org.codehaus.plexus.util.StringUtils;
+
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -102,10 +104,10 @@ public class Printer
             // If there is no code, then generate one
             if (code == null) {
                 if (descriptor instanceof ArgumentDescriptor) {
-                    code = "argument." + descriptor.getId();
+                    code = String.format("argument.%s", descriptor.getId());
                 }
                 else {
-                    code = "option." + descriptor.getId();
+                    code = String.format("option.%s", descriptor.getId());
                 }
             }
 
@@ -134,10 +136,10 @@ public class Printer
             // If there is no coded, then generate one
             if (code == null) {
                 if (descriptor instanceof ArgumentDescriptor) {
-                    code = "argument." + descriptor.getId() + ".token";
+                    code = String.format("argument.%s.token", descriptor.getId());
                 }
                 else {
-                    code = "option." + descriptor.getId() + ".token";
+                    code = String.format("option.%s.token", descriptor.getId());
                 }
             }
 

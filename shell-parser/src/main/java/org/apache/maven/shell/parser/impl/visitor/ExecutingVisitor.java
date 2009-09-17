@@ -143,7 +143,7 @@ public class ExecutingVisitor
         assert value != null;
 
         // Skip interpolation if there is no start token
-        if (value.indexOf("${" )== -1) {
+        if (!value.contains(StringSearchInterpolator.DEFAULT_START_EXPR)) {
             return value;
         }
 
@@ -179,13 +179,14 @@ public class ExecutingVisitor
 
     private static class ExpressionState
     {
-        private final StringBuilder buff = new StringBuilder();
+        private final StringBuilder buff;
 
         private final List<Object> args;
 
         public ExpressionState(final ASTExpression root) {
             assert root != null;
-            args = new ArrayList<Object>(root.jjtGetNumChildren());
+            this.args = new ArrayList<Object>(root.jjtGetNumChildren());
+            this.buff = new StringBuilder();
         }
 
         public String append(final String value) {

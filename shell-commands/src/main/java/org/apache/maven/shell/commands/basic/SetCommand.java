@@ -130,11 +130,7 @@ public class SetCommand
                     io.streams.out.print(name);
                     io.streams.out.print("='");
                     io.streams.out.print(value);
-                    io.streams.out.print("'");
-
-                    // Value is always a string, so no need to add muck here for --verbose
-
-                    io.streams.out.println();
+                    io.streams.out.println("'");
                 }
                 break;
             }

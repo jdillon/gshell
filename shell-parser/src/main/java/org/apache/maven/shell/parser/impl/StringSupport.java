@@ -58,7 +58,7 @@ public abstract class StringSupport
     }
 
     public String toString() {
-        return super.toString() + "( " + getToken() + " )";
+        return String.format("%s (%s)", super.toString(), getToken());
     }
 
     /**

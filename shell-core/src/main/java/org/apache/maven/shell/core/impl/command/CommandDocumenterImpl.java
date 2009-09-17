@@ -62,7 +62,7 @@ public class CommandDocumenterImpl
         assert command != null;
         assert text != null;
 
-        if (text.indexOf("${") != -1) {
+        if (text.contains(StringSearchInterpolator.DEFAULT_START_EXPR)) {
             Interpolator interp = new StringSearchInterpolator();
             interp.addValueSource(new PrefixedObjectValueSource("command", command));
             interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));

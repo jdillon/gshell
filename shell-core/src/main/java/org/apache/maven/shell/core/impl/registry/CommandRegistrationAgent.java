@@ -60,6 +60,7 @@ public class CommandRegistrationAgent
             "cd",
             "pwd",
             "mvn",
+            "test/puke",
         };
 
         for (String name : names) {

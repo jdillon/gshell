@@ -21,51 +21,54 @@ package org.apache.maven.shell.core;
 
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.ShellHolder;
+import org.apache.maven.shell.VariableNames;
+import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.ansi.Ansi;
 import org.apache.maven.shell.cli.Argument;
-import org.apache.maven.shell.cli.Processor;
 import org.apache.maven.shell.cli.Option;
 import org.apache.maven.shell.cli.Printer;
+import org.apache.maven.shell.cli.Processor;
+import org.apache.maven.shell.core.impl.ShellImpl;
 import org.apache.maven.shell.core.impl.registry.CommandRegistrationAgent;
 import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
+import org.apache.maven.shell.io.AnsiAwareIO;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.io.SystemInputOutputHijacker;
-import org.apache.maven.shell.io.AnsiAwareIO;
 import org.apache.maven.shell.notification.ExitNotification;
 import org.apache.maven.shell.terminal.AutoDetectedTerminal;
-import org.apache.maven.shell.terminal.UnixTerminal;
-import org.apache.maven.shell.terminal.UnsupportedTerminal;
-import org.apache.maven.shell.terminal.WindowsTerminal;
 import org.codehaus.plexus.ContainerConfiguration;
 import org.codehaus.plexus.DefaultContainerConfiguration;
 import org.codehaus.plexus.DefaultPlexusContainer;
 import org.codehaus.plexus.PlexusContainer;
-import org.codehaus.plexus.PlexusContainerException;
-import org.codehaus.plexus.classworlds.ClassWorld;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * Command-line bootstrap for Maven Shell.
+ * Command-line bootstrap for Apache Maven Shell (<tt>mvnsh</tt>).
  *
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class Main
+    implements VariableNames
 {
-    private final ClassWorld classWorld;
+    private static final String DEBUG = "DEBUG";
+
+    private static final String TRACE = "TRACE";
+
+    private static final String INFO = "INFO";
+
+    private static final String ERROR = "ERROR";
+
+    private static final String WARN = "WARN";
 
     private final IO io = new AnsiAwareIO();
 
+    private final Variables vars = new Variables();
+
     private final MessageSource messages = new ResourceBundleMessageSource(getClass());
-
-    public Main(final ClassWorld classWorld) {
-        assert classWorld != null;
-
-        this.classWorld = classWorld;
-    }
 
     //
     // TODO: Add flag to capture output to log file
@@ -77,14 +80,25 @@ public class Main
     @Option(name="-V", aliases={"--version"}, requireOverride=true)
     private boolean version;
 
+    @Option(name="-e", aliases={"--exception"})
+    private void setShowExceptionTraces(final boolean flag) {
+        if (flag) {
+            vars.set(MVNSH_SHOW_STACKTRACE, Boolean.TRUE.toString());
+        }
+    }
+
     private void setConsoleLogLevel(final String level) {
+        //
+        // TODO: Use a variable to control this, so users can change... can we do that?
+        //
+
         System.setProperty("mvnsh.log.console.level", level);
     }
-    
+
     @Option(name="-d", aliases={"--debug"})
     private void setDebug(boolean flag) {
         if (flag) {
-            setConsoleLogLevel("DEBUG");
+            setConsoleLogLevel(DEBUG);
             io.setVerbosity(IO.Verbosity.DEBUG);
         }
     }
@@ -92,7 +106,7 @@ public class Main
     @Option(name="-X", aliases={"--trace"})
     private void setTrace(boolean flag) {
         if (flag) {
-            setConsoleLogLevel("TRACE");
+            setConsoleLogLevel(TRACE);
             io.setVerbosity(IO.Verbosity.DEBUG);
         }
     }
@@ -100,7 +114,7 @@ public class Main
     @Option(name="-v", aliases={"--verbose"})
     private void setVerbose(boolean flag) {
         if (flag) {
-            setConsoleLogLevel("INFO");
+            setConsoleLogLevel(INFO);
             io.setVerbosity(IO.Verbosity.VERBOSE);
         }
     }
@@ -108,7 +122,7 @@ public class Main
     @Option(name="-q", aliases={"--quiet"})
     private void setQuiet(boolean flag) {
         if (flag) {
-            setConsoleLogLevel("ERROR");
+            setConsoleLogLevel(ERROR);
             io.setVerbosity(IO.Verbosity.QUIET);
         }
     }
@@ -116,7 +130,7 @@ public class Main
     @Option(name="-c", aliases={"--commands"})
     private String commands;
 
-    @Argument(description="Command")
+    @Argument()
     private List<String> commandArgs = null;
 
     @Option(name="-D", aliases={"--define"})
@@ -124,7 +138,7 @@ public class Main
         assert nameValue != null;
 
         String name, value;
-        int i = nameValue.indexOf("=");
+        int i = nameValue.indexOf('=');
 
         if (i == -1) {
             name = nameValue;
@@ -145,74 +159,36 @@ public class Main
     }
 
     @Option(name="-T", aliases={"--terminal"}, argumentRequired=true)
-    private void setTerminalType(String type) {
-        type = type.toLowerCase();
-
-        if ("auto".equals(type)) {
-            type = AutoDetectedTerminal.class.getName();
-        }
-        else if ("unix".equals(type)) {
-            type = UnixTerminal.class.getName();
-        }
-        else if ("win".equals(type) || "windows".equals("type")) {
-            type = WindowsTerminal.class.getName();
-        }
-        else if ("false".equals(type) || "off".equals(type) || "none".equals(type)) {
-            type = UnsupportedTerminal.class.getName();
-        }
-
-        System.setProperty("jline.terminal", type);
-    }
-
-    @Option(name="-e", aliases={"--exception"})
-    private void setException(boolean flag) {
-        if (flag) {
-            // FIXME: Stuff this into variables not properties
-            System.setProperty("mvnsh.show.stacktrace","true");
-        }
-    }
-
-    private PlexusContainer createContainer() throws PlexusContainerException {
-        ContainerConfiguration config = new DefaultContainerConfiguration();
-        config.setName("mvnsh.core");
-        config.setClassWorld(classWorld);
-
-        // FIXME: Hookup Plexus logging to Slf4j
-
-        return new DefaultPlexusContainer(config);
+    private void setTerminalType(final String type) {
+        AutoDetectedTerminal.configure(type);
     }
 
     public void boot(final String[] args) throws Exception {
         assert args != null;
 
-        System.setProperty("jline.terminal", AutoDetectedTerminal.class.getName());
+        // Setup environment defaults
+        setShowExceptionTraces(false);
+        setTerminalType(AutoDetectedTerminal.AUTO);
+        setConsoleLogLevel(WARN);
 
-        // Default is to be quiet
-        setConsoleLogLevel("WARN");
-        
+        // Process command line options & arguments
         Processor clp = new Processor(this);
         clp.setStopAtNonOption(true);
         clp.process(args);
 
         if (help) {
-            io.out.println(System.getProperty("mvnsh.program") + " [options] <command> [args]");
-            io.out.println();
-
             Printer printer = new Printer(clp);
             printer.setMessageSource(messages);
-            printer.printUsage(io.out);
-
-            io.out.println();
+            printer.printUsage(io.out, System.getProperty(MVNSH_PROGRAM));
             io.out.flush();
-
             System.exit(ExitNotification.DEFAULT_CODE);
         }
 
         if (version) {
-            io.out.println(System.getProperty("mvnsh.version"));
-            io.out.println();
-            io.out.flush();
+            // TODO: Expose MVNSH_PROGRAM_TITLE or something
 
+            io.out.format("%s %s", System.getProperty(MVNSH_PROGRAM), System.getProperty(MVNSH_VERSION)).println();
+            io.out.flush();
             System.exit(ExitNotification.DEFAULT_CODE);
         }
 
@@ -235,7 +211,11 @@ public class Main
         });
 
         try {
-            PlexusContainer container = createContainer();
+            ContainerConfiguration config = new DefaultContainerConfiguration();
+
+            // TODO: Hookup Plexus logging to Slf4j
+
+            PlexusContainer container = new DefaultPlexusContainer(config);
 
             // Hijack the system output streams
             if (!SystemInputOutputHijacker.isInstalled()) {
@@ -245,14 +225,17 @@ public class Main
             // Register the IO streams
             SystemInputOutputHijacker.register(io.streams);
 
+            //
+            // TODO: Bring back the ShellBuilder (lives in shell-core, not a plexus component)
+            //
+
             // Create the shell instance
-            Shell shell = container.lookup(Shell.class);
+            ShellImpl shell = (ShellImpl)container.lookup(Shell.class);
             shell.setIo(io);
+            shell.setVariables(vars);
 
             // Install shell into thread context
             ShellHolder.set(shell);
-
-            // FIXME: Install default variables
 
             // Register our commands
             CommandRegistrationAgent agent = container.lookup(CommandRegistrationAgent.class);
@@ -280,12 +263,8 @@ public class Main
         System.exit(code);
     }
 
-    public static void main(final String[] args, final ClassWorld world) throws Exception {
-        Main main = new Main(world);
-        main.boot(args);
-    }
-
     public static void main(final String[] args) throws Exception {
-        main(args, new ClassWorld("mvnsh.core", Thread.currentThread().getContextClassLoader()));
+        Main main = new Main();
+        main.boot(args);
     }
 }

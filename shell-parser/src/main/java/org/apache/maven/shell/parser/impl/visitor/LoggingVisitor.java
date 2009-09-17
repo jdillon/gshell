@@ -85,7 +85,7 @@ public class LoggingVisitor
 
         StringBuilder buff = new StringBuilder(StringUtils.repeat(" ", indent));
 
-        buff.append(node).append(" (").append(type.getName()).append(")");
+        buff.append(node).append(" (").append(type.getName()).append(')');
         if (data != null) {
             buff.append("; Data: ").append(data);
         }

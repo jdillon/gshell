@@ -122,9 +122,11 @@
                                             <include>org.apache.maven.shell:shell-cli</include>
                                             <include>org.apache.maven.shell:shell-api</include>
                                             <include>org.apache.maven.shell:shell-core</include>
-                                            <include>org.apache.maven.shell:shell-commands</include>
                                             <include>org.apache.maven.shell:shell-parser</include>
                                             <include>org.apache.maven.shell:shell-bootstrap</include>
+                                            <!--
+                                            <include>org.apache.maven.shell:shell-commands</include>
+                                            -->
                                         </includes>
                                     </artifactSet>
                                 </configuration>

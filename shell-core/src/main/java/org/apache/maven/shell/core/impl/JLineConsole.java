@@ -17,13 +17,14 @@
  * under the License.
  */
 
-package org.apache.maven.shell.console;
+package org.apache.maven.shell.core.impl;
 
 import jline.CandidateListCompletionHandler;
 import jline.Completor;
 import jline.ConsoleReader;
 import jline.History;
 import org.apache.maven.shell.io.IO;
+import org.apache.maven.shell.console.Console;
 
 import java.io.IOException;
 

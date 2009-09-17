@@ -78,7 +78,7 @@ public enum AnsiCode
         assert code != null;
 
         StringBuilder buff = new StringBuilder();
-        buff.append(ESC).append("[").append(code.code).append("m");
+        buff.append(ESC).append('[').append(code.code).append('m');
         return buff.toString();
     }
 }

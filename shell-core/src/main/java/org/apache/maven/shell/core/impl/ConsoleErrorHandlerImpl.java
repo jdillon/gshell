@@ -22,6 +22,10 @@ package org.apache.maven.shell.core.impl;
 import org.apache.maven.shell.console.Console;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.notification.ErrorNotification;
+import org.apache.maven.shell.ShellHolder;
+import org.apache.maven.shell.Shell;
+import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.VariableNames;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +36,7 @@ import org.slf4j.LoggerFactory;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class ConsoleErrorHandlerImpl
-    implements Console.ErrorHandler
+    implements Console.ErrorHandler, VariableNames
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -60,54 +64,53 @@ public class ConsoleErrorHandlerImpl
             cause = error.getCause();
         }
 
+        if (io.isDebug()) {
+            // If we have debug enabled then skip the fancy bits below, and log the full error, don't decode shit
+            log.debug(error.toString(), error);
+        }
+
         // Spit out the terse reason why we've failed
-        io.err.print("@|bold,red ERROR| ");
-        io.err.print(cause.getClass().getSimpleName());
-        io.err.println(": @|bold,red " + cause.getMessage() + "|");
+        io.err.format("@|bold,red ERROR| %s: @|bold,red %s|", cause.getClass().getSimpleName(), cause.getMessage()).println();
+
+        Variables vars = ShellHolder.get().getVariables();
 
         // Determine if the stack trace flag is set
-        String stackTraceProperty = System.getProperty("mvnsh.show.stacktrace");
+        String stackTraceProperty = vars.get(MVNSH_SHOW_STACKTRACE, String.class);
         boolean stackTraceFlag = false;
         if (stackTraceProperty != null) {
             stackTraceFlag = stackTraceProperty.trim().equals("true");
         }
 
-        if (io.isDebug()) {
-            // If we have debug enabled then skip the fancy bits below, and log the full error, don't decode shit
-            log.debug(error.toString(), error);
-        }
-        else if (io.isVerbose() || stackTraceFlag) {
-            // Render a fancy ansi colored stack trace
-            StackTraceElement[] trace = cause.getStackTrace();
-            StringBuilder buff = new StringBuilder();
+        if (io.isVerbose() || stackTraceFlag) {
+            while (cause != null) {
+                for (StackTraceElement e : cause.getStackTrace()) {
+                    io.err.format("        @|bold at| %s.%s (@|bold %s|)", e.getClassName(), e.getMethodName(), getLocation(e)).println();
+                }
 
-            //
-            // TODO: Move this to helper in mvnsh-ansi
-            //
-
-            for (StackTraceElement e : trace) {
-                buff.append("        @|bold at| ").
-                    append(e.getClassName()).
-                    append(".").
-                    append(e.getMethodName()).
-                    append(" (@|bold ");
-
-                buff.append(e.isNativeMethod() ? "Native Method" :
-                        (e.getFileName() != null && e.getLineNumber() != -1 ? e.getFileName() + ":" + e.getLineNumber() :
-                            (e.getFileName() != null ? e.getFileName() : "Unknown Source")));
-
-                buff.append("|)");
-
-                //
-                // FIXME: This does not properly display the full exception detail when cause contains nested exceptions
-                //
-
-                io.err.println(buff);
-
-                buff.setLength(0);
+                cause = cause.getCause();
+                if (cause != null) {
+                    io.err.format("    @|bold Caused by| %s: @|bold,red %s|", cause.getClass().getSimpleName(), cause.getMessage()).println();    
+                }
             }
         }
 
         io.err.flush();
+    }
+
+    private String getLocation(final StackTraceElement e) {
+        assert e != null;
+        
+        if (e.isNativeMethod()) {
+            return "Native Method";
+        }
+        else if (e.getFileName() == null) {
+            return "Unknown Source";
+        }
+        else if (e.getLineNumber() >= 0) {
+            return String.format("%s:%s", e.getFileName(), e.getLineNumber());
+        }
+        else {
+            return e.getFileName();
+        }
     }
 }

@@ -17,29 +17,28 @@
  * under the License.
  */
 
-package org.apache.maven.shell;
+package org.apache.maven.shell.commands.test;
+
+import org.apache.maven.shell.cli.Argument;
+import org.apache.maven.shell.command.Command;
+import org.apache.maven.shell.command.CommandContext;
+import org.apache.maven.shell.command.CommandSupport;
+import org.apache.maven.shell.notification.ExitNotification;
+import org.codehaus.plexus.component.annotations.Component;
 
 /**
- * Common shell variable names.
+ * Puke up an exception.
  *
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public interface VariableNames
+@Component(role=Command.class, hint="test/puke", instantiationStrategy="per-lookup")
+public class PukeCommand
+    extends CommandSupport
 {
-    String MVNSH_HOME = "mvnsh.home";
+    public Object execute(final CommandContext context) throws Exception {
+        assert context != null;
 
-    String MVNSH_PROGRAM = "mvnsh.program";
-
-    String MVNSH_VERSION = "mvnsh.version";
-
-    String MVNSH_USER_DIR = "mvnsh.user.dir";
-
-    String MVNSH_USER_HOME = "mvnsh.user.home";
-
-    String MVNSH_PROMPT = "mvnsh.prompt";
-
-    String MVNSH_HISTORY = "mvnsh.history";
-
-    String MVNSH_SHOW_STACKTRACE = "mvnsh.show.stacktrace";
+        throw new Exception("Puke", new Exception("Barf", new Exception("Poop")));
+    }
 }

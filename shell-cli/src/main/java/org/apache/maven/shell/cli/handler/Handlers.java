@@ -76,6 +76,7 @@ public class Handlers
 
             // Enum requires some special handling
             if (Enum.class.isAssignableFrom(valueType)) {
+                //noinspection unchecked
                 return new EnumHandler(desc, setter, valueType);
             }
 

@@ -83,11 +83,13 @@ public class AliasCommand
             }
 
             io.out.println(getMessages().format("info.defined-aliases"));
+            String nameFormat = "%-" + maxNameLen + 's';
+
             for (String name : names) {
                 String alias = aliasRegistry.getAlias(name);
-                String formattedName = String.format("%-" + maxNameLen + "s", name);
+                String formattedName = String.format(nameFormat, name);
 
-                io.out.print("  @|bold " + formattedName + "|  ");
+                io.out.format("  @|bold %s|  ", formattedName);
                 io.out.println(getMessages().format("info.alias-to", alias));
             }
         }

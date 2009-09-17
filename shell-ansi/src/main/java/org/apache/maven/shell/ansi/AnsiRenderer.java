@@ -116,7 +116,7 @@ public class AnsiRenderer
     //
 
     public static boolean test(final String text) {
-        return text != null && text.indexOf(BEGIN_TOKEN) >= 0;
+        return text != null && text.contains(BEGIN_TOKEN);
     }
 
     public static String encode(final Object text, final AnsiCode code) {

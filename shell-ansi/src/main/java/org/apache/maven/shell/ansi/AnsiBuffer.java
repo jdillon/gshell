@@ -27,7 +27,7 @@ package org.apache.maven.shell.ansi;
  */
 public class AnsiBuffer
 {
-    private final StringBuilder buff = new StringBuilder();
+    private final StringBuilder buff;
 
     public Boolean ansiEnabled;
     
@@ -36,6 +36,7 @@ public class AnsiBuffer
     public AnsiBuffer(final Boolean ansiEnabled, final boolean autoClear) {
         this.ansiEnabled = ansiEnabled;
         this.autoClear = autoClear;
+        this.buff = new StringBuilder();
     }
 
     public AnsiBuffer() {

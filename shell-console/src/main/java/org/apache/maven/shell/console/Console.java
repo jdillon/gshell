@@ -130,7 +130,7 @@ public abstract class Console
             }
             catch (Throwable t) {
                 // Don't use {} here so we getOutput the throwable detail in the log stream
-                log.debug("Work failed: " + t, t);
+                log.debug("Work failed", t);
 
                 if (errorHandler != null) {
                     ErrorHandler.Result result = errorHandler.handleError(t);
@@ -161,8 +161,8 @@ public abstract class Console
             for (byte b : bytes) {
                 String h = Integer.toHexString(b);
 
-                hex.append("x").append(h).append(" ");
-                idx.append(" ").append((char)b).append("  ");
+                hex.append('x').append(h).append(' ');
+                idx.append(' ').append((char)b).append("  ");
             }
 
             log.trace("HEX: {}", hex);

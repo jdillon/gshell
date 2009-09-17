@@ -68,14 +68,14 @@ public class EnumHandler<T extends Enum<T>>
     @Override
     public String getDefaultToken() {
         StringBuilder buff = new StringBuilder();
-        buff.append("[");
+        buff.append('[');
 
         for (T constants : enumType.getEnumConstants()) {
             buff.append(constants).append(" | ");
         }
 
         buff.delete(buff.length()-3, buff.length());
-        buff.append("]");
+        buff.append(']');
 
         return buff.toString();
     }
