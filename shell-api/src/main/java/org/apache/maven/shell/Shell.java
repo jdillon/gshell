@@ -30,12 +30,8 @@ import org.apache.maven.shell.io.IO;
 public interface Shell
 {
     IO getIo();
-
-    void setIo(IO io);
     
     Variables getVariables();
-
-    void setVariables(Variables vars);
 
     History getHistory();
 

@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.maven.shell.core.impl;
+package org.apache.maven.shell.core.impl.console;
 
 import org.apache.maven.shell.VariableNames;
 import org.apache.maven.shell.Variables;

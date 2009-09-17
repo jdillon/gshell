@@ -24,6 +24,9 @@ import org.apache.maven.shell.History;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.VariableNames;
 import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.core.impl.console.ConsoleErrorHandlerImpl;
+import org.apache.maven.shell.core.impl.console.ConsolePrompterImpl;
+import org.apache.maven.shell.core.impl.console.JLineConsole;
 import org.apache.maven.shell.command.CommandExecutor;
 import org.apache.maven.shell.console.Console;
 import org.apache.maven.shell.console.completer.AggregateCompleter;
@@ -45,7 +48,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-@Component(role=Shell.class)
+@Component(role=Shell.class, instantiationStrategy="per-lookup")
 public class ShellImpl
     implements Shell, VariableNames
 {
@@ -218,6 +221,8 @@ public class ShellImpl
         // Setup the console
         JLineConsole console = new JLineConsole(executor, io);
         console.setHistory(history.getDelegate());
+
+        // TODO: Expose as configuration via ShellBuilder, let Main configure these
         console.setPrompter(new ConsolePrompterImpl(getVariables()));
         console.setErrorHandler(new ConsoleErrorHandlerImpl(io));
 

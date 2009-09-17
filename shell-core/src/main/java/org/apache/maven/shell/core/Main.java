@@ -28,8 +28,6 @@ import org.apache.maven.shell.cli.Argument;
 import org.apache.maven.shell.cli.Option;
 import org.apache.maven.shell.cli.Printer;
 import org.apache.maven.shell.cli.Processor;
-import org.apache.maven.shell.core.impl.ShellImpl;
-import org.apache.maven.shell.core.impl.registry.CommandRegistrationAgent;
 import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
 import org.apache.maven.shell.io.AnsiAwareIO;
@@ -37,10 +35,6 @@ import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.io.SystemInputOutputHijacker;
 import org.apache.maven.shell.notification.ExitNotification;
 import org.apache.maven.shell.terminal.AutoDetectedTerminal;
-import org.codehaus.plexus.ContainerConfiguration;
-import org.codehaus.plexus.DefaultContainerConfiguration;
-import org.codehaus.plexus.DefaultPlexusContainer;
-import org.codehaus.plexus.PlexusContainer;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -80,7 +74,7 @@ public class Main
     @Option(name="-V", aliases={"--version"}, requireOverride=true)
     private boolean version;
 
-    @Option(name="-e", aliases={"--exception"})
+    @Option(name="-e", aliases={"--errors"})
     private void setShowExceptionTraces(final boolean flag) {
         if (flag) {
             vars.set(MVNSH_SHOW_STACKTRACE, Boolean.TRUE);
@@ -190,7 +184,6 @@ public class Main
 
         if (version) {
             // TODO: Expose MVNSH_PROGRAM_TITLE or something
-
             io.out.format("%s %s", System.getProperty(MVNSH_PROGRAM), System.getProperty(MVNSH_VERSION)).println();
             io.flush();
             System.exit(ExitNotification.DEFAULT_CODE);
@@ -215,36 +208,18 @@ public class Main
         });
 
         try {
-            ContainerConfiguration config = new DefaultContainerConfiguration();
+            // Build a shell instance
+            Shell shell = new ShellBuilder()
+                    .setIo(io)
+                    .setVariables(vars)
+                    .create();
 
-            // TODO: Hookup Plexus logging to Slf4j
-
-            PlexusContainer container = new DefaultPlexusContainer(config);
-
-            // Hijack the system output streams
-            if (!SystemInputOutputHijacker.isInstalled()) {
-                SystemInputOutputHijacker.install();
-            }
-            
-            // Register the IO streams
+            // FIXME: Should hide install/register inside of the framework
             SystemInputOutputHijacker.register(io.streams);
 
-            //
-            // TODO: Bring back the ShellBuilder (lives in shell-core, not a plexus component)
-            //
-
-            // Create the shell instance
-            ShellImpl shell = (ShellImpl)container.lookup(Shell.class);
-            shell.setIo(io);
-            shell.setVariables(vars);
-
-            // Install shell into thread context
+            // FIXME: Need to find the right location to stuff this puppy inside of the framework
             ShellHolder.set(shell);
 
-            // Register our commands
-            CommandRegistrationAgent agent = container.lookup(CommandRegistrationAgent.class);
-            agent.registerCommands();
-            
             // clp gives us a list, but we need an array
             String[] _args = {};
             if (commandArgs != null) {

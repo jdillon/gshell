@@ -24,7 +24,7 @@ import org.apache.maven.shell.VariableNames;
 import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.ansi.Ansi;
 import org.apache.maven.shell.command.Command;
-import org.apache.maven.shell.core.impl.registry.CommandRegistrationAgent;
+import org.apache.maven.shell.core.ShellBuilder;
 import org.apache.maven.shell.io.SystemInputOutputHijacker;
 import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.registry.CommandRegistry;
@@ -72,17 +72,14 @@ public abstract class CommandTestSupport
         System.setProperty(MVNSH_HOME, System.getProperty("user.dir"));
         System.setProperty(MVNSH_USER_HOME, System.getProperty("user.dir"));
 
-        CommandRegistrationAgent agent = plexus.lookup(CommandRegistrationAgent.class);
-        agent.registerCommands();
-
-        shell = plexus.lookup(Shell.class);
         io = new TestIO();
-        shell.setIo(io);
 
-        // Hijack the system output streams
-        if (!SystemInputOutputHijacker.isInstalled()) {
-            SystemInputOutputHijacker.install();
-        }
+        shell = new ShellBuilder()
+                .setIo(io)
+                .setContainer(plexus.getContainer())
+                .create();
+
+        SystemInputOutputHijacker.register(io.streams);
 
         // For simplicity of output verification disable ANSI
         Ansi.setEnabled(false);

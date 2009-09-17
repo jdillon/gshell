@@ -23,12 +23,12 @@
 <plexus>
     <components>
         <!--
-        Configure our logging component to be used so Plexus will pick it up.
-        -->
+        TODO: Configure our logging component to be used so Plexus will pick it up.
         <component>
             <role>org.codehaus.plexus.logging.LoggerManager</role>
             <role-hint>default</role-hint>
-            <implementation>org.apache.maven.shell.core.Slf4jLoggerManager</implementation>
+            <implementation>org.apache.maven.shell.core.impl.Slf4jLoggerManager</implementation>
         </component>
+        -->
     </components>
 </plexus>

@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.maven.shell.core;
+package org.apache.maven.shell.core.impl;
 
 import org.codehaus.plexus.logging.AbstractLogger;
 import org.codehaus.plexus.logging.BaseLoggerManager;
@@ -25,7 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Adapts the Plexus logging system to SLF4J.
+ * Adapts the Plexus logging system to <a href="http://slf4j.org">SLF4J<a>.
  *
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
@@ -33,6 +33,8 @@ import org.slf4j.LoggerFactory;
 public class Slf4jLoggerManager
     extends BaseLoggerManager
 {
+    // TODO: Hookup Plexus logging to Slf4j
+    
     protected org.codehaus.plexus.logging.Logger createLogger(final String key) {
         return new LoggerImpl(getThreshold(), LoggerFactory.getLogger(key));
     }
@@ -42,7 +44,7 @@ public class Slf4jLoggerManager
     }
 
     public void returnComponentLogger(final String role, final String roleHint) {
-        // Ignore
+        // ignore
     }
 
     /**
