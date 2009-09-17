@@ -54,7 +54,6 @@ public class Slf4jLoggerManager
 
         public LoggerImpl(final int threshold, final Logger logger) {
             super(threshold, logger.getName());
-            
             this.log = logger;
         }
 
