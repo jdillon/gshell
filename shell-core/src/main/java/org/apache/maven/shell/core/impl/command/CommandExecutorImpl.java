@@ -21,6 +21,7 @@ package org.apache.maven.shell.core.impl.command;
 
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.i18n.PrefixingMessageSource;
 import org.apache.maven.shell.cli.Processor;
 import org.apache.maven.shell.command.Arguments;
 import org.apache.maven.shell.command.Command;
@@ -126,6 +127,7 @@ public class CommandExecutorImpl
 
             if (!(command instanceof OpaqueArguments)) {
                 Processor clp = new Processor(command);
+                clp.setMessages(new PrefixingMessageSource(command.getMessages(), "command."));
                 CommandHelpSupport help = new CommandHelpSupport();
                 clp.addBean(help);
 
