@@ -24,6 +24,7 @@ import org.apache.maven.shell.History;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.VariableNames;
 import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.ShellHolder;
 import org.apache.maven.shell.command.CommandExecutor;
 import org.apache.maven.shell.console.Console;
 import org.apache.maven.shell.core.impl.console.JLineConsole;
@@ -267,8 +268,13 @@ public class ShellImpl
             execute(args);
         }
 
-        // And then spin up the console and go for a jog
-        console.run();
+        final Shell lastShell = ShellHolder.set(this);
+        try {
+            console.run();
+        }
+        finally {
+            ShellHolder.set(lastShell);
+        }
 
         // If any exit notification occurred while running, then puke it up
         ExitNotification n = exitNotifHolder.get();

@@ -34,10 +34,14 @@ public class ShellHolder
 
     private static final InheritableThreadLocal<Shell> holder = new InheritableThreadLocal<Shell>();
 
-    public static void set(final Shell shell) {
+    public static Shell set(final Shell shell) {
         log.trace("Setting shell: {}", shell);
 
+        Shell last = holder.get();
+
         holder.set(shell);
+
+        return last;
     }
 
     public static Shell get(final boolean allowNull) {

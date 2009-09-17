@@ -58,13 +58,17 @@ public class CommandDocumenterImpl
 
     private static final String COMMAND_MANUAL = "command.manual";
 
+    private static final String COMMAND_DOT = "command.";
+
+    private static final String COMMAND = "command";
+
     private String interpolate(final Command command, final String text) {
         assert command != null;
         assert text != null;
 
         if (text.contains(StringSearchInterpolator.DEFAULT_START_EXPR)) {
             Interpolator interp = new StringSearchInterpolator();
-            interp.addValueSource(new PrefixedObjectValueSource("command", command));
+            interp.addValueSource(new PrefixedObjectValueSource(COMMAND, command));
             interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));
             interp.addValueSource(new AbstractValueSource(false) {
                 public Object getValue(final String expression) {
@@ -120,7 +124,7 @@ public class CommandDocumenterImpl
 
         Printer printer = new Printer(clp);
         AggregateMessageSource messages = new AggregateMessageSource(command.getMessages(), help.getMessages());
-        printer.addMessages(new PrefixingMessageSource(messages, "command."));
+        printer.addMessages(new PrefixingMessageSource(messages, COMMAND_DOT));
         printer.printUsage(io.out, command.getName());
     }
 
@@ -138,21 +142,21 @@ public class CommandDocumenterImpl
         //       add more println()s to compensate for now
         //
 
-        io.out.println("@|bold NAME|");
+        io.out.println("@|bold NAME|"); // TODO: i18n
         io.out.println();
         out.println(command.getName());
         io.out.println();
 
         String text;
 
-        io.out.println("@|bold DESCRIPTION|");
+        io.out.println("@|bold DESCRIPTION|"); // TODO: i18n
         text = getDescription(command);
         text = renderer.render(text);
         out.println();
         out.println(text);
         io.out.println();
         
-        io.out.println("@|bold MANUAL|");
+        io.out.println("@|bold MANUAL|"); // TODO: i18n
         text = getManual(command);
         text = renderer.render(text);
         out.println();

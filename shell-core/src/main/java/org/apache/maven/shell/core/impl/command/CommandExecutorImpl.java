@@ -21,6 +21,7 @@ package org.apache.maven.shell.core.impl.command;
 
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.ShellHolder;
 import org.apache.maven.shell.cli.Processor;
 import org.apache.maven.shell.command.Arguments;
 import org.apache.maven.shell.command.Command;
@@ -78,8 +79,10 @@ public class CommandExecutorImpl
             return null;
         }
 
+        final Shell lastShell = ShellHolder.set(shell);
+        
         CommandLine cl = parser.parse(line);
-
+        
         try {
             return cl.execute(shell, this);
         }
@@ -96,6 +99,9 @@ public class CommandExecutorImpl
             else {
                 throw n;
             }
+        }
+        finally {
+            ShellHolder.set(lastShell);
         }
     }
 
@@ -116,6 +122,8 @@ public class CommandExecutorImpl
         Command command = resolveCommand(name);
 
         MDC.put(Command.class.getName(), name);
+
+        final Shell lastShell = ShellHolder.set(shell);
 
         final IO io = shell.getIo();
 
@@ -173,6 +181,8 @@ public class CommandExecutorImpl
             io.flush();
 
             SystemInputOutputHijacker.deregister();
+
+            ShellHolder.set(lastShell);
             
             MDC.remove(Command.class.getName());
         }

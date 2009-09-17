@@ -21,7 +21,6 @@ package org.apache.maven.shell.core;
 
 import jline.Completor;
 import org.apache.maven.shell.Shell;
-import org.apache.maven.shell.ShellHolder;
 import org.apache.maven.shell.VariableNames;
 import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.ansi.Ansi;
@@ -238,9 +237,6 @@ public class Main
                             container.lookup(Completor.class, "commands")
                     ))
                     .create();
-
-            // FIXME: Need to find the right location to stuff this puppy inside of the framework
-            ShellHolder.set(shell);
 
             // clp gives us a list, but we need an array
             String[] _args = {};
