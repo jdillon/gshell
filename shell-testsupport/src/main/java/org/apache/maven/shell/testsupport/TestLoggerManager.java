@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.maven.shell.core.impl;
+package org.apache.maven.shell.testsupport;
 
 import org.codehaus.plexus.logging.AbstractLogger;
 import org.codehaus.plexus.logging.BaseLoggerManager;
@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  *
  * @version $Rev$ $Date$
  */
-public class Slf4jLoggerManager
+public class TestLoggerManager
     extends BaseLoggerManager
 {
     protected org.codehaus.plexus.logging.Logger createLogger(final String key) {
