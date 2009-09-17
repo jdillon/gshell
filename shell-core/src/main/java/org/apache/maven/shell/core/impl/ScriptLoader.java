@@ -87,7 +87,7 @@ public class ScriptLoader
             loadScript(file);
         }
         else {
-            log.debug("User script is not present: {}", file);
+            log.trace("User script is not present: {}", file);
         }
     }
 
@@ -100,7 +100,7 @@ public class ScriptLoader
             loadScript(file);
         }
         else {
-            log.debug("Shared script is not present: {}", file);
+            log.trace("Shared script is not present: {}", file);
         }
     }
 }
