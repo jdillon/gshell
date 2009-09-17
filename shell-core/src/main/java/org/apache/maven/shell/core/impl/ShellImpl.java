@@ -55,6 +55,8 @@ public class ShellImpl
 
     private static final String USER_DIR = "user.dir";
 
+    private static final String DOTM2 = ".m2";
+
     @Requirement
     private CommandExecutor executor;
 
@@ -129,12 +131,12 @@ public class ShellImpl
             variables.set(MVNSH_USER_DIR, System.getProperty(USER_DIR));
         }
         if (!variables.contains(MVNSH_PROMPT)) {
-            variables.set(MVNSH_PROMPT, String.format("@|bold mvnsh|:%%{%s}> ", MVNSH_USER_DIR));
+            variables.set(MVNSH_PROMPT, String.format("@|bold %s|:%%{%s}> ", System.getProperty(MVNSH_PROGRAM), MVNSH_USER_DIR));
         }
 
         // Configure history storage
         if (!variables.contains(MVNSH_HISTORY)) {
-            File dir = new File(variables.get(MVNSH_USER_HOME, String.class), ".m2");
+            File dir = new File(variables.get(MVNSH_USER_HOME, String.class), DOTM2);
             File file = new File(dir, MVNSH_HISTORY);
             history.setStoreFile(file);
             variables.set(MVNSH_HISTORY, file.getCanonicalFile(), false);
@@ -160,25 +162,22 @@ public class ShellImpl
     
     public Object execute(final String line) throws Exception {
         ensureOpened();
-
         return executor.execute(this, line);
     }
 
     public Object execute(final String command, final Object[] args) throws Exception {
         ensureOpened();
-
         return executor.execute(this, command, args);
     }
 
     public Object execute(final Object... args) throws Exception {
         ensureOpened();
-
         return executor.execute(this, args);
     }
 
     private void setLastResult(final Object result) {
         // result may be null
-        getVariables().set("_", result);
+        getVariables().set(LAST_RESULT, result);
     }
 
     public void run(final Object... args) throws Exception {

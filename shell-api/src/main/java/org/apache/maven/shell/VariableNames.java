@@ -42,4 +42,6 @@ public interface VariableNames
     String MVNSH_HISTORY = "mvnsh.history";
 
     String MVNSH_SHOW_STACKTRACE = "mvnsh.show.stacktrace";
+
+    String LAST_RESULT = "_";
 }
