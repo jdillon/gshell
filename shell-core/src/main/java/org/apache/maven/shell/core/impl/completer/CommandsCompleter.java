@@ -103,20 +103,20 @@ public class CommandsCompleter
         List<Completor> children = new ArrayList<Completor>();
 
         // Attach completion for the command name
-        children.add(new StringsCompleter(new String[] { name }));
+        children.add(new StringsCompleter(name));
 
         // Then attach any command specific completers
         Command command = commandRegistry.getCommand(name);
 
         Completor[] completers = command.getCompleters();
-        if (completers != null) {
+        if (completers == null) {
+            children.add(TerminalCompleter.INSTANCE);
+        }
+        else {
             for (Completor completer : completers) {
                 log.debug("Adding completer: {}", completer);
                 children.add(completer != null ? completer : TerminalCompleter.INSTANCE);
             }
-        }
-        else {
-            children.add(TerminalCompleter.INSTANCE);
         }
 
         // setUp the root completer for the command
