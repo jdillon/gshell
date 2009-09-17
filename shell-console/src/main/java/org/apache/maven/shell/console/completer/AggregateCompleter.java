@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Arrays;
 
 /**
  * Completer which contains multipule completers and aggregates them together.
@@ -41,16 +42,11 @@ public class AggregateCompleter
 
     public AggregateCompleter(final Collection<Completor> completers) {
         assert completers != null;
-
-        getCompleters().addAll(completers);
+        this.completers.addAll(completers);
     }
 
     public AggregateCompleter(final Completor... completers) {
-        assert completers != null;
-
-        for (Completor completer : completers) {
-            getCompleters().add(completer);
-        }
+        this(Arrays.asList(completers));
     }
 
     public Collection<Completor> getCompleters() {
