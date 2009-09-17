@@ -48,7 +48,6 @@ public class ScriptLoader
 
     public ScriptLoader(final Shell shell) {
         assert shell != null;
-
         this.shell = shell;
     }
 

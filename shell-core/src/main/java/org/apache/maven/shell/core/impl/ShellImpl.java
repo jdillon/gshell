@@ -29,8 +29,6 @@ import org.apache.maven.shell.console.Console;
 import org.apache.maven.shell.core.impl.console.JLineConsole;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.notification.ExitNotification;
-import org.codehaus.plexus.component.annotations.Component;
-import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +43,6 @@ import java.util.concurrent.atomic.AtomicReference;
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-@Component(role=Shell.class, instantiationStrategy="per-lookup")
 public class ShellImpl
     implements Shell, VariableNames
 {
@@ -57,41 +54,37 @@ public class ShellImpl
 
     private static final String DOTM2 = ".m2";
 
-    @Requirement
-    private CommandExecutor executor;
+    private final CommandExecutor executor;
+
+    private final IO io;
+
+    private final Variables variables;
+
+    private final JLineHistory history = new JLineHistory();
 
     private List<Completor> completers;
-
-    private IO io = new IO();
-
-    private Variables variables = new Variables();
 
     private Console.Prompter prompter;
 
     private Console.ErrorHandler errorHandler;
 
-    private final JLineHistory history = new JLineHistory();
-
-    private final ScriptLoader scriptLoader = new ScriptLoader(this);
-
     private boolean opened;
+
+    public ShellImpl(final CommandExecutor executor, final IO io, final Variables variables) {
+        assert executor != null;
+        // io and variables may be null
+
+        this.executor = executor;
+        this.io = io != null ? io : new IO();
+        this.variables = variables != null ? variables : new Variables();
+    }
 
     public IO getIo() {
         return io;
     }
 
-    public void setIo(final IO io) {
-        assert io != null;
-        this.io = io;
-    }
-
     public Variables getVariables() {
         return variables;
-    }
-
-    public void setVariables(final Variables variables) {
-        assert variables != null;
-        this.variables = variables;
     }
 
     public History getHistory() {
@@ -174,7 +167,7 @@ public class ShellImpl
         }
         
         // Load profile scripts
-        scriptLoader.loadProfileScripts();
+        new ScriptLoader(this).loadProfileScripts();
 
         opened = true;
 
@@ -209,12 +202,11 @@ public class ShellImpl
 
     public void run(final Object... args) throws Exception {
         assert args != null;
-
         ensureOpened();
 
         log.debug("Starting interactive console; args: {}", args);
 
-        scriptLoader.loadInteractiveScripts();
+        new ScriptLoader(this).loadInteractiveScripts();
 
         // setUp 2 final refs to allow our executor to pass stuff back to us
         final AtomicReference<ExitNotification> exitNotifHolder = new AtomicReference<ExitNotification>();
@@ -232,7 +224,6 @@ public class ShellImpl
                 }
                 catch (ExitNotification n) {
                     exitNotifHolder.set(n);
-
                     return Result.STOP;
                 }
 

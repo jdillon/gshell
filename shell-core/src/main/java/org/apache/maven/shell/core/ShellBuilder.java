@@ -21,6 +21,7 @@ package org.apache.maven.shell.core;
 
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.command.CommandExecutor;
 import org.apache.maven.shell.console.Console;
 import org.apache.maven.shell.core.impl.ShellImpl;
 import org.apache.maven.shell.core.impl.CommandRegistrationAgent;
@@ -115,11 +116,10 @@ public class ShellBuilder
         if (!SystemInputOutputHijacker.isInstalled()) {
             SystemInputOutputHijacker.install();
         }
-        
+
         // Create the shell instance
-        ShellImpl shell = (ShellImpl)getContainer().lookup(Shell.class);
-        shell.setIo(io != null ? io : new IO());
-        shell.setVariables(variables != null ? variables : new Variables());
+        CommandExecutor executor = container.lookup(CommandExecutor.class);
+        ShellImpl shell = new ShellImpl(executor, io, variables);
         shell.setPrompter(prompter);
         shell.setErrorHandler(errorHandler);
         shell.setCompleters(completers);
