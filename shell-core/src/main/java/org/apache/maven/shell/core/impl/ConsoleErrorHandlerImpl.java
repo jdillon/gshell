@@ -68,19 +68,19 @@ public class ConsoleErrorHandlerImpl
             log.debug(error.toString(), error);
         }
 
-        // Spit out the terse reason why we've failed
-        io.err.format("@|bold,red ERROR| %s: @|bold,red %s|", cause.getClass().getSimpleName(), cause.getMessage()).println();
-
         Variables vars = ShellHolder.get().getVariables();
 
         // Determine if the stack trace flag is set
-        String stackTraceProperty = vars.get(MVNSH_SHOW_STACKTRACE, String.class);
-        boolean stackTraceFlag = false;
-        if (stackTraceProperty != null) {
-            stackTraceFlag = stackTraceProperty.trim().equals("true");
+        boolean showTrace = false;
+        if (vars.contains(MVNSH_SHOW_STACKTRACE)) {
+            String tmp = vars.get(MVNSH_SHOW_STACKTRACE, String.class);
+            showTrace = Boolean.parseBoolean(tmp.trim());
         }
 
-        if (io.isVerbose() || stackTraceFlag) {
+        // Spit out the terse reason why we've failed
+        io.err.format("@|bold,red ERROR| %s: @|bold,red %s|", cause.getClass().getSimpleName(), cause.getMessage()).println();
+
+        if (showTrace || io.isVerbose()) {
             while (cause != null) {
                 for (StackTraceElement e : cause.getStackTrace()) {
                     io.err.format("        @|bold at| %s.%s (@|bold %s|)", e.getClassName(), e.getMethodName(), getLocation(e)).println();
