@@ -24,12 +24,10 @@ import org.apache.maven.shell.History;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.VariableNames;
 import org.apache.maven.shell.Variables;
-import org.apache.maven.shell.core.impl.console.ConsoleErrorHandlerImpl;
-import org.apache.maven.shell.core.impl.console.ConsolePrompterImpl;
-import org.apache.maven.shell.core.impl.console.JLineConsole;
 import org.apache.maven.shell.command.CommandExecutor;
 import org.apache.maven.shell.console.Console;
 import org.apache.maven.shell.console.completer.AggregateCompleter;
+import org.apache.maven.shell.core.impl.console.JLineConsole;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.notification.ExitNotification;
 import org.codehaus.plexus.component.annotations.Component;
@@ -70,9 +68,13 @@ public class ShellImpl
 
     private Variables variables = new Variables();
 
-    private JLineHistory history = new JLineHistory();
+    private Console.Prompter prompter;
 
-    private ScriptLoader scriptLoader = new ScriptLoader(this);
+    private Console.ErrorHandler errorHandler;
+
+    private final JLineHistory history = new JLineHistory();
+
+    private final ScriptLoader scriptLoader = new ScriptLoader(this);
 
     private boolean opened;
 
@@ -96,6 +98,22 @@ public class ShellImpl
 
     public History getHistory() {
         return history;
+    }
+
+    public Console.Prompter getPrompter() {
+        return prompter;
+    }
+
+    public void setPrompter(final Console.Prompter prompter) {
+        this.prompter = prompter;
+    }
+
+    public Console.ErrorHandler getErrorHandler() {
+        return errorHandler;
+    }
+
+    public void setErrorHandler(final Console.ErrorHandler errorHandler) {
+        this.errorHandler = errorHandler;
     }
 
     public synchronized boolean isOpened() {
@@ -222,13 +240,14 @@ public class ShellImpl
         JLineConsole console = new JLineConsole(executor, io);
         console.setHistory(history.getDelegate());
 
-        // TODO: Expose as configuration via ShellBuilder, let Main configure these
-        console.setPrompter(new ConsolePrompterImpl(getVariables()));
-        console.setErrorHandler(new ConsoleErrorHandlerImpl(io));
-
-        // Attach completers if there are any
+        if (prompter != null) {
+            console.setPrompter(prompter);
+        }
+        if (errorHandler != null) {
+            console.setErrorHandler(errorHandler);
+        }
         if (completers != null) {
-            // Have to use aggregate here to getOutput the completion list to update properly
+            // Have to use aggregate here to get the completion list to update properly
             console.addCompleter(new AggregateCompleter(completers));
         }
 

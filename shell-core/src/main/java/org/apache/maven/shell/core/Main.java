@@ -23,6 +23,8 @@ import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.ShellHolder;
 import org.apache.maven.shell.VariableNames;
 import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.core.impl.console.ConsolePrompterImpl;
+import org.apache.maven.shell.core.impl.console.ConsoleErrorHandlerImpl;
 import org.apache.maven.shell.ansi.Ansi;
 import org.apache.maven.shell.cli.Argument;
 import org.apache.maven.shell.cli.Option;
@@ -212,6 +214,8 @@ public class Main
             Shell shell = new ShellBuilder()
                     .setIo(io)
                     .setVariables(vars)
+                    .setPrompter(new ConsolePrompterImpl(vars))
+                    .setErrorHandler(new ConsoleErrorHandlerImpl(io))
                     .create();
 
             // FIXME: Should hide install/register inside of the framework

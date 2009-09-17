@@ -21,6 +21,7 @@ package org.apache.maven.shell.core;
 
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.console.Console;
 import org.apache.maven.shell.core.impl.ShellImpl;
 import org.apache.maven.shell.core.impl.CommandRegistrationAgent;
 import org.apache.maven.shell.io.IO;
@@ -50,6 +51,10 @@ public class ShellBuilder
 
     private boolean registerCommands = true;
 
+    private Console.Prompter prompter;
+
+    private Console.ErrorHandler errorHandler;
+
     public ShellBuilder setIo(final IO io) {
         this.io = io;
         return this;
@@ -60,13 +65,23 @@ public class ShellBuilder
         return this;
     }
 
-    public ShellBuilder setContainer(PlexusContainer container) {
+    public ShellBuilder setContainer(final PlexusContainer container) {
         this.container = container;
         return this;
     }
 
-    public ShellBuilder setRegisterCommands(boolean registerCommands) {
-        this.registerCommands = registerCommands;
+    public ShellBuilder setRegisterCommands(final boolean flag) {
+        this.registerCommands = flag;
+        return this;
+    }
+
+    public ShellBuilder setPrompter(final Console.Prompter prompter) {
+        this.prompter = prompter;
+        return this;
+    }
+
+    public ShellBuilder setErrorHandler(final Console.ErrorHandler errorHandler) {
+        this.errorHandler = errorHandler;
         return this;
     }
 
@@ -86,6 +101,8 @@ public class ShellBuilder
         ShellImpl shell = (ShellImpl)container.lookup(Shell.class);
         shell.setIo(io != null ? io : new IO());
         shell.setVariables(variables != null ? variables : new Variables());
+        shell.setPrompter(prompter);
+        shell.setErrorHandler(errorHandler);
 
         // Maybe register default commands
         if (registerCommands) {
