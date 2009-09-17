@@ -212,7 +212,7 @@ public class Variables
         extends RuntimeException
     {
         public ImmutableVariableException(final String name) {
-            super("Variable is immutable: " + name);
+            super(name);
         }
     }
 }
