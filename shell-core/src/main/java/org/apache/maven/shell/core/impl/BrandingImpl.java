@@ -21,9 +21,12 @@ package org.apache.maven.shell.core.impl;
 
 import org.apache.maven.shell.Branding;
 import org.apache.maven.shell.VariableNames;
+import org.codehaus.plexus.util.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.StringWriter;
+import java.io.PrintWriter;
 
 /**
  * The default {@link Branding} component.
@@ -34,41 +37,43 @@ import java.io.IOException;
 public class BrandingImpl
     implements Branding, VariableNames
 {
-    private static final String ETC = "etc";
-
-    private static final String USER_HOME = "user.home";
-
     public String getDisplayName() {
-        return "Apache Maven Shell";
+        return "@|bold,red Apache Maven| @|bold Shell|";
     }
 
     public String getProgramName() {
-        return "mvnsh";
+        return System.getProperty(MVNSH_PROGRAM);
     }
 
     public String getVersion() {
-        return "1.0-SNAPSHOT";
+        return System.getProperty(MVNSH_VERSION);
     }
 
     public String getAboutMessage() {
         return getDisplayName();
     }
 
-    public String getWelcomeMessage() {
-        // io.out.println("@|bold,red Apache Maven| @|bold Shell|");
-        // io.out.println(StringUtils.repeat("-", io.getTerminal().getTerminalWidth() - 1));
+    protected String line() {
+        return StringUtils.repeat("-", jline.Terminal.getTerminal().getTerminalWidth() - 1);
+    }
 
-        return getDisplayName();
+    public String getWelcomeMessage() {
+        StringWriter buff = new StringWriter();
+        PrintWriter out = new PrintWriter(buff);
+
+        out.println(getDisplayName());
+        out.println(line());
+        out.flush();
+
+        return buff.toString();
     }
 
     public String getGoodbyeMessage() {
-        return "Goodbye!";
+        return "Goodbye!"; // TODO: i18n
     }
 
     public String getDefaultPrompt() {
-        // String.format("@|bold %s|:%%{%s}> ", System.getProperty(MVNSH_PROGRAM), MVNSH_USER_DIR));
-
-        return "mvnsh> ";
+        return String.format("@|bold %s|:%%{%s}> ", getProgramName(), MVNSH_USER_DIR);
     }
 
     public String getProfileScriptName() {
@@ -103,11 +108,11 @@ public class BrandingImpl
     }
 
     public File getShellContextDir() {
-        return resolveFile(new File(getShellHomeDir(), ETC));
+        return resolveFile(new File(getShellHomeDir(), "etc"));
     }
 
     public File getUserHomeDir() {
-        return resolveFile(System.getProperty(USER_HOME));
+        return resolveFile(System.getProperty("user.home"));
     }
 
     public File getUserContextDir() {

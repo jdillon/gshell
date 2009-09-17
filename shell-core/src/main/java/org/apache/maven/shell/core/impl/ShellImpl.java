@@ -140,6 +140,10 @@ public class ShellImpl
     private synchronized void open() throws Exception {
         log.debug("Opening");
 
+        //
+        // TODO: Should we delegate all this to branding?
+        //
+
         // Setup default variables
         if (!variables.contains(MVNSH_HOME)) {
             variables.set(MVNSH_HOME, branding.getShellHomeDir(), false);
@@ -199,11 +203,6 @@ public class ShellImpl
         return executor.execute(this, args);
     }
 
-    private void setLastResult(final Object result) {
-        // result may be null
-        getVariables().set(LAST_RESULT, result);
-    }
-
     public void run(final Object... args) throws Exception {
         assert args != null;
         ensureOpened();
@@ -255,13 +254,8 @@ public class ShellImpl
             }
         }
 
-        // Display the welcome message
         if (!io.isQuiet()) {
-            String msg = branding.getWelcomeMessage();
-            if (msg != null) {
-                io.out.println(msg);
-                io.out.flush();
-            }
+            renderWelcomeMessage(io);
         }
 
         // Check if there are args, and run them and then enter interactive
@@ -277,19 +271,37 @@ public class ShellImpl
             ShellHolder.set(lastShell);
         }
 
-        // Display the goodbye message
         if (!io.isQuiet()) {
-            String msg = branding.getGoodbyeMessage();
-            if (msg != null) {
-                io.out.println(msg);
-                io.out.flush();
-            }
+            renderGoodbyeMessage(io);
         }
 
         // If any exit notification occurred while running, then puke it up
         ExitNotification n = exitNotifHolder.get();
         if (n != null) {
             throw n;
+        }
+    }
+
+    protected void setLastResult(final Object result) {
+        // result may be null
+        getVariables().set(LAST_RESULT, result);
+    }
+
+    protected void renderGoodbyeMessage(final IO io) {
+        assert io != null;
+        String msg = branding.getGoodbyeMessage();
+        if (msg != null) {
+            io.out.println(msg);
+            io.out.flush();
+        }
+    }
+
+    protected void renderWelcomeMessage(final IO io) {
+        assert io != null;
+        String msg = branding.getWelcomeMessage();
+        if (msg != null) {
+            io.out.print(msg);
+            io.out.flush();
         }
     }
 }
