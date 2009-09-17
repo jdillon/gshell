@@ -133,6 +133,10 @@ public class Main
     @Argument()
     private List<String> commandArgs = null;
 
+    //
+    // TODO: Expose setting variables via the command-line
+    //
+    
     @Option(name="-D", aliases={"--define"})
     private void setSystemProperty(final String nameValue) {
         assert nameValue != null;
@@ -180,7 +184,7 @@ public class Main
             Printer printer = new Printer(clp);
             printer.setMessageSource(messages);
             printer.printUsage(io.out, System.getProperty(MVNSH_PROGRAM));
-            io.out.flush();
+            io.flush();
             System.exit(ExitNotification.DEFAULT_CODE);
         }
 
@@ -188,7 +192,7 @@ public class Main
             // TODO: Expose MVNSH_PROGRAM_TITLE or something
 
             io.out.format("%s %s", System.getProperty(MVNSH_PROGRAM), System.getProperty(MVNSH_VERSION)).println();
-            io.out.flush();
+            io.flush();
             System.exit(ExitNotification.DEFAULT_CODE);
         }
 
@@ -256,6 +260,9 @@ public class Main
         }
         catch (ExitNotification n) {
             code = n.code;
+        }
+        finally {
+            io.flush();
         }
 
         codeRef.set(code);
