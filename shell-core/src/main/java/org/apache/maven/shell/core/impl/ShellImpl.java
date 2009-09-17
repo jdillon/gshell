@@ -51,6 +51,10 @@ public class ShellImpl
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
+    private static final String USER_HOME = "user.home";
+
+    private static final String USER_DIR = "user.dir";
+
     @Requirement
     private CommandExecutor executor;
 
@@ -119,13 +123,13 @@ public class ShellImpl
             variables.set(MVNSH_VERSION, System.getProperty(MVNSH_VERSION), false);
         }
         if (!variables.contains(MVNSH_USER_HOME)) {
-            variables.set(MVNSH_USER_HOME, System.getProperty("user.home"), false);
+            variables.set(MVNSH_USER_HOME, System.getProperty(USER_HOME), false);
         }
         if (!variables.contains(MVNSH_USER_DIR)) {
-            variables.set(MVNSH_USER_DIR, System.getProperty("user.dir"));
+            variables.set(MVNSH_USER_DIR, System.getProperty(USER_DIR));
         }
         if (!variables.contains(MVNSH_PROMPT)) {
-            variables.set(MVNSH_PROMPT, "@|bold mvnsh|:%{" + MVNSH_USER_DIR + "}> ");
+            variables.set(MVNSH_PROMPT, String.format("@|bold mvnsh|:%%{%s}> ", MVNSH_USER_DIR));
         }
 
         // Configure history storage
@@ -147,7 +151,6 @@ public class ShellImpl
 
         log.debug("Opened");
     }
-
 
     public boolean isInteractive() {
         return true;
@@ -208,12 +211,10 @@ public class ShellImpl
 
         IO io = getIo();
         
-        // setUp the console runner
+        // Setup the console
         JLineConsole console = new JLineConsole(executor, io);
         console.setHistory(history.getDelegate());
-
         console.setPrompter(new ConsolePrompterImpl(getVariables()));
-
         console.setErrorHandler(new ConsoleErrorHandlerImpl(io));
 
         // Attach completers if there are any
