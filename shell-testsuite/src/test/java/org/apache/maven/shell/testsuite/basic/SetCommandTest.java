@@ -70,6 +70,6 @@ public class SetCommandTest
 
         assertTrue(vars.contains("foo"));
         Object value = vars.get("foo");
-        assertEquals(value, vars.get("mvnsh.home"));
+        assertEquals(value, vars.get("mvnsh.home", String.class));
     }
 }

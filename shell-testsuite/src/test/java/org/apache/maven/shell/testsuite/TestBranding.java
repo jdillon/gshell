@@ -17,33 +17,40 @@
  * under the License.
  */
 
-package org.apache.maven.shell;
+package org.apache.maven.shell.testsuite;
+
+import org.apache.maven.shell.core.impl.BrandingImpl;
+
+import java.io.File;
 
 /**
- * Common shell variable names.
+ * Test {@link Branding}.
  *
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public interface VariableNames
+public class TestBranding
+    extends BrandingImpl
 {
-    String MVNSH_HOME = "mvnsh.home";
+    private File baseDir;
 
-    String MVNSH_PROGRAM = "mvnsh.program";
+    public TestBranding(final File baseDir) {
+        assert baseDir != null;
+        this.baseDir = baseDir;
+    }
 
-    String MVNSH_VERSION = "mvnsh.version";
+    @Override
+    public File getShellHomeDir() {
+        return baseDir;
+    }
 
-    String MVNSH_USER_DIR = "mvnsh.user.dir";
+    @Override
+    public File getUserHomeDir() {
+        return baseDir;
+    }
 
-    String MVNSH_USER_HOME = "mvnsh.user.home";
-
-    String MVNSH_PROMPT = "mvnsh.prompt";
-
-    String MVNSH_HISTORY = "mvnsh.history";
-
-    String MVNSH_SHOW_STACKTRACE = "mvnsh.show.stacktrace";
-
-    String MVNSH_LOG_CONSOLE_LEVEL = "mvnsh.log.console.level";
-
-    String LAST_RESULT = "_";
+    @Override
+    public File getUserContextDir() {
+        return resolveFile(new File(getUserHomeDir(), getProgramName()));
+    }
 }

@@ -95,7 +95,8 @@ public class JLineHistory
 
             File originalFile = storeFile;
 
-            // Create and install a new history file
+            // Create and install a new history file, to deal with windows shit locking
+            // and lack of real control over the streams used by jline.History
             File tmp = File.createTempFile(getClass().getSimpleName(), "temp");
             tmp.deleteOnExit();
             setStoreFile(tmp);

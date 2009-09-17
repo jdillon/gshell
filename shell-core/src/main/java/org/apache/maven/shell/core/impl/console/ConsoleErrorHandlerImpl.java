@@ -77,6 +77,8 @@ public class ConsoleErrorHandlerImpl
             showTrace = Boolean.parseBoolean(tmp.trim());
         }
 
+        // TODO: i18n
+
         // Spit out the terse reason why we've failed
         io.err.format("@|bold,red ERROR| %s: @|bold,red %s|", cause.getClass().getSimpleName(), cause.getMessage()).println();
 
@@ -98,6 +100,8 @@ public class ConsoleErrorHandlerImpl
 
     private String getLocation(final StackTraceElement e) {
         assert e != null;
+
+        // TODO: i18n
         
         if (e.isNativeMethod()) {
             return "Native Method";

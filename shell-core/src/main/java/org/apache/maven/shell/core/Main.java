@@ -23,6 +23,7 @@ import jline.Completor;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.VariableNames;
 import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.Branding;
 import org.apache.maven.shell.ansi.Ansi;
 import org.apache.maven.shell.cli.Argument;
 import org.apache.maven.shell.cli.Option;
@@ -32,6 +33,7 @@ import org.apache.maven.shell.cli.Processor;
 import org.apache.maven.shell.console.completer.AggregateCompleter;
 import org.apache.maven.shell.core.impl.console.ConsoleErrorHandlerImpl;
 import org.apache.maven.shell.core.impl.console.ConsolePrompterImpl;
+import org.apache.maven.shell.core.impl.BrandingImpl;
 import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
 import org.apache.maven.shell.io.AnsiAwareIO;
@@ -82,11 +84,9 @@ public class Main
     private boolean showErrorTraces = false;
 
     private void setConsoleLogLevel(final String level) {
-        //
-        // TODO: Use a variable to control this, so users can change... can we do that?
-        //
-
-        System.setProperty("mvnsh.log.console.level", level);
+        // TODO: Use a variable to control this instead of a property
+        //       may require some magic to make it dynamic?
+        System.setProperty(MVNSH_LOG_CONSOLE_LEVEL, level);
     }
 
     @Option(name="-d", aliases={"--debug"})
@@ -127,28 +127,16 @@ public class Main
     @Argument()
     private List<String> commandArgs = null;
 
-    //
-    // TODO: Expose setting variables via the command-line, maybe -P for property -D for variable?
-    //
-    
     @Option(name="-D", aliases={"--define"})
-    private void setSystemProperty(final String nameValue) {
-        assert nameValue != null;
+    private void setVariable(final String input) {
+        NameValue nv = NameValue.parse(input);
+        vars.set(nv.name, nv.value);
+    }
 
-        String name, value;
-        int i = nameValue.indexOf('=');
-
-        if (i == -1) {
-            name = nameValue;
-            value = Boolean.TRUE.toString();
-        }
-        else {
-            name = nameValue.substring(0, i);
-            value = nameValue.substring(i + 1, nameValue.length());
-        }
-        name = name.trim();
-
-        System.setProperty(name, value);
+    @Option(name="-P", aliases={"--property"})
+    private void setSystemProperty(final String input) {
+        NameValue nv = NameValue.parse(input);
+        System.setProperty(nv.name, nv.value);
     }
 
     @Option(name="-C", aliases={"--color"}, argumentRequired=true)
@@ -161,8 +149,15 @@ public class Main
         AutoDetectedTerminal.configure(type);
     }
 
+    private void exit(final int code) {
+        io.flush();
+        System.exit(code);
+    }
+
     public void boot(final String[] args) throws Exception {
         assert args != null;
+
+        Branding branding = new BrandingImpl();
 
         // Setup environment defaults
         setTerminalType(AutoDetectedTerminal.AUTO);
@@ -183,22 +178,18 @@ public class Main
             else {
                 io.err.println(e);
             }
-            io.flush();
-            System.exit(ExitNotification.FATAL_CODE);
+            exit(ExitNotification.FATAL_CODE);
         }
 
         if (help) {
             Printer printer = new Printer(clp);
-            printer.printUsage(io.out, System.getProperty(MVNSH_PROGRAM));
-            io.flush();
-            System.exit(ExitNotification.DEFAULT_CODE);
+            printer.printUsage(io.out, branding.getProgramName());
+            exit(ExitNotification.DEFAULT_CODE);
         }
 
         if (version) {
-            // TODO: Expose MVNSH_PROGRAM_TITLE or something
-            io.out.format("%s %s", System.getProperty(MVNSH_PROGRAM), System.getProperty(MVNSH_VERSION)).println();
-            io.flush();
-            System.exit(ExitNotification.DEFAULT_CODE);
+            io.out.format("%s %s", branding.getDisplayName(), branding.getVersion()).println();
+            exit(ExitNotification.DEFAULT_CODE);
         }
 
         // setUp a reference for our exit code so our callback thread can tell if we've shutdown normally or not
@@ -228,6 +219,7 @@ public class Main
             // Build a shell instance
             Shell shell = new ShellBuilder()
                     .setContainer(container)
+                    .setBranding(branding)
                     .setIo(io)
                     .setVariables(vars)
                     .setPrompter(new ConsolePrompterImpl(vars))
@@ -260,11 +252,10 @@ public class Main
 
         codeRef.set(code);
 
-        System.exit(code);
+        exit(code);
     }
 
     public static void main(final String[] args) throws Exception {
-        Main main = new Main();
-        main.boot(args);
+        new Main().boot(args);
     }
 }

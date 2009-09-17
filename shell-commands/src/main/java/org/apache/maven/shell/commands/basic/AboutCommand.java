@@ -19,13 +19,12 @@
 
 package org.apache.maven.shell.commands.basic;
 
-import org.apache.maven.cli.CLIReportingUtils;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.io.IO;
+import org.apache.maven.shell.Branding;
 import org.codehaus.plexus.component.annotations.Component;
-import org.codehaus.plexus.util.StringUtils;
 
 /**
  * Display information about the current shell.
@@ -40,11 +39,11 @@ public class AboutCommand
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
         IO io = context.getIo();
+        Branding branding = context.getShell().getBranding();
 
-        io.out.println("@|bold,red Apache Maven| @|bold Shell|");
-        io.out.println(StringUtils.repeat("-", io.getTerminal().getTerminalWidth() - 1));
+        io.out.println(branding.getAboutMessage());
 
-        CLIReportingUtils.showVersion();
+        // TODO: Dump more details when --verbose
 
         return Result.SUCCESS;
     }

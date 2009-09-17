@@ -25,18 +25,16 @@ import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.ansi.Ansi;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.core.ShellBuilder;
-import org.apache.maven.shell.io.SystemInputOutputHijacker;
 import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.registry.CommandRegistry;
 import org.apache.maven.shell.testsupport.PlexusTestSupport;
 import org.apache.maven.shell.testsupport.TestIO;
+import org.apache.maven.shell.testsupport.TestUtil;
+import org.codehaus.plexus.util.StringUtils;
 import org.junit.After;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import org.codehaus.plexus.util.StringUtils;
 
 /**
  * Support for testing {@link Command} instances.
@@ -49,8 +47,10 @@ public abstract class CommandTestSupport
 {
     protected final String name;
 
-    private PlexusTestSupport plexus;
+    private final TestUtil util = new TestUtil(this);
 
+    private PlexusTestSupport plexus;
+    
     private TestIO io;
 
     private Shell shell;
@@ -70,17 +70,13 @@ public abstract class CommandTestSupport
     public void setUp() throws Exception {
         plexus = new PlexusTestSupport(this);
 
-        System.setProperty(MVNSH_HOME, System.getProperty("user.dir"));
-        System.setProperty(MVNSH_USER_HOME, System.getProperty("user.dir"));
-
         io = new TestIO();
-
+        
         shell = new ShellBuilder()
-                .setIo(io)
                 .setContainer(plexus.getContainer())
+                .setBranding(new TestBranding(util.resolveFile("target/shell-home")))
+                .setIo(io)
                 .create();
-
-        // SystemInputOutputHijacker.register(io.streams);
 
         // For simplicity of output verification disable ANSI
         Ansi.setEnabled(false);
@@ -95,9 +91,6 @@ public abstract class CommandTestSupport
         commandRegistry = null;
         aliasRegistry = null;
         vars = null;
-
-        // SystemInputOutputHijacker.uninstall();
-
         io = null;
         shell.close();
         shell = null;

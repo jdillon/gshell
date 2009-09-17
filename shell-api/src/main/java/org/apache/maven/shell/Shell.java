@@ -29,6 +29,8 @@ import org.apache.maven.shell.io.IO;
  */
 public interface Shell
 {
+    Branding getBranding();
+    
     IO getIo();
     
     Variables getVariables();

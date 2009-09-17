@@ -20,17 +20,17 @@
 package org.apache.maven.shell.core.impl;
 
 import jline.Completor;
+import org.apache.maven.shell.Branding;
 import org.apache.maven.shell.History;
 import org.apache.maven.shell.Shell;
+import org.apache.maven.shell.ShellHolder;
 import org.apache.maven.shell.VariableNames;
 import org.apache.maven.shell.Variables;
-import org.apache.maven.shell.ShellHolder;
 import org.apache.maven.shell.command.CommandExecutor;
 import org.apache.maven.shell.console.Console;
 import org.apache.maven.shell.core.impl.console.JLineConsole;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.notification.ExitNotification;
-import org.codehaus.plexus.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,11 +49,7 @@ public class ShellImpl
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private static final String USER_HOME = "user.home";
-
-    private static final String USER_DIR = "user.dir";
-
-    private static final String DOTM2 = ".m2";
+    private final Branding branding;
 
     private final CommandExecutor executor;
 
@@ -71,13 +67,19 @@ public class ShellImpl
 
     private boolean opened;
 
-    public ShellImpl(final CommandExecutor executor, final IO io, final Variables variables) {
+    public ShellImpl(final Branding branding, final CommandExecutor executor, final IO io, final Variables variables) {
+        assert branding != null;
         assert executor != null;
         // io and variables may be null
 
+        this.branding = branding;
         this.executor = executor;
         this.io = io != null ? io : new IO();
         this.variables = variables != null ? variables : new Variables();
+    }
+
+    public Branding getBranding() {
+        return branding;
     }
 
     public IO getIo() {
@@ -138,39 +140,36 @@ public class ShellImpl
     private synchronized void open() throws Exception {
         log.debug("Opening");
 
-        //
-        // TODO: Bring branding back
-        //
-        
-        // setUp default variables
+        // Setup default variables
         if (!variables.contains(MVNSH_HOME)) {
-            variables.set(MVNSH_HOME, System.getProperty(MVNSH_HOME), false);
+            variables.set(MVNSH_HOME, branding.getShellHomeDir(), false);
         }
         if (!variables.contains(MVNSH_VERSION)) {
-            variables.set(MVNSH_VERSION, System.getProperty(MVNSH_VERSION), false);
+            variables.set(MVNSH_VERSION, branding.getVersion(), false);
         }
         if (!variables.contains(MVNSH_USER_HOME)) {
-            variables.set(MVNSH_USER_HOME, System.getProperty(USER_HOME), false);
-        }
-        if (!variables.contains(MVNSH_USER_DIR)) {
-            variables.set(MVNSH_USER_DIR, System.getProperty(USER_DIR));
+            variables.set(MVNSH_USER_HOME, branding.getUserHomeDir(), false);
         }
         if (!variables.contains(MVNSH_PROMPT)) {
-            variables.set(MVNSH_PROMPT, String.format("@|bold %s|:%%{%s}> ", System.getProperty(MVNSH_PROGRAM), MVNSH_USER_DIR));
+            variables.set(MVNSH_PROMPT, branding.getDefaultPrompt());
         }
 
         // Configure history storage
         if (!variables.contains(MVNSH_HISTORY)) {
-            File dir = new File(variables.get(MVNSH_USER_HOME, String.class), DOTM2);
-            File file = new File(dir, MVNSH_HISTORY);
+            File file = new File(branding.getUserContextDir(), branding.getHistoryFileName());
             history.setStoreFile(file);
-            variables.set(MVNSH_HISTORY, file.getCanonicalFile(), false);
+            variables.set(MVNSH_HISTORY, file, false);
         }
         else {
             File file = new File(variables.get(MVNSH_HISTORY, String.class));
             history.setStoreFile(file);
         }
-        
+
+        // Setup context cwd
+        if (!variables.contains(MVNSH_USER_DIR)) {
+            variables.set(MVNSH_USER_DIR, new File(".").getCanonicalPath());
+        }
+
         // Load profile scripts
         new ScriptLoader(this).loadProfileScripts();
 
@@ -256,11 +255,13 @@ public class ShellImpl
             }
         }
 
-        // Unless the user wants us to shut up, then display a nice welcome banner
+        // Display the welcome message
         if (!io.isQuiet()) {
-            io.out.println("@|bold,red Apache Maven| @|bold Shell|");
-            io.out.println(StringUtils.repeat("-", io.getTerminal().getTerminalWidth() - 1));
-            io.out.flush();
+            String msg = branding.getWelcomeMessage();
+            if (msg != null) {
+                io.out.println(msg);
+                io.out.flush();
+            }
         }
 
         // Check if there are args, and run them and then enter interactive
@@ -274,6 +275,15 @@ public class ShellImpl
         }
         finally {
             ShellHolder.set(lastShell);
+        }
+
+        // Display the goodbye message
+        if (!io.isQuiet()) {
+            String msg = branding.getGoodbyeMessage();
+            if (msg != null) {
+                io.out.println(msg);
+                io.out.flush();
+            }
         }
 
         // If any exit notification occurred while running, then puke it up

@@ -17,33 +17,41 @@
  * under the License.
  */
 
-package org.apache.maven.shell;
+package org.apache.maven.shell.core;
 
 /**
- * Common shell variable names.
+ * Container and parser for name=value bits.
  *
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public interface VariableNames
+public class NameValue
 {
-    String MVNSH_HOME = "mvnsh.home";
+    public final String name;
 
-    String MVNSH_PROGRAM = "mvnsh.program";
+    public final String value;
 
-    String MVNSH_VERSION = "mvnsh.version";
+    private NameValue(final String name, final String value) {
+        this.name = name;
+        this.value = value;
+    }
 
-    String MVNSH_USER_DIR = "mvnsh.user.dir";
+    public static NameValue parse(final String input) {
+        assert input != null;
 
-    String MVNSH_USER_HOME = "mvnsh.user.home";
+        String name, value;
+        int i = input.indexOf('=');
 
-    String MVNSH_PROMPT = "mvnsh.prompt";
+        if (i == -1) {
+            name = input;
+            value = Boolean.TRUE.toString();
+        }
+        else {
+            name = input.substring(0, i);
+            value = input.substring(i + 1, input.length());
+        }
+        name = name.trim();
 
-    String MVNSH_HISTORY = "mvnsh.history";
-
-    String MVNSH_SHOW_STACKTRACE = "mvnsh.show.stacktrace";
-
-    String MVNSH_LOG_CONSOLE_LEVEL = "mvnsh.log.console.level";
-
-    String LAST_RESULT = "_";
+        return new NameValue(name, value);
+    }
 }

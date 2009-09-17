@@ -42,11 +42,13 @@ public class ConsolePrompterImpl
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
+    private static final String DEFAULT_PROMPT = "> ";
+
+    // NOTE: Have to use %{} here to avoid causing problems with ${} variable expansion
+
     private final Interpolator interp = new StringSearchInterpolator("%{", "}");
 
     private final AnsiRenderer renderer = new AnsiRenderer();
-
-    private final String defaultPrompt = "> ";
 
     private final Variables vars;
 
@@ -55,7 +57,6 @@ public class ConsolePrompterImpl
         this.vars = vars;
 
         interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));
-
         interp.addValueSource(new AbstractValueSource(false) {
             public Object getValue(final String expression) {
                 return vars.get(expression);
@@ -78,7 +79,7 @@ public class ConsolePrompterImpl
 
         // Use a default prompt if we don't have anything here
         if (prompt == null) {
-            prompt = defaultPrompt;
+            prompt = DEFAULT_PROMPT;
         }
 
         // Encode ANSI muck if it looks like there are codes encoded

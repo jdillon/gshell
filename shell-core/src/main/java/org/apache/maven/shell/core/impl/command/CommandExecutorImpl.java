@@ -69,6 +69,7 @@ public class CommandExecutorImpl
 
     @Requirement
     private CommandDocumenter commandDocumeter;
+    private static final String COMMAND_DOT = "command.";
 
     public Object execute(final Shell shell, final String line) throws Exception {
         assert shell != null;
@@ -141,7 +142,7 @@ public class CommandExecutorImpl
 
             if (!(command instanceof OpaqueArguments)) {
                 Processor clp = new Processor(command);
-                clp.setMessages(new PrefixingMessageSource(command.getMessages(), "command."));
+                clp.setMessages(new PrefixingMessageSource(command.getMessages(), COMMAND_DOT));
                 CommandHelpSupport help = new CommandHelpSupport();
                 clp.addBean(help);
 

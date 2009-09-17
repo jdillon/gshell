@@ -22,6 +22,7 @@ package org.apache.maven.shell.core;
 import jline.Completor;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.Branding;
 import org.apache.maven.shell.command.CommandExecutor;
 import org.apache.maven.shell.console.Console;
 import org.apache.maven.shell.core.impl.CommandRegistrationAgent;
@@ -50,6 +51,8 @@ public class ShellBuilder
 
     private PlexusContainer container;
 
+    private Branding branding;
+
     private IO io;
 
     private Variables variables;
@@ -77,6 +80,11 @@ public class ShellBuilder
     public static PlexusContainer createContainer() throws PlexusContainerException {
         ContainerConfiguration config = new DefaultContainerConfiguration();
         return new DefaultPlexusContainer(config);
+    }
+
+    public ShellBuilder setBranding(final Branding branding) {
+        this.branding = branding;
+        return this;
     }
 
     public ShellBuilder setIo(final IO io) {
@@ -111,9 +119,13 @@ public class ShellBuilder
     }
 
     public Shell create() throws Exception {
+        if (branding == null) {
+            throw new IllegalStateException("Missing branding");
+        }
+        
         // Create the shell instance
         CommandExecutor executor = container.lookup(CommandExecutor.class);
-        ShellImpl shell = new ShellImpl(executor, io, variables);
+        ShellImpl shell = new ShellImpl(branding, executor, io, variables);
         shell.setPrompter(prompter);
         shell.setErrorHandler(errorHandler);
         shell.setCompleters(completers);

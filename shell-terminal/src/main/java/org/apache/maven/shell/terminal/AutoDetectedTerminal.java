@@ -37,6 +37,8 @@ public class AutoDetectedTerminal
 {
     public static final String JLINE_TERMINAL = "jline.terminal";
 
+    public static final String JLINE_NOBELL = "jline.nobell";
+
     public static final String AUTO = "auto";
 
     public static final String UNIX = "unix";

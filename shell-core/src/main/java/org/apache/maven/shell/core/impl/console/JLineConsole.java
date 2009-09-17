@@ -25,6 +25,7 @@ import jline.ConsoleReader;
 import jline.History;
 import org.apache.maven.shell.console.Console;
 import org.apache.maven.shell.io.IO;
+import org.apache.maven.shell.terminal.AutoDetectedTerminal;
 
 import java.io.IOException;
 
@@ -72,7 +73,7 @@ public class JLineConsole
 
         reader = io.createConsoleReader();
         reader.setUsePagination(true);
-        if (Boolean.getBoolean("jline.nobell")) {
+        if (Boolean.getBoolean(AutoDetectedTerminal.JLINE_NOBELL)) {
             reader.setBellEnabled(false);
         }
         reader.setCompletionHandler(new CandidateListCompletionHandler());
