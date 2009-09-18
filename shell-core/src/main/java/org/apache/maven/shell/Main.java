@@ -17,13 +17,9 @@
  * under the License.
  */
 
-package org.apache.maven.shell.core;
+package org.apache.maven.shell;
 
 import jline.Completor;
-import org.apache.maven.shell.Branding;
-import org.apache.maven.shell.Shell;
-import org.apache.maven.shell.VariableNames;
-import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.ansi.Ansi;
 import org.apache.maven.shell.cli.Argument;
 import org.apache.maven.shell.cli.Option;
@@ -31,6 +27,7 @@ import org.apache.maven.shell.cli.Printer;
 import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.cli.Processor;
 import org.apache.maven.shell.console.completer.AggregateCompleter;
+import org.apache.maven.shell.core.ShellBuilder;
 import org.apache.maven.shell.core.impl.BrandingImpl;
 import org.apache.maven.shell.core.impl.console.ConsoleErrorHandlerImpl;
 import org.apache.maven.shell.core.impl.console.ConsolePrompterImpl;

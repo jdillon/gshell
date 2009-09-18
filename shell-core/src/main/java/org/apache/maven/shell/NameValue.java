@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.maven.shell.core;
+package org.apache.maven.shell;
 
 /**
  * Container and parser for name=value bits.

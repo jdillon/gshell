@@ -43,10 +43,6 @@ public class EventManagerImpl
 
     private final Set<EventListener> listeners = new LinkedHashSet<EventListener>();
 
-    //
-    // EventManager
-    //
-
     public void addListener(final EventListener listener) {
         assert listener != null;
 

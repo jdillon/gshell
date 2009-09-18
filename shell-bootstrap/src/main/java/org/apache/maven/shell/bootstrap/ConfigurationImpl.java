@@ -44,7 +44,7 @@ public class ConfigurationImpl
 
     private static final int FAILURE_EXIT_CODE = 100;
 
-    private static final String MAIN_CLASS = "org.apache.maven.shell.core.Main";
+    private static final String MAIN_CLASS = "org.apache.maven.shell.Main";
 
     private Properties props;
 
