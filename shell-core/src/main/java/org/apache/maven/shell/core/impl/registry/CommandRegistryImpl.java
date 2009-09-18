@@ -52,6 +52,13 @@ public class CommandRegistryImpl
     @Requirement
     private EventManager eventManager;
 
+    public CommandRegistryImpl() {}
+
+    public CommandRegistryImpl(final EventManager eventManager) {
+        assert eventManager != null;
+        this.eventManager = eventManager;
+    }
+
     public void registerCommand(final String name, final Command command) throws DuplicateCommandException {
         assert name != null;
 

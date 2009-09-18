@@ -49,6 +49,13 @@ public class AliasRegistryImpl
     @Requirement
     private EventManager eventManager;
 
+    public AliasRegistryImpl() {}
+
+    public AliasRegistryImpl(final EventManager eventManager) {
+        assert eventManager != null;
+        this.eventManager = eventManager;
+    }
+
     public void registerAlias(final String name, final String alias) {
         assert name != null;
         assert alias != null;

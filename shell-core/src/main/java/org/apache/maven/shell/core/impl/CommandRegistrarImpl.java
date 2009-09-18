@@ -56,6 +56,15 @@ public class CommandRegistrarImpl
     @Requirement
     private CommandRegistry commandRegistry;
 
+    public CommandRegistrarImpl() {}
+    
+    public CommandRegistrarImpl(final PlexusContainer container, final CommandRegistry commandRegistry) {
+        assert container != null;
+        assert commandRegistry != null;
+        this.container = container;
+        this.commandRegistry = commandRegistry;
+    }
+
     public void registerCommands() throws Exception {
         List<CommandsConfiguration> configurations = discoverConfigurations();
 
