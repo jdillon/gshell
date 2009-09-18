@@ -21,6 +21,7 @@ package org.apache.maven.shell.core.impl.console;
 
 import org.apache.maven.shell.VariableNames;
 import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.Branding;
 import org.apache.maven.shell.ansi.AnsiRenderer;
 import org.apache.maven.shell.console.Console;
 import org.codehaus.plexus.interpolation.AbstractValueSource;
@@ -28,6 +29,7 @@ import org.codehaus.plexus.interpolation.InterpolationException;
 import org.codehaus.plexus.interpolation.Interpolator;
 import org.codehaus.plexus.interpolation.PropertiesBasedValueSource;
 import org.codehaus.plexus.interpolation.StringSearchInterpolator;
+import org.codehaus.plexus.interpolation.PrefixedObjectValueSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,9 +44,11 @@ public class ConsolePrompterImpl
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
+    private static final String SHELL_BRANDING = "shell.branding";
+
     private static final String DEFAULT_PROMPT = "> ";
 
-    // NOTE: Have to use %{} here to avoid causing problems with ${} variable expansion
+    // NOTE: Have to use %{} here to avoid causing problems with ${} variable interpolation
 
     private final Interpolator interp = new StringSearchInterpolator("%{", "}");
 
@@ -52,33 +56,40 @@ public class ConsolePrompterImpl
 
     private final Variables vars;
 
-    public ConsolePrompterImpl(final Variables vars) {
-        assert vars != null;
-        this.vars = vars;
+    private final Branding branding;
 
-        interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));
+    public ConsolePrompterImpl(final Variables vars, final Branding branding) {
+        assert vars != null;
+        assert branding != null;
+        this.vars = vars;
+        this.branding = branding;
+
         interp.addValueSource(new AbstractValueSource(false) {
             public Object getValue(final String expression) {
                 return vars.get(expression);
             }
         });
+        interp.addValueSource(new PrefixedObjectValueSource(SHELL_BRANDING, branding));
+        interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));
     }
 
     public String prompt() {
         String prompt = null;
-        String pattern = vars.get(SHELL_PROMPT, String.class);
 
+        String pattern = vars.get(SHELL_PROMPT, String.class);
         if (pattern != null) {
             try {
                 prompt = interp.interpolate(pattern);
             }
             catch (InterpolationException e) {
-                log.error("Failed to render prompt pattern: " + pattern, e);
+                log.warn("Failed to render prompt pattern: " + pattern, e);
             }
         }
 
         // Use a default prompt if we don't have anything here
         if (prompt == null) {
+            // TODO: Maybe use branding.getDefaultPrompt() here, but have to interpolate
+            //       and then handle null again, defaulting to this basic prompt?
             prompt = DEFAULT_PROMPT;
         }
 

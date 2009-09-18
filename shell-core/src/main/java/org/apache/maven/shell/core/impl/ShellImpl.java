@@ -147,6 +147,7 @@ public class ShellImpl
 
         //
         // TODO: Should we delegate all this to branding?
+        //       Or provide a hook for branding to customize variables here?
         //
 
         // Setup default variables

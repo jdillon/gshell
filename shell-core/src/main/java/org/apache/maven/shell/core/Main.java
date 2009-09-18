@@ -221,7 +221,7 @@ public class Main
                     .setBranding(branding)
                     .setIo(io)
                     .setVariables(vars)
-                    .setPrompter(new ConsolePrompterImpl(vars))
+                    .setPrompter(new ConsolePrompterImpl(vars, branding))
                     .setErrorHandler(new ConsoleErrorHandlerImpl(io))
                     .addCompleter(new AggregateCompleter(
                             container.lookup(Completor.class, "alias-name"),
