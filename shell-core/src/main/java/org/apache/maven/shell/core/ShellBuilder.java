@@ -25,7 +25,7 @@ import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.command.CommandExecutor;
 import org.apache.maven.shell.console.Console;
-import org.apache.maven.shell.core.impl.CommandRegistrationAgent;
+import org.apache.maven.shell.core.impl.CommandRegistrar;
 import org.apache.maven.shell.core.impl.ShellImpl;
 import org.apache.maven.shell.core.impl.Slf4jLoggerManager;
 import org.apache.maven.shell.io.IO;
@@ -135,7 +135,7 @@ public class ShellBuilder
         
         // Maybe register default commands
         if (registerCommands) {
-            getContainer().lookup(CommandRegistrationAgent.class).registerCommands();
+            getContainer().lookup(CommandRegistrar.class).registerCommands();
         }
 
         log.debug("Created shell: {}", shell);

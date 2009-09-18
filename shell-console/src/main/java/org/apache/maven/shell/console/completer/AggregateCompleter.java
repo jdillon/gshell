@@ -53,6 +53,7 @@ public class AggregateCompleter
         return completers;
     }
 
+    @SuppressWarnings({"unchecked"})
     public int complete(final String buffer, final int cursor, final List candidates) {
         // buffer could be null
         assert candidates != null;
@@ -74,7 +75,6 @@ public class AggregateCompleter
         // Append candidates from completions which have the same cursor position as max
         for (Completion completion : completions) {
             if (completion.cursor == max) {
-                // noinspection unchecked
                 candidates.addAll(completion.candidates);
             }
         }
@@ -88,10 +88,9 @@ public class AggregateCompleter
 
         public int cursor;
 
+        @SuppressWarnings({"unchecked"})
         public Completion(final List candidates) {
             assert candidates != null;
-
-            // noinspection unchecked
             this.candidates = new LinkedList<String>(candidates);
         }
 
