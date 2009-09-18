@@ -76,4 +76,8 @@ public abstract class CommandSupport
             throw new InternalError();
         }
     }
+
+    public Command copy() {
+        return (Command)clone();
+    }
 }

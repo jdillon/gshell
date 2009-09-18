@@ -25,17 +25,15 @@ import org.apache.maven.shell.event.EventManager;
 import org.apache.maven.shell.registry.CommandRegistry;
 import org.apache.maven.shell.registry.DuplicateCommandException;
 import org.apache.maven.shell.registry.NoSuchCommandException;
-import org.codehaus.plexus.PlexusContainer;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
-import org.codehaus.plexus.component.repository.exception.ComponentLookupException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * The default {@link CommandRegistry} component.
@@ -49,15 +47,12 @@ public class CommandRegistryImpl
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private final Set<String> commands = new LinkedHashSet<String>();
-
-    @Requirement
-    private PlexusContainer container;
+    private final Map<String,Command> commands = new LinkedHashMap<String,Command>();
 
     @Requirement
     private EventManager eventManager;
 
-    public void registerCommand(final String name) throws DuplicateCommandException {
+    public void registerCommand(final String name, final Command command) throws DuplicateCommandException {
         assert name != null;
 
         log.debug("Registering command: {}", name);
@@ -65,10 +60,15 @@ public class CommandRegistryImpl
         if (containsCommand(name)) {
             throw new DuplicateCommandException(name);
         }
-        
-        commands.add(name);
 
-        eventManager.publish(new CommandRegisteredEvent(name));
+        // Inject the name of the command
+        if (command instanceof NameAware) {
+            ((NameAware)command).setName(name);
+        }
+        
+        commands.put(name, command);
+
+        eventManager.publish(new CommandRegisteredEvent(name, command));
     }
 
     public void removeCommand(final String name) throws NoSuchCommandException {
@@ -94,29 +94,16 @@ public class CommandRegistryImpl
             throw new NoSuchCommandException(name);
         }
 
-        Command command;
-        try {
-            command = container.lookup(Command.class, name);
-        }
-        catch (ComponentLookupException e) {
-            throw new NoSuchCommandException(name);
-        }
-
-        // Inject the name of the command
-        if (command instanceof NameAware) {
-            ((NameAware)command).setName(name);
-        }
-
-        return command;
+        return commands.get(name);
     }
 
     public boolean containsCommand(final String name) {
         assert name != null;
 
-        return commands.contains(name);
+        return commands.containsKey(name);
     }
 
     public Collection<String> getCommandNames() {
-        return Collections.unmodifiableSet(commands);
+        return Collections.unmodifiableSet(commands.keySet());
     }
 }

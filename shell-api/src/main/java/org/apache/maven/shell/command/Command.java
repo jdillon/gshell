@@ -36,7 +36,9 @@ public interface Command
     MessageSource getMessages();
 
     Completor[] getCompleters();
-    
+
+    Command copy();
+
     /**
      * Execute the command action.
      *

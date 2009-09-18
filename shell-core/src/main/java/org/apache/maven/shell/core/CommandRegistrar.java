@@ -20,8 +20,10 @@
 package org.apache.maven.shell.core;
 
 import org.apache.maven.shell.registry.CommandRegistry;
+import org.apache.maven.shell.command.Command;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
+import org.codehaus.plexus.PlexusContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,6 +50,9 @@ public class CommandRegistrar
     private static final String COMMANDS_PROPERTIES = "META-INF/org.apache.maven.shell/commands.properties";
 
     @Requirement
+    private PlexusContainer container;
+
+    @Requirement
     private CommandRegistry commandRegistry;
 
     public void registerCommands() throws Exception {
@@ -60,7 +65,8 @@ public class CommandRegistrar
                 log.debug("Registering commands for: {}", config);
 
                 for (String name : config.getAutoRegisterCommands()) {
-                    commandRegistry.registerCommand(name);
+                    Command command = container.lookup(Command.class, name);
+                    commandRegistry.registerCommand(name, command);
                 }
             }
         }

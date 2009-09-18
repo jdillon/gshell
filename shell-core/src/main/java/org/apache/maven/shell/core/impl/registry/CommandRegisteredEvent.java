@@ -19,6 +19,8 @@
 
 package org.apache.maven.shell.core.impl.registry;
 
+import org.apache.maven.shell.command.Command;
+
 import java.util.EventObject;
 
 /**
@@ -34,15 +36,23 @@ public class CommandRegisteredEvent
 
     private final String name;
 
-    public CommandRegisteredEvent(final String name) {
+    private final Command command;
+
+    public CommandRegisteredEvent(final String name, final Command command) {
         super(name);
 
         assert name != null;
-
         this.name = name;
+
+        assert command != null;
+        this.command = command;
     }
 
     public String getName() {
         return name;
+    }
+
+    public Command getCommand() {
+        return command;
     }
 }

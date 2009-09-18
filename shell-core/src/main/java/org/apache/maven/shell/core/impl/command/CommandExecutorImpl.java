@@ -209,6 +209,7 @@ public class CommandExecutorImpl
 
         if (command == null) {
             command = resolveRegisteredCommand(name);
+            command = command.copy();
         }
         
         if (command == null) {

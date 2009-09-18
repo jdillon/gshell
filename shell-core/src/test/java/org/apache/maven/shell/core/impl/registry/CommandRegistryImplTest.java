@@ -21,6 +21,8 @@ package org.apache.maven.shell.core.impl.registry;
 
 import org.apache.maven.shell.registry.CommandRegistry;
 import org.apache.maven.shell.testsupport.PlexusTestSupport;
+import org.apache.maven.shell.command.CommandSupport;
+import org.apache.maven.shell.command.CommandContext;
 import org.junit.After;
 import static org.junit.Assert.fail;
 import org.junit.Before;
@@ -54,7 +56,28 @@ public class CommandRegistryImplTest
     @Test
     public void testRegisterCommandInvalid() throws Exception {
         try {
-            registry.registerCommand(null);
+            registry.registerCommand(null, null);
+            fail();
+        }
+        catch (AssertionError e) {
+            // ignore
+        }
+
+        try {
+            registry.registerCommand("foo", null);
+            fail();
+        }
+        catch (AssertionError e) {
+            // ignore
+        }
+
+        try {
+            registry.registerCommand(null, new CommandSupport() {
+                public Object execute(CommandContext context) throws Exception {
+                    // ignore
+                    return null;
+                }
+            });
             fail();
         }
         catch (AssertionError e) {
