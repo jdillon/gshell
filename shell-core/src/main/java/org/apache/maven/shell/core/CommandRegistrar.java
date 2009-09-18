@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.maven.shell.core.impl;
+package org.apache.maven.shell.core;
 
 import org.apache.maven.shell.registry.CommandRegistry;
 import org.codehaus.plexus.component.annotations.Component;
