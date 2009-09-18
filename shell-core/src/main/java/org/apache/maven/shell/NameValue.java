@@ -40,8 +40,8 @@ public class NameValue
         assert input != null;
 
         String name, value;
-        int i = input.indexOf('=');
 
+        int i = input.indexOf('=');
         if (i == -1) {
             name = input;
             value = Boolean.TRUE.toString();
@@ -50,8 +50,7 @@ public class NameValue
             name = input.substring(0, i);
             value = input.substring(i + 1, input.length());
         }
-        name = name.trim();
 
-        return new NameValue(name, value);
+        return new NameValue(name.trim(), value);
     }
 }
