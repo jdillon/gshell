@@ -98,7 +98,7 @@ public class CommandsCompleter
     private void addCompleter(final String name) throws Exception {
         assert name != null;
 
-        log.debug("Adding completer for: {}", name);
+        log.trace("Adding completer for: {}", name);
         
         List<Completor> children = new ArrayList<Completor>();
 
@@ -114,7 +114,7 @@ public class CommandsCompleter
         }
         else {
             for (Completor completer : completers) {
-                log.debug("Adding completer: {}", completer);
+                log.trace("Adding completer: {}", completer);
                 children.add(completer != null ? completer : TerminalCompleter.INSTANCE);
             }
         }

@@ -60,7 +60,7 @@ public class CommandRegistryImpl
     public void registerCommand(final String name) throws DuplicateCommandException {
         assert name != null;
 
-        log.info("Registering command: {}", name);
+        log.debug("Registering command: {}", name);
 
         if (containsCommand(name)) {
             throw new DuplicateCommandException(name);
@@ -74,7 +74,7 @@ public class CommandRegistryImpl
     public void removeCommand(final String name) throws NoSuchCommandException {
         assert name != null;
 
-        log.debug("Removing command: {}", name);
+        log.trace("Removing command: {}", name);
 
         if (!containsCommand(name)) {
             throw new NoSuchCommandException(name);
@@ -88,7 +88,7 @@ public class CommandRegistryImpl
     public Command getCommand(final String name) throws NoSuchCommandException {
         assert name != null;
 
-        log.info("Getting command: {}", name);
+        log.trace("Getting command: {}", name);
 
         if (!containsCommand(name)) {
             throw new NoSuchCommandException(name);

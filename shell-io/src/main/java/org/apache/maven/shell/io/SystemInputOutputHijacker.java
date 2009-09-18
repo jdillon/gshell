@@ -159,8 +159,8 @@ public class SystemInputOutputHijacker
     public static synchronized void register(final InputStream in, final PrintStream out, final PrintStream err) {
         ensureInstalled();
 
-        if (log.isDebugEnabled()) {
-            log.debug("Registering: {} -> {}, {}, {}", new Object[] { Thread.currentThread(), in, out, err });
+        if (log.isTraceEnabled()) {
+            log.trace("Registering: {} -> {}, {}, {}", new Object[] { Thread.currentThread(), in, out, err });
         }
         
         StreamRegistration prev = registration(false);
@@ -194,7 +194,7 @@ public class SystemInputOutputHijacker
 
         registrations.set(cur.previous);
 
-        log.debug("Deregistered: {}", Thread.currentThread());
+        log.trace("Deregistered: {}", Thread.currentThread());
     }
 
     /**
@@ -226,7 +226,7 @@ public class SystemInputOutputHijacker
     }
 
     //
-    // System Stream Restoration.  This stuff needs more testing, not sure its working as I'd like... :-(
+    // System Stream Restoration.
     //
 
     /**
@@ -271,22 +271,27 @@ public class SystemInputOutputHijacker
             return current().getOutput(type);
         }
 
+        @Override
         public void write(final int b) {
             get().write(b);
         }
 
+        @Override
         public void write(final byte b[]) throws IOException {
             get().write(b, 0, b.length);
         }
 
+        @Override
         public void write(final byte[] b, final int off, final int len) {
             get().write(b, off, len);
         }
 
+        @Override
         public void flush() {
             get().flush();
         }
 
+        @Override
         public void close() {
             get().close();
         }

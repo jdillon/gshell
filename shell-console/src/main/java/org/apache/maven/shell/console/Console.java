@@ -35,6 +35,8 @@ public abstract class Console
 {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
+    private static final String DEFAULT_PROMPT = "> ";
+
     protected boolean running = false;
 
     protected boolean breakOnNull = true;
@@ -45,7 +47,7 @@ public abstract class Console
 
     protected Prompter prompter = new Prompter() {
         public String prompt() {
-            return "> ";
+            return DEFAULT_PROMPT;
         }
     };
 
@@ -119,7 +121,7 @@ public abstract class Console
     }
 
     public void run() {
-        log.debug("Running");
+        log.trace("Running");
 
         running = true;
 
@@ -129,14 +131,14 @@ public abstract class Console
             }
             catch (Throwable t) {
                 // Don't use {} here so we get the throwable detail in the log stream
-                log.debug("Work failed", t);
+                log.trace("Work failed", t);
 
                 if (errorHandler != null) {
                     ErrorHandler.Result result = errorHandler.handleError(t);
 
                     // Allow the error handler to request that the loop stop
                     if (result == ErrorHandler.Result.STOP) {
-                        log.debug("Error handler requested STOP");
+                        log.trace("Error handler requested STOP");
                         running = false;
                     }
                 }
@@ -149,7 +151,7 @@ public abstract class Console
     protected boolean work() throws Exception {
         String line = readLine(prompter.prompt());
 
-        log.debug("Read line: {}", line);
+        log.trace("Read line: {}", line);
 
         // Log the line as HEX if trace is enabled
         if (log.isTraceEnabled()) {
@@ -176,7 +178,7 @@ public abstract class Console
 
         // Allow executor to request that the loop stop
         if (result == Executor.Result.STOP) {
-            log.debug("Executor requested STOP");
+            log.trace("Executor requested STOP");
             return false;
         }
 

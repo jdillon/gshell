@@ -31,6 +31,7 @@ import org.apache.maven.shell.console.Console;
 import org.apache.maven.shell.core.ScriptLoader;
 import org.apache.maven.shell.core.impl.console.JLineConsole;
 import org.apache.maven.shell.io.IO;
+import org.apache.maven.shell.io.SystemInputOutputHijacker;
 import org.apache.maven.shell.notification.ExitNotification;
 import org.apache.maven.shell.terminal.Constants;
 import org.slf4j.Logger;
@@ -146,6 +147,10 @@ public class ShellImpl
     private synchronized void open() throws Exception {
         log.debug("Opening");
 
+        if (!SystemInputOutputHijacker.isInstalled()) {
+            SystemInputOutputHijacker.install();
+        }
+
         //
         // TODO: Should we delegate all this to branding?
         //       Or provide a hook for branding to customize variables here?
@@ -161,7 +166,6 @@ public class ShellImpl
         if (!variables.contains(SHELL_USER_HOME)) {
             variables.set(SHELL_USER_HOME, branding.getUserHomeDir(), false);
         }
-
         if (!variables.contains(SHELL_PROMPT)) {
             variables.set(SHELL_PROMPT, branding.getPrompt());
         }

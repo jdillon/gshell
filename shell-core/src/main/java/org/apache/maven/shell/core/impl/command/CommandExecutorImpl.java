@@ -201,7 +201,7 @@ public class CommandExecutorImpl
     private Command resolveCommand(final String name) throws CommandException {
         assert name != null;
 
-        log.debug("Resolving command for name: {}", name);
+        log.trace("Resolving command: {}", name);
 
         Command command;
 
@@ -215,7 +215,7 @@ public class CommandExecutorImpl
             throw new CommandException("Unable to resolve command: " + name);
         }
 
-        log.debug("Resolved command: {}", command);
+        log.trace("Resolved command: {}", command);
 
         return command;
     }
