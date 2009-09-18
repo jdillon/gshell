@@ -393,10 +393,10 @@
 
     <profiles>
         <profile>
-            <id>framework</id>
+            <id>smaller</id>
             <activation>
                 <property>
-                    <name>framework</name>
+                    <name>smaller</name>
                 </property>
             </activation>
             <build>
