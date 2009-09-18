@@ -27,9 +27,8 @@ import org.apache.maven.shell.cli.Printer;
 import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.cli.Processor;
 import org.apache.maven.shell.console.completer.AggregateCompleter;
-import org.apache.maven.shell.core.ShellBuilder;
 import org.apache.maven.shell.core.NameValue;
-import org.apache.maven.shell.BrandingImpl;
+import org.apache.maven.shell.core.ShellBuilder;
 import org.apache.maven.shell.core.impl.console.ConsoleErrorHandlerImpl;
 import org.apache.maven.shell.core.impl.console.ConsolePrompterImpl;
 import org.apache.maven.shell.i18n.MessageSource;
@@ -118,19 +117,16 @@ public class Main
         }
     }
 
-    @Option(name="-c", aliases={"--commands"})
-    private String commands;
+    @Option(name="-c", aliases={"--command"}, argumentRequired=true)
+    private String command;
 
-    @Argument()
-    private List<String> commandArgs = null;
-
-    @Option(name="-D", aliases={"--define"})
+    @Option(name="-D", aliases={"--define"}, argumentRequired=true)
     private void setVariable(final String input) {
         NameValue nv = NameValue.parse(input);
         vars.set(nv.name, nv.value);
     }
 
-    @Option(name="-P", aliases={"--property"})
+    @Option(name="-P", aliases={"--property"}, argumentRequired=true)
     private void setSystemProperty(final String input) {
         NameValue nv = NameValue.parse(input);
         System.setProperty(nv.name, nv.value);
@@ -142,9 +138,12 @@ public class Main
     }
 
     @Option(name="-T", aliases={"--terminal"}, argumentRequired=true)
-    private void setTerminalType(final String type) {
+    private void setTerminalType(final AutoDetectedTerminal.TYPE type) {
         AutoDetectedTerminal.configure(type);
     }
+
+    @Argument()
+    private List<String> commandArgs = null;
 
     private void exit(final int code) {
         io.flush();
@@ -157,7 +156,7 @@ public class Main
         Branding branding = new BrandingImpl();
 
         // Setup environment defaults
-        setTerminalType(AutoDetectedTerminal.AUTO);
+        setTerminalType(AutoDetectedTerminal.TYPE.AUTO);
         setConsoleLogLevel(WARN);
 
         // Process command line options & arguments
@@ -227,17 +226,11 @@ public class Main
                     ))
                     .create();
 
-            // clp gives us a list, but we need an array
-            String[] _args = {};
-            if (commandArgs != null) {
-                commandArgs.toArray(new String[commandArgs.size()]);
-            }
-
-            if (commands != null) {
-                shell.execute(commands);
+            if (command != null) {
+                shell.execute(command);
             }
             else {
-                shell.run((Object[])_args);
+                shell.run(commandArgs != null ? commandArgs.toArray() : new Object[0]);
             }
         }
         catch (ExitNotification n) {

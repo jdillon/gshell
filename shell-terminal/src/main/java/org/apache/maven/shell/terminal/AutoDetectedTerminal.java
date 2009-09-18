@@ -36,6 +36,13 @@ public class AutoDetectedTerminal
     extends jline.Terminal
     implements Constants
 {
+    public static enum TYPE {
+        AUTO,
+        UNIX,
+        WIN,
+        NONE
+    }
+
     private final Terminal delegate;
 
     public AutoDetectedTerminal() {
@@ -107,6 +114,10 @@ public class AutoDetectedTerminal
         return delegate.getDefaultBindings();
     }
 
+    public static String configure(final TYPE type) {
+        return configure(type.name());
+    }
+    
     public static String configure(String type) {
         if (type == null) {
             type = AUTO;

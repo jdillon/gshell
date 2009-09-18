@@ -38,7 +38,6 @@ public class EnumHandler<T extends Enum<T>>
         super(desc, setter);
 
         assert enumType != null;
-        
         this.enumType = enumType;
     }
 
@@ -70,11 +69,15 @@ public class EnumHandler<T extends Enum<T>>
         StringBuilder buff = new StringBuilder();
         buff.append('[');
 
-        for (T constants : enumType.getEnumConstants()) {
-            buff.append(constants).append(" | ");
+        T[] constants = enumType.getEnumConstants();
+        
+        for (int i=0; i<constants.length; i++) {
+            buff.append(constants[i].name().toLowerCase());
+            if (i+1<constants.length) {
+                buff.append('|');
+            }
         }
 
-        buff.delete(buff.length()-3, buff.length());
         buff.append(']');
 
         return buff.toString();
