@@ -322,7 +322,7 @@ public class ShellImpl
             bindings = new BufferedInputStream(new FileInputStream(file));
         }
         else {
-            log.debug("Using default bindings");
+            log.trace("Using default bindings");
             bindings = io.getTerminal().getDefaultBindings();
         }
 
