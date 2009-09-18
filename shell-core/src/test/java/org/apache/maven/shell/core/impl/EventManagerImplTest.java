@@ -22,6 +22,7 @@ package org.apache.maven.shell.core.impl;
 import org.apache.maven.shell.event.EventListener;
 import org.apache.maven.shell.event.EventManager;
 import org.apache.maven.shell.testsupport.PlexusTestSupport;
+import org.apache.maven.shell.core.impl.event.EventManagerImpl;
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;

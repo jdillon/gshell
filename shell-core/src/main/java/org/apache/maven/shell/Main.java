@@ -28,7 +28,7 @@ import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.cli.Processor;
 import org.apache.maven.shell.console.completer.AggregateCompleter;
 import org.apache.maven.shell.core.ShellBuilder;
-import org.apache.maven.shell.core.impl.BrandingImpl;
+import org.apache.maven.shell.MvnshBranding;
 import org.apache.maven.shell.core.impl.console.ConsoleErrorHandlerImpl;
 import org.apache.maven.shell.core.impl.console.ConsolePrompterImpl;
 import org.apache.maven.shell.i18n.MessageSource;
@@ -153,7 +153,7 @@ public class Main
     public void boot(final String[] args) throws Exception {
         assert args != null;
 
-        Branding branding = new BrandingImpl();
+        Branding branding = new MvnshBranding();
 
         // Setup environment defaults
         setTerminalType(AutoDetectedTerminal.AUTO);

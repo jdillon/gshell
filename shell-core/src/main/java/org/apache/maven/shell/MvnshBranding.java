@@ -17,55 +17,26 @@
  * under the License.
  */
 
-package org.apache.maven.shell.testsuite;
-
-import org.apache.maven.shell.BrandingSupport;
-
-import java.io.File;
+package org.apache.maven.shell;
 
 /**
- * Test {@link Branding}.
+ * Branding for <tt>mvnsh</tt>.
  *
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class TestBranding
+public class MvnshBranding
     extends BrandingSupport
 {
-    private File baseDir;
-
-    public TestBranding(final File baseDir) {
-        assert baseDir != null;
-        this.baseDir = baseDir;
+    public String getDisplayName() {
+        return "@|bold,red Apache Maven| @|bold Shell|";
     }
 
-    @Override
-    public String getProgramName() {
-        return "testsh";
+    public String getGoodbyeMessage() {
+        return getMessages().format("goodbye");
     }
 
-    @Override
-    public String getScriptExtension() {
-        return "tsh";
-    }
-
-    @Override
-    public String getVersion() {
-        return "1.0-TEST";
-    }
-
-    @Override
-    public File getShellHomeDir() {
-        return baseDir;
-    }
-
-    @Override
-    public File getUserHomeDir() {
-        return baseDir;
-    }
-
-    @Override
-    public File getUserContextDir() {
-        return resolveFile(new File(getUserHomeDir(), getProgramName()));
+    public String getPrompt() {
+        return String.format("@|bold %s|:%%{%s}> ", getProgramName(), SHELL_USER_DIR);
     }
 }

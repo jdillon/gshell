@@ -17,10 +17,8 @@
  * under the License.
  */
 
-package org.apache.maven.shell.core.impl;
+package org.apache.maven.shell;
 
-import org.apache.maven.shell.Branding;
-import org.apache.maven.shell.VariableNames;
 import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
 import org.codehaus.plexus.util.StringUtils;
@@ -29,24 +27,48 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Properties;
 
 /**
- * The default {@link Branding} component.
+ * Support for {@link Branding) implementations.
  *
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class BrandingImpl
+public class BrandingSupport
     implements Branding, VariableNames
 {
     private final MessageSource messages = new ResourceBundleMessageSource(getClass());
 
+    private final Properties props;
+
+    public BrandingSupport(final Properties props) {
+        if (props == null) {
+            this.props = System.getProperties();
+        }
+        else {
+            this.props = props;
+        }
+    }
+
+    public BrandingSupport() {
+        this(null);
+    }
+    
+    protected MessageSource getMessages() {
+        return messages;
+    }
+
+    protected Properties getProperties() {
+        return props;
+    }
+
     public String getDisplayName() {
-        return "@|bold,red Apache Maven| @|bold Shell|";
+        return getProgramName();
     }
 
     public String getProgramName() {
-        return System.getProperty(SHELL_PROGRAM);
+        return getProperties().getProperty(SHELL_PROGRAM);
     }
 
     public String getScriptExtension() {
@@ -54,7 +76,7 @@ public class BrandingImpl
     }
 
     public String getVersion() {
-        return System.getProperty(SHELL_VERSION);
+        return getProperties().getProperty(SHELL_VERSION);
     }
 
     public String getAboutMessage() {
@@ -77,11 +99,11 @@ public class BrandingImpl
     }
 
     public String getGoodbyeMessage() {
-        return messages.format("goodbye");
+        return null;
     }
 
     public String getPrompt() {
-        return String.format("@|bold %s|:%%{%s}> ", getProgramName(), SHELL_USER_DIR);
+        return String.format("@|bold %s|> ", getProgramName());
     }
 
     public String getProfileScriptName() {
@@ -120,7 +142,7 @@ public class BrandingImpl
     }
 
     public File getUserHomeDir() {
-        return resolveFile(System.getProperty("user.home"));
+        return resolveFile(getProperties().getProperty("user.home"));
     }
 
     public File getUserContextDir() {

@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.maven.shell.core.impl;
+package org.apache.maven.shell.core.impl.event;
 
 import org.apache.maven.shell.event.EventListener;
 import org.apache.maven.shell.event.EventManager;
@@ -55,7 +55,7 @@ public class EventManagerImpl
 
     public void removeListener(final EventListener listener) {
         assert listener != null;
-        
+
         log.trace("Removing listener: {}", listener);
 
         synchronized (listeners) {
@@ -69,7 +69,7 @@ public class EventManagerImpl
         log.trace("Publishing event: {}", event);
 
         EventListener[] targets;
-        
+
         synchronized (listeners) {
             targets = listeners.toArray(new EventListener[listeners.size()]);
         }

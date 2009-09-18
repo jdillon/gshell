@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.maven.shell.core.impl;
+package org.apache.maven.shell.core.impl.plexus;
 
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.logging.AbstractLogger;
