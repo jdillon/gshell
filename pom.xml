@@ -371,7 +371,7 @@
             <build>
                 <plugins>
                     <!--
-                    NOTE: Disable descriptors for more accurate size muck...
+                    NOTE: Remove legal and descriptors for better size.
                     -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -380,6 +380,11 @@
                             <archive>
                                 <addMavenDescriptor>false</addMavenDescriptor>
                             </archive>
+                            <excludes>
+                                <exclude>META-INF/DEPENDENCIES</exclude>
+                                <exclude>META-INF/LICENSE</exclude>
+                                <exclude>META-INF/NOTICE</exclude>
+                            </excludes>
                         </configuration>
                     </plugin>
                 </plugins>
