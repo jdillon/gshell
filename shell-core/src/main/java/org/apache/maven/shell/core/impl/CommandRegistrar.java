@@ -51,34 +51,40 @@ public class CommandRegistrar
     private CommandRegistry commandRegistry;
 
     public void registerCommands() throws Exception {
+        List<CommandsConfiguration> configurations = discoverConfigurations();
+
+        if (!configurations.isEmpty()) {
+            Collections.sort(configurations);
+
+            for (CommandsConfiguration config : configurations) {
+                log.debug("Registering commands for: {}", config);
+
+                for (String name : config.getAutoRegisterCommands()) {
+                    commandRegistry.registerCommand(name);
+                }
+            }
+        }
+    }
+
+    private List<CommandsConfiguration> discoverConfigurations() throws IOException {
         log.debug("Discovering commands configuration");
 
-        List<CommandsConfiguration> configurations = new LinkedList<CommandsConfiguration>();
+        List<CommandsConfiguration> list = new LinkedList<CommandsConfiguration>();
 
-        Enumeration<URL> resources = ClassLoader.getSystemResources(COMMANDS_PROPERTIES);
+        ClassLoader cl = Thread.currentThread().getContextClassLoader();
+        
+        Enumeration<URL> resources = cl.getResources(COMMANDS_PROPERTIES);
         if (resources != null && resources.hasMoreElements()) {
             log.debug("Discovered:");
             while (resources.hasMoreElements()) {
                 URL url = resources.nextElement();
                 log.debug("    {}", url);
                 CommandsConfiguration config = new CommandsConfiguration(url);
-                configurations.add(config);
+                list.add(config);
             }
         }
-        else {
-            log.debug("No commands configuration discovered");
-            return;
-        }
 
-        Collections.sort(configurations);
-
-        for (CommandsConfiguration config : configurations) {
-            log.debug("Registering commands for: {}", config);
-
-            for (String name : config.getAutoRegisterCommands()) {
-                commandRegistry.registerCommand(name);
-            }
-        }
+        return list;
     }
 
     private static class CommandsConfiguration
