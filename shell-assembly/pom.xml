@@ -41,7 +41,7 @@
 
         <dependency>
             <groupId>org.apache.maven.shell</groupId>
-            <artifactId>shell-core</artifactId>
+            <artifactId>shell-mvnsh</artifactId>
         </dependency>
 
         <dependency>
