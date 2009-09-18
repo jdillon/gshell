@@ -27,5 +27,5 @@ package org.apache.maven.shell.core;
  */
 public interface CommandRegistrar
 {
-    public void registerCommands() throws Exception;
+    void registerCommands() throws Exception;
 }

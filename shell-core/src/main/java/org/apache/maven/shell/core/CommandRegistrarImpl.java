@@ -44,6 +44,7 @@ import java.util.Properties;
  */
 @Component(role=CommandRegistrar.class)
 public class CommandRegistrarImpl
+    implements CommandRegistrar
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
