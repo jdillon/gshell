@@ -61,6 +61,8 @@ public class HelpCommand
     @Argument
     private String commandName;
 
+    public HelpCommand() {}
+
     @Override
     public Completor[] getCompleters() {
         assert completers != null;

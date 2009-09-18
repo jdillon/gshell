@@ -51,6 +51,13 @@ public class AliasCommand
     @Argument(index=1, multiValued=true)
     private List<String> target = null;
 
+    public AliasCommand() {}
+
+    public AliasCommand(final AliasRegistry aliasRegistry) {
+        assert aliasRegistry != null;
+        this.aliasRegistry = aliasRegistry;
+    }
+
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
 

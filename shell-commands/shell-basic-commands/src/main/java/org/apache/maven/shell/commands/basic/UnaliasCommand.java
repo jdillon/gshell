@@ -52,6 +52,13 @@ public class UnaliasCommand
     @Argument(index=0, required=true)
     private String name;
 
+    public UnaliasCommand() {}
+
+    public UnaliasCommand(final AliasRegistry aliasRegistry) {
+        assert aliasRegistry != null;
+        this.aliasRegistry = aliasRegistry;
+    }
+
     @Override
     public Completor[] getCompleters() {
         assert completers != null;
