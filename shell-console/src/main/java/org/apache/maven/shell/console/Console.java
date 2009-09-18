@@ -35,8 +35,6 @@ public abstract class Console
 {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
-    private static final String DEFAULT_PROMPT = "> ";
-
     protected boolean running = false;
 
     protected boolean breakOnNull = true;
@@ -145,7 +143,7 @@ public abstract class Console
             }
         }
 
-        log.debug("Finished");
+        log.trace("Finished");
     }
 
     protected boolean work() throws Exception {
@@ -211,6 +209,8 @@ public abstract class Console
 
     public static interface Prompter
     {
+        String DEFAULT_PROMPT = "> ";
+
         String prompt();
     }
 

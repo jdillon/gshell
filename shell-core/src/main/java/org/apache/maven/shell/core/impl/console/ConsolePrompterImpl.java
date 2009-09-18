@@ -46,8 +46,6 @@ public class ConsolePrompterImpl
 
     private static final String SHELL_BRANDING = "shell.branding";
 
-    private static final String DEFAULT_PROMPT = "> ";
-
     // NOTE: Have to use %{} here to avoid causing problems with ${} variable interpolation
 
     private final Interpolator interp = new StringSearchInterpolator("%{", "}");
