@@ -19,127 +19,13 @@
 
 package org.apache.maven.shell.core;
 
-import org.apache.maven.shell.registry.CommandRegistry;
-import org.apache.maven.shell.command.Command;
-import org.codehaus.plexus.component.annotations.Component;
-import org.codehaus.plexus.component.annotations.Requirement;
-import org.codehaus.plexus.PlexusContainer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.net.URL;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Properties;
-
 /**
- * Registers commands in order.
+ * Registers commands.
  *
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-@Component(role=CommandRegistrar.class)
-public class CommandRegistrar
+public interface CommandRegistrar
 {
-    private final Logger log = LoggerFactory.getLogger(getClass());
-
-    private static final String COMMANDS_PROPERTIES = "META-INF/org.apache.maven.shell/commands.properties";
-
-    @Requirement
-    private PlexusContainer container;
-
-    @Requirement
-    private CommandRegistry commandRegistry;
-
-    public void registerCommands() throws Exception {
-        List<CommandsConfiguration> configurations = discoverConfigurations();
-
-        if (!configurations.isEmpty()) {
-            Collections.sort(configurations);
-
-            for (CommandsConfiguration config : configurations) {
-                log.debug("Registering commands for: {}", config);
-
-                for (String name : config.getAutoRegisterCommands()) {
-                    Command command = createCommand(name);
-                    commandRegistry.registerCommand(name, command);
-                }
-            }
-        }
-    }
-
-    protected Command createCommand(final String name) throws Exception{
-        assert name != null;
-        return container.lookup(Command.class, name);
-    }
-
-    private List<CommandsConfiguration> discoverConfigurations() throws IOException {
-        log.debug("Discovering commands configuration");
-
-        List<CommandsConfiguration> list = new LinkedList<CommandsConfiguration>();
-
-        ClassLoader cl = Thread.currentThread().getContextClassLoader();
-        
-        Enumeration<URL> resources = cl.getResources(COMMANDS_PROPERTIES);
-        if (resources != null && resources.hasMoreElements()) {
-            log.debug("Discovered:");
-            while (resources.hasMoreElements()) {
-                URL url = resources.nextElement();
-                log.debug("    {}", url);
-                CommandsConfiguration config = new CommandsConfiguration(url);
-                list.add(config);
-            }
-        }
-
-        return list;
-    }
-
-    private static class CommandsConfiguration
-        implements Comparable<CommandsConfiguration>
-    {
-        private static final String AUTO_REGISTER_PRIORITY = "auto-register-priority";
-
-        private static final String DEFAULT_AUTO_REGISTER_PRIORITY = "50";
-
-        private static final String AUTO_REGISTER_COMMANDS = "auto-register-commands";
-
-        private final URL source;
-
-        private final Properties props = new Properties();
-
-        private CommandsConfiguration(final URL source) throws IOException {
-            assert source != null;
-            this.source = source;
-            props.load(new BufferedInputStream(source.openStream()));
-        }
-
-        public int getAutoRegisterPriority() {
-            return Integer.parseInt(props.getProperty(AUTO_REGISTER_PRIORITY, DEFAULT_AUTO_REGISTER_PRIORITY));
-        }
-
-        public String[] getAutoRegisterCommands() {
-            String tmp = props.getProperty(AUTO_REGISTER_COMMANDS);
-            if (tmp == null) {
-                return new String[0];
-            }
-
-            return tmp.split(",");
-        }
-
-        @Override
-        public int compareTo(final CommandsConfiguration target) {
-            int us = getAutoRegisterPriority();
-            int them = target.getAutoRegisterPriority();
-            return (us<them ? -1 : (us==them ? 0 : 1));
-        }
-
-        @Override
-        public String toString() {
-            return source.toString();
-        }
-    }
+    public void registerCommands() throws Exception;
 }
