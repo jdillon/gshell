@@ -66,4 +66,14 @@ public abstract class CommandSupport
     public Completor[] getCompleters() {
         return null;
     }
+
+    @Override
+    protected Object clone() {
+        try {
+            return super.clone();
+        }
+        catch (CloneNotSupportedException e) {
+            throw new InternalError();
+        }
+    }
 }

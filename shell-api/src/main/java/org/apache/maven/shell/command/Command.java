@@ -29,6 +29,7 @@ import org.apache.maven.shell.i18n.MessageSource;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public interface Command
+    extends Cloneable
 {
     String getName();
 
