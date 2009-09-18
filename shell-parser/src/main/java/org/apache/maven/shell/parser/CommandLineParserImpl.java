@@ -51,7 +51,7 @@ public class CommandLineParserImpl
     public CommandLine parse(final String line) throws Exception {
         assert line != null;
 
-        log.debug("Building command-line for: {}", line);
+        log.trace("Building command-line for: {}", line);
 
         Reader reader = new StringReader(line);
         final ASTCommandLine root;
