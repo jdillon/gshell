@@ -26,43 +26,17 @@
 
     <parent>
         <groupId>org.apache.maven.shell</groupId>
-        <artifactId>shell</artifactId>
+        <artifactId>shell-commands</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>shell-testsuite</artifactId>
-    <name>Maven Shell :: Testsuite</name>
+    <artifactId>shell-maven-commands</artifactId>
+    <name>Maven Shell Commands :: Maven</name>
 
     <dependencies>
         <dependency>
-            <groupId>org.apache.maven.shell</groupId>
-            <artifactId>shell-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.maven.shell</groupId>
-            <artifactId>shell-basic-commands</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.maven.shell</groupId>
-            <artifactId>shell-file-commands</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.maven.shell</groupId>
-            <artifactId>shell-maven-commands</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.maven.shell</groupId>
-            <artifactId>shell-test-commands</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.maven.shell</groupId>
-            <artifactId>shell-testsupport</artifactId>
-            <scope>test</scope>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-embedder</artifactId>
         </dependency>
     </dependencies>
 

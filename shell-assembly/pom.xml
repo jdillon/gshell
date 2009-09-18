@@ -46,9 +46,24 @@
 
         <dependency>
             <groupId>org.apache.maven.shell</groupId>
-            <artifactId>shell-commands</artifactId>
+            <artifactId>shell-basic-commands</artifactId>
         </dependency>
-        
+
+        <dependency>
+            <groupId>org.apache.maven.shell</groupId>
+            <artifactId>shell-file-commands</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.maven.shell</groupId>
+            <artifactId>shell-maven-commands</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.maven.shell</groupId>
+            <artifactId>shell-test-commands</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>

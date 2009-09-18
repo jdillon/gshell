@@ -43,6 +43,10 @@ public class CommandRegistrationAgent
     public void registerCommands() throws CommandException {
         log.debug("Registering commands");
 
+        //
+        // TODO: Load resources to handle which commands to load
+        //
+        
         String[] names = {
             "help",
             "about",
