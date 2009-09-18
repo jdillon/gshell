@@ -42,7 +42,7 @@ import java.util.List;
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-@Component(role=Command.class, hint="ls", instantiationStrategy="per-lookup")
+@Component(role=Command.class, hint="ls")
 public class ListDirectoryCommand
     extends FileCommandSupport
 {

@@ -38,7 +38,7 @@ import org.codehaus.plexus.util.StringUtils;
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-@Component(role= Command.class, hint="mvn", instantiationStrategy="per-lookup")
+@Component(role= Command.class, hint="mvn")
 public class MavenCommand
     extends CommandSupport
     implements OpaqueArguments, VariableNames

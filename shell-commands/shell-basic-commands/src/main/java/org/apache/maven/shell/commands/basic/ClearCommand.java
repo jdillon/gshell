@@ -33,7 +33,7 @@ import org.codehaus.plexus.component.annotations.Component;
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-@Component(role=Command.class, hint="clear", instantiationStrategy="per-lookup")
+@Component(role=Command.class, hint="clear")
 public class ClearCommand
     extends CommandSupport
 {

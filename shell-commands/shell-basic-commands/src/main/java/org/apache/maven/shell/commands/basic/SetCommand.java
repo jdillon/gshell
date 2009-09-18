@@ -45,7 +45,7 @@ import java.util.Properties;
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-@Component(role=Command.class, hint="set", instantiationStrategy="per-lookup")
+@Component(role=Command.class, hint="set")
 public class SetCommand
     extends CommandSupport
 {

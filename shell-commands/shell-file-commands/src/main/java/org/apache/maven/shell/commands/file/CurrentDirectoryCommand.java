@@ -32,7 +32,7 @@ import java.io.File;
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-@Component(role=Command.class, hint="pwd", instantiationStrategy="per-lookup")
+@Component(role=Command.class, hint="pwd")
 public class CurrentDirectoryCommand
     extends FileCommandSupport
 {

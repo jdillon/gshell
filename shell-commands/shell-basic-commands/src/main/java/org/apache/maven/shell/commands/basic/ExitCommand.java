@@ -32,7 +32,7 @@ import org.codehaus.plexus.component.annotations.Component;
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-@Component(role=Command.class, hint="exit", instantiationStrategy="per-lookup")
+@Component(role=Command.class, hint="exit")
 public class ExitCommand
     extends CommandSupport
 {
