@@ -242,13 +242,13 @@
             
             <dependency>
                 <groupId>org.apache.maven.shell</groupId>
-                <artifactId>shell-bootstrap</artifactId>
+                <artifactId>shell-framework</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>org.apache.maven.shell</groupId>
-                <artifactId>shell-framework</artifactId>
+                <artifactId>shell-bootstrap</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
 
@@ -298,10 +298,10 @@
         <module>shell-parser</module>
         <module>shell-core</module>
         <module>shell-framework</module>
-        <module>shell-mvnsh</module>
         <module>shell-commands</module>
-        <module>shell-bootstrap</module>
         <module>shell-testsuite</module>
+        <module>shell-bootstrap</module>
+        <module>shell-mvnsh</module>
         <module>shell-assembly</module>
     </modules>
     
