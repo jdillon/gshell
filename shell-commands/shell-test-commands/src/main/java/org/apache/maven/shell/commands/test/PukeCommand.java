@@ -30,7 +30,7 @@ import org.codehaus.plexus.component.annotations.Component;
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-@Component(role=Command.class, hint="test/puke", instantiationStrategy="per-lookup")
+@Component(role=Command.class, hint="puke", instantiationStrategy="per-lookup")
 public class PukeCommand
     extends CommandSupport
 {
