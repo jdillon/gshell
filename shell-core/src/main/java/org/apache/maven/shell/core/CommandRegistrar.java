@@ -65,11 +65,16 @@ public class CommandRegistrar
                 log.debug("Registering commands for: {}", config);
 
                 for (String name : config.getAutoRegisterCommands()) {
-                    Command command = container.lookup(Command.class, name);
+                    Command command = createCommand(name);
                     commandRegistry.registerCommand(name, command);
                 }
             }
         }
+    }
+
+    protected Command createCommand(final String name) throws Exception{
+        assert name != null;
+        return container.lookup(Command.class, name);
     }
 
     private List<CommandsConfiguration> discoverConfigurations() throws IOException {
