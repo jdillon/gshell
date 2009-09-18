@@ -36,8 +36,7 @@ public class Ansi
         boolean enabled = Terminal.getTerminal().isANSISupported();
 
         if (!enabled) {
-            String force = System.getProperty(Ansi.class.getName() + ".force", "false");
-            enabled = Boolean.valueOf(force);
+            enabled = Boolean.getBoolean(Ansi.class.getName() + ".force");
         }
 
         return enabled;

@@ -50,6 +50,9 @@ public class BooleanHandler
             return 1;
         } 
         else if (descriptor instanceof OptionDescriptor && isKeyValuePair) {
+            //
+            // FIXME: This needs to be global to all handlers
+            //
             String token = params.get(0);
             token = token.substring(token.indexOf('=') + 1, token.length());
             boolean value = Boolean.parseBoolean(token);

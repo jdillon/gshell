@@ -173,7 +173,6 @@ public class Processor
         }
 
         optionHandlers.add(handler);
-
     }
 
     private void checkOptionNotInMap(final String name) throws IllegalAnnotationError {
@@ -215,7 +214,8 @@ public class Processor
 
         public String get(final int idx) throws ProcessingException {
             if (pos + idx >= args.length) {
-                throw new ProcessingException(Messages.MISSING_OPERAND.format(handler.descriptor.toString(), handler.getToken(messages)));
+                throw new ProcessingException(Messages.MISSING_OPERAND.format(
+                        handler.descriptor.toString(), handler.getToken(messages)));
             }
 
             return args[pos + idx];
@@ -230,7 +230,8 @@ public class Processor
         boolean requireOverride = false;
 
         //
-        // TODO: Need to rewrite some of this to allow more posix-style argument processing, like --foo=bar and --foo bar, and -vvvv
+        // TODO: Need to rewrite some of this to allow more posix-style argument processing,
+        //       like --foo=bar and --foo bar, and -vvvv
         //
         
         while (params.hasMore()) {
@@ -278,7 +279,7 @@ public class Processor
             }
 
             try {
-                //Hook up the current handler to the params for error message rendering
+                // Hook up the current handler to the params for error message rendering
                 params.handler = handler;
 
                 // If this is an option which overrides requirements track it
@@ -286,6 +287,10 @@ public class Processor
                     OptionDescriptor d = (OptionDescriptor) handler.descriptor;
                     requireOverride = d.isRequireOverride();
                 }
+
+                //
+                // FIXME: Things like -Dfoo=bar end up processed as value "-Dfoo=bar" instead of "foo=bar"
+                //
                 
                 // Invoker the handler and then skip arguments which it has eaten up
                 int consumed = handler.handle(params);
@@ -317,10 +322,10 @@ public class Processor
     }
 
     //
-    // Option Handler Lookup
+    // Option Handler lookup
     //
     
-    private Handler findOptionHandler(String name) {
+    private Handler findOptionHandler(final String name) {
         Handler handler = findOptionByName(name);
 
         if (handler == null) {
@@ -340,7 +345,7 @@ public class Processor
         return handler;
     }
 
-    private Map<String, Handler> filter(List<Handler> handlers, String keyFilter) {
+    private Map<String, Handler> filter(final List<Handler> handlers, final String keyFilter) {
         Map<String, Handler> map = new TreeMap<String, Handler>();
 
         for (Handler handler : handlers) {
@@ -361,7 +366,7 @@ public class Processor
         return map;
     }
     
-    private Handler findOptionByName(String name) {
+    private Handler findOptionByName(final String name) {
         for (Handler handler : optionHandlers) {
             OptionDescriptor option = (OptionDescriptor)handler.descriptor;
 
