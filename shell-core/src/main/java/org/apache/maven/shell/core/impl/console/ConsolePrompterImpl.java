@@ -19,17 +19,17 @@
 
 package org.apache.maven.shell.core.impl.console;
 
+import org.apache.maven.shell.Branding;
 import org.apache.maven.shell.VariableNames;
 import org.apache.maven.shell.Variables;
-import org.apache.maven.shell.Branding;
 import org.apache.maven.shell.ansi.AnsiRenderer;
 import org.apache.maven.shell.console.Console;
 import org.codehaus.plexus.interpolation.AbstractValueSource;
 import org.codehaus.plexus.interpolation.InterpolationException;
 import org.codehaus.plexus.interpolation.Interpolator;
+import org.codehaus.plexus.interpolation.PrefixedObjectValueSource;
 import org.codehaus.plexus.interpolation.PropertiesBasedValueSource;
 import org.codehaus.plexus.interpolation.StringSearchInterpolator;
-import org.codehaus.plexus.interpolation.PrefixedObjectValueSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
