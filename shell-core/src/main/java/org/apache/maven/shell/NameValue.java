@@ -20,7 +20,7 @@
 package org.apache.maven.shell;
 
 /**
- * Container and parser for name=value bits.
+ * Container and parser for <tt>name=value</tt> bits.
  *
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
