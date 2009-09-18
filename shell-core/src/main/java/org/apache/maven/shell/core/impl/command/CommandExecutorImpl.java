@@ -58,6 +58,8 @@ public class CommandExecutorImpl
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
+    private static final String COMMAND_DOT = "command.";
+    
     @Requirement
     private AliasRegistry aliasRegistry;
 
@@ -69,7 +71,6 @@ public class CommandExecutorImpl
 
     @Requirement
     private CommandDocumenter commandDocumeter;
-    private static final String COMMAND_DOT = "command.";
 
     public Object execute(final Shell shell, final String line) throws Exception {
         assert shell != null;

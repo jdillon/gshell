@@ -85,17 +85,14 @@
 
     <profiles>
         <profile>
-            <id>ubercore</id>
+            <id>framework</id>
             <activation>
                 <property>
-                    <name>ubercore</name>
+                    <name>framework</name>
                 </property>
             </activation>
             <build>
                 <plugins>
-                    <!--
-                    NOTE: The following is just to getOutput the rough size of the basic muck...
-                    -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-shade-plugin</artifactId>
@@ -106,7 +103,7 @@
                                     <goal>shade</goal>
                                 </goals>
                                 <configuration>
-                                    <finalName>mvnsh-${project.version}-core</finalName>
+                                    <finalName>mvnsh-${project.version}-framework</finalName>
                                     <createDependencyReducedPom>false</createDependencyReducedPom>
                                     <keepDependenciesWithProvidedScope>true</keepDependenciesWithProvidedScope>
                                     <transformers>
@@ -122,9 +119,9 @@
                                             <include>org.apache.maven.shell:shell-cli</include>
                                             <include>org.apache.maven.shell:shell-api</include>
                                             <include>org.apache.maven.shell:shell-core</include>
-                                            <include>org.apache.maven.shell:shell-parser</include>
-                                            <include>org.apache.maven.shell:shell-bootstrap</include>
                                             <!--
+                                            <include>org.apache.maven.shell:shell-bootstrap</include>
+                                            <include>org.apache.maven.shell:shell-parser</include>
                                             <include>org.apache.maven.shell:shell-commands</include>
                                             -->
                                         </includes>

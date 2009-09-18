@@ -362,10 +362,10 @@
 
     <profiles>
         <profile>
-            <id>ubercore</id>
+            <id>framework</id>
             <activation>
                 <property>
-                    <name>ubercore</name>
+                    <name>framework</name>
                 </property>
             </activation>
             <build>

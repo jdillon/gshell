@@ -52,13 +52,13 @@ public class ScriptLoader
     }
 
     public void loadProfileScripts() throws Exception {
-        String fileName = shell.getBranding().getProfileScriptName();
+        String fileName = branding.getProfileScriptName();
         loadSharedScript(fileName);
         loadUserScript(fileName);
     }
 
     public void loadInteractiveScripts() throws Exception {
-        String fileName = shell.getBranding().getInteractiveScriptName();
+        String fileName = branding.getInteractiveScriptName();
         loadSharedScript(fileName);
         loadUserScript(fileName);
     }
