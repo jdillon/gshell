@@ -72,6 +72,19 @@ public class CommandExecutorImpl
     @Requirement
     private CommandDocumenter commandDocumeter;
 
+    public CommandExecutorImpl() {}
+
+    public CommandExecutorImpl(final AliasRegistry aliasRegistry, final CommandRegistry commandRegistry, final CommandLineParser parser, final CommandDocumenter commandDocumeter) {
+        assert aliasRegistry != null;
+        this.aliasRegistry = aliasRegistry;
+        assert commandRegistry != null;
+        this.commandRegistry = commandRegistry;
+        assert parser != null;
+        this.parser = parser;
+        assert commandDocumeter != null;
+        this.commandDocumeter = commandDocumeter;
+    }
+
     public Object execute(final Shell shell, final String line) throws Exception {
         assert shell != null;
         assert line != null;

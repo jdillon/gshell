@@ -55,6 +55,15 @@ public class CommandNameCompleter
 
     private final StringsCompleter delegate = new StringsCompleter();
 
+    public CommandNameCompleter() {}
+
+    public CommandNameCompleter(final EventManager eventManager, final CommandRegistry commandRegistry) {
+        assert eventManager != null;
+        this.eventManager = eventManager;
+        assert commandRegistry != null;
+        this.commandRegistry = commandRegistry;
+    }
+
     public void initialize() throws InitializationException {
         assert commandRegistry != null;
         Collection<String> names = commandRegistry.getCommandNames();

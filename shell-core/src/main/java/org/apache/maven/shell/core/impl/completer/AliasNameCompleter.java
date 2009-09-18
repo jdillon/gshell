@@ -55,6 +55,15 @@ public class AliasNameCompleter
 
     private final StringsCompleter delegate = new StringsCompleter();
 
+    public AliasNameCompleter() {}
+    
+    public AliasNameCompleter(final EventManager eventManager, final AliasRegistry aliasRegistry) {
+        assert eventManager != null;
+        this.eventManager = eventManager;
+        assert aliasRegistry != null;
+        this.aliasRegistry = aliasRegistry;
+    }
+
     public void initialize() throws InitializationException {
         assert aliasRegistry != null;
         Collection<String> names = aliasRegistry.getAliasNames();

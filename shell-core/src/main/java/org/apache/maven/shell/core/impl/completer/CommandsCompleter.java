@@ -68,6 +68,15 @@ public class CommandsCompleter
 
     private final AggregateCompleter delegate = new AggregateCompleter();
 
+    public CommandsCompleter() {}
+    
+    public CommandsCompleter(final EventManager eventManager, final CommandRegistry commandRegistry) {
+        assert eventManager != null;
+        this.eventManager = eventManager;
+        assert commandRegistry != null;
+        this.commandRegistry = commandRegistry;
+    }
+
     public void initialize() throws InitializationException {
         try {
             // Populate the initial list of completers from the currently registered commands
