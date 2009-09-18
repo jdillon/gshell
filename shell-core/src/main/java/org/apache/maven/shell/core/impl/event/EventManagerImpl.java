@@ -63,16 +63,22 @@ public class EventManagerImpl
         }
     }
 
+    private EventListener[] getListeners() {
+        EventListener[] listeners;
+
+        synchronized (this.listeners) {
+            listeners = this.listeners.toArray(new EventListener[this.listeners.size()]);
+        }
+        
+        return listeners;
+    }
+
     public void publish(final EventObject event) {
         assert event != null;
 
         log.trace("Publishing event: {}", event);
 
-        EventListener[] targets;
-
-        synchronized (listeners) {
-            targets = listeners.toArray(new EventListener[listeners.size()]);
-        }
+        EventListener[] targets = getListeners();
 
         for (EventListener listener : targets) {
             log.trace("Firing event ({}) to listener: {}", event, listener);
@@ -81,7 +87,7 @@ public class EventManagerImpl
                 listener.onEvent(event);
             }
             catch (Exception e) {
-                log.error("Listener handler raised an exception", e);
+                log.error("Listener raised an exception", e);
             }
         }
     }

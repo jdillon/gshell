@@ -64,16 +64,20 @@ public class OptionDescriptor
     @Override
     public String toString() {
         if (aliases != null && aliases.length > 0) {
-            String str = "";
+            StringBuilder buff = new StringBuilder();
 
             for (String alias : aliases) {
-                if (str.length() > 0) {
-                    str += ", ";
+                if (buff.length() > 0) {
+                    buff.append(", ");
                 }
-                str += alias;
+                buff.append(alias);
             }
+
+            buff.insert(0, " (");
+            buff.insert(0, getName());
+            buff.append(")");
             
-            return getName() + " (" + str + ")";
+            return buff.toString();
         }
         
         return getName();
