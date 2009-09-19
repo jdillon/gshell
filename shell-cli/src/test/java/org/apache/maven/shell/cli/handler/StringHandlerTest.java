@@ -59,9 +59,23 @@ public class StringHandlerTest
         assertEquals("test", bean.s);
     }
 
+    @Test
+    public void test3() throws Exception {
+        clp.process("--one", "test");
+
+        assertEquals("test", bean.s);
+    }
+
+    @Test
+    public void test4() throws Exception {
+        clp.process("--one=test");
+
+        assertEquals("test", bean.s);
+    }
+
     private static class TestBean
     {
-        @Option(name="-1")
+        @Option(name="-1", aliases={ "--one" })
         String s;
     }
 }

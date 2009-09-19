@@ -27,7 +27,7 @@ package org.apache.maven.shell.cli;
  */
 public class NameValue
 {
-    public static final String EQUALS = "=";
+    public static final String SEPARATOR = "=";
 
     public final String name;
 
@@ -43,7 +43,7 @@ public class NameValue
 
         String name, value;
 
-        int i = input.indexOf(EQUALS);
+        int i = input.indexOf(SEPARATOR);
         if (i == -1) {
             name = input;
             value = Boolean.TRUE.toString();

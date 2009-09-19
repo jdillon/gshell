@@ -214,13 +214,14 @@ public class Processor
 
         public String get(final int idx) throws ProcessingException {
             if (pos + idx >= args.length) {
-                throw new ProcessingException(Messages.MISSING_OPERAND.format(
-                        handler.getDescriptor().toString(), handler.getToken(messages)));
+                throw new ProcessingException(Messages.MISSING_OPERAND.format(handler.getDescriptor(), handler.getToken(messages)));
             }
 
             String arg = args[pos + idx];
 
             if (handler.isKeyValuePair()) {
+                int i = arg.indexOf(NameValue.SEPARATOR);
+                arg = arg.substring(i, arg.length());
                 arg = NameValue.parse(arg).value;
             }
 
@@ -245,7 +246,7 @@ public class Processor
             Handler handler;
 
             if (processOptions && arg.startsWith(DASH)) {
-                boolean nv = arg.contains(NameValue.EQUALS);
+                boolean nv = arg.contains(NameValue.SEPARATOR);
 
                 // parse this as an option.
                 handler = nv ? findOptionHandler(arg) : findOptionByName(arg);
