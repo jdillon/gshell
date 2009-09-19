@@ -27,8 +27,8 @@ import java.util.EventObject;
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public interface EventListener
+public interface EventListener<T extends EventObject>
     extends java.util.EventListener
 {
-    void onEvent(EventObject event) throws Exception;
+    void onEvent(T event) throws Exception;
 }

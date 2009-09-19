@@ -249,8 +249,7 @@ public class ShellImpl
         IO io = getIo();
 
         // Setup the console
-        JLineConsole console = new JLineConsole(executor, io, loadBindings());
-        console.setHistory(history.getDelegate());
+        JLineConsole console = new JLineConsole(executor, io, history.getDelegate(), loadBindings());
 
         if (prompter != null) {
             console.setPrompter(prompter);
@@ -334,9 +333,8 @@ public class ShellImpl
         getVariables().set(LAST_RESULT, result);
     }
 
-    protected void renderGoodbyeMessage(final IO io) {
+    private void renderMessage(final IO io, final String msg) {
         assert io != null;
-        String msg = branding.getGoodbyeMessage();
         if (msg != null) {
             io.out.println(msg);
             io.out.flush();
@@ -344,11 +342,10 @@ public class ShellImpl
     }
 
     protected void renderWelcomeMessage(final IO io) {
-        assert io != null;
-        String msg = branding.getWelcomeMessage();
-        if (msg != null) {
-            io.out.print(msg);
-            io.out.flush();
-        }
+        renderMessage(io, branding.getWelcomeMessage());
+    }
+
+    protected void renderGoodbyeMessage(final IO io) {
+        renderMessage(io, branding.getGoodbyeMessage());
     }
 }

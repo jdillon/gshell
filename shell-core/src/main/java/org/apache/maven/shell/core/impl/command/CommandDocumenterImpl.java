@@ -73,13 +73,13 @@ public class CommandDocumenterImpl
         if (text.contains(StringSearchInterpolator.DEFAULT_START_EXPR)) {
             Interpolator interp = new StringSearchInterpolator();
             interp.addValueSource(new PrefixedObjectValueSource(COMMAND, command));
-            interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));
             interp.addValueSource(new AbstractValueSource(false) {
                 public Object getValue(final String expression) {
                     Variables vars = ShellHolder.get().getVariables();
                     return vars.get(expression);
                 }
             });
+            interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));
 
             try {
                 return interp.interpolate(text);

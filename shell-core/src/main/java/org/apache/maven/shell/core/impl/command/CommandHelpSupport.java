@@ -38,7 +38,7 @@ public class CommandHelpSupport
     public boolean displayHelp;
 
     @Option(name="--", handler=StopHandler.class)
-    boolean stop;
+    public boolean stop;
 
     private MessageSource messages;
 

@@ -92,7 +92,7 @@ public class BrandingSupport
         PrintWriter out = new PrintWriter(buff);
 
         out.println(getDisplayName());
-        out.println(line());
+        out.print(line());
         out.flush();
 
         return buff.toString();

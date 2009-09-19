@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.maven.shell.core.impl;
+package org.apache.maven.shell.core.impl.event;
 
 import org.apache.maven.shell.event.EventListener;
 import org.apache.maven.shell.event.EventManager;

@@ -42,7 +42,7 @@ public class JLineConsole
 {
     private final ConsoleReader reader;
 
-    public JLineConsole(final Executor executor, final IO io, final InputStream bindings) throws IOException {
+    public JLineConsole(final Executor executor, final IO io, final History history, final InputStream bindings) throws IOException {
         super(executor);
         assert io != null;
 
@@ -52,20 +52,20 @@ public class JLineConsole
             reader.setBellEnabled(false);
         }
         reader.setCompletionHandler(new CandidateListCompletionHandler());
+        reader.setHistory(history != null ? history : new History());
     }
 
     public JLineConsole(final Executor executor, final IO io) throws IOException {
-        this(executor, io, null);
+        this(executor, io, null, null);
+    }
+
+    public ConsoleReader getReader() {
+        return reader;
     }
 
     public void addCompleter(final Completor completer) {
         assert completer != null;
         reader.addCompletor(completer);
-    }
-
-    public void setHistory(final History history) {
-        assert history != null;
-        reader.setHistory(history);
     }
 
     protected String readLine(final String prompt) throws IOException {

@@ -72,23 +72,15 @@ public class ConsolePrompterImpl
     }
 
     public String prompt() {
-        String prompt = null;
-
         String pattern = vars.get(SHELL_PROMPT, String.class);
-        if (pattern != null) {
-            try {
-                prompt = interp.interpolate(pattern);
-            }
-            catch (InterpolationException e) {
-                log.warn("Failed to render prompt pattern: " + pattern, e);
-            }
-        }
+        String prompt = interpolate(pattern);
 
         // Use a default prompt if we don't have anything here
         if (prompt == null) {
-            // TODO: Maybe use branding.getDefaultPrompt() here, but have to interpolate
-            //       and then handle null again, defaulting to this basic prompt?
-            prompt = DEFAULT_PROMPT;
+            prompt = interpolate(branding.getPrompt());
+            if (prompt == null) {
+                prompt = DEFAULT_PROMPT;
+            }
         }
 
         // Encode ANSI muck if it looks like there are codes encoded
@@ -96,6 +88,19 @@ public class ConsolePrompterImpl
             prompt = renderer.render(prompt);
         }
 
+        return prompt;
+    }
+
+    private String interpolate(final String pattern) {
+        String prompt = null;
+        if (pattern != null) {
+            try {
+                prompt = interp.interpolate(pattern);
+            }
+            catch (InterpolationException e) {
+                log.warn("Failed to interpolate: " + pattern, e);
+            }
+        }
         return prompt;
     }
 }
