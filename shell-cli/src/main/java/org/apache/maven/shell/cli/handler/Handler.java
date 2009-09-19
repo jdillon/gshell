@@ -36,10 +36,10 @@ public abstract class Handler<T>
 {
     public final Descriptor descriptor;
     
-    public Boolean isKeyValuePair = false;
-
     public final Setter<? super T> setter;
 
+    public Boolean isKeyValuePair = false;
+    
     protected Handler(final Descriptor descriptor, final Setter<? super T> setter) {
         assert descriptor != null;
         assert setter != null;
