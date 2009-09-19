@@ -64,13 +64,9 @@ public class EventManagerImpl
     }
 
     private EventListener[] getListeners() {
-        EventListener[] listeners;
-
-        synchronized (this.listeners) {
-            listeners = this.listeners.toArray(new EventListener[this.listeners.size()]);
+        synchronized (listeners) {
+            return listeners.toArray(new EventListener[listeners.size()]);
         }
-        
-        return listeners;
     }
 
     public void publish(final EventObject event) {
@@ -78,9 +74,7 @@ public class EventManagerImpl
 
         log.trace("Publishing event: {}", event);
 
-        EventListener[] targets = getListeners();
-
-        for (EventListener listener : targets) {
+        for (EventListener listener : getListeners()) {
             log.trace("Firing event ({}) to listener: {}", event, listener);
 
             try {
