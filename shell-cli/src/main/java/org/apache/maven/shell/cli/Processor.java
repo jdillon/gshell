@@ -58,8 +58,6 @@ public class Processor
     public Processor() {}
     
     public Processor(final Object bean) {
-        assert bean != null;
-
         addBean(bean);
     }
 
@@ -88,7 +86,6 @@ public class Processor
     }
 
     public void addBean(final Object bean) {
-        assert bean != null;
         discoverDescriptors(bean);
     }
 
@@ -192,11 +189,10 @@ public class Processor
         
         private int pos = 0;
 
-        private Handler handler;
+        public Handler handler;
 
         public ParametersImpl(final String[] args) {
             assert args != null;
-            
             this.args = args;
         }
 
