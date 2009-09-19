@@ -163,16 +163,16 @@ public class Processor
 
     private void addOption(final Setter setter, final Option option) {
         Handler handler = Handlers.create(new OptionDescriptor(setter.getName(), option, setter.isMultiValued()), setter);
-        checkOptionNotInMap(option.name());
+        ensureUniqueOptionName(option.name());
 
         for (String alias : option.aliases()) {
-            checkOptionNotInMap(alias);
+            ensureUniqueOptionName(alias);
         }
 
         optionHandlers.add(handler);
     }
 
-    private void checkOptionNotInMap(final String name) throws IllegalAnnotationError {
+    private void ensureUniqueOptionName(final String name) {
         if (findOptionByName(name) != null) {
             throw new IllegalAnnotationError("Duplicate option name: " + name);
         }
