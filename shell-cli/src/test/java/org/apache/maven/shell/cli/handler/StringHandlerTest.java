@@ -53,10 +53,17 @@ public class StringHandlerTest
     }
 
     @Test
-    public void test2() throws Exception {
+    public void test2a() throws Exception {
         clp.process("-1=test");
 
         assertEquals("test", bean.s);
+    }
+
+    @Test
+    public void test2b() throws Exception {
+        clp.process("-1=foo=bar");
+
+        assertEquals("foo=bar", bean.s);
     }
 
     @Test
@@ -71,6 +78,20 @@ public class StringHandlerTest
         clp.process("--one=test");
 
         assertEquals("test", bean.s);
+    }
+
+    @Test
+    public void test5a() throws Exception {
+        clp.process("--one=foo=bar");
+
+        assertEquals("foo=bar", bean.s);
+    }
+
+    @Test
+    public void test5b() throws Exception {
+        clp.process("--one", "foo=bar");
+
+        assertEquals("foo=bar", bean.s);
     }
 
     private static class TestBean
