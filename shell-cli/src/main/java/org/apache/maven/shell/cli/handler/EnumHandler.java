@@ -32,13 +32,13 @@ import org.apache.maven.shell.cli.setter.Setter;
 public class EnumHandler<T extends Enum<T>>
     extends Handler<T>
 {
-    private final Class<T> enumType;
+    private final Class<T> type;
 
-    public EnumHandler(final Descriptor desc, final Setter<? super T> setter, final Class<T> enumType) {
+    public EnumHandler(final Descriptor desc, final Setter<? super T> setter, final Class<T> type) {
         super(desc, setter);
 
-        assert enumType != null;
-        this.enumType = enumType;
+        assert type != null;
+        this.type = type;
     }
 
     @Override
@@ -48,7 +48,7 @@ public class EnumHandler<T extends Enum<T>>
         String token = params.get(0);
         T value = null;
 
-        for (T constant : enumType.getEnumConstants()) {
+        for (T constant : type.getEnumConstants()) {
             if (constant.name().equalsIgnoreCase(token)) {
                 value = constant;
                 break;
@@ -56,10 +56,10 @@ public class EnumHandler<T extends Enum<T>>
         }
 
         if (value == null) {
-            throw new ProcessingException(Messages.ILLEGAL_OPERAND.format(descriptor.toString(), token));
+            throw new ProcessingException(Messages.ILLEGAL_OPERAND.format(getDescriptor().toString(), token));
         }
 
-        setter.set(value);
+        getSetter().set(value);
         
         return 1;
     }
@@ -69,7 +69,7 @@ public class EnumHandler<T extends Enum<T>>
         StringBuilder buff = new StringBuilder();
         buff.append('[');
 
-        T[] constants = enumType.getEnumConstants();
+        T[] constants = type.getEnumConstants();
         
         for (int i=0; i<constants.length; i++) {
             buff.append(constants[i].name().toLowerCase());

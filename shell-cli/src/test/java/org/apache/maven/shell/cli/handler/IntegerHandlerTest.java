@@ -59,6 +59,13 @@ public class IntegerHandlerTest
         assertEquals(new Integer(1), bean.i);
     }
 
+    @Test
+    public void test3() throws Exception {
+        clp.process("-2=1");
+
+        assertEquals(new Integer(1), bean.i);
+    }
+
     private static class TestBean
     {
         @Option(name="-1")

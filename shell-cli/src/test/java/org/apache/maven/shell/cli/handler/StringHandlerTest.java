@@ -52,6 +52,13 @@ public class StringHandlerTest
         assertEquals("test", bean.s);
     }
 
+    @Test
+    public void test2() throws Exception {
+        clp.process("-1=test");
+
+        assertEquals("test", bean.s);
+    }
+
     private static class TestBean
     {
         @Option(name="-1")

@@ -22,6 +22,7 @@ package org.apache.maven.shell.cli.handler;
 import org.apache.maven.shell.cli.ArgumentDescriptor;
 import org.apache.maven.shell.cli.Descriptor;
 import org.apache.maven.shell.cli.ProcessingException;
+import org.apache.maven.shell.cli.OptionDescriptor;
 import org.apache.maven.shell.cli.setter.Setter;
 import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.i18n.ResourceNotFoundException;
@@ -34,18 +35,33 @@ import org.apache.maven.shell.i18n.ResourceNotFoundException;
  */
 public abstract class Handler<T>
 {
-    public final Descriptor descriptor;
+    private final Descriptor descriptor;
     
-    public final Setter<? super T> setter;
+    private final Setter<? super T> setter;
 
-    public Boolean isKeyValuePair = false;
-    
+    private boolean kvp = false;
+
     protected Handler(final Descriptor descriptor, final Setter<? super T> setter) {
         assert descriptor != null;
-        assert setter != null;
-        
         this.descriptor = descriptor;
+        assert setter != null;
         this.setter = setter;
+    }
+
+    public Descriptor getDescriptor() {
+        return descriptor;
+    }
+
+    public Setter<? super T> getSetter() {
+        return setter;
+    }
+
+    public Boolean isKeyValuePair() {
+        return kvp;
+    }
+
+    public void setKeyValuePair(final boolean flag) {
+        this.kvp = flag;
     }
 
     public abstract int handle(Parameters params) throws ProcessingException;
@@ -63,12 +79,7 @@ public abstract class Handler<T>
 
             // If there is no coded, then generate one
             if (code == null) {
-                if (descriptor instanceof ArgumentDescriptor) {
-                    code = String.format("argument.%s.token", descriptor.getId());
-                }
-                else {
-                    code = String.format("option.%s.token", descriptor.getId());
-                }
+                code = descriptor.getMessageCode();
             }
 
             // Resolve the text in the message source
@@ -85,5 +96,39 @@ public abstract class Handler<T>
         }
 
         return token;
+    }
+
+    public String getHelpText(final MessageSource messages) {
+        assert messages != null;
+
+        String message = descriptor.getDescription();
+
+        // If we have i18n messages for the command, then try to resolve the message further using the message as the code
+        if (messages != null) {
+            String code = message;
+
+            // If there is no code, then generate one
+            if (code == null) {
+                code = descriptor.getMessageCode();
+            }
+
+            // Resolve the text in the message source
+            try {
+                message = messages.getMessage(code);
+            }
+            catch (ResourceNotFoundException e) {
+                // Just use the code as the message
+            }
+        }
+
+        return message;
+    }
+
+    public boolean isArgument() {
+        return descriptor instanceof ArgumentDescriptor;
+    }
+
+    public boolean isOption() {
+        return descriptor instanceof OptionDescriptor;
     }
 }

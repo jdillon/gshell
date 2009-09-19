@@ -31,28 +31,32 @@ import org.apache.xbean.propertyeditor.PropertyEditorException;
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class ConverterHandlerSupport
-    extends Handler<Object>
+public class ConverterHandlerSupport<T>
+    extends Handler<T>
 {
-    private final Class type;
+    private final Class<T> type;
 
     private final String token;
 
-    public ConverterHandlerSupport(final Descriptor desc, final Setter<Object> setter, final Class type, final String token) {
+    public ConverterHandlerSupport(final Descriptor desc, final Setter<Object> setter, final Class<T> type, final String token) {
         super(desc, setter);
         assert type != null;
         this.type = type;
-        assert token != null;
+        // token may be null
         this.token = token;
     }
 
+    public Class<T> getType() {
+        return type;
+    }
+
+    @SuppressWarnings({ "unchecked" })
     @Override
     public int handle(final Parameters params) throws ProcessingException {
         assert params != null;
 
         try {
-            Object value = PropertyEditors.getValue(type, params.get(0));
-            setter.set(value);
+            getSetter().set((T)PropertyEditors.getValue(type, params.get(0)));
         }
         catch (PropertyEditorException e) {
             throw new ProcessingException(e.getCause());

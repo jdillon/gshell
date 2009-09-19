@@ -56,6 +56,15 @@ public class FileHandlerTest
         assertEquals(f, bean.f);
     }
 
+    @Test
+    public void test2() throws Exception {
+        clp.process("-1=/tmp");
+
+        File f = new File("/tmp");
+
+        assertEquals(f, bean.f);
+    }
+
     private static class TestBean
     {
         @Option(name="-1")

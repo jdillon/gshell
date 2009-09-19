@@ -23,7 +23,6 @@ import org.apache.maven.shell.cli.handler.Handler;
 import org.apache.maven.shell.i18n.AggregateMessageSource;
 import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
-import org.apache.maven.shell.i18n.ResourceNotFoundException;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -91,44 +90,10 @@ public class Printer
         this.separator = separator;
     }
 
-    /**
-     * Get the help text for the given descriptor, using any configured messages for i18n support.
-     */
-    private String getHelpText(final Descriptor descriptor) {
-        assert descriptor != null;
-
-        String message = descriptor.getDescription();
-
-        // If we have i18n messages for the command, then try to resolve the message further using the message as the code
-        if (messages != null) {
-            String code = message;
-
-            // If there is no code, then generate one
-            if (code == null) {
-                if (descriptor instanceof ArgumentDescriptor) {
-                    code = String.format("argument.%s", descriptor.getId());
-                }
-                else {
-                    code = String.format("option.%s", descriptor.getId());
-                }
-            }
-
-            // Resolve the text in the message source
-            try {
-                message = messages.getMessage(code);
-            }
-            catch (ResourceNotFoundException e) {
-                // Just use the code as the message
-            }
-        }
-
-        return message;
-    }
-
     private String getNameAndToken(final Handler handler) {
         assert handler != null;
 
-        String str = (handler.descriptor instanceof ArgumentDescriptor) ? "" : handler.descriptor.toString();
+        String str = handler.isArgument() ? "" : handler.getDescriptor().toString();
         String token = handler.getToken(messages);
 
         if (token != null) {
@@ -144,8 +109,7 @@ public class Printer
     private int getPrefixLen(final Handler handler) {
         assert handler != null;
 
-        String helpText = getHelpText(handler.descriptor);
-        if (helpText == null) {
+        if (handler.getHelpText(messages) == null) {
             return 0;
         }
 
@@ -164,8 +128,8 @@ public class Printer
         // For display purposes, we like the argument handlers in argument order,
         // but the option handlers in alphabetical order
         Collections.sort(optionHandlers, new Comparator<Handler>() {
-            public int compare(Handler a, Handler b) {
-                return a.descriptor.toString().compareTo(b.descriptor.toString());
+            public int compare(final Handler a, final Handler b) {
+                return a.getDescriptor().toString().compareTo(b.getDescriptor().toString());
             }
         });
 
@@ -230,7 +194,7 @@ public class Printer
         int descriptionWidth = terminalWidth - len - prefixSeperatorWidth;
 
         // Only render if there is help-text, else its hidden
-        String desc = getHelpText(handler.descriptor);
+        String desc = handler.getHelpText(messages);
         if (desc == null) {
             return;
         }

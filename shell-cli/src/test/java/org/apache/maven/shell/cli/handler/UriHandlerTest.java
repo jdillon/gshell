@@ -56,6 +56,15 @@ public class UriHandlerTest
         assertEquals(l, bean.l);
     }
 
+    @Test
+    public void test2() throws Exception {
+        clp.process("-1=foo:bar");
+
+        URI l = new URI("foo:bar");
+
+        assertEquals(l, bean.l);
+    }
+
     private static class TestBean
     {
         @Option(name="-1")

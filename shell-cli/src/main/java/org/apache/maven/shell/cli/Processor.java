@@ -47,6 +47,10 @@ import java.util.TreeMap;
  */
 public class Processor
 {
+    public static final String DASH_DASH = "--";
+
+    public static final String DASH = "-";
+
     private final List<Handler> optionHandlers = new ArrayList<Handler>();
 
     private final List<Handler> argumentHandlers = new ArrayList<Handler>();
@@ -189,7 +193,7 @@ public class Processor
         
         private int pos = 0;
 
-        public Handler handler;
+        Handler handler;
 
         public ParametersImpl(final String[] args) {
             assert args != null;
@@ -211,10 +215,16 @@ public class Processor
         public String get(final int idx) throws ProcessingException {
             if (pos + idx >= args.length) {
                 throw new ProcessingException(Messages.MISSING_OPERAND.format(
-                        handler.descriptor.toString(), handler.getToken(messages)));
+                        handler.getDescriptor().toString(), handler.getToken(messages)));
             }
 
-            return args[pos + idx];
+            String arg = args[pos + idx];
+
+            if (handler.isKeyValuePair()) {
+                arg = NameValue.parse(arg).value;
+            }
+
+            return arg;
         }
     }
 
@@ -234,11 +244,11 @@ public class Processor
             String arg = params.current();
             Handler handler;
 
-            if (processOptions && arg.startsWith("-")) {
-                boolean isKeyValuePair = arg.indexOf('=') != -1;
+            if (processOptions && arg.startsWith(DASH)) {
+                boolean nv = arg.contains(NameValue.EQUALS);
 
                 // parse this as an option.
-                handler = isKeyValuePair ? findOptionHandler(arg) : findOptionByName(arg);
+                handler = nv ? findOptionHandler(arg) : findOptionByName(arg);
 
                 if (handler == null) {
                     if (stopAtNonOption) {
@@ -251,9 +261,9 @@ public class Processor
                         throw new ProcessingException(Messages.UNDEFINED_OPTION.format(arg));
                     }
                 }
-                else if (isKeyValuePair){
+                else if (nv){
                     // known option, but further processing is required in the handler.
-                    handler.isKeyValuePair = isKeyValuePair;
+                    handler.setKeyValuePair(nv);
                 }
                 else {
                     // known option; skip its name
@@ -269,7 +279,7 @@ public class Processor
 
                 // known argument
                 handler = argumentHandlers.get(argIndex);
-                if (!handler.descriptor.isMultiValued()) {
+                if (!handler.getDescriptor().isMultiValued()) {
                     argIndex++;
                 }
             }
@@ -279,15 +289,10 @@ public class Processor
                 params.handler = handler;
 
                 // If this is an option which overrides requirements track it
-                if (!requireOverride && handler.descriptor instanceof OptionDescriptor) {
-                    OptionDescriptor d = (OptionDescriptor) handler.descriptor;
-                    requireOverride = d.isRequireOverride();
+                if (!requireOverride && handler.isOption()) {
+                    requireOverride = ((OptionDescriptor)handler.getDescriptor()).isRequireOverride();
                 }
 
-                //
-                // FIXME: Things like -Dfoo=bar end up processed as value "-Dfoo=bar" instead of "foo=bar"
-                //
-                
                 // Invoker the handler and then skip arguments which it has eaten up
                 int consumed = handler.handle(params);
                 params.skip(consumed);
@@ -303,14 +308,14 @@ public class Processor
         // Ensure that all required option handlers are present, unless a processed option has overridden requirements
         if (!requireOverride) {
             for (Handler handler : optionHandlers) {
-                if (handler.descriptor.isRequired() && !present.contains(handler)) {
+                if (handler.getDescriptor().isRequired() && !present.contains(handler)) {
                     throw new ProcessingException(Messages.REQUIRED_OPTION_MISSING.format(handler.getToken(messages)));
                 }
             }
 
             // Ensure that all required argument handlers are present
             for (Handler handler : argumentHandlers) {
-                if (handler.descriptor.isRequired() && !present.contains(handler)) {
+                if (handler.getDescriptor().isRequired() && !present.contains(handler)) {
                     throw new ProcessingException(Messages.REQUIRED_ARGUMENT_MISSING.format(handler.getToken(messages)));
                 }
             }
@@ -341,20 +346,22 @@ public class Processor
         return handler;
     }
 
-    private Map<String, Handler> filter(final List<Handler> handlers, final String keyFilter) {
-        Map<String, Handler> map = new TreeMap<String, Handler>();
+    private Map<String,Handler> filter(final List<Handler> handlers, final String keyFilter) {
+        Map<String,Handler> map = new TreeMap<String,Handler>();
 
         for (Handler handler : handlers) {
-            if (keyFilter.contains("--")) {
-                for (String alias : ((OptionDescriptor) handler.descriptor).getAliases()) {
+            OptionDescriptor descriptor = (OptionDescriptor)handler.getDescriptor();
+
+            if (keyFilter.contains(DASH_DASH)) {
+                for (String alias : descriptor.getAliases()) {
                     if (alias.startsWith(keyFilter)) {
                         map.put(alias, handler);
                     }
                 }
             }
             else {
-                if (((OptionDescriptor) handler.descriptor).getName().startsWith(keyFilter)) {
-                    map.put(((OptionDescriptor) handler.descriptor).getName(), handler);
+                if (descriptor.getName().startsWith(keyFilter)) {
+                    map.put(descriptor.getName(), handler);
                 }
             }
         }
@@ -364,13 +371,13 @@ public class Processor
     
     private Handler findOptionByName(final String name) {
         for (Handler handler : optionHandlers) {
-            OptionDescriptor option = (OptionDescriptor)handler.descriptor;
+            OptionDescriptor descriptor = (OptionDescriptor)handler.getDescriptor();
 
-            if (name.equals(option.getName())) {
+            if (name.equals(descriptor.getName())) {
                 return handler;
             }
 
-            for (String alias : option.getAliases()) {
+            for (String alias : descriptor.getAliases()) {
                 if (name.equals(alias)) {
                     return handler;
                 }

@@ -41,14 +41,14 @@ public class Handlers
 {
     private static final Map<Class,Constructor<? extends Handler>> handlerClasses = Collections.synchronizedMap(new HashMap<Class,Constructor<? extends Handler>>());
 
-    private static Constructor<? extends Handler> createHandlerFactory(final Class<? extends Handler> type) {
-        assert type != null;
+    private static Constructor<? extends Handler> createHandlerFactory(final Class<? extends Handler> handlerType) {
+        assert handlerType != null;
 
         try {
-            return type.getConstructor(Descriptor.class, Setter.class);
+            return handlerType.getConstructor(Descriptor.class, Setter.class);
         }
         catch (NoSuchMethodException e) {
-            throw new IllegalArgumentException("Handler is missing required constructor: " + type);
+            throw new IllegalArgumentException("Handler is missing required constructor: " + handlerType);
         }
     }
 
@@ -70,7 +70,7 @@ public class Handlers
         assert setter != null;
 
         Constructor<? extends Handler> factory;
-        Class<? extends Handler> handlerType = desc.getHandler();
+        Class<? extends Handler> handlerType = desc.getHandlerType();
 
         if (handlerType == Handler.class) {
             Class valueType = setter.getType();
@@ -117,8 +117,6 @@ public class Handlers
     static {
         register(Boolean.class, BooleanHandler.class);
         register(boolean.class, BooleanHandler.class);
-        register(File.class, FileHandler.class);
-        register(URI.class, UriHandler.class);
         register(Integer.class, IntegerHandler.class);
         register(int.class, IntegerHandler.class);
         register(Long.class, LongHandler.class);
@@ -127,5 +125,7 @@ public class Handlers
         register(double.class, DoubleHandler.class);
         register(String.class, StringHandler.class);
         register(Object.class, ObjectHandler.class);
+        register(File.class, FileHandler.class);
+        register(URI.class, UriHandler.class);
     }
 }

@@ -19,7 +19,6 @@
 
 package org.apache.maven.shell.cli.handler;
 
-import org.apache.maven.shell.cli.ArgumentDescriptor;
 import org.apache.maven.shell.cli.Descriptor;
 import org.apache.maven.shell.cli.OptionDescriptor;
 import org.apache.maven.shell.cli.ProcessingException;
@@ -41,43 +40,21 @@ public class BooleanHandler
     @Override
     public int handle(final Parameters params) throws ProcessingException {
         assert params != null;
-        
-        if (descriptor instanceof ArgumentDescriptor) {
-            String token = params.get(0);
-            boolean value = Boolean.parseBoolean(token);
-            setter.set(value);
 
-            return 1;
-        } 
-        else if (descriptor instanceof OptionDescriptor && isKeyValuePair) {
-            //
-            // FIXME: This needs to be global to all handlers
-            //
-            String token = params.get(0);
-            token = token.substring(token.indexOf('=') + 1, token.length());
-            boolean value = Boolean.parseBoolean(token);
-            setter.set(value);
+        if (isArgument() || ((OptionDescriptor)getDescriptor()).isArgumentRequired()) {
+            getSetter().set(Boolean.parseBoolean(params.get(0)));
 
             return 1;
         }
         else {
-            if (((OptionDescriptor)descriptor).isArgumentRequired()) {
-                String token = params.get(0);
-                boolean value = Boolean.parseBoolean(token);
-                setter.set(value);
-    
-                return 1;
-            }
-            else {
-                setter.set(true);
+            getSetter().set(true);
 
-                return 0;
-            }
+            return 0;
         }
     }
 
     @Override
     public String getDefaultToken() {
-        return null;
+        return "FLAG";
     }
 }

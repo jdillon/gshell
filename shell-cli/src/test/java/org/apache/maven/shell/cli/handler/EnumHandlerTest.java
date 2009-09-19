@@ -21,16 +21,18 @@ package org.apache.maven.shell.cli.handler;
 
 import org.apache.maven.shell.cli.Option;
 import org.apache.maven.shell.cli.ProcessorTestSupport;
+import org.apache.maven.shell.cli.ProcessingException;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import org.junit.Test;
 
 /**
- * Tests for the {@link DoubleHandler} class.
+ * Tests for the {@link EnumHandler} class.
  *
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class DoubleHandlerTest
+public class EnumHandlerTest
     extends ProcessorTestSupport
 {
     private TestBean bean;
@@ -47,28 +49,45 @@ public class DoubleHandlerTest
 
     @Test
     public void test1() throws Exception {
-        clp.process("-1", "1");
+        clp.process("-t", "A");
 
-        assertEquals(1.0, bean.d, 0);
+        assertEquals(Type.A, bean.type);
     }
 
     @Test
     public void test2() throws Exception {
-        clp.process("-1", "1.1");
+        clp.process("-t", "b");
 
-        assertEquals(1.1, bean.d, 0);
+        assertEquals(Type.B, bean.type);
     }
 
     @Test
     public void test3() throws Exception {
-        clp.process("-1=1.1");
+        try {
+            clp.process("-t", "c");
+            fail();
+        }
+        catch (ProcessingException e) {
+            // expected
+        }
+    }
 
-        assertEquals(1.1, bean.d, 0);
+    @Test
+    public void test4() throws Exception {
+        clp.process("-t=b");
+
+        assertEquals(Type.B, bean.type);
+    }
+
+    private static enum Type
+    {
+        A,
+        B
     }
 
     private static class TestBean
     {
-        @Option(name="-1")
-        double d;
+        @Option(name="-t")
+        Type type;
     }
 }

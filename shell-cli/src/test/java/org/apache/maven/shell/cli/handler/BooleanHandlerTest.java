@@ -47,8 +47,15 @@ public class BooleanHandlerTest
     }
 
     @Test
-    public void test1() throws Exception {
+    public void test1a() throws Exception {
         clp.process("-1");
+
+        assertTrue(bean.flag);
+    }
+
+    @Test
+    public void test1b() throws Exception {
+        clp.process("--one");
 
         assertTrue(bean.flag);
     }
@@ -64,12 +71,45 @@ public class BooleanHandlerTest
         assertTrue(bean.flag2);
     }
 
+    @Test
+    public void test3a() throws Exception {
+        clp.process("-2=false");
+
+        assertFalse(bean.flag2);
+
+        clp.process("-2=true");
+
+        assertTrue(bean.flag2);
+    }
+
+    @Test
+    public void test3b() throws Exception {
+        clp.process("--two", "false");
+
+        assertFalse(bean.flag2);
+
+        clp.process("--two", "true");
+
+        assertTrue(bean.flag2);
+    }
+
+    @Test
+    public void test3c() throws Exception {
+        clp.process("--two=false");
+
+        assertFalse(bean.flag2);
+
+        clp.process("--two=true");
+
+        assertTrue(bean.flag2);
+    }
+
     private static class TestBean
     {
-        @Option(name="-1")
+        @Option(name="-1", aliases={"--one"})
         boolean flag;
 
-        @Option(name="-2", argumentRequired=true)
+        @Option(name="-2", aliases={"--two"}, argumentRequired=true)
         boolean flag2;
     }
 }

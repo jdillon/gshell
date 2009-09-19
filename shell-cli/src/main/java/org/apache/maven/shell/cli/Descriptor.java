@@ -39,11 +39,10 @@ public abstract class Descriptor
 
     private final boolean multiValued;
 
-    private final Class<? extends Handler> handler;
+    private final Class<? extends Handler> handlerType;
 
-    protected Descriptor(final String id, final String description, final String token, final boolean required, final Class<? extends Handler> handler, final boolean multiValued) {
+    protected Descriptor(final String id, final String description, final String token, final boolean required, final Class<? extends Handler> handlerType, final boolean multiValued) {
         assert id != null;
-
         this.id = id;
 
         // Handle "" = null, since default values in annotations can be set to null
@@ -62,13 +61,23 @@ public abstract class Descriptor
         }
         
         this.required = required;
-        // On IBM JDK, the value passed is null instead of the default value, so fix it in case
-        this.handler = handler != null ? handler : Handler.class;
         this.multiValued = multiValued;
+        
+        // On IBM JDK, the value passed is null instead of the default value, so fix it in case
+        this.handlerType = handlerType != null ? handlerType : Handler.class;
     }
 
     public String getId() {
         return id;
+    }
+
+    public String getMessageCode() {
+        if (this instanceof ArgumentDescriptor) {
+            return String.format("argument.%s.token", id);
+        }
+        else {
+            return String.format("option.%s.token", id);
+        }
     }
 
     public String getDescription() {
@@ -83,8 +92,8 @@ public abstract class Descriptor
         return required;
     }
 
-    public Class<? extends Handler> getHandler() {
-        return handler;
+    public Class<? extends Handler> getHandlerType() {
+        return handlerType;
     }
 
     public boolean isMultiValued() {

@@ -43,8 +43,7 @@ public class ObjectHandler
     public int handle(final Parameters params) throws ProcessingException {
         assert params != null;
 
-        String token = params.get(0);
-        setter.set(token);
+        getSetter().set(params.get(0));
 
         return 1;
     }

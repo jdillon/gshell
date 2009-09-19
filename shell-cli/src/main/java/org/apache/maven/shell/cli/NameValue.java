@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.maven.shell.core;
+package org.apache.maven.shell.cli;
 
 /**
  * Container and parser for <tt>name=value</tt> bits.
@@ -27,6 +27,8 @@ package org.apache.maven.shell.core;
  */
 public class NameValue
 {
+    public static final String EQUALS = "=";
+
     public final String name;
 
     public final String value;
@@ -41,7 +43,7 @@ public class NameValue
 
         String name, value;
 
-        int i = input.indexOf('=');
+        int i = input.indexOf(EQUALS);
         if (i == -1) {
             name = input;
             value = Boolean.TRUE.toString();
