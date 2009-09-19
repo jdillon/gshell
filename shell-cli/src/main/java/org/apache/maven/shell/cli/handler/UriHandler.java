@@ -20,43 +20,20 @@
 package org.apache.maven.shell.cli.handler;
 
 import org.apache.maven.shell.cli.Descriptor;
-import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.cli.setter.Setter;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 
 /**
- * Handler for file types.
+ * Handler for URI types.
  *
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class UriHandler
-    extends Handler<URI>
+    extends ConverterHandlerSupport
 {
-    public UriHandler(final Descriptor desc, final Setter<? super URI> setter) {
-        super(desc, setter);
-    }
-
-    @Override
-    public int handle(final Parameters params) throws ProcessingException {
-        assert params != null;
-
-        String token = params.get(0);
-
-        try {
-            setter.set(new URI(token));
-        }
-        catch (URISyntaxException e) {
-            throw new ProcessingException(e);
-        }
-
-        return 1;
-    }
-
-    @Override
-    public String getDefaultToken() {
-        return "URI";
+    public UriHandler(final Descriptor desc, final Setter setter) {
+        super(desc, setter, URI.class, "URI");
     }
 }

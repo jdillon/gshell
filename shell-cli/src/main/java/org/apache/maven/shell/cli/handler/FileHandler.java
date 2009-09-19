@@ -20,7 +20,6 @@
 package org.apache.maven.shell.cli.handler;
 
 import org.apache.maven.shell.cli.Descriptor;
-import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.cli.setter.Setter;
 
 import java.io.File;
@@ -32,24 +31,9 @@ import java.io.File;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class FileHandler
-    extends Handler<File>
+    extends ConverterHandlerSupport
 {
-    public FileHandler(final Descriptor desc, final Setter<? super File> setter) {
-        super(desc, setter);
-    }
-
-    @Override
-    public int handle(final Parameters params) throws ProcessingException {
-        assert params != null;
-
-        String token = params.get(0);
-        setter.set(new File(token));
-        
-        return 1;
-    }
-
-    @Override
-    public String getDefaultToken() {
-        return "FILE";
+    public FileHandler(final Descriptor desc, final Setter setter) {
+        super(desc, setter, File.class, "FILE");
     }
 }

@@ -22,35 +22,47 @@ package org.apache.maven.shell.cli.handler;
 import org.apache.maven.shell.cli.Descriptor;
 import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.cli.setter.Setter;
+import org.apache.xbean.propertyeditor.PropertyEditors;
+import org.apache.xbean.propertyeditor.PropertyEditorException;
 
 /**
- * Handler for object types, simply treating them as strings.
- *
- * <p>This is for compatibility with multi-valued bits that don't use generics to
- *    indicate the class of contained elements.
+ * A generic {@link Handler} which uses XBean Reflect to convert values.
  *
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class ObjectHandler
+public class ConverterHandlerSupport
     extends Handler<Object>
 {
-    public ObjectHandler(final Descriptor desc, Setter<? super Object> setter) {
+    private final Class type;
+
+    private final String token;
+
+    public ConverterHandlerSupport(final Descriptor desc, final Setter<Object> setter, final Class type, final String token) {
         super(desc, setter);
+        assert type != null;
+        this.type = type;
+        assert token != null;
+        this.token = token;
     }
 
     @Override
     public int handle(final Parameters params) throws ProcessingException {
         assert params != null;
 
-        String token = params.get(0);
-        setter.set(token);
+        try {
+            Object value = PropertyEditors.getValue(type, params.get(0));
+            setter.set(value);
+        }
+        catch (PropertyEditorException e) {
+            throw new ProcessingException(e.getCause());
+        }
 
         return 1;
     }
 
     @Override
     public String getDefaultToken() {
-        return "OBJ";
+        return token;
     }
 }

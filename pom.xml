@@ -87,6 +87,18 @@
             </dependency>
 
             <dependency>
+                <groupId>org.apache.xbean</groupId>
+                <artifactId>xbean-reflect</artifactId>
+                <version>3.4</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging-api</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
                 <groupId>org.codehaus.plexus</groupId>
                 <artifactId>plexus-container-default</artifactId>
                 <version>1.2.1-SNAPSHOT</version>
@@ -313,9 +325,9 @@
         <module>shell-core</module>
         <module>shell-framework</module>
         <module>shell-commands</module>
-        <module>shell-testsuite</module>
         <module>shell-bootstrap</module>
         <module>shell-mvnsh</module>
+        <module>shell-testsuite</module>
         <module>shell-assembly</module>
     </modules>
     

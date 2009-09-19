@@ -20,7 +20,6 @@
 package org.apache.maven.shell.cli.handler;
 
 import org.apache.maven.shell.cli.Descriptor;
-import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.cli.setter.Setter;
 
 /**
@@ -30,24 +29,9 @@ import org.apache.maven.shell.cli.setter.Setter;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class StringHandler
-    extends Handler<String>
+    extends ConverterHandlerSupport
 {
-    public StringHandler(final Descriptor desc, Setter<? super String> setter) {
-        super(desc, setter);
-    }
-
-    @Override
-    public int handle(final Parameters params) throws ProcessingException {
-        assert params != null;
-
-        String token = params.get(0);
-        setter.set(token);
-        
-        return 1;
-    }
-
-    @Override
-    public String getDefaultToken() {
-        return "VAL";
+    public StringHandler(final Descriptor desc, final Setter setter) {
+        super(desc, setter, String.class, "STR");
     }
 }

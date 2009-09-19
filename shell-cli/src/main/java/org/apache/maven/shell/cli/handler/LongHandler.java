@@ -20,7 +20,6 @@
 package org.apache.maven.shell.cli.handler;
 
 import org.apache.maven.shell.cli.Descriptor;
-import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.cli.setter.Setter;
 
 /**
@@ -30,25 +29,9 @@ import org.apache.maven.shell.cli.setter.Setter;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class LongHandler
-    extends Handler<Long>
+    extends ConverterHandlerSupport
 {
-    public LongHandler(final Descriptor desc, final Setter<? super Long> setter) {
-        super(desc, setter);
-    }
-
-    @Override
-    public int handle(final Parameters params) throws ProcessingException {
-        assert params != null;
-
-        String token = params.get(0);
-        long value = Long.parseLong(token);
-        setter.set(value);
-
-        return 1;
-    }
-
-    @Override
-    public String getDefaultToken() {
-        return "N";
+    public LongHandler(final Descriptor desc, final Setter setter) {
+        super(desc, setter, Long.class, "N");
     }
 }

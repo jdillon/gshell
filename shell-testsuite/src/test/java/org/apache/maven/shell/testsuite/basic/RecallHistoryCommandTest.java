@@ -81,7 +81,7 @@ public class RecallHistoryCommandTest
             executeWithArgs("foo");
             fail();
         }
-        catch (NumberFormatException e) {
+        catch (ProcessingException e) {
             // expected
         }
     }
