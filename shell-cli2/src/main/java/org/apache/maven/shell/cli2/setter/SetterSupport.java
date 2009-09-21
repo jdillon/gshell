@@ -17,35 +17,42 @@
  * under the License.
  */
 
-package org.apache.maven.shell.cli2;
+package org.apache.maven.shell.cli2.setter;
 
-import org.junit.After;
-import org.junit.Before;
-import org.apache.maven.shell.cli.ProcessingException;
+import java.lang.reflect.AccessibleObject;
 
 /**
- * Support for {@link Processor} tests.
+ * Support for {@link Setter} implementations.
  *
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public abstract class ProcessorTestSupport
+public abstract class SetterSupport
+    implements Setter
 {
-    private Processor processor;
+    private final AccessibleObject accessible;
 
-    @Before
-    public void setUp() {
-        processor = new Processor(createBean());
+    public SetterSupport(final AccessibleObject accessible) {
+        assert accessible != null;
+        this.accessible = accessible;
     }
 
-    @After
-    public void tearDown() {
-        processor = null;
+    public void set(final Object value) {
+        try {
+            doSet(value);
+        }
+        catch (IllegalAccessException ignore) {
+            // try again
+            accessible.setAccessible(true);
+
+            try {
+                doSet(value);
+            }
+            catch (IllegalAccessException e) {
+                throw new IllegalAccessError(e.getMessage());
+            }
+        }
     }
 
-    protected void process(final String... args) throws ProcessingException {
-        processor.process(args);
-    }
-
-    protected abstract Object createBean();
+    protected abstract void doSet(Object value) throws IllegalAccessException;
 }

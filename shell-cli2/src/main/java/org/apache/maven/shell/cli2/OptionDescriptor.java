@@ -19,7 +19,7 @@
 
 package org.apache.maven.shell.cli2;
 
-import org.apache.maven.shell.cli.setter.Setter;
+import org.apache.maven.shell.cli2.setter.Setter;
 
 /**
  * Descriptor for {@link Option} annotations.
@@ -31,16 +31,10 @@ public class OptionDescriptor
     extends Descriptor
 {
     private final Option option;
-    
-    private final Setter setter;
 
     public OptionDescriptor(final Option option, final Setter setter) {
+        super(setter);
         this.option = option;
-        this.setter = setter;
-    }
-
-    public Setter getSetter() {
-        return setter;
     }
 
     public String getDescription() {
@@ -88,6 +82,6 @@ public class OptionDescriptor
         if (tmp != Void.class) {
             return tmp;
         }
-        return setter.getType();
+        return getSetter().getType();
     }
 }

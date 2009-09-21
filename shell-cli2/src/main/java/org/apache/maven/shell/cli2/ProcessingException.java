@@ -19,15 +19,28 @@
 
 package org.apache.maven.shell.cli2;
 
-import org.apache.maven.shell.cli.handler.Handler;
-
 /**
- * Basic container for option and argument descriptors.
+ * Thrown to indicate a problem processing command line arguments and options.
  *
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public abstract class Descriptor
+public class ProcessingException
+    extends Exception
 {
-   
+    ///CLOVER:OFF
+
+    private static final long serialVersionUID = 1;
+
+    public ProcessingException(String msg) {
+        super(msg);
+    }
+
+    public ProcessingException(String msg, Throwable cause) {
+        super(msg, cause);
+    }
+
+    public ProcessingException(Throwable cause) {
+        super(cause);
+    }
 }

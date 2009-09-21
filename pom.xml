@@ -226,6 +226,12 @@
 
             <dependency>
                 <groupId>org.apache.maven.shell</groupId>
+                <artifactId>shell-cli2</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.maven.shell</groupId>
                 <artifactId>shell-api</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
@@ -324,8 +330,9 @@
         <module>shell-ansi</module>
         <module>shell-io</module>
         <module>shell-console</module>
-        <module>shell-cli</module>
         <module>shell-i18n</module>
+        <module>shell-cli</module>
+        <module>shell-cli2</module>
         <module>shell-api</module>
         <module>shell-parser</module>
         <module>shell-core</module>

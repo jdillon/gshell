@@ -17,33 +17,44 @@
  * under the License.
  */
 
-package org.apache.maven.shell.cli2;
+package org.apache.maven.shell.cli2.setter;
+
+import java.lang.reflect.Field;
 
 /**
- * Support for Commons Cli option processing to use an {@link OptionDescriptor}.
+ * Setter for fields.
  *
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class OptionDescriptorOption
-    extends org.apache.commons.cli.Option
+public class FieldSetter
+    extends SetterSupport
 {
-    private final OptionDescriptor descriptor;
+    protected final Field field;
+    
+    protected final Object bean;
 
-    public OptionDescriptorOption(final OptionDescriptor descriptor) {
-        super(descriptor.getOpt(), descriptor.getDescription());
-
-        this.descriptor = descriptor;
-
-        this.setRequired(descriptor.isRequired());
-        this.setLongOpt(descriptor.getLongOpt());
-        this.setOptionalArg(descriptor.isArgOptional());
-        this.setArgs(descriptor.getArgs());
-        this.setArgName(descriptor.getArgName());
-        this.setValueSeparator(descriptor.getValueSeperator());
+    public FieldSetter(final Field field, final Object bean) {
+        super(field);
+        assert field != null;
+        this.field = field;
+        assert bean != null;
+        this.bean = bean;
     }
 
-    public OptionDescriptor getDescriptor() {
-        return descriptor;
+    public String getName() {
+        return field.getName();
+    }
+
+    public Class getType() {
+        return field.getType();
+    }
+    
+    public boolean isMultiValued() {
+        return false;
+    }
+
+    protected void doSet(final Object value) throws IllegalAccessException {
+        field.set(bean, value);
     }
 }

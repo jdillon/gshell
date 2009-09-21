@@ -19,14 +19,22 @@
 
 package org.apache.maven.shell.cli2;
 
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 /**
- * Descriptor for {@link Argument} annotations.
+ * Configures a field or method for processing as a command-line argument.
  *
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class ArgumentDescriptor
-    extends Descriptor
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.FIELD, ElementType.METHOD})
+public @interface Argument
 {
-    
+
 }

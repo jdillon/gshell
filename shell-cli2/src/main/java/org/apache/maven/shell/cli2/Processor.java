@@ -24,11 +24,10 @@ import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
-import org.apache.maven.shell.cli.IllegalAnnotationError;
-import org.apache.maven.shell.cli.ProcessingException;
-import org.apache.maven.shell.cli.setter.Setter;
-import org.apache.maven.shell.cli.setter.SetterFactory;
 import org.apache.maven.shell.i18n.MessageSource;
+import org.apache.maven.shell.cli2.setter.SetterFactory;
+import org.apache.maven.shell.cli2.setter.Setter;
+import org.apache.maven.shell.cli2.internal.OptionDescriptorOption;
 import org.apache.xbean.propertyeditor.PropertyEditors;
 
 import java.lang.reflect.AnnotatedElement;
@@ -96,10 +95,10 @@ public class Processor
             throw new IllegalAnnotationError("Element can only be Option or Argument, not both: " + element); 
         }
         else if (option != null) {
-            addOption(option, SetterFactory.create(bean, element));
+            addOption(option, SetterFactory.create(element, bean));
         }
         else if (argument != null) {
-            addArgument(argument, SetterFactory.create(bean, element));
+            addArgument(argument, SetterFactory.create(element, bean));
         }
     }
 

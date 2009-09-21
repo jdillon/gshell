@@ -19,24 +19,32 @@
 
 package org.apache.maven.shell.cli2;
 
-import org.apache.maven.shell.cli.handler.Handler;
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-import java.lang.annotation.Documented;
+import org.junit.After;
+import org.junit.Before;
 
 /**
- * Configures a field or method for processing as a command-line argument.
+ * Support for {@link Processor} tests.
  *
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD, ElementType.METHOD})
-public @interface Argument
+public abstract class ProcessorTestSupport
 {
+    private Processor processor;
 
+    @Before
+    public void setUp() {
+        processor = new Processor(createBean());
+    }
+
+    @After
+    public void tearDown() {
+        processor = null;
+    }
+
+    protected void process(final String... args) throws ProcessingException {
+        processor.process(args);
+    }
+
+    protected abstract Object createBean();
 }
