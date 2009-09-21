@@ -26,8 +26,6 @@ import org.apache.maven.shell.core.ShellBuilder;
 import org.apache.maven.shell.core.impl.console.ConsoleErrorHandlerImpl;
 import org.apache.maven.shell.core.impl.console.ConsolePrompterImpl;
 import org.codehaus.plexus.PlexusContainer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Command-line bootstrap for Apache Maven Shell (<tt>shell</tt>).
