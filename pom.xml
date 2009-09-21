@@ -184,22 +184,17 @@
 
             <dependency>
                 <groupId>org.apache.maven.shell</groupId>
-                <artifactId>shell-testsupport</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.maven.shell</groupId>
                 <artifactId>shell-common</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>org.apache.maven.shell</groupId>
-                <artifactId>shell-io</artifactId>
+                <artifactId>shell-common</artifactId>
+                <classifier>tests</classifier>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
-            
+
             <dependency>
                 <groupId>org.apache.maven.shell</groupId>
                 <artifactId>shell-cli</artifactId>
@@ -307,9 +302,7 @@
     </dependencies>
 
     <modules>
-        <module>shell-testsupport</module>
         <module>shell-common</module>
-        <module>shell-io</module>
         <module>shell-cli</module>
         <module>shell-cli2</module>
         <module>shell-api</module>

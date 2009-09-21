@@ -63,7 +63,6 @@
                             <artifactSet>
                                 <includes>
                                     <include>org.apache.maven.shell:shell-common</include>
-                                    <include>org.apache.maven.shell:shell-io</include>
                                     <include>org.apache.maven.shell:shell-cli</include>
                                     <include>org.apache.maven.shell:shell-api</include>
                                     <include>org.apache.maven.shell:shell-core</include>

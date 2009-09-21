@@ -62,7 +62,14 @@
 
         <dependency>
             <groupId>org.apache.maven.shell</groupId>
-            <artifactId>shell-testsupport</artifactId>
+            <artifactId>shell-common</artifactId>
+            <classifier>tests</classifier>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-container-default</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

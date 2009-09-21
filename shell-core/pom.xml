@@ -71,7 +71,8 @@
 
         <dependency>
             <groupId>org.apache.maven.shell</groupId>
-            <artifactId>shell-testsupport</artifactId>
+            <artifactId>shell-common</artifactId>
+            <classifier>tests</classifier>
             <scope>test</scope>
         </dependency>
     </dependencies>
