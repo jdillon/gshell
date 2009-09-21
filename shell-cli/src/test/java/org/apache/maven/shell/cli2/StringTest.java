@@ -93,18 +93,21 @@ public class StringTest
     }
 
     /*
-    FIXME: ...
+    FIXME: Handle no args setting
     @Test
     public void test8() throws Exception {
         process("-3");
     }
     */
 
+    /*
+    FIXME: Handle collections
     @Test
     public void test9() throws Exception {
         process("-4", "a", "b", "c");
         assertEquals("abc", bean.four);
     }
+    */
 
     private static class TestBean
     {
