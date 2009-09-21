@@ -39,14 +39,18 @@ public class ResourceBundleMessageSource
 
     private final Locale locale;
 
-    public ResourceBundleMessageSource(final Class... types) {
+    public ResourceBundleMessageSource(final Locale locale, final Class... types) {
+        assert locale != null;
+        this.locale = locale;
+
         assert types != null;
-
-        locale = Locale.getDefault();
-
         for (Class type : types) {
             loadBundle(type);
         }
+    }
+
+    public ResourceBundleMessageSource(final Class... types) {
+        this(Locale.getDefault(), types);    
     }
 
     private void loadBundle(final Class type) {
