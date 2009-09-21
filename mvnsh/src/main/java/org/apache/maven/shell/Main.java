@@ -38,8 +38,6 @@ import org.slf4j.LoggerFactory;
 public class Main
     extends MainSupport
 {
-    protected Logger log = LoggerFactory.getLogger(getClass());
-
     @Override
     protected Branding createBranding() {
         return new BrandingImpl();
@@ -61,8 +59,6 @@ public class Main
                         container.lookup(Completor.class, "commands")
                 ))
                 .create();
-
-        log.debug("Created shell: {}", shell);
 
         return shell;
     }
