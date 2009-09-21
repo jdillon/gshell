@@ -27,7 +27,6 @@ import org.apache.maven.shell.command.CommandExecutor;
 import org.apache.maven.shell.console.Console;
 import org.apache.maven.shell.core.impl.ShellImpl;
 import org.apache.maven.shell.core.impl.CommandRegistrar;
-import org.apache.maven.shell.core.impl.plexus.Slf4jLoggerManager;
 import org.apache.maven.shell.io.IO;
 import org.codehaus.plexus.ContainerConfiguration;
 import org.codehaus.plexus.DefaultContainerConfiguration;
@@ -81,7 +80,6 @@ public class ShellBuilder
     public static PlexusContainer createContainer() throws PlexusContainerException {
         ContainerConfiguration config = new DefaultContainerConfiguration();
         DefaultPlexusContainer c = new DefaultPlexusContainer(config);
-        c.setLoggerManager(new Slf4jLoggerManager());
         return c;
     }
 
