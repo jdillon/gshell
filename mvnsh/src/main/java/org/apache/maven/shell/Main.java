@@ -45,7 +45,7 @@ public class Main
     protected Shell createShell() throws Exception {
         PlexusContainer container = ShellBuilder.createContainer();
         
-        Shell shell = new ShellBuilder()
+        return new ShellBuilder()
                 .setContainer(container)
                 .setBranding(getBranding())
                 .setIo(io)
@@ -57,8 +57,6 @@ public class Main
                         container.lookup(Completor.class, "commands")
                 ))
                 .create();
-
-        return shell;
     }
 
     public static void main(final String[] args) throws Exception {
