@@ -71,7 +71,6 @@
             <useStrictFiltering>true</useStrictFiltering>
             <excludes>
                 <exclude>org.apache.maven.shell:shell-bootstrap</exclude>
-                <exclude>org.apache.maven.shell:shell-assembly</exclude>
             </excludes>
         </dependencySet>
         
