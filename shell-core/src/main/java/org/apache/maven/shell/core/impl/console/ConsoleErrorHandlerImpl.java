@@ -22,6 +22,8 @@ package org.apache.maven.shell.core.impl.console;
 import org.apache.maven.shell.ShellHolder;
 import org.apache.maven.shell.VariableNames;
 import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.i18n.MessageSource;
+import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
 import org.apache.maven.shell.console.Console;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.notification.ErrorNotification;
@@ -41,6 +43,8 @@ public class ConsoleErrorHandlerImpl
 
     private final IO io;
 
+    private final MessageSource messages = new ResourceBundleMessageSource(getClass());
+    
     public ConsoleErrorHandlerImpl(final IO io) {
         assert io != null;
         this.io = io;

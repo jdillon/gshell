@@ -31,7 +31,7 @@ import java.io.File;
 import java.io.FileReader;
 
 /**
- * Helper to load profile scripts.
+ * Helper to load scripts.
  *
  * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
