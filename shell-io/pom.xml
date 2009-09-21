@@ -41,7 +41,7 @@
 
         <dependency>
             <groupId>org.apache.maven.shell</groupId>
-            <artifactId>shell-ansi</artifactId>
+            <artifactId>shell-common</artifactId>
         </dependency>
     </dependencies>
 

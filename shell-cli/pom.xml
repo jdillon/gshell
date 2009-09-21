@@ -36,12 +36,7 @@
     <dependencies>
         <dependency>
             <groupId>org.apache.maven.shell</groupId>
-            <artifactId>shell-i18n</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.maven.shell</groupId>
-            <artifactId>shell-terminal</artifactId>
+            <artifactId>shell-common</artifactId>
         </dependency>
         
         <dependency>

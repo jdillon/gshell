@@ -46,7 +46,7 @@
 
         <dependency>
             <groupId>org.apache.maven.shell</groupId>
-            <artifactId>shell-i18n</artifactId>
+            <artifactId>shell-common</artifactId>
         </dependency>
     </dependencies>
 

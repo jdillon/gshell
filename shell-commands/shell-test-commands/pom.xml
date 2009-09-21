@@ -33,12 +33,5 @@
     <artifactId>shell-test-commands</artifactId>
     <name>Maven Shell Commands :: Test</name>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.maven.shell</groupId>
-            <artifactId>shell-console</artifactId>
-        </dependency>
-    </dependencies>
-
 </project>
 

@@ -46,7 +46,7 @@
         
         <dependency>
             <groupId>org.apache.maven.shell</groupId>
-            <artifactId>shell-console</artifactId>
+            <artifactId>shell-common</artifactId>
         </dependency>
         
         <dependency>

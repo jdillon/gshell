@@ -33,12 +33,5 @@
     <artifactId>shell-basic-commands</artifactId>
     <name>Maven Shell Commands :: Basic</name>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.maven.shell</groupId>
-            <artifactId>shell-console</artifactId>
-        </dependency>
-    </dependencies>
-
 </project>
 
