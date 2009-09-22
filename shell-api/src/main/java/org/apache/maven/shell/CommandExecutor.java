@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.maven.shell.command;
+package org.apache.maven.shell;
 
 import org.apache.maven.shell.Shell;
 

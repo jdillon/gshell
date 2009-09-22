@@ -20,8 +20,8 @@
 package org.apache.maven.shell.parser;
 
 import org.apache.maven.shell.Shell;
-import org.apache.maven.shell.command.CommandExecutor;
-import org.apache.maven.shell.command.CommandLineParser;
+import org.apache.maven.shell.CommandExecutor;
+import org.apache.maven.shell.CommandLineParser;
 import org.apache.maven.shell.io.Closer;
 import org.apache.maven.shell.parser.impl.ASTCommandLine;
 import org.apache.maven.shell.parser.impl.Parser;

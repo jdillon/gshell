@@ -17,21 +17,41 @@
  * under the License.
  */
 
-package org.apache.maven.shell.command;
+package org.apache.maven.shell;
 
-import org.apache.maven.shell.Shell;
+import java.lang.reflect.Array;
 
 /**
- * Parse command lines for execution.
+ * Utils for command-line arguments.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public interface CommandLineParser
+public class Arguments
 {
-    CommandLine parse(String line) throws Exception;
+    public static Object[] shift(final Object[] args) {
+        return shift(args, 1);
+    }
 
-    interface CommandLine
-    {
-        Object execute(Shell shell, CommandExecutor executor) throws Exception;
+    public static Object[] shift(final Object[] source, int pos) {
+        assert source != null;
+        assert source.length >= pos;
+
+        Object[] target = (Object[])Array.newInstance(source.getClass().getComponentType(), source.length - pos);
+
+        System.arraycopy(source, pos, target, 0, target.length);
+
+        return target;
+    }
+
+    public static String[] toStringArray(final Object[] args) {
+        assert args != null;
+
+        String[] strings = new String[args.length];
+
+        for (int i=0; i<args.length; i++ ) {
+            strings[i] = String.valueOf(args[i]);
+        }
+
+        return strings;
     }
 }

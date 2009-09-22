@@ -20,9 +20,9 @@
 package org.apache.maven.shell.core.impl.parser;
 
 import org.apache.maven.shell.Shell;
-import org.apache.maven.shell.command.Arguments;
-import org.apache.maven.shell.command.CommandExecutor;
-import org.apache.maven.shell.command.CommandLineParser;
+import org.apache.maven.shell.Arguments;
+import org.apache.maven.shell.CommandExecutor;
+import org.apache.maven.shell.CommandLineParser;
 import org.codehaus.plexus.component.annotations.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

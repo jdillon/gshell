@@ -19,7 +19,7 @@
 
 package org.apache.maven.shell.parser;
 
-import org.apache.maven.shell.command.CommandLineParser;
+import org.apache.maven.shell.CommandLineParser;
 import org.apache.maven.shell.testsupport.PlexusTestSupport;
 import org.junit.After;
 import static org.junit.Assert.fail;
