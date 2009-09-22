@@ -31,6 +31,6 @@ public interface CommandResolver
 {
     Command resolveCommand(String name) throws CommandException;
 
-    // TODO:
+    // TODO: Add resolution of a group of commands
     // Collection<Command> resolveCommands(String name) throws CommandException;
 }
