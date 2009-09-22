@@ -159,11 +159,14 @@ public class CommandDocumenterImpl
         out.println(text);
         io.out.println();
 
-        io.out.format("@|bold %s|", messages.getMessage("section.manual")).println();
-        text = getManual(command);
-        text = renderer.render(text);
-        out.println();
-        out.println(text);
-        io.out.println();
+        String manual = getManual(command);
+        if (manual != null && manual.trim().length() != 0) {
+            io.out.format("@|bold %s|", messages.getMessage("section.manual")).println();
+            text = manual;
+            text = renderer.render(text);
+            out.println();
+            out.println(text);
+            io.out.println();
+        }
     }
 }
