@@ -99,7 +99,7 @@ public abstract class Handler<T>
     }
 
     public String getHelpText(final MessageSource messages) {
-        assert messages != null;
+        // messages may be null
 
         String message = descriptor.getDescription();
 

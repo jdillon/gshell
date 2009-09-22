@@ -55,6 +55,6 @@ public class BooleanHandler
 
     @Override
     public String getDefaultToken() {
-        return "FLAG";
+        return null;
     }
 }
