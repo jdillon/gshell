@@ -32,8 +32,6 @@ import org.apache.maven.shell.event.EventManager;
 import org.apache.maven.shell.registry.CommandRegistry;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
-import org.codehaus.plexus.personality.plexus.lifecycle.phase.Initializable;
-import org.codehaus.plexus.personality.plexus.lifecycle.phase.InitializationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,7 +51,7 @@ import java.util.Map;
  */
 @Component(role=Completor.class, hint="commands")
 public class CommandsCompleter
-    implements Completor, Initializable
+    implements Completor
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -67,6 +65,8 @@ public class CommandsCompleter
 
     private final AggregateCompleter delegate = new AggregateCompleter();
 
+    private boolean initialized;
+
     public CommandsCompleter() {}
     
     public CommandsCompleter(final EventManager eventManager, final CommandRegistry commandRegistry) {
@@ -76,7 +76,7 @@ public class CommandsCompleter
         this.commandRegistry = commandRegistry;
     }
 
-    public void initialize() throws InitializationException {
+    private void init() {
         try {
             // Populate the initial list of completers from the currently registered commands
             Collection<String> names = commandRegistry.getCommandNames();
@@ -99,8 +99,10 @@ public class CommandsCompleter
             });
         }
         catch (Exception e) {
-            throw new InitializationException(e.getMessage(), e);
+            throw new RuntimeException(e);
         }
+
+        initialized = true;
     }
 
     private void addCompleter(final String name) throws Exception {
@@ -143,6 +145,10 @@ public class CommandsCompleter
     }
 
     public int complete(final String buffer, final int cursor, final List candidates) {
+        if (!initialized) {
+            init();
+        }
+
         return delegate.complete(buffer, cursor, candidates);
     }
 }

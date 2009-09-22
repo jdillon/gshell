@@ -28,8 +28,6 @@ import org.apache.maven.shell.event.EventManager;
 import org.apache.maven.shell.registry.AliasRegistry;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
-import org.codehaus.plexus.personality.plexus.lifecycle.phase.Initializable;
-import org.codehaus.plexus.personality.plexus.lifecycle.phase.InitializationException;
 
 import java.util.Collection;
 import java.util.EventObject;
@@ -44,7 +42,7 @@ import java.util.List;
  */
 @Component(role=Completor.class, hint="alias-name")
 public class AliasNameCompleter
-    implements Completor, Initializable
+    implements Completor
 {
     @Requirement
     private EventManager eventManager;
@@ -53,6 +51,8 @@ public class AliasNameCompleter
     private AliasRegistry aliasRegistry;
 
     private final StringsCompleter delegate = new StringsCompleter();
+
+    private boolean initialized;
 
     public AliasNameCompleter() {}
     
@@ -63,7 +63,7 @@ public class AliasNameCompleter
         this.aliasRegistry = aliasRegistry;
     }
 
-    public void initialize() throws InitializationException {
+    private void init() {
         assert aliasRegistry != null;
         Collection<String> names = aliasRegistry.getAliasNames();
         delegate.getStrings().addAll(names);
@@ -81,9 +81,15 @@ public class AliasNameCompleter
                 }
             }
         });
+
+        initialized = true;
     }
 
     public int complete(final String buffer, final int cursor, final List candidates) {
+        if (!initialized) {
+            init();
+        }
+
         return delegate.complete(buffer, cursor, candidates);
     }
 }

@@ -28,8 +28,6 @@ import org.apache.maven.shell.event.EventManager;
 import org.apache.maven.shell.registry.CommandRegistry;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
-import org.codehaus.plexus.personality.plexus.lifecycle.phase.Initializable;
-import org.codehaus.plexus.personality.plexus.lifecycle.phase.InitializationException;
 
 import java.util.Collection;
 import java.util.EventObject;
@@ -44,7 +42,7 @@ import java.util.List;
  */
 @Component(role=Completor.class, hint="command-name")
 public class CommandNameCompleter
-    implements Completor, Initializable
+    implements Completor
 {
     @Requirement
     private EventManager eventManager;
@@ -53,6 +51,8 @@ public class CommandNameCompleter
     private CommandRegistry commandRegistry;
 
     private final StringsCompleter delegate = new StringsCompleter();
+
+    private boolean initialized;
 
     public CommandNameCompleter() {}
 
@@ -63,7 +63,7 @@ public class CommandNameCompleter
         this.commandRegistry = commandRegistry;
     }
 
-    public void initialize() throws InitializationException {
+    private void init() {
         assert commandRegistry != null;
         Collection<String> names = commandRegistry.getCommandNames();
         delegate.getStrings().addAll(names);
@@ -81,9 +81,15 @@ public class CommandNameCompleter
                 }
             }
         });
+
+        initialized = true;
     }
 
     public int complete(final String buffer, final int cursor, final List candidates) {
+        if (!initialized) {
+            init();
+        }
+
         return delegate.complete(buffer, cursor, candidates);
     }
 }
