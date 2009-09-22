@@ -40,10 +40,20 @@ public class ConsoleErrorHandlerImpl
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
+    private static final String ERROR_EXCEPTION_NAME = "error.exception.name";
+
+    private static final String ERROR_EXCEPTION_AT = "error.exception.at";
+
+    private static final String ERROR_EXCEPTION_CAUSEBY = "error.exception.causeby";
+
+    private static final String ERROR_LOCATION_NATIVE = "error.location.native";
+
+    private static final String ERROR_LOCATION_UNKNOWN = "error.location.unknown";
+
     private final IO io;
 
     private final MessageSource messages = new ResourceBundleMessageSource(getClass());
-    
+
     public ConsoleErrorHandlerImpl(final IO io) {
         assert io != null;
         this.io = io;
@@ -80,20 +90,19 @@ public class ConsoleErrorHandlerImpl
             showTrace = Boolean.parseBoolean(tmp.trim());
         }
 
-        // TODO: i18n
-
         // Spit out the terse reason why we've failed
-        io.err.format("@|bold,red ERROR| %s: @|bold,red %s|", cause.getClass().getSimpleName(), cause.getMessage()).println();
+        io.err.println(messages.format(ERROR_EXCEPTION_NAME,  cause.getClass().getName(), cause.getMessage()));
 
         if (showTrace || io.isVerbose()) {
             while (cause != null) {
                 for (StackTraceElement e : cause.getStackTrace()) {
-                    io.err.format("        @|bold at| %s.%s (@|bold %s|)", e.getClassName(), e.getMethodName(), getLocation(e)).println();
+                    io.err.print("    ");
+                    io.err.println(messages.format(ERROR_EXCEPTION_AT, e.getClassName(), e.getMethodName(), getLocation(e)));
                 }
 
                 cause = cause.getCause();
                 if (cause != null) {
-                    io.err.format("    @|bold Caused by| %s: @|bold,red %s|", cause.getClass().getSimpleName(), cause.getMessage()).println();    
+                    io.err.println(messages.format(ERROR_EXCEPTION_CAUSEBY, cause.getClass().getName(), cause.getMessage()));
                 }
             }
         }
@@ -104,13 +113,11 @@ public class ConsoleErrorHandlerImpl
     private String getLocation(final StackTraceElement e) {
         assert e != null;
 
-        // TODO: i18n
-        
         if (e.isNativeMethod()) {
-            return "Native Method";
+            return messages.format(ERROR_LOCATION_NATIVE);
         }
         else if (e.getFileName() == null) {
-            return "Unknown Source";
+            return messages.format(ERROR_LOCATION_UNKNOWN);
         }
         else if (e.getLineNumber() >= 0) {
             return String.format("%s:%s", e.getFileName(), e.getLineNumber());
