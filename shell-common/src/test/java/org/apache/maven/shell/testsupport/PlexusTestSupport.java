@@ -40,7 +40,6 @@ import java.io.InputStream;
 /**
  * Support for using Plexus components in tests.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class PlexusTestSupport

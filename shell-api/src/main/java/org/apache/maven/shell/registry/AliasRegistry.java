@@ -24,7 +24,6 @@ import java.util.Collection;
 /**
  * Registry for command aliases.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public interface AliasRegistry

@@ -22,10 +22,8 @@ package org.apache.maven.shell.notification;
 /**
  * Thrown to indicate a notification state.
  *
- * <p>
- * Extending from Error to prevent need to declare throwable.
+ * <p>Extending from Error to prevent need to declare throwable.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public abstract class Notification

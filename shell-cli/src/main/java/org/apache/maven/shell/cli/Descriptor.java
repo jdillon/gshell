@@ -24,7 +24,6 @@ import org.apache.maven.shell.cli.handler.Handler;
 /**
  * Basic container for option and argument descriptors.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public abstract class Descriptor

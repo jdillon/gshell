@@ -42,9 +42,8 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * Support for booting shell applications
+ * Support for booting shell applications.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public abstract class MainSupport

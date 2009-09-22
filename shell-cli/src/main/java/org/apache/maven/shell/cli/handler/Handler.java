@@ -30,7 +30,6 @@ import org.apache.maven.shell.i18n.ResourceNotFoundException;
 /**
  * Provides the basic mechanism to handle custom option and argument processing.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public abstract class Handler<T>

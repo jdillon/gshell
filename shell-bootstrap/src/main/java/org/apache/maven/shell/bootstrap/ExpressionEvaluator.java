@@ -28,7 +28,6 @@ import java.util.Properties;
 /**
  * Simple expression evaluator for handling <tt>${variable}</tt> expansion.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class ExpressionEvaluator

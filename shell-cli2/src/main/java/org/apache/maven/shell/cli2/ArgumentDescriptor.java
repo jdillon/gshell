@@ -24,7 +24,6 @@ import org.apache.maven.shell.cli2.setter.Setter;
 /**
  * Descriptor for {@link Argument} annotations.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class ArgumentDescriptor
@@ -37,4 +36,6 @@ public class ArgumentDescriptor
         assert argument != null;
         this.argument = argument;
     }
+
+    // TODO:
 }

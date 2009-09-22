@@ -31,7 +31,6 @@ import java.io.PrintStream;
  * Hijacks the systems standard output and error streams on a per-thread basis
  * and redirects to given streams.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class SystemInputOutputHijacker

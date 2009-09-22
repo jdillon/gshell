@@ -33,7 +33,6 @@ import java.util.Set;
 /**
  * Setter for fields of collection types.  Currently supports lists and sets.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class CollectionFieldSetter

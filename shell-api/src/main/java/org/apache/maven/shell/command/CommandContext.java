@@ -26,7 +26,6 @@ import org.apache.maven.shell.io.IO;
 /**
  * Provides commands with the context of it's execution.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public interface CommandContext

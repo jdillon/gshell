@@ -33,7 +33,7 @@ import java.io.PrintStream;
 /**
  * Tests for the {@link SystemInputOutputHijacker} class.
  *
- * @version $Rev$ $Date$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class SystemInputOutputHijackerTest
 {

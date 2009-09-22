@@ -29,8 +29,7 @@ import org.codehaus.plexus.PlexusContainer;
 
 /**
  * Command-line bootstrap for Apache Maven Shell (<tt>shell</tt>).
- *
- * @version $Rev$ $Date$
+ * 
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class Main

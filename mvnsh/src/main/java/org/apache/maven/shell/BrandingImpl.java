@@ -21,8 +21,7 @@ package org.apache.maven.shell;
 
 /**
  * Branding for <tt>mvnsh</tt>.
- *
- * @version $Rev$ $Date$
+ * 
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class BrandingImpl

@@ -24,7 +24,7 @@ import java.io.File;
 /**
  * Defines the basic elements for branding a shell.
  *
- * @version $Rev: 574424 $ $Date: 2007-09-11 08:47:18 +0700 (Tue, 11 Sep 2007) $
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public interface Branding
 {

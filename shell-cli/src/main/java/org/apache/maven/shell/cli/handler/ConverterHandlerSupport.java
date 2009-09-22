@@ -28,7 +28,6 @@ import org.apache.xbean.propertyeditor.PropertyEditorException;
 /**
  * A generic {@link Handler} which uses XBean Reflect to convert values.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class ConverterHandlerSupport<T>

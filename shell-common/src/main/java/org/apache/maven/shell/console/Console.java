@@ -27,7 +27,6 @@ import java.io.IOException;
 /**
  * Provides an abstraction of a console.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public abstract class Console

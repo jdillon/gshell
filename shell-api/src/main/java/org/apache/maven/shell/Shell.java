@@ -23,8 +23,7 @@ import org.apache.maven.shell.io.IO;
 
 /**
  * Provides access to execute commands.
- *
- * @version $Rev$ $Date$
+ * 
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public interface Shell

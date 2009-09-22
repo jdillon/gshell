@@ -33,7 +33,6 @@ import java.io.InputStream;
 /**
  * Support for running console using the <a href="http://jline.sf.net">JLine</a> library.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class JLineConsole

@@ -50,7 +50,6 @@ import org.slf4j.MDC;
 /**
  * The default {@link CommandExecutor} component.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 @Component(role=CommandExecutor.class)

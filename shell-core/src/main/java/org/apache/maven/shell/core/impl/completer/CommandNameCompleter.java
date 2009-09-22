@@ -40,7 +40,6 @@ import java.util.List;
  *
  * Keeps up to date automatically by handling command-related events.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 @Component(role=Completor.class, hint="command-name")

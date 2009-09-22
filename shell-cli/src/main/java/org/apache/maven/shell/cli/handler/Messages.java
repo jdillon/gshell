@@ -19,12 +19,12 @@
 
 package org.apache.maven.shell.cli.handler;
 
-import java.util.ResourceBundle;
+import org.apache.maven.shell.i18n.MessageSource;
+import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
 
 /**
  * Messages for the {@link org.apache.maven.shell.cli.handler} package.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 enum Messages
@@ -35,17 +35,9 @@ enum Messages
     ILLEGAL_BOOLEAN,
     ;
 
-    private static ResourceBundle bundle;
+    private final MessageSource messages = new ResourceBundleMessageSource(getClass());
 
     String format(final Object... args) {
-        assert args != null;
-        
-        synchronized (Messages.class) {
-            if (bundle == null) {
-                bundle = ResourceBundle.getBundle(Messages.class.getName());
-            }
-
-            return String.format(bundle.getString(name()), args);
-        }
+        return messages.format(name(), args);
     }
 }

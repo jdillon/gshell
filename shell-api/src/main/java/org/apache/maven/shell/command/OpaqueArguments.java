@@ -22,7 +22,6 @@ package org.apache.maven.shell.command;
 /**
  * Marker to indicate that arguments to a command should not be pre-processed.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public interface OpaqueArguments

@@ -24,8 +24,7 @@ import java.util.List;
 
 /**
  * Provides access to a shells history.
- *
- * @version $Rev$ $Date$
+ * 
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public interface History

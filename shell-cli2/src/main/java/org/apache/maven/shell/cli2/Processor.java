@@ -39,7 +39,6 @@ import java.util.List;
 /**
  * Processes an object for command-line configuration annotations.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class Processor

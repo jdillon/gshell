@@ -29,7 +29,6 @@ import java.lang.annotation.Target;
 /**
  * Configures a field or method for processing as a command-line argument.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 @Retention(RetentionPolicy.RUNTIME)

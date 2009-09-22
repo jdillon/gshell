@@ -33,7 +33,6 @@ import java.util.List;
 /**
  * Helper to print formatted help and usage text.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class Printer

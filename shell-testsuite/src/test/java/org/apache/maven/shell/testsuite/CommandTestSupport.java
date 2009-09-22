@@ -40,8 +40,7 @@ import org.junit.Test;
 
 /**
  * Support for testing {@link Command} instances.
- *
- * @version $Rev$ $Date$
+ * 
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public abstract class CommandTestSupport

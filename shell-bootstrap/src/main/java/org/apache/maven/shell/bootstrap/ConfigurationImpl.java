@@ -32,7 +32,6 @@ import java.util.Properties;
 /**
  * Bootstrap configuration implementation.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class ConfigurationImpl

@@ -22,7 +22,6 @@ package org.apache.maven.shell;
 /**
  * Common shell variable names.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public interface VariableNames

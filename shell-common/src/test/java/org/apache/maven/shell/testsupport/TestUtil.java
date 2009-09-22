@@ -27,7 +27,7 @@ import java.io.File;
 /**
  * Test utilities.
  *
- * @version $Rev:$ $Date:$
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class TestUtil
 {

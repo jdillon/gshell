@@ -31,7 +31,6 @@ import java.util.List;
 /**
  * Implementation of {@link History} for <a href="http://jline.sf.net">JLine</a>.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class JLineHistory

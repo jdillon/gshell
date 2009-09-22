@@ -24,7 +24,6 @@ import org.apache.maven.shell.cli2.OptionDescriptor;
 /**
  * Support for Commons Cli option processing to use an {@link org.apache.maven.shell.cli2.OptionDescriptor}.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class OptionDescriptorOption

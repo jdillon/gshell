@@ -44,7 +44,6 @@ import java.util.List;
 /**
  * Read and execute commands from a file in the current shell environment.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 @Component(role=Command.class, hint="source")

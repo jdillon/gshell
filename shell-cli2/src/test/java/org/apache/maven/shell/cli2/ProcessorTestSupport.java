@@ -25,7 +25,6 @@ import org.junit.Before;
 /**
  * Support for {@link Processor} tests.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public abstract class ProcessorTestSupport

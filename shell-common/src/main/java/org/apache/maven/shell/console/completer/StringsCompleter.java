@@ -30,7 +30,6 @@ import java.util.TreeSet;
 /**
  * Completer for a set of strings.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class StringsCompleter

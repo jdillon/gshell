@@ -24,7 +24,6 @@ import org.apache.maven.shell.cli.ProcessingException;
 /**
  * Provides the basic mechanism to set values.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public interface Setter<T>

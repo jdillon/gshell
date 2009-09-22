@@ -25,8 +25,7 @@ import java.io.File;
 
 /**
  * Test {@link Branding}.
- *
- * @version $Rev$ $Date$
+ * 
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class TestBranding

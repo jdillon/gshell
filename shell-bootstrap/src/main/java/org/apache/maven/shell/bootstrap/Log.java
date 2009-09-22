@@ -22,7 +22,6 @@ package org.apache.maven.shell.bootstrap;
 /**
  * Bootstrap logger.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class Log

@@ -33,7 +33,6 @@ import java.io.FileReader;
 /**
  * Helper to load scripts.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class ScriptLoader

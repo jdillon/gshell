@@ -22,7 +22,6 @@ package org.apache.maven.shell.parser.impl.visitor;
 /**
  * Thrown when a command execution fails.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class ExecutionFailed

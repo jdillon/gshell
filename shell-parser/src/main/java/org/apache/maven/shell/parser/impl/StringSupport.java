@@ -22,7 +22,6 @@ package org.apache.maven.shell.parser.impl;
 /**
  * Support for string types.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public abstract class StringSupport

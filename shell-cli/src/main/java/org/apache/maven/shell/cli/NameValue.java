@@ -22,7 +22,6 @@ package org.apache.maven.shell.cli;
 /**
  * Container and parser for <tt>name=value</tt> bits.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class NameValue

@@ -27,7 +27,6 @@ import java.util.Collection;
 /**
  * Creates {@link Setter} instances.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class SetterFactory

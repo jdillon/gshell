@@ -25,7 +25,6 @@ import java.io.IOException;
 /**
  * Quietly closes {@link Closeable}s.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class Closer

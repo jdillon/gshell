@@ -34,7 +34,6 @@ import org.slf4j.LoggerFactory;
 /**
  * Visitor whichs logs nodes in the tree.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class LoggingVisitor

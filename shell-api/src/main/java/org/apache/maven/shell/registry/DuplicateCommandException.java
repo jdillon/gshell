@@ -24,7 +24,6 @@ import org.apache.maven.shell.command.CommandException;
 /**
  * Thrown to indicate a duplicate command registration attempt has failed.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class DuplicateCommandException

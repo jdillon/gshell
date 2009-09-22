@@ -29,7 +29,6 @@ import org.apache.maven.shell.cli.setter.Setter;
  * <p>This is for compatibility with multi-valued bits that don't use generics to
  *    indicate the class of contained elements.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class ObjectHandler

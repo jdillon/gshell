@@ -25,7 +25,6 @@ import java.util.List;
 /**
  * Bootstrap configuration.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public interface Configuration

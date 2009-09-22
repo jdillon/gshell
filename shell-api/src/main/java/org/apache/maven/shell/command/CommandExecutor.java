@@ -24,7 +24,6 @@ import org.apache.maven.shell.Shell;
 /**
  * Provides the ability to execute commands.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public interface CommandExecutor

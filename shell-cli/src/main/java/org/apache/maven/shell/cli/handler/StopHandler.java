@@ -27,7 +27,6 @@ import org.apache.maven.shell.cli.setter.Setter;
 /**
  * Handler to abort further option processing (and soak up remaining tokens as arguments).
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class StopHandler

@@ -22,7 +22,6 @@ package org.apache.maven.shell.ansi;
 /**
  * A stringbuffer-like thingy to help with using ANSI escape-codes.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class AnsiBuffer

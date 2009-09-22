@@ -39,7 +39,6 @@ import java.util.Properties;
 /**
  * Default implementation of the {@link CommandRegistrar}.
  *
- * @version $Rev$ $Date$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 @Component(role=CommandRegistrar.class)
