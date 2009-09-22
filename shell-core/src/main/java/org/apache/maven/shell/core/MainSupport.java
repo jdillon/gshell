@@ -30,6 +30,7 @@ import org.apache.maven.shell.cli.Option;
 import org.apache.maven.shell.cli.Printer;
 import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.cli.Processor;
+import org.apache.maven.shell.cli.handler.StopHandler;
 import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
 import org.apache.maven.shell.io.AnsiAwareIO;
@@ -73,6 +74,9 @@ public abstract class MainSupport
 
     @Option(name="-h", aliases={"--help"}, requireOverride=true)
     protected boolean help;
+
+    @Option(name="--", handler= StopHandler.class)
+    private boolean stop;
 
     @Option(name="-V", aliases={"--version"}, requireOverride=true)
     protected boolean version;
@@ -184,12 +188,12 @@ public abstract class MainSupport
 
         if (help) {
             Printer printer = new Printer(clp);
-            printer.printUsage(io.out, branding.getProgramName());
+            printer.printUsage(io.out, getBranding().getProgramName());
             exit(ExitNotification.DEFAULT_CODE);
         }
 
         if (version) {
-            io.out.format("%s %s", branding.getDisplayName(), branding.getVersion()).println();
+            io.out.format("%s %s", getBranding().getDisplayName(), getBranding().getVersion()).println();
             exit(ExitNotification.DEFAULT_CODE);
         }
 
