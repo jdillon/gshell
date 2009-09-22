@@ -37,6 +37,7 @@ import org.apache.maven.shell.i18n.PrefixingMessageSource;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.io.SystemInputOutputHijacker;
 import org.apache.maven.shell.notification.ErrorNotification;
+import org.apache.maven.shell.notification.ResultNotification;
 import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.registry.CommandRegistry;
 import org.codehaus.plexus.component.annotations.Component;
@@ -173,23 +174,28 @@ public class CommandExecutorImpl
             }
 
             if (execute) {
-                result = command.execute(new CommandContext() {
-                    public Shell getShell() {
-                        return shell;
-                    }
+                try {
+                    result = command.execute(new CommandContext() {
+                        public Shell getShell() {
+                            return shell;
+                        }
 
-                    public Object[] getArguments() {
-                        return args;
-                    }
+                        public Object[] getArguments() {
+                            return args;
+                        }
 
-                    public IO getIo() {
-                        return io;
-                    }
+                        public IO getIo() {
+                            return io;
+                        }
 
-                    public Variables getVariables() {
-                        return shell.getVariables();
-                    }
-                });
+                        public Variables getVariables() {
+                            return shell.getVariables();
+                        }
+                    });
+                }
+                catch (ResultNotification n) {
+                    result = n.getResult();   
+                }
             }
         }
         finally {
