@@ -20,6 +20,7 @@
 package org.apache.maven.shell.commands.basic;
 
 import org.apache.maven.shell.Branding;
+import org.apache.maven.shell.cli.Option;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
@@ -35,20 +36,23 @@ import org.codehaus.plexus.component.annotations.Component;
 public class AboutCommand
     extends CommandSupport
 {
+    @Option(name="-v", aliases={"--verbose"})
+    private boolean verbose;
+
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
         IO io = context.getIo();
         Branding branding = context.getShell().getBranding();
 
-        if (io.isVerbose()) {
-            io.verbose("Version: {}", branding.getVersion());
-            io.verbose("Display Name: {}", branding.getDisplayName());
-            io.verbose("Program Name: {}", branding.getProgramName());
-            io.verbose("Script Extension: {}", branding.getScriptExtension());
-            io.verbose("Script Home Dir: {}", branding.getShellHomeDir());
-            io.verbose("Script Context Dir: {}", branding.getShellContextDir());
-            io.verbose("Script User Home Dir: {}", branding.getUserHomeDir());
-            io.verbose("Script User Context Dir: {}", branding.getUserContextDir());
+        if (verbose || io.isVerbose()) {
+            io.info("Version: {}", branding.getVersion());
+            io.info("Display Name: {}", branding.getDisplayName());
+            io.info("Program Name: {}", branding.getProgramName());
+            io.info("Script Extension: {}", branding.getScriptExtension());
+            io.info("Script Home Dir: {}", branding.getShellHomeDir());
+            io.info("Script Context Dir: {}", branding.getShellContextDir());
+            io.info("Script User Home Dir: {}", branding.getUserHomeDir());
+            io.info("Script User Context Dir: {}", branding.getUserContextDir());
         }
         else {
             io.info(branding.getAboutMessage());

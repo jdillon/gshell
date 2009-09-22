@@ -40,8 +40,7 @@ public class BrandingSupport
     implements Branding, VariableNames
 {
     private final MessageSource messages = new ResourceBundleMessageSource()
-            .add(false, getClass())
-            .add(BrandingSupport.class);
+            .add(false, getClass());
 
     private final Properties props;
 
