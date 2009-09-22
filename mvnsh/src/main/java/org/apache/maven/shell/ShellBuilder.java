@@ -17,15 +17,12 @@
  * under the License.
  */
 
-package org.apache.maven.shell.core;
+package org.apache.maven.shell;
 
 import jline.Completor;
-import org.apache.maven.shell.Branding;
-import org.apache.maven.shell.Shell;
-import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.command.CommandExecutor;
 import org.apache.maven.shell.console.Console;
-import org.apache.maven.shell.core.impl.CommandRegistrar;
+import org.apache.maven.shell.core.impl.command.CommandRegistrar;
 import org.apache.maven.shell.core.impl.ShellImpl;
 import org.apache.maven.shell.io.IO;
 import org.codehaus.plexus.ContainerConfiguration;
@@ -40,7 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Builds {@link Shell} instances.
+ * Builds {@link org.apache.maven.shell.Shell} instances.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
@@ -122,21 +119,21 @@ public class ShellBuilder
         if (branding == null) {
             throw new IllegalStateException("Missing branding");
         }
-        
+
         // Create the shell instance
         CommandExecutor executor = container.lookup(CommandExecutor.class);
         ShellImpl shell = new ShellImpl(branding, executor, io, variables);
         shell.setPrompter(prompter);
         shell.setErrorHandler(errorHandler);
         shell.setCompleters(completers);
-        
+
         // Maybe register default commands
         if (registerCommands) {
             getContainer().lookup(CommandRegistrar.class).registerCommands();
         }
 
         log.debug("Created shell: {}", shell);
-        
+
         return shell;
     }
 }

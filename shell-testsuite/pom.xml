@@ -64,6 +64,11 @@
 
         <dependency>
             <groupId>org.apache.maven.shell</groupId>
+            <artifactId>mvnsh</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.maven.shell</groupId>
             <artifactId>shell-common</artifactId>
             <classifier>tests</classifier>
             <scope>test</scope>

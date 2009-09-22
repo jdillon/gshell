@@ -22,7 +22,6 @@ package org.apache.maven.shell;
 import jline.Completor;
 import org.apache.maven.shell.console.completer.AggregateCompleter;
 import org.apache.maven.shell.core.MainSupport;
-import org.apache.maven.shell.core.ShellBuilder;
 import org.apache.maven.shell.core.impl.console.ConsoleErrorHandlerImpl;
 import org.apache.maven.shell.core.impl.console.ConsolePrompterImpl;
 import org.codehaus.plexus.PlexusContainer;
