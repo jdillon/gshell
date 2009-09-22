@@ -18,10 +18,6 @@
 @REM
 @if "%DEBUG%" == "" @echo off
 
-@REM
-@REM $Rev$ $Date$
-@REM
-
 if "%OS%"=="Windows_NT" setlocal enableextensions
 set ERRORLEVEL=0
 
