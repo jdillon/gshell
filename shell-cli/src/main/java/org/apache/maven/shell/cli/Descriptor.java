@@ -73,6 +73,15 @@ public abstract class Descriptor
 
     public String getMessageCode() {
         if (this instanceof ArgumentDescriptor) {
+            return String.format("argument.%s", id);
+        }
+        else {
+            return String.format("option.%s", id);
+        }
+    }
+
+    public String getTokenCode() {
+        if (this instanceof ArgumentDescriptor) {
             return String.format("argument.%s.token", id);
         }
         else {

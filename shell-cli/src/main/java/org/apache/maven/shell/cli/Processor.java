@@ -100,7 +100,7 @@ public class Processor
     private void discoverDescriptors(final Object bean) {
         assert bean != null;
 
-        // Recursively process all the methods/fields.
+        // Recursively process all the methods/fields (@Inherited won't work here)
         for (Class type=bean.getClass(); type!=null; type=type.getSuperclass()) {
             // Discover methods
             for (Method method : type.getDeclaredMethods()) {

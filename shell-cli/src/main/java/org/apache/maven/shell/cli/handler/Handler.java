@@ -79,7 +79,7 @@ public abstract class Handler<T>
 
             // If there is no coded, then generate one
             if (code == null) {
-                code = descriptor.getMessageCode();
+                code = descriptor.getTokenCode();
             }
 
             // Resolve the text in the message source
