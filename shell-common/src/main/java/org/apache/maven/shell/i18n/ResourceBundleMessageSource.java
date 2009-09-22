@@ -64,6 +64,10 @@ public class ResourceBundleMessageSource
         return this;
     }
 
+    public Locale getLocale() {
+        return locale;
+    }
+
     public ResourceBundleMessageSource add(final Class... types) {
         return add(true, types);
     }
