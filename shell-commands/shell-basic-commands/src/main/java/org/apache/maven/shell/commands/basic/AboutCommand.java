@@ -40,9 +40,19 @@ public class AboutCommand
         IO io = context.getIo();
         Branding branding = context.getShell().getBranding();
 
-        io.out.println(branding.getAboutMessage());
-
-        // TODO: Dump more details when --verbose
+        if (io.isVerbose()) {
+            io.verbose("Version: {}", branding.getVersion());
+            io.verbose("Display Name: {}", branding.getDisplayName());
+            io.verbose("Program Name: {}", branding.getProgramName());
+            io.verbose("Script Extension: {}", branding.getScriptExtension());
+            io.verbose("Script Home Dir: {}", branding.getShellHomeDir());
+            io.verbose("Script Context Dir: {}", branding.getShellContextDir());
+            io.verbose("Script User Home Dir: {}", branding.getUserHomeDir());
+            io.verbose("Script User Context Dir: {}", branding.getUserContextDir());
+        }
+        else {
+            io.info(branding.getAboutMessage());
+        }
 
         return Result.SUCCESS;
     }
