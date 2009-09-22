@@ -22,8 +22,8 @@ package org.apache.maven.shell.cli.handler;
 import org.apache.maven.shell.cli.Descriptor;
 import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.cli.setter.Setter;
-import org.apache.xbean.propertyeditor.PropertyEditors;
 import org.apache.xbean.propertyeditor.PropertyEditorException;
+import org.apache.xbean.propertyeditor.PropertyEditors;
 
 /**
  * A generic {@link Handler} which uses XBean Reflect to convert values.

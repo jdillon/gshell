@@ -20,8 +20,8 @@
 package org.apache.maven.shell.cli.handler;
 
 import org.apache.maven.shell.cli.Option;
-import org.apache.maven.shell.cli.ProcessorTestSupport;
 import org.apache.maven.shell.cli.ProcessingException;
+import org.apache.maven.shell.cli.ProcessorTestSupport;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import org.junit.Test;

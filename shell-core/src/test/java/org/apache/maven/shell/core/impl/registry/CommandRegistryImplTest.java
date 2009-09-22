@@ -19,10 +19,10 @@
 
 package org.apache.maven.shell.core.impl.registry;
 
+import org.apache.maven.shell.command.CommandContext;
+import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.registry.CommandRegistry;
 import org.apache.maven.shell.testsupport.PlexusTestSupport;
-import org.apache.maven.shell.command.CommandSupport;
-import org.apache.maven.shell.command.CommandContext;
 import org.junit.After;
 import static org.junit.Assert.fail;
 import org.junit.Before;

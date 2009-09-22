@@ -21,8 +21,8 @@ package org.apache.maven.shell.cli.handler;
 
 import org.apache.maven.shell.cli.ArgumentDescriptor;
 import org.apache.maven.shell.cli.Descriptor;
-import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.cli.OptionDescriptor;
+import org.apache.maven.shell.cli.ProcessingException;
 import org.apache.maven.shell.cli.setter.Setter;
 import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.i18n.ResourceNotFoundException;
