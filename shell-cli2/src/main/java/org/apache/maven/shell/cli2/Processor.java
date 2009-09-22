@@ -24,10 +24,10 @@ import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
-import org.apache.maven.shell.i18n.MessageSource;
-import org.apache.maven.shell.cli2.setter.SetterFactory;
-import org.apache.maven.shell.cli2.setter.Setter;
 import org.apache.maven.shell.cli2.internal.OptionDescriptorOption;
+import org.apache.maven.shell.cli2.setter.Setter;
+import org.apache.maven.shell.cli2.setter.SetterFactory;
+import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.xbean.propertyeditor.PropertyEditors;
 
 import java.lang.reflect.AnnotatedElement;
@@ -73,7 +73,7 @@ public class Processor
     private void discoverDescriptors(final Object bean) {
         assert bean != null;
 
-        // Recursively process all the methods/fields.
+        // Recursively process all the methods/fields (@Inherited won't work here)
         for (Class type=bean.getClass(); type!=null; type=type.getSuperclass()) {
             for (Method method : type.getDeclaredMethods()) {
                 discoverDescriptor(bean, method);
