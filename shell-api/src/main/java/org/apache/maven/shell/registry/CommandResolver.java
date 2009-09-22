@@ -17,7 +17,10 @@
  * under the License.
  */
 
-package org.apache.maven.shell.command;
+package org.apache.maven.shell.registry;
+
+import org.apache.maven.shell.command.Command;
+import org.apache.maven.shell.command.CommandException;
 
 /**
  * Resolves commands.

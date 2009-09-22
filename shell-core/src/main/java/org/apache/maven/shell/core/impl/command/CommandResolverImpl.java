@@ -22,7 +22,7 @@ package org.apache.maven.shell.core.impl.command;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandException;
-import org.apache.maven.shell.command.CommandResolver;
+import org.apache.maven.shell.registry.CommandResolver;
 import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.command.OpaqueArguments;
 import org.apache.maven.shell.registry.AliasRegistry;
@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-@Component(role=CommandResolver.class)
+@Component(role= CommandResolver.class)
 public class CommandResolverImpl
     implements CommandResolver
 {

@@ -30,7 +30,7 @@ import org.apache.maven.shell.command.CommandDocumenter;
 import org.apache.maven.shell.command.CommandExecutor;
 import org.apache.maven.shell.command.CommandLineParser;
 import org.apache.maven.shell.command.CommandLineParser.CommandLine;
-import org.apache.maven.shell.command.CommandResolver;
+import org.apache.maven.shell.registry.CommandResolver;
 import org.apache.maven.shell.command.OpaqueArguments;
 import org.apache.maven.shell.i18n.PrefixingMessageSource;
 import org.apache.maven.shell.io.IO;

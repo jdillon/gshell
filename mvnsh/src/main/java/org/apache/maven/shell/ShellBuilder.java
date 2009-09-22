@@ -22,7 +22,7 @@ package org.apache.maven.shell;
 import jline.Completor;
 import org.apache.maven.shell.command.CommandExecutor;
 import org.apache.maven.shell.console.Console;
-import org.apache.maven.shell.command.CommandRegistrar;
+import org.apache.maven.shell.registry.CommandRegistrar;
 import org.apache.maven.shell.core.impl.ShellImpl;
 import org.apache.maven.shell.io.IO;
 import org.codehaus.plexus.ContainerConfiguration;
