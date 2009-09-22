@@ -19,6 +19,8 @@
 
 package org.apache.maven.shell;
 
+import org.apache.maven.shell.core.BrandingSupport;
+
 /**
  * Branding for <tt>mvnsh</tt>.
  * 

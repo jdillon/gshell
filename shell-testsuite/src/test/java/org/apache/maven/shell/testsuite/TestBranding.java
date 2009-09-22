@@ -19,7 +19,7 @@
 
 package org.apache.maven.shell.testsuite;
 
-import org.apache.maven.shell.BrandingSupport;
+import org.apache.maven.shell.core.BrandingSupport;
 
 import java.io.File;
 

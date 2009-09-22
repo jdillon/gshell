@@ -63,7 +63,9 @@ public abstract class MainSupport
 
     protected final Variables vars = new Variables();
 
-    protected final MessageSource messages = new ResourceBundleMessageSource(true, getClass(), MainSupport.class);
+    protected final MessageSource messages = new ResourceBundleMessageSource()
+            .add(false, getClass())
+            .add(MainSupport.class);
 
     private Branding branding;
 

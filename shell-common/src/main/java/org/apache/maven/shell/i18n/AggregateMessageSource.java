@@ -19,8 +19,8 @@
 
 package org.apache.maven.shell.i18n;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -31,7 +31,7 @@ import java.util.List;
 public class AggregateMessageSource
     implements MessageSource
 {
-    private final List<MessageSource> sources = new ArrayList<MessageSource>();
+    private final List<MessageSource> sources = new LinkedList<MessageSource>();
 
     public AggregateMessageSource(final List<MessageSource> sources) {
         assert sources != null;

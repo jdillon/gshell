@@ -20,53 +20,52 @@
 package org.apache.maven.shell.i18n;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 /**
- * Message source backed up by one or more {@link ResourceBundle} instances.
+ * Message source backed up by {@link ResourceBundle} instances.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class ResourceBundleMessageSource
     implements MessageSource
 {
-    private final List<ResourceBundle> bundles = new ArrayList<ResourceBundle>();
+    private final List<ResourceBundle> bundles = new LinkedList<ResourceBundle>();
 
     private final Locale locale;
 
-    public ResourceBundleMessageSource(final Locale locale, final boolean ignoreMissing, final Class... types) {
+    public ResourceBundleMessageSource(final Locale locale) {
         assert locale != null;
         this.locale = locale;
-
-        assert types != null;
-        for (Class type : types) {
-            try {
-                loadBundle(type);
-            }
-            catch (MissingResourceException e) {
-                if (!ignoreMissing) {
-                    throw e;
-                }
-            }
-        }
-    }
-
-    public ResourceBundleMessageSource(final boolean ignoreMissing, final Class... types) {
-        this(Locale.getDefault(), ignoreMissing, types);
     }
 
     public ResourceBundleMessageSource(final Class... types) {
-        this(Locale.getDefault(), false, types);    
+        this(Locale.getDefault());
+        add(types);
     }
 
-    private void loadBundle(final Class type) {
-        assert type != null;
-        ResourceBundle bundle = ResourceBundle.getBundle(type.getName(), locale, type.getClassLoader());
-        bundles.add(bundle);
+    public ResourceBundleMessageSource add(final boolean required, final Class... types) {
+        assert types != null;
+
+        for (Class type : types) {
+            try {
+                ResourceBundle bundle = ResourceBundle.getBundle(type.getName(), locale, type.getClassLoader());
+                bundles.add(bundle);
+            }
+            catch (MissingResourceException e) {
+                if (required) throw e;
+            }
+        }
+
+        return this;
+    }
+
+    public ResourceBundleMessageSource add(final Class... types) {
+        return add(true, types);
     }
 
     /**

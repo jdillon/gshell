@@ -17,10 +17,12 @@
  * under the License.
  */
 
-package org.apache.maven.shell;
+package org.apache.maven.shell.core;
 
 import org.apache.maven.shell.i18n.MessageSource;
 import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
+import org.apache.maven.shell.Branding;
+import org.apache.maven.shell.VariableNames;
 import org.codehaus.plexus.util.StringUtils;
 
 import java.io.File;
@@ -30,14 +32,16 @@ import java.io.StringWriter;
 import java.util.Properties;
 
 /**
- * Support for {@link Branding) implementations.
+ * Support for {@link org.apache.maven.shell.Branding ) implementations.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class BrandingSupport
     implements Branding, VariableNames
 {
-    private final MessageSource messages = new ResourceBundleMessageSource(true, getClass(), BrandingSupport.class);
+    private final MessageSource messages = new ResourceBundleMessageSource()
+            .add(false, getClass())
+            .add(BrandingSupport.class);
 
     private final Properties props;
 
