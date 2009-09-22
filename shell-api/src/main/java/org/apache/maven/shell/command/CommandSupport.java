@@ -25,6 +25,8 @@ import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+// FIXME: This does not belong in api
+
 /**
  * Provides support for {@link Command} implementations.
  *
