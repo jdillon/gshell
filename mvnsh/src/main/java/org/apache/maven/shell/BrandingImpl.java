@@ -21,6 +21,8 @@ package org.apache.maven.shell;
 
 import org.apache.maven.shell.core.BrandingSupport;
 
+import java.io.File;
+
 /**
  * Branding for <tt>mvnsh</tt>.
  * 
@@ -29,15 +31,23 @@ import org.apache.maven.shell.core.BrandingSupport;
 public class BrandingImpl
     extends BrandingSupport
 {
+    @Override
     public String getDisplayName() {
         return "@|bold,red Apache Maven| @|bold Shell|";
     }
 
+    @Override
     public String getGoodbyeMessage() {
         return getMessages().format("goodbye");
     }
 
+    @Override
     public String getPrompt() {
         return String.format("@|bold %s|:%%{%s}> ", getProgramName(), SHELL_USER_DIR);
+    }
+
+    @Override
+    public File getUserContextDir() {
+        return new File(getUserHomeDir(), ".m2");
     }
 }
