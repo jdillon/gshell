@@ -28,4 +28,6 @@ public interface CommandResolver
 {
     Command resolveCommand(String name) throws CommandException;
 
+    // TODO:
+    // Collection<Command> resolveCommands(String name) throws CommandException;
 }
