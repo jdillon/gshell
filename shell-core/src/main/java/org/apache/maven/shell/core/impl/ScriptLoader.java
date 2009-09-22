@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.maven.shell.core;
+package org.apache.maven.shell.core.impl;
 
 import org.apache.maven.shell.Branding;
 import org.apache.maven.shell.Shell;

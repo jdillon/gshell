@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.maven.shell.core.impl.command;
+package org.apache.maven.shell.command;
 
 /**
  * Registers commands.

@@ -27,19 +27,16 @@ import org.apache.maven.shell.command.Arguments;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandDocumenter;
-import org.apache.maven.shell.command.CommandException;
 import org.apache.maven.shell.command.CommandExecutor;
 import org.apache.maven.shell.command.CommandLineParser;
 import org.apache.maven.shell.command.CommandLineParser.CommandLine;
-import org.apache.maven.shell.command.CommandSupport;
+import org.apache.maven.shell.command.CommandResolver;
 import org.apache.maven.shell.command.OpaqueArguments;
 import org.apache.maven.shell.i18n.PrefixingMessageSource;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.io.SystemInputOutputHijacker;
 import org.apache.maven.shell.notification.ErrorNotification;
 import org.apache.maven.shell.notification.ResultNotification;
-import org.apache.maven.shell.registry.AliasRegistry;
-import org.apache.maven.shell.registry.CommandRegistry;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.util.StringUtils;
@@ -59,30 +56,27 @@ public class CommandExecutorImpl
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     private static final String COMMAND_DOT = "command.";
-    
-    @Requirement
-    private AliasRegistry aliasRegistry;
 
     @Requirement
-    private CommandRegistry commandRegistry;
+    private CommandResolver resolver;
 
     @Requirement
     private CommandLineParser parser;
 
     @Requirement
-    private CommandDocumenter commandDocumeter;
+    private CommandDocumenter documeter;
 
     public CommandExecutorImpl() {}
 
-    public CommandExecutorImpl(final AliasRegistry aliasRegistry, final CommandRegistry commandRegistry, final CommandLineParser parser, final CommandDocumenter commandDocumeter) {
-        assert aliasRegistry != null;
-        this.aliasRegistry = aliasRegistry;
-        assert commandRegistry != null;
-        this.commandRegistry = commandRegistry;
+    public CommandExecutorImpl(final CommandResolver resolver, final CommandLineParser parser, final CommandDocumenter documenter) {
+        assert resolver != null;
+        this.resolver = resolver;
+
         assert parser != null;
         this.parser = parser;
-        assert commandDocumeter != null;
-        this.commandDocumeter = commandDocumeter;
+
+        assert documenter != null;
+        this.documeter = documenter;
     }
 
     public Object execute(final Shell shell, final String line) throws Exception {
@@ -134,7 +128,7 @@ public class CommandExecutorImpl
 
         log.debug("Executing ({}): [{}]", name, StringUtils.join(args, ", "));
 
-        Command command = resolveCommand(name);
+        Command command = resolver.resolveCommand(name);
 
         MDC.put(Command.class.getName(), name);
 
@@ -166,7 +160,7 @@ public class CommandExecutorImpl
                 // Render command-line usage
                 if (help.displayHelp) {
                     log.trace("Render command-line usage");
-                    commandDocumeter.renderUsage(command, io);
+                    documeter.renderUsage(command, io);
                     result = Command.Result.SUCCESS;
                     execute = false;
                 }
@@ -210,98 +204,5 @@ public class CommandExecutorImpl
         log.debug("Result: {}", result);
 
         return result;
-    }
-
-    //
-    // Command resolution
-    //
-
-    private Command resolveCommand(final String name) throws CommandException {
-        assert name != null;
-
-        log.trace("Resolving command: {}", name);
-
-        Command command;
-
-        command = resolveAliasCommand(name);
-
-        if (command == null) {
-            command = resolveRegisteredCommand(name);
-            if (command != null) {
-                // Copy the prototype to use
-                command = command.copy();
-            }
-        }
-        
-        if (command == null) {
-            throw new CommandException("Unable to resolve command: " + name);
-        }
-
-        log.trace("Resolved command: {}", command);
-
-        return command;
-    }
-
-    private Command resolveAliasCommand(final String name) throws CommandException {
-        assert name != null;
-        assert aliasRegistry != null;
-
-        if (aliasRegistry.containsAlias(name)) {
-            return new Alias(name, aliasRegistry.getAlias(name));
-        }
-
-        return null;
-    }
-
-    private Command resolveRegisteredCommand(final String name) throws CommandException {
-        assert name != null;
-        assert commandRegistry != null;
-
-        if (commandRegistry.containsCommand(name)) {
-            return commandRegistry.getCommand(name);
-        }
-
-        return null;
-    }
-
-    //
-    // Alias
-    //
-    
-    private static class Alias
-        extends CommandSupport
-        implements OpaqueArguments
-    {
-        private final String name;
-
-        private final String target;
-
-        public Alias(final String name, final String target) {
-            assert name != null;
-            assert target != null;
-
-            this.name = name;
-            this.target = target;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public Object execute(final CommandContext context) throws Exception {
-            assert context != null;
-
-            String alias = target;
-
-            // Need to append any more arguments in the context
-            Object[] args = context.getArguments();
-            if (args.length > 0) {
-                alias = String.format("%s %s", target, StringUtils.join(args, " "));
-            }
-
-            log.debug("Executing alias ({}) -> {}", name, alias);
-
-            return context.getShell().execute(alias);
-        }
     }
 }

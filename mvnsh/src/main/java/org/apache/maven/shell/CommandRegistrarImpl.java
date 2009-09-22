@@ -21,7 +21,7 @@ package org.apache.maven.shell;
 
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.registry.CommandRegistry;
-import org.apache.maven.shell.core.impl.command.CommandRegistrar;
+import org.apache.maven.shell.command.CommandRegistrar;
 import org.codehaus.plexus.PlexusContainer;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
@@ -38,7 +38,7 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- * Default implementation of the {@link org.apache.maven.shell.core.impl.command.CommandRegistrar}.
+ * Default implementation of the {@link org.apache.maven.shell.command.CommandRegistrar}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
