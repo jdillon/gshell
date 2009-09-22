@@ -65,6 +65,8 @@ public class ScriptLoader
     public void loadScript(final File file) throws Exception {
         assert file != null;
 
+        log.debug("Loading script: {}", file);
+
         BufferedReader reader = new BufferedReader(new FileReader(file));
         try {
             String line;
@@ -82,7 +84,6 @@ public class ScriptLoader
 
         File file = new File(branding.getUserContextDir(), fileName);
         if (file.exists()) {
-            log.debug("Loading user-script: {}", file);
             loadScript(file);
         }
         else {
@@ -95,7 +96,6 @@ public class ScriptLoader
 
         File file = new File(branding.getShellContextDir(), fileName);
         if (file.exists()) {
-            log.debug("Loading shared-script: {}", file);
             loadScript(file);
         }
         else {
