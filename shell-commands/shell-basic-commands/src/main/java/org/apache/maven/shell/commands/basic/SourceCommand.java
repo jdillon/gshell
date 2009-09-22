@@ -84,13 +84,6 @@ public class SourceCommand
         try {
             String line;
             while ((line = reader.readLine()) != null) {
-                String tmp = line.trim();
-
-                // Ignore empty lines and comments
-                if (tmp.length() == 0 || tmp.startsWith("#")) {
-                    continue;
-                }
-
                 shell.execute(line);
             }
         }
@@ -126,7 +119,7 @@ public class SourceCommand
 
                 reader = new BufferedReader(new InputStreamReader(url.openStream()));
             }
-            catch (MalformedURLException ignore) {
+            catch (MalformedURLException e) {
                 // They try a file
                 File file = new File(tmp);
                 log.info("Using source file: {}", file);
