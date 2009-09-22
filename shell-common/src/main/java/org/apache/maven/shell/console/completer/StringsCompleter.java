@@ -53,6 +53,7 @@ public class StringsCompleter
         return strings;
     }
 
+    @SuppressWarnings({ "unchecked" })
     public int complete(String buffer, final int cursor, final List candidates) {
         // buffer could be null
         assert candidates != null;
@@ -68,12 +69,10 @@ public class StringsCompleter
                 break;
             }
 
-            // noinspection unchecked
             candidates.add(match);
         }
 
         if (candidates.size() == 1) {
-            // noinspection unchecked
             candidates.set(0, candidates.get(0) + " ");
         }
 

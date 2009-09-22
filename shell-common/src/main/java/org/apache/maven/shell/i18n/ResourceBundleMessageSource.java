@@ -38,18 +38,29 @@ public class ResourceBundleMessageSource
 
     private final Locale locale;
 
-    public ResourceBundleMessageSource(final Locale locale, final Class... types) {
+    public ResourceBundleMessageSource(final Locale locale, final boolean ignoreMissing, final Class... types) {
         assert locale != null;
         this.locale = locale;
 
         assert types != null;
         for (Class type : types) {
-            loadBundle(type);
+            try {
+                loadBundle(type);
+            }
+            catch (MissingResourceException e) {
+                if (!ignoreMissing) {
+                    throw e;
+                }
+            }
         }
     }
 
+    public ResourceBundleMessageSource(final boolean ignoreMissing, final Class... types) {
+        this(Locale.getDefault(), ignoreMissing, types);
+    }
+
     public ResourceBundleMessageSource(final Class... types) {
-        this(Locale.getDefault(), types);    
+        this(Locale.getDefault(), false, types);    
     }
 
     private void loadBundle(final Class type) {

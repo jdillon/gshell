@@ -63,7 +63,7 @@ public abstract class MainSupport
 
     protected final Variables vars = new Variables();
 
-    protected final MessageSource messages = new ResourceBundleMessageSource(getClass());
+    protected final MessageSource messages = new ResourceBundleMessageSource(true, getClass(), MainSupport.class);
 
     private Branding branding;
 
@@ -160,7 +160,7 @@ public abstract class MainSupport
         return branding;
     }
 
-    public void boot(final String[] args) throws Exception {
+    public void boot(final String... args) throws Exception {
         assert args != null;
 
         // Setup environment defaults

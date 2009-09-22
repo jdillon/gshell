@@ -37,7 +37,7 @@ import java.util.Properties;
 public class BrandingSupport
     implements Branding, VariableNames
 {
-    private final MessageSource messages = new ResourceBundleMessageSource(getClass());
+    private final MessageSource messages = new ResourceBundleMessageSource(true, getClass(), BrandingSupport.class);
 
     private final Properties props;
 
