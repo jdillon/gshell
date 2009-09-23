@@ -43,6 +43,11 @@ public abstract class FileCommandSupport
         Variables vars = context.getVariables();
         String path = vars.get(name, String.class);
 
+        if (path.startsWith("~")) {
+            File userHome = getUserHomeDir(context);
+            path = userHome.getPath() + path.substring(1);
+        }
+
         return new File(path).getCanonicalFile();
     }
 
