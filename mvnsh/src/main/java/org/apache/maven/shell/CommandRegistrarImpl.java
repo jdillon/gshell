@@ -153,7 +153,7 @@ public class CommandRegistrarImpl
 
         @Override
         public String toString() {
-            return source.toString();
+            return getId() + " -> " + source.toString();
         }
     }
 }
