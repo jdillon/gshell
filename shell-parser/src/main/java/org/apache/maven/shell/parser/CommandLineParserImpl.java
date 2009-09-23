@@ -71,7 +71,6 @@ public class CommandLineParserImpl
         return new CommandLine()
         {
             public Object execute(final Shell shell, final CommandExecutor executor) throws Exception {
-                assert shell != null;
                 ExecutingVisitor visitor = new ExecutingVisitor(shell, executor);
                 return root.jjtAccept(visitor, null);
             }
