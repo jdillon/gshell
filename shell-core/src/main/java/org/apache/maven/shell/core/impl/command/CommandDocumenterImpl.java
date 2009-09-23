@@ -55,14 +55,6 @@ public class CommandDocumenterImpl
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private static final String COMMAND_DESCRIPTION = "command.description";
-
-    private static final String COMMAND_MANUAL = "command.manual";
-
-    private static final String COMMAND_DOT = "command.";
-
-    private static final String COMMAND = "command";
-
     private final MessageSource messages = new ResourceBundleMessageSource(getClass());
 
     private String interpolate(final Command command, final String text) {

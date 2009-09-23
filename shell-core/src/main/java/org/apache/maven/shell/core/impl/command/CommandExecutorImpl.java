@@ -55,8 +55,6 @@ public class CommandExecutorImpl
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private static final String COMMAND_DOT = "command.";
-
     @Requirement
     private CommandResolver resolver;
 
@@ -150,7 +148,7 @@ public class CommandExecutorImpl
 
             if (!(command instanceof OpaqueArguments)) {
                 Processor clp = new Processor(command);
-                clp.setMessages(new PrefixingMessageSource(command.getMessages(), COMMAND_DOT));
+                clp.setMessages(new PrefixingMessageSource(command.getMessages(), CommandDocumenter.COMMAND_DOT));
                 CommandHelpSupport help = new CommandHelpSupport();
                 clp.addBean(help);
 

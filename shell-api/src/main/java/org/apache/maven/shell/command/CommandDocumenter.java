@@ -28,6 +28,14 @@ import org.apache.maven.shell.io.IO;
  */
 public interface CommandDocumenter
 {
+    String COMMAND = "command";
+
+    String COMMAND_DOT = "command.";
+
+    String COMMAND_DESCRIPTION = "command.description";
+
+    String COMMAND_MANUAL = "command.manual";
+
     String getDescription(Command command);
 
     String getManual(Command command);
