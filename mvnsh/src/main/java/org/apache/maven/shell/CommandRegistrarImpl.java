@@ -52,15 +52,15 @@ public class CommandRegistrarImpl
     private PlexusContainer container;
 
     @Requirement
-    private CommandRegistry commandRegistry;
+    private CommandRegistry registry;
 
     public CommandRegistrarImpl() {}
     
-    public CommandRegistrarImpl(final PlexusContainer container, final CommandRegistry commandRegistry) {
+    public CommandRegistrarImpl(final PlexusContainer container, final CommandRegistry registry) {
         assert container != null;
-        assert commandRegistry != null;
+        assert registry != null;
         this.container = container;
-        this.commandRegistry = commandRegistry;
+        this.registry = registry;
     }
 
     public void registerCommands() throws Exception {
@@ -74,7 +74,7 @@ public class CommandRegistrarImpl
 
                 for (String name : config.getAutoRegisterCommands()) {
                     Command command = createCommand(name);
-                    commandRegistry.registerCommand(name, command);
+                    registry.registerCommand(name, command);
                 }
             }
         }
