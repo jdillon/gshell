@@ -28,5 +28,7 @@ package org.apache.maven.shell.registry;
  */
 public interface CommandRegistrar
 {
+    String COMMANDS_PROPERTIES = "META-INF/org.apache.maven.shell/commands.properties";
+    
     void registerCommands() throws Exception;
 }

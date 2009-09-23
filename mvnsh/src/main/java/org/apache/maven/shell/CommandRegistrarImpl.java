@@ -48,8 +48,6 @@ public class CommandRegistrarImpl
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private static final String COMMANDS_PROPERTIES = "META-INF/org.apache.maven.shell/commands.properties";
-
     @Requirement
     private PlexusContainer container;
 
