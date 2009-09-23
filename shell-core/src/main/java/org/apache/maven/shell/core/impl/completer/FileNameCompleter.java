@@ -33,6 +33,8 @@ import java.util.List;
  * {@link Completor} for file names.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 @Component(role=Completor.class, hint="file-name")
 public class FileNameCompleter

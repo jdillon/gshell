@@ -34,6 +34,8 @@ import java.io.FileReader;
  * Helper to load scripts.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 public class ScriptLoader
     implements VariableNames

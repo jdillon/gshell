@@ -25,6 +25,8 @@ import java.util.EventObject;
  * Event fired once an alias has been removed.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 public class AliasRemovedEvent
     extends EventObject

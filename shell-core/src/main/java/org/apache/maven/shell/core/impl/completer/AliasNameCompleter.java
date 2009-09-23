@@ -39,6 +39,8 @@ import java.util.List;
  * Keeps up to date automatically by handling alias-related events.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 @Component(role=Completor.class, hint="alias-name")
 public class AliasNameCompleter

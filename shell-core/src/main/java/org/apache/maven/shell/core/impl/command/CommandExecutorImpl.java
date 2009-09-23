@@ -48,6 +48,8 @@ import org.slf4j.MDC;
  * The default {@link CommandExecutor} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 @Component(role=CommandExecutor.class)
 public class CommandExecutorImpl

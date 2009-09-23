@@ -50,6 +50,8 @@ import java.util.concurrent.atomic.AtomicReference;
  * The default {@link Shell} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 public class ShellImpl
     implements Shell, VariableNames, Constants

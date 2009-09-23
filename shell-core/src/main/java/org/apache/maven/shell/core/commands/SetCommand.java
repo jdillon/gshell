@@ -43,6 +43,8 @@ import java.util.Properties;
  * Set a variable or property.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 @Component(role=Command.class, hint="set")
 public class SetCommand

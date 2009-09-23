@@ -31,6 +31,8 @@ import org.codehaus.plexus.component.annotations.Component;
  * Display information about the current shell.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 @Component(role=Command.class, hint="about")
 public class AboutCommand

@@ -34,6 +34,8 @@ import org.slf4j.LoggerFactory;
  * {@link Console.ErrorHandler} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 public class ConsoleErrorHandlerImpl
     implements Console.ErrorHandler, VariableNames

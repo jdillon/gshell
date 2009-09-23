@@ -34,6 +34,8 @@ import java.util.List;
  * Print all arguments to the commands standard output.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 @Component(role=Command.class, hint="echo")
 public class EchoCommand

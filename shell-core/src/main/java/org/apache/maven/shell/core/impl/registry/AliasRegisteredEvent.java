@@ -25,6 +25,8 @@ import java.util.EventObject;
  * Event fired once an alias has been registered.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 public class AliasRegisteredEvent
     extends EventObject

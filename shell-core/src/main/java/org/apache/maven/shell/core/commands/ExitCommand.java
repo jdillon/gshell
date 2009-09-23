@@ -30,6 +30,8 @@ import org.codehaus.plexus.component.annotations.Component;
  * Exit the current shell.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 @Component(role=Command.class, hint="exit")
 public class ExitCommand

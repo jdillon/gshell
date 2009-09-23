@@ -45,6 +45,8 @@ import java.util.List;
  * Read and execute commands from a file in the current shell environment.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 @Component(role=Command.class, hint="source")
 public class SourceCommand

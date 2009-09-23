@@ -37,6 +37,8 @@ import org.slf4j.LoggerFactory;
  * {@link Console.Prompter} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 public class ConsolePrompterImpl
     implements Console.Prompter, VariableNames

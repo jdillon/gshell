@@ -31,6 +31,8 @@ import org.slf4j.LoggerFactory;
  * A simple {@link CommandLineParser} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 @Component(role=CommandLineParser.class, hint="simple")
 public class SimpleCommandLineParser

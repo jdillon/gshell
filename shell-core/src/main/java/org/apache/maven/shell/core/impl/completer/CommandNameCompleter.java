@@ -39,6 +39,8 @@ import java.util.List;
  * Keeps up to date automatically by handling command-related events.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 @Component(role=Completor.class, hint="command-name")
 public class CommandNameCompleter

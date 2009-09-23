@@ -37,6 +37,8 @@ import org.slf4j.LoggerFactory;
  * The default {@link CommandResolver} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 @Component(role= CommandResolver.class)
 public class CommandResolverImpl
