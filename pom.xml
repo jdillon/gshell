@@ -231,12 +231,6 @@
 
             <dependency>
                 <groupId>org.apache.maven.shell</groupId>
-                <artifactId>shell-basic-commands</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.maven.shell</groupId>
                 <artifactId>shell-file-commands</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
@@ -344,7 +338,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-remote-resources-plugin</artifactId>
-                    <version>1.1-SNAPSHOT</version>
+                    <version>1.1</version>
                 </plugin>
                 
                 <plugin>

@@ -17,46 +17,48 @@
  * under the License.
  */
 
-package org.apache.maven.shell.commands.basic;
+package org.apache.maven.shell.core.commands;
 
 import jline.Completor;
+import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.cli.Argument;
+import org.apache.maven.shell.cli.Option;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.console.completer.AggregateCompleter;
-import org.apache.maven.shell.io.IO;
-import org.apache.maven.shell.registry.AliasRegistry;
-import org.apache.maven.shell.registry.NoSuchAliasException;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 /**
- * Undefine an alias.
+ * Unset a variable or property.
  * 
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-@Component(role=Command.class, hint="unalias")
-public class UnaliasCommand
+@Component(role=Command.class, hint="unset")
+public class UnsetCommand
     extends CommandSupport
 {
-    @Requirement
-    private AliasRegistry aliasRegistry;
+    private final Logger log = LoggerFactory.getLogger(getClass());
+
+    private enum Mode
+    {
+        VARIABLE,
+        PROPERTY
+    }
 
     @Requirement(role=Completor.class, hints={"variable-name"})
     private List<Completor> completers;
 
-    @Argument(index=0, required=true)
-    private String name;
+    @Option(name="-m", aliases={"--mode"})
+    private Mode mode = Mode.VARIABLE;
 
-    public UnaliasCommand() {}
-
-    public UnaliasCommand(final AliasRegistry aliasRegistry) {
-        assert aliasRegistry != null;
-        this.aliasRegistry = aliasRegistry;
-    }
+    @Argument(required=true)
+    private List<String> args = null;
 
     @Override
     public Completor[] getCompleters() {
@@ -67,21 +69,38 @@ public class UnaliasCommand
             null
         };
     }
-    
-    public Object execute(final CommandContext context) {
+
+    public Object execute(final CommandContext context) throws Exception {
         assert context != null;
-        IO io = context.getIo();
 
-        log.debug("Undefining alias: {}", name);
+        Variables variables = context.getVariables();
 
-        try {
-            aliasRegistry.removeAlias(name);
+        for (String arg : args) {
+            String namevalue = String.valueOf(arg);
 
-            return Result.SUCCESS;
+            switch (mode) {
+                case PROPERTY:
+                    unsetProperty(namevalue);
+                    break;
+
+                case VARIABLE:
+                    unsetVariable(variables, namevalue);
+                    break;
+            }
         }
-        catch (NoSuchAliasException e) {
-            io.error(getMessages().format("error.alias-not-defined", name));
-            return Result.FAILURE;
-        }
+
+        return Result.SUCCESS;
+    }
+
+    private void unsetProperty(final String name) {
+        log.info("Unsetting system property: {}", name);
+
+        System.getProperties().remove(name);
+    }
+
+    private void unsetVariable(final Variables vars, final String name) {
+        log.info("Unsetting variable: {}", name);
+
+        vars.unset(name);
     }
 }

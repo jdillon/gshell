@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.maven.shell.commands.basic;
+package org.apache.maven.shell.core.commands;
 
 import org.apache.maven.shell.Branding;
 import org.apache.maven.shell.cli.Option;

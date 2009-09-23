@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.maven.shell.commands.basic;
+package org.apache.maven.shell.core.commands;
 
 import jline.Completor;
 import org.apache.maven.shell.cli.Argument;

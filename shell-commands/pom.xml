@@ -62,7 +62,6 @@
     </dependencies>
 
     <modules>
-        <module>shell-basic-commands</module>
         <module>shell-file-commands</module>
         <module>shell-maven-commands</module>
         <module>shell-test-commands</module>

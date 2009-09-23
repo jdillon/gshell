@@ -17,46 +17,53 @@
  * under the License.
  */
 
-package org.apache.maven.shell.commands.basic;
+package org.apache.maven.shell.core.commands;
 
-import org.apache.maven.shell.History;
-import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.cli.Argument;
+import org.apache.maven.shell.cli.Option;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.io.IO;
 import org.codehaus.plexus.component.annotations.Component;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
- * Recall history.
+ * Print all arguments to the commands standard output.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-@Component(role=Command.class, hint="recall")
-public class RecallHistoryCommand
+@Component(role=Command.class, hint="echo")
+public class EchoCommand
     extends CommandSupport
 {
-    @Argument(required=true)
-    private int index;
+    @Option(name="-n")
+    private boolean trailingNewline = true;
+
+    @Argument
+    private List<String> args = null;
 
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
         IO io = context.getIo();
-        History history = context.getShell().getHistory();
 
-        List<String> elements = history.elements();
-        if (index < 0 || index >= elements.size()) {
-            io.error(getMessages().format("error.no-such-index", index));
-            return Result.FAILURE;
+        if (args != null && !args.isEmpty()) {
+            Iterator iter = args.iterator();
+            
+            while (iter.hasNext()) {
+                io.out.print(iter.next());
+                if (iter.hasNext()) {
+                    io.out.print(" ");
+                }
+            }
         }
 
-        String element = elements.get(index);
-        log.debug("Recalling from history: {}", element);
-        
-        Shell shell = context.getShell();
-        return shell.execute(element);
+        if (trailingNewline) {
+            io.out.println();
+        }
+
+        return Result.SUCCESS;
     }
 }
