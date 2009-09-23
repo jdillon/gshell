@@ -32,7 +32,7 @@ import java.io.StringWriter;
 import java.util.Properties;
 
 /**
- * Support for {@link org.apache.maven.shell.Branding ) implementations.
+ * Support for {@link Branding} implementations.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */

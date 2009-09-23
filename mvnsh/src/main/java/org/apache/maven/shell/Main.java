@@ -27,7 +27,7 @@ import org.apache.maven.shell.core.impl.console.ConsolePrompterImpl;
 import org.codehaus.plexus.PlexusContainer;
 
 /**
- * Command-line bootstrap for Apache Maven Shell (<tt>shell</tt>).
+ * Command-line bootstrap for Apache Maven Shell (<tt>mvnsh</tt>).
  * 
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */

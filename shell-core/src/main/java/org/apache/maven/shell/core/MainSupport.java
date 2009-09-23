@@ -147,7 +147,7 @@ public abstract class MainSupport
         AutoDetectedTerminal.configure(type);
     }
 
-    @Argument()
+    @Argument
     protected List<String> appArgs = null;
 
     protected void exit(final int code) {
