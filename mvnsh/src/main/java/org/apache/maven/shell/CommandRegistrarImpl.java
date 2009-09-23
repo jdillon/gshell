@@ -109,6 +109,8 @@ public class CommandRegistrarImpl
     private static class CommandsConfiguration
         implements Comparable<CommandsConfiguration>
     {
+        private static final String ID = "id";
+        
         private static final String AUTO_REGISTER_PRIORITY = "auto-register-priority";
 
         private static final String DEFAULT_AUTO_REGISTER_PRIORITY = "50";
@@ -123,6 +125,10 @@ public class CommandRegistrarImpl
             assert source != null;
             this.source = source;
             props.load(new BufferedInputStream(source.openStream()));
+        }
+
+        public String getId() {
+            return props.getProperty(ID);
         }
 
         public int getAutoRegisterPriority() {
