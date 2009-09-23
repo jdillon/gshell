@@ -38,7 +38,6 @@ public class ClearCommand
 {
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
-        
         IO io = context.getIo();
 
         // We can only clear the screen if ANSI is enabled, so complain and fail otherwise

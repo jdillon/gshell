@@ -80,6 +80,8 @@ public class HelpCommand
             return displayAvailableCommands(context);
         }
         else {
+            // TODO: Use the resolver
+            
             if (commandRegistry.containsCommand(commandName)) {
                 Command command = commandRegistry.getCommand(commandName);
                 commandDocumeter.renderManual(command, io);
@@ -87,11 +89,11 @@ public class HelpCommand
                 return Result.SUCCESS;
             }
             else if (aliasRegistry.containsAlias(commandName)) {
-                io.out.println(getMessages().format("info.explain-alias", "@|bold " + commandName + '|', commandName));
+                io.out.println(getMessages().format("info.explain-alias", commandName, aliasRegistry.getAlias(commandName)));
                 return Result.SUCCESS;
             }
             else {
-                io.out.println(getMessages().format("info.command-not-found", "@|bold " + commandName + '|', "help"));
+                io.out.println(getMessages().format("info.command-not-found", commandName));
                 return Result.FAILURE;
             }
         }
