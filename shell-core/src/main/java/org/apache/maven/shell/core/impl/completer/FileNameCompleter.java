@@ -43,17 +43,18 @@ public class FileNameCompleter
         String translated = buffer;
 
         Variables vars = ShellHolder.get().getVariables();
-        String home = vars.get(SHELL_USER_HOME, String.class);
+        File homeDir = vars.get(SHELL_USER_HOME, File.class);
 
         // special character: ~ maps to the user's home directory
         if (translated.startsWith("~" + File.separator)) {
-            translated = home + translated.substring(1);
+            translated = homeDir.getPath() + translated.substring(1);
         }
         else if (translated.startsWith("~")) {
-            translated = new File(home).getParentFile().getAbsolutePath();
+            translated = homeDir.getParentFile().getAbsolutePath();
         }
         else if (!(translated.startsWith(File.separator))) {
-            translated = new File("").getAbsolutePath() + File.separator + translated;
+            String cwd = vars.get(SHELL_USER_DIR, String.class);
+            translated = cwd + File.separator + translated;
         }
 
         File file = new File(translated);

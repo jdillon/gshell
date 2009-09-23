@@ -82,6 +82,10 @@ public class ConsolePrompterImpl
             }
         }
 
+        //
+        // TODO: Support rendering ~ for home dir here somewhere
+        //
+
         // Encode ANSI muck if it looks like there are codes encoded
         if (AnsiRenderer.test(prompt)) {
             prompt = renderer.render(prompt);
