@@ -102,7 +102,6 @@ public class PlexusTestSupport
         customizeContainerConfiguration(config);
 
         container = new DefaultPlexusContainer(config);
-        container.setLoggerManager(new TestLoggerManager());
     }
 
     @SuppressWarnings({ "UnusedDeclaration" })
