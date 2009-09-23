@@ -32,6 +32,8 @@ import java.io.PrintStream;
  * and redirects to given streams.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 public class SystemInputOutputHijacker
 {

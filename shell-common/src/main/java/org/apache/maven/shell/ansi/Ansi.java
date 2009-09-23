@@ -25,6 +25,8 @@ import jline.Terminal;
  * Provides support for using ANSI color escape codes.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 public class Ansi
 {

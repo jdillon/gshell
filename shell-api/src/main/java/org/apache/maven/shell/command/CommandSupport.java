@@ -31,6 +31,8 @@ import org.slf4j.LoggerFactory;
  * Provides support for {@link Command} implementations.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 public abstract class CommandSupport
     implements Command, NameAware

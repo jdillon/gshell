@@ -30,6 +30,8 @@ import java.io.InputStream;
  * Auto-detected terminal.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 public class AutoDetectedTerminal
     extends jline.Terminal

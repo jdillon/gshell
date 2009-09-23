@@ -23,6 +23,8 @@ package org.apache.maven.shell.i18n;
  * Provides simple access to i18n messages.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 public interface MessageSource
 {

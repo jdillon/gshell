@@ -25,6 +25,8 @@ import java.io.File;
  * Defines the basic elements for branding a shell.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 public interface Branding
 {

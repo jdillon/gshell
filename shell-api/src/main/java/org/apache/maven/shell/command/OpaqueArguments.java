@@ -23,6 +23,8 @@ package org.apache.maven.shell.command;
  * Marker to indicate that arguments to a command should not be pre-processed.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 public interface OpaqueArguments
 {

@@ -26,6 +26,8 @@ import org.apache.maven.shell.i18n.MessageSource;
  * Provides the user-action for a command.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 public interface Command
     extends Cloneable

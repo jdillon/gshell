@@ -26,6 +26,8 @@ import java.io.PrintStream;
  * A set of input, output and error streams.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 public class StreamSet
 {

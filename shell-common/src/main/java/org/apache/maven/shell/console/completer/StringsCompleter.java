@@ -31,6 +31,8 @@ import java.util.TreeSet;
  * Completer for a set of strings.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 public class StringsCompleter
     implements Completor

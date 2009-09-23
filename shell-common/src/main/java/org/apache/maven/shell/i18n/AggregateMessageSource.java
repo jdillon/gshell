@@ -27,6 +27,8 @@ import java.util.List;
  * A message source which aggregates messages sources in order.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 public class AggregateMessageSource
     implements MessageSource

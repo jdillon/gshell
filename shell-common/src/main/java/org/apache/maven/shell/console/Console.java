@@ -28,6 +28,8 @@ import java.io.IOException;
  * Provides an abstraction of a console.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 public abstract class Console
     implements Runnable

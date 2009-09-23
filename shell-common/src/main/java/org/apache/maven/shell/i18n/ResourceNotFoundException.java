@@ -23,6 +23,8 @@ package org.apache.maven.shell.i18n;
  * Thrown to indicate a required resource was not found.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 public class ResourceNotFoundException
     extends RuntimeException

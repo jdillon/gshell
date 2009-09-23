@@ -25,6 +25,8 @@ package org.apache.maven.shell.notification;
  * <p>Extending from Error to prevent need to declare throwable.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 public abstract class Notification
     extends Error

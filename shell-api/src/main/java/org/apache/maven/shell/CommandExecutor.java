@@ -19,12 +19,12 @@
 
 package org.apache.maven.shell;
 
-import org.apache.maven.shell.Shell;
-
 /**
  * Provides the ability to execute commands.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 public interface CommandExecutor
 {

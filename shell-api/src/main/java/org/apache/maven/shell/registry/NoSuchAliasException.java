@@ -25,6 +25,8 @@ import org.apache.maven.shell.command.CommandException;
  * Thrown to indicate that a requested named-alias was not found.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 1.0
  */
 public class NoSuchAliasException
     extends CommandException
