@@ -61,7 +61,12 @@ public class CommandRegistryImpl
     public void registerCommand(final String name, final Command command) throws DuplicateCommandException {
         assert name != null;
 
-        log.debug("Registering command: {}", name);
+        if (log.isTraceEnabled()) {
+            log.trace("Registering command: {} -> {}", name, command);
+        }
+        else {
+            log.trace("Registering command: {}", name);    
+        }
 
         if (containsCommand(name)) {
             throw new DuplicateCommandException(name);
