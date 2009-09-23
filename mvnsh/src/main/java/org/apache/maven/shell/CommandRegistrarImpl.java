@@ -38,7 +38,7 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- * Default implementation of the {@link org.apache.maven.shell.registry.CommandRegistrar}.
+ * Default implementation of the {@link CommandRegistrar}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
