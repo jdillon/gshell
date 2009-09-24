@@ -20,9 +20,9 @@
 package org.apache.maven.mvnsh.commands.maven;
 
 import org.apache.maven.cli.MavenCli;
+import org.apache.maven.shell.Arguments;
 import org.apache.maven.shell.VariableNames;
 import org.apache.maven.shell.Variables;
-import org.apache.maven.shell.Arguments;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;

@@ -19,10 +19,10 @@
 
 package org.apache.maven.shell.core;
 
-import org.apache.maven.shell.i18n.MessageSource;
-import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
 import org.apache.maven.shell.Branding;
 import org.apache.maven.shell.VariableNames;
+import org.apache.maven.shell.i18n.MessageSource;
+import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
 import org.codehaus.plexus.util.StringUtils;
 
 import java.io.File;

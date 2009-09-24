@@ -19,9 +19,6 @@
 
 package org.apache.maven.shell;
 
-import org.apache.maven.shell.Shell;
-import org.apache.maven.shell.CommandExecutor;
-
 /**
  * Parse command lines for execution.
  *

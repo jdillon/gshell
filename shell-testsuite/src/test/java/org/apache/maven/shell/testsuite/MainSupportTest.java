@@ -23,15 +23,15 @@ import org.apache.maven.shell.Branding;
 import org.apache.maven.shell.History;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.Variables;
-import org.apache.maven.shell.notification.ExitNotification;
 import org.apache.maven.shell.ansi.Ansi;
 import org.apache.maven.shell.core.MainSupport;
 import org.apache.maven.shell.io.IO;
+import org.apache.maven.shell.notification.ExitNotification;
 import org.apache.maven.shell.testsupport.TestUtil;
 import org.junit.After;
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  * Tests for {@link MainSupport}.

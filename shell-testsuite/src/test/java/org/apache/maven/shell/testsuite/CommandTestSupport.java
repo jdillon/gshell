@@ -19,6 +19,7 @@
 
 package org.apache.maven.shell.testsuite;
 
+import org.apache.maven.mvnsh.ShellBuilder;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.VariableNames;
 import org.apache.maven.shell.Variables;
@@ -29,7 +30,6 @@ import org.apache.maven.shell.registry.CommandRegistry;
 import org.apache.maven.shell.testsupport.PlexusTestSupport;
 import org.apache.maven.shell.testsupport.TestIO;
 import org.apache.maven.shell.testsupport.TestUtil;
-import org.apache.maven.mvnsh.ShellBuilder;
 import org.codehaus.plexus.util.StringUtils;
 import org.junit.After;
 import static org.junit.Assert.assertEquals;

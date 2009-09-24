@@ -19,24 +19,24 @@
 
 package org.apache.maven.shell.core.impl.command;
 
+import org.apache.maven.shell.Arguments;
+import org.apache.maven.shell.CommandExecutor;
+import org.apache.maven.shell.CommandLineParser;
+import org.apache.maven.shell.CommandLineParser.CommandLine;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.ShellHolder;
 import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.cli.Processor;
-import org.apache.maven.shell.Arguments;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandDocumenter;
-import org.apache.maven.shell.CommandExecutor;
-import org.apache.maven.shell.CommandLineParser;
-import org.apache.maven.shell.CommandLineParser.CommandLine;
-import org.apache.maven.shell.registry.CommandResolver;
 import org.apache.maven.shell.command.OpaqueArguments;
 import org.apache.maven.shell.i18n.PrefixingMessageSource;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.io.SystemInputOutputHijacker;
 import org.apache.maven.shell.notification.ErrorNotification;
 import org.apache.maven.shell.notification.ResultNotification;
+import org.apache.maven.shell.registry.CommandResolver;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.util.StringUtils;

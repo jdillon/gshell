@@ -21,14 +21,13 @@ package org.apache.maven.shell.core.impl;
 
 import jline.Completor;
 import org.apache.maven.shell.Branding;
+import org.apache.maven.shell.CommandExecutor;
 import org.apache.maven.shell.History;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.ShellHolder;
 import org.apache.maven.shell.VariableNames;
 import org.apache.maven.shell.Variables;
-import org.apache.maven.shell.CommandExecutor;
 import org.apache.maven.shell.console.Console;
-import org.apache.maven.shell.core.impl.ScriptLoader;
 import org.apache.maven.shell.core.impl.console.JLineConsole;
 import org.apache.maven.shell.core.impl.console.JLineHistory;
 import org.apache.maven.shell.io.IO;

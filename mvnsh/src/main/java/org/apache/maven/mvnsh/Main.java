@@ -20,12 +20,12 @@
 package org.apache.maven.mvnsh;
 
 import jline.Completor;
+import org.apache.maven.shell.Branding;
+import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.console.completer.AggregateCompleter;
 import org.apache.maven.shell.core.MainSupport;
 import org.apache.maven.shell.core.impl.console.ConsoleErrorHandlerImpl;
 import org.apache.maven.shell.core.impl.console.ConsolePrompterImpl;
-import org.apache.maven.shell.Branding;
-import org.apache.maven.shell.Shell;
 import org.codehaus.plexus.PlexusContainer;
 
 /**
