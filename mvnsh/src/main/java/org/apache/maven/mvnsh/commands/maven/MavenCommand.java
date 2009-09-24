@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.maven.shell.commands.maven;
+package org.apache.maven.mvnsh.commands.maven;
 
 import org.apache.maven.cli.MavenCli;
 import org.apache.maven.shell.VariableNames;

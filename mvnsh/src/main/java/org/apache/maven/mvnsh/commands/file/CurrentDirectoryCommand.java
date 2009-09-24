@@ -17,37 +17,31 @@
  * under the License.
  */
 
-package org.apache.maven.shell;
+package org.apache.maven.mvnsh.commands.file;
 
-import org.apache.maven.shell.core.BrandingSupport;
+import org.apache.maven.shell.command.Command;
+import org.apache.maven.shell.command.CommandContext;
+import org.apache.maven.shell.io.IO;
+import org.codehaus.plexus.component.annotations.Component;
 
 import java.io.File;
 
 /**
- * Branding for <tt>mvnsh</tt>.
+ * Displays the current directory.
  * 
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class BrandingImpl
-    extends BrandingSupport
+@Component(role=Command.class, hint="pwd")
+public class CurrentDirectoryCommand
+    extends FileCommandSupport
 {
-    @Override
-    public String getDisplayName() {
-        return "@|bold,red Apache Maven| @|bold Shell|";
-    }
+    public Object execute(final CommandContext context) throws Exception {
+        assert context != null;
+        IO io = context.getIo();
 
-    @Override
-    public String getGoodbyeMessage() {
-        return getMessages().format("goodbye");
-    }
+        File dir = getUserDir(context);
+        io.info(dir.getPath());
 
-    @Override
-    public String getPrompt() {
-        return String.format("@|bold %s|:%%{%s}> ", getProgramName(), SHELL_USER_DIR);
-    }
-
-    @Override
-    public File getUserContextDir() {
-        return new File(getUserHomeDir(), ".m2");
+        return Result.SUCCESS;
     }
 }

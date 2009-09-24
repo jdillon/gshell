@@ -20,6 +20,8 @@
 
 DIRNAME=`dirname "$0"`
 
+MAIN=org.apache.maven.mvnsh.Main
+
 # OS specific support (must be 'true' or 'false').
 cygwin=false;
 case "`uname`" in
@@ -55,5 +57,5 @@ if $cygwin ; then
 fi
 
 # Start the JVM
-exec "$JAVACMD" $JAVA_OPTS -Dshell.main=org.apache.maven.shell.Main -jar "$BOOTJAR" "$@"
+exec "$JAVACMD" $JAVA_OPTS -Dshell.main=$MAIN -jar "$BOOTJAR" "$@"
 

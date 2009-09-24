@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.maven.shell.commands.maven;
+package org.apache.maven.mvnsh.commands.maven;
 
 import org.apache.maven.artifact.InvalidRepositoryException;
 import org.apache.maven.artifact.repository.ArtifactRepository;

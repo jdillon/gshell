@@ -26,6 +26,8 @@ set ERRORLEVEL=0
 set DIRNAME=%~dp0
 if "%DIRNAME%" == "" set DIRNAME=.\
 
+set MAIN=org.apache.maven.mvnsh.Main
+
 :check_JAVACMD
 if not "%JAVACMD%" == "" goto check_SHELL_HOME
 
@@ -69,7 +71,7 @@ set ARGS=%$
 set BOOTJAR=%SHELL_HOME%\lib\boot\shell-bootstrap.jar
 
 @REM Start the JVM
-"%JAVACMD%" %JAVA_OPTS% -Dshell.main=org.apache.maven.shell.Main -jar "%BOOTJAR%" %ARGS%
+"%JAVACMD%" %JAVA_OPTS% -Dshell.main=%MAIN% -jar "%BOOTJAR%" %ARGS%
 
 :end
 
