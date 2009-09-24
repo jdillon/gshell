@@ -225,30 +225,6 @@
 
             <dependency>
                 <groupId>org.apache.maven.shell</groupId>
-                <artifactId>shell-commands</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.maven.shell</groupId>
-                <artifactId>shell-file-commands</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.maven.shell</groupId>
-                <artifactId>shell-maven-commands</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.maven.shell</groupId>
-                <artifactId>shell-test-commands</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.maven.shell</groupId>
                 <artifactId>shell-bootstrap</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
@@ -288,7 +264,6 @@
         <module>shell-api</module>
         <module>shell-parser</module>
         <module>shell-core</module>
-        <module>shell-commands</module>
         <module>shell-bootstrap</module>
         <module>shell-testsuite</module>
         <module>mvnsh</module>
