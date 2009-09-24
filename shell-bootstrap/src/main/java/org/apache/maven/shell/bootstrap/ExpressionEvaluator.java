@@ -83,7 +83,7 @@ public class ExpressionEvaluator
                     String key = input.substring(j, k);
 
                     // first try in System properties
-                    String replacement = getSystemProperty(key);
+                    String replacement = getSystemProperty(key, null);
 
                     // then try props parameter
                     if (replacement == null && props != null) {
@@ -114,9 +114,5 @@ public class ExpressionEvaluator
             Log.debug("Was not allowed to read system property: ", key);
             return def;
         }
-    }
-
-    public static String getSystemProperty(final String key) {
-        return getSystemProperty(key, null);
     }
 }
