@@ -69,7 +69,7 @@ set ARGS=%$
 set BOOTJAR=%SHELL_HOME%\lib\boot\shell-bootstrap.jar
 
 @REM Start the JVM
-"%JAVACMD%" %JAVA_OPTS% -jar "%BOOTJAR%" %ARGS%
+"%JAVACMD%" %JAVA_OPTS% -Dshell.main=org.apache.maven.shell.Main -jar "%BOOTJAR%" %ARGS%
 
 :end
 

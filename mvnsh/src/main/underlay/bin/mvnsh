@@ -55,5 +55,5 @@ if $cygwin ; then
 fi
 
 # Start the JVM
-exec "$JAVACMD" $JAVA_OPTS -jar "$BOOTJAR" "$@"
+exec "$JAVACMD" $JAVA_OPTS -Dshell.main=org.apache.maven.shell.Main -jar "$BOOTJAR" "$@"
 

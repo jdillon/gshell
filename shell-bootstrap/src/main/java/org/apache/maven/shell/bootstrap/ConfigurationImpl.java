@@ -45,9 +45,6 @@ public class ConfigurationImpl
 
     private static final int FAILURE_EXIT_CODE = 100;
 
-    // TODO: Make this easier to configure
-    private static final String MAIN_CLASS = "org.apache.maven.shell.Main";
-
     private Properties props;
 
     private File homeDir;
@@ -57,6 +54,8 @@ public class ConfigurationImpl
     private File etcDir;
 
     private String programName;
+
+    private String mainName;
 
     private String version;
 
@@ -87,6 +86,13 @@ public class ConfigurationImpl
 
         props.setProperty(SHELL_HOME_DETECTED, detectHomeDir().getAbsolutePath());
 
+        // HACK: Stuff in shell.main
+        String main = System.getProperty(SHELL_MAIN);
+        if (main == null) {
+            throw new Error("Missing: " + SHELL_MAIN);
+        }
+        props.setProperty(SHELL_MAIN, main);
+        
         if (Log.DEBUG) {
             Log.debug("Properties:");
             for (Map.Entry entry : props.entrySet()) {
@@ -222,7 +228,13 @@ public class ConfigurationImpl
     }
 
     public String getMainClass() {
-        return MAIN_CLASS;
+        ensureConfigured();
+
+        if (mainName == null) {
+            mainName = getProperty(SHELL_MAIN);
+        }
+
+        return mainName;
     }
 
     public int getSuccessExitCode() {
