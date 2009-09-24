@@ -45,16 +45,6 @@ public interface Configuration
 
     String SHELL_MAIN = "shell.main";
 
-    String[] VARIABLES = {
-        SHELL_HOME_DETECTED,
-        SHELL_HOME,
-        SHELL_ETC,
-        SHELL_LIB,
-        SHELL_PROGRAM,
-        SHELL_VERSION,
-        SHELL_MAIN
-    };
-
     void configure() throws Exception;
 
     List<URL> getClassPath() throws Exception;
