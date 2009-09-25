@@ -68,15 +68,11 @@ public class ShellBuilder
         return this;
     }
 
-    private PlexusContainer getContainer() throws PlexusContainerException {
+    public PlexusContainer getContainer() throws PlexusContainerException {
         if (container == null) {
-            createContainer();
+            container = new DefaultPlexusContainer(new DefaultContainerConfiguration());
         }
         return container;
-    }
-
-    public static PlexusContainer createContainer() throws PlexusContainerException {
-        return new DefaultPlexusContainer(new DefaultContainerConfiguration());
     }
 
     public ShellBuilder setBranding(final Branding branding) {

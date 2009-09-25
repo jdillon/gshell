@@ -43,10 +43,10 @@ public class Main
 
     @Override
     protected Shell createShell() throws Exception {
-        PlexusContainer container = ShellBuilder.createContainer();
+        ShellBuilder builder = new ShellBuilder();
+        PlexusContainer container = builder.getContainer();
         
-        return new ShellBuilder()
-                .setContainer(container)
+        return builder
                 .setBranding(getBranding())
                 .setIo(io)
                 .setVariables(vars)
