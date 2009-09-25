@@ -38,6 +38,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 /**
  * Support for testing {@link org.apache.gshell.command.Command} instances.
  * 
@@ -47,6 +49,8 @@ public abstract class CommandTestSupport
     implements VariableNames
 {
     protected final String name;
+
+    private List<String> requiredCommands;
 
     private final TestUtil util = new TestUtil(this);
 
@@ -65,6 +69,7 @@ public abstract class CommandTestSupport
     protected CommandTestSupport(final String name) {
         assertNotNull(name);
         this.name = name;
+        requiredCommands.add(name);
     }
 
     @Before
@@ -72,8 +77,13 @@ public abstract class CommandTestSupport
         plexus = new PlexusTestSupport(this);
 
         io = new TestIO();
-        
-        shell = new ShellBuilder()
+
+        requireCommands(requiredCommands);
+
+        TestShellBuilder builder = new TestShellBuilder();
+        builder.setRequiredCommands(requiredCommands);
+
+        shell = builder
                 .setContainer(plexus.getContainer())
                 .setBranding(new TestBranding(util.resolveFile("target/shell-home")))
                 .setIo(io)
@@ -96,6 +106,10 @@ public abstract class CommandTestSupport
         shell.close();
         shell = null;
         plexus = null;
+    }
+
+    protected void requireCommands(List<String> commands) {
+        // empty
     }
 
     protected Shell getShell() {

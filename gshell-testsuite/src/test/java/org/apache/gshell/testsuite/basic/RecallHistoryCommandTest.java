@@ -26,7 +26,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
+
+import java.util.List;
 
 /**
  * Tests for the {@link RecallHistoryCommand}.
@@ -40,9 +43,10 @@ public class RecallHistoryCommandTest
         super("recall");
     }
 
-    @Test
-    public void testDependenciesRegistered() throws Exception {
-        assertTrue(commandRegistry.containsCommand("set"));
+    @Override
+    protected void requireCommands(final List<String> commands) {
+        assertNotNull(commands);
+        commands.add("set");
     }
 
     @Override

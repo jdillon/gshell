@@ -24,7 +24,10 @@ import org.apache.gshell.testsuite.CommandTestSupport;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
+
+import java.util.List;
 
 /**
  * Tests for the {@link HistoryCommand}.
@@ -38,9 +41,10 @@ public class HistoryCommandTest
         super("history");
     }
 
-    @Test
-    public void testDependenciesRegistered() throws Exception {
-        assertTrue(commandRegistry.containsCommand("echo"));
+    @Override
+    protected void requireCommands(final List<String> commands) {
+        assertNotNull(commands);
+        commands.add("echo");
     }
 
     @Test

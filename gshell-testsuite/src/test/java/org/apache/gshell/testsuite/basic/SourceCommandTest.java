@@ -30,6 +30,7 @@ import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.net.URL;
+import java.util.List;
 
 /**
  * Tests for the {@link SourceCommand}.
@@ -42,7 +43,13 @@ public class SourceCommandTest
     public SourceCommandTest() {
         super("source");
     }
-    
+
+    @Override
+    protected void requireCommands(final List<String> commands) {
+        assertNotNull(commands);
+        commands.add("set");
+    }
+
     @Override
     @Test
     public void testDefault() throws Exception {
@@ -53,11 +60,6 @@ public class SourceCommandTest
         catch (ProcessingException e) {
             // expected
         }
-    }
-
-    @Test
-    public void testDependenciesRegistered() throws Exception {
-        assertTrue(commandRegistry.containsCommand("set"));
     }
 
     @Test
