@@ -39,7 +39,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>org.apache.maven.shell.bootstrap.Launcher</mainClass>
+                            <mainClass>org.apache.gshell.bootstrap.Launcher</mainClass>
                             <addClasspath>true</addClasspath>
                         </manifest>
                   </archive>

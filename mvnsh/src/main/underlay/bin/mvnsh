@@ -20,7 +20,7 @@
 
 DIRNAME=`dirname "$0"`
 
-MAIN=org.apache.maven.mvnsh.Main
+MAIN=org.apache.maven.shell.Main
 
 # OS specific support (must be 'true' or 'false').
 cygwin=false;
