@@ -21,7 +21,6 @@ package org.apache.maven.shell.core.commands;
 
 import org.apache.maven.shell.Branding;
 import org.apache.maven.shell.cli.Option;
-import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.io.IO;
@@ -34,7 +33,7 @@ import org.codehaus.plexus.component.annotations.Component;
  *
  * @since 1.0
  */
-@Component(role=Command.class, hint="about")
+@Component(role=AboutCommand.class)
 public class AboutCommand
     extends CommandSupport
 {

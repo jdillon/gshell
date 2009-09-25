@@ -21,10 +21,8 @@ package org.apache.maven.shell.core.commands;
 
 import jline.Completor;
 import org.apache.maven.shell.cli.Argument;
-import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
-import org.apache.maven.shell.console.completer.AggregateCompleter;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.registry.AliasRegistry;
 import org.apache.maven.shell.registry.NoSuchAliasException;
@@ -40,7 +38,7 @@ import java.util.List;
  *
  * @since 1.0
  */
-@Component(role=Command.class, hint="unalias")
+@Component(role=UnaliasCommand.class)
 public class UnaliasCommand
     extends CommandSupport
 {
@@ -48,7 +46,7 @@ public class UnaliasCommand
     private AliasRegistry aliasRegistry;
 
     @Requirement(role=Completor.class, hints={"variable-name"})
-    private List<Completor> completers;
+    private List<Completor> installCompleters;
 
     @Argument(index=0, required=true)
     private String name;
@@ -62,12 +60,11 @@ public class UnaliasCommand
 
     @Override
     public Completor[] getCompleters() {
-        assert completers != null;
+        if (super.getCompleters() == null) {
+            setCompleters(installCompleters);
+        }
 
-        return new Completor[] {
-            new AggregateCompleter(completers),
-            null
-        };
+        return super.getCompleters();
     }
     
     public Object execute(final CommandContext context) {

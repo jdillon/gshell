@@ -20,7 +20,6 @@
 package org.apache.maven.shell.core.commands;
 
 import org.apache.maven.shell.cli.Argument;
-import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.notification.ExitNotification;
@@ -33,7 +32,7 @@ import org.codehaus.plexus.component.annotations.Component;
  *
  * @since 1.0
  */
-@Component(role=Command.class, hint="exit")
+@Component(role=ExitCommand.class)
 public class ExitCommand
     extends CommandSupport
 {

@@ -25,6 +25,8 @@ import org.apache.maven.shell.i18n.ResourceBundleMessageSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 // FIXME: This does not belong in api
 
 /**
@@ -74,6 +76,11 @@ public abstract class CommandSupport
 
     public void setCompleters(final Completor... completers) {
         this.completers = completers;
+    }
+
+    public void setCompleters(final List<Completor> completers) {
+        assert completers != null;
+        setCompleters(completers.toArray(new Completor[completers.size()]));
     }
 
     @Override

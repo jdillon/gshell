@@ -21,21 +21,11 @@ package org.apache.maven.mvnsh;
 
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.registry.CommandRegistrar;
+import org.apache.maven.shell.registry.CommandRegistrarSupport;
 import org.apache.maven.shell.registry.CommandRegistry;
 import org.codehaus.plexus.PlexusContainer;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.net.URL;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Properties;
 
 /**
  * Default implementation of the {@link CommandRegistrar}.
@@ -44,10 +34,8 @@ import java.util.Properties;
  */
 @Component(role= CommandRegistrar.class)
 public class CommandRegistrarImpl
-    implements CommandRegistrar
+    extends CommandRegistrarSupport
 {
-    private final Logger log = LoggerFactory.getLogger(getClass());
-
     @Requirement
     private PlexusContainer container;
 
@@ -63,97 +51,13 @@ public class CommandRegistrarImpl
         this.registry = registry;
     }
 
-    public void registerCommands() throws Exception {
-        List<CommandsConfiguration> configurations = discoverConfigurations();
-
-        if (!configurations.isEmpty()) {
-            Collections.sort(configurations);
-
-            for (CommandsConfiguration config : configurations) {
-                log.debug("Registering commands for: {}", config);
-
-                for (String name : config.getAutoRegisterCommands()) {
-                    Command command = createCommand(name);
-                    registry.registerCommand(name, command);
-                }
-            }
-        }
-    }
-
-    protected Command createCommand(final String name) throws Exception{
+    public void registerCommand(final String name, final String type) throws Exception {
         assert name != null;
-        return container.lookup(Command.class, name);
-    }
+        assert type != null;
 
-    private List<CommandsConfiguration> discoverConfigurations() throws IOException {
-        log.debug("Discovering commands configuration");
+        log.trace("Registering command: {} -> {}", name, type);
 
-        List<CommandsConfiguration> list = new LinkedList<CommandsConfiguration>();
-
-        ClassLoader cl = Thread.currentThread().getContextClassLoader();
-
-        Enumeration<URL> resources = cl.getResources(COMMANDS_PROPERTIES);
-        if (resources != null && resources.hasMoreElements()) {
-            log.debug("Discovered:");
-            while (resources.hasMoreElements()) {
-                URL url = resources.nextElement();
-                log.debug("    {}", url);
-                CommandsConfiguration config = new CommandsConfiguration(url);
-                list.add(config);
-            }
-        }
-
-        return list;
-    }
-
-    private static class CommandsConfiguration
-        implements Comparable<CommandsConfiguration>
-    {
-        private static final String ID = "id";
-        
-        private static final String AUTO_REGISTER_PRIORITY = "auto-register-priority";
-
-        private static final String DEFAULT_AUTO_REGISTER_PRIORITY = "50";
-
-        private static final String AUTO_REGISTER_COMMANDS = "auto-register-commands";
-
-        private final URL source;
-
-        private final Properties props = new Properties();
-
-        private CommandsConfiguration(final URL source) throws IOException {
-            assert source != null;
-            this.source = source;
-            props.load(new BufferedInputStream(source.openStream()));
-        }
-
-        public String getId() {
-            return props.getProperty(ID);
-        }
-
-        public int getAutoRegisterPriority() {
-            return Integer.parseInt(props.getProperty(AUTO_REGISTER_PRIORITY, DEFAULT_AUTO_REGISTER_PRIORITY));
-        }
-
-        public String[] getAutoRegisterCommands() {
-            String tmp = props.getProperty(AUTO_REGISTER_COMMANDS);
-            if (tmp == null) {
-                return new String[0];
-            }
-
-            return tmp.split(",");
-        }
-
-        @Override
-        public int compareTo(final CommandsConfiguration target) {
-            int us = getAutoRegisterPriority();
-            int them = target.getAutoRegisterPriority();
-            return (us<them ? -1 : (us==them ? 0 : 1));
-        }
-
-        @Override
-        public String toString() {
-            return getId() + " -> " + source.toString();
-        }
+        Command command = (Command) container.lookup(type);
+        registry.registerCommand(name, command);
     }
 }

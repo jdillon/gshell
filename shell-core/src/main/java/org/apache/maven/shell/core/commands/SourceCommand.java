@@ -22,10 +22,8 @@ package org.apache.maven.shell.core.commands;
 import jline.Completor;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.cli.Argument;
-import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
-import org.apache.maven.shell.console.completer.AggregateCompleter;
 import org.apache.maven.shell.io.Closer;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
@@ -48,26 +46,25 @@ import java.util.List;
  *
  * @since 1.0
  */
-@Component(role=Command.class, hint="source")
+@Component(role=SourceCommand.class)
 public class SourceCommand
     extends CommandSupport
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Requirement(role=Completor.class, hints={"file-name"})
-    private List<Completor> completers;
+    private List<Completor> installCompleters;
 
     @Argument(required=true)
     private String path;
 
     @Override
     public Completor[] getCompleters() {
-        assert completers != null;
+        if (super.getCompleters() == null) {
+            setCompleters(installCompleters);
+        }
 
-        return new Completor[] {
-            new AggregateCompleter(completers),
-            null
-        };
+        return super.getCompleters();
     }
 
     public Object execute(final CommandContext context) throws Exception {

@@ -17,7 +17,9 @@
  * under the License.
  */
 
-package org.apache.maven.shell;
+package org.apache.maven.shell.execute;
+
+import org.apache.maven.shell.Shell;
 
 /**
  * Provides the ability to execute commands.

@@ -20,7 +20,7 @@
 package org.apache.maven.shell.parser.impl.visitor;
 
 import org.apache.maven.shell.Arguments;
-import org.apache.maven.shell.CommandExecutor;
+import org.apache.maven.shell.execute.CommandExecutor;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.ShellHolder;
 import org.apache.maven.shell.Variables;

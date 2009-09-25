@@ -21,7 +21,6 @@ package org.apache.maven.shell.core.commands;
 
 import jline.ConsoleReader;
 import org.apache.maven.shell.ansi.Ansi;
-import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.io.IO;
@@ -34,7 +33,7 @@ import org.codehaus.plexus.component.annotations.Component;
  *
  * @since 1.0
  */
-@Component(role=Command.class, hint="clear")
+@Component(role=ClearCommand.class)
 public class ClearCommand
     extends CommandSupport
 {

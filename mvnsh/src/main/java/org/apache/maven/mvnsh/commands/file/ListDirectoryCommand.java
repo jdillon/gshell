@@ -23,9 +23,7 @@ import jline.Completor;
 import jline.ConsoleReader;
 import org.apache.maven.shell.cli.Argument;
 import org.apache.maven.shell.cli.Option;
-import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
-import org.apache.maven.shell.console.completer.AggregateCompleter;
 import org.apache.maven.shell.io.IO;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
@@ -41,12 +39,12 @@ import java.util.List;
  * 
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-@Component(role=Command.class, hint="ls")
+@Component(role=ListDirectoryCommand.class)
 public class ListDirectoryCommand
     extends FileCommandSupport
 {
     @Requirement(role=Completor.class, hints={"file-name"})
-    private List<Completor> completers;
+    private List<Completor> installCompleters;
 
     @Argument
     private String path;
@@ -62,14 +60,13 @@ public class ListDirectoryCommand
 
     @Override
     public Completor[] getCompleters() {
-        assert completers != null;
+        if (super.getCompleters() == null) {
+            setCompleters(installCompleters);
+        }
 
-        return new Completor[] {
-            new AggregateCompleter(completers),
-            null
-        };
+        return super.getCompleters();
     }
-    
+
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
         IO io = context.getIo();

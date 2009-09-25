@@ -19,7 +19,6 @@
 
 package org.apache.maven.mvnsh.commands.file;
 
-import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.io.IO;
 import org.codehaus.plexus.component.annotations.Component;
@@ -31,7 +30,7 @@ import java.io.File;
  * 
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-@Component(role=Command.class, hint="pwd")
+@Component(role=CurrentDirectoryCommand.class)
 public class CurrentDirectoryCommand
     extends FileCommandSupport
 {

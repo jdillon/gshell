@@ -21,7 +21,7 @@ package org.apache.maven.mvnsh;
 
 import jline.Completor;
 import org.apache.maven.shell.Branding;
-import org.apache.maven.shell.CommandExecutor;
+import org.apache.maven.shell.execute.CommandExecutor;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.console.Console;

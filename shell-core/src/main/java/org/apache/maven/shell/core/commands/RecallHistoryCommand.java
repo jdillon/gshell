@@ -22,7 +22,6 @@ package org.apache.maven.shell.core.commands;
 import org.apache.maven.shell.History;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.cli.Argument;
-import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;
 import org.apache.maven.shell.command.CommandSupport;
 import org.apache.maven.shell.io.IO;
@@ -37,7 +36,7 @@ import java.util.List;
  *
  * @since 1.0
  */
-@Component(role=Command.class, hint="recall")
+@Component(role=RecallHistoryCommand.class)
 public class RecallHistoryCommand
     extends CommandSupport
 {

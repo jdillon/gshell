@@ -20,9 +20,9 @@
 package org.apache.maven.shell.core.impl.command;
 
 import org.apache.maven.shell.Arguments;
-import org.apache.maven.shell.CommandExecutor;
-import org.apache.maven.shell.CommandLineParser;
-import org.apache.maven.shell.CommandLineParser.CommandLine;
+import org.apache.maven.shell.execute.CommandExecutor;
+import org.apache.maven.shell.execute.CommandLineParser;
+import org.apache.maven.shell.execute.CommandLineParser.CommandLine;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.ShellHolder;
 import org.apache.maven.shell.Variables;
