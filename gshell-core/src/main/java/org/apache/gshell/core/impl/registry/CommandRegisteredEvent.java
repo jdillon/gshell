@@ -28,7 +28,7 @@ import java.util.EventObject;
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *
- * @since 1.0
+ * @since 2.0
  */
 public class CommandRegisteredEvent
     extends EventObject

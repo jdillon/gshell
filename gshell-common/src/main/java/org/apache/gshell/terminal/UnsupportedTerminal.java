@@ -24,7 +24,7 @@ package org.apache.gshell.terminal;
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *
- * @since 1.0
+ * @since 2.0
  */
 public class UnsupportedTerminal
     extends jline.UnsupportedTerminal

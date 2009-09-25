@@ -35,7 +35,7 @@ import java.io.FileReader;
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *
- * @since 1.0
+ * @since 2.0
  */
 public class ScriptLoader
     implements VariableNames
