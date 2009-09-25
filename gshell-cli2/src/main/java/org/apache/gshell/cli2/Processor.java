@@ -24,10 +24,10 @@ import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
-import org.apache.gshell.i18n.MessageSource;
-import org.apache.gshell.cli2.setter.SetterFactory;
-import org.apache.gshell.cli2.setter.Setter;
 import org.apache.gshell.cli2.internal.OptionDescriptorOption;
+import org.apache.gshell.cli2.setter.Setter;
+import org.apache.gshell.cli2.setter.SetterFactory;
+import org.apache.gshell.i18n.MessageSource;
 import org.apache.xbean.propertyeditor.PropertyEditors;
 
 import java.lang.reflect.AnnotatedElement;

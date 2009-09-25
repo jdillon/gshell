@@ -19,25 +19,8 @@
 
 package org.apache.gshell.testsuite;
 
-import jline.Completor;
-import org.apache.gshell.Branding;
-import org.apache.gshell.Shell;
-import org.apache.gshell.Variables;
-import org.apache.gshell.console.Console;
-import org.apache.gshell.core.impl.ShellImpl;
-import org.apache.gshell.execute.CommandExecutor;
-import org.apache.gshell.io.IO;
 import org.apache.gshell.registry.CommandRegistrar;
 import org.apache.maven.shell.ShellBuilder;
-import org.codehaus.plexus.DefaultContainerConfiguration;
-import org.codehaus.plexus.DefaultPlexusContainer;
-import org.codehaus.plexus.PlexusContainer;
-import org.codehaus.plexus.PlexusContainerException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Builds {@link org.apache.gshell.Shell} instances.

@@ -20,16 +20,12 @@
 package org.apache.gshell.testsuite.basic;
 
 import org.apache.gshell.cli.ProcessingException;
-import org.apache.gshell.testsuite.CommandTestSupport;
 import org.apache.gshell.core.commands.EchoCommand;
 import org.apache.gshell.core.commands.HistoryCommand;
+import org.apache.gshell.testsuite.CommandTestSupport;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
-
-import java.util.List;
 
 /**
  * Tests for the {@link HistoryCommand}.

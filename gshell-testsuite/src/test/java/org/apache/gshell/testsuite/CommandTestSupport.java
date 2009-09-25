@@ -25,12 +25,11 @@ import org.apache.gshell.Variables;
 import org.apache.gshell.ansi.Ansi;
 import org.apache.gshell.command.Command;
 import org.apache.gshell.registry.AliasRegistry;
-import org.apache.gshell.registry.CommandRegistry;
 import org.apache.gshell.registry.CommandRegistrar;
+import org.apache.gshell.registry.CommandRegistry;
 import org.apache.gshell.testsupport.PlexusTestSupport;
 import org.apache.gshell.testsupport.TestIO;
 import org.apache.gshell.testsupport.TestUtil;
-import org.apache.maven.shell.ShellBuilder;
 import org.codehaus.plexus.util.StringUtils;
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
@@ -39,9 +38,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Support for testing {@link org.apache.gshell.command.Command} instances.
@@ -115,6 +113,7 @@ public abstract class CommandTestSupport
         shell.close();
         shell = null;
         plexus = null;
+        requiredCommands.clear();
     }
 
     protected Shell getShell() {
