@@ -37,11 +37,13 @@ import org.slf4j.LoggerFactory;
 public abstract class CommandSupport
     implements Command, NameAware
 {
-    protected Logger log = LoggerFactory.getLogger(getClass());
+    protected final Logger log = LoggerFactory.getLogger(getClass());
 
     private String name;
 
     private MessageSource messages;
+
+    private Completor[] completers;
 
     public String getName() {
         if (name == null) {
@@ -67,7 +69,11 @@ public abstract class CommandSupport
     }
 
     public Completor[] getCompleters() {
-        return null;
+        return completers;
+    }
+
+    public void setCompleters(final Completor... completers) {
+        this.completers = completers;
     }
 
     @Override
