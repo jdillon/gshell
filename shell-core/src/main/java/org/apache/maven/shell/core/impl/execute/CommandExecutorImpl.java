@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.maven.shell.core.impl.command;
+package org.apache.maven.shell.core.impl.execute;
 
 import org.apache.maven.shell.Arguments;
 import org.apache.maven.shell.execute.CommandExecutor;
@@ -26,6 +26,7 @@ import org.apache.maven.shell.execute.CommandLineParser.CommandLine;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.ShellHolder;
 import org.apache.maven.shell.Variables;
+import org.apache.maven.shell.core.impl.command.CommandHelpSupport;
 import org.apache.maven.shell.cli.Processor;
 import org.apache.maven.shell.command.Command;
 import org.apache.maven.shell.command.CommandContext;

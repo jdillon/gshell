@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.maven.shell.core.impl.parser;
+package org.apache.maven.shell.core.impl.execute;
 
 import org.apache.maven.shell.Arguments;
 import org.apache.maven.shell.execute.CommandExecutor;
