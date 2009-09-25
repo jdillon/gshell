@@ -23,28 +23,28 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.apache.maven.shell</groupId>
-        <artifactId>shell</artifactId>
+        <groupId>org.apache.gshell</groupId>
+        <artifactId>gshell</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>shell-core</artifactId>
-    <name>Maven Shell :: Core</name>
+    <artifactId>gshell-core</artifactId>
+    <name>GShell :: Core</name>
 
     <dependencies>
         <dependency>
-            <groupId>org.apache.maven.shell</groupId>
-            <artifactId>shell-api</artifactId>
+            <groupId>org.apache.gshell</groupId>
+            <artifactId>gshell-api</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.apache.maven.shell</groupId>
-            <artifactId>shell-cli</artifactId>
+            <groupId>org.apache.gshell</groupId>
+            <artifactId>gshell-cli</artifactId>
         </dependency>
         
         <dependency>
-            <groupId>org.apache.maven.shell</groupId>
-            <artifactId>shell-common</artifactId>
+            <groupId>org.apache.gshell</groupId>
+            <artifactId>gshell-common</artifactId>
         </dependency>
 
         <dependency>
@@ -63,12 +63,12 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.maven.shell</groupId>
-            <artifactId>shell-common</artifactId>
+            <groupId>org.apache.gshell</groupId>
+            <artifactId>gshell-common</artifactId>
             <classifier>tests</classifier>
             <scope>test</scope>
         </dependency>
-
+        
         <dependency>
             <groupId>org.codehaus.plexus</groupId>
             <artifactId>plexus-container-default</artifactId>
@@ -97,10 +97,10 @@
                             </transformers>
                             <artifactSet>
                                 <includes>
-                                    <include>org.apache.maven.shell:shell-common</include>
-                                    <include>org.apache.maven.shell:shell-cli</include>
-                                    <include>org.apache.maven.shell:shell-api</include>
-                                    <include>org.apache.maven.shell:shell-core</include>
+                                    <include>org.apache.gshell:gshell-common</include>
+                                    <include>org.apache.gshell:gshell-cli</include>
+                                    <include>org.apache.gshell:gshell-api</include>
+                                    <include>org.apache.gshell:gshell-core</include>
                                 </includes>
                             </artifactSet>
                         </configuration>

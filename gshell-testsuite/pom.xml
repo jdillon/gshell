@@ -23,28 +23,35 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.apache.maven.shell</groupId>
-        <artifactId>shell</artifactId>
+        <groupId>org.apache.gshell</groupId>
+        <artifactId>gshell</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>shell-cli</artifactId>
-    <name>Maven Shell :: CLI</name>
+    <artifactId>gshell-testsuite</artifactId>
+    <name>GShell :: Testsuite</name>
 
     <dependencies>
         <dependency>
-            <groupId>org.apache.maven.shell</groupId>
-            <artifactId>shell-common</artifactId>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.codehaus.plexus</groupId>
-            <artifactId>plexus-utils</artifactId>
+            <groupId>org.apache.gshell</groupId>
+            <artifactId>gshell-core</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.apache.xbean</groupId>
-            <artifactId>xbean-reflect</artifactId>
+            <groupId>org.apache.gshell</groupId>
+            <artifactId>gshell-parser</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.maven.shell</groupId>
+            <artifactId>mvnsh</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.gshell</groupId>
+            <artifactId>gshell-common</artifactId>
+            <classifier>tests</classifier>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

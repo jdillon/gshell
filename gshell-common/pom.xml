@@ -23,18 +23,23 @@
     <modelVersion>4.0.0</modelVersion>
     
     <parent>
-        <groupId>org.apache.maven.shell</groupId>
-        <artifactId>shell</artifactId>
+        <groupId>org.apache.gshell</groupId>
+        <artifactId>gshell</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    
-    <artifactId>shell-parser</artifactId>
-    <name>Maven Shell :: Parser</name>
 
+    <artifactId>gshell-common</artifactId>
+    <name>GShell :: Common</name>
+    
     <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>jline</groupId>
+            <artifactId>jline</artifactId>
         </dependency>
 
         <dependency>
@@ -44,50 +49,25 @@
 
         <dependency>
             <groupId>org.codehaus.plexus</groupId>
-            <artifactId>plexus-interpolation</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.codehaus.plexus</groupId>
-            <artifactId>plexus-component-annotations</artifactId>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.apache.maven.shell</groupId>
-            <artifactId>shell-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.maven.shell</groupId>
-            <artifactId>shell-common</artifactId>
-            <classifier>tests</classifier>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.codehaus.plexus</groupId>
             <artifactId>plexus-container-default</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
-
+    
     <build>
         <plugins>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>javacc-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
                 <executions>
                     <execution>
                         <goals>
-                            <goal>jjtree-javacc</goal>
+                            <goal>test-jar</goal>
                         </goals>
-                        <configuration>
-                            <sourceDirectory>${project.basedir}/src/main/grammar</sourceDirectory>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
-    
+
 </project>

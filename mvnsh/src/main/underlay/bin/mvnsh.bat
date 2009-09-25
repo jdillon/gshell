@@ -68,7 +68,7 @@ set ARGS=%$
 
 :execute
 
-set BOOTJAR=%SHELL_HOME%\lib\boot\shell-bootstrap.jar
+set BOOTJAR=%SHELL_HOME%\lib\boot\bootstrap.jar
 
 @REM Start the JVM
 "%JAVACMD%" %JAVA_OPTS% -Dshell.main=%MAIN% -jar "%BOOTJAR%" %ARGS%

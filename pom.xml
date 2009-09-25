@@ -22,9 +22,9 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.apache.maven.shell</groupId>
-    <artifactId>shell</artifactId>
-    <name>Maven Shell</name>
+    <groupId>org.apache.gshell</groupId>
+    <artifactId>gshell</artifactId>
+    <name>GShell</name>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
@@ -187,57 +187,57 @@
             <!-- INTERNAL -->
 
             <dependency>
-                <groupId>org.apache.maven.shell</groupId>
-                <artifactId>shell-common</artifactId>
+                <groupId>org.apache.gshell</groupId>
+                <artifactId>gshell-common</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>org.apache.maven.shell</groupId>
-                <artifactId>shell-common</artifactId>
+                <groupId>org.apache.gshell</groupId>
+                <artifactId>gshell-common</artifactId>
                 <classifier>tests</classifier>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>org.apache.maven.shell</groupId>
-                <artifactId>shell-cli</artifactId>
+                <groupId>org.apache.gshell</groupId>
+                <artifactId>gshell-cli</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>org.apache.maven.shell</groupId>
-                <artifactId>shell-cli2</artifactId>
+                <groupId>org.apache.gshell</groupId>
+                <artifactId>gshell-cli2</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>org.apache.maven.shell</groupId>
-                <artifactId>shell-api</artifactId>
+                <groupId>org.apache.gshell</groupId>
+                <artifactId>gshell-api</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>org.apache.maven.shell</groupId>
-                <artifactId>shell-parser</artifactId>
+                <groupId>org.apache.gshell</groupId>
+                <artifactId>gshell-parser</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>org.apache.maven.shell</groupId>
-                <artifactId>shell-core</artifactId>
+                <groupId>org.apache.gshell</groupId>
+                <artifactId>gshell-core</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>org.apache.maven.shell</groupId>
-                <artifactId>shell-bootstrap</artifactId>
+                <groupId>org.apache.gshell</groupId>
+                <artifactId>gshell-bootstrap</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>org.apache.maven.shell</groupId>
-                <artifactId>shell-testsuite</artifactId>
+                <groupId>org.apache.gshell</groupId>
+                <artifactId>gshell-testsuite</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
 
@@ -264,14 +264,14 @@
     </dependencies>
 
     <modules>
-        <module>shell-common</module>
-        <module>shell-cli</module>
-        <module>shell-cli2</module>
-        <module>shell-api</module>
-        <module>shell-parser</module>
-        <module>shell-core</module>
-        <module>shell-bootstrap</module>
-        <module>shell-testsuite</module>
+        <module>gshell-common</module>
+        <module>gshell-cli</module>
+        <module>gshell-cli2</module>
+        <module>gshell-api</module>
+        <module>gshell-parser</module>
+        <module>gshell-core</module>
+        <module>gshell-bootstrap</module>
+        <module>gshell-testsuite</module>
         <module>mvnsh</module>
     </modules>
     

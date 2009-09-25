@@ -68,16 +68,16 @@
             <outputDirectory>lib</outputDirectory>
             <useStrictFiltering>true</useStrictFiltering>
             <excludes>
-                <exclude>org.apache.maven.shell:shell-bootstrap</exclude>
+                <exclude>org.apache.gshell:gshell-bootstrap</exclude>
             </excludes>
         </dependencySet>
         
         <dependencySet>
             <outputDirectory>lib/boot</outputDirectory>
-            <outputFileNameMapping>shell-bootstrap.jar</outputFileNameMapping>
+            <outputFileNameMapping>bootstrap.jar</outputFileNameMapping>
             <useStrictFiltering>true</useStrictFiltering>
             <includes>
-                <include>org.apache.maven.shell:shell-bootstrap</include>
+                <include>org.apache.gshell:gshell-bootstrap</include>
             </includes>
         </dependencySet>
     </dependencySets>
