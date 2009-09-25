@@ -21,14 +21,13 @@ package org.apache.maven.mvnsh;
 
 import jline.Completor;
 import org.apache.maven.shell.Branding;
-import org.apache.maven.shell.execute.CommandExecutor;
 import org.apache.maven.shell.Shell;
 import org.apache.maven.shell.Variables;
 import org.apache.maven.shell.console.Console;
 import org.apache.maven.shell.core.impl.ShellImpl;
+import org.apache.maven.shell.execute.CommandExecutor;
 import org.apache.maven.shell.io.IO;
 import org.apache.maven.shell.registry.CommandRegistrar;
-import org.codehaus.plexus.ContainerConfiguration;
 import org.codehaus.plexus.DefaultContainerConfiguration;
 import org.codehaus.plexus.DefaultPlexusContainer;
 import org.codehaus.plexus.PlexusContainer;
@@ -77,9 +76,7 @@ public class ShellBuilder
     }
 
     public static PlexusContainer createContainer() throws PlexusContainerException {
-        ContainerConfiguration config = new DefaultContainerConfiguration();
-        DefaultPlexusContainer c = new DefaultPlexusContainer(config);
-        return c;
+        return new DefaultPlexusContainer(new DefaultContainerConfiguration());
     }
 
     public ShellBuilder setBranding(final Branding branding) {
