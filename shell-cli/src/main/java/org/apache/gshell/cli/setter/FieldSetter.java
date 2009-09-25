@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.gshell.cli.setterx;
+package org.apache.gshell.cli.setter;
 
 import java.lang.reflect.Field;
 

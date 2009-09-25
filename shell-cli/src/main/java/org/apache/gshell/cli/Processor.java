@@ -22,10 +22,10 @@ package org.apache.gshell.cli;
 import org.apache.gshell.cli.handler.Handler;
 import org.apache.gshell.cli.handler.Handlers;
 import org.apache.gshell.cli.handler.Parameters;
-import org.apache.gshell.cli.setterx.CollectionFieldSetter;
-import org.apache.gshell.cli.setterx.FieldSetter;
-import org.apache.gshell.cli.setterx.MethodSetter;
-import org.apache.gshell.cli.setterx.Setter;
+import org.apache.gshell.cli.setter.CollectionFieldSetter;
+import org.apache.gshell.cli.setter.FieldSetter;
+import org.apache.gshell.cli.setter.MethodSetter;
+import org.apache.gshell.cli.setter.Setter;
 import org.apache.gshell.i18n.MessageSource;
 
 import java.lang.reflect.Field;

@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.gshell.cli.setterx;
+package org.apache.gshell.cli.setter;
 
 import org.apache.gshell.cli.IllegalAnnotationError;
 import org.apache.gshell.cli.ProcessingException;

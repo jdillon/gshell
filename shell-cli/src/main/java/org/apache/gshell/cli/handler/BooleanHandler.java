@@ -22,7 +22,7 @@ package org.apache.gshell.cli.handler;
 import org.apache.gshell.cli.Descriptor;
 import org.apache.gshell.cli.OptionDescriptor;
 import org.apache.gshell.cli.ProcessingException;
-import org.apache.gshell.cli.setterx.Setter;
+import org.apache.gshell.cli.setter.Setter;
 
 /**
  * Handler for boolean types.
