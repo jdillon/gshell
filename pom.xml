@@ -355,7 +355,7 @@
                     <configuration>
                         <redirectTestOutputToFile>true</redirectTestOutputToFile>
                         <forkMode>once</forkMode>
-                        <argLine>-enableassertions</argLine>
+                        <argLine>-ea</argLine>
                         <failIfNoTests>false</failIfNoTests>
                         <workingDirectory>${project.build.directory}</workingDirectory>
                         <excludes>
