@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.gshell.cli.setter;
+package org.apache.gshell.cli.setterx;
 
 import org.apache.gshell.cli.Argument;
 import org.apache.gshell.cli.Option;
@@ -26,7 +26,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 /**
- * Tests for the {@link org.apache.gshell.cli.setter.MethodSetter} class.
+ * Tests for the {@link org.apache.gshell.cli.setterx.MethodSetter} class.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */

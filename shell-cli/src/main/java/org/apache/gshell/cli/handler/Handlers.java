@@ -21,7 +21,7 @@ package org.apache.gshell.cli.handler;
 
 import org.apache.gshell.cli.Descriptor;
 import org.apache.gshell.cli.IllegalAnnotationError;
-import org.apache.gshell.cli.setter.Setter;
+import org.apache.gshell.cli.setterx.Setter;
 
 import java.io.File;
 import java.lang.reflect.Constructor;

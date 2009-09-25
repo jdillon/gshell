@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.gshell.cli.setter;
+package org.apache.gshell.cli.setterx;
 
 import org.apache.gshell.cli.Argument;
 import org.apache.gshell.cli.ProcessorTestSupport;
@@ -28,7 +28,7 @@ import org.junit.Test;
 import java.util.List;
 
 /**
- * Tests for the {@link org.apache.gshell.cli.setter.CollectionFieldSetter} class.
+ * Tests for the {@link org.apache.gshell.cli.setterx.CollectionFieldSetter} class.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */

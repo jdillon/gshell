@@ -23,7 +23,7 @@ import org.apache.gshell.cli.ArgumentDescriptor;
 import org.apache.gshell.cli.Descriptor;
 import org.apache.gshell.cli.OptionDescriptor;
 import org.apache.gshell.cli.ProcessingException;
-import org.apache.gshell.cli.setter.Setter;
+import org.apache.gshell.cli.setterx.Setter;
 import org.apache.gshell.i18n.MessageSource;
 import org.apache.gshell.i18n.ResourceNotFoundException;
 
