@@ -20,6 +20,9 @@
 package org.apache.gshell.testsuite.basic;
 
 import org.apache.gshell.History;
+import org.apache.gshell.core.commands.EchoCommand;
+import org.apache.gshell.core.commands.SetCommand;
+import org.apache.gshell.core.commands.RecallHistoryCommand;
 import org.apache.gshell.cli.ProcessingException;
 import org.apache.gshell.testsuite.CommandTestSupport;
 import static org.junit.Assert.assertEquals;
@@ -40,13 +43,13 @@ public class RecallHistoryCommandTest
     extends CommandTestSupport
 {
     public RecallHistoryCommandTest() {
-        super("recall");
+        super("recall", RecallHistoryCommand.class);
     }
 
     @Override
-    protected void requireCommands(final List<String> commands) {
-        assertNotNull(commands);
-        commands.add("set");
+    public void setUp() throws Exception {
+        requiredCommands.put("set", SetCommand.class);
+        super.setUp();
     }
 
     @Override

@@ -22,6 +22,7 @@ package org.apache.gshell.testsuite.basic;
 import org.apache.gshell.cli.ProcessingException;
 import org.apache.gshell.notification.ExitNotification;
 import org.apache.gshell.testsuite.CommandTestSupport;
+import org.apache.gshell.core.commands.ExitCommand;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import org.junit.Test;
@@ -35,7 +36,7 @@ public class ExitCommandTest
     extends CommandTestSupport
 {
     public ExitCommandTest() {
-        super("exit");
+        super("exit", ExitCommand.class);
     }
 
     @Override

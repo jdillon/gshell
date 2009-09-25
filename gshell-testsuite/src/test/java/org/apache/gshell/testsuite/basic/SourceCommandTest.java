@@ -21,6 +21,9 @@ package org.apache.gshell.testsuite.basic;
 
 import org.apache.gshell.cli.ProcessingException;
 import org.apache.gshell.testsuite.CommandTestSupport;
+import org.apache.gshell.core.commands.SetCommand;
+import org.apache.gshell.core.commands.SourceCommand;
+import org.apache.gshell.core.commands.EchoCommand;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -41,13 +44,14 @@ public class SourceCommandTest
     extends CommandTestSupport
 {
     public SourceCommandTest() {
-        super("source");
+        super("source", SourceCommand.class);
     }
 
     @Override
-    protected void requireCommands(final List<String> commands) {
-        assertNotNull(commands);
-        commands.add("set");
+    public void setUp() throws Exception {
+        requiredCommands.put("set", SetCommand.class);
+        requiredCommands.put("echo", EchoCommand.class);
+        super.setUp();
     }
 
     @Override

@@ -21,6 +21,7 @@ package org.apache.gshell.testsuite.basic;
 
 import org.apache.gshell.cli.ProcessingException;
 import org.apache.gshell.testsuite.CommandTestSupport;
+import org.apache.gshell.core.commands.AboutCommand;
 import static org.junit.Assert.fail;
 import org.junit.Test;
 
@@ -33,7 +34,7 @@ public class AboutCommandTest
     extends CommandTestSupport
 {
     public AboutCommandTest() {
-        super("about");
+        super("about", AboutCommand.class);
     }
 
     @Test

@@ -26,6 +26,7 @@ import org.apache.gshell.ansi.Ansi;
 import org.apache.gshell.command.Command;
 import org.apache.gshell.registry.AliasRegistry;
 import org.apache.gshell.registry.CommandRegistry;
+import org.apache.gshell.registry.CommandRegistrar;
 import org.apache.gshell.testsupport.PlexusTestSupport;
 import org.apache.gshell.testsupport.TestIO;
 import org.apache.gshell.testsupport.TestUtil;
@@ -39,6 +40,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  * Support for testing {@link org.apache.gshell.command.Command} instances.
@@ -50,7 +53,7 @@ public abstract class CommandTestSupport
 {
     protected final String name;
 
-    private List<String> requiredCommands;
+    protected final TestShellBuilder builder = new TestShellBuilder();;
 
     private final TestUtil util = new TestUtil(this);
 
@@ -66,10 +69,13 @@ public abstract class CommandTestSupport
 
     protected Variables vars;
 
-    protected CommandTestSupport(final String name) {
+    protected final Map<String,Class> requiredCommands = new HashMap<String,Class>();
+
+    protected CommandTestSupport(final String name, final Class type) {
         assertNotNull(name);
+        assertNotNull(type);
         this.name = name;
-        requiredCommands.add(name);
+        requiredCommands.put(name, type);
     }
 
     @Before
@@ -78,16 +84,19 @@ public abstract class CommandTestSupport
 
         io = new TestIO();
 
-        requireCommands(requiredCommands);
-
         TestShellBuilder builder = new TestShellBuilder();
-        builder.setRequiredCommands(requiredCommands);
 
         shell = builder
                 .setContainer(plexus.getContainer())
                 .setBranding(new TestBranding(util.resolveFile("target/shell-home")))
                 .setIo(io)
+                .setRegisterCommands(false)
                 .create();
+
+        CommandRegistrar registrar = plexus.lookup(CommandRegistrar.class);
+        for (Map.Entry<String,Class> entry : requiredCommands.entrySet()) {
+            registrar.registerCommand(entry.getKey(), entry.getValue().getName());
+        }
 
         // For simplicity of output verification disable ANSI
         Ansi.setEnabled(false);
@@ -106,10 +115,6 @@ public abstract class CommandTestSupport
         shell.close();
         shell = null;
         plexus = null;
-    }
-
-    protected void requireCommands(List<String> commands) {
-        // empty
     }
 
     protected Shell getShell() {

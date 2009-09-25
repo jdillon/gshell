@@ -20,6 +20,7 @@
 package org.apache.gshell.testsuite.basic;
 
 import org.apache.gshell.testsuite.CommandTestSupport;
+import org.apache.gshell.core.commands.HelpCommand;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
@@ -33,7 +34,7 @@ public class HelpCommandTest
     extends CommandTestSupport
 {
     public HelpCommandTest() {
-        super("help");
+        super("help", HelpCommand.class);
     }
 
     @Test

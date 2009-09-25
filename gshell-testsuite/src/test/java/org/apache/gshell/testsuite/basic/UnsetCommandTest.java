@@ -21,6 +21,7 @@ package org.apache.gshell.testsuite.basic;
 
 import org.apache.gshell.cli.ProcessingException;
 import org.apache.gshell.testsuite.CommandTestSupport;
+import org.apache.gshell.core.commands.UnsetCommand;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -35,7 +36,7 @@ public class UnsetCommandTest
     extends CommandTestSupport
 {
     public UnsetCommandTest() {
-        super("unset");
+        super("unset", UnsetCommand.class);
     }
 
     @Override

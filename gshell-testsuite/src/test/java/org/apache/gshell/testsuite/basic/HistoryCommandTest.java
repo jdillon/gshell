@@ -21,6 +21,8 @@ package org.apache.gshell.testsuite.basic;
 
 import org.apache.gshell.cli.ProcessingException;
 import org.apache.gshell.testsuite.CommandTestSupport;
+import org.apache.gshell.core.commands.EchoCommand;
+import org.apache.gshell.core.commands.HistoryCommand;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -38,13 +40,13 @@ public class HistoryCommandTest
     extends CommandTestSupport
 {
     public HistoryCommandTest() {
-        super("history");
+        super("history", HistoryCommand.class);
     }
 
     @Override
-    protected void requireCommands(final List<String> commands) {
-        assertNotNull(commands);
-        commands.add("echo");
+    public void setUp() throws Exception {
+        requiredCommands.put("echo", EchoCommand.class);
+        super.setUp();
     }
 
     @Test

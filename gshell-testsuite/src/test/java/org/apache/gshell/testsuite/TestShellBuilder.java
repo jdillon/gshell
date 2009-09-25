@@ -47,18 +47,8 @@ import java.util.List;
 public class TestShellBuilder
     extends ShellBuilder
 {
-    private List<String> requiredCommands;
-
-    public ShellBuilder setRequiredCommands(final List<String> requiredCommands) {
-        assert requiredCommands != null;
-        this.requiredCommands = requiredCommands;
-    }
-
-    protected void registerCommands() throws Exception {
+    protected void registerCommand(final String name, final String type) throws Exception {
         CommandRegistrar registrar = getContainer().lookup(CommandRegistrar.class);
-
-        for (String name : requiredCommands) {
-            registrar.registerCommand(name);
-        }
+        registrar.registerCommand(name, type);
     }
 }

@@ -20,6 +20,7 @@
 package org.apache.gshell.testsuite.basic;
 
 import org.apache.gshell.testsuite.CommandTestSupport;
+import org.apache.gshell.core.commands.SetCommand;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -34,7 +35,7 @@ public class SetCommandTest
     extends CommandTestSupport
 {
     public SetCommandTest() {
-        super("set");
+        super("set", SetCommand.class);
     }
 
     @Test

@@ -21,6 +21,7 @@ package org.apache.gshell.testsuite.basic;
 
 import org.apache.gshell.cli.ProcessingException;
 import org.apache.gshell.testsuite.CommandTestSupport;
+import org.apache.gshell.core.commands.UnaliasCommand;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 import org.junit.Test;
@@ -34,7 +35,7 @@ public class UnaliasCommandTest
     extends CommandTestSupport
 {
     public UnaliasCommandTest() {
-        super("unalias");
+        super("unalias", UnaliasCommand.class);
     }
     
     @Override
