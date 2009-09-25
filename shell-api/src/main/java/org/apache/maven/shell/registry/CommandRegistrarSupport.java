@@ -42,6 +42,8 @@ public abstract class CommandRegistrarSupport
 {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
+    private List<CommandsConfiguration> configurations = new LinkedList<CommandsConfiguration>();
+
     public void registerCommands() throws Exception {
         List<CommandsConfiguration> configurations = discoverConfigurations();
 
@@ -50,6 +52,8 @@ public abstract class CommandRegistrarSupport
 
             for (CommandsConfiguration config : configurations) {
                 log.debug("Registering commands for: {}", config);
+
+                this.configurations.add(config);
 
                 for (String name : config.getAutoRegisterCommands()) {
                     String type = config.getCommandType(name);
@@ -90,7 +94,7 @@ public abstract class CommandRegistrarSupport
         return list;
     }
 
-    protected static class CommandsConfiguration
+    public static class CommandsConfiguration
         implements Comparable<CommandsConfiguration>
     {
         private static final String ID = "id";
