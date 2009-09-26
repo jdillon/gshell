@@ -24,7 +24,6 @@ import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
-import org.apache.gshell.cli2.internal.OptionDescriptorOption;
 import org.apache.gshell.cli2.setter.Setter;
 import org.apache.gshell.cli2.setter.SetterFactory;
 import org.apache.gshell.i18n.MessageSource;
@@ -91,7 +90,7 @@ public class Processor
         Argument argument = element.getAnnotation(Argument.class);
 
         if (option != null && argument != null) {
-            throw new IllegalAnnotationError("Element can only be Option or Argument, not both: " + element); 
+            throw new IllegalAnnotationError("Element can only be Option or Argument, not both: " + element); // TODO: i18n
         }
         else if (option != null) {
             addOption(option, SetterFactory.create(element, bean));
@@ -120,7 +119,11 @@ public class Processor
     public void process(final String... args) throws ProcessingException {
         assert args != null;
 
-        Options options = buildOptions();
+        Options options = new Options();
+
+        for (OptionDescriptor desc : optionDescriptors) {
+            options.addOption(new OptionDescriptorOption(desc));
+        }
 
         CommandLineParser parser = new PosixParser();
         CommandLine cmd;
@@ -165,15 +168,5 @@ public class Processor
         System.out.println("    Value Sep: " + option.getValueSeparator());
         System.out.println("    Value: " + option.getValue());
         System.out.println("    Values: " + option.getValuesList());
-    }
-
-    private Options buildOptions() {
-        Options options = new Options();
-
-        for (OptionDescriptor desc : optionDescriptors) {
-            options.addOption(new OptionDescriptorOption(desc));
-        }
-
-        return options;
     }
 }

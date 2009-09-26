@@ -17,16 +17,14 @@
  * under the License.
  */
 
-package org.apache.gshell.cli2.internal;
-
-import org.apache.gshell.cli2.OptionDescriptor;
+package org.apache.gshell.cli2;
 
 /**
- * Support for Commons Cli option processing to use an {@link org.apache.gshell.cli.OptionDescriptor}.
+ * Support for Commons Cli option processing to use an {@link OptionDescriptor}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class OptionDescriptorOption
+class OptionDescriptorOption
     extends org.apache.commons.cli.Option
 {
     private final OptionDescriptor descriptor;
@@ -42,6 +40,7 @@ public class OptionDescriptorOption
         this.setArgs(descriptor.getArgs());
         this.setArgName(descriptor.getArgName());
         this.setValueSeparator(descriptor.getValueSeperator());
+        // do not set type, type will be converted externally
     }
 
     public OptionDescriptor getDescriptor() {

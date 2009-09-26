@@ -23,21 +23,20 @@ import org.apache.gshell.i18n.MessageSource;
 import org.apache.gshell.i18n.ResourceBundleMessageSource;
 
 /**
- * Messages for the {@link org.apache.maven.shell.cli.setter} package.
+ * Messages for the {@link org.apache.maven.shell.cli2.setter} package.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 enum Messages
 {
     ///CLOVER:OFF
-    
-    ILLEGAL_OPERAND,
-    ILLEGAL_BOOLEAN,
+
     ILLEGAL_METHOD_SIGNATURE,
     ILLEGAL_FIELD_SIGNATURE,
-    ;
+    UNSUPPORTED_COLLECTION_TYPE,
+    FIELD_NOT_COLLECTION;
     
-    private MessageSource messages = new ResourceBundleMessageSource(getClass());
+    private static final MessageSource messages = new ResourceBundleMessageSource(Messages.class);
 
     String format(final Object... args) {
         return messages.format(name(), args);

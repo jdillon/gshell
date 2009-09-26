@@ -88,7 +88,7 @@ public class CollectionFieldSetter
                     obj = type.newInstance();
                 }
                 catch (Exception e) {
-                    throw new IllegalAnnotationError("Unsupported collection type: " + field.getType(), e);
+                    throw new IllegalAnnotationError(Messages.UNSUPPORTED_COLLECTION_TYPE.format(field.getType()), e);
                 }
             }
 
@@ -97,7 +97,7 @@ public class CollectionFieldSetter
 
         // This should never happen
         if (!(obj instanceof Collection)) {
-            throw new IllegalAnnotationError("Field is not a collection type: " + field);
+            throw new IllegalAnnotationError(Messages.FIELD_NOT_COLLECTION.format(field));
         }
 
         // noinspection unchecked
