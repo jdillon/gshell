@@ -57,10 +57,6 @@ public class MethodSetter
         return method.getParameterTypes()[0];
     }
 
-    public boolean isMultiValued() {
-        return false;
-    }
-
     protected void doSet(final Object value) throws IllegalAccessException {
         try {
             method.invoke(bean, value);

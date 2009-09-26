@@ -19,6 +19,8 @@
 
 package org.apache.gshell.cli2.setter;
 
+import org.apache.gshell.cli2.ProcessingException;
+
 import java.lang.reflect.AccessibleObject;
 
 /**
@@ -36,7 +38,11 @@ public abstract class SetterSupport
         this.accessible = accessible;
     }
 
-    public void set(final Object value) {
+    public boolean isMultiValued() {
+        return false;
+    }
+    
+    public void set(final Object value) throws ProcessingException {
         try {
             doSet(value);
         }
@@ -48,7 +54,7 @@ public abstract class SetterSupport
                 doSet(value);
             }
             catch (IllegalAccessException e) {
-                throw new IllegalAccessError(e.getMessage());
+                throw new ProcessingException(e.getMessage());
             }
         }
     }

@@ -29,6 +29,8 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  * Setter for fields of collection types.  Currently supports lists and sets.
@@ -46,6 +48,7 @@ public class CollectionFieldSetter
         }
     }
 
+    @Override
     public boolean isMultiValued() {
         return true;
     }
@@ -68,39 +71,45 @@ public class CollectionFieldSetter
     }
 
     protected void doSet(final Object value) throws IllegalAccessException {
-        Object obj = field.get(bean);
+        Object target = field.get(bean);
 
         // If the field is not set, then create a new instance of the collection and set it
-        if (obj == null) {
+        if (target == null) {
             Class type = field.getType();
 
             if (List.class.isAssignableFrom(type)) {
-                obj = new ArrayList();
+                target = new ArrayList();
+            }
+            else if (SortedSet.class.isAssignableFrom(type)) {
+                target = new TreeSet();
             }
             else if (Set.class.isAssignableFrom(type)) {
-                obj = new LinkedHashSet();
+                target = new LinkedHashSet();
             }
             else if (Collection.class.isAssignableFrom(type)) {
-                obj = new ArrayList();
+                target = new ArrayList();
             }
             else {
                 try {
-                    obj = type.newInstance();
+                    target = type.newInstance();
                 }
                 catch (Exception e) {
                     throw new IllegalAnnotationError(Messages.UNSUPPORTED_COLLECTION_TYPE.format(field.getType()), e);
                 }
             }
 
-            field.set(bean, obj);
+            field.set(bean, target);
         }
 
-        // This should never happen
-        if (!(obj instanceof Collection)) {
+        append(value, target);
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    private void append(final Object value, final Object target) {
+        if (!(target instanceof Collection)) {
             throw new IllegalAnnotationError(Messages.FIELD_NOT_COLLECTION.format(field));
         }
-
-        // noinspection unchecked
-        ((Collection)obj).add(value);
+        
+        ((Collection)target).add(value);
     }
 }

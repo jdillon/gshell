@@ -19,7 +19,7 @@
 
 package org.apache.gshell.cli2;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
@@ -46,13 +46,14 @@ public class IntegerTest
     @Test
     public void test2() throws Exception {
         process("-2", "1");
-        assertEquals(new Integer(1), bean.i);
+        assertEquals((Object)1, bean.i);
     }
 
     @Test
     public void test3() throws Exception {
         process("-21");
-        assertEquals(new Integer(1), bean.i);
+        assertEquals((Object)
+                1, bean.i);
     }
 
     private static class TestBean

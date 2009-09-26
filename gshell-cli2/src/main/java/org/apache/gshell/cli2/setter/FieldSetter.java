@@ -48,10 +48,6 @@ public class FieldSetter
     public Class getType() {
         return field.getType();
     }
-    
-    public boolean isMultiValued() {
-        return false;
-    }
 
     protected void doSet(final Object value) throws IllegalAccessException {
         field.set(bean, value);

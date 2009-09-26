@@ -38,6 +38,10 @@ public class SetterFactory
         if (element instanceof Field) {
             Field field = (Field)element;
 
+            //
+            // TODO: Add array setter
+            //
+            
             if (Collection.class.isAssignableFrom(field.getType())) {
                 return new CollectionFieldSetter(bean, field);
             }
