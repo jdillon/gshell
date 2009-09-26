@@ -20,6 +20,7 @@
 package org.apache.gshell.testsuite;
 
 import org.apache.gshell.registry.CommandRegistrar;
+import org.apache.gshell.Shell;
 import org.apache.maven.shell.ShellBuilder;
 
 /**
@@ -33,5 +34,11 @@ public class TestShellBuilder
     protected void registerCommand(final String name, final String type) throws Exception {
         CommandRegistrar registrar = getContainer().lookup(CommandRegistrar.class);
         registrar.registerCommand(name, type);
+    }
+
+    @Override
+    public Shell create() throws Exception {
+        setRegisterCommands(false);
+        return super.create();
     }
 }
