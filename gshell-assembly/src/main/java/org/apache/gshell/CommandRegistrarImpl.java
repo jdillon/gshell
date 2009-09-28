@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.maven.shell;
+package org.apache.gshell;
 
 import org.apache.gshell.command.Command;
 import org.apache.gshell.registry.CommandRegistrar;
@@ -32,7 +32,7 @@ import org.codehaus.plexus.component.annotations.Requirement;
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-@Component(role= CommandRegistrar.class)
+@Component(role=CommandRegistrar.class)
 public class CommandRegistrarImpl
     extends CommandRegistrarSupport
 {

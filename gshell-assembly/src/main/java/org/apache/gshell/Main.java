@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.maven.shell;
+package org.apache.gshell;
 
 import jline.Completor;
 import org.apache.gshell.Branding;
@@ -43,7 +43,7 @@ public class Main
 
     @Override
     protected Shell createShell() throws Exception {
-        ShellBuilder builder = new ShellBuilder();
+        PlexusShellBuilder builder = new PlexusShellBuilder();
         PlexusContainer container = builder.getContainer();
         
         return builder

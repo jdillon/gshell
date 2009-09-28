@@ -17,12 +17,9 @@
  * under the License.
  */
 
-package org.apache.maven.shell;
+package org.apache.gshell;
 
 import jline.Completor;
-import org.apache.gshell.Branding;
-import org.apache.gshell.Shell;
-import org.apache.gshell.Variables;
 import org.apache.gshell.console.Console;
 import org.apache.gshell.core.impl.ShellImpl;
 import org.apache.gshell.execute.CommandExecutor;
@@ -39,11 +36,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Builds {@link org.apache.gshell.Shell} instances.
+ * Builds {@link org.apache.gshell.Shell} instances using Plexus.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class ShellBuilder
+public class PlexusShellBuilder
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -63,7 +60,7 @@ public class ShellBuilder
 
     private final List<Completor> completers = new ArrayList<Completor>();
 
-    public ShellBuilder setContainer(final PlexusContainer container) {
+    public PlexusShellBuilder setContainer(final PlexusContainer container) {
         this.container = container;
         return this;
     }
@@ -75,37 +72,37 @@ public class ShellBuilder
         return container;
     }
 
-    public ShellBuilder setBranding(final Branding branding) {
+    public PlexusShellBuilder setBranding(final Branding branding) {
         this.branding = branding;
         return this;
     }
 
-    public ShellBuilder setIo(final IO io) {
+    public PlexusShellBuilder setIo(final IO io) {
         this.io = io;
         return this;
     }
 
-    public ShellBuilder setVariables(final Variables variables) {
+    public PlexusShellBuilder setVariables(final Variables variables) {
         this.variables = variables;
         return this;
     }
 
-    public ShellBuilder setRegisterCommands(final boolean flag) {
+    public PlexusShellBuilder setRegisterCommands(final boolean flag) {
         this.registerCommands = flag;
         return this;
     }
 
-    public ShellBuilder setPrompter(final Console.Prompter prompter) {
+    public PlexusShellBuilder setPrompter(final Console.Prompter prompter) {
         this.prompter = prompter;
         return this;
     }
 
-    public ShellBuilder setErrorHandler(final Console.ErrorHandler errorHandler) {
+    public PlexusShellBuilder setErrorHandler(final Console.ErrorHandler errorHandler) {
         this.errorHandler = errorHandler;
         return this;
     }
 
-    public ShellBuilder addCompleter(final Completor completer) {
+    public PlexusShellBuilder addCompleter(final Completor completer) {
         assert completer != null;
         completers.add(completer);
         return this;

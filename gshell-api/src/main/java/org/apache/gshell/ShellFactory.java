@@ -17,37 +17,16 @@
  * under the License.
  */
 
-package org.apache.maven.shell;
-
-import org.apache.gshell.core.BrandingSupport;
-
-import java.io.File;
+package org.apache.gshell;
 
 /**
- * Branding for <tt>mvnsh</tt>.
- * 
+ * Creates {@link Shell} instances.
+ *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 2.0
  */
-public class BrandingImpl
-    extends BrandingSupport
+public interface ShellFactory
 {
-    @Override
-    public String getDisplayName() {
-        return "@|bold,red Apache Maven| @|bold Shell|";
-    }
-
-    @Override
-    public String getGoodbyeMessage() {
-        return getMessages().format("goodbye");
-    }
-
-    @Override
-    public String getPrompt() {
-        return String.format("@|bold %s|:%%{%s}> ", getProgramName(), SHELL_USER_DIR);
-    }
-
-    @Override
-    public File getUserContextDir() {
-        return new File(getUserHomeDir(), ".m2");
-    }
+    Shell create() throws Exception;
 }

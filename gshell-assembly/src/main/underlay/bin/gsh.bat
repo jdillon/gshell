@@ -26,7 +26,7 @@ set ERRORLEVEL=0
 set DIRNAME=%~dp0
 if "%DIRNAME%" == "" set DIRNAME=.\
 
-set MAIN=org.apache.maven.shell.Main
+set MAIN=org.apache.gshell.Main
 
 :check_JAVACMD
 if not "%JAVACMD%" == "" goto check_SHELL_HOME

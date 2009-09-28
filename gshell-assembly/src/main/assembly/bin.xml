@@ -42,7 +42,7 @@
             <directory>src/main/underlay/bin</directory>
             <outputDirectory>bin</outputDirectory>
             <includes>
-                <include>mvnsh.bat</include>
+                <include>gsh.bat</include>
             </includes>
             <lineEnding>dos</lineEnding>
         </fileSet>
@@ -51,7 +51,7 @@
             <directory>src/main/underlay/bin</directory>
             <outputDirectory>bin</outputDirectory>
             <includes>
-                <include>mvnsh</include>
+                <include>gsh</include>
             </includes>
             <lineEnding>unix</lineEnding>
             <fileMode>0755</fileMode>

@@ -17,30 +17,25 @@
  * under the License.
  */
 
-package org.apache.maven.shell.commands;
+package org.apache.gshell;
 
-import org.apache.gshell.command.CommandContext;
-import org.apache.gshell.io.IO;
-import org.codehaus.plexus.component.annotations.Component;
-
-import java.io.File;
+import org.apache.gshell.core.BrandingSupport;
 
 /**
- * Displays the current directory.
+ * Branding for <tt>gsh</tt>.
  * 
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-@Component(role=CurrentDirectoryCommand.class)
-public class CurrentDirectoryCommand
-    extends FileCommandSupport
+public class BrandingImpl
+    extends BrandingSupport
 {
-    public Object execute(final CommandContext context) throws Exception {
-        assert context != null;
-        IO io = context.getIo();
+    @Override
+    public String getDisplayName() {
+        return getMessages().format("displayName");
+    }
 
-        File dir = getUserDir(context);
-        io.info(dir.getPath());
-
-        return Result.SUCCESS;
+    @Override
+    public String getGoodbyeMessage() {
+        return getMessages().format("goodbye");
     }
 }

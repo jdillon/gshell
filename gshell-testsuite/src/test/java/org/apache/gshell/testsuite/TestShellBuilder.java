@@ -21,7 +21,7 @@ package org.apache.gshell.testsuite;
 
 import org.apache.gshell.registry.CommandRegistrar;
 import org.apache.gshell.Shell;
-import org.apache.maven.shell.ShellBuilder;
+import org.apache.gshell.PlexusShellBuilder;
 
 /**
  * Builds {@link org.apache.gshell.Shell} instances.
@@ -29,7 +29,7 @@ import org.apache.maven.shell.ShellBuilder;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class TestShellBuilder
-    extends ShellBuilder
+    extends PlexusShellBuilder
 {
     protected void registerCommand(final String name, final String type) throws Exception {
         CommandRegistrar registrar = getContainer().lookup(CommandRegistrar.class);
