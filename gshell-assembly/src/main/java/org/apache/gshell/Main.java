@@ -20,8 +20,6 @@
 package org.apache.gshell;
 
 import jline.Completor;
-import org.apache.gshell.Branding;
-import org.apache.gshell.Shell;
 import org.apache.gshell.console.completer.AggregateCompleter;
 import org.apache.gshell.core.MainSupport;
 import org.apache.gshell.core.impl.console.ConsoleErrorHandlerImpl;
@@ -29,7 +27,7 @@ import org.apache.gshell.core.impl.console.ConsolePrompterImpl;
 import org.codehaus.plexus.PlexusContainer;
 
 /**
- * Command-line bootstrap for Apache Maven Shell (<tt>mvnsh</tt>).
+ * Command-line bootstrap for GShell (<tt>gsh</tt>).
  * 
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
