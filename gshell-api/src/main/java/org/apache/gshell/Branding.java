@@ -59,4 +59,6 @@ public interface Branding
     File getUserHomeDir();
 
     File getUserContextDir();
+
+    void customize(Shell shell) throws Exception;
 }

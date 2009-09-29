@@ -21,6 +21,8 @@ package org.apache.gshell.core;
 
 import org.apache.gshell.Branding;
 import org.apache.gshell.VariableNames;
+import org.apache.gshell.Shell;
+import org.apache.gshell.Variables;
 import org.apache.gshell.i18n.MessageSource;
 import org.apache.gshell.i18n.ResourceBundleMessageSource;
 import org.codehaus.plexus.util.StringUtils;
@@ -151,5 +153,29 @@ public class BrandingSupport
 
     public File getUserContextDir() {
         return resolveFile(new File(getUserHomeDir(), String.format(".%s", getProgramName())));
+    }
+
+    @Override
+    public void customize(final Shell shell) throws Exception {
+        assert shell != null;
+
+        Variables vars = shell.getVariables();
+
+        // Setup default variables
+        if (!vars.contains(SHELL_HOME)) {
+            vars.set(SHELL_HOME, getShellHomeDir(), false);
+        }
+        if (!vars.contains(SHELL_VERSION)) {
+            vars.set(SHELL_VERSION, getVersion(), false);
+        }
+        if (!vars.contains(SHELL_USER_HOME)) {
+            vars.set(SHELL_USER_HOME, getUserHomeDir(), false);
+        }
+        if (!vars.contains(SHELL_PROMPT)) {
+            vars.set(SHELL_PROMPT, getPrompt());
+        }
+        if (!vars.contains(SHELL_USER_DIR)) {
+            vars.set(SHELL_USER_DIR, new File(".").getCanonicalPath());
+        }
     }
 }
