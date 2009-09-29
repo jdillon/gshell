@@ -24,7 +24,7 @@ import jline.Completor;
 import org.apache.gshell.command.Command;
 import org.apache.gshell.console.completer.AggregateCompleter;
 import org.apache.gshell.console.completer.StringsCompleter;
-import org.apache.gshell.console.completer.TerminalCompleter;
+import org.apache.gshell.console.completer.NullCompleter;
 import org.apache.gshell.core.registry.CommandRegisteredEvent;
 import org.apache.gshell.core.registry.CommandRemovedEvent;
 import org.apache.gshell.event.EventListener;
@@ -122,12 +122,12 @@ public class CommandsCompleter
 
         Completor[] completers = command.getCompleters();
         if (completers == null) {
-            children.add(TerminalCompleter.INSTANCE);
+            children.add(NullCompleter.INSTANCE);
         }
         else {
             for (Completor completer : completers) {
                 log.trace("Adding completer: {}", completer);
-                children.add(completer != null ? completer : TerminalCompleter.INSTANCE);
+                children.add(completer != null ? completer : NullCompleter.INSTANCE);
             }
         }
 

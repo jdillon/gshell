@@ -17,22 +17,25 @@
  * under the License.
  */
 
-package org.apache.gshell.bootstrap;
+package org.apache.gshell.console.completer;
 
-import static org.junit.Assert.assertEquals;
-import org.junit.Test;
+import jline.Completor;
+
+import java.util.List;
 
 /**
- * Tests for the {@link ExpressionEvaluator} class.
+ * Null completer.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 2.0
  */
-public class ExpressionEvaluatorTest
+public final class NullCompleter
+    implements Completor
 {
-    @Test
-    public void test1() {
-        ExpressionEvaluator evaluator = new ExpressionEvaluator(null);
-        String result = evaluator.evaluate("foo");
-        assertEquals("foo", result);
+    public static final NullCompleter INSTANCE = new NullCompleter();
+
+    public int complete(final String buffer, final int cursor, final List candidates) {
+        return -1;
     }
 }
