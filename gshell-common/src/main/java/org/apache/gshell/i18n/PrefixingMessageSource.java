@@ -35,15 +35,13 @@ public class PrefixingMessageSource
 
     public PrefixingMessageSource(final MessageSource messages, final String prefix) {
         assert messages != null;
-        assert prefix != null;
-
         this.messages = messages;
+        assert prefix != null;
         this.prefix = prefix;
     }
 
     protected String createCode(final String code) {
         assert code != null;
-        
         return prefix + code;
     }
 
