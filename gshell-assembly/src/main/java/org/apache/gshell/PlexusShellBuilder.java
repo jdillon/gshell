@@ -21,7 +21,7 @@ package org.apache.gshell;
 
 import jline.Completor;
 import org.apache.gshell.console.Console;
-import org.apache.gshell.core.impl.ShellImpl;
+import org.apache.gshell.core.ShellImpl;
 import org.apache.gshell.execute.CommandExecutor;
 import org.apache.gshell.io.IO;
 import org.apache.gshell.registry.CommandRegistrar;

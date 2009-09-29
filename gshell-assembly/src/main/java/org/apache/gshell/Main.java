@@ -22,8 +22,8 @@ package org.apache.gshell;
 import jline.Completor;
 import org.apache.gshell.console.completer.AggregateCompleter;
 import org.apache.gshell.core.MainSupport;
-import org.apache.gshell.core.impl.console.ConsoleErrorHandlerImpl;
-import org.apache.gshell.core.impl.console.ConsolePrompterImpl;
+import org.apache.gshell.core.console.ConsoleErrorHandlerImpl;
+import org.apache.gshell.core.console.ConsolePrompterImpl;
 import org.codehaus.plexus.PlexusContainer;
 
 /**
