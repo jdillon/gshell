@@ -136,30 +136,11 @@ public class Configuration
         return input;
     }
 
-    /**
-     * Get the value of a property, checking system properties, then configuration properties and evaluating the result.
-     */
-    private String getProperty(final String name) {
-        assert name != null;
-        assert props != null;
-
-        String value = System.getProperty(name, props.getProperty(name));
-        return evaluate(value);
-    }
-
-    private File getPropertyAsFile(final String name) {
-        String path = getProperty(name);
-        if (path != null) {
-            return new File(path);
-        }
-        return null;
-    }
-
     public void configure() throws Exception {
         Log.debug("Configuring");
 
         props = loadProperties();
-        props.setProperty(SHELL_HOME_DETECTED, detectHomeDir().getAbsolutePath());
+        props.setProperty(SHELL_HOME_DETECTED, detectHomeDir().getPath());
 
         if (Log.DEBUG) {
             Log.debug("Properties:");
@@ -169,9 +150,9 @@ public class Configuration
         }
 
         // Export some configuration
-        setSystemProperty(SHELL_HOME, getHomeDir().getAbsolutePath());
-        setSystemProperty(SHELL_PROGRAM, getProgramName());
-        setSystemProperty(SHELL_VERSION, getVersion());
+        setSystemProperty(SHELL_HOME, getPropertyAsFile(SHELL_HOME).getPath());
+        setSystemProperty(SHELL_PROGRAM, getProperty(SHELL_PROGRAM));
+        setSystemProperty(SHELL_VERSION, getProperty(SHELL_VERSION));
     }
 
     private void ensureConfigured() {
@@ -180,47 +161,43 @@ public class Configuration
         }
     }
 
-    public File getHomeDir() {
+    /**
+     * Get the value of a property, checking system properties, then configuration properties and evaluating the result.
+     */
+    private String getProperty(final String name) {
+        assert name != null;
+        assert props != null;
         ensureConfigured();
-        return getPropertyAsFile(SHELL_HOME);
+        String value = System.getProperty(name, props.getProperty(name));
+        return evaluate(value);
     }
 
-    public File getLibDir() {
-        ensureConfigured();
-        return getPropertyAsFile(SHELL_LIB);
-    }
-
-    public File getEtcDir() {
-        ensureConfigured();
-        return getPropertyAsFile(SHELL_ETC);
-    }
-
-    public String getProgramName() {
-        ensureConfigured();
-        return getProperty(SHELL_PROGRAM);
-    }
-
-    public String getVersion() {
-        ensureConfigured();
-        return getProperty(SHELL_VERSION);
+    private File getPropertyAsFile(final String name) {
+        String path = getProperty(name);
+        if (path != null) {
+            return new File(path).getAbsoluteFile();
+        }
+        return null;
     }
 
     public List<URL> getClassPath() throws Exception {
         ensureConfigured();
         List<URL> classPath = new ArrayList<URL>();
 
-        classPath.add(getEtcDir().toURI().toURL());
+        classPath.add(getPropertyAsFile(SHELL_ETC).toURI().toURL());
 
-        Log.debug("Finding jars under: ", getLibDir());
+        File dir = getPropertyAsFile(SHELL_LIB);
 
-        File[] files = getLibDir().listFiles(new FileFilter() {
+        Log.debug("Finding jars under: ", dir);
+
+        File[] files = dir.listFiles(new FileFilter() {
             public boolean accept(final File file) {
                 return file.isFile() && file.getName().toLowerCase().endsWith(".jar");
             }
         });
 
         if (files == null) {
-            throw new Error("No jars found under: " + getLibDir());
+            throw new Error("No jars found under: " + dir);
         }
 
         for (File file : files) {
@@ -231,7 +208,6 @@ public class Configuration
     }
 
     public String getMainClass() {
-        ensureConfigured();
         return getProperty(SHELL_MAIN);
     }
 
