@@ -103,7 +103,6 @@
                             <artifactSet>
                                 <includes>
                                     <include>org.apache.gshell:gshell-common</include>
-                                    <include>org.apache.gshell:gshell-cli</include>
                                     <include>org.apache.gshell:gshell-api</include>
                                     <include>org.apache.gshell:gshell-core</include>
                                 </includes>
