@@ -133,10 +133,10 @@ public abstract class Console
                 log.trace("Work failed", t);
 
                 if (errorHandler != null) {
-                    ErrorHandler.Result result = errorHandler.handleError(t);
+                    Result result = errorHandler.handleError(t);
 
                     // Allow the error handler to request that the loop stop
-                    if (result == ErrorHandler.Result.STOP) {
+                    if (result == Result.STOP) {
                         log.trace("Error handler requested STOP");
                         running = false;
                     }
@@ -173,10 +173,10 @@ public abstract class Console
         }
 
         // Execute the line
-        Executor.Result result = executor.execute(line);
+        Result result = executor.execute(line);
 
         // Allow executor to request that the loop stop
-        if (result == Executor.Result.STOP) {
+        if (result == Result.STOP) {
             log.trace("Executor requested STOP");
             return false;
         }
@@ -216,16 +216,20 @@ public abstract class Console
     }
 
     //
+    // Result
+    //
+
+    public static enum Result {
+        CONTINUE,
+        STOP
+    }
+
+    //
     // Executor
     //
 
     public static interface Executor
     {
-        enum Result {
-            CONTINUE,
-            STOP
-        }
-
         Result execute(String line) throws Exception;
     }
 
@@ -235,11 +239,6 @@ public abstract class Console
 
     public static interface ErrorHandler
     {
-        enum Result {
-            CONTINUE,
-            STOP
-        }
-
         Result handleError(Throwable error);
     }
 }

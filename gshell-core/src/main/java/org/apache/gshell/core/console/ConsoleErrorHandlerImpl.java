@@ -61,12 +61,12 @@ public class ConsoleErrorHandlerImpl
         this.io = io;
     }
 
-    public Result handleError(final Throwable error) {
+    public Console.Result handleError(final Throwable error) {
         assert error != null;
 
         displayError(error);
 
-        return Result.CONTINUE;
+        return Console.Result.CONTINUE;
     }
 
     private void displayError(final Throwable error) {

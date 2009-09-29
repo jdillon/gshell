@@ -51,9 +51,9 @@ public class ConsoleTest
     private static class MockExecutor
         implements Console.Executor
     {
-        public Result result;
+        public Console.Result result;
 
-        public Result execute(final String line) throws Exception {
+        public Console.Result execute(final String line) throws Exception {
             return result;
         }
     }

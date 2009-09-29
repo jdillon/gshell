@@ -230,7 +230,7 @@ public class ShellImpl
 
         // Whip up a tiny console executor that will execute shell command-lines
         Console.Executor executor = new Console.Executor() {
-            public Result execute(final String line) throws Exception {
+            public Console.Result execute(final String line) throws Exception {
                 assert line != null;
 
                 try {
@@ -240,10 +240,10 @@ public class ShellImpl
                 }
                 catch (ExitNotification n) {
                     exitNotifHolder.set(n);
-                    return Result.STOP;
+                    return Console.Result.STOP;
                 }
 
-                return Result.CONTINUE;
+                return Console.Result.CONTINUE;
             }
         };
 
