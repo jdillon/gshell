@@ -17,14 +17,14 @@
  * under the License.
  */
 
-package org.apache.gshell.parser.impl;
+package org.apache.gshell.core.parser.impl;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Assert;
 import static org.junit.Assert.fail;
 import org.junit.Test;
 
 /**
- * Unit tests for the {@link org.apache.maven.shell.parser.impl.Parser} class.
+ * Unit tests for the {@link Parser} class.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
@@ -52,7 +52,7 @@ public class ParserTest
         ASTCommandLine cl = parse(input);
 
         // No expressions
-        assertEquals(0, cl.jjtGetNumChildren());
+        Assert.assertEquals(0, cl.jjtGetNumChildren());
     }
 
     @Test
@@ -62,7 +62,7 @@ public class ParserTest
         ASTCommandLine cl = parse(input);
 
         // No expressions
-        assertEquals(0, cl.jjtGetNumChildren());
+        Assert.assertEquals(0, cl.jjtGetNumChildren());
     }
 
     @Test
@@ -72,7 +72,7 @@ public class ParserTest
         ASTCommandLine cl = parse(input);
 
         // No expressions
-        assertEquals(0, cl.jjtGetNumChildren());
+        Assert.assertEquals(0, cl.jjtGetNumChildren());
     }
 
     //
@@ -86,11 +86,11 @@ public class ParserTest
         ASTCommandLine cl = parse(input);
 
         // 1 expression
-        assertEquals(1, cl.jjtGetNumChildren());
+        Assert.assertEquals(1, cl.jjtGetNumChildren());
 
         // 3 plain strings 2 whitespace
         Node child = cl.jjtGetChild(0);
-        assertEquals(5, child.jjtGetNumChildren());
+        Assert.assertEquals(5, child.jjtGetNumChildren());
 
         /*
         FIXME: Re-implement verification to know about whitespace
@@ -113,11 +113,11 @@ public class ParserTest
         ASTCommandLine cl = parse(input);
 
         // 1 expression
-        assertEquals(1, cl.jjtGetNumChildren());
+        Assert.assertEquals(1, cl.jjtGetNumChildren());
 
         // 4 plain strings, 3 whitespace
         Node child = cl.jjtGetChild(0);
-        assertEquals(7, child.jjtGetNumChildren());
+        Assert.assertEquals(7, child.jjtGetNumChildren());
 
         /*
         FIXME: Re-implement verification to know about whitespace
@@ -141,11 +141,11 @@ public class ParserTest
         ASTCommandLine cl = parse(input);
 
         // One expression
-        assertEquals(1, cl.jjtGetNumChildren());
+        Assert.assertEquals(1, cl.jjtGetNumChildren());
 
         // 3 strings 2 whitespace
         Node child = cl.jjtGetChild(0);
-        assertEquals(5, child.jjtGetNumChildren());
+        Assert.assertEquals(5, child.jjtGetNumChildren());
 
         /*
         FIXME: Re-implement verification to know about whitespace
@@ -173,11 +173,11 @@ public class ParserTest
         ASTCommandLine cl = parse(input);
 
         // 1 expression
-        assertEquals(1, cl.jjtGetNumChildren());
+        Assert.assertEquals(1, cl.jjtGetNumChildren());
 
         // 3 strings 2 whietspace
         Node child = cl.jjtGetChild(0);
-        assertEquals(5, child.jjtGetNumChildren());
+        Assert.assertEquals(5, child.jjtGetNumChildren());
 
         /*
         FIXME: Re-implement verification to know about whitespace
@@ -205,11 +205,11 @@ public class ParserTest
         ASTCommandLine cl = parse(input);
 
         // 1 expression
-        assertEquals(1, cl.jjtGetNumChildren());
+        Assert.assertEquals(1, cl.jjtGetNumChildren());
 
         // 4 strings 3 whitespace
         Node child = cl.jjtGetChild(0);
-        assertEquals(7, child.jjtGetNumChildren());
+        Assert.assertEquals(7, child.jjtGetNumChildren());
 
         /*
         FIXME: Re-implement verification to know about whitespace
@@ -242,11 +242,11 @@ public class ParserTest
         ASTCommandLine cl = parse(input);
 
         // 1 expression
-        assertEquals(1, cl.jjtGetNumChildren());
+        Assert.assertEquals(1, cl.jjtGetNumChildren());
 
         // 4 strings, 3 whitespace
         Node child = cl.jjtGetChild(0);
-        assertEquals(7, child.jjtGetNumChildren());
+        Assert.assertEquals(7, child.jjtGetNumChildren());
 
         /*
         FIXME: Re-implement verification to know about whitespace
@@ -283,17 +283,17 @@ public class ParserTest
         ASTCommandLine cl = parse(input);
 
         // 2 expressions
-        assertEquals(2, cl.jjtGetNumChildren());
+        Assert.assertEquals(2, cl.jjtGetNumChildren());
 
         Node child;
 
         // 3 strings, 2 whitespace
         child = cl.jjtGetChild(0);
-        assertEquals(5, child.jjtGetNumChildren());
+        Assert.assertEquals(5, child.jjtGetNumChildren());
 
         // 3 strings, 3 whitespace
         child = cl.jjtGetChild(1);
-        assertEquals(6, child.jjtGetNumChildren());
+        Assert.assertEquals(6, child.jjtGetNumChildren());
     }
 
     @Test
@@ -303,17 +303,17 @@ public class ParserTest
         ASTCommandLine cl = parse(input);
 
         // 2 expressions
-        assertEquals(2, cl.jjtGetNumChildren());
+        Assert.assertEquals(2, cl.jjtGetNumChildren());
 
         Node child;
 
         // 3 strings, 2 whitespace
         child = cl.jjtGetChild(0);
-        assertEquals(5, child.jjtGetNumChildren());
+        Assert.assertEquals(5, child.jjtGetNumChildren());
 
         // 3 strings, 2 whitespace
         child = cl.jjtGetChild(1);
-        assertEquals(5, child.jjtGetNumChildren());
+        Assert.assertEquals(5, child.jjtGetNumChildren());
     }
 
     @Test
@@ -323,11 +323,11 @@ public class ParserTest
         ASTCommandLine cl = parse(input);
 
         // 1 expression
-        assertEquals(1, cl.jjtGetNumChildren());
+        Assert.assertEquals(1, cl.jjtGetNumChildren());
 
         // 3 strings, 2 whitespace
         Node child = cl.jjtGetChild(0);
-        assertEquals(5, child.jjtGetNumChildren());
+        Assert.assertEquals(5, child.jjtGetNumChildren());
     }
 
     @Test
@@ -337,11 +337,11 @@ public class ParserTest
         ASTCommandLine cl = parse(input);
 
         // 1 expression
-        assertEquals(1, cl.jjtGetNumChildren());
+        Assert.assertEquals(1, cl.jjtGetNumChildren());
 
         // 3 strings, 2 whitespace
         Node child = cl.jjtGetChild(0);
-        assertEquals(5, child.jjtGetNumChildren());
+        Assert.assertEquals(5, child.jjtGetNumChildren());
     }
 
     @Test
@@ -351,17 +351,17 @@ public class ParserTest
         ASTCommandLine cl = parse(input);
 
         // 2 expressions
-        assertEquals(2, cl.jjtGetNumChildren());
+        Assert.assertEquals(2, cl.jjtGetNumChildren());
 
         Node child;
 
         // 3 strings, 2 whitespace
         child = cl.jjtGetChild(0);
-        assertEquals(5, child.jjtGetNumChildren());
+        Assert.assertEquals(5, child.jjtGetNumChildren());
 
         // 3 strings, 2 whitespace
         child = cl.jjtGetChild(1);
-        assertEquals(5, child.jjtGetNumChildren());
+        Assert.assertEquals(5, child.jjtGetNumChildren());
     }
 
     @Test
@@ -371,11 +371,11 @@ public class ParserTest
         ASTCommandLine cl = parse(input);
 
         // 1 expression
-        assertEquals(1, cl.jjtGetNumChildren());
+        Assert.assertEquals(1, cl.jjtGetNumChildren());
 
         // 6 strings, 5 whitespace
         Node child = cl.jjtGetChild(0);
-        assertEquals(11, child.jjtGetNumChildren());
+        Assert.assertEquals(11, child.jjtGetNumChildren());
     }
 
     @Test
@@ -385,10 +385,10 @@ public class ParserTest
         ASTCommandLine cl = parse(input);
 
         // 1 expression
-        assertEquals(1, cl.jjtGetNumChildren());
+        Assert.assertEquals(1, cl.jjtGetNumChildren());
 
         // 3 strings, 1 whitespace
         Node child = cl.jjtGetChild(0);
-        assertEquals(4, child.jjtGetNumChildren());
+        Assert.assertEquals(4, child.jjtGetNumChildren());
     }
 }

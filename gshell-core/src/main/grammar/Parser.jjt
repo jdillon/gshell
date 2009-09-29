@@ -33,7 +33,7 @@ options {
 
 PARSER_BEGIN(Parser)
 
-package org.apache.gshell.parser.impl;
+package org.apache.gshell.core.parser.impl;
 
 import java.io.Reader;
 import java.io.StringReader;

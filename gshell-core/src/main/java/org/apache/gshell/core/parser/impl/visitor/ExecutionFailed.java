@@ -17,26 +17,21 @@
  * under the License.
  */
 
-package org.apache.gshell.parser.impl;
+package org.apache.gshell.core.parser.impl.visitor;
 
 /**
- * Represents a <em>plain</em> unquoted argument.
+ * Thrown when a command execution fails.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class ASTPlainString
-    extends StringSupport
+public class ExecutionFailed
+    extends Exception
 {
-    public ASTPlainString(final int id) {
-        super(id);
-    }
+    ///CLOVER:OFF
+    
+    private static final long serialVersionUID = 1;
 
-    public ASTPlainString(final Parser p, final int id) {
-        super(p, id);
-    }
-
-    /** Accept the visitor. **/
-    public Object jjtAccept(final ParserVisitor visitor, final Object data) {
-        return visitor.visit(this, data);
+    public ExecutionFailed(final Throwable cause) {
+        super(cause);
     }
 }

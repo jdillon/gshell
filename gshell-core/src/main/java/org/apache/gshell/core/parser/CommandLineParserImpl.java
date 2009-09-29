@@ -17,16 +17,16 @@
  * under the License.
  */
 
-package org.apache.gshell.parser;
+package org.apache.gshell.core.parser;
 
 import org.apache.gshell.Shell;
+import org.apache.gshell.core.parser.impl.ASTCommandLine;
+import org.apache.gshell.core.parser.impl.Parser;
+import org.apache.gshell.core.parser.impl.visitor.ExecutingVisitor;
+import org.apache.gshell.core.parser.impl.visitor.LoggingVisitor;
 import org.apache.gshell.execute.CommandExecutor;
 import org.apache.gshell.execute.CommandLineParser;
 import org.apache.gshell.io.Closer;
-import org.apache.gshell.parser.impl.ASTCommandLine;
-import org.apache.gshell.parser.impl.Parser;
-import org.apache.gshell.parser.impl.visitor.ExecutingVisitor;
-import org.apache.gshell.parser.impl.visitor.LoggingVisitor;
 import org.codehaus.plexus.component.annotations.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

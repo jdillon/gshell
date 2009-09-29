@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.gshell.parser.impl;
+package org.apache.gshell.core.parser.impl;
 
 /**
  * Support for string types.

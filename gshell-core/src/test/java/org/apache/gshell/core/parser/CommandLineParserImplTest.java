@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.gshell.parser;
+package org.apache.gshell.core.parser;
 
 import org.apache.gshell.execute.CommandLineParser;
 import org.apache.gshell.testsupport.PlexusTestSupport;
@@ -27,7 +27,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Unit tests for the {@link org.apache.gshell.parser.CommandLineParserImpl} class.
+ * Unit tests for the {@link CommandLineParserImpl} class.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */

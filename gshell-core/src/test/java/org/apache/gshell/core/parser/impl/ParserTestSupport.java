@@ -17,30 +17,32 @@
  * under the License.
  */
 
-package org.apache.gshell.parser.impl;
+package org.apache.gshell.core.parser.impl;
+
+import static org.junit.Assert.assertNotNull;
+
+import java.io.Reader;
+import java.io.StringReader;
 
 /**
- * Represents an <em>opaque</em> argument.
+ * Support for parser testing.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class ASTOpaqueString
-    extends StringSupport
+public class ParserTestSupport
 {
-    public ASTOpaqueString(final int id) {
-        super(id);
-    }
+    protected ASTCommandLine parse(final String input) throws ParseException {
+        assertNotNull(input);
 
-    public ASTOpaqueString(final Parser p, final int id) {
-        super(p, id);
-    }
+        Reader reader = new StringReader(input);
+        Parser parser = new Parser();
+        ASTCommandLine cl = parser.parse(reader);
 
-    public String getValue() {
-        return unquote(super.getValue());
-    }
+        assertNotNull(cl);
 
-    /** Accept the visitor. **/
-    public Object jjtAccept(final ParserVisitor visitor, final Object data) {
-        return visitor.visit(this, data);
+        System.out.println("Parsed (" + input + "):");
+        cl.dump("  ");
+
+        return cl;
     }
 }

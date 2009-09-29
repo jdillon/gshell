@@ -17,14 +17,14 @@
  * under the License.
  */
 
-package org.apache.gshell.parser.impl;
+package org.apache.gshell.core.parser.impl;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import org.junit.Test;
 
 /**
- * Unit tests for the {@link org.apache.maven.shell.parser.impl.ParserVisitor} usage.
+ * Unit tests for the {@link ParserVisitor} usage.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */

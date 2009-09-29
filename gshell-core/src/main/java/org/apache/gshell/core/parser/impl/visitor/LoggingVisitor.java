@@ -17,16 +17,16 @@
  * under the License.
  */
 
-package org.apache.gshell.parser.impl.visitor;
+package org.apache.gshell.core.parser.impl.visitor;
 
-import org.apache.gshell.parser.impl.ASTCommandLine;
-import org.apache.gshell.parser.impl.ASTExpression;
-import org.apache.gshell.parser.impl.ASTOpaqueString;
-import org.apache.gshell.parser.impl.ASTPlainString;
-import org.apache.gshell.parser.impl.ASTQuotedString;
-import org.apache.gshell.parser.impl.ASTWhitespace;
-import org.apache.gshell.parser.impl.ParserVisitor;
-import org.apache.gshell.parser.impl.SimpleNode;
+import org.apache.gshell.core.parser.impl.ASTCommandLine;
+import org.apache.gshell.core.parser.impl.ASTExpression;
+import org.apache.gshell.core.parser.impl.ASTOpaqueString;
+import org.apache.gshell.core.parser.impl.ASTPlainString;
+import org.apache.gshell.core.parser.impl.ASTQuotedString;
+import org.apache.gshell.core.parser.impl.ASTWhitespace;
+import org.apache.gshell.core.parser.impl.ParserVisitor;
+import org.apache.gshell.core.parser.impl.SimpleNode;
 import org.codehaus.plexus.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
