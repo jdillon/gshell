@@ -63,25 +63,9 @@ public class Configuration
 
     public static final int FAILURE_EXIT_CODE = 100;
 
+    private static final Pattern PATTERN = Pattern.compile("\\$\\{([^}]+)\\}");
+
     private Properties props;
-
-    private File homeDir;
-
-    private File libDir;
-
-    private File etcDir;
-
-    private String programName;
-
-    private String mainName;
-
-    private String version;
-
-    private final Pattern pattern;
-
-    public Configuration() {
-        this.pattern = Pattern.compile("\\$\\{([^}]+)\\}");
-    }
 
     private void setSystemProperty(final String name, final String value) {
         assert name != null;
@@ -139,7 +123,7 @@ public class Configuration
     private String evaluate(String input) {
         assert input != null;
 
-        Matcher matcher = pattern.matcher(input);
+        Matcher matcher = PATTERN.matcher(input);
 
         while (matcher.find()) {
             Object rep = props.get(matcher.group(1));
@@ -198,52 +182,27 @@ public class Configuration
 
     public File getHomeDir() {
         ensureConfigured();
-
-        if (homeDir == null) {
-            homeDir = getPropertyAsFile(SHELL_HOME);
-        }
-
-        return homeDir;
+        return getPropertyAsFile(SHELL_HOME);
     }
 
     public File getLibDir() {
         ensureConfigured();
-
-        if (libDir == null) {
-            libDir = getPropertyAsFile(SHELL_LIB);
-        }
-
-        return libDir;
+        return getPropertyAsFile(SHELL_LIB);
     }
 
     public File getEtcDir() {
         ensureConfigured();
-
-        if (etcDir == null) {
-            etcDir = getPropertyAsFile(SHELL_ETC);
-        }
-
-        return etcDir;
+        return getPropertyAsFile(SHELL_ETC);
     }
 
     public String getProgramName() {
         ensureConfigured();
-
-        if (programName == null) {
-            programName = getProperty(SHELL_PROGRAM);
-        }
-        
-        return programName;
+        return getProperty(SHELL_PROGRAM);
     }
 
     public String getVersion() {
         ensureConfigured();
-
-        if (version == null) {
-            version = getProperty(SHELL_VERSION);
-        }
-
-        return version;
+        return getProperty(SHELL_VERSION);
     }
 
     public List<URL> getClassPath() throws Exception {
@@ -273,12 +232,7 @@ public class Configuration
 
     public String getMainClass() {
         ensureConfigured();
-
-        if (mainName == null) {
-            mainName = getProperty(SHELL_MAIN);
-        }
-
-        return mainName;
+        return getProperty(SHELL_MAIN);
     }
 
     public int getSuccessExitCode() {
