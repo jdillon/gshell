@@ -82,10 +82,11 @@ public class ConfigurationImpl
         mergeProperties(props, defaults);
 
         File bootstrap = new File(detectBootDir(), BOOTSTRAP_PROPERTIES);
-        Log.debug("Bootstrap properties: ", bootstrap);
-        if (bootstrap.exists()) {
-            mergeProperties(props, bootstrap.toURI().toURL());
+        if (!bootstrap.exists()) {
+            throw new Error("Missing file: " + BOOTSTRAP_PROPERTIES);
         }
+        mergeProperties(props, bootstrap.toURI().toURL());
+
         return props;
     }
 
