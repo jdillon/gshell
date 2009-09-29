@@ -33,7 +33,7 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 /**
- * Bootstrap {@link Configuration} implementation.
+ * Bootstrap configuration.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *
