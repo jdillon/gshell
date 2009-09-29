@@ -17,10 +17,10 @@
  * under the License.
  */
 
-package org.apache.gshell.testsuite.basic;
+package org.apache.gshell.core.commands;
 
 import org.apache.gshell.core.commands.HelpCommand;
-import org.apache.gshell.testsuite.CommandTestSupport;
+import org.apache.gshell.core.commands.CommandTestSupport;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;

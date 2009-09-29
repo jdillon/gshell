@@ -17,39 +17,33 @@
  * under the License.
  */
 
-package org.apache.gshell.testsuite.basic;
+package org.apache.gshell.core.commands;
 
+import org.apache.gshell.History;
 import org.apache.gshell.cli.ProcessingException;
-import org.apache.gshell.core.commands.EchoCommand;
+import org.apache.gshell.core.commands.RecallHistoryCommand;
 import org.apache.gshell.core.commands.SetCommand;
-import org.apache.gshell.core.commands.SourceCommand;
-import org.apache.gshell.testsuite.CommandTestSupport;
+import org.apache.gshell.core.commands.CommandTestSupport;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import org.junit.Test;
 
-import java.io.FileNotFoundException;
-import java.net.URL;
-
 /**
- * Tests for the {@link SourceCommand}.
- * 
+ * Tests for the {@link RecallHistoryCommand}.
+ *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class SourceCommandTest
+public class RecallHistoryCommandTest
     extends CommandTestSupport
 {
-    public SourceCommandTest() {
-        super("source", SourceCommand.class);
+    public RecallHistoryCommandTest() {
+        super("recall", RecallHistoryCommand.class);
     }
 
     @Override
     public void setUp() throws Exception {
         requiredCommands.put("set", SetCommand.class);
-        requiredCommands.put("echo", EchoCommand.class);
         super.setUp();
     }
 
@@ -77,35 +71,41 @@ public class SourceCommandTest
     }
 
     @Test
-    public void testNoSuchFile() throws Exception {
+    public void testIndexOutOfRange() throws Exception {
+        Object result = executeWithArgs(String.valueOf(Integer.MAX_VALUE));
+        assertEqualsFailure(result);
+    }
+
+    @Test
+    public void testInvalidIndex() throws Exception {
         try {
-            executeWithArgs("no-such-file");
+            executeWithArgs("foo");
             fail();
         }
-        catch (FileNotFoundException e) {
+        catch (ProcessingException e) {
             // expected
         }
     }
 
     @Test
-    public void test1() throws Exception {
-        URL script = getClass().getResource("test1.tsh");
-        assertNotNull(script);
-        Object result = executeWithArgs(script.toExternalForm());
-        assertEqualsSuccess(result);
-    }
+    public void testRecallElement() throws Exception {
+        History history = getShell().getHistory();
 
-    @Test
-    public void test2() throws Exception {
+        // Clear history and make sure there is no foo variable
+        history.clear();
         assertFalse(vars.contains("foo"));
 
-        URL script = getClass().getResource("test2.tsh");
-        assertNotNull(script);
-        Object result = executeWithArgs(script.toExternalForm());
+        // Then add 2 elements, both setting foo
+        history.add("set foo bar");
+        history.add("set foo baz");
+
+        assertEquals(2, getShell().getHistory().size());
+
+        // Recall the first, which sets foo to bar
+        Object result = executeWithArgs("0");
         assertEqualsSuccess(result);
 
-        assertTrue(vars.contains("foo"));
-        Object value = vars.get("foo");
-        assertEquals(value, "bar");
+        // Make sure it executed
+        assertEquals("bar", vars.get("foo"));
     }
 }

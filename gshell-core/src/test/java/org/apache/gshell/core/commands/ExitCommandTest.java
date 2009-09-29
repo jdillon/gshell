@@ -17,45 +17,37 @@
  * under the License.
  */
 
-package org.apache.gshell.testsuite.basic;
+package org.apache.gshell.core.commands;
 
-import org.apache.gshell.History;
 import org.apache.gshell.cli.ProcessingException;
-import org.apache.gshell.core.commands.RecallHistoryCommand;
-import org.apache.gshell.core.commands.SetCommand;
-import org.apache.gshell.testsuite.CommandTestSupport;
+import org.apache.gshell.core.commands.ExitCommand;
+import org.apache.gshell.core.commands.CommandTestSupport;
+import org.apache.gshell.notification.ExitNotification;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 import org.junit.Test;
 
 /**
- * Tests for the {@link RecallHistoryCommand}.
+ * Tests for the {@link ExitCommand}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class RecallHistoryCommandTest
+public class ExitCommandTest
     extends CommandTestSupport
 {
-    public RecallHistoryCommandTest() {
-        super("recall", RecallHistoryCommand.class);
-    }
-
-    @Override
-    public void setUp() throws Exception {
-        requiredCommands.put("set", SetCommand.class);
-        super.setUp();
+    public ExitCommandTest() {
+        super("exit", ExitCommand.class);
     }
 
     @Override
     @Test
     public void testDefault() throws Exception {
         try {
-            super.testDefault();
+            execute();
             fail();
         }
-        catch (ProcessingException e) {
-            // expected
+        catch (ExitNotification n) {
+            assertEquals(ExitNotification.DEFAULT_CODE, n.code);
         }
     }
 
@@ -71,13 +63,18 @@ public class RecallHistoryCommandTest
     }
 
     @Test
-    public void testIndexOutOfRange() throws Exception {
-        Object result = executeWithArgs(String.valueOf(Integer.MAX_VALUE));
-        assertEqualsFailure(result);
+    public void testExitWithCode() throws Exception {
+        try {
+            executeWithArgs("57");
+            fail();
+        }
+        catch (ExitNotification n) {
+            assertEquals(57, n.code);
+        }
     }
 
     @Test
-    public void testInvalidIndex() throws Exception {
+    public void testExitWithInvalidCode() throws Exception {
         try {
             executeWithArgs("foo");
             fail();
@@ -85,27 +82,5 @@ public class RecallHistoryCommandTest
         catch (ProcessingException e) {
             // expected
         }
-    }
-
-    @Test
-    public void testRecallElement() throws Exception {
-        History history = getShell().getHistory();
-
-        // Clear history and make sure there is no foo variable
-        history.clear();
-        assertFalse(vars.contains("foo"));
-
-        // Then add 2 elements, both setting foo
-        history.add("set foo bar");
-        history.add("set foo baz");
-
-        assertEquals(2, getShell().getHistory().size());
-
-        // Recall the first, which sets foo to bar
-        Object result = executeWithArgs("0");
-        assertEqualsSuccess(result);
-
-        // Make sure it executed
-        assertEquals("bar", vars.get("foo"));
     }
 }

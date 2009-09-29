@@ -17,34 +17,55 @@
  * under the License.
  */
 
-package org.apache.gshell.testsuite.basic;
+package org.apache.gshell.core.commands;
 
 import org.apache.gshell.cli.ProcessingException;
-import org.apache.gshell.core.commands.AboutCommand;
-import org.apache.gshell.testsuite.CommandTestSupport;
+import org.apache.gshell.core.commands.UnsetCommand;
+import org.apache.gshell.core.commands.CommandTestSupport;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import org.junit.Test;
 
 /**
- * Tests for the {@link AboutCommand}.
- *
+ * Tests for the {@link UnsetCommand}.
+ * 
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class AboutCommandTest
+public class UnsetCommandTest
     extends CommandTestSupport
 {
-    public AboutCommandTest() {
-        super("about", AboutCommand.class);
+    public UnsetCommandTest() {
+        super("unset", UnsetCommand.class);
     }
 
+    @Override
     @Test
-    public void testTooManyArguments() throws Exception {
+    public void testDefault() throws Exception {
         try {
-            executeWithArgs("1");
+            super.testDefault();
             fail();
         }
         catch (ProcessingException e) {
             // expected
         }
+    }
+
+    @Test
+    public void testUndefineVariable() throws Exception {
+        vars.set("foo", "bar");
+        assertTrue(vars.contains("foo"));
+        Object result = executeWithArgs("foo");
+        assertEqualsSuccess(result);
+        assertFalse(vars.contains("foo"));
+    }
+
+    @Test
+    public void testUndefineUndefinedVariable() throws Exception {
+        assertFalse(vars.contains("foo"));
+        Object result = executeWithArgs("foo");
+
+        // Unsetting undefined should not return any errors
+        assertEqualsSuccess(result);
     }
 }

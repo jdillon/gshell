@@ -17,55 +17,59 @@
  * under the License.
  */
 
-package org.apache.gshell.testsuite.basic;
+package org.apache.gshell.core.commands;
 
-import org.apache.gshell.cli.ProcessingException;
-import org.apache.gshell.core.commands.UnsetCommand;
-import org.apache.gshell.testsuite.CommandTestSupport;
+import org.apache.gshell.core.commands.SetCommand;
+import org.apache.gshell.core.commands.CommandTestSupport;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import org.junit.Test;
 
 /**
- * Tests for the {@link UnsetCommand}.
+ * Tests for the {@link SetCommand}.
  * 
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class UnsetCommandTest
+public class SetCommandTest
     extends CommandTestSupport
 {
-    public UnsetCommandTest() {
-        super("unset", UnsetCommand.class);
-    }
-
-    @Override
-    @Test
-    public void testDefault() throws Exception {
-        try {
-            super.testDefault();
-            fail();
-        }
-        catch (ProcessingException e) {
-            // expected
-        }
+    public SetCommandTest() {
+        super("set", SetCommand.class);
     }
 
     @Test
-    public void testUndefineVariable() throws Exception {
-        vars.set("foo", "bar");
+    public void testDefineVariable() throws Exception {
+        assertFalse(vars.contains("foo"));
+        Object result = executeWithArgs("foo bar");
+        assertEqualsSuccess(result);
+
         assertTrue(vars.contains("foo"));
-        Object result = executeWithArgs("foo");
-        assertEqualsSuccess(result);
-        assertFalse(vars.contains("foo"));
+        Object value = vars.get("foo");
+        assertEquals(value, "bar");
     }
 
     @Test
-    public void testUndefineUndefinedVariable() throws Exception {
-        assertFalse(vars.contains("foo"));
-        Object result = executeWithArgs("foo");
+    public void testRedefineVariable() throws Exception {
+        testDefineVariable();
+        assertTrue(vars.contains("foo"));
 
-        // Unsetting undefined should not return any errors
+        Object result = executeWithArgs("foo baz");
         assertEqualsSuccess(result);
+
+        assertTrue(vars.contains("foo"));
+        Object value = vars.get("foo");
+        assertEquals(value, "baz");
+    }
+
+    @Test
+    public void testDefineVariableWithExpression() throws Exception {
+        assertFalse(vars.contains("foo"));
+        Object result = executeWithArgs("foo ${shell.home}");
+        assertEqualsSuccess(result);
+
+        assertTrue(vars.contains("foo"));
+        Object value = vars.get("foo");
+        assertEquals(value, vars.get("shell.home", String.class));
     }
 }

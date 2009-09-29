@@ -17,28 +17,54 @@
  * under the License.
  */
 
-package org.apache.gshell.testsuite;
+package org.apache.gshell.core;
 
-import org.apache.gshell.registry.CommandRegistrar;
-import org.apache.gshell.Shell;
-import org.apache.gshell.PlexusShellBuilder;
+import org.apache.gshell.core.BrandingSupport;
+
+import java.io.File;
 
 /**
- * Builds {@link org.apache.gshell.Shell} instances.
- *
+ * Test {@link Branding}.
+ * 
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class TestShellBuilder
-    extends PlexusShellBuilder
+public class TestBranding
+    extends BrandingSupport
 {
-    protected void registerCommand(final String name, final String type) throws Exception {
-        CommandRegistrar registrar = getContainer().lookup(CommandRegistrar.class);
-        registrar.registerCommand(name, type);
+    private File baseDir;
+
+    public TestBranding(final File baseDir) {
+        assert baseDir != null;
+        this.baseDir = baseDir;
     }
 
     @Override
-    public Shell create() throws Exception {
-        setRegisterCommands(false);
-        return super.create();
+    public String getProgramName() {
+        return "testsh";
+    }
+
+    @Override
+    public String getScriptExtension() {
+        return "tsh";
+    }
+
+    @Override
+    public String getVersion() {
+        return "1.0-TEST";
+    }
+
+    @Override
+    public File getShellHomeDir() {
+        return baseDir;
+    }
+
+    @Override
+    public File getUserHomeDir() {
+        return baseDir;
+    }
+
+    @Override
+    public File getUserContextDir() {
+        return resolveFile(new File(getUserHomeDir(), getProgramName()));
     }
 }

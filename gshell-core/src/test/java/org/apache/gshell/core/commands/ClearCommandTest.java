@@ -17,12 +17,12 @@
  * under the License.
  */
 
-package org.apache.gshell.testsuite.basic;
+package org.apache.gshell.core.commands;
 
 import org.apache.gshell.ansi.Ansi;
 import org.apache.gshell.cli.ProcessingException;
 import org.apache.gshell.core.commands.ClearCommand;
-import org.apache.gshell.testsuite.CommandTestSupport;
+import org.apache.gshell.core.commands.CommandTestSupport;
 import static org.junit.Assert.fail;
 import org.junit.Test;
 

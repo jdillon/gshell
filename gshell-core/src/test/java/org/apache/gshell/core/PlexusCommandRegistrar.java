@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.gshell;
+package org.apache.gshell.core;
 
 import org.apache.gshell.command.Command;
 import org.apache.gshell.registry.CommandRegistrar;
@@ -33,7 +33,7 @@ import org.codehaus.plexus.component.annotations.Requirement;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 @Component(role=CommandRegistrar.class)
-public class CommandRegistrarImpl
+public class PlexusCommandRegistrar
     extends CommandRegistrarSupport
 {
     @Requirement
@@ -42,9 +42,9 @@ public class CommandRegistrarImpl
     @Requirement
     private CommandRegistry registry;
 
-    public CommandRegistrarImpl() {}
-    
-    public CommandRegistrarImpl(final PlexusContainer container, final CommandRegistry registry) {
+    public PlexusCommandRegistrar() {}
+
+    public PlexusCommandRegistrar(final PlexusContainer container, final CommandRegistry registry) {
         assert container != null;
         assert registry != null;
         this.container = container;

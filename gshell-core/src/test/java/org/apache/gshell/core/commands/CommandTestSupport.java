@@ -17,11 +17,13 @@
  * under the License.
  */
 
-package org.apache.gshell.testsuite;
+package org.apache.gshell.core.commands;
 
 import org.apache.gshell.Shell;
 import org.apache.gshell.VariableNames;
 import org.apache.gshell.Variables;
+import org.apache.gshell.core.TestShellBuilder;
+import org.apache.gshell.core.TestBranding;
 import org.apache.gshell.ansi.Ansi;
 import org.apache.gshell.command.Command;
 import org.apache.gshell.registry.AliasRegistry;

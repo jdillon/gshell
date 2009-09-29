@@ -17,37 +17,36 @@
  * under the License.
  */
 
-package org.apache.gshell.testsuite.basic;
+package org.apache.gshell.core.commands;
 
 import org.apache.gshell.cli.ProcessingException;
-import org.apache.gshell.core.commands.ExitCommand;
-import org.apache.gshell.notification.ExitNotification;
-import org.apache.gshell.testsuite.CommandTestSupport;
-import static org.junit.Assert.assertEquals;
+import org.apache.gshell.core.commands.UnaliasCommand;
+import org.apache.gshell.core.commands.CommandTestSupport;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 import org.junit.Test;
 
 /**
- * Tests for the {@link ExitCommand}.
- *
+ * Tests for the {@link UnaliasCommand}.
+ * 
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class ExitCommandTest
+public class UnaliasCommandTest
     extends CommandTestSupport
 {
-    public ExitCommandTest() {
-        super("exit", ExitCommand.class);
+    public UnaliasCommandTest() {
+        super("unalias", UnaliasCommand.class);
     }
-
+    
     @Override
     @Test
     public void testDefault() throws Exception {
         try {
-            execute();
+            super.testDefault();
             fail();
         }
-        catch (ExitNotification n) {
-            assertEquals(ExitNotification.DEFAULT_CODE, n.code);
+        catch (ProcessingException e) {
+            // expected
         }
     }
 
@@ -63,24 +62,12 @@ public class ExitCommandTest
     }
 
     @Test
-    public void testExitWithCode() throws Exception {
-        try {
-            executeWithArgs("57");
-            fail();
-        }
-        catch (ExitNotification n) {
-            assertEquals(57, n.code);
-        }
-    }
-
-    @Test
-    public void testExitWithInvalidCode() throws Exception {
-        try {
-            executeWithArgs("foo");
-            fail();
-        }
-        catch (ProcessingException e) {
-            // expected
-        }
+    public void testUndefineAlias() throws Exception {
+        assertFalse(aliasRegistry.containsAlias("foo"));
+        aliasRegistry.registerAlias("foo", "bar");
+        
+        Object result = executeWithArgs("foo");
+        assertEqualsSuccess(result);
+        assertFalse(aliasRegistry.containsAlias("foo"));
     }
 }

@@ -17,57 +17,34 @@
  * under the License.
  */
 
-package org.apache.gshell.testsuite.basic;
+package org.apache.gshell.core.commands;
 
 import org.apache.gshell.cli.ProcessingException;
-import org.apache.gshell.core.commands.UnaliasCommand;
-import org.apache.gshell.testsuite.CommandTestSupport;
-import static org.junit.Assert.assertFalse;
+import org.apache.gshell.core.commands.AboutCommand;
+import org.apache.gshell.core.commands.CommandTestSupport;
 import static org.junit.Assert.fail;
 import org.junit.Test;
 
 /**
- * Tests for the {@link UnaliasCommand}.
- * 
+ * Tests for the {@link AboutCommand}.
+ *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class UnaliasCommandTest
+public class AboutCommandTest
     extends CommandTestSupport
 {
-    public UnaliasCommandTest() {
-        super("unalias", UnaliasCommand.class);
-    }
-    
-    @Override
-    @Test
-    public void testDefault() throws Exception {
-        try {
-            super.testDefault();
-            fail();
-        }
-        catch (ProcessingException e) {
-            // expected
-        }
+    public AboutCommandTest() {
+        super("about", AboutCommand.class);
     }
 
     @Test
     public void testTooManyArguments() throws Exception {
         try {
-            executeWithArgs("1 2");
+            executeWithArgs("1");
             fail();
         }
         catch (ProcessingException e) {
             // expected
         }
-    }
-
-    @Test
-    public void testUndefineAlias() throws Exception {
-        assertFalse(aliasRegistry.containsAlias("foo"));
-        aliasRegistry.registerAlias("foo", "bar");
-        
-        Object result = executeWithArgs("foo");
-        assertEqualsSuccess(result);
-        assertFalse(aliasRegistry.containsAlias("foo"));
     }
 }

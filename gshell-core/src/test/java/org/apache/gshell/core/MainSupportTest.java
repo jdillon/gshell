@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.gshell.testsuite;
+package org.apache.gshell.core;
 
 import org.apache.gshell.Branding;
 import org.apache.gshell.History;
