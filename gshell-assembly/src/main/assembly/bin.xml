@@ -43,6 +43,7 @@
             <outputDirectory>bin</outputDirectory>
             <includes>
                 <include>gsh.bat</include>
+                <include>bootstrap.properties</include>
             </includes>
             <lineEnding>dos</lineEnding>
         </fileSet>
@@ -62,6 +63,14 @@
             <outputDirectory>etc</outputDirectory>
         </fileSet>
     </fileSets>
+
+    <files>
+        <file>
+            <source>src/main/underlay/lib/boot/bootstrap.properties</source>
+            <outputDirectory>lib/boot</outputDirectory>
+            <filtered>true</filtered>
+        </file>
+    </files>
 
     <dependencySets>
         <dependencySet>

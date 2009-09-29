@@ -21,6 +21,7 @@ package org.apache.gshell.bootstrap;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLDecoder;
@@ -30,7 +31,7 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * Bootstrap configuration implementation.
+ * Bootstrap {@link Configuration} implementation.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *
@@ -40,6 +41,8 @@ public class ConfigurationImpl
     implements Configuration
 {
     private static final String DEFAULT_PROPERTIES = "default.properties";
+
+    private static final String BOOTSTRAP_PROPERTIES = "bootstrap.properties";
     
     private static final int SUCCESS_EXIT_CODE = 0;
 
@@ -73,36 +76,36 @@ public class ConfigurationImpl
 
         URL defaults = getClass().getResource(DEFAULT_PROPERTIES);
         if (defaults == null) {
+            // Should never happen
             throw new Error("Missing resource: " + DEFAULT_PROPERTIES);
         }
+        mergeProperties(props, defaults);
 
-        Log.debug("Merging default properties from: ", defaults);
+        File bootstrap = new File(detectBootDir(), BOOTSTRAP_PROPERTIES);
+        Log.debug("Bootstrap properties: ", bootstrap);
+        if (bootstrap.exists()) {
+            mergeProperties(props, bootstrap.toURI().toURL());
+        }
+        return props;
+    }
 
-        InputStream input = defaults.openStream();
+    private void mergeProperties(final Properties props, final URL url) throws IOException {
+        Log.debug("Merging properties from: ", url);
+
+        InputStream input = url.openStream();
         try {
             props.load(input);
         }
         finally {
             input.close();
         }
+    }
 
-        props.setProperty(SHELL_HOME_DETECTED, detectHomeDir().getAbsolutePath());
-
-        // HACK: Stuff in shell.main
-        String main = System.getProperty(SHELL_MAIN);
-        if (main == null) {
-            throw new Error("Missing: " + SHELL_MAIN);
-        }
-        props.setProperty(SHELL_MAIN, main);
-        
-        if (Log.DEBUG) {
-            Log.debug("Properties:");
-            for (Map.Entry entry : props.entrySet()) {
-                Log.debug("    ",  entry.getKey(), "=", entry.getValue());
-            }
-        }
-
-        return props;
+    private File detectBootDir() throws Exception {
+        String path = getClass().getProtectionDomain().getCodeSource().getLocation().getFile();
+        path = URLDecoder.decode(path, "UTF-8");
+        File file = new File(path);
+        return file.getParentFile().getCanonicalFile();
     }
 
     /**
@@ -140,7 +143,16 @@ public class ConfigurationImpl
     public void configure() throws Exception {
         Log.debug("Configuring");
         
-        this.props = loadProperties();
+        props = loadProperties();
+
+        props.setProperty(SHELL_HOME_DETECTED, detectHomeDir().getAbsolutePath());
+
+        if (Log.DEBUG) {
+            Log.debug("Properties:");
+            for (Map.Entry entry : props.entrySet()) {
+                Log.debug("    ",  entry.getKey(), "=", entry.getValue());
+            }
+        }
 
         // Export some configuration
         setSystemProperty(SHELL_HOME, getHomeDir().getAbsolutePath());

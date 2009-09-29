@@ -20,8 +20,6 @@
 
 DIRNAME=`dirname "$0"`
 
-MAIN=org.apache.gshell.Main
-
 # OS specific support (must be 'true' or 'false').
 cygwin=false;
 case "`uname`" in
@@ -57,5 +55,5 @@ if $cygwin ; then
 fi
 
 # Start the JVM
-exec "$JAVACMD" $JAVA_OPTS -Dshell.main=$MAIN -jar "$BOOTJAR" "$@"
+exec "$JAVACMD" $JAVA_OPTS -jar "$BOOTJAR" "$@"
 
