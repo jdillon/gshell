@@ -43,7 +43,6 @@ public class StringsCompleter
 
     public StringsCompleter(final Collection<String> strings) {
         assert strings != null;
-
         getStrings().addAll(strings);
     }
 
