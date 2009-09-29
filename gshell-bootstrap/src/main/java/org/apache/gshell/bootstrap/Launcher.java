@@ -38,7 +38,7 @@ public class Launcher
     private final Configuration config;
 
     public Launcher() {
-        this.config = new ConfigurationImpl();
+        this.config = new Configuration();
     }
 
     public static void main(final String[] args) {
