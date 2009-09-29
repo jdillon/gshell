@@ -34,7 +34,7 @@
     <dependencies>
         <dependency>
             <groupId>org.apache.gshell</groupId>
-            <artifactId>gshell-common</artifactId>
+            <artifactId>gshell-api</artifactId>
         </dependency>
 
         <dependency>
