@@ -38,16 +38,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.gshell</groupId>
-            <artifactId>gshell-cli</artifactId>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.apache.gshell</groupId>
-            <artifactId>gshell-common</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.codehaus.plexus</groupId>
             <artifactId>plexus-component-annotations</artifactId>
         </dependency>
