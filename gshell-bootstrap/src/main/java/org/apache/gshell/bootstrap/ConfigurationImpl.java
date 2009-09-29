@@ -29,6 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 /**
  * Bootstrap {@link Configuration} implementation.
@@ -62,12 +64,17 @@ public class ConfigurationImpl
 
     private String version;
 
+    private final Pattern pattern;
+
+    public ConfigurationImpl() {
+        this.pattern = Pattern.compile("\\$\\{([^}]+)\\}");
+    }
+
     private void setSystemProperty(final String name, final String value) {
         assert name != null;
         assert value != null;
 
         Log.debug(name, ": ", value);
-
         System.setProperty(name, value);
     }
 
@@ -110,15 +117,26 @@ public class ConfigurationImpl
     }
 
     /**
-     * Attempt to detect the home directory, which is expected to be <tt>../../</tt> from the location of the jar containing this class.
+     * Detect the home directory, which is expected to be <tt>../../</tt> from the location of the jar containing this class.
      */
     private File detectHomeDir() throws Exception {
-        Log.debug("Detecting ", SHELL_HOME);
+        return detectBootDir().getParentFile().getParentFile().getCanonicalFile();
+    }
 
-        String path = getClass().getProtectionDomain().getCodeSource().getLocation().getFile();
-        path = URLDecoder.decode(path, "UTF-8");
-        File file = new File(path);
-        return file.getParentFile().getParentFile().getParentFile().getCanonicalFile();
+    private String evaluate(String input) {
+        assert input != null;
+
+        Matcher matcher = pattern.matcher(input);
+
+        while (matcher.find()) {
+            Object rep = props.get(matcher.group(1));
+            if (rep != null) {
+                input = input.replace(matcher.group(0), rep.toString());
+                matcher.reset(input);
+            }
+        }
+
+        return input;
     }
 
     /**
@@ -128,9 +146,8 @@ public class ConfigurationImpl
         assert name != null;
         assert props != null;
 
-        String value = ExpressionEvaluator.getSystemProperty(name, props.getProperty(name));
-
-        return ExpressionEvaluator.evaluate(value, props);
+        String value = System.getProperty(name, props.getProperty(name));
+        return evaluate(value);
     }
 
     private File getPropertyAsFile(final String name) {
@@ -143,9 +160,8 @@ public class ConfigurationImpl
 
     public void configure() throws Exception {
         Log.debug("Configuring");
-        
-        props = loadProperties();
 
+        props = loadProperties();
         props.setProperty(SHELL_HOME_DETECTED, detectHomeDir().getAbsolutePath());
 
         if (Log.DEBUG) {
