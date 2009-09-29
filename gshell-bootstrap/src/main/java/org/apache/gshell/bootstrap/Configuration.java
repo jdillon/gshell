@@ -67,14 +67,6 @@ public class Configuration
 
     private Properties props;
 
-    private void setSystemProperty(final String name, final String value) {
-        assert name != null;
-        assert value != null;
-
-        Log.debug(name, ": ", value);
-        System.setProperty(name, value);
-    }
-
     private Properties loadProperties() throws Exception {
         Properties props = new Properties();
 
@@ -153,6 +145,13 @@ public class Configuration
         setSystemProperty(SHELL_HOME, getPropertyAsFile(SHELL_HOME).getPath());
         setSystemProperty(SHELL_PROGRAM, getProperty(SHELL_PROGRAM));
         setSystemProperty(SHELL_VERSION, getProperty(SHELL_VERSION));
+    }
+
+    private void setSystemProperty(final String name, final String value) {
+        assert name != null;
+        assert value != null;
+        Log.debug(name, ": ", value);
+        System.setProperty(name, value);
     }
 
     private void ensureConfigured() {
