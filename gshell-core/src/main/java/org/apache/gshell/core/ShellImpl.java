@@ -32,6 +32,7 @@ import org.apache.gshell.core.console.JLineHistory;
 import org.apache.gshell.execute.CommandExecutor;
 import org.apache.gshell.io.IO;
 import org.apache.gshell.io.SystemInputOutputHijacker;
+import org.apache.gshell.io.Closer;
 import org.apache.gshell.notification.ExitNotification;
 import org.apache.gshell.terminal.Constants;
 import org.slf4j.Logger;
@@ -42,6 +43,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -160,7 +163,7 @@ public class ShellImpl
         branding.customize(this);
 
         // Load profile scripts
-        new ScriptLoader(this).loadProfileScripts();
+        loadProfileScripts();
 
         opened = true;
 
@@ -194,7 +197,7 @@ public class ShellImpl
 
         log.debug("Starting interactive console; args: {}", args);
 
-        new ScriptLoader(this).loadInteractiveScripts();
+        loadInteractiveScripts();
 
         // Setup 2 final refs to allow our executor to pass stuff back to us
         final AtomicReference<ExitNotification> exitNotifHolder = new AtomicReference<ExitNotification>();
@@ -320,5 +323,60 @@ public class ShellImpl
 
     protected void renderGoodbyeMessage(final IO io) {
         renderMessage(io, branding.getGoodbyeMessage());
+    }
+
+    // Script Loader
+
+    protected void loadProfileScripts() throws Exception {
+        String fileName = branding.getProfileScriptName();
+        loadSharedScript(fileName);
+        loadUserScript(fileName);
+    }
+
+    protected void loadInteractiveScripts() throws Exception {
+        String fileName = branding.getInteractiveScriptName();
+        loadSharedScript(fileName);
+        loadUserScript(fileName);
+    }
+
+    protected void loadScript(final File file) throws Exception {
+        assert file != null;
+
+        log.debug("Loading script: {}", file);
+
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        try {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                execute(line);
+            }
+        }
+        finally {
+            Closer.close(reader);
+        }
+    }
+
+    protected void loadUserScript(final String fileName) throws Exception {
+        assert fileName != null;
+
+        File file = new File(branding.getUserContextDir(), fileName);
+        if (file.exists()) {
+            loadScript(file);
+        }
+        else {
+            log.trace("User script is not present: {}", file);
+        }
+    }
+
+    protected void loadSharedScript(final String fileName) throws Exception {
+        assert fileName != null;
+
+        File file = new File(branding.getShellContextDir(), fileName);
+        if (file.exists()) {
+            loadScript(file);
+        }
+        else {
+            log.trace("Shared script is not present: {}", file);
+        }
     }
 }
