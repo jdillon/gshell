@@ -33,13 +33,9 @@ import java.util.List;
  *
  * @since 2.0
  */
-public class Launcher
+public final class Launcher
 {
-    private final Configuration config;
-
-    public Launcher() {
-        this.config = new Configuration();
-    }
+    private final Configuration config = new Configuration();
 
     public static void main(final String[] args) {
         assert args != null;
