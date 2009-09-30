@@ -26,18 +26,7 @@ package org.apache.gshell.util;
  */
 public class Strings
 {
-    /**
-     * <p>Joins the elements of the provided array into a single String
-     * containing the provided list of elements.</p>
-     * <p/>
-     * <p>No delimiter is added before or after the list. A
-     * <code>null</code> separator is the same as a blank String.</p>
-     *
-     * @param array     the array of values to join together
-     * @param separator the separator character to use
-     * @return the joined String
-     */
-    public static String join(Object[] array, String separator) {
+    public static String join(final Object[] array, String separator) {
         if (separator == null) {
             separator = "";
         }
@@ -55,17 +44,7 @@ public class Strings
         return buf.toString();
     }
     
-    /**
-     * <p>Repeat a String <code>n</code> times to form a
-     * new string.</p>
-     *
-     * @param str    String to repeat
-     * @param repeat number of times to repeat str
-     * @return String with repeated String
-     * @throws NegativeArraySizeException if <code>repeat < 0</code>
-     * @throws NullPointerException       if str is <code>null</code>
-     */
-    public static String repeat(String str, int repeat) {
+    public static String repeat(final String str, final int repeat) {
         StringBuffer buffer = new StringBuffer(repeat * str.length());
         for (int i = 0; i < repeat; i++) {
             buffer.append(str);
