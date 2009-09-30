@@ -21,10 +21,11 @@ package org.apache.gshell.terminal;
 
 import jline.ConsoleReader;
 import jline.Terminal;
-import org.codehaus.plexus.util.Os;
 
 import java.io.IOException;
 import java.io.InputStream;
+
+import org.apache.gshell.util.Os;
 
 /**
  * Auto-detected terminal.

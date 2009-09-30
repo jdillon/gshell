@@ -23,6 +23,7 @@ import org.apache.gshell.Arguments;
 import org.apache.gshell.Shell;
 import org.apache.gshell.ShellHolder;
 import org.apache.gshell.Variables;
+import org.apache.gshell.util.Strings;
 import org.apache.gshell.cli.Processor;
 import org.apache.gshell.command.Command;
 import org.apache.gshell.command.CommandContext;
@@ -40,7 +41,6 @@ import org.apache.gshell.notification.ResultNotification;
 import org.apache.gshell.registry.CommandResolver;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
-import org.codehaus.plexus.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -127,7 +127,7 @@ public class CommandExecutorImpl
         assert name != null;
         assert args != null;
 
-        log.debug("Executing ({}): [{}]", name, StringUtils.join(args, ", "));
+        log.debug("Executing ({}): [{}]", name, Strings.join(args, ", "));
 
         Command command = resolver.resolveCommand(name);
 

@@ -23,6 +23,7 @@ import org.apache.gshell.Arguments;
 import org.apache.gshell.Shell;
 import org.apache.gshell.ShellHolder;
 import org.apache.gshell.Variables;
+import org.apache.gshell.util.Strings;
 import org.apache.gshell.core.parser.impl.ASTCommandLine;
 import org.apache.gshell.core.parser.impl.ASTExpression;
 import org.apache.gshell.core.parser.impl.ASTOpaqueString;
@@ -38,7 +39,6 @@ import org.codehaus.plexus.interpolation.InterpolationException;
 import org.codehaus.plexus.interpolation.Interpolator;
 import org.codehaus.plexus.interpolation.PropertiesBasedValueSource;
 import org.codehaus.plexus.interpolation.StringSearchInterpolator;
-import org.codehaus.plexus.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -101,7 +101,7 @@ public class ExecutingVisitor
             result = executor.execute(shell, path, args);
         }
         catch (Exception e) {
-            throw new ErrorNotification("Shell execution failed; path=" + path + "; args=" + StringUtils.join(args, ", "), e);
+            throw new ErrorNotification("Shell execution failed; path=" + path + "; args=" + Strings.join(args, ", "), e);
         }
 
         List results = (List)data;

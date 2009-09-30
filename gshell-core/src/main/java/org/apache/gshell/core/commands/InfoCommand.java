@@ -24,8 +24,8 @@ import org.apache.gshell.command.CommandContext;
 import org.apache.gshell.io.IO;
 import org.apache.gshell.Branding;
 import org.apache.gshell.VariableNames;
+import org.apache.gshell.util.Strings;
 import org.codehaus.plexus.component.annotations.Component;
-import org.codehaus.plexus.util.StringUtils;
 
 import java.util.Locale;
 import java.text.DecimalFormatSymbols;
@@ -55,9 +55,9 @@ import java.lang.reflect.Method;
 public class InfoCommand
     extends CommandSupport
 {
-    private final NumberFormat fmtI = new DecimalFormat("###,###", new DecimalFormatSymbols(Locale.ENGLISH));
+    private static final NumberFormat FMTI = new DecimalFormat("###,###", new DecimalFormatSymbols(Locale.ENGLISH));
 
-    private final NumberFormat fmtD = new DecimalFormat("###,##0.000", new DecimalFormatSymbols(Locale.ENGLISH));
+    private static final NumberFormat FMTD = new DecimalFormat("###,##0.000", new DecimalFormatSymbols(Locale.ENGLISH));
 
     @Override
     public Object execute(final CommandContext context) throws Exception {
@@ -141,7 +141,7 @@ public class InfoCommand
     }
 
     private String printLong(long i) {
-        return fmtI.format(i);
+        return FMTI.format(i);
     }
 
     //
@@ -149,41 +149,41 @@ public class InfoCommand
     //
     
     private String printSizeInKb(double size) {
-        return fmtI.format((long) (size / 1024)) + " kbytes";
+        return FMTI.format((long) (size / 1024)) + " kbytes";
     }
 
     private String printDuration(double uptime) {
         uptime /= 1000;
         if (uptime < 60) {
-            return fmtD.format(uptime) + " seconds";
+            return FMTD.format(uptime) + " seconds";
         }
         uptime /= 60;
         if (uptime < 60) {
             long minutes = (long) uptime;
-            String s = fmtI.format(minutes) + (minutes > 1 ? " minutes" : " minute");
+            String s = FMTI.format(minutes) + (minutes > 1 ? " minutes" : " minute");
             return s;
         }
         uptime /= 60;
         if (uptime < 24) {
             long hours = (long) uptime;
             long minutes = (long) ((uptime - hours) * 60);
-            String s = fmtI.format(hours) + (hours > 1 ? " hours" : " hour");
+            String s = FMTI.format(hours) + (hours > 1 ? " hours" : " hour");
             if (minutes != 0) {
-                s += " " + fmtI.format(minutes) + (minutes > 1 ? " minutes" : "minute");
+                s += " " + FMTI.format(minutes) + (minutes > 1 ? " minutes" : "minute");
             }
             return s;
         }
         uptime /= 24;
         long days = (long) uptime;
         long hours = (long) ((uptime - days) * 60);
-        String s = fmtI.format(days) + (days > 1 ? " days" : " day");
+        String s = FMTI.format(days) + (days > 1 ? " days" : " day");
         if (hours != 0) {
-            s += " " + fmtI.format(hours) + (hours > 1 ? " hours" : "hour");
+            s += " " + FMTI.format(hours) + (hours > 1 ? " hours" : "hour");
         }
         return s;
     }
 
     private void printValue(final IO io, final String name, final int pad, final Object value) {
-        io.out.format("  @|bold %s|%s    %s", name, StringUtils.repeat(" ", pad - name.length()), value).println();
+        io.out.format("  @|bold %s|%s    %s", name, Strings.repeat(" ", pad - name.length()), value).println();
     }
 }

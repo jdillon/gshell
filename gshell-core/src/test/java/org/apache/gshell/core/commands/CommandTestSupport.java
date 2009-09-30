@@ -22,6 +22,7 @@ package org.apache.gshell.core.commands;
 import org.apache.gshell.Shell;
 import org.apache.gshell.VariableNames;
 import org.apache.gshell.Variables;
+import org.apache.gshell.util.Strings;
 import org.apache.gshell.core.TestShellBuilder;
 import org.apache.gshell.core.TestBranding;
 import org.apache.gshell.ansi.Ansi;
@@ -32,7 +33,6 @@ import org.apache.gshell.registry.CommandRegistry;
 import org.apache.gshell.testsupport.PlexusTestSupport;
 import org.apache.gshell.testsupport.TestIO;
 import org.apache.gshell.testsupport.TestUtil;
-import org.codehaus.plexus.util.StringUtils;
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -138,7 +138,7 @@ public abstract class CommandTestSupport
     }
 
     protected Object execute(final String... args) throws Exception {
-        return execute(StringUtils.join(args, " "));
+        return execute(Strings.join(args, " "));
     }
 
     protected Object executeWithArgs(final String args) throws Exception {
@@ -148,7 +148,7 @@ public abstract class CommandTestSupport
 
     protected Object executeWithArgs(final String... args) throws Exception {
         assertNotNull(args);
-        return execute(name, StringUtils.join(args, " "));
+        return execute(name, Strings.join(args, " "));
     }
 
     //

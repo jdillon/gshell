@@ -24,9 +24,9 @@ import org.apache.gshell.command.CommandContext;
 import org.apache.gshell.command.CommandSupport;
 import org.apache.gshell.io.IO;
 import org.apache.gshell.registry.AliasRegistry;
+import org.apache.gshell.util.Strings;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
-import org.codehaus.plexus.util.StringUtils;
 
 import java.util.Collection;
 import java.util.List;
@@ -113,7 +113,7 @@ public class AliasCommand
             return Result.FAILURE;
         }
 
-        String alias = StringUtils.join(target.toArray(), " ");
+        String alias = Strings.join(target.toArray(), " ");
         
         log.debug("Defining alias: {} -> {}", name, alias);
 

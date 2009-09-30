@@ -27,9 +27,9 @@ import org.apache.gshell.command.OpaqueArguments;
 import org.apache.gshell.registry.AliasRegistry;
 import org.apache.gshell.registry.CommandRegistry;
 import org.apache.gshell.registry.CommandResolver;
+import org.apache.gshell.util.Strings;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
-import org.codehaus.plexus.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -139,7 +139,7 @@ public class CommandResolverImpl
             // Need to append any more arguments in the context
             Object[] args = context.getArguments();
             if (args.length > 0) {
-                alias = String.format("%s %s", target, StringUtils.join(args, " "));
+                alias = String.format("%s %s", target, Strings.join(args, " "));
             }
 
             log.debug("Executing alias ({}) -> {}", name, alias);

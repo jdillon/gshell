@@ -23,9 +23,9 @@ import org.apache.gshell.Branding;
 import org.apache.gshell.VariableNames;
 import org.apache.gshell.Shell;
 import org.apache.gshell.Variables;
+import org.apache.gshell.util.Strings;
 import org.apache.gshell.i18n.MessageSource;
 import org.apache.gshell.i18n.ResourceBundleMessageSource;
-import org.codehaus.plexus.util.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -90,7 +90,7 @@ public class BrandingSupport
     }
 
     protected String line() {
-        return StringUtils.repeat("-", jline.Terminal.getTerminal().getTerminalWidth() - 1);
+        return Strings.repeat("-", jline.Terminal.getTerminal().getTerminalWidth() - 1);
     }
 
     public String getWelcomeMessage() {
