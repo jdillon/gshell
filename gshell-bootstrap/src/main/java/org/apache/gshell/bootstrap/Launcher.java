@@ -55,10 +55,8 @@ public final class Launcher
         }
         catch (Throwable t) {
             Log.debug("Failure: ", t);
-            
-            t.printStackTrace(System.err);
+            t.printStackTrace();
             System.err.flush();
-
             System.exit(config.getFailureExitCode());
         }
     }
@@ -113,13 +111,10 @@ public final class Launcher
         assert type != null;
 
         Method method = type.getMethod("main", String[].class);
+        
         int modifiers = method.getModifiers();
-
-        if (Modifier.isStatic(modifiers) && Modifier.isPublic(modifiers)) {
-            Class<?> returns = method.getReturnType();
-            if (returns == Integer.TYPE || returns == Void.TYPE) {
-                return method;
-            }
+        if (Modifier.isStatic(modifiers) && Modifier.isPublic(modifiers) && method.getReturnType() == Void.TYPE) {
+            return method;
         }
 
         throw new NoSuchMethodException("public static void main(String[] args) in " + type);
