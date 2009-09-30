@@ -99,18 +99,14 @@ public class Configuration
         }
     }
 
-    private File detectBootDir() throws Exception {
-        String path = getClass().getProtectionDomain().getCodeSource().getLocation().getFile();
-        path = URLDecoder.decode(path, "UTF-8");
-        File file = new File(path);
-        return file.getParentFile().getCanonicalFile();
-    }
-
     /**
      * Detect the home directory, which is expected to be <tt>../../</tt> from the location of the jar containing this class.
      */
     private File detectHomeDir() throws Exception {
-        return detectBootDir().getParentFile().getParentFile().getCanonicalFile();
+        String path = getClass().getProtectionDomain().getCodeSource().getLocation().getFile();
+        path = URLDecoder.decode(path, "UTF-8");
+        File file = new File(path);
+        return file.getParentFile().getParentFile().getParentFile().getCanonicalFile();
     }
 
     private String evaluate(String input) {
@@ -141,6 +137,10 @@ public class Configuration
                 Log.debug("    ",  entry.getKey(), "=", entry.getValue());
             }
         }
+
+        requireProperty(SHELL_MAIN);
+        requireProperty(SHELL_PROGRAM);
+        requireProperty(SHELL_VERSION);
 
         // Export some configuration
         setSystemProperty(SHELL_HOME, getPropertyAsFile(SHELL_HOME).getPath());
@@ -178,6 +178,13 @@ public class Configuration
             return new File(path).getAbsoluteFile();
         }
         return null;
+    }
+
+    private void requireProperty(final String name) {
+        String value = getProperty(name);
+        if (value == null) {
+            throw new Error("Missing required property: " + name);
+        }
     }
 
     public List<URL> getClassPath() throws Exception {
