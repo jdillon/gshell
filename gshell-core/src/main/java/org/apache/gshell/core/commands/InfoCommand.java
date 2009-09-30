@@ -59,9 +59,6 @@ public class InfoCommand
 
     private final NumberFormat fmtD = new DecimalFormat("###,##0.000", new DecimalFormatSymbols(Locale.ENGLISH));
 
-    @Option(name="-v", aliases={"--verbose"})
-    private boolean verbose;
-
     @Override
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
