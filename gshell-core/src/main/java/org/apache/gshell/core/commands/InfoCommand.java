@@ -64,6 +64,7 @@ public class InfoCommand
         IO io = context.getIo();
 
         int maxNameLen = 25;
+
         Branding branding = context.getShell().getBranding();
         RuntimeMXBean runtime = ManagementFactory.getRuntimeMXBean();
         OperatingSystemMXBean os = ManagementFactory.getOperatingSystemMXBean();
@@ -75,11 +76,9 @@ public class InfoCommand
         // TODO: i18n all this
         //
 
-        io.info("{} ({})", branding.getAboutMessage(), branding.getVersion());
-        io.out.println();
-        
-        io.out.println("Shell");
+        io.info(branding.getAboutMessage());
         printValue(io, "Home", maxNameLen, System.getProperty("shell.home"));
+        printValue(io, "Version", maxNameLen, branding.getVersion());
         printValue(io, "Display Name", maxNameLen, branding.getDisplayName());
         printValue(io, "Program Name", maxNameLen, branding.getProgramName());
         printValue(io, "Script Extension", maxNameLen, branding.getScriptExtension());
@@ -129,9 +128,10 @@ public class InfoCommand
             printValue(io, "Committed virtual memory", maxNameLen, printSizeInKb(getSunOsValueAsLong(os, "getCommittedVirtualMemorySize")));
             printValue(io, "Total swap space", maxNameLen, printSizeInKb(getSunOsValueAsLong(os, "getTotalSwapSpaceSize")));
             printValue(io, "Free swap space", maxNameLen, printSizeInKb(getSunOsValueAsLong(os, "getFreeSwapSpaceSize")));
-        } catch (Throwable t) {}
+        }
+        catch (Throwable t) {}
 
-        return null;
+        return Result.SUCCESS;
     }
 
     private long getSunOsValueAsLong(OperatingSystemMXBean os, String name) throws Exception {

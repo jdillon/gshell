@@ -20,21 +20,19 @@
 package org.apache.gshell.core.commands;
 
 import org.apache.gshell.cli.ProcessingException;
-import org.apache.gshell.core.commands.AboutCommand;
-import org.apache.gshell.core.commands.CommandTestSupport;
 import static org.junit.Assert.fail;
 import org.junit.Test;
 
 /**
- * Tests for the {@link AboutCommand}.
+ * Tests for the {@link InfoCommand}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class AboutCommandTest
+public class InfoCommandTest
     extends CommandTestSupport
 {
-    public AboutCommandTest() {
-        super("about", AboutCommand.class);
+    public InfoCommandTest() {
+        super("info", InfoCommand.class);
     }
 
     @Test

@@ -86,7 +86,7 @@ public class BrandingSupport
     }
 
     public String getAboutMessage() {
-        return getDisplayName();
+        return String.format("%s (%s)", getDisplayName(), getVersion());
     }
 
     protected String line() {
