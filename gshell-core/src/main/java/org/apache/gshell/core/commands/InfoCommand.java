@@ -144,6 +144,10 @@ public class InfoCommand
         return fmtI.format(i);
     }
 
+    //
+    // TODO: i18n all this
+    //
+    
     private String printSizeInKb(double size) {
         return fmtI.format((long) (size / 1024)) + " kbytes";
     }
