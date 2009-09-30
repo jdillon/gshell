@@ -40,6 +40,10 @@ import java.lang.management.RuntimeMXBean;
 import java.lang.management.GarbageCollectorMXBean;
 import java.lang.reflect.Method;
 
+//
+// From Apache Felix Karaf
+//
+
 /**
  * Display shell information.
  *
