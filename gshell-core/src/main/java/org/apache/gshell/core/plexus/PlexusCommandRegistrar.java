@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.gshell.core;
+package org.apache.gshell.core.plexus;
 
 import org.apache.gshell.command.Command;
 import org.apache.gshell.registry.CommandRegistrar;
@@ -43,7 +43,7 @@ public class PlexusCommandRegistrar
     private CommandRegistry registry;
 
     public PlexusCommandRegistrar() {}
-
+    
     public PlexusCommandRegistrar(final PlexusContainer container, final CommandRegistry registry) {
         assert container != null;
         assert registry != null;

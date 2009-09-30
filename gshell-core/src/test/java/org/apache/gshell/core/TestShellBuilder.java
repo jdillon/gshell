@@ -21,6 +21,7 @@ package org.apache.gshell.core;
 
 import org.apache.gshell.registry.CommandRegistrar;
 import org.apache.gshell.Shell;
+import org.apache.gshell.core.plexus.PlexusShellBuilder;
 
 /**
  * Builds {@link org.apache.gshell.Shell} instances.

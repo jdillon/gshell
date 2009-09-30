@@ -44,6 +44,11 @@
 
         <dependency>
             <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-container-default</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.plexus</groupId>
             <artifactId>plexus-utils</artifactId>
         </dependency>
 
@@ -56,12 +61,6 @@
             <groupId>org.apache.gshell</groupId>
             <artifactId>gshell-api</artifactId>
             <classifier>tests</classifier>
-            <scope>test</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.codehaus.plexus</groupId>
-            <artifactId>plexus-container-default</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
