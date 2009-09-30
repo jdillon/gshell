@@ -68,7 +68,7 @@
     <files>
         <file>
             <source>target/gshell-bootstrap.jar</source>
-            <outputDirectory>lib/boot</outputDirectory>
+            <outputDirectory>lib</outputDirectory>
             <destName>bootstrap.jar</destName>
         </file>
     </files>

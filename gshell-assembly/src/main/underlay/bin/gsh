@@ -49,7 +49,7 @@ if [ -z "$JAVACMD" ]; then
     fi
 fi
 
-BOOTJAR="$SHELL_HOME/lib/boot/bootstrap.jar"
+BOOTJAR="$SHELL_HOME/lib/bootstrap.jar"
 if $cygwin ; then
     BOOTJAR=`cygpath --windows "$BOOTJAR"`
 fi

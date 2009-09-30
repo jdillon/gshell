@@ -58,6 +58,8 @@ public class Configuration
     public static final String DEFAULT_PROPERTIES = "default.properties";
 
     public static final String BOOTSTRAP_PROPERTIES = "bootstrap.properties";
+
+    public static final String BOOTSTRAP_JAR = "bootstrap.jar";
     
     public static final int SUCCESS_EXIT_CODE = 0;
 
@@ -105,8 +107,7 @@ public class Configuration
     private File detectHomeDir() throws Exception {
         String path = getClass().getProtectionDomain().getCodeSource().getLocation().getFile();
         path = URLDecoder.decode(path, "UTF-8");
-        File file = new File(path);
-        return file.getParentFile().getParentFile().getParentFile().getCanonicalFile();
+        return new File(path).getParentFile().getParentFile().getCanonicalFile();
     }
 
     public void configure() throws Exception {
@@ -155,7 +156,7 @@ public class Configuration
     }
 
     private String evaluate(String input) {
-        if (input != null && input.contains("${")) {
+        if (input != null) {
             Matcher matcher = PATTERN.matcher(input);
 
             while (matcher.find()) {
@@ -197,7 +198,10 @@ public class Configuration
 
         File[] files = dir.listFiles(new FileFilter() {
             public boolean accept(final File file) {
-                return file.isFile() && file.getName().toLowerCase().endsWith(".jar");
+                assert file != null;
+                String name = file.getName().toLowerCase();
+                return !name.equals(BOOTSTRAP_JAR) && file.isFile() && name.endsWith(".jar");
+
             }
         });
 
