@@ -35,7 +35,6 @@
         <dependency>
             <groupId>org.apache.gshell</groupId>
             <artifactId>gshell-bootstrap</artifactId>
-            <scope>provided</scope>
         </dependency>
         
         <dependency>
@@ -68,71 +67,57 @@
                     <execution>
                         <phase>generate-resources</phase>
                         <goals>
-                            <goal>copy</goal>
+                            <goal>unpack</goal>
                         </goals>
                         <configuration>
+                            <silent>true</silent>
                             <artifactItems>
                                 <artifactItem>
                                     <groupId>org.apache.gshell</groupId>
                                     <artifactId>gshell-bootstrap</artifactId>
-                                    <destFileName>bootstrap.jar</destFileName>
                                 </artifactItem>
                             </artifactItems>
-                            <outputDirectory>${project.build.directory}</outputDirectory>
+                            <outputDirectory>${project.build.directory}/bootstrap</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
 
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>truezip-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                        <configuration>
-                            <fileset>
-                                <directory>${project.build.outputDirectory}</directory>
-                                <includes>
-                                    <include>bootstrap.properties</include>
-                                </includes>
-                                <outputDirectory>${project.build.directory}/bootstrap.jar/</outputDirectory>
-                            </fileset>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>bootstrap.properties</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <executions>
                     <execution>
+                        <id>bootstrap</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <descriptors>
+                                <descriptor>src/main/assembly/bootstrap.xml</descriptor>
+                            </descriptors>
+                            <finalName>gshell</finalName>
+                            <archive>
+                                <manifestFile>${project.build.directory}/bootstrap/META-INF/MANIFEST.MF</manifestFile>
+                            </archive>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>bin</id>
                         <phase>package</phase>
                         <goals>
-                            <goal>attached</goal>
+                            <goal>single</goal>
                         </goals>
+                        <configuration>
+                            <descriptors>
+                                <descriptor>src/main/assembly/bin.xml</descriptor>
+                            </descriptors>
+                            <finalName>gshell-${project.version}</finalName>
+                        </configuration>
                     </execution>
                 </executions>
-                <configuration>
-                    <descriptors>
-                        <descriptor>src/main/assembly/bin.xml</descriptor>
-                    </descriptors>
-                    <finalName>gshell-${project.version}</finalName>
-                </configuration>
             </plugin>
         </plugins>
     </build>

@@ -24,6 +24,7 @@
     <formats>
         <format>tar.gz</format>
         <!--
+        <format>tar.bz2</format>
         <format>zip</format>
         -->
     </formats>
@@ -66,8 +67,9 @@
 
     <files>
         <file>
-            <source>target/bootstrap.jar</source>
+            <source>target/gshell-bootstrap.jar</source>
             <outputDirectory>lib/boot</outputDirectory>
+            <destName>bootstrap.jar</destName>
         </file>
     </files>
 
@@ -75,6 +77,9 @@
         <dependencySet>
             <outputDirectory>lib</outputDirectory>
             <useStrictFiltering>true</useStrictFiltering>
+            <excludes>
+                <exclude>org.apache.gshell:gshell-bootstrap</exclude>
+            </excludes>
         </dependencySet>
     </dependencySets>
 </assembly>
