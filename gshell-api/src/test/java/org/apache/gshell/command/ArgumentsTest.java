@@ -19,7 +19,7 @@
 
 package org.apache.gshell.command;
 
-import org.apache.gshell.Arguments;
+import org.apache.gshell.util.Arguments;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 

@@ -19,7 +19,7 @@
 
 package org.apache.gshell.core.parser.impl.visitor;
 
-import org.apache.gshell.Arguments;
+import org.apache.gshell.util.Arguments;
 import org.apache.gshell.Shell;
 import org.apache.gshell.ShellHolder;
 import org.apache.gshell.Variables;

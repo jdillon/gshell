@@ -31,24 +31,24 @@ public class Strings
             separator = "";
         }
         int arraySize = array.length;
-        int bufSize = (arraySize == 0 ? 0 : (array[0].toString().length() +
-                separator.length()) * arraySize);
-        StringBuffer buf = new StringBuffer(bufSize);
+        int bufSize = (arraySize == 0 ? 0 : (array[0].toString().length() + separator.length()) * arraySize);
+        StringBuilder buff = new StringBuilder(bufSize);
 
         for (int i = 0; i < arraySize; i++) {
             if (i > 0) {
-                buf.append(separator);
+                buff.append(separator);
             }
-            buf.append(array[i]);
+            buff.append(array[i]);
         }
-        return buf.toString();
+
+        return buff.toString();
     }
     
     public static String repeat(final String str, final int repeat) {
-        StringBuffer buffer = new StringBuffer(repeat * str.length());
+        StringBuilder buff = new StringBuilder(repeat * str.length());
         for (int i = 0; i < repeat; i++) {
-            buffer.append(str);
+            buff.append(str);
         }
-        return buffer.toString();
+        return buff.toString();
     }
 }

@@ -24,8 +24,7 @@ import jline.Terminal;
 
 import java.io.IOException;
 import java.io.InputStream;
-
-import org.apache.gshell.util.Os;
+import java.util.Locale;
 
 /**
  * Auto-detected terminal.
@@ -48,7 +47,8 @@ public class AutoDetectedTerminal
     private final Terminal delegate;
 
     public AutoDetectedTerminal() {
-        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        String os = System.getProperty("os.name").toLowerCase(Locale.US);
+        if (os.contains("windows")) {
             delegate = new WindowsTerminal();
         }
         else {

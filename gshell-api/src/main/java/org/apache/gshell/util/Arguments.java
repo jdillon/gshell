@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.gshell;
+package org.apache.gshell.util;
 
 import java.lang.reflect.Array;
 
