@@ -109,22 +109,6 @@ public class Configuration
         return file.getParentFile().getParentFile().getParentFile().getCanonicalFile();
     }
 
-    private String evaluate(String input) {
-        assert input != null;
-
-        Matcher matcher = PATTERN.matcher(input);
-
-        while (matcher.find()) {
-            Object rep = props.get(matcher.group(1));
-            if (rep != null) {
-                input = input.replace(matcher.group(0), rep.toString());
-                matcher.reset(input);
-            }
-        }
-
-        return input;
-    }
-
     public void configure() throws Exception {
         Log.debug("Configuring");
 
@@ -166,10 +150,24 @@ public class Configuration
      */
     private String getProperty(final String name) {
         assert name != null;
-        assert props != null;
         ensureConfigured();
-        String value = System.getProperty(name, props.getProperty(name));
-        return evaluate(value);
+        return evaluate(System.getProperty(name, props.getProperty(name)));
+    }
+
+    private String evaluate(String input) {
+        if (input != null && input.contains("${")) {
+            Matcher matcher = PATTERN.matcher(input);
+
+            while (matcher.find()) {
+                Object rep = props.get(matcher.group(1));
+                if (rep != null) {
+                    input = input.replace(matcher.group(0), rep.toString());
+                    matcher.reset(input);
+                }
+            }
+        }
+
+        return input;
     }
 
     private File getPropertyAsFile(final String name) {
