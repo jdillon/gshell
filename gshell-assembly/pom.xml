@@ -34,12 +34,13 @@
     <dependencies>
         <dependency>
             <groupId>org.apache.gshell</groupId>
-            <artifactId>gshell-core</artifactId>
+            <artifactId>gshell-bootstrap</artifactId>
+            <scope>provided</scope>
         </dependency>
-
+        
         <dependency>
             <groupId>org.apache.gshell</groupId>
-            <artifactId>gshell-bootstrap</artifactId>
+            <artifactId>gshell-core</artifactId>
         </dependency>
 
         <dependency>
@@ -60,6 +61,61 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.apache.gshell</groupId>
+                                    <artifactId>gshell-bootstrap</artifactId>
+                                    <destFileName>bootstrap.jar</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>truezip-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <fileset>
+                                <directory>${project.build.outputDirectory}</directory>
+                                <includes>
+                                    <include>bootstrap.properties</include>
+                                </includes>
+                                <outputDirectory>${project.build.directory}/bootstrap.jar/</outputDirectory>
+                            </fileset>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>bootstrap.properties</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>

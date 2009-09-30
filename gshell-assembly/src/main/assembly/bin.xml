@@ -66,9 +66,8 @@
 
     <files>
         <file>
-            <source>src/main/underlay/lib/boot/bootstrap.properties</source>
+            <source>target/bootstrap.jar</source>
             <outputDirectory>lib/boot</outputDirectory>
-            <filtered>true</filtered>
         </file>
     </files>
 
@@ -76,18 +75,6 @@
         <dependencySet>
             <outputDirectory>lib</outputDirectory>
             <useStrictFiltering>true</useStrictFiltering>
-            <excludes>
-                <exclude>org.apache.gshell:gshell-bootstrap</exclude>
-            </excludes>
-        </dependencySet>
-        
-        <dependencySet>
-            <outputDirectory>lib/boot</outputDirectory>
-            <outputFileNameMapping>bootstrap.jar</outputFileNameMapping>
-            <useStrictFiltering>true</useStrictFiltering>
-            <includes>
-                <include>org.apache.gshell:gshell-bootstrap</include>
-            </includes>
         </dependencySet>
     </dependencySets>
 </assembly>
