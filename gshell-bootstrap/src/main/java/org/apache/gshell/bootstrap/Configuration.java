@@ -57,7 +57,7 @@ public class Configuration
 
     public static final String DEFAULT_PROPERTIES = "default.properties";
 
-    public static final String BOOTSTRAP_PROPERTIES = "/bootstrap.properties";
+    public static final String BOOTSTRAP_PROPERTIES = "bootstrap.properties";
     
     public static final int SUCCESS_EXIT_CODE = 0;
 
@@ -77,7 +77,7 @@ public class Configuration
         }
         mergeProperties(props, defaults);
 
-        URL bootstrap = getClass().getResource(BOOTSTRAP_PROPERTIES);
+        URL bootstrap = getClass().getClassLoader().getResource(BOOTSTRAP_PROPERTIES);
         if (bootstrap == null) {
             // Happens when assembly forgets to install the bootstrap properties file
             throw new Error("Missing resource: " + BOOTSTRAP_PROPERTIES);

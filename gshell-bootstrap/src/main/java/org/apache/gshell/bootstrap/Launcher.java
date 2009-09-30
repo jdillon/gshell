@@ -38,15 +38,10 @@ public final class Launcher
     private final Configuration config = new Configuration();
 
     public static void main(final String[] args) {
-        assert args != null;
-
-        Launcher launcher = new Launcher();
-        launcher.run(args);
+        new Launcher().run(args);
     }
 
     public void run(final String[] args) {
-        assert args != null;
-
         Log.debug("Running");
 
         try {
