@@ -23,7 +23,6 @@ import org.apache.gshell.command.CommandSupport;
 import org.apache.gshell.command.CommandContext;
 import org.apache.gshell.io.IO;
 import org.apache.gshell.Branding;
-import org.apache.gshell.cli.Option;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.util.StringUtils;
 
