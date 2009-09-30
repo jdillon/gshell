@@ -111,12 +111,12 @@ public final class Launcher
         assert type != null;
 
         Method method = type.getMethod("main", String[].class);
-        
         int modifiers = method.getModifiers();
+
         if (Modifier.isStatic(modifiers) && Modifier.isPublic(modifiers) && method.getReturnType() == Void.TYPE) {
             return method;
         }
 
-        throw new NoSuchMethodException("public static void main(String[] args) in " + type);
+        throw new NoSuchMethodException("public static void main(String[] args) in " + type); // TODO: i18n
     }
 }

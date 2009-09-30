@@ -75,14 +75,14 @@ public class Configuration
         URL defaults = getClass().getResource(DEFAULT_PROPERTIES);
         if (defaults == null) {
             // Should never happen
-            throw new Error("Missing resource: " + DEFAULT_PROPERTIES);
+            throw new Error("Missing resource: " + DEFAULT_PROPERTIES); // TODO: i18n
         }
         mergeProperties(props, defaults);
 
         URL bootstrap = getClass().getClassLoader().getResource(BOOTSTRAP_PROPERTIES);
         if (bootstrap == null) {
             // Happens when assembly forgets to install the bootstrap properties file
-            throw new Error("Missing resource: " + BOOTSTRAP_PROPERTIES);
+            throw new Error("Missing resource: " + BOOTSTRAP_PROPERTIES); // TODO: i18n
         }
         mergeProperties(props, bootstrap);
 
@@ -182,7 +182,7 @@ public class Configuration
     private void requireProperty(final String name) {
         String value = getProperty(name);
         if (value == null) {
-            throw new Error("Missing required property: " + name);
+            throw new Error("Missing required property: " + name); // TODO: i18n
         }
     }
 
@@ -206,7 +206,7 @@ public class Configuration
         });
 
         if (files == null) {
-            throw new Error("No jars found under: " + dir);
+            throw new Error("No jars found under: " + dir); // TODO: i18n
         }
 
         for (File file : files) {
