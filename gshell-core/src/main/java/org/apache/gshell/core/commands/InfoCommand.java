@@ -23,6 +23,7 @@ import org.apache.gshell.command.CommandSupport;
 import org.apache.gshell.command.CommandContext;
 import org.apache.gshell.io.IO;
 import org.apache.gshell.Branding;
+import org.apache.gshell.VariableNames;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.util.StringUtils;
 
@@ -77,7 +78,7 @@ public class InfoCommand
         //
 
         io.info(branding.getAboutMessage());
-        printValue(io, "Home", maxNameLen, System.getProperty("shell.home"));
+        printValue(io, "Home", maxNameLen, System.getProperty(VariableNames.SHELL_HOME));
         printValue(io, "Version", maxNameLen, branding.getVersion());
         printValue(io, "Display Name", maxNameLen, branding.getDisplayName());
         printValue(io, "Program Name", maxNameLen, branding.getProgramName());
