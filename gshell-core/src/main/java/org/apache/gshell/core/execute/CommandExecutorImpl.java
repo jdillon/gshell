@@ -26,7 +26,7 @@ import org.apache.gshell.Variables;
 import org.apache.gshell.util.Strings;
 import org.apache.gshell.cli.Processor;
 import org.apache.gshell.cli.OpaqueArguments;
-import org.apache.gshell.command.Command;
+import org.apache.gshell.command.CommandAction;
 import org.apache.gshell.command.CommandContext;
 import org.apache.gshell.command.CommandDocumenter;
 import org.apache.gshell.core.command.CommandHelpSupport;
@@ -129,9 +129,9 @@ public class CommandExecutorImpl
 
         log.debug("Executing ({}): [{}]", name, Strings.join(args, ", "));
 
-        Command command = resolver.resolveCommand(name);
+        CommandAction command = resolver.resolveCommand(name);
 
-        MDC.put(Command.class.getName(), name);
+        MDC.put(CommandAction.class.getName(), name);
 
         final Shell lastShell = ShellHolder.set(shell);
 
@@ -162,7 +162,7 @@ public class CommandExecutorImpl
                 if (help.displayHelp) {
                     log.trace("Render command-line usage");
                     documeter.renderUsage(command, io);
-                    result = Command.Result.SUCCESS;
+                    result = CommandAction.Result.SUCCESS;
                     execute = false;
                 }
             }
@@ -199,7 +199,7 @@ public class CommandExecutorImpl
 
             ShellHolder.set(lastShell);
             
-            MDC.remove(Command.class.getName());
+            MDC.remove(CommandAction.class.getName());
         }
 
         log.debug("Result: {}", result);

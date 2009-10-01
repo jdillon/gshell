@@ -26,7 +26,7 @@ import org.apache.gshell.util.Strings;
 import org.apache.gshell.core.TestShellBuilder;
 import org.apache.gshell.core.TestBranding;
 import org.apache.gshell.ansi.Ansi;
-import org.apache.gshell.command.Command;
+import org.apache.gshell.command.CommandAction;
 import org.apache.gshell.registry.AliasRegistry;
 import org.apache.gshell.registry.CommandRegistrar;
 import org.apache.gshell.registry.CommandRegistry;
@@ -44,7 +44,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Support for testing {@link org.apache.gshell.command.Command} instances.
+ * Support for testing {@link org.apache.gshell.command.CommandAction} instances.
  * 
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
@@ -156,11 +156,11 @@ public abstract class CommandTestSupport
     //
     
     protected void assertEqualsSuccess(final Object result) {
-        assertEquals(Command.Result.SUCCESS, result);
+        assertEquals(CommandAction.Result.SUCCESS, result);
     }
 
     protected void assertEqualsFailure(final Object result) {
-        assertEquals(Command.Result.FAILURE, result);
+        assertEquals(CommandAction.Result.FAILURE, result);
     }
 
     protected void assertOutputEquals(final String expected) {

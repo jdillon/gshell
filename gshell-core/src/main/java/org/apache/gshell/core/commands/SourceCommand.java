@@ -23,7 +23,7 @@ import jline.Completor;
 import org.apache.gshell.Shell;
 import org.apache.gshell.cli.Argument;
 import org.apache.gshell.command.CommandContext;
-import org.apache.gshell.command.CommandSupport;
+import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.io.Closer;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
@@ -48,7 +48,7 @@ import java.util.List;
  */
 @Component(role=SourceCommand.class)
 public class SourceCommand
-    extends CommandSupport
+    extends CommandActionSupport
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 

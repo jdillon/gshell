@@ -22,7 +22,7 @@ package org.apache.gshell.core.commands;
 import jline.ConsoleReader;
 import org.apache.gshell.ansi.Ansi;
 import org.apache.gshell.command.CommandContext;
-import org.apache.gshell.command.CommandSupport;
+import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.io.IO;
 import org.codehaus.plexus.component.annotations.Component;
 
@@ -35,7 +35,7 @@ import org.codehaus.plexus.component.annotations.Component;
  */
 @Component(role=ClearCommand.class)
 public class ClearCommand
-    extends CommandSupport
+    extends CommandActionSupport
 {
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;

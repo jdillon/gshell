@@ -19,7 +19,7 @@
 
 package org.apache.gshell.core.registry;
 
-import org.apache.gshell.command.Command;
+import org.apache.gshell.command.CommandAction;
 import org.apache.gshell.command.NameAware;
 import org.apache.gshell.event.EventManager;
 import org.apache.gshell.registry.CommandRegistry;
@@ -48,7 +48,7 @@ public class CommandRegistryImpl
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private final Map<String, Command> commands = new LinkedHashMap<String,Command>();
+    private final Map<String, CommandAction> commands = new LinkedHashMap<String, CommandAction>();
 
     @Requirement
     private EventManager eventManager;
@@ -60,7 +60,7 @@ public class CommandRegistryImpl
         this.eventManager = eventManager;
     }
 
-    public void registerCommand(final String name, final Command command) throws DuplicateCommandException {
+    public void registerCommand(final String name, final CommandAction command) throws DuplicateCommandException {
         assert name != null;
 
         if (log.isTraceEnabled()) {
@@ -98,7 +98,7 @@ public class CommandRegistryImpl
         eventManager.publish(new CommandRemovedEvent(name));
     }
 
-    public Command getCommand(final String name) throws NoSuchCommandException {
+    public CommandAction getCommand(final String name) throws NoSuchCommandException {
         assert name != null;
 
         log.trace("Getting command: {}", name);

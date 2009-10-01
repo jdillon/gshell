@@ -22,7 +22,7 @@ package org.apache.gshell.core.commands;
 import org.apache.gshell.cli.Argument;
 import org.apache.gshell.cli.Option;
 import org.apache.gshell.command.CommandContext;
-import org.apache.gshell.command.CommandSupport;
+import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.io.IO;
 import org.codehaus.plexus.component.annotations.Component;
 
@@ -38,7 +38,7 @@ import java.util.List;
  */
 @Component(role=EchoCommand.class)
 public class EchoCommand
-    extends CommandSupport
+    extends CommandActionSupport
 {
     @Option(name="-n")
     private boolean trailingNewline = true;

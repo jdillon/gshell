@@ -30,14 +30,14 @@ import java.util.List;
 // FIXME: This does not belong in api
 
 /**
- * Provides support for {@link Command} implementations.
+ * Provides support for {@link CommandAction} implementations.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *
  * @since 2.0
  */
-public abstract class CommandSupport
-    implements Command, NameAware
+public abstract class CommandActionSupport
+    implements CommandAction, NameAware
 {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -93,7 +93,7 @@ public abstract class CommandSupport
         }
     }
 
-    public Command copy() {
-        return (Command)clone();
+    public CommandAction copy() {
+        return (CommandAction)clone();
     }
 }

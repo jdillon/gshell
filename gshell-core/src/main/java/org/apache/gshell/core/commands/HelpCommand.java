@@ -21,10 +21,10 @@ package org.apache.gshell.core.commands;
 
 import jline.Completor;
 import org.apache.gshell.cli.Argument;
-import org.apache.gshell.command.Command;
+import org.apache.gshell.command.CommandAction;
 import org.apache.gshell.command.CommandContext;
 import org.apache.gshell.command.CommandDocumenter;
-import org.apache.gshell.command.CommandSupport;
+import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.io.IO;
 import org.apache.gshell.registry.AliasRegistry;
 import org.apache.gshell.registry.CommandRegistry;
@@ -44,7 +44,7 @@ import java.util.List;
  */
 @Component(role=HelpCommand.class)
 public class HelpCommand
-    extends CommandSupport
+    extends CommandActionSupport
 {
     @Requirement
     private AliasRegistry aliasRegistry;
@@ -83,7 +83,7 @@ public class HelpCommand
             // TODO: Use the resolver
             
             if (commandRegistry.containsCommand(commandName)) {
-                Command command = commandRegistry.getCommand(commandName);
+                CommandAction command = commandRegistry.getCommand(commandName);
                 commandDocumeter.renderManual(command, io);
 
                 return Result.SUCCESS;
@@ -104,14 +104,14 @@ public class HelpCommand
 
         log.debug("Listing brief help for commands");
 
-        Collection<Command> commands = new LinkedList<Command>();
+        Collection<CommandAction> commands = new LinkedList<CommandAction>();
         for (String name : commandRegistry.getCommandNames()) {
             commands.add(commandRegistry.getCommand(name));
         }
 
         // Determine the maximum name length
         int maxNameLen = 0;
-        for (Command command : commands) {
+        for (CommandAction command : commands) {
             int len = command.getName().length();
             maxNameLen = Math.max(len, maxNameLen);
         }
@@ -119,7 +119,7 @@ public class HelpCommand
 
         IO io = context.getIo();
         io.out.println(getMessages().format("info.available-commands"));
-        for (Command command : commands) {
+        for (CommandAction command : commands) {
             String formattedName = String.format(nameFormat, command.getName());
             String desc = commandDocumeter.getDescription(command);
 

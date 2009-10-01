@@ -20,7 +20,7 @@
 package org.apache.gshell.command;
 
 /**
- * Allow {@link Command} implementations to discover their bound names.
+ * Allow {@link CommandAction} implementations to discover their bound names.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *

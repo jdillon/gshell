@@ -19,7 +19,7 @@
 
 package org.apache.gshell.core.registry;
 
-import org.apache.gshell.command.Command;
+import org.apache.gshell.command.CommandAction;
 
 import java.util.EventObject;
 
@@ -37,9 +37,9 @@ public class CommandRegisteredEvent
 
     private final String name;
 
-    private final Command command;
+    private final CommandAction command;
 
-    public CommandRegisteredEvent(final String name, final Command command) {
+    public CommandRegisteredEvent(final String name, final CommandAction command) {
         super(name);
 
         assert name != null;
@@ -53,7 +53,7 @@ public class CommandRegisteredEvent
         return name;
     }
 
-    public Command getCommand() {
+    public CommandAction getCommand() {
         return command;
     }
 }

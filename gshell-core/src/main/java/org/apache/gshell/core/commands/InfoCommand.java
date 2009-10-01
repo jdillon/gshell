@@ -19,7 +19,7 @@
 
 package org.apache.gshell.core.commands;
 
-import org.apache.gshell.command.CommandSupport;
+import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.command.CommandContext;
 import org.apache.gshell.io.IO;
 import org.apache.gshell.Branding;
@@ -53,7 +53,7 @@ import java.lang.reflect.Method;
  */
 @Component(role=InfoCommand.class)
 public class InfoCommand
-    extends CommandSupport
+    extends CommandActionSupport
 {
     private static final NumberFormat FMTI = new DecimalFormat("###,###", new DecimalFormatSymbols(Locale.ENGLISH));
 

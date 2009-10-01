@@ -25,7 +25,7 @@ import org.apache.gshell.util.Strings;
 import org.apache.gshell.cli.Argument;
 import org.apache.gshell.cli.Option;
 import org.apache.gshell.command.CommandContext;
-import org.apache.gshell.command.CommandSupport;
+import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.i18n.MessageSource;
 import org.apache.gshell.io.IO;
 import org.codehaus.plexus.component.annotations.Component;
@@ -46,7 +46,7 @@ import java.util.Properties;
  */
 @Component(role=SetCommand.class)
 public class SetCommand
-    extends CommandSupport
+    extends CommandActionSupport
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 

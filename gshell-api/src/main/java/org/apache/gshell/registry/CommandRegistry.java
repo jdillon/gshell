@@ -19,7 +19,7 @@
 
 package org.apache.gshell.registry;
 
-import org.apache.gshell.command.Command;
+import org.apache.gshell.command.CommandAction;
 
 import java.util.Collection;
 
@@ -32,11 +32,11 @@ import java.util.Collection;
  */
 public interface CommandRegistry
 {
-    void registerCommand(String name, Command command) throws DuplicateCommandException;
+    void registerCommand(String name, CommandAction command) throws DuplicateCommandException;
 
     void removeCommand(String name) throws NoSuchCommandException;
 
-    Command getCommand(String name) throws NoSuchCommandException;
+    CommandAction getCommand(String name) throws NoSuchCommandException;
 
     boolean containsCommand(String name);
 

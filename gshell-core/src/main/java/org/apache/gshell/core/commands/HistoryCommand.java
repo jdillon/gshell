@@ -23,7 +23,7 @@ import org.apache.gshell.History;
 import org.apache.gshell.cli.Argument;
 import org.apache.gshell.cli.Option;
 import org.apache.gshell.command.CommandContext;
-import org.apache.gshell.command.CommandSupport;
+import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.io.IO;
 import org.codehaus.plexus.component.annotations.Component;
 
@@ -38,7 +38,7 @@ import java.util.List;
  */
 @Component(role=HistoryCommand.class)
 public class HistoryCommand
-    extends CommandSupport
+    extends CommandActionSupport
 {
     @Option(name="-c", aliases={"--clear"})
     private boolean clear = false;

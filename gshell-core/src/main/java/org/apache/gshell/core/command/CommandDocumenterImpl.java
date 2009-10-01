@@ -24,7 +24,7 @@ import org.apache.gshell.Variables;
 import org.apache.gshell.ansi.AnsiRenderer;
 import org.apache.gshell.cli.Printer;
 import org.apache.gshell.cli.Processor;
-import org.apache.gshell.command.Command;
+import org.apache.gshell.command.CommandAction;
 import org.apache.gshell.command.CommandDocumenter;
 import org.apache.gshell.i18n.AggregateMessageSource;
 import org.apache.gshell.i18n.MessageSource;
@@ -59,7 +59,7 @@ public class CommandDocumenterImpl
 
     private final MessageSource messages = new ResourceBundleMessageSource(getClass());
 
-    private String interpolate(final Command command, final String text) {
+    private String interpolate(final CommandAction command, final String text) {
         assert command != null;
         assert text != null;
 
@@ -86,21 +86,21 @@ public class CommandDocumenterImpl
         }
     }
 
-    public String getDescription(final Command command) {
+    public String getDescription(final CommandAction command) {
         assert command != null;
 
         String text = command.getMessages().getMessage(COMMAND_DESCRIPTION);
         return interpolate(command, text);
     }
 
-    public String getManual(final Command command) {
+    public String getManual(final CommandAction command) {
         assert command != null;
         
         String text = command.getMessages().getMessage(COMMAND_MANUAL);
         return interpolate(command, text);
     }
 
-    public void renderUsage(final Command command, final IO io) {
+    public void renderUsage(final CommandAction command, final IO io) {
         assert command != null;
         assert io != null;
 
@@ -125,7 +125,7 @@ public class CommandDocumenterImpl
         printer.printUsage(io.out, command.getName());
     }
 
-    public void renderManual(final Command command, final IO io) {
+    public void renderManual(final CommandAction command, final IO io) {
         assert command != null;
         assert io != null;
 

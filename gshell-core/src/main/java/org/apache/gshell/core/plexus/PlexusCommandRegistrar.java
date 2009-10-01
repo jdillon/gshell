@@ -19,7 +19,7 @@
 
 package org.apache.gshell.core.plexus;
 
-import org.apache.gshell.command.Command;
+import org.apache.gshell.command.CommandAction;
 import org.apache.gshell.registry.CommandRegistrar;
 import org.apache.gshell.registry.CommandRegistrarSupport;
 import org.apache.gshell.registry.CommandRegistry;
@@ -57,7 +57,7 @@ public class PlexusCommandRegistrar
 
         log.trace("Registering command: {} -> {}", name, type);
 
-        Command command = (Command) container.lookup(type);
+        CommandAction command = (CommandAction) container.lookup(type);
         registry.registerCommand(name, command);
     }
 }

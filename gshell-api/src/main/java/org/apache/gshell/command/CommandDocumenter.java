@@ -38,11 +38,11 @@ public interface CommandDocumenter
 
     String COMMAND_MANUAL = "command.manual";
 
-    String getDescription(Command command);
+    String getDescription(CommandAction command);
 
-    String getManual(Command command);
+    String getManual(CommandAction command);
 
-    void renderUsage(Command command, IO io);
+    void renderUsage(CommandAction command, IO io);
 
-    void renderManual(Command command, IO io);
+    void renderManual(CommandAction command, IO io);
 }

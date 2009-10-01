@@ -21,7 +21,7 @@ package org.apache.gshell.core.completer;
 
 import jline.ArgumentCompletor;
 import jline.Completor;
-import org.apache.gshell.command.Command;
+import org.apache.gshell.command.CommandAction;
 import org.apache.gshell.console.completer.AggregateCompleter;
 import org.apache.gshell.console.completer.StringsCompleter;
 import org.apache.gshell.console.completer.NullCompleter;
@@ -118,7 +118,7 @@ public class CommandsCompleter
         children.add(new StringsCompleter(name));
 
         // Then attach any command specific completers
-        Command command = commandRegistry.getCommand(name);
+        CommandAction command = commandRegistry.getCommand(name);
 
         Completor[] completers = command.getCompleters();
         if (completers == null) {

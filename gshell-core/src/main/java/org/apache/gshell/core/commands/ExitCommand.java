@@ -21,7 +21,7 @@ package org.apache.gshell.core.commands;
 
 import org.apache.gshell.cli.Argument;
 import org.apache.gshell.command.CommandContext;
-import org.apache.gshell.command.CommandSupport;
+import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.notification.ExitNotification;
 import org.codehaus.plexus.component.annotations.Component;
 
@@ -34,7 +34,7 @@ import org.codehaus.plexus.component.annotations.Component;
  */
 @Component(role=ExitCommand.class)
 public class ExitCommand
-    extends CommandSupport
+    extends CommandActionSupport
 {
     @Argument
     private int exitCode = 0;

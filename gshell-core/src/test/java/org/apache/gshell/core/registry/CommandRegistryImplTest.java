@@ -20,7 +20,7 @@
 package org.apache.gshell.core.registry;
 
 import org.apache.gshell.command.CommandContext;
-import org.apache.gshell.command.CommandSupport;
+import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.registry.CommandRegistry;
 import org.apache.gshell.testsupport.PlexusTestSupport;
 import org.apache.gshell.core.registry.CommandRegistryImpl;
@@ -72,7 +72,7 @@ public class CommandRegistryImplTest
         }
 
         try {
-            registry.registerCommand(null, new CommandSupport() {
+            registry.registerCommand(null, new CommandActionSupport() {
                 public Object execute(CommandContext context) throws Exception {
                     // ignore
                     return null;

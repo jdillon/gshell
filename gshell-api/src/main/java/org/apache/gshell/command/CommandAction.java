@@ -29,7 +29,7 @@ import org.apache.gshell.i18n.MessageSource;
  *
  * @since 2.0
  */
-public interface Command
+public interface CommandAction
     extends Cloneable
 {
     String getName();
@@ -38,7 +38,7 @@ public interface Command
 
     Completor[] getCompleters();
 
-    Command copy();
+    CommandAction copy();
 
     /**
      * Execute the command action.

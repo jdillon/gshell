@@ -19,7 +19,7 @@
 
 package org.apache.gshell.registry;
 
-import org.apache.gshell.command.Command;
+import org.apache.gshell.command.CommandAction;
 import org.apache.gshell.command.CommandException;
 
 /**
@@ -31,7 +31,7 @@ import org.apache.gshell.command.CommandException;
  */
 public interface CommandResolver
 {
-    Command resolveCommand(String name) throws CommandException;
+    CommandAction resolveCommand(String name) throws CommandException;
 
     // TODO: Add resolution of a group of commands
     // Collection<Command> resolveCommands(String name) throws CommandException;

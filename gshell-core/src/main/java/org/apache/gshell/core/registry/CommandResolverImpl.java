@@ -19,10 +19,10 @@
 
 package org.apache.gshell.core.registry;
 
-import org.apache.gshell.command.Command;
+import org.apache.gshell.command.CommandAction;
 import org.apache.gshell.command.CommandContext;
 import org.apache.gshell.command.CommandException;
-import org.apache.gshell.command.CommandSupport;
+import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.cli.OpaqueArguments;
 import org.apache.gshell.registry.AliasRegistry;
 import org.apache.gshell.registry.CommandRegistry;
@@ -62,12 +62,12 @@ public class CommandResolverImpl
         this.commandRegistry = commandRegistry;
     }
 
-    public Command resolveCommand(final String name) throws CommandException {
+    public CommandAction resolveCommand(final String name) throws CommandException {
         assert name != null;
 
         log.trace("Resolving command: {}", name);
 
-        Command command = resolveAlias(name);
+        CommandAction command = resolveAlias(name);
         if (command == null) {
             command = resolveRegistered(name);
             if (command != null) {
@@ -85,7 +85,7 @@ public class CommandResolverImpl
         return command;
     }
 
-    private Command resolveAlias(final String name) throws CommandException {
+    private CommandAction resolveAlias(final String name) throws CommandException {
         assert name != null;
         assert aliasRegistry != null;
 
@@ -96,7 +96,7 @@ public class CommandResolverImpl
         return null;
     }
 
-    private Command resolveRegistered(final String name) throws CommandException {
+    private CommandAction resolveRegistered(final String name) throws CommandException {
         assert name != null;
         assert commandRegistry != null;
 
@@ -112,7 +112,7 @@ public class CommandResolverImpl
     //
 
     private static class Alias
-        extends CommandSupport
+        extends CommandActionSupport
         implements OpaqueArguments
     {
         private final String name;
