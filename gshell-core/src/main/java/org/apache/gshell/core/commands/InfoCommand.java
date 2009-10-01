@@ -21,9 +21,9 @@ package org.apache.gshell.core.commands;
 
 import org.apache.gshell.Branding;
 import org.apache.gshell.VariableNames;
+import org.apache.gshell.command.Command;
 import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.command.CommandContext;
-import org.apache.gshell.command.Command;
 import org.apache.gshell.io.IO;
 import org.apache.gshell.util.Strings;
 import org.codehaus.plexus.component.annotations.Component;
