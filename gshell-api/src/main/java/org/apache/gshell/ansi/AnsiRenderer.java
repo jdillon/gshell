@@ -119,13 +119,4 @@ public class AnsiRenderer
     public static boolean test(final String text) {
         return text != null && text.contains(BEGIN_TOKEN);
     }
-
-    public static String encode(final Object text, final AnsiCode code) {
-        return new StringBuilder(BEGIN_TOKEN).
-                append(code.name()).
-                append(CODE_TEXT_SEPARATOR).
-                append(text).
-                append(END_TOKEN).
-                toString();
-    }
 }
