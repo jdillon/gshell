@@ -20,9 +20,11 @@
 package org.apache.gshell.cli.handler;
 
 import org.apache.gshell.cli.Descriptor;
+import org.apache.gshell.cli.ProcessingException;
 import org.apache.gshell.cli.setter.Setter;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * Handler for URI types.
@@ -30,9 +32,30 @@ import java.net.URI;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class UriHandler
-    extends ConverterHandlerSupport
+    extends Handler<URI>
 {
-    public UriHandler(final Descriptor desc, final Setter setter) {
-        super(desc, setter, URI.class, "URI");
+    public UriHandler(final Descriptor desc, final Setter<? super URI> setter) {
+        super(desc, setter);
+    }
+
+    @Override
+    public int handle(final Parameters params) throws ProcessingException {
+        assert params != null;
+
+        String token = params.get(0);
+
+        try {
+            getSetter().set(new URI(token));
+        }
+        catch (URISyntaxException e) {
+            throw new ProcessingException(e);
+        }
+
+        return 1;
+    }
+
+    @Override
+    public String getDefaultToken() {
+        return "URI";
     }
 }

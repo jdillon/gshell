@@ -77,7 +77,7 @@ public class ExitCommandTest
             executeWithArgs("foo");
             fail();
         }
-        catch (ProcessingException e) {
+        catch (NumberFormatException e) {
             // expected
         }
     }

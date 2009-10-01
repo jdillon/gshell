@@ -20,6 +20,7 @@
 package org.apache.gshell.cli.handler;
 
 import org.apache.gshell.cli.Descriptor;
+import org.apache.gshell.cli.ProcessingException;
 import org.apache.gshell.cli.setter.Setter;
 
 /**
@@ -28,9 +29,24 @@ import org.apache.gshell.cli.setter.Setter;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class StringHandler
-    extends ConverterHandlerSupport
+    extends Handler<String>
 {
-    public StringHandler(final Descriptor desc, final Setter setter) {
-        super(desc, setter, String.class, "STR");
+    public StringHandler(Descriptor desc, Setter<? super String> setter) {
+        super(desc, setter);
+    }
+
+    @Override
+    public int handle(final Parameters params) throws ProcessingException {
+        assert params != null;
+
+        String token = params.get(0);
+        getSetter().set(token);
+
+        return 1;
+    }
+
+    @Override
+    public String getDefaultToken() {
+        return "VAL";
     }
 }

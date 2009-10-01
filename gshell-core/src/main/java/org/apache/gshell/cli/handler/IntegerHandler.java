@@ -20,6 +20,7 @@
 package org.apache.gshell.cli.handler;
 
 import org.apache.gshell.cli.Descriptor;
+import org.apache.gshell.cli.ProcessingException;
 import org.apache.gshell.cli.setter.Setter;
 
 /**
@@ -28,9 +29,25 @@ import org.apache.gshell.cli.setter.Setter;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class IntegerHandler
-    extends ConverterHandlerSupport
+    extends Handler<Integer>
 {
-    public IntegerHandler(final Descriptor desc, final Setter setter) {
-        super(desc, setter, Integer.class, "N");
+    public IntegerHandler(final Descriptor desc, final Setter<? super Integer> setter) {
+        super(desc, setter);
+    }
+
+    @Override
+    public int handle(final Parameters params) throws ProcessingException {
+        assert params != null;
+
+        String token = params.get(0);
+        int value = Integer.parseInt(token);
+        getSetter().set(value);
+
+        return 1;
+    }
+
+    @Override
+    public String getDefaultToken() {
+        return "N";
     }
 }
