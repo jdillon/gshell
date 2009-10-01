@@ -23,7 +23,7 @@ import org.apache.gshell.command.Command;
 import org.apache.gshell.command.CommandContext;
 import org.apache.gshell.command.CommandException;
 import org.apache.gshell.command.CommandSupport;
-import org.apache.gshell.command.OpaqueArguments;
+import org.apache.gshell.cli.OpaqueArguments;
 import org.apache.gshell.registry.AliasRegistry;
 import org.apache.gshell.registry.CommandRegistry;
 import org.apache.gshell.registry.CommandResolver;

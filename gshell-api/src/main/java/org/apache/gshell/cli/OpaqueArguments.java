@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.gshell.command;
+package org.apache.gshell.cli;
 
 /**
  * Marker to indicate that arguments to a command should not be pre-processed.
