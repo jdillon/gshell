@@ -21,7 +21,11 @@ package org.apache.gshell.core;
 
 import org.apache.gshell.Shell;
 import org.apache.gshell.core.guice.GuiceShellBuilder;
+import org.apache.gshell.core.guice.CoreModule;
 import org.apache.gshell.registry.CommandRegistrar;
+import com.google.inject.Injector;
+import com.google.inject.Guice;
+import com.google.inject.Stage;
 
 /**
  * Builds {@link org.apache.gshell.Shell} instances.
@@ -31,6 +35,10 @@ import org.apache.gshell.registry.CommandRegistrar;
 public class TestShellBuilder
     extends GuiceShellBuilder
 {
+    protected Injector createInjector() {
+        return Guice.createInjector(Stage.DEVELOPMENT, new CoreModule());
+    }
+
     protected void registerCommand(final String name, final String type) throws Exception {
         CommandRegistrar registrar = getInjector().getInstance(CommandRegistrar.class);
         registrar.registerCommand(name, type);

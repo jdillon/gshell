@@ -64,7 +64,7 @@ public class GuiceShellBuilder
 
     private final List<Completor> completers = new ArrayList<Completor>();
 
-    private Injector createInjector() {
+    protected Injector createInjector() {
         return Guice.createInjector(Stage.PRODUCTION, new CoreModule());
     }
 
