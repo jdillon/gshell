@@ -20,8 +20,6 @@
 package org.apache.gshell.core.commands;
 
 import org.apache.gshell.cli.ProcessingException;
-import org.apache.gshell.core.commands.UnaliasCommand;
-import org.apache.gshell.core.commands.CommandTestSupport;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 import org.junit.Test;

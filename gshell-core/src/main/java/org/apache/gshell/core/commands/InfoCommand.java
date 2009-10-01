@@ -19,26 +19,26 @@
 
 package org.apache.gshell.core.commands;
 
+import org.apache.gshell.Branding;
+import org.apache.gshell.VariableNames;
 import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.command.CommandContext;
 import org.apache.gshell.io.IO;
-import org.apache.gshell.Branding;
-import org.apache.gshell.VariableNames;
 import org.apache.gshell.util.Strings;
 import org.codehaus.plexus.component.annotations.Component;
 
-import java.util.Locale;
-import java.text.DecimalFormatSymbols;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.lang.management.OperatingSystemMXBean;
-import java.lang.management.ManagementFactory;
 import java.lang.management.ClassLoadingMXBean;
-import java.lang.management.MemoryMXBean;
-import java.lang.management.ThreadMXBean;
-import java.lang.management.RuntimeMXBean;
 import java.lang.management.GarbageCollectorMXBean;
+import java.lang.management.ManagementFactory;
+import java.lang.management.MemoryMXBean;
+import java.lang.management.OperatingSystemMXBean;
+import java.lang.management.RuntimeMXBean;
+import java.lang.management.ThreadMXBean;
 import java.lang.reflect.Method;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 //
 // From Apache Felix Karaf

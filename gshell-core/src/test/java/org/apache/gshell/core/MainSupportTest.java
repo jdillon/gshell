@@ -24,7 +24,6 @@ import org.apache.gshell.History;
 import org.apache.gshell.Shell;
 import org.apache.gshell.Variables;
 import org.apache.gshell.ansi.Ansi;
-import org.apache.gshell.core.MainSupport;
 import org.apache.gshell.io.IO;
 import org.apache.gshell.notification.ExitNotification;
 import org.apache.gshell.testsupport.TestUtil;

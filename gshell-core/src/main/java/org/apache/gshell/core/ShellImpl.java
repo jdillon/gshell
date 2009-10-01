@@ -30,21 +30,21 @@ import org.apache.gshell.console.Console;
 import org.apache.gshell.core.console.JLineConsole;
 import org.apache.gshell.core.console.JLineHistory;
 import org.apache.gshell.execute.CommandExecutor;
+import org.apache.gshell.io.Closer;
 import org.apache.gshell.io.IO;
 import org.apache.gshell.io.SystemInputOutputHijacker;
-import org.apache.gshell.io.Closer;
 import org.apache.gshell.notification.ExitNotification;
 import org.apache.gshell.terminal.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 

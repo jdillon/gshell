@@ -19,11 +19,9 @@
 
 package org.apache.gshell.core.parser.impl.visitor;
 
-import org.apache.gshell.util.Arguments;
 import org.apache.gshell.Shell;
 import org.apache.gshell.ShellHolder;
 import org.apache.gshell.Variables;
-import org.apache.gshell.util.Strings;
 import org.apache.gshell.core.parser.impl.ASTCommandLine;
 import org.apache.gshell.core.parser.impl.ASTExpression;
 import org.apache.gshell.core.parser.impl.ASTOpaqueString;
@@ -34,6 +32,8 @@ import org.apache.gshell.core.parser.impl.ParserVisitor;
 import org.apache.gshell.core.parser.impl.SimpleNode;
 import org.apache.gshell.execute.CommandExecutor;
 import org.apache.gshell.notification.ErrorNotification;
+import org.apache.gshell.util.Arguments;
+import org.apache.gshell.util.Strings;
 import org.codehaus.plexus.interpolation.AbstractValueSource;
 import org.codehaus.plexus.interpolation.InterpolationException;
 import org.codehaus.plexus.interpolation.Interpolator;

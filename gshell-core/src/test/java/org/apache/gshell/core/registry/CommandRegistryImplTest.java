@@ -19,11 +19,10 @@
 
 package org.apache.gshell.core.registry;
 
-import org.apache.gshell.command.CommandContext;
 import org.apache.gshell.command.CommandActionSupport;
+import org.apache.gshell.command.CommandContext;
 import org.apache.gshell.registry.CommandRegistry;
 import org.apache.gshell.testsupport.PlexusTestSupport;
-import org.apache.gshell.core.registry.CommandRegistryImpl;
 import org.junit.After;
 import static org.junit.Assert.fail;
 import org.junit.Before;

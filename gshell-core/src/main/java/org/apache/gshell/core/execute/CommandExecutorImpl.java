@@ -19,13 +19,11 @@
 
 package org.apache.gshell.core.execute;
 
-import org.apache.gshell.util.Arguments;
 import org.apache.gshell.Shell;
 import org.apache.gshell.ShellHolder;
 import org.apache.gshell.Variables;
-import org.apache.gshell.util.Strings;
-import org.apache.gshell.cli.Processor;
 import org.apache.gshell.cli.OpaqueArguments;
+import org.apache.gshell.cli.Processor;
 import org.apache.gshell.command.CommandAction;
 import org.apache.gshell.command.CommandContext;
 import org.apache.gshell.command.CommandDocumenter;
@@ -39,6 +37,8 @@ import org.apache.gshell.io.SystemInputOutputHijacker;
 import org.apache.gshell.notification.ErrorNotification;
 import org.apache.gshell.notification.ResultNotification;
 import org.apache.gshell.registry.CommandResolver;
+import org.apache.gshell.util.Arguments;
+import org.apache.gshell.util.Strings;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 import org.slf4j.Logger;

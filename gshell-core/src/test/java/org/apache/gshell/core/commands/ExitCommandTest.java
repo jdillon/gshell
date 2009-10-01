@@ -20,8 +20,6 @@
 package org.apache.gshell.core.commands;
 
 import org.apache.gshell.cli.ProcessingException;
-import org.apache.gshell.core.commands.ExitCommand;
-import org.apache.gshell.core.commands.CommandTestSupport;
 import org.apache.gshell.notification.ExitNotification;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;

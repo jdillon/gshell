@@ -22,7 +22,6 @@ package org.apache.gshell.core.registry;
 import org.apache.gshell.registry.AliasRegistry;
 import org.apache.gshell.registry.NoSuchAliasException;
 import org.apache.gshell.testsupport.PlexusTestSupport;
-import org.apache.gshell.core.registry.AliasRegistryImpl;
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

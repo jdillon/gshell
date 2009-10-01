@@ -20,14 +20,14 @@
 package org.apache.gshell.core.plexus;
 
 import jline.Completor;
+import org.apache.gshell.Branding;
+import org.apache.gshell.Shell;
+import org.apache.gshell.Variables;
 import org.apache.gshell.console.Console;
 import org.apache.gshell.core.ShellImpl;
 import org.apache.gshell.execute.CommandExecutor;
 import org.apache.gshell.io.IO;
 import org.apache.gshell.registry.CommandRegistrar;
-import org.apache.gshell.Branding;
-import org.apache.gshell.Variables;
-import org.apache.gshell.Shell;
 import org.codehaus.plexus.DefaultContainerConfiguration;
 import org.codehaus.plexus.DefaultPlexusContainer;
 import org.codehaus.plexus.PlexusContainer;

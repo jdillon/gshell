@@ -19,8 +19,6 @@
 
 package org.apache.gshell.core.commands;
 
-import org.apache.gshell.core.commands.EchoCommand;
-import org.apache.gshell.core.commands.CommandTestSupport;
 import org.junit.Test;
 
 /**

@@ -22,9 +22,9 @@ package org.apache.gshell;
 import jline.Completor;
 import org.apache.gshell.console.completer.AggregateCompleter;
 import org.apache.gshell.core.MainSupport;
-import org.apache.gshell.core.plexus.PlexusShellBuilder;
 import org.apache.gshell.core.console.ConsoleErrorHandlerImpl;
 import org.apache.gshell.core.console.ConsolePrompterImpl;
+import org.apache.gshell.core.plexus.PlexusShellBuilder;
 import org.codehaus.plexus.PlexusContainer;
 
 /**

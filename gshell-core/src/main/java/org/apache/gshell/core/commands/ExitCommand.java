@@ -20,8 +20,8 @@
 package org.apache.gshell.core.commands;
 
 import org.apache.gshell.cli.Argument;
-import org.apache.gshell.command.CommandContext;
 import org.apache.gshell.command.CommandActionSupport;
+import org.apache.gshell.command.CommandContext;
 import org.apache.gshell.notification.ExitNotification;
 import org.codehaus.plexus.component.annotations.Component;
 

@@ -19,11 +19,11 @@
 
 package org.apache.gshell.core.registry;
 
+import org.apache.gshell.cli.OpaqueArguments;
 import org.apache.gshell.command.CommandAction;
+import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.command.CommandContext;
 import org.apache.gshell.command.CommandException;
-import org.apache.gshell.command.CommandActionSupport;
-import org.apache.gshell.cli.OpaqueArguments;
 import org.apache.gshell.registry.AliasRegistry;
 import org.apache.gshell.registry.CommandRegistry;
 import org.apache.gshell.registry.CommandResolver;

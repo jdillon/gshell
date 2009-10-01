@@ -19,8 +19,6 @@
 
 package org.apache.gshell.core;
 
-import org.apache.gshell.core.BrandingSupport;
-
 import java.io.File;
 
 /**
