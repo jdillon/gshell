@@ -28,7 +28,7 @@ import com.google.inject.Guice;
 import com.google.inject.Stage;
 
 /**
- * Builds {@link org.apache.gshell.Shell} instances.
+ * Builds {@link org.apache.gshell.Shell} instances for testing.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
