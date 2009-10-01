@@ -19,13 +19,13 @@
 
 package org.apache.gshell.core;
 
-import org.apache.gshell.Shell;
-import org.apache.gshell.core.guice.GuiceShellBuilder;
-import org.apache.gshell.core.guice.CoreModule;
-import org.apache.gshell.registry.CommandRegistrar;
-import com.google.inject.Injector;
 import com.google.inject.Guice;
+import com.google.inject.Injector;
 import com.google.inject.Stage;
+import org.apache.gshell.Shell;
+import org.apache.gshell.core.guice.CoreModule;
+import org.apache.gshell.core.guice.GuiceShellBuilder;
+import org.apache.gshell.registry.CommandRegistrar;
 
 /**
  * Builds {@link org.apache.gshell.Shell} instances for testing.

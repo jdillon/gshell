@@ -17,9 +17,8 @@
  * under the License.
  */
 
-package org.apache.gshell.command;
+package org.apache.gshell.util;
 
-import org.apache.gshell.util.Arguments;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 

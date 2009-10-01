@@ -19,6 +19,7 @@
 
 package org.apache.gshell.core.event;
 
+import com.google.inject.Singleton;
 import org.apache.gshell.event.EventListener;
 import org.apache.gshell.event.EventManager;
 import org.slf4j.Logger;
@@ -27,8 +28,6 @@ import org.slf4j.LoggerFactory;
 import java.util.EventObject;
 import java.util.LinkedHashSet;
 import java.util.Set;
-
-import com.google.inject.Singleton;
 
 /**
  * The default {@link EventManager} components.
