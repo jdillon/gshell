@@ -20,26 +20,26 @@
 package org.apache.gshell.core.guice;
 
 import com.google.inject.AbstractModule;
-import org.apache.gshell.registry.CommandRegistrar;
-import org.apache.gshell.registry.AliasRegistry;
-import org.apache.gshell.registry.CommandRegistry;
-import org.apache.gshell.registry.CommandResolver;
-import org.apache.gshell.execute.CommandLineParser;
-import org.apache.gshell.execute.CommandExecutor;
-import org.apache.gshell.core.parser.CommandLineParserImpl;
-import org.apache.gshell.core.event.EventManagerImpl;
-import org.apache.gshell.core.registry.AliasRegistryImpl;
-import org.apache.gshell.core.registry.CommandRegistryImpl;
-import org.apache.gshell.core.registry.CommandResolverImpl;
+import org.apache.gshell.command.CommandDocumenter;
 import org.apache.gshell.core.command.CommandDocumenterImpl;
-import org.apache.gshell.core.execute.CommandExecutorImpl;
 import org.apache.gshell.core.completer.AliasNameCompleter;
 import org.apache.gshell.core.completer.CommandNameCompleter;
 import org.apache.gshell.core.completer.CommandsCompleter;
 import org.apache.gshell.core.completer.FileNameCompleter;
 import org.apache.gshell.core.completer.VariableNameCompleter;
+import org.apache.gshell.core.event.EventManagerImpl;
+import org.apache.gshell.core.execute.CommandExecutorImpl;
+import org.apache.gshell.core.parser.CommandLineParserImpl;
+import org.apache.gshell.core.registry.AliasRegistryImpl;
+import org.apache.gshell.core.registry.CommandRegistryImpl;
+import org.apache.gshell.core.registry.CommandResolverImpl;
 import org.apache.gshell.event.EventManager;
-import org.apache.gshell.command.CommandDocumenter;
+import org.apache.gshell.execute.CommandExecutor;
+import org.apache.gshell.execute.CommandLineParser;
+import org.apache.gshell.registry.AliasRegistry;
+import org.apache.gshell.registry.CommandRegistrar;
+import org.apache.gshell.registry.CommandRegistry;
+import org.apache.gshell.registry.CommandResolver;
 
 /**
  * Mvnsh module.

@@ -19,13 +19,13 @@
 
 package org.apache.gshell.core.commands;
 
-import jline.Completor;
+import com.google.inject.Inject;
 import org.apache.gshell.Shell;
-import org.apache.gshell.core.completer.FileNameCompleter;
 import org.apache.gshell.cli.Argument;
 import org.apache.gshell.command.Command;
 import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.command.CommandContext;
+import org.apache.gshell.core.completer.FileNameCompleter;
 import org.apache.gshell.io.Closer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,9 +37,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
-
-import com.google.inject.Inject;
 
 /**
  * Read and execute commands from a file in the current shell environment.

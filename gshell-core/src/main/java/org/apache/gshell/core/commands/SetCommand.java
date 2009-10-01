@@ -19,13 +19,14 @@
 
 package org.apache.gshell.core.commands;
 
+import com.google.inject.Inject;
 import org.apache.gshell.Variables;
-import org.apache.gshell.core.completer.VariableNameCompleter;
 import org.apache.gshell.cli.Argument;
 import org.apache.gshell.cli.Option;
 import org.apache.gshell.command.Command;
 import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.command.CommandContext;
+import org.apache.gshell.core.completer.VariableNameCompleter;
 import org.apache.gshell.i18n.MessageSource;
 import org.apache.gshell.io.IO;
 import org.apache.gshell.util.Strings;
@@ -35,8 +36,6 @@ import org.slf4j.LoggerFactory;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
-
-import com.google.inject.Inject;
 
 /**
  * Set a variable or property.

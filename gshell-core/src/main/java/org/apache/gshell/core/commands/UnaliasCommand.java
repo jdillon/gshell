@@ -19,19 +19,15 @@
 
 package org.apache.gshell.core.commands;
 
-import jline.Completor;
+import com.google.inject.Inject;
 import org.apache.gshell.cli.Argument;
 import org.apache.gshell.command.Command;
 import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.command.CommandContext;
+import org.apache.gshell.core.completer.AliasNameCompleter;
 import org.apache.gshell.io.IO;
 import org.apache.gshell.registry.AliasRegistry;
 import org.apache.gshell.registry.NoSuchAliasException;
-import org.apache.gshell.core.completer.AliasNameCompleter;
-
-import java.util.List;
-
-import com.google.inject.Inject;
 
 /**
  * Undefine an alias.

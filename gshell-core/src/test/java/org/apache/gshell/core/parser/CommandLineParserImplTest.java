@@ -19,15 +19,15 @@
 
 package org.apache.gshell.core.parser;
 
+import com.google.inject.AbstractModule;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Stage;
 import org.apache.gshell.execute.CommandLineParser;
 import org.junit.After;
 import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
-import com.google.inject.AbstractModule;
-import com.google.inject.Stage;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 
 /**
  * Unit tests for the {@link CommandLineParserImpl} class.

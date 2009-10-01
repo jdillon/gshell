@@ -19,6 +19,7 @@
 
 package org.apache.gshell.core.completer;
 
+import com.google.inject.Inject;
 import jline.Completor;
 import org.apache.gshell.console.completer.StringsCompleter;
 import org.apache.gshell.core.registry.AliasRegisteredEvent;
@@ -30,8 +31,6 @@ import org.apache.gshell.registry.AliasRegistry;
 import java.util.Collection;
 import java.util.EventObject;
 import java.util.List;
-
-import com.google.inject.Inject;
 
 /**
  * {@link Completor} for alias names.

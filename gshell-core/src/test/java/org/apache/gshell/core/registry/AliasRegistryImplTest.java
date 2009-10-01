@@ -19,10 +19,14 @@
 
 package org.apache.gshell.core.registry;
 
-import org.apache.gshell.registry.AliasRegistry;
-import org.apache.gshell.registry.NoSuchAliasException;
+import com.google.inject.AbstractModule;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Stage;
 import org.apache.gshell.core.event.EventManagerImpl;
 import org.apache.gshell.event.EventManager;
+import org.apache.gshell.registry.AliasRegistry;
+import org.apache.gshell.registry.NoSuchAliasException;
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -33,11 +37,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Collection;
-
-import com.google.inject.AbstractModule;
-import com.google.inject.Stage;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 
 /**
  * Tests for the {@link AliasRegistryImpl}.

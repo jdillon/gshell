@@ -19,6 +19,7 @@
 
 package org.apache.gshell.core.commands;
 
+import com.google.inject.Injector;
 import org.apache.gshell.Shell;
 import org.apache.gshell.VariableNames;
 import org.apache.gshell.Variables;
@@ -41,8 +42,6 @@ import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import com.google.inject.Injector;
 
 /**
  * Support for testing {@link org.apache.gshell.command.CommandAction} instances.

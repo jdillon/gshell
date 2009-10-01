@@ -19,6 +19,8 @@
 
 package org.apache.gshell.core.registry;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import org.apache.gshell.command.CommandAction;
 import org.apache.gshell.command.NameAware;
 import org.apache.gshell.event.EventManager;
@@ -32,9 +34,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 /**
  * The default {@link org.apache.gshell.registry.CommandRegistry} component.

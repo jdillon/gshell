@@ -19,6 +19,7 @@
 
 package org.apache.gshell.core.completer;
 
+import com.google.inject.Inject;
 import jline.ArgumentCompletor;
 import jline.Completor;
 import org.apache.gshell.command.CommandAction;
@@ -39,8 +40,6 @@ import java.util.EventObject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.google.inject.Inject;
 
 /**
  * {@link Completor} for commands, including support for command-specific sub-completion.

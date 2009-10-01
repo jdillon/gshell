@@ -19,6 +19,7 @@
 
 package org.apache.gshell.core.commands;
 
+import com.google.inject.Inject;
 import org.apache.gshell.cli.Argument;
 import org.apache.gshell.command.Command;
 import org.apache.gshell.command.CommandActionSupport;
@@ -29,8 +30,6 @@ import org.apache.gshell.util.Strings;
 
 import java.util.Collection;
 import java.util.List;
-
-import com.google.inject.Inject;
 
 /**
  * Define an alias or list defined aliases.

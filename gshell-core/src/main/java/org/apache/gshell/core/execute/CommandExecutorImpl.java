@@ -19,6 +19,7 @@
 
 package org.apache.gshell.core.execute;
 
+import com.google.inject.Inject;
 import org.apache.gshell.Shell;
 import org.apache.gshell.ShellHolder;
 import org.apache.gshell.Variables;
@@ -42,7 +43,6 @@ import org.apache.gshell.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
-import com.google.inject.Inject;
 
 /**
  * The default {@link org.apache.gshell.execute.CommandExecutor} component.

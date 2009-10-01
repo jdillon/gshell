@@ -19,19 +19,19 @@
 
 package org.apache.gshell.core.registry;
 
+import com.google.inject.AbstractModule;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Stage;
 import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.command.CommandContext;
-import org.apache.gshell.registry.CommandRegistry;
 import org.apache.gshell.core.event.EventManagerImpl;
 import org.apache.gshell.event.EventManager;
+import org.apache.gshell.registry.CommandRegistry;
 import org.junit.After;
 import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
-import com.google.inject.AbstractModule;
-import com.google.inject.Stage;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 
 /**
  * Tests for the {@link CommandRegistryImpl}.

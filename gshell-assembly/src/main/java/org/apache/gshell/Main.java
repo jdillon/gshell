@@ -19,14 +19,14 @@
 
 package org.apache.gshell;
 
+import com.google.inject.Injector;
 import org.apache.gshell.console.completer.AggregateCompleter;
 import org.apache.gshell.core.MainSupport;
 import org.apache.gshell.core.completer.AliasNameCompleter;
 import org.apache.gshell.core.completer.CommandsCompleter;
-import org.apache.gshell.core.guice.GuiceShellBuilder;
 import org.apache.gshell.core.console.ConsoleErrorHandlerImpl;
 import org.apache.gshell.core.console.ConsolePrompterImpl;
-import com.google.inject.Injector;
+import org.apache.gshell.core.guice.GuiceShellBuilder;
 
 /**
  * Command-line bootstrap for GShell (<tt>gsh</tt>).

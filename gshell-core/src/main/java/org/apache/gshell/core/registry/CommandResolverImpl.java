@@ -19,6 +19,7 @@
 
 package org.apache.gshell.core.registry;
 
+import com.google.inject.Inject;
 import org.apache.gshell.cli.OpaqueArguments;
 import org.apache.gshell.command.CommandAction;
 import org.apache.gshell.command.CommandActionSupport;
@@ -30,7 +31,6 @@ import org.apache.gshell.registry.CommandResolver;
 import org.apache.gshell.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.google.inject.Inject;
 
 /**
  * The default {@link org.apache.gshell.registry.CommandResolver} component.

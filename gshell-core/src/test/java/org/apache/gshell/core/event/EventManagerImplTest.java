@@ -19,6 +19,10 @@
 
 package org.apache.gshell.core.event;
 
+import com.google.inject.AbstractModule;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Stage;
 import org.apache.gshell.event.EventListener;
 import org.apache.gshell.event.EventManager;
 import org.junit.After;
@@ -28,11 +32,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.EventObject;
-
-import com.google.inject.AbstractModule;
-import com.google.inject.Stage;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 
 /**
  * Tests for the {@link org.apache.gshell.core.event.EventManagerImpl}.
