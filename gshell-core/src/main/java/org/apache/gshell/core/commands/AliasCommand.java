@@ -22,6 +22,7 @@ package org.apache.gshell.core.commands;
 import org.apache.gshell.cli.Argument;
 import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.command.CommandContext;
+import org.apache.gshell.command.Command;
 import org.apache.gshell.io.IO;
 import org.apache.gshell.registry.AliasRegistry;
 import org.apache.gshell.util.Strings;
@@ -38,6 +39,7 @@ import java.util.List;
  *
  * @since 2.0
  */
+@Command
 @Component(role=AliasCommand.class)
 public class AliasCommand
     extends CommandActionSupport

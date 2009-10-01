@@ -23,6 +23,7 @@ import org.apache.gshell.Branding;
 import org.apache.gshell.VariableNames;
 import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.command.CommandContext;
+import org.apache.gshell.command.Command;
 import org.apache.gshell.io.IO;
 import org.apache.gshell.util.Strings;
 import org.codehaus.plexus.component.annotations.Component;
@@ -51,6 +52,7 @@ import java.util.Locale;
  *
  * @since 2.0
  */
+@Command
 @Component(role=InfoCommand.class)
 public class InfoCommand
     extends CommandActionSupport

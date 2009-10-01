@@ -24,6 +24,7 @@ import org.apache.gshell.Shell;
 import org.apache.gshell.cli.Argument;
 import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.command.CommandContext;
+import org.apache.gshell.command.Command;
 import org.apache.gshell.io.IO;
 import org.codehaus.plexus.component.annotations.Component;
 
@@ -36,6 +37,7 @@ import java.util.List;
  *
  * @since 2.0
  */
+@Command
 @Component(role=RecallHistoryCommand.class)
 public class RecallHistoryCommand
     extends CommandActionSupport

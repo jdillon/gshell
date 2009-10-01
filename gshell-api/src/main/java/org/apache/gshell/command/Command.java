@@ -39,4 +39,5 @@ import java.lang.annotation.Inherited;
 @Target({ ElementType.TYPE })
 public @interface Command
 {
+    // TODO:
 }

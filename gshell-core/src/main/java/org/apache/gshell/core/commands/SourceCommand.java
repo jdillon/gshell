@@ -24,6 +24,7 @@ import org.apache.gshell.Shell;
 import org.apache.gshell.cli.Argument;
 import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.command.CommandContext;
+import org.apache.gshell.command.Command;
 import org.apache.gshell.io.Closer;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
@@ -46,6 +47,7 @@ import java.util.List;
  *
  * @since 2.0
  */
+@Command
 @Component(role=SourceCommand.class)
 public class SourceCommand
     extends CommandActionSupport

@@ -25,6 +25,7 @@ import org.apache.gshell.cli.Argument;
 import org.apache.gshell.cli.Option;
 import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.command.CommandContext;
+import org.apache.gshell.command.Command;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 import org.slf4j.Logger;
@@ -39,6 +40,7 @@ import java.util.List;
  *
  * @since 2.0
  */
+@Command
 @Component(role=UnsetCommand.class)
 public class UnsetCommand
     extends CommandActionSupport
