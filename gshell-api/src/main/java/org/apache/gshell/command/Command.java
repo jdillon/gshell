@@ -34,7 +34,6 @@ import java.lang.annotation.Inherited;
  * @since 2.0
  */
 @Documented
-@Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.TYPE })
 public @interface Command
