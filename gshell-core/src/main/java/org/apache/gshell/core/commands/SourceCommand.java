@@ -55,9 +55,10 @@ public class SourceCommand
     private String path;
 
     @Inject
-    public void installCompleters(final FileNameCompleter c1) {
+    public SourceCommand installCompleters(final FileNameCompleter c1) {
         assert c1 != null;
         setCompleters(c1, null);
+        return this;
     }
 
     public Object execute(final CommandContext context) throws Exception {

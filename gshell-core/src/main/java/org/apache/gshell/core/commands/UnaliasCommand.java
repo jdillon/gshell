@@ -52,9 +52,10 @@ public class UnaliasCommand
     }
 
     @Inject
-    public void installCompleters(final AliasNameCompleter c1) {
+    public UnaliasCommand installCompleters(final AliasNameCompleter c1) {
         assert c1 != null;
         setCompleters(c1, null);
+        return this;
     }
 
     public Object execute(final CommandContext context) {

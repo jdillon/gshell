@@ -69,9 +69,10 @@ public class SetCommand
     private List<String> values = null;
 
     @Inject
-    public void installCompleters(final VariableNameCompleter c1) {
+    public SetCommand installCompleters(final VariableNameCompleter c1) {
         assert c1 != null;
         setCompleters(c1, null);
+        return this;
     }
 
     public Object execute(final CommandContext context) throws Exception {

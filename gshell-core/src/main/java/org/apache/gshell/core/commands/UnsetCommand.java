@@ -53,9 +53,10 @@ public class UnsetCommand
     private List<String> args = null;
 
     @Inject
-    public void installCompleters(final VariableNameCompleter c1) {
+    public UnsetCommand installCompleters(final VariableNameCompleter c1) {
         assert c1 != null;
         setCompleters(c1, null);
+        return this;
     }
 
     public Object execute(final CommandContext context) throws Exception {

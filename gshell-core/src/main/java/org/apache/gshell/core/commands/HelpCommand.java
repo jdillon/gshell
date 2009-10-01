@@ -66,9 +66,10 @@ public class HelpCommand
     }
 
     @Inject
-    public void installCompleters(final AliasNameCompleter c1, final CommandNameCompleter c2) {
+    public HelpCommand installCompleters(final AliasNameCompleter c1, final CommandNameCompleter c2) {
         assert c1 != null;
         setCompleters(c1, c2, null);
+        return this;
     }
     
     public Object execute(final CommandContext context) throws Exception {

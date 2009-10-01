@@ -28,6 +28,8 @@ import java.util.EventObject;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import com.google.inject.Singleton;
+
 /**
  * The default {@link EventManager} components.
  *
@@ -35,6 +37,7 @@ import java.util.Set;
  *
  * @since 2.0
  */
+@Singleton
 public class EventManagerImpl
     implements EventManager
 {
