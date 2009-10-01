@@ -51,12 +51,6 @@
                 <artifactId>slf4j-log4j12</artifactId>
                 <version>1.5.8</version>
             </dependency>
-            
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>jcl-over-slf4j</artifactId>
-                <version>1.5.8</version>
-            </dependency>
 
             <dependency>
                 <groupId>jline</groupId>
