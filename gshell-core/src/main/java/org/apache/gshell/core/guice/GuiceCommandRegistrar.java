@@ -17,47 +17,46 @@
  * under the License.
  */
 
-package org.apache.gshell.core.plexus;
+package org.apache.gshell.core.guice;
 
+import com.google.inject.Inject;
+import com.google.inject.Injector;
 import org.apache.gshell.command.CommandAction;
 import org.apache.gshell.registry.CommandRegistrar;
 import org.apache.gshell.registry.CommandRegistrarSupport;
 import org.apache.gshell.registry.CommandRegistry;
-import org.codehaus.plexus.PlexusContainer;
-import org.codehaus.plexus.component.annotations.Component;
-import org.codehaus.plexus.component.annotations.Requirement;
 
 /**
- * Default implementation of the {@link org.apache.gshell.registry.CommandRegistrar}.
+ * Default implementation of the {@link CommandRegistrar}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 2.0
  */
-@Component(role=CommandRegistrar.class)
-public class PlexusCommandRegistrar
+public class GuiceCommandRegistrar
     extends CommandRegistrarSupport
 {
-    @Requirement
-    private PlexusContainer container;
+    private final Injector injector;
 
-    @Requirement
-    private CommandRegistry registry;
+    private final CommandRegistry registry;
 
-    public PlexusCommandRegistrar() {}
-    
-    public PlexusCommandRegistrar(final PlexusContainer container, final CommandRegistry registry) {
-        assert container != null;
+    @Inject
+    public GuiceCommandRegistrar(final CommandRegistry registry, final Injector injector) {
         assert registry != null;
-        this.container = container;
         this.registry = registry;
+        assert injector != null;
+        this.injector = injector;
     }
 
-    public void registerCommand(final String name, final String type) throws Exception {
+    @Override
+    public void registerCommand(final String name, final String classname) throws Exception {
         assert name != null;
-        assert type != null;
+        assert classname != null;
 
-        log.trace("Registering command: {} -> {}", name, type);
+        log.trace("Registering command: {} -> {}", name, classname);
 
-        CommandAction command = (CommandAction) container.lookup(type);
+        Class<CommandAction> type = (Class<CommandAction>)Thread.currentThread().getContextClassLoader().loadClass(classname);
+        CommandAction command = injector.getInstance(type);
         registry.registerCommand(name, command);
     }
 }

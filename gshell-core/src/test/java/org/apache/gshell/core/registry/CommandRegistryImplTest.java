@@ -22,11 +22,16 @@ package org.apache.gshell.core.registry;
 import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.command.CommandContext;
 import org.apache.gshell.registry.CommandRegistry;
-import org.apache.gshell.testsupport.PlexusTestSupport;
+import org.apache.gshell.core.event.EventManagerImpl;
+import org.apache.gshell.event.EventManager;
 import org.junit.After;
 import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
+import com.google.inject.AbstractModule;
+import com.google.inject.Stage;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
 /**
  * Tests for the {@link CommandRegistryImpl}.
@@ -35,21 +40,23 @@ import org.junit.Test;
  */
 public class CommandRegistryImplTest
 {
-    private PlexusTestSupport plexus;
-
-    private CommandRegistryImpl registry;
+    private CommandRegistry registry;
 
     @Before
     public void setUp() throws Exception {
-        plexus = new PlexusTestSupport(this);
-        registry = (CommandRegistryImpl)plexus.lookup(CommandRegistry.class);
+        Injector injector = Guice.createInjector(Stage.DEVELOPMENT, new AbstractModule() {
+            @Override
+            protected void configure() {
+                bind(EventManager.class).to(EventManagerImpl.class);
+                bind(CommandRegistry.class).to(CommandRegistryImpl.class);
+            }
+        });
+        registry = injector.getInstance(CommandRegistry.class);
     }
 
     @After
     public void tearDown() {
         registry = null;
-        plexus.destroy();
-        plexus = null;
     }
 
     @Test

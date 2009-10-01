@@ -20,7 +20,7 @@
 package org.apache.gshell.core;
 
 import org.apache.gshell.Shell;
-import org.apache.gshell.core.plexus.PlexusShellBuilder;
+import org.apache.gshell.core.guice.GuiceShellBuilder;
 import org.apache.gshell.registry.CommandRegistrar;
 
 /**
@@ -29,10 +29,10 @@ import org.apache.gshell.registry.CommandRegistrar;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class TestShellBuilder
-    extends PlexusShellBuilder
+    extends GuiceShellBuilder
 {
     protected void registerCommand(final String name, final String type) throws Exception {
-        CommandRegistrar registrar = getContainer().lookup(CommandRegistrar.class);
+        CommandRegistrar registrar = getInjector().getInstance(CommandRegistrar.class);
         registrar.registerCommand(name, type);
     }
 

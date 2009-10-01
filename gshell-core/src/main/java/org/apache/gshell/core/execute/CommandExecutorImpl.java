@@ -39,11 +39,10 @@ import org.apache.gshell.notification.ResultNotification;
 import org.apache.gshell.registry.CommandResolver;
 import org.apache.gshell.util.Arguments;
 import org.apache.gshell.util.Strings;
-import org.codehaus.plexus.component.annotations.Component;
-import org.codehaus.plexus.component.annotations.Requirement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
+import com.google.inject.Inject;
 
 /**
  * The default {@link org.apache.gshell.execute.CommandExecutor} component.
@@ -52,30 +51,23 @@ import org.slf4j.MDC;
  *
  * @since 2.0
  */
-@Component(role= CommandExecutor.class)
 public class CommandExecutorImpl
     implements CommandExecutor
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Requirement
-    private CommandResolver resolver;
+    private final CommandResolver resolver;
 
-    @Requirement
-    private CommandLineParser parser;
+    private final CommandLineParser parser;
 
-    @Requirement
-    private CommandDocumenter documeter;
+    private final CommandDocumenter documeter;
 
-    public CommandExecutorImpl() {}
-
+    @Inject
     public CommandExecutorImpl(final CommandResolver resolver, final CommandLineParser parser, final CommandDocumenter documenter) {
         assert resolver != null;
         this.resolver = resolver;
-
         assert parser != null;
         this.parser = parser;
-
         assert documenter != null;
         this.documeter = documenter;
     }

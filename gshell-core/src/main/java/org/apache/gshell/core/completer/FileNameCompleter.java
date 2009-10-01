@@ -23,7 +23,6 @@ import jline.Completor;
 import org.apache.gshell.ShellHolder;
 import org.apache.gshell.VariableNames;
 import org.apache.gshell.Variables;
-import org.codehaus.plexus.component.annotations.Component;
 
 import java.io.File;
 import java.util.Collections;
@@ -36,7 +35,6 @@ import java.util.List;
  *
  * @since 2.0
  */
-@Component(role=Completor.class, hint="file-name")
 public class FileNameCompleter
     implements Completor, VariableNames
 {

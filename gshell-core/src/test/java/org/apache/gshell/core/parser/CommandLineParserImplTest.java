@@ -20,11 +20,14 @@
 package org.apache.gshell.core.parser;
 
 import org.apache.gshell.execute.CommandLineParser;
-import org.apache.gshell.testsupport.PlexusTestSupport;
 import org.junit.After;
 import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
+import com.google.inject.AbstractModule;
+import com.google.inject.Stage;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
 /**
  * Unit tests for the {@link CommandLineParserImpl} class.
@@ -33,27 +36,28 @@ import org.junit.Test;
  */
 public class CommandLineParserImplTest
 {
-    private PlexusTestSupport plexus;
-
-    private CommandLineParserImpl clp;
+    private CommandLineParser parser;
 
     @Before
     public void setUp() throws Exception {
-        plexus = new PlexusTestSupport(this);
-        clp = (CommandLineParserImpl)plexus.lookup(CommandLineParser.class);
+        Injector injector = Guice.createInjector(Stage.DEVELOPMENT, new AbstractModule() {
+            @Override
+            protected void configure() {
+                bind(CommandLineParser.class).to(CommandLineParserImpl.class);
+            }
+        });
+        parser = injector.getInstance(CommandLineParser.class);
     }
 
     @After
     public void tearDown() {
-        clp = null;
-        plexus.destroy();
-        plexus = null;
+        parser = null;
     }
 
     @Test
     public void testParseNull() throws Exception {
         try {
-            clp.parse(null);
+            parser.parse(null);
             fail();
         }
         catch (AssertionError expected) {

@@ -25,8 +25,6 @@ import org.apache.gshell.event.EventManager;
 import org.apache.gshell.registry.CommandRegistry;
 import org.apache.gshell.registry.DuplicateCommandException;
 import org.apache.gshell.registry.NoSuchCommandException;
-import org.codehaus.plexus.component.annotations.Component;
-import org.codehaus.plexus.component.annotations.Requirement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,6 +33,9 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+
 /**
  * The default {@link org.apache.gshell.registry.CommandRegistry} component.
  *
@@ -42,7 +43,7 @@ import java.util.Map;
  *
  * @since 2.0
  */
-@Component(role= CommandRegistry.class)
+@Singleton
 public class CommandRegistryImpl
     implements CommandRegistry
 {
@@ -50,11 +51,9 @@ public class CommandRegistryImpl
 
     private final Map<String, CommandAction> commands = new LinkedHashMap<String, CommandAction>();
 
-    @Requirement
-    private EventManager eventManager;
+    private final EventManager eventManager;
 
-    public CommandRegistryImpl() {}
-
+    @Inject
     public CommandRegistryImpl(final EventManager eventManager) {
         assert eventManager != null;
         this.eventManager = eventManager;

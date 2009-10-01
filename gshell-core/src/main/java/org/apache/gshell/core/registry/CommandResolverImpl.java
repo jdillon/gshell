@@ -28,10 +28,9 @@ import org.apache.gshell.registry.AliasRegistry;
 import org.apache.gshell.registry.CommandRegistry;
 import org.apache.gshell.registry.CommandResolver;
 import org.apache.gshell.util.Strings;
-import org.codehaus.plexus.component.annotations.Component;
-import org.codehaus.plexus.component.annotations.Requirement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.google.inject.Inject;
 
 /**
  * The default {@link org.apache.gshell.registry.CommandResolver} component.
@@ -40,24 +39,19 @@ import org.slf4j.LoggerFactory;
  *
  * @since 2.0
  */
-@Component(role= CommandResolver.class)
 public class CommandResolverImpl
     implements CommandResolver
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Requirement
-    private AliasRegistry aliasRegistry;
+    private final AliasRegistry aliasRegistry;
 
-    @Requirement
-    private CommandRegistry commandRegistry;
+    private final CommandRegistry commandRegistry;
 
-    public CommandResolverImpl() {}
-    
+    @Inject
     public CommandResolverImpl(final AliasRegistry aliasRegistry, final CommandRegistry commandRegistry) {
         assert aliasRegistry != null;
         this.aliasRegistry = aliasRegistry;
-
         assert commandRegistry != null;
         this.commandRegistry = commandRegistry;
     }

@@ -26,12 +26,12 @@ import org.apache.gshell.core.registry.CommandRemovedEvent;
 import org.apache.gshell.event.EventListener;
 import org.apache.gshell.event.EventManager;
 import org.apache.gshell.registry.CommandRegistry;
-import org.codehaus.plexus.component.annotations.Component;
-import org.codehaus.plexus.component.annotations.Requirement;
 
 import java.util.Collection;
 import java.util.EventObject;
 import java.util.List;
+
+import com.google.inject.Inject;
 
 /**
  * {@link Completor} for command names.
@@ -42,22 +42,18 @@ import java.util.List;
  *
  * @since 2.0
  */
-@Component(role=Completor.class, hint="command-name")
 public class CommandNameCompleter
     implements Completor
 {
-    @Requirement
-    private EventManager eventManager;
+    private final EventManager eventManager;
 
-    @Requirement
-    private CommandRegistry commandRegistry;
+    private final CommandRegistry commandRegistry;
 
     private final StringsCompleter delegate = new StringsCompleter();
 
     private boolean initialized;
 
-    public CommandNameCompleter() {}
-
+    @Inject
     public CommandNameCompleter(final EventManager eventManager, final CommandRegistry commandRegistry) {
         assert eventManager != null;
         this.eventManager = eventManager;

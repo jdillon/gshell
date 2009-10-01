@@ -23,7 +23,6 @@ import jline.Completor;
 import org.apache.gshell.ShellHolder;
 import org.apache.gshell.Variables;
 import org.apache.gshell.console.completer.StringsCompleter;
-import org.codehaus.plexus.component.annotations.Component;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -36,7 +35,6 @@ import java.util.List;
  *
  * @since 2.0
  */
-@Component(role=Completor.class, hint="variable-name")
 public class VariableNameCompleter
     implements Completor
 {

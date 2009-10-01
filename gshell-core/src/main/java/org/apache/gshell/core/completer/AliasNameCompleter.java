@@ -26,12 +26,12 @@ import org.apache.gshell.core.registry.AliasRemovedEvent;
 import org.apache.gshell.event.EventListener;
 import org.apache.gshell.event.EventManager;
 import org.apache.gshell.registry.AliasRegistry;
-import org.codehaus.plexus.component.annotations.Component;
-import org.codehaus.plexus.component.annotations.Requirement;
 
 import java.util.Collection;
 import java.util.EventObject;
 import java.util.List;
+
+import com.google.inject.Inject;
 
 /**
  * {@link Completor} for alias names.
@@ -42,22 +42,18 @@ import java.util.List;
  *
  * @since 2.0
  */
-@Component(role=Completor.class, hint="alias-name")
 public class AliasNameCompleter
     implements Completor
 {
-    @Requirement
-    private EventManager eventManager;
+    private final EventManager eventManager;
 
-    @Requirement
-    private AliasRegistry aliasRegistry;
+    private final AliasRegistry aliasRegistry;
 
     private final StringsCompleter delegate = new StringsCompleter();
 
     private boolean initialized;
 
-    public AliasNameCompleter() {}
-    
+    @Inject
     public AliasNameCompleter(final EventManager eventManager, final AliasRegistry aliasRegistry) {
         assert eventManager != null;
         this.eventManager = eventManager;

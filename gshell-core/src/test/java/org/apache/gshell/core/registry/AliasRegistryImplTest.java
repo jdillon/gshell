@@ -21,7 +21,8 @@ package org.apache.gshell.core.registry;
 
 import org.apache.gshell.registry.AliasRegistry;
 import org.apache.gshell.registry.NoSuchAliasException;
-import org.apache.gshell.testsupport.PlexusTestSupport;
+import org.apache.gshell.core.event.EventManagerImpl;
+import org.apache.gshell.event.EventManager;
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -33,6 +34,11 @@ import org.junit.Test;
 
 import java.util.Collection;
 
+import com.google.inject.AbstractModule;
+import com.google.inject.Stage;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
 /**
  * Tests for the {@link AliasRegistryImpl}.
  *
@@ -40,21 +46,23 @@ import java.util.Collection;
  */
 public class AliasRegistryImplTest
 {
-    private PlexusTestSupport plexus;
-
-    private AliasRegistryImpl registry;
+    private AliasRegistry registry;
 
     @Before
     public void setUp() throws Exception {
-        plexus = new PlexusTestSupport(this);
-        registry = (AliasRegistryImpl)plexus.lookup(AliasRegistry.class);
+        Injector injector = Guice.createInjector(Stage.DEVELOPMENT, new AbstractModule() {
+            @Override
+            protected void configure() {
+                bind(EventManager.class).to(EventManagerImpl.class);
+                bind(AliasRegistry.class).to(AliasRegistryImpl.class);
+            }
+        });
+        registry = injector.getInstance(AliasRegistry.class);
     }
 
     @After
     public void tearDown() {
         registry = null;
-        plexus.destroy();
-        plexus = null;
     }
 
     @Test

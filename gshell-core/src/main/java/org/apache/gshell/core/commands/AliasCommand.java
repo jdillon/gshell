@@ -26,11 +26,11 @@ import org.apache.gshell.command.CommandContext;
 import org.apache.gshell.io.IO;
 import org.apache.gshell.registry.AliasRegistry;
 import org.apache.gshell.util.Strings;
-import org.codehaus.plexus.component.annotations.Component;
-import org.codehaus.plexus.component.annotations.Requirement;
 
 import java.util.Collection;
 import java.util.List;
+
+import com.google.inject.Inject;
 
 /**
  * Define an alias or list defined aliases.
@@ -40,12 +40,10 @@ import java.util.List;
  * @since 2.0
  */
 @Command
-@Component(role=AliasCommand.class)
 public class AliasCommand
     extends CommandActionSupport
 {
-    @Requirement
-    private AliasRegistry aliasRegistry;
+    private final AliasRegistry aliasRegistry;
     
     @Argument(index=0)
     private String name;
@@ -53,8 +51,7 @@ public class AliasCommand
     @Argument(index=1, multiValued=true)
     private List<String> target = null;
 
-    public AliasCommand() {}
-
+    @Inject
     public AliasCommand(final AliasRegistry aliasRegistry) {
         assert aliasRegistry != null;
         this.aliasRegistry = aliasRegistry;

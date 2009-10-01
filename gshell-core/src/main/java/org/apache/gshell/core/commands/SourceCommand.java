@@ -21,13 +21,12 @@ package org.apache.gshell.core.commands;
 
 import jline.Completor;
 import org.apache.gshell.Shell;
+import org.apache.gshell.core.completer.FileNameCompleter;
 import org.apache.gshell.cli.Argument;
 import org.apache.gshell.command.Command;
 import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.command.CommandContext;
 import org.apache.gshell.io.Closer;
-import org.codehaus.plexus.component.annotations.Component;
-import org.codehaus.plexus.component.annotations.Requirement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +39,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
+import com.google.inject.Inject;
+
 /**
  * Read and execute commands from a file in the current shell environment.
  *
@@ -48,25 +49,18 @@ import java.util.List;
  * @since 2.0
  */
 @Command
-@Component(role=SourceCommand.class)
 public class SourceCommand
     extends CommandActionSupport
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Requirement(role=Completor.class, hints={"file-name"})
-    private List<Completor> installCompleters;
-
     @Argument(required=true)
     private String path;
 
-    @Override
-    public Completor[] getCompleters() {
-        if (super.getCompleters() == null) {
-            setCompleters(installCompleters);
-        }
-
-        return super.getCompleters();
+    @Inject
+    public void installCompleters(final FileNameCompleter c1) {
+        assert c1 != null;
+        setCompleters(c1, null);
     }
 
     public Object execute(final CommandContext context) throws Exception {

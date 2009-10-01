@@ -21,7 +21,6 @@ package org.apache.gshell.core.event;
 
 import org.apache.gshell.event.EventListener;
 import org.apache.gshell.event.EventManager;
-import org.apache.gshell.testsupport.PlexusTestSupport;
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -30,6 +29,11 @@ import org.junit.Test;
 
 import java.util.EventObject;
 
+import com.google.inject.AbstractModule;
+import com.google.inject.Stage;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
 /**
  * Tests for the {@link org.apache.gshell.core.event.EventManagerImpl}.
  *
@@ -37,16 +41,19 @@ import java.util.EventObject;
  */
 public class EventManagerImplTest
 {
-    private PlexusTestSupport plexus;
-
-    private EventManagerImpl manager;
+    private EventManager manager;
 
     private MockEventListener listener;
 
     @Before
     public void setUp() throws Exception {
-        plexus = new PlexusTestSupport(this);
-        manager = (EventManagerImpl)plexus.lookup(EventManager.class);
+        Injector injector = Guice.createInjector(Stage.DEVELOPMENT, new AbstractModule() {
+            @Override
+            protected void configure() {
+                bind(EventManager.class).to(EventManagerImpl.class);
+            }
+        });
+        manager = injector.getInstance(EventManager.class);
         listener = new MockEventListener();
     }
 
@@ -54,8 +61,6 @@ public class EventManagerImplTest
     public void tearDown() {
         manager = null;
         listener = null;
-        plexus.destroy();
-        plexus = null;
     }
 
     @Test

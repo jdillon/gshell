@@ -27,7 +27,6 @@ import org.apache.gshell.core.parser.impl.visitor.LoggingVisitor;
 import org.apache.gshell.execute.CommandExecutor;
 import org.apache.gshell.execute.CommandLineParser;
 import org.apache.gshell.io.Closer;
-import org.codehaus.plexus.component.annotations.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,7 +40,6 @@ import java.io.StringReader;
  *
  * @since 2.0
  */
-@Component(role= CommandLineParser.class)
 public class CommandLineParserImpl
     implements CommandLineParser
 {

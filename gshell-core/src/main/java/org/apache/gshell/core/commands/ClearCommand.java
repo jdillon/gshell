@@ -25,7 +25,6 @@ import org.apache.gshell.command.Command;
 import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.command.CommandContext;
 import org.apache.gshell.io.IO;
-import org.codehaus.plexus.component.annotations.Component;
 
 /**
  * Clear the terminal screen.
@@ -35,7 +34,6 @@ import org.codehaus.plexus.component.annotations.Component;
  * @since 2.0
  */
 @Command
-@Component(role=ClearCommand.class)
 public class ClearCommand
     extends CommandActionSupport
 {

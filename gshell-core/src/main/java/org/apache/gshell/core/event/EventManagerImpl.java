@@ -21,7 +21,6 @@ package org.apache.gshell.core.event;
 
 import org.apache.gshell.event.EventListener;
 import org.apache.gshell.event.EventManager;
-import org.codehaus.plexus.component.annotations.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +35,6 @@ import java.util.Set;
  *
  * @since 2.0
  */
-@Component(role=EventManager.class)
 public class EventManagerImpl
     implements EventManager
 {

@@ -32,7 +32,6 @@ import org.apache.gshell.i18n.PrefixingMessageSource;
 import org.apache.gshell.i18n.ResourceBundleMessageSource;
 import org.apache.gshell.io.IO;
 import org.apache.gshell.io.PrefixingOutputStream;
-import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.interpolation.AbstractValueSource;
 import org.codehaus.plexus.interpolation.InterpolationException;
 import org.codehaus.plexus.interpolation.Interpolator;
@@ -51,7 +50,6 @@ import java.io.PrintStream;
  *
  * @since 2.0
  */
-@Component(role= CommandDocumenter.class)
 public class CommandDocumenterImpl
     implements CommandDocumenter
 {

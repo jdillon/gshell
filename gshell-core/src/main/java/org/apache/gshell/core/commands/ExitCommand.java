@@ -24,7 +24,6 @@ import org.apache.gshell.command.Command;
 import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.command.CommandContext;
 import org.apache.gshell.notification.ExitNotification;
-import org.codehaus.plexus.component.annotations.Component;
 
 /**
  * Exit the current shell.
@@ -34,7 +33,6 @@ import org.codehaus.plexus.component.annotations.Component;
  * @since 2.0
  */
 @Command
-@Component(role=ExitCommand.class)
 public class ExitCommand
     extends CommandActionSupport
 {

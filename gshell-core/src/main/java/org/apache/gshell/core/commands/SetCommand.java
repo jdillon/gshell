@@ -19,8 +19,8 @@
 
 package org.apache.gshell.core.commands;
 
-import jline.Completor;
 import org.apache.gshell.Variables;
+import org.apache.gshell.core.completer.VariableNameCompleter;
 import org.apache.gshell.cli.Argument;
 import org.apache.gshell.cli.Option;
 import org.apache.gshell.command.Command;
@@ -29,14 +29,14 @@ import org.apache.gshell.command.CommandContext;
 import org.apache.gshell.i18n.MessageSource;
 import org.apache.gshell.io.IO;
 import org.apache.gshell.util.Strings;
-import org.codehaus.plexus.component.annotations.Component;
-import org.codehaus.plexus.component.annotations.Requirement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
+
+import com.google.inject.Inject;
 
 /**
  * Set a variable or property.
@@ -46,20 +46,16 @@ import java.util.Properties;
  * @since 2.0
  */
 @Command
-@Component(role=SetCommand.class)
 public class SetCommand
     extends CommandActionSupport
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private enum Mode
+    enum Mode
     {
         VARIABLE,
         PROPERTY
     }
-
-    @Requirement(role=Completor.class, hints={"variable-name"})
-    private List<Completor> installCompleters;
 
     @Option(name="-m", aliases={"--mode"})
     private Mode mode = Mode.VARIABLE;
@@ -73,15 +69,12 @@ public class SetCommand
     @Argument(index=1, multiValued=true)
     private List<String> values = null;
 
-    @Override
-    public Completor[] getCompleters() {
-        if (super.getCompleters() == null) {
-            setCompleters(installCompleters);
-        }
-
-        return super.getCompleters();
+    @Inject
+    public void installCompleters(final VariableNameCompleter c1) {
+        assert c1 != null;
+        setCompleters(c1, null);
     }
-    
+
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
         IO io = context.getIo();

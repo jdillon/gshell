@@ -22,8 +22,6 @@ package org.apache.gshell.core.registry;
 import org.apache.gshell.event.EventManager;
 import org.apache.gshell.registry.AliasRegistry;
 import org.apache.gshell.registry.NoSuchAliasException;
-import org.codehaus.plexus.component.annotations.Component;
-import org.codehaus.plexus.component.annotations.Requirement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,6 +30,9 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+
 /**
  * The default {@link org.apache.gshell.registry.AliasRegistry} component.
  *
@@ -39,7 +40,7 @@ import java.util.Map;
  *
  * @since 2.0
  */
-@Component(role= AliasRegistry.class)
+@Singleton
 public class AliasRegistryImpl
     implements AliasRegistry
 {
@@ -47,11 +48,9 @@ public class AliasRegistryImpl
 
     private final Map<String,String> aliases = new LinkedHashMap<String,String>();
 
-    @Requirement
-    private EventManager eventManager;
+    private final EventManager eventManager;
 
-    public AliasRegistryImpl() {}
-
+    @Inject
     public AliasRegistryImpl(final EventManager eventManager) {
         assert eventManager != null;
         this.eventManager = eventManager;

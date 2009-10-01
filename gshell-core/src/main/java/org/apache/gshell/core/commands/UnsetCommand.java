@@ -19,19 +19,20 @@
 
 package org.apache.gshell.core.commands;
 
-import jline.Completor;
 import org.apache.gshell.Variables;
+import org.apache.gshell.core.completer.VariableNameCompleter;
 import org.apache.gshell.cli.Argument;
 import org.apache.gshell.cli.Option;
 import org.apache.gshell.command.Command;
 import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.command.CommandContext;
-import org.codehaus.plexus.component.annotations.Component;
-import org.codehaus.plexus.component.annotations.Requirement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.apache.gshell.core.commands.SetCommand.Mode;
 
 import java.util.List;
+
+import com.google.inject.Inject;
 
 /**
  * Unset a variable or property.
@@ -41,20 +42,10 @@ import java.util.List;
  * @since 2.0
  */
 @Command
-@Component(role=UnsetCommand.class)
 public class UnsetCommand
     extends CommandActionSupport
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
-
-    private enum Mode
-    {
-        VARIABLE,
-        PROPERTY
-    }
-
-    @Requirement(role=Completor.class, hints={"variable-name"})
-    private List<Completor> installCompleters;
 
     @Option(name="-m", aliases={"--mode"})
     private Mode mode = Mode.VARIABLE;
@@ -62,13 +53,10 @@ public class UnsetCommand
     @Argument(required=true)
     private List<String> args = null;
 
-    @Override
-    public Completor[] getCompleters() {
-        if (super.getCompleters() == null) {
-            setCompleters(installCompleters);
-        }
-
-        return super.getCompleters();
+    @Inject
+    public void installCompleters(final VariableNameCompleter c1) {
+        assert c1 != null;
+        setCompleters(c1, null);
     }
 
     public Object execute(final CommandContext context) throws Exception {

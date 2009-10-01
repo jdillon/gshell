@@ -27,10 +27,11 @@ import org.apache.gshell.command.CommandContext;
 import org.apache.gshell.io.IO;
 import org.apache.gshell.registry.AliasRegistry;
 import org.apache.gshell.registry.NoSuchAliasException;
-import org.codehaus.plexus.component.annotations.Component;
-import org.codehaus.plexus.component.annotations.Requirement;
+import org.apache.gshell.core.completer.AliasNameCompleter;
 
 import java.util.List;
+
+import com.google.inject.Inject;
 
 /**
  * Undefine an alias.
@@ -40,35 +41,26 @@ import java.util.List;
  * @since 2.0
  */
 @Command
-@Component(role=UnaliasCommand.class)
 public class UnaliasCommand
     extends CommandActionSupport
 {
-    @Requirement
-    private AliasRegistry aliasRegistry;
-
-    @Requirement(role=Completor.class, hints={"variable-name"})
-    private List<Completor> installCompleters;
+    private final AliasRegistry aliasRegistry;
 
     @Argument(index=0, required=true)
     private String name;
 
-    public UnaliasCommand() {}
-
+    @Inject
     public UnaliasCommand(final AliasRegistry aliasRegistry) {
         assert aliasRegistry != null;
         this.aliasRegistry = aliasRegistry;
     }
 
-    @Override
-    public Completor[] getCompleters() {
-        if (super.getCompleters() == null) {
-            setCompleters(installCompleters);
-        }
-
-        return super.getCompleters();
+    @Inject
+    public void installCompleters(final AliasNameCompleter c1) {
+        assert c1 != null;
+        setCompleters(c1, null);
     }
-    
+
     public Object execute(final CommandContext context) {
         assert context != null;
         IO io = context.getIo();

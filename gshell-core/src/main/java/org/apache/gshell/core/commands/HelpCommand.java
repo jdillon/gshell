@@ -19,7 +19,6 @@
 
 package org.apache.gshell.core.commands;
 
-import jline.Completor;
 import org.apache.gshell.cli.Argument;
 import org.apache.gshell.command.Command;
 import org.apache.gshell.command.CommandAction;
@@ -29,12 +28,13 @@ import org.apache.gshell.command.CommandDocumenter;
 import org.apache.gshell.io.IO;
 import org.apache.gshell.registry.AliasRegistry;
 import org.apache.gshell.registry.CommandRegistry;
-import org.codehaus.plexus.component.annotations.Component;
-import org.codehaus.plexus.component.annotations.Requirement;
+import org.apache.gshell.core.completer.AliasNameCompleter;
+import org.apache.gshell.core.completer.CommandNameCompleter;
 
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.List;
+
+import com.google.inject.Inject;
 
 /**
  * Display command help.
@@ -44,34 +44,32 @@ import java.util.List;
  * @since 2.0
  */
 @Command
-@Component(role=HelpCommand.class)
 public class HelpCommand
     extends CommandActionSupport
 {
-    @Requirement
     private AliasRegistry aliasRegistry;
 
-    @Requirement
     private CommandRegistry commandRegistry;
 
-    @Requirement
     private CommandDocumenter commandDocumeter;
-
-    @Requirement(role=Completor.class, hints={"alias-name", "command-name"})
-    private List<Completor> installCompleters;
 
     @Argument
     private String commandName;
 
-    public HelpCommand() {}
+    @Inject
+    public HelpCommand(final AliasRegistry aliasRegistry, final CommandRegistry commandRegistry, final CommandDocumenter commandDocumeter) {
+        assert aliasRegistry != null;
+        this.aliasRegistry = aliasRegistry;
+        assert commandDocumeter != null;
+        this.commandDocumeter = commandDocumeter;
+        assert commandRegistry != null;
+        this.commandRegistry = commandRegistry;
+    }
 
-    @Override
-    public Completor[] getCompleters() {
-        if (super.getCompleters() == null) {
-            setCompleters(installCompleters);
-        }
-
-        return super.getCompleters();
+    @Inject
+    public void installCompleters(final AliasNameCompleter c1, final CommandNameCompleter c2) {
+        assert c1 != null;
+        setCompleters(c1, c2, null);
     }
     
     public Object execute(final CommandContext context) throws Exception {

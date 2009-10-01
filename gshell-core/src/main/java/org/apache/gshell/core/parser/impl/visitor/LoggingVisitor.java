@@ -27,7 +27,7 @@ import org.apache.gshell.core.parser.impl.ASTQuotedString;
 import org.apache.gshell.core.parser.impl.ASTWhitespace;
 import org.apache.gshell.core.parser.impl.ParserVisitor;
 import org.apache.gshell.core.parser.impl.SimpleNode;
-import org.codehaus.plexus.util.StringUtils;
+import org.apache.gshell.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -82,7 +82,7 @@ public class LoggingVisitor
                 break;
         }
 
-        StringBuilder buff = new StringBuilder(StringUtils.repeat(" ", indent));
+        StringBuilder buff = new StringBuilder(Strings.repeat(" ", indent));
 
         buff.append(node).append(" (").append(type.getName()).append(')');
         if (data != null) {

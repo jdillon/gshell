@@ -17,21 +17,20 @@
  * under the License.
  */
 
-package org.apache.gshell.core.plexus;
+package org.apache.gshell.core.guice;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Stage;
 import jline.Completor;
-import org.apache.gshell.Branding;
-import org.apache.gshell.Shell;
-import org.apache.gshell.Variables;
-import org.apache.gshell.console.Console;
+import org.apache.gshell.registry.CommandRegistrar;
 import org.apache.gshell.core.ShellImpl;
 import org.apache.gshell.execute.CommandExecutor;
+import org.apache.gshell.Shell;
+import org.apache.gshell.Variables;
+import org.apache.gshell.Branding;
 import org.apache.gshell.io.IO;
-import org.apache.gshell.registry.CommandRegistrar;
-import org.codehaus.plexus.DefaultContainerConfiguration;
-import org.codehaus.plexus.DefaultPlexusContainer;
-import org.codehaus.plexus.PlexusContainer;
-import org.codehaus.plexus.PlexusContainerException;
+import org.apache.gshell.console.Console;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,15 +38,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Builds {@link org.apache.gshell.Shell} instances using Plexus.
+ * Builds {@link org.apache.maven.shell.Shell} instances.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 2.0
  */
-public class PlexusShellBuilder
+public class GuiceShellBuilder
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private PlexusContainer container;
+    private Injector injector;
 
     private Branding branding;
 
@@ -63,49 +64,54 @@ public class PlexusShellBuilder
 
     private final List<Completor> completers = new ArrayList<Completor>();
 
-    public PlexusShellBuilder setContainer(final PlexusContainer container) {
-        this.container = container;
+    private Injector createInjector() {
+        return Guice.createInjector(Stage.PRODUCTION, new CoreModule());
+    }
+
+    public Injector getInjector() {
+        if (injector == null) {
+            injector = createInjector();
+        }
+        return injector;
+    }
+
+    public GuiceShellBuilder setInjector(final Injector injector) {
+        assert injector != null;
+        this.injector = injector;
         return this;
     }
 
-    public PlexusContainer getContainer() throws PlexusContainerException {
-        if (container == null) {
-            container = new DefaultPlexusContainer(new DefaultContainerConfiguration());
-        }
-        return container;
-    }
-
-    public PlexusShellBuilder setBranding(final Branding branding) {
+    public GuiceShellBuilder setBranding(final Branding branding) {
         this.branding = branding;
         return this;
     }
 
-    public PlexusShellBuilder setIo(final IO io) {
+    public GuiceShellBuilder setIo(final IO io) {
         this.io = io;
         return this;
     }
 
-    public PlexusShellBuilder setVariables(final Variables variables) {
+    public GuiceShellBuilder setVariables(final Variables variables) {
         this.variables = variables;
         return this;
     }
 
-    public PlexusShellBuilder setRegisterCommands(final boolean flag) {
+    public GuiceShellBuilder setRegisterCommands(final boolean flag) {
         this.registerCommands = flag;
         return this;
     }
 
-    public PlexusShellBuilder setPrompter(final Console.Prompter prompter) {
+    public GuiceShellBuilder setPrompter(final Console.Prompter prompter) {
         this.prompter = prompter;
         return this;
     }
 
-    public PlexusShellBuilder setErrorHandler(final Console.ErrorHandler errorHandler) {
+    public GuiceShellBuilder setErrorHandler(final Console.ErrorHandler errorHandler) {
         this.errorHandler = errorHandler;
         return this;
     }
 
-    public PlexusShellBuilder addCompleter(final Completor completer) {
+    public GuiceShellBuilder addCompleter(final Completor completer) {
         assert completer != null;
         completers.add(completer);
         return this;
@@ -116,8 +122,10 @@ public class PlexusShellBuilder
             throw new IllegalStateException("Missing branding");
         }
 
+        Injector injector = getInjector();
+
         // Create the shell instance
-        CommandExecutor executor = container.lookup(CommandExecutor.class);
+        CommandExecutor executor = injector.getInstance(CommandExecutor.class);
         ShellImpl shell = new ShellImpl(branding, executor, io, variables);
         shell.setPrompter(prompter);
         shell.setErrorHandler(errorHandler);
@@ -125,7 +133,7 @@ public class PlexusShellBuilder
 
         // Maybe register default commands
         if (registerCommands) {
-            getContainer().lookup(CommandRegistrar.class).registerCommands();
+            injector.getInstance(CommandRegistrar.class).registerCommands();
         }
 
         log.debug("Created shell: {}", shell);

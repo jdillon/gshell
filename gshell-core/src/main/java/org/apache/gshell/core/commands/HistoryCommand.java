@@ -26,7 +26,6 @@ import org.apache.gshell.command.Command;
 import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.command.CommandContext;
 import org.apache.gshell.io.IO;
-import org.codehaus.plexus.component.annotations.Component;
 
 import java.util.List;
 
@@ -38,7 +37,6 @@ import java.util.List;
  * @since 2.0
  */
 @Command
-@Component(role=HistoryCommand.class)
 public class HistoryCommand
     extends CommandActionSupport
 {

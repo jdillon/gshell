@@ -30,8 +30,6 @@ import org.apache.gshell.core.registry.CommandRemovedEvent;
 import org.apache.gshell.event.EventListener;
 import org.apache.gshell.event.EventManager;
 import org.apache.gshell.registry.CommandRegistry;
-import org.codehaus.plexus.component.annotations.Component;
-import org.codehaus.plexus.component.annotations.Requirement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,6 +40,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.inject.Inject;
+
 /**
  * {@link Completor} for commands, including support for command-specific sub-completion.
  *
@@ -51,17 +51,14 @@ import java.util.Map;
  *
  * @since 2.0
  */
-@Component(role=Completor.class, hint="commands")
 public class CommandsCompleter
     implements Completor
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Requirement
-    private EventManager eventManager;
+    private final EventManager eventManager;
 
-    @Requirement
-    private CommandRegistry commandRegistry;
+    private final CommandRegistry commandRegistry;
 
     private final Map<String,Completor> completors = new HashMap<String,Completor>();
 
@@ -69,8 +66,7 @@ public class CommandsCompleter
 
     private boolean initialized;
 
-    public CommandsCompleter() {}
-    
+    @Inject
     public CommandsCompleter(final EventManager eventManager, final CommandRegistry commandRegistry) {
         assert eventManager != null;
         this.eventManager = eventManager;

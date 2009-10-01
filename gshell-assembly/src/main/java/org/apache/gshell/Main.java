@@ -19,13 +19,14 @@
 
 package org.apache.gshell;
 
-import jline.Completor;
 import org.apache.gshell.console.completer.AggregateCompleter;
 import org.apache.gshell.core.MainSupport;
+import org.apache.gshell.core.completer.AliasNameCompleter;
+import org.apache.gshell.core.completer.CommandsCompleter;
+import org.apache.gshell.core.guice.GuiceShellBuilder;
 import org.apache.gshell.core.console.ConsoleErrorHandlerImpl;
 import org.apache.gshell.core.console.ConsolePrompterImpl;
-import org.apache.gshell.core.plexus.PlexusShellBuilder;
-import org.codehaus.plexus.PlexusContainer;
+import com.google.inject.Injector;
 
 /**
  * Command-line bootstrap for GShell (<tt>gsh</tt>).
@@ -42,8 +43,8 @@ public class Main
 
     @Override
     protected Shell createShell() throws Exception {
-        PlexusShellBuilder builder = new PlexusShellBuilder();
-        PlexusContainer container = builder.getContainer();
+        GuiceShellBuilder builder = new GuiceShellBuilder();
+        Injector injector = builder.getInjector();
         
         return builder
                 .setBranding(getBranding())
@@ -52,8 +53,8 @@ public class Main
                 .setPrompter(new ConsolePrompterImpl(vars, getBranding()))
                 .setErrorHandler(new ConsoleErrorHandlerImpl(io))
                 .addCompleter(new AggregateCompleter(
-                        container.lookup(Completor.class, "alias-name"),
-                        container.lookup(Completor.class, "commands")
+                        injector.getInstance(AliasNameCompleter.class),
+                        injector.getInstance(CommandsCompleter.class)
                 ))
                 .create();
     }

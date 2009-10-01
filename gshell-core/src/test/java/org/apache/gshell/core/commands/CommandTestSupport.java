@@ -29,7 +29,6 @@ import org.apache.gshell.core.TestShellBuilder;
 import org.apache.gshell.registry.AliasRegistry;
 import org.apache.gshell.registry.CommandRegistrar;
 import org.apache.gshell.registry.CommandRegistry;
-import org.apache.gshell.testsupport.PlexusTestSupport;
 import org.apache.gshell.testsupport.TestIO;
 import org.apache.gshell.testsupport.TestUtil;
 import org.apache.gshell.util.Strings;
@@ -42,6 +41,8 @@ import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import com.google.inject.Injector;
 
 /**
  * Support for testing {@link org.apache.gshell.command.CommandAction} instances.
@@ -57,8 +58,6 @@ public abstract class CommandTestSupport
 
     private final TestUtil util = new TestUtil(this);
 
-    private PlexusTestSupport plexus;
-    
     private TestIO io;
 
     private Shell shell;
@@ -80,20 +79,18 @@ public abstract class CommandTestSupport
 
     @Before
     public void setUp() throws Exception {
-        plexus = new PlexusTestSupport(this);
-
         io = new TestIO();
 
         TestShellBuilder builder = new TestShellBuilder();
+        Injector injector = builder.getInjector();
 
         shell = builder
-                .setContainer(plexus.getContainer())
                 .setBranding(new TestBranding(util.resolveFile("target/shell-home")))
                 .setIo(io)
                 .setRegisterCommands(false)
                 .create();
 
-        CommandRegistrar registrar = plexus.lookup(CommandRegistrar.class);
+        CommandRegistrar registrar = injector.getInstance(CommandRegistrar.class);
         for (Map.Entry<String,Class> entry : requiredCommands.entrySet()) {
             registrar.registerCommand(entry.getKey(), entry.getValue().getName());
         }
@@ -102,8 +99,9 @@ public abstract class CommandTestSupport
         Ansi.setEnabled(false);
         
         vars = shell.getVariables();
-        aliasRegistry = plexus.lookup(AliasRegistry.class);
-        commandRegistry = plexus.lookup(CommandRegistry.class);
+
+        aliasRegistry = injector.getInstance(AliasRegistry.class);
+        commandRegistry = injector.getInstance(CommandRegistry.class);
     }
 
     @After
@@ -114,7 +112,6 @@ public abstract class CommandTestSupport
         io = null;
         shell.close();
         shell = null;
-        plexus = null;
         requiredCommands.clear();
     }
 
