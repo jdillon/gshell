@@ -24,6 +24,7 @@ import org.apache.gshell.core.BrandingSupport;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.io.File;
 
 /**
  * Branding for <tt>gsh</tt>.
@@ -83,5 +84,9 @@ public class BrandingImpl
     @Override
     public String getGoodbyeMessage() {
         return getMessages().format("goodbye");
+    }
+
+    public File getUserContextDir() {
+        return resolveFile(new File(getUserHomeDir(), ".gshell"));
     }
 }
