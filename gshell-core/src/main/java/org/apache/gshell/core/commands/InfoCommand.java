@@ -20,7 +20,6 @@
 package org.apache.gshell.core.commands;
 
 import org.apache.gshell.Branding;
-import org.apache.gshell.VariableNames;
 import org.apache.gshell.command.Command;
 import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.command.CommandContext;
@@ -78,15 +77,15 @@ public class InfoCommand
         //
 
         io.info(branding.getAboutMessage());
-        printValue(io, "Home", maxNameLen, System.getProperty(VariableNames.SHELL_HOME));
-        printValue(io, "Version", maxNameLen, branding.getVersion());
+        printValue(io, "Home", maxNameLen, branding.getShellHomeDir());
         printValue(io, "Display Name", maxNameLen, branding.getDisplayName());
         printValue(io, "Program Name", maxNameLen, branding.getProgramName());
+        printValue(io, "Version", maxNameLen, branding.getVersion());
+        printValue(io, "Shell Home Dir", maxNameLen, branding.getShellHomeDir());
+        printValue(io, "Shell Context Dir", maxNameLen, branding.getShellContextDir());
+        printValue(io, "Shell User Home Dir", maxNameLen, branding.getUserHomeDir());
+        printValue(io, "Shell User Context Dir", maxNameLen, branding.getUserContextDir());
         printValue(io, "Script Extension", maxNameLen, branding.getScriptExtension());
-        printValue(io, "Script Home Dir", maxNameLen, branding.getShellHomeDir());
-        printValue(io, "Script Context Dir", maxNameLen, branding.getShellContextDir());
-        printValue(io, "Script User Home Dir", maxNameLen, branding.getUserHomeDir());
-        printValue(io, "Script User Context Dir", maxNameLen, branding.getUserContextDir());
 
         io.out.println("JVM");
         printValue(io, "Java Virtual Machine", maxNameLen, runtime.getVmName() + " version " + runtime.getVmVersion());
