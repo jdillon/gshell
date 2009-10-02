@@ -28,7 +28,6 @@ import org.codehaus.plexus.interpolation.AbstractValueSource;
 import org.codehaus.plexus.interpolation.InterpolationException;
 import org.codehaus.plexus.interpolation.Interpolator;
 import org.codehaus.plexus.interpolation.PrefixedObjectValueSource;
-import org.codehaus.plexus.interpolation.PropertiesBasedValueSource;
 import org.codehaus.plexus.interpolation.StringSearchInterpolator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,7 +68,11 @@ public class ConsolePrompterImpl
             }
         });
         interp.addValueSource(new PrefixedObjectValueSource(SHELL_BRANDING, branding));
-        interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));
+        interp.addValueSource(new AbstractValueSource(false) {
+            public Object getValue(final String expression) {
+                return System.getProperty(expression);
+            }
+        });
     }
 
     public String prompt() {
@@ -88,7 +91,7 @@ public class ConsolePrompterImpl
         // TODO: Support rendering ~ for home dir here somewhere
         //
 
-        // Encode ANSI muck if it looks like there are codes encoded
+        // Encode ANSI muck if it looks like there are codes encoded, need to render here as the console uses raw streams
         if (AnsiRenderer.test(prompt)) {
             prompt = renderer.render(prompt);
         }

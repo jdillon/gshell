@@ -36,7 +36,6 @@ import org.codehaus.plexus.interpolation.AbstractValueSource;
 import org.codehaus.plexus.interpolation.InterpolationException;
 import org.codehaus.plexus.interpolation.Interpolator;
 import org.codehaus.plexus.interpolation.PrefixedObjectValueSource;
-import org.codehaus.plexus.interpolation.PropertiesBasedValueSource;
 import org.codehaus.plexus.interpolation.StringSearchInterpolator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,7 +69,11 @@ public class CommandDocumenterImpl
                     return vars.get(expression);
                 }
             });
-            interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));
+            interp.addValueSource(new AbstractValueSource(false) {
+                public Object getValue(final String expression) {
+                    return System.getProperty(expression);
+                }
+            });
 
             try {
                 return interp.interpolate(text);
