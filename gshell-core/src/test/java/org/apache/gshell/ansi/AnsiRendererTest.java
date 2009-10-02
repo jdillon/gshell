@@ -37,6 +37,7 @@ public class AnsiRendererTest
 
     @Before
     public void setUp() {
+        Ansi.setEnabled(true);
         renderer = new AnsiRenderer();
     }
 
@@ -49,58 +50,39 @@ public class AnsiRendererTest
     public void testTest() throws Exception {
         assertFalse(AnsiRenderer.test("foo"));
         assertTrue(AnsiRenderer.test("@|foo|"));
+        assertTrue(AnsiRenderer.test("@|foo"));
     }
 
     @Test
     public void testRender() {
-        AnsiBuffer buff = new AnsiBuffer();
-        buff.attrib(AnsiCode.BOLD);
-        buff.append("foo");
-        buff.attrib(AnsiCode.OFF);
-
         String str = renderer.render("@|bold foo|");
-        assertEquals(buff.toString(), str);
+        System.out.println(str);
+        assertEquals(Ansi.ansi().a(Ansi.Attribute.INTENSITY_BOLD).a("foo").reset().toString(), str);
     }
 
     @Test
     public void testRender2() {
-        AnsiBuffer buff = new AnsiBuffer();
-        buff.attrib(AnsiCode.BOLD);
-        buff.attrib(AnsiCode.RED);
-        buff.append("foo");
-        buff.attrib(AnsiCode.OFF);
-
         String str = renderer.render("@|bold,red foo|");
-        assertEquals(buff.toString(), str);
+        System.out.println(str);
+        assertEquals(Ansi.ansi().a(Ansi.Attribute.INTENSITY_BOLD).fg(Ansi.Color.RED).a("foo").reset().toString(), str);
     }
 
     @Test
     public void testRender3() {
-        AnsiBuffer buff = new AnsiBuffer();
-        buff.attrib(AnsiCode.BOLD);
-        buff.attrib(AnsiCode.RED);
-        buff.append("foo bar baz");
-        buff.attrib(AnsiCode.OFF);
-
         String str = renderer.render("@|bold,red foo bar baz|");
-        assertEquals(buff.toString(), str);
+        System.out.println(str);
+        assertEquals(Ansi.ansi().a(Ansi.Attribute.INTENSITY_BOLD).fg(Ansi.Color.RED).a("foo bar baz").reset().toString(), str);
     }
 
     @Test
     public void testRender4() {
-        AnsiBuffer buff = new AnsiBuffer();
-        buff.attrib(AnsiCode.BOLD);
-        buff.attrib(AnsiCode.RED);
-        buff.append("foo bar baz");
-        buff.attrib(AnsiCode.OFF);
-        buff.append(" ick ");
-        buff.attrib(AnsiCode.BOLD);
-        buff.attrib(AnsiCode.RED);
-        buff.append("foo bar baz");
-        buff.attrib(AnsiCode.OFF);
-
         String str = renderer.render("@|bold,red foo bar baz| ick @|bold,red foo bar baz|");
-        assertEquals(buff.toString(), str);
+        System.out.println(str);
+        assertEquals(Ansi.ansi()
+                .a(Ansi.Attribute.INTENSITY_BOLD).fg(Ansi.Color.RED).a("foo bar baz").reset()
+                .a(" ick ")
+                .a(Ansi.Attribute.INTENSITY_BOLD).fg(Ansi.Color.RED).a("foo bar baz").reset()
+                .toString(), str);
     }
 
     @Test

@@ -19,8 +19,7 @@
 
 package org.apache.gshell;
 
-import org.apache.gshell.ansi.AnsiBuffer;
-import org.apache.gshell.ansi.AnsiCode;
+import org.apache.gshell.ansi.Ansi;
 import org.apache.gshell.core.BrandingSupport;
 
 import java.io.PrintWriter;
@@ -61,11 +60,9 @@ public class BrandingImpl
     public String getWelcomeMessage() {
         StringWriter writer = new StringWriter();
         PrintWriter out = new PrintWriter(writer);
-        AnsiBuffer buff = new AnsiBuffer();
 
         for (String line : BANNER) {
-            buff.attrib(line, AnsiCode.CYAN);
-            out.println(buff);
+            out.println(Ansi.ansi().fg(Ansi.Color.CYAN).a(line).reset());
         }
 
         out.println();

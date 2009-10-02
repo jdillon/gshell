@@ -20,9 +20,12 @@
 package org.apache.gshell.io;
 
 import org.apache.gshell.ansi.AnsiRenderWriter;
+import org.fusesource.jansi.AnsiConsole;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.io.OutputStream;
+import java.lang.reflect.Method;
 
 /**
  * ANSI-aware {@link IO}.
@@ -45,6 +48,31 @@ public class AnsiAwareIO
     @Override
     protected PrintWriter createWriter(final PrintStream out, final boolean autoFlush) {
         assert out != null;
-        return new AnsiRenderWriter(out, autoFlush);
+        return new AnsiRenderWriter(wrap(unwrap(out)), autoFlush);
+    }
+
+    //
+    // These bits lifted from Karaf's ConsoleFactory
+    //
+
+    private static PrintStream wrap(final PrintStream out) {
+        OutputStream stream = AnsiConsole.wrapOutputStream(out);
+        if (stream instanceof PrintStream) {
+            return ((PrintStream) stream);
+        }
+        else {
+            return new PrintStream(stream);
+        }
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    private static <T> T unwrap(final T stream) {
+        try {
+            Method method = stream.getClass().getMethod("getRoot");
+            return (T) method.invoke(stream);
+        }
+        catch (Throwable t) {
+            return stream;
+        }
     }
 }

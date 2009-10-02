@@ -62,7 +62,7 @@ public class AnsiRenderWriter
     }
 
     //
-    // Need to prevent partial output from being written while formatting or we will get rendering exceptons
+    // Need to prevent partial output from being written while formatting or we will get rendering exceptions
     //
     
     @Override

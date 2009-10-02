@@ -29,6 +29,7 @@ import jline.Terminal;
  * @since 2.0
  */
 public class Ansi
+    extends org.fusesource.jansi.Ansi
 {
     /**
      * Tries to detect if the current system supports ANSI.
@@ -60,5 +61,77 @@ public class Ansi
 
     public static boolean isEnabled() {
         return holder.get();
+    }
+
+    //
+    // JAnsi support
+    //
+
+    public static org.fusesource.jansi.Ansi ansi() {
+        if (isEnabled()) {
+            return new Ansi();
+        }
+        else {
+            return new NoAnsi();
+        }
+    }
+
+    private static class NoAnsi
+        extends org.fusesource.jansi.Ansi
+    {
+        @Override
+        public org.fusesource.jansi.Ansi a(Attribute attribute) {
+            return this;
+        }
+
+        @Override
+        public org.fusesource.jansi.Ansi fg(Color color) {
+            return this;
+        }
+
+        @Override
+        public org.fusesource.jansi.Ansi bg(Color color) {
+            return this;
+        }
+
+        @Override
+        public org.fusesource.jansi.Ansi reset() {
+            return this;
+        }
+
+        @Override
+        public org.fusesource.jansi.Ansi cursor(int i, int i1) {
+            return this;
+        }
+
+        @Override
+        public org.fusesource.jansi.Ansi cursorDown(int i) {
+            return this;
+        }
+
+        @Override
+        public org.fusesource.jansi.Ansi cursorLeft(int i) {
+            return this;
+        }
+
+        @Override
+        public org.fusesource.jansi.Ansi cursorRight(int i) {
+            return this;
+        }
+
+        @Override
+        public org.fusesource.jansi.Ansi cursorUp(int i) {
+            return this;
+        }
+
+        @Override
+        protected boolean isAttributeAnsi() {
+            return false;
+        }
+
+        @Override
+        protected boolean isStringBuilderAnsi() {
+            return false;
+        }
     }
 }
