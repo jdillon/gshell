@@ -22,9 +22,9 @@ package org.apache.gshell.io;
 import org.apache.gshell.ansi.AnsiRenderWriter;
 import org.fusesource.jansi.AnsiConsole;
 
+import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
-import java.io.OutputStream;
 import java.lang.reflect.Method;
 
 /**
@@ -37,8 +37,8 @@ import java.lang.reflect.Method;
 public class AnsiAwareIO
     extends IO
 {
-    public AnsiAwareIO(StreamSet streams, boolean autoFlush) {
-        super(streams, autoFlush);
+    public AnsiAwareIO(final StreamSet streams, final boolean autoFlush) {
+        super(wrap(streams), autoFlush);
     }
 
     public AnsiAwareIO() {
@@ -48,7 +48,22 @@ public class AnsiAwareIO
     @Override
     protected PrintWriter createWriter(final PrintStream out, final boolean autoFlush) {
         assert out != null;
-        return new AnsiRenderWriter(wrap(unwrap(out)), autoFlush);
+        return new AnsiRenderWriter(out, autoFlush);
+    }
+
+    private static StreamSet wrap(final StreamSet streams) {
+        assert streams != null;
+
+        PrintStream out = unwrap(streams.out);
+        PrintStream err = unwrap(streams.err);
+
+        out = wrap(out);
+
+        if (out != err) {
+            err = wrap(err);
+        }
+
+        return new StreamSet(streams.in, out, err);
     }
 
     //
