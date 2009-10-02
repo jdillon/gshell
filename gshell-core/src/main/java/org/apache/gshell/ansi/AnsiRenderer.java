@@ -19,6 +19,9 @@
 
 package org.apache.gshell.ansi;
 
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 /**
  * Renders ANSI color escape-codes in strings by parsing out some special syntax to pick up the correct fluff to use.
  *
@@ -37,84 +40,42 @@ public class AnsiRenderer
 {
     public static final String BEGIN_TOKEN = "@|";
 
-    private static final int BEGIN_TOKEN_SIZE = BEGIN_TOKEN.length();
-
     public static final String END_TOKEN = "|";
-
-    private static final int END_TOKEN_SIZE = END_TOKEN.length();
 
     public static final String CODE_TEXT_SEPARATOR  = " ";
 
     public static final String CODE_LIST_SEPARATOR  = ",";
 
+    private static final Pattern PATTERN = Pattern.compile("\\@\\|([^ ]+) ([^|]+)\\|");
+
     private final AnsiBuffer buff = new AnsiBuffer();
 
-    public String render(final String input) throws RenderException {
-        assert input != null;
+    public String render(String input) {
+        if (input != null) {
+            Matcher matcher = PATTERN.matcher(input);
 
-        // current, prefix and suffix positions
-        int c = 0, p, s;
-
-        while (c < input.length()) {
-            p = input.indexOf(BEGIN_TOKEN, c);
-            if (p < 0) { break; }
-
-            s = input.indexOf(END_TOKEN, p + BEGIN_TOKEN_SIZE);
-            if (s < 0) {
-                throw new RenderException("Missing '" + END_TOKEN + "': " + input);
+            while (matcher.find()) {
+                String rep = render(matcher.group(2), matcher.group(1).split(CODE_LIST_SEPARATOR));
+                if (rep != null) {
+                    input = input.replace(matcher.group(0), rep);
+                    matcher.reset(input);
+                }
             }
-
-            String expr = input.substring(p + BEGIN_TOKEN_SIZE, s);
-
-            buff.append(input.substring(c, p));
-
-            evaluate(expr);
-
-            c = s + END_TOKEN_SIZE;
         }
 
-        buff.append(input.substring(c));
-
-        return buff.toString();
+        return input;
     }
 
-    private void evaluate(final String input) throws RenderException {
-        assert input != null;
-
-        int i = input.indexOf(CODE_TEXT_SEPARATOR);
-        if (i < 0) {
-            throw new RenderException("Missing ANSI code/text separator '" + CODE_TEXT_SEPARATOR + "': " + input);
-        }
-
-        String tmp = input.substring(0, i);
-        String[] codes = tmp.split(CODE_LIST_SEPARATOR);
-        String text = input.substring(i + 1, input.length());
-
+    private String render(final String text, final String... codes) {
         for (String name : codes) {
             AnsiCode code = AnsiCode.valueOf(name.toUpperCase());
             buff.attrib(code);
         }
 
         buff.append(text);
-
         buff.attrib(AnsiCode.OFF);
+        return buff.toString();
     }
-
-    //
-    // RenderException
-    //
-
-    public static class RenderException
-        extends RuntimeException
-    {
-        public RenderException(final String msg) {
-            super(msg);
-        }
-    }
-
-    //
-    // Helpers
-    //
 
     public static boolean test(final String text) {
         return text != null && text.contains(BEGIN_TOKEN);

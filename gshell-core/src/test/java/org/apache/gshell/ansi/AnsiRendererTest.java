@@ -23,7 +23,6 @@ import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -53,18 +52,71 @@ public class AnsiRendererTest
     }
 
     @Test
+    public void testRender() {
+        AnsiBuffer buff = new AnsiBuffer();
+        buff.attrib(AnsiCode.BOLD);
+        buff.append("foo");
+        buff.attrib(AnsiCode.OFF);
+
+        String str = renderer.render("@|bold foo|");
+        assertEquals(buff.toString(), str);
+    }
+
+    @Test
+    public void testRender2() {
+        AnsiBuffer buff = new AnsiBuffer();
+        buff.attrib(AnsiCode.BOLD);
+        buff.attrib(AnsiCode.RED);
+        buff.append("foo");
+        buff.attrib(AnsiCode.OFF);
+
+        String str = renderer.render("@|bold,red foo|");
+        assertEquals(buff.toString(), str);
+    }
+
+    @Test
+    public void testRender3() {
+        AnsiBuffer buff = new AnsiBuffer();
+        buff.attrib(AnsiCode.BOLD);
+        buff.attrib(AnsiCode.RED);
+        buff.append("foo bar baz");
+        buff.attrib(AnsiCode.OFF);
+
+        String str = renderer.render("@|bold,red foo bar baz|");
+        assertEquals(buff.toString(), str);
+    }
+
+    @Test
+    public void testRender4() {
+        AnsiBuffer buff = new AnsiBuffer();
+        buff.attrib(AnsiCode.BOLD);
+        buff.attrib(AnsiCode.RED);
+        buff.append("foo bar baz");
+        buff.attrib(AnsiCode.OFF);
+        buff.append(" ick ");
+        buff.attrib(AnsiCode.BOLD);
+        buff.attrib(AnsiCode.RED);
+        buff.append("foo bar baz");
+        buff.attrib(AnsiCode.OFF);
+
+        String str = renderer.render("@|bold,red foo bar baz| ick @|bold,red foo bar baz|");
+        assertEquals(buff.toString(), str);
+    }
+
+    @Test
     public void testRenderNothing() {
         assertEquals("foo", renderer.render("foo"));
     }
 
     @Test
-    public void testRenderMissingEndToken() {
-        try {
-            renderer.render("@|foo");
-            fail();
-        }
-        catch (AnsiRenderer.RenderException e) {
-            // expected;
-        }
+    public void testRenderInvalidMissingEnd() {
+        String str = renderer.render("@|bold foo");
+        assertEquals("@|bold foo", str);
+    }
+
+    @Test
+    public void testRenderInvalidMissingText() {
+        String str = renderer.render("@|bold|");
+        assertEquals("@|bold|", str);
     }
 }
