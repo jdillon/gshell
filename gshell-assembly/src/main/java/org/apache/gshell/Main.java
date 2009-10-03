@@ -62,6 +62,7 @@ public class Main
 
     public static void main(final String[] args) throws Exception {
         // FIXME: Need to set this here, some other stream muck must be getting in the way
+        //        think this must have something to do with StreamSet.SYSTEM
         AnsiConsole.systemInstall();
         try {
             new Main().boot(args);
