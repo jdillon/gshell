@@ -30,7 +30,12 @@ public class WindowsTerminal
     extends jline.WindowsTerminal
 {
     ///CLOVER:OFF
-    
+
+    @Override
+    public boolean isANSISupported() {
+        return true;
+    }
+
     @Override
     public int getTerminalWidth() {
         int width = super.getTerminalWidth();
