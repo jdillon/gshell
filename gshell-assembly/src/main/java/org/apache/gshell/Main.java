@@ -27,6 +27,7 @@ import org.apache.gshell.core.completer.CommandsCompleter;
 import org.apache.gshell.core.console.ConsoleErrorHandlerImpl;
 import org.apache.gshell.core.console.ConsolePrompterImpl;
 import org.apache.gshell.core.guice.GuiceShellBuilder;
+import org.fusesource.jansi.AnsiConsole;
 
 /**
  * Command-line bootstrap for GShell (<tt>gsh</tt>).
@@ -60,6 +61,13 @@ public class Main
     }
 
     public static void main(final String[] args) throws Exception {
-        new Main().boot(args);
+        // FIXME: Need to set this here, some other stream muck must be getting in the way
+        AnsiConsole.systemInstall();
+        try {
+            new Main().boot(args);
+        }
+        finally {
+            AnsiConsole.systemUninstall();
+        }
     }
 }

@@ -24,6 +24,7 @@ import org.apache.gshell.Shell;
 import org.apache.gshell.VariableNames;
 import org.apache.gshell.Variables;
 import org.apache.gshell.ansi.Ansi;
+import org.apache.gshell.ansi.AnsiRendererIO;
 import org.apache.gshell.cli.Argument;
 import org.apache.gshell.cli.NameValue;
 import org.apache.gshell.cli.Option;
@@ -33,10 +34,10 @@ import org.apache.gshell.cli.Processor;
 import org.apache.gshell.cli.handler.StopHandler;
 import org.apache.gshell.i18n.MessageSource;
 import org.apache.gshell.i18n.ResourceBundleMessageSource;
-import org.apache.gshell.io.AnsiAwareIO;
 import org.apache.gshell.io.IO;
 import org.apache.gshell.notification.ExitNotification;
 import org.apache.gshell.terminal.AutoDetectedTerminal;
+import org.fusesource.jansi.AnsiConsole;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -61,7 +62,7 @@ public abstract class MainSupport
 
     protected static final String WARN = "WARN";
 
-    protected final IO io = new AnsiAwareIO();
+    protected final IO io = new AnsiRendererIO();
 
     protected final Variables vars = new Variables();
 
@@ -168,6 +169,7 @@ public abstract class MainSupport
         assert args != null;
 
         // Setup environment defaults
+        AnsiConsole.systemInstall();
         setTerminalType(AutoDetectedTerminal.TYPE.AUTO);
         setConsoleLogLevel(WARN);
 
