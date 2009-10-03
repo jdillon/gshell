@@ -58,7 +58,6 @@ public class InfoCommand
 
     private static final NumberFormat FMTD = new DecimalFormat("###,##0.000", new DecimalFormatSymbols(Locale.ENGLISH));
 
-    @Override
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
         IO io = context.getIo();
@@ -76,15 +75,14 @@ public class InfoCommand
         // TODO: i18n all this
         //
 
-        io.info(branding.getAboutMessage());
-        printValue(io, "Home", maxNameLen, branding.getShellHomeDir());
+        io.info("Shell");
         printValue(io, "Display Name", maxNameLen, branding.getDisplayName());
         printValue(io, "Program Name", maxNameLen, branding.getProgramName());
         printValue(io, "Version", maxNameLen, branding.getVersion());
-        printValue(io, "Shell Home Dir", maxNameLen, branding.getShellHomeDir());
-        printValue(io, "Shell Context Dir", maxNameLen, branding.getShellContextDir());
-        printValue(io, "Shell User Home Dir", maxNameLen, branding.getUserHomeDir());
-        printValue(io, "Shell User Context Dir", maxNameLen, branding.getUserContextDir());
+        printValue(io, "Home Dir", maxNameLen, branding.getShellHomeDir());
+        printValue(io, "Context Dir", maxNameLen, branding.getShellContextDir());
+        printValue(io, "User Home Dir", maxNameLen, branding.getUserHomeDir());
+        printValue(io, "User Context Dir", maxNameLen, branding.getUserContextDir());
         printValue(io, "Script Extension", maxNameLen, branding.getScriptExtension());
 
         io.out.println("JVM");
