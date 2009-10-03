@@ -19,6 +19,8 @@
 
 package org.apache.gshell.terminal;
 
+import java.io.File;
+
 /**
  * Windows terminal.
  *
@@ -30,6 +32,21 @@ public class WindowsTerminal
     extends jline.WindowsTerminal
 {
     ///CLOVER:OFF
+
+
+    @Override
+    public void initializeTerminal() throws Exception {
+        // HACK: Nuke jline dll, need to fix the impl to be unique
+        String version = getClass().getPackage().getImplementationVersion();
+        if (version == null) {
+            version = "";
+        }
+        version = version.replace('.', '_');
+        File file = new File(System.getProperty("java.io.tmpdir"), "jline_" + version + ".dll");
+        file.delete();
+
+        super.initializeTerminal();
+    }
 
     @Override
     public boolean isANSISupported() {
