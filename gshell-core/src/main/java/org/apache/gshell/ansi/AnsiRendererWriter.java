@@ -31,24 +31,24 @@ import java.util.Locale;
  *
  * @since 2.0
  */
-public class AnsiRenderWriter
+public class AnsiRendererWriter
     extends PrintWriter
 {
     private final AnsiRenderer renderer = new AnsiRenderer();
 
-    public AnsiRenderWriter(final OutputStream out) {
+    public AnsiRendererWriter(final OutputStream out) {
         super(out);
     }
 
-    public AnsiRenderWriter(final OutputStream out, final boolean autoFlush) {
+    public AnsiRendererWriter(final OutputStream out, final boolean autoFlush) {
         super(out, autoFlush);
     }
 
-    public AnsiRenderWriter(final Writer out) {
+    public AnsiRendererWriter(final Writer out) {
         super(out);
     }
 
-    public AnsiRenderWriter(final Writer out, final boolean autoFlush) {
+    public AnsiRendererWriter(final Writer out, final boolean autoFlush) {
         super(out, autoFlush);
     }
 

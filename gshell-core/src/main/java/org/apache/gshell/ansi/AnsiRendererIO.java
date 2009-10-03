@@ -46,6 +46,6 @@ public class AnsiRendererIO
     @Override
     protected PrintWriter createWriter(final PrintStream out, final boolean autoFlush) {
         assert out != null;
-        return new AnsiRenderWriter(out, autoFlush);
+        return new AnsiRendererWriter(out, autoFlush);
     }
 }

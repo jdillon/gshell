@@ -27,7 +27,7 @@ import org.junit.Test;
 import java.io.ByteArrayOutputStream;
 
 /**
- * Tests for the {@link org.apache.gshell.ansi.AnsiRenderWriter} class.
+ * Tests for the {@link AnsiRendererWriter} class.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
@@ -35,12 +35,12 @@ public class AnsiRenderWriterTest
 {
     private ByteArrayOutputStream baos;
 
-    private AnsiRenderWriter out;
+    private AnsiRendererWriter out;
 
     @Before
     public void setUp() {
         baos = new ByteArrayOutputStream();
-        out = new AnsiRenderWriter(baos);
+        out = new AnsiRendererWriter(baos);
     }
 
     @After
