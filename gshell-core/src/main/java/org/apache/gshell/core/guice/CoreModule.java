@@ -22,11 +22,6 @@ package org.apache.gshell.core.guice;
 import com.google.inject.AbstractModule;
 import org.apache.gshell.command.CommandDocumenter;
 import org.apache.gshell.core.command.CommandDocumenterImpl;
-import org.apache.gshell.core.completer.AliasNameCompleter;
-import org.apache.gshell.core.completer.CommandNameCompleter;
-import org.apache.gshell.core.completer.CommandsCompleter;
-import org.apache.gshell.core.completer.FileNameCompleter;
-import org.apache.gshell.core.completer.VariableNameCompleter;
 import org.apache.gshell.core.event.EventManagerImpl;
 import org.apache.gshell.core.execute.CommandExecutorImpl;
 import org.apache.gshell.core.parser.CommandLineParserImpl;
@@ -62,12 +57,5 @@ public class CoreModule
         bind(CommandExecutor.class).to(CommandExecutorImpl.class);
         bind(CommandResolver.class).to(CommandResolverImpl.class);
         bind(CommandRegistrar.class).to(GuiceCommandRegistrar.class);
-
-        // Completers
-        bind(AliasNameCompleter.class);
-        bind(CommandNameCompleter.class);
-        bind(CommandsCompleter.class);
-        bind(FileNameCompleter.class);
-        bind(VariableNameCompleter.class);
     }
 }
