@@ -20,8 +20,6 @@
 package org.apache.gshell.core.completer;
 
 import com.google.inject.Inject;
-import jline.Completor;
-import org.apache.gshell.console.completer.StringsCompleter;
 import org.apache.gshell.core.registry.CommandRegisteredEvent;
 import org.apache.gshell.core.registry.CommandRemovedEvent;
 import org.apache.gshell.event.EventListener;
@@ -31,6 +29,9 @@ import org.apache.gshell.registry.CommandRegistry;
 import java.util.Collection;
 import java.util.EventObject;
 import java.util.List;
+
+import jline.console.Completer;
+import jline.console.completers.StringsCompleter;
 
 /**
  * {@link Completor} for command names.
@@ -42,7 +43,7 @@ import java.util.List;
  * @since 2.0
  */
 public class CommandNameCompleter
-    implements Completor
+    implements Completer
 {
     private final EventManager eventManager;
 
@@ -82,7 +83,7 @@ public class CommandNameCompleter
         initialized = true;
     }
 
-    public int complete(final String buffer, final int cursor, final List candidates) {
+    public int complete(final String buffer, final int cursor, final List<String> candidates) {
         if (!initialized) {
             init();
         }

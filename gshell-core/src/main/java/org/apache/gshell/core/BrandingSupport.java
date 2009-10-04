@@ -33,6 +33,8 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Properties;
 
+import jline.TerminalFactory;
+
 /**
  * Support for {@link Branding} implementations.
  *
@@ -90,7 +92,7 @@ public class BrandingSupport
     }
 
     protected String line() {
-        return Strings.repeat("-", jline.Terminal.getTerminal().getTerminalWidth() - 1);
+        return Strings.repeat("-", TerminalFactory.getTerminal().getTerminalWidth() - 1);
     }
 
     public String getWelcomeMessage() {

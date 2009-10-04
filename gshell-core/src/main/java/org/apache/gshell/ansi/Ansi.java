@@ -20,6 +20,7 @@
 package org.apache.gshell.ansi;
 
 import jline.Terminal;
+import jline.TerminalFactory;
 
 /**
  * Provides support for using ANSI color escape codes.
@@ -35,7 +36,7 @@ public class Ansi
      * Tries to detect if the current system supports ANSI.
      */
     private static boolean detect() {
-        boolean enabled = Terminal.getTerminal().isANSISupported();
+        boolean enabled = TerminalFactory.getTerminal().isANSISupported();
 
         if (!enabled) {
             enabled = Boolean.getBoolean(Ansi.class.getName() + ".force");

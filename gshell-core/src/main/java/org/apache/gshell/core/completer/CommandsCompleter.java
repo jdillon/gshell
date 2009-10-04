@@ -20,12 +20,7 @@
 package org.apache.gshell.core.completer;
 
 import com.google.inject.Inject;
-import jline.ArgumentCompletor;
-import jline.Completor;
 import org.apache.gshell.command.CommandAction;
-import org.apache.gshell.console.completer.AggregateCompleter;
-import org.apache.gshell.console.completer.NullCompleter;
-import org.apache.gshell.console.completer.StringsCompleter;
 import org.apache.gshell.core.registry.CommandRegisteredEvent;
 import org.apache.gshell.core.registry.CommandRemovedEvent;
 import org.apache.gshell.event.EventListener;
@@ -41,6 +36,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import jline.console.Completer;
+import jline.console.completers.AggregateCompleter;
+import jline.console.completers.StringsCompleter;
+import jline.console.completers.NullCompleter;
+import jline.console.completers.ArgumentCompleter;
+
 /**
  * {@link Completor} for commands, including support for command-specific sub-completion.
  *
@@ -51,7 +52,7 @@ import java.util.Map;
  * @since 2.0
  */
 public class CommandsCompleter
-    implements Completor
+    implements Completer
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -59,7 +60,7 @@ public class CommandsCompleter
 
     private final CommandRegistry commandRegistry;
 
-    private final Map<String,Completor> completors = new HashMap<String,Completor>();
+    private final Map<String,Completer> completors = new HashMap<String,Completer>();
 
     private final AggregateCompleter delegate = new AggregateCompleter();
 
@@ -107,7 +108,7 @@ public class CommandsCompleter
 
         log.trace("Adding completer for: {}", name);
         
-        List<Completor> children = new ArrayList<Completor>();
+        List<Completer> children = new ArrayList<Completer>();
 
         // Attach completion for the command name
         children.add(new StringsCompleter(name));
@@ -115,19 +116,19 @@ public class CommandsCompleter
         // Then attach any command specific completers
         CommandAction command = commandRegistry.getCommand(name);
 
-        Completor[] completers = command.getCompleters();
+        Completer[] completers = command.getCompleters();
         if (completers == null) {
             children.add(NullCompleter.INSTANCE);
         }
         else {
-            for (Completor completer : completers) {
+            for (Completer completer : completers) {
                 log.trace("Adding completer: {}", completer);
                 children.add(completer != null ? completer : NullCompleter.INSTANCE);
             }
         }
 
         // Setup the root completer for the command
-        Completor root = new ArgumentCompletor(children);
+        Completer root = new ArgumentCompleter(children);
 
         // Track and attach
         completors.put(name, root);
@@ -137,11 +138,11 @@ public class CommandsCompleter
     private void removeCompleter(final String name) {
         assert name != null;
 
-        Completor completer = completors.remove(name);
+        Completer completer = completors.remove(name);
         delegate.getCompleters().remove(completer);
     }
 
-    public int complete(final String buffer, final int cursor, final List candidates) {
+    public int complete(final String buffer, final int cursor, final List<String> candidates) {
         if (!initialized) {
             init();
         }

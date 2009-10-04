@@ -19,7 +19,7 @@
 
 package org.apache.gshell.core;
 
-import jline.Completor;
+import jline.console.Completer;
 import org.apache.gshell.Branding;
 import org.apache.gshell.History;
 import org.apache.gshell.Shell;
@@ -70,7 +70,7 @@ public class ShellImpl
 
     private final JLineHistory history = new JLineHistory();
 
-    private List<Completor> completers;
+    private List<Completer> completers;
 
     private Console.Prompter prompter;
 
@@ -121,11 +121,11 @@ public class ShellImpl
         this.errorHandler = errorHandler;
     }
 
-    public List<Completor> getCompleters() {
+    public List<Completer> getCompleters() {
         return completers;
     }
 
-    public void setCompleters(final List<Completor> completers) {
+    public void setCompleters(final List<Completer> completers) {
         this.completers = completers;
     }
 
@@ -225,7 +225,7 @@ public class ShellImpl
         IO io = getIo();
 
         // Setup the console
-        JLineConsole console = new JLineConsole(executor, io, history.getDelegate(), loadBindings());
+        JLineConsole console = new JLineConsole(executor, io, history.getDelegate(), null); //loadBindings());
 
         if (prompter != null) {
             console.setPrompter(prompter);
@@ -236,7 +236,7 @@ public class ShellImpl
         }
 
         if (completers != null && !completers.isEmpty()) {
-            for (Completor completer : completers) {
+            for (Completer completer : completers) {
                 console.addCompleter(completer);
             }
         }

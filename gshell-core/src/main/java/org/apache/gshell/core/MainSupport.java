@@ -146,8 +146,11 @@ public abstract class MainSupport
     }
 
     @Option(name="-T", aliases={"--terminal"}, argumentRequired=true)
-    protected void setTerminalType(final AutoDetectedTerminal.TYPE type) {
+    protected void setTerminalType(final String type) {
         AutoDetectedTerminal.configure(type);
+    }
+    protected void setTerminalType(final AutoDetectedTerminal.TYPE type) {
+        setTerminalType(type.name());
     }
 
     @Argument

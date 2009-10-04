@@ -19,10 +19,11 @@
 
 package org.apache.gshell.core.console;
 
-import jline.CandidateListCompletionHandler;
-import jline.Completor;
-import jline.ConsoleReader;
-import jline.History;
+import jline.console.ConsoleReader;
+import jline.console.CandidateListCompletionHandler;
+import jline.console.SimpleHistory;
+import jline.console.History;
+import jline.console.Completer;
 import org.apache.gshell.console.Console;
 import org.apache.gshell.io.IO;
 import org.apache.gshell.terminal.Constants;
@@ -53,7 +54,7 @@ public class JLineConsole
             reader.setBellEnabled(false);
         }
         reader.setCompletionHandler(new CandidateListCompletionHandler());
-        reader.setHistory(history != null ? history : new History());
+        reader.setHistory(history != null ? history : new SimpleHistory());
     }
 
     public JLineConsole(final Executor executor, final IO io) throws IOException {
@@ -64,7 +65,7 @@ public class JLineConsole
         return reader;
     }
 
-    public void addCompleter(final Completor completer) {
+    public void addCompleter(final Completer completer) {
         assert completer != null;
         reader.addCompletor(completer);
     }

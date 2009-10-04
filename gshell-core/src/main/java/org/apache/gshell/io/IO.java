@@ -19,8 +19,9 @@
 
 package org.apache.gshell.io;
 
-import jline.ConsoleReader;
 import jline.Terminal;
+import jline.TerminalFactory;
+import jline.console.ConsoleReader;
 import org.slf4j.helpers.MessageFormatter;
 
 import java.io.IOException;
@@ -254,7 +255,7 @@ public class IO
     }
 
     public Terminal getTerminal() {
-        return Terminal.getTerminal();
+        return TerminalFactory.getTerminal();
     }
 
     public ConsoleReader createConsoleReader(final InputStream bindings) throws IOException {

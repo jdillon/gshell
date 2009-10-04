@@ -22,7 +22,7 @@ package org.apache.gshell.core.guice;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Stage;
-import jline.Completor;
+import jline.console.Completer;
 import org.apache.gshell.Branding;
 import org.apache.gshell.Shell;
 import org.apache.gshell.Variables;
@@ -62,7 +62,7 @@ public class GuiceShellBuilder
 
     private Console.ErrorHandler errorHandler;
 
-    private final List<Completor> completers = new ArrayList<Completor>();
+    private final List<Completer> completers = new ArrayList<Completer>();
 
     protected Injector createInjector() {
         return Guice.createInjector(Stage.PRODUCTION, new CoreModule());
@@ -111,7 +111,7 @@ public class GuiceShellBuilder
         return this;
     }
 
-    public GuiceShellBuilder addCompleter(final Completor completer) {
+    public GuiceShellBuilder addCompleter(final Completer completer) {
         assert completer != null;
         completers.add(completer);
         return this;

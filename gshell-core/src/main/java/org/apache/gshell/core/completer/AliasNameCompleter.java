@@ -20,8 +20,9 @@
 package org.apache.gshell.core.completer;
 
 import com.google.inject.Inject;
-import jline.Completor;
-import org.apache.gshell.console.completer.StringsCompleter;
+
+import jline.console.Completer;
+import jline.console.completers.StringsCompleter;
 import org.apache.gshell.core.registry.AliasRegisteredEvent;
 import org.apache.gshell.core.registry.AliasRemovedEvent;
 import org.apache.gshell.event.EventListener;
@@ -42,7 +43,7 @@ import java.util.List;
  * @since 2.0
  */
 public class AliasNameCompleter
-    implements Completor
+    implements Completer
 {
     private final EventManager eventManager;
 
@@ -82,7 +83,7 @@ public class AliasNameCompleter
         initialized = true;
     }
 
-    public int complete(final String buffer, final int cursor, final List candidates) {
+    public int complete(final String buffer, final int cursor, final List<String> candidates) {
         if (!initialized) {
             init();
         }

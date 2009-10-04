@@ -19,7 +19,6 @@
 
 package org.apache.gshell.core.completer;
 
-import jline.Completor;
 import org.apache.gshell.ShellHolder;
 import org.apache.gshell.VariableNames;
 import org.apache.gshell.Variables;
@@ -27,6 +26,8 @@ import org.apache.gshell.Variables;
 import java.io.File;
 import java.util.Collections;
 import java.util.List;
+
+import jline.console.Completer;
 
 /**
  * {@link Completor} for file names.
@@ -36,9 +37,9 @@ import java.util.List;
  * @since 2.0
  */
 public class FileNameCompleter
-    implements Completor, VariableNames
+    implements Completer, VariableNames
 {
-   public int complete(final String buf, final int cursor, final List candidates) {
+   public int complete(final String buf, final int cursor, final List<String> candidates) {
         String buffer = (buf == null) ? "" : buf;
         String translated = buffer;
 
@@ -78,13 +79,11 @@ public class FileNameCompleter
         }
     }
 
-    @SuppressWarnings({ "unchecked" })
-    protected void sortFileNames(final List fileNames) {
+    protected void sortFileNames(final List<String> fileNames) {
         Collections.sort(fileNames);
     }
 
-    @SuppressWarnings({ "unchecked" })
-    public int matchFiles(final String buffer, final String translated, final File[] files, final List candidates) {
+    public int matchFiles(final String buffer, final String translated, final File[] files, final List<String> candidates) {
         if (files == null) {
             return -1;
         }

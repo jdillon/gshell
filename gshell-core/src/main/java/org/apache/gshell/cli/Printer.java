@@ -30,6 +30,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import jline.TerminalFactory;
+
 /**
  * Helper to print formatted help and usage text.
  *
@@ -41,7 +43,7 @@ public class Printer
 
     private AggregateMessageSource messages = new AggregateMessageSource(new ResourceBundleMessageSource(getClass()));
 
-    private int terminalWidth = jline.Terminal.getTerminal().getTerminalWidth();
+    private int terminalWidth = TerminalFactory.getTerminal().getTerminalWidth();
 
     private String prefix = "  ";
 

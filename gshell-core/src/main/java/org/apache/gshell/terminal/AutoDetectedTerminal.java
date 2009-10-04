@@ -19,8 +19,12 @@
 
 package org.apache.gshell.terminal;
 
-import jline.ConsoleReader;
 import jline.Terminal;
+import jline.TerminalSupport;
+import jline.UnixTerminal;
+import jline.WindowsTerminal;
+import jline.UnsupportedTerminal;
+import jline.console.ConsoleReader;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,7 +38,7 @@ import java.util.Locale;
  * @since 2.0
  */
 public class AutoDetectedTerminal
-    extends jline.Terminal
+    extends TerminalSupport
     implements Constants
 {
     public static enum TYPE {
@@ -116,6 +120,10 @@ public class AutoDetectedTerminal
         return delegate.getDefaultBindings();
     }
 
+    public void restoreTerminal() throws Exception {
+        delegate.restoreTerminal();
+    }
+
     public static String configure(final TYPE type) {
         return configure(type.name());
     }
@@ -125,18 +133,18 @@ public class AutoDetectedTerminal
             type = AUTO;
         }
 
-        type = type.toLowerCase();
+        String tmp = type.toLowerCase();
 
-        if (AUTO.equals(type)) {
+        if (AUTO.equals(tmp)) {
             type = AutoDetectedTerminal.class.getName();
         }
-        else if (UNIX.equals(type)) {
+        else if (UNIX.equals(tmp)) {
             type = UnixTerminal.class.getName();
         }
-        else if (WIN.equals(type) || WINDOWS.equals(type)) {
+        else if (WIN.equals(tmp) || WINDOWS.equals(tmp)) {
             type = WindowsTerminal.class.getName();
         }
-        else if (FALSE.equals(type) || OFF.equals(type) || NONE.equals(type)) {
+        else if (FALSE.equals(tmp) || OFF.equals(tmp) || NONE.equals(tmp)) {
             type = UnsupportedTerminal.class.getName();
         }
 

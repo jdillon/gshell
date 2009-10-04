@@ -19,14 +19,15 @@
 
 package org.apache.gshell.core.completer;
 
-import jline.Completor;
 import org.apache.gshell.ShellHolder;
 import org.apache.gshell.Variables;
-import org.apache.gshell.console.completer.StringsCompleter;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+
+import jline.console.Completer;
+import jline.console.completers.StringsCompleter;
 
 /**
  * {@link jline.Completor} for {@link Application} variable names.
@@ -36,9 +37,9 @@ import java.util.List;
  * @since 2.0
  */
 public class VariableNameCompleter
-    implements Completor
+    implements Completer
 {
-    public int complete(final String buffer, final int cursor, final List candidates) {
+    public int complete(final String buffer, final int cursor, final List<String> candidates) {
         Variables vars = ShellHolder.get().getVariables();
 
         // There are no events for variables muck, so each time we have to rebuild the list.

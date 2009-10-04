@@ -19,7 +19,7 @@
 
 package org.apache.gshell.command;
 
-import jline.Completor;
+import jline.console.Completer;
 import org.apache.gshell.i18n.MessageSource;
 import org.apache.gshell.i18n.ResourceBundleMessageSource;
 import org.slf4j.Logger;
@@ -45,7 +45,7 @@ public abstract class CommandActionSupport
 
     private MessageSource messages;
 
-    private Completor[] completers;
+    private Completer[] completers;
 
     public String getName() {
         if (name == null) {
@@ -70,17 +70,17 @@ public abstract class CommandActionSupport
         return messages;
     }
 
-    public Completor[] getCompleters() {
+    public Completer[] getCompleters() {
         return completers;
     }
 
-    public void setCompleters(final Completor... completers) {
+    public void setCompleters(final Completer... completers) {
         this.completers = completers;
     }
 
-    public void setCompleters(final List<Completor> completers) {
+    public void setCompleters(final List<Completer> completers) {
         assert completers != null;
-        setCompleters(completers.toArray(new Completor[completers.size()]));
+        setCompleters(completers.toArray(new Completer[completers.size()]));
     }
 
     @Override

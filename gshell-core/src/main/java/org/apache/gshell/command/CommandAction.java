@@ -19,7 +19,7 @@
 
 package org.apache.gshell.command;
 
-import jline.Completor;
+import jline.console.Completer;
 import org.apache.gshell.i18n.MessageSource;
 
 /**
@@ -36,7 +36,7 @@ public interface CommandAction
 
     MessageSource getMessages();
 
-    Completor[] getCompleters();
+    Completer[] getCompleters();
 
     CommandAction copy();
 

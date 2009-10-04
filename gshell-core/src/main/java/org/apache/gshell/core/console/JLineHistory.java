@@ -28,6 +28,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import jline.console.SimpleHistory;
+
 /**
  * Implementation of {@link History} for <a href="http://jline.sf.net">JLine</a>.
  *
@@ -40,7 +42,7 @@ public class JLineHistory
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private jline.History delegate = new jline.History();
+    private jline.console.History delegate = new SimpleHistory();
 
     private File storeFile;
 
@@ -57,7 +59,7 @@ public class JLineHistory
         });
     }
 
-    public jline.History getDelegate() {
+    public jline.console.History getDelegate() {
         return delegate;
     }
 

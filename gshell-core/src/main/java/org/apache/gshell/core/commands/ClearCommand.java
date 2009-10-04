@@ -19,7 +19,7 @@
 
 package org.apache.gshell.core.commands;
 
-import jline.ConsoleReader;
+import jline.console.ConsoleReader;
 import org.apache.gshell.ansi.Ansi;
 import org.apache.gshell.command.Command;
 import org.apache.gshell.command.CommandActionSupport;
