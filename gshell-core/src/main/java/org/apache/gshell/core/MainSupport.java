@@ -36,11 +36,12 @@ import org.apache.gshell.i18n.MessageSource;
 import org.apache.gshell.i18n.ResourceBundleMessageSource;
 import org.apache.gshell.io.IO;
 import org.apache.gshell.notification.ExitNotification;
-import org.apache.gshell.terminal.AutoDetectedTerminal;
 import org.fusesource.jansi.AnsiConsole;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
+
+import jline.TerminalFactory;
 
 /**
  * Support for booting shell applications.
@@ -147,10 +148,10 @@ public abstract class MainSupport
 
     @Option(name="-T", aliases={"--terminal"}, argumentRequired=true)
     protected void setTerminalType(final String type) {
-        AutoDetectedTerminal.configure(type);
+        TerminalFactory.configure(type);
     }
-    protected void setTerminalType(final AutoDetectedTerminal.TYPE type) {
-        setTerminalType(type.name());
+    protected void setTerminalType(final TerminalFactory.Type type) {
+        TerminalFactory.configure(type);
     }
 
     @Argument
@@ -173,7 +174,7 @@ public abstract class MainSupport
 
         // Setup environment defaults
         AnsiConsole.systemInstall();
-        setTerminalType(AutoDetectedTerminal.TYPE.AUTO);
+        setTerminalType(TerminalFactory.Type.AUTO);
         setConsoleLogLevel(WARN);
 
         // Process command line options & arguments

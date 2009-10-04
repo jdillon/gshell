@@ -26,7 +26,6 @@ import jline.console.History;
 import jline.console.Completer;
 import org.apache.gshell.console.Console;
 import org.apache.gshell.io.IO;
-import org.apache.gshell.terminal.Constants;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,7 +39,6 @@ import java.io.InputStream;
  */
 public class JLineConsole
     extends Console
-    implements Constants
 {
     private final ConsoleReader reader;
 
@@ -50,9 +48,6 @@ public class JLineConsole
 
         reader = io.createConsoleReader(bindings);
         reader.setUsePagination(true);
-        if (Boolean.getBoolean(JLINE_NOBELL)) {
-            reader.setBellEnabled(false);
-        }
         reader.setCompletionHandler(new CandidateListCompletionHandler());
         reader.setHistory(history != null ? history : new SimpleHistory());
     }

@@ -43,7 +43,7 @@ public class Printer
 
     private AggregateMessageSource messages = new AggregateMessageSource(new ResourceBundleMessageSource(getClass()));
 
-    private int terminalWidth = TerminalFactory.getTerminal().getTerminalWidth();
+    private int terminalWidth = TerminalFactory.getTerminal().getWidth();
 
     private String prefix = "  ";
 

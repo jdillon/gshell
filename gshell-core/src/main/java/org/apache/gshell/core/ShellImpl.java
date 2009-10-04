@@ -20,6 +20,7 @@
 package org.apache.gshell.core;
 
 import jline.console.Completer;
+import jline.console.ConsoleReader;
 import org.apache.gshell.Branding;
 import org.apache.gshell.History;
 import org.apache.gshell.Shell;
@@ -34,7 +35,6 @@ import org.apache.gshell.io.Closer;
 import org.apache.gshell.io.IO;
 import org.apache.gshell.io.SystemInputOutputHijacker;
 import org.apache.gshell.notification.ExitNotification;
-import org.apache.gshell.terminal.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,7 +56,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * @since 2.0
  */
 public class ShellImpl
-    implements Shell, VariableNames, Constants
+    implements Shell, VariableNames
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -270,18 +270,18 @@ public class ShellImpl
     }
 
     private InputStream loadBindings() throws IOException {
-        File file = new File(branding.getUserContextDir(), JLINE_KEYBINDINGS);
+        File file = new File(branding.getUserContextDir(), ConsoleReader.JLINE_KEYBINDINGS);
 
         if (!file.exists() || !file.isFile()) {
-            file = new File(branding.getShellContextDir(), JLINE_KEYBINDINGS);
+            file = new File(branding.getShellContextDir(), ConsoleReader.JLINE_KEYBINDINGS);
             if (!file.exists() || file.isFile()) {
                 try {
-                    String fileName = System.getProperty(JLINE_KEYBINDINGS);
+                    String fileName = System.getProperty(ConsoleReader.JLINE_KEYBINDINGS);
                     if (fileName != null) {
                         file = new File(fileName);
                     }
                     if (!file.exists() || file.isFile()) {
-                        file = new File(branding.getUserHomeDir(), JLINEBINDINGS_PROPERTIES);
+                        file = new File(branding.getUserHomeDir(), ConsoleReader.JLINEBINDINGS_PROPERTIES);
                     }
                 }
                 catch (Exception e) {
