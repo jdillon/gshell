@@ -24,7 +24,7 @@
 
     <groupId>org.apache.gshell</groupId>
     <artifactId>gshell</artifactId>
-    <name>GShell</name>
+    <name>GShell - ${project.version}</name>
     <version>2.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
