@@ -173,9 +173,9 @@ public abstract class MainSupport
         assert args != null;
 
         // Setup environment defaults
+        setConsoleLogLevel(WARN);
         AnsiConsole.systemInstall();
         setTerminalType(TerminalFactory.Type.AUTO);
-        setConsoleLogLevel(WARN);
 
         // Process command line options & arguments
         Processor clp = new Processor(this);
