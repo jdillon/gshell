@@ -92,7 +92,7 @@ public class BrandingSupport
     }
 
     protected String line() {
-        return Strings.repeat("-", TerminalFactory.getTerminal().getWidth() - 1);
+        return Strings.repeat("-", TerminalFactory.get().getWidth() - 1);
     }
 
     public String getWelcomeMessage() {

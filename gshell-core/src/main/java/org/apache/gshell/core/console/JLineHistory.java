@@ -42,7 +42,7 @@ public class JLineHistory
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private jline.console.History delegate = new SimpleHistory();
+    private SimpleHistory delegate = new SimpleHistory();
 
     private File storeFile;
 
@@ -50,7 +50,7 @@ public class JLineHistory
         Runtime.getRuntime().addShutdownHook(new Thread() {
             public void run() {
                 try {
-                    delegate.flushBuffer();
+                    delegate.flush();
                 }
                 catch (IOException e) {
                     log.error("Failed to flush history buffer", e);
@@ -81,7 +81,7 @@ public class JLineHistory
 
     public void add(final String element) {
         assert element != null;
-        delegate.addToHistory(element);
+        delegate.add(element);
     }
 
     public void clear() {
@@ -97,7 +97,7 @@ public class JLineHistory
         else {
             log.debug("Purging history file: {}", storeFile);
 
-            delegate.flushBuffer();
+            delegate.flush();
 
             File originalFile = storeFile;
 
@@ -123,8 +123,7 @@ public class JLineHistory
         return delegate.size();
     }
 
-    @SuppressWarnings({"unchecked"})
     public List<String> elements() {
-        return (List<String>)delegate.getHistoryList();
+        return delegate.items();
     }
 }

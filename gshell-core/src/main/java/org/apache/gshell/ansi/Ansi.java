@@ -36,7 +36,7 @@ public class Ansi
      * Tries to detect if the current system supports ANSI.
      */
     private static boolean detect() {
-        boolean enabled = TerminalFactory.getTerminal().isAnsiSupported();
+        boolean enabled = TerminalFactory.get().isAnsiSupported();
 
         if (!enabled) {
             enabled = Boolean.getBoolean(Ansi.class.getName() + ".force");

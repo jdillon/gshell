@@ -255,7 +255,7 @@ public class IO
     }
 
     public Terminal getTerminal() {
-        return TerminalFactory.getTerminal();
+        return TerminalFactory.get();
     }
 
     public ConsoleReader createConsoleReader(final InputStream bindings) throws IOException {
