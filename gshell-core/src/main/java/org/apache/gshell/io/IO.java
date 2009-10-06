@@ -30,6 +30,8 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.Reader;
+import java.io.FileInputStream;
+import java.io.FileDescriptor;
 
 /**
  * Provides access to input/output handles.
@@ -259,8 +261,15 @@ public class IO
     }
 
     public ConsoleReader createConsoleReader(final InputStream bindings) throws IOException {
+        InputStream input = streams.in;
+
+        // If input is System.in then use a FIS for a better chance of unbuffered input
+        if (streams.in == StreamSet.SYSTEM.in) {
+            input = new FileInputStream(FileDescriptor.in);
+        }
+        
         return new ConsoleReader(
-            streams.in,
+            input,
             new PrintWriter(streams.out, true),
             bindings,
             getTerminal());

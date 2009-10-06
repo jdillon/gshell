@@ -29,6 +29,8 @@ import org.apache.gshell.core.guice.GuiceShellBuilder;
 import org.fusesource.jansi.AnsiConsole;
 import jline.console.completers.AggregateCompleter;
 
+import java.io.PrintStream;
+
 /**
  * Command-line bootstrap for GShell (<tt>gsh</tt>).
  * 
@@ -64,11 +66,17 @@ public class Main
         // FIXME: Need to set this here, some other stream muck must be getting in the way
         //        think this must have something to do with StreamSet.SYSTEM
         AnsiConsole.systemInstall();
+
+        // AnsiConsole does not install System.err, so do it ourself
+        final PrintStream err = System.err;
+	    System.setErr(new PrintStream(AnsiConsole.wrapOutputStream(err)));
+
         try {
             new Main().boot(args);
         }
         finally {
             AnsiConsole.systemUninstall();
+            System.setErr(err);
         }
     }
 }
