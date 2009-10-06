@@ -14,8 +14,8 @@ Building
 
 At the moment JLine 2.0 must be built manually, as it is not yet in any public repositories:
 
-    git clone git://github.com/jdillon/jline.git
-    cd jline
+    git clone git://github.com/jdillon/jline2.git
+    cd jline2
     mvn install
 
 Check out and build:
