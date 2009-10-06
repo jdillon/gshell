@@ -69,7 +69,7 @@ public class Main
 
         // AnsiConsole does not install System.err, so do it ourself
         final PrintStream err = System.err;
-	    System.setErr(new PrintStream(AnsiConsole.wrapOutputStream(err)));
+        System.setErr(new PrintStream(AnsiConsole.wrapOutputStream(err)));
 
         try {
             new Main().boot(args);
