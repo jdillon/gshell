@@ -19,8 +19,8 @@
 
 package org.apache.gshell.ansi;
 
-import jline.Terminal;
 import jline.TerminalFactory;
+import org.apache.gshell.internal.Log;
 
 /**
  * Provides support for using ANSI color escape codes.
@@ -32,14 +32,20 @@ import jline.TerminalFactory;
 public class Ansi
     extends org.fusesource.jansi.Ansi
 {
+    @SuppressWarnings({ "StringConcatenation" })
+    public static final String FORCE = Ansi.class.getName() + ".force";
+
     /**
      * Tries to detect if the current system supports ANSI.
      */
     private static boolean detect() {
         boolean enabled = TerminalFactory.get().isAnsiSupported();
 
+        Log.trace("ANSI Detected: ", enabled);
+
         if (!enabled) {
-            enabled = Boolean.getBoolean(Ansi.class.getName() + ".force");
+            enabled = Boolean.getBoolean(FORCE);
+            Log.trace("ANSI Forced: ", enabled);
         }
 
         return enabled;
@@ -133,6 +139,94 @@ public class Ansi
         @Override
         protected boolean isStringBuilderAnsi() {
             return false;
+        }
+    }
+
+    public static enum Code
+    {
+        // Colors
+        BLACK(Color.BLACK),
+        RED(Color.RED),
+        GREEN(Color.GREEN),
+        YELLOW(Color.YELLOW),
+        BLUE(Color.BLUE),
+        MAGENTA(Color.MAGENTA),
+        CYAN(Color.CYAN),
+        WHITE(Color.WHITE),
+
+        // Forground Colors
+        FG_BLACK(Color.BLACK, false),
+        FG_RED(Color.RED, false),
+        FG_GREEN(Color.GREEN, false),
+        FG_YELLOW(Color.YELLOW, false),
+        FG_BLUE(Color.BLUE, false),
+        FG_MAGENTA(Color.MAGENTA, false),
+        FG_CYAN(Color.CYAN, false),
+        FG_WHITE(Color.WHITE, false),
+
+        // Background Colors
+        BG_BLACK(Color.BLACK, true),
+        BG_RED(Color.RED, true),
+        BG_GREEN(Color.GREEN, true),
+        BG_YELLOW(Color.YELLOW, true),
+        BG_BLUE(Color.BLUE, true),
+        BG_MAGENTA(Color.MAGENTA, true),
+        BG_CYAN(Color.CYAN, true),
+        BG_WHITE(Color.WHITE, true),
+
+        // Attributes
+        RESET(Attribute.RESET),
+        INTENSITY_BOLD(Attribute.INTENSITY_BOLD),
+        INTENSITY_FAINT(Attribute.INTENSITY_FAINT),
+        ITALIC(Attribute.ITALIC),
+        UNDERLINE(Attribute.UNDERLINE),
+        BLINK_SLOW(Attribute.BLINK_SLOW),
+        BLINK_FAST(Attribute.BLINK_FAST),
+        BLINK_OFF(Attribute.BLINK_OFF),
+        NEGATIVE_ON(Attribute.NEGATIVE_ON),
+        NEGATIVE_OFF(Attribute.NEGATIVE_OFF),
+        CONCEAL_ON(Attribute.CONCEAL_ON),
+        CONCEAL_OFF(Attribute.CONCEAL_OFF),
+        UNDERLINE_DOUBLE(Attribute.UNDERLINE_DOUBLE),
+        INTENSITY_NORMAL(Attribute.INTENSITY_NORMAL),
+        UNDERLINE_OFF(Attribute.UNDERLINE_OFF),
+
+        // Aliases
+        BOLD(Attribute.INTENSITY_BOLD),
+        FAINT(Attribute.INTENSITY_FAINT),
+        ;
+
+        private final Enum n;
+
+        private final boolean background;
+
+        private Code(final Enum n, boolean background) {
+            this.n = n;
+            this.background = background;
+        }
+
+        private Code(final Enum n) {
+            this(n, false);
+        }
+
+        public boolean isColor() {
+            return n instanceof Color;
+        }
+
+        public Color getColor() {
+            return (Color) n;
+        }
+
+        public boolean isAttribute() {
+            return n instanceof Attribute;
+        }
+
+        public Attribute getAttribute() {
+            return (Attribute) n;
+        }
+
+        public boolean isBackground() {
+            return background;
         }
     }
 }

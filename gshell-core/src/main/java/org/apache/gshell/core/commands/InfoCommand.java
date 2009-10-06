@@ -20,6 +20,7 @@
 package org.apache.gshell.core.commands;
 
 import org.apache.gshell.Branding;
+import org.apache.gshell.ansi.Ansi;
 import org.apache.gshell.command.Command;
 import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.command.CommandContext;
@@ -38,6 +39,9 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Locale;
+
+import jline.Terminal;
+import jline.WindowsTerminal;
 
 //
 // From Apache Felix Karaf
@@ -84,6 +88,19 @@ public class InfoCommand
         printValue(io, "User Home Dir", maxNameLen, branding.getUserHomeDir());
         printValue(io, "User Context Dir", maxNameLen, branding.getUserContextDir());
         printValue(io, "Script Extension", maxNameLen, branding.getScriptExtension());
+        printValue(io, "ANSI", maxNameLen, Ansi.isEnabled());
+
+        io.out.println("Terminal");
+        Terminal term = io.getTerminal();
+        printValue(io, "Type", maxNameLen, term.getClass().getName());
+        printValue(io, "Supported", maxNameLen, term.isSupported());
+        printValue(io, "Height", maxNameLen, term.getHeight());
+        printValue(io, "Width", maxNameLen, term.getWidth());
+        printValue(io, "ANSI", maxNameLen, term.isAnsiSupported());
+        printValue(io, "Echo", maxNameLen, term.isEchoEnabled());
+        if (term instanceof WindowsTerminal) {
+            printValue(io, "Direct Console", maxNameLen, ((WindowsTerminal)term).getDirectConsole());
+        }
 
         io.out.println("JVM");
         printValue(io, "Java Virtual Machine", maxNameLen, runtime.getVmName() + " version " + runtime.getVmVersion());

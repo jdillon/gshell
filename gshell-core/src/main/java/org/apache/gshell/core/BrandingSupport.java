@@ -157,7 +157,6 @@ public class BrandingSupport
         return resolveFile(new File(getUserHomeDir(), String.format(".%s", getProgramName())));
     }
 
-    @Override
     public void customize(final Shell shell) throws Exception {
         assert shell != null;
 

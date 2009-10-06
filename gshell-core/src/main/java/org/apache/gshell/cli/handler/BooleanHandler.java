@@ -41,6 +41,7 @@ public class BooleanHandler
         assert params != null;
 
         if (isArgument() || ((OptionDescriptor)getDescriptor()).isArgumentRequired()) {
+            // TODO: support on/off as well as true/false
             getSetter().set(Boolean.parseBoolean(params.get(0)));
 
             return 1;

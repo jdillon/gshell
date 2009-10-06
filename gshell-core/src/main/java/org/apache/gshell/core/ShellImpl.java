@@ -225,7 +225,7 @@ public class ShellImpl
         IO io = getIo();
 
         // Setup the console
-        JLineConsole console = new JLineConsole(executor, io, history.getDelegate(), null); //loadBindings());
+        JLineConsole console = new JLineConsole(executor, io, history.getDelegate(), loadBindings());
 
         if (prompter != null) {
             console.setPrompter(prompter);
