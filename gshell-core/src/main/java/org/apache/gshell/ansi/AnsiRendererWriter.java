@@ -52,6 +52,7 @@ public class AnsiRendererWriter
         super(out, autoFlush);
     }
 
+    @Override
     public void write(final String s) {
         if (AnsiRenderer.test(s)) {
             super.write(renderer.render(s));

@@ -86,6 +86,7 @@ public class BrandingImpl
         return getMessages().format("goodbye");
     }
 
+    @Override
     public File getUserContextDir() {
         return resolveFile(new File(getUserHomeDir(), ".gshell"));
     }
