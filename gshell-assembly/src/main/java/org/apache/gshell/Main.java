@@ -28,6 +28,7 @@ import org.apache.gshell.core.console.ConsolePrompterImpl;
 import org.apache.gshell.core.guice.GuiceShellBuilder;
 import org.fusesource.jansi.AnsiConsole;
 import jline.console.completers.AggregateCompleter;
+import jline.WindowsTerminal;
 
 import java.io.PrintStream;
 
@@ -70,6 +71,9 @@ public class Main
         // AnsiConsole does not install System.err, so do it ourself
         final PrintStream err = System.err;
         System.setErr(new PrintStream(AnsiConsole.wrapOutputStream(err)));
+
+        // We support Ansi on windows with jansi so flip it on
+        System.setProperty(WindowsTerminal.ANSI, Boolean.TRUE.toString());
 
         try {
             new Main().boot(args);

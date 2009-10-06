@@ -19,11 +19,11 @@
 
 package org.apache.gshell.core;
 
+import jline.TerminalFactory;
 import org.apache.gshell.Branding;
 import org.apache.gshell.Shell;
 import org.apache.gshell.VariableNames;
 import org.apache.gshell.Variables;
-import org.apache.gshell.internal.Log;
 import org.apache.gshell.ansi.Ansi;
 import org.apache.gshell.ansi.AnsiRendererIO;
 import org.apache.gshell.cli.Argument;
@@ -35,15 +35,12 @@ import org.apache.gshell.cli.Processor;
 import org.apache.gshell.cli.handler.StopHandler;
 import org.apache.gshell.i18n.MessageSource;
 import org.apache.gshell.i18n.ResourceBundleMessageSource;
+import org.apache.gshell.internal.Log;
 import org.apache.gshell.io.IO;
 import org.apache.gshell.notification.ExitNotification;
-import org.fusesource.jansi.AnsiConsole;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
-
-import jline.TerminalFactory;
-import jline.WindowsTerminal;
 
 /**
  * Support for booting shell applications.
@@ -168,8 +165,6 @@ public abstract class MainSupport
 
         // Setup environment defaults
         setConsoleLogLevel(Log.Level.WARN);
-        AnsiConsole.systemInstall();
-        System.setProperty(WindowsTerminal.ANSI, Boolean.TRUE.toString());
         setTerminalType(TerminalFactory.Type.AUTO);
 
         // Process command line options & arguments
