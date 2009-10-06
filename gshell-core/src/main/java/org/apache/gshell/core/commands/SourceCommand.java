@@ -39,7 +39,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * Read and execute commands from a file in the current shell environment.
+ * Read and execute commands from a file in the current shell.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *
