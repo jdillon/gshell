@@ -23,6 +23,7 @@ import org.apache.gshell.Branding;
 import org.apache.gshell.Shell;
 import org.apache.gshell.VariableNames;
 import org.apache.gshell.Variables;
+import org.apache.gshell.internal.Log;
 import org.apache.gshell.ansi.Ansi;
 import org.apache.gshell.ansi.AnsiRendererIO;
 import org.apache.gshell.cli.Argument;
@@ -42,6 +43,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 import jline.TerminalFactory;
+import jline.WindowsTerminal;
 
 /**
  * Support for booting shell applications.
@@ -53,16 +55,6 @@ import jline.TerminalFactory;
 public abstract class MainSupport
     implements VariableNames
 {
-    protected static final String DEBUG = "DEBUG";
-
-    protected static final String TRACE = "TRACE";
-
-    protected static final String INFO = "INFO";
-
-    protected static final String ERROR = "ERROR";
-
-    protected static final String WARN = "WARN";
-
     protected final IO io = new AnsiRendererIO();
 
     protected final Variables vars = new Variables();
@@ -89,15 +81,15 @@ public abstract class MainSupport
     @Option(name="-e", aliases={"--errors"})
     protected boolean showErrorTraces = false;
 
-    protected void setConsoleLogLevel(final String level) {
-        System.setProperty(SHELL_LOGGING, level);
+    protected void setConsoleLogLevel(final Log.Level level) {
+        System.setProperty(SHELL_LOGGING, level.name());
         vars.set(SHELL_LOGGING, level);
     }
 
     @Option(name="-d", aliases={"--debug"})
     protected void setDebug(final boolean flag) {
         if (flag) {
-            setConsoleLogLevel(DEBUG);
+            setConsoleLogLevel(Log.Level.DEBUG);
             io.setVerbosity(IO.Verbosity.DEBUG);
         }
     }
@@ -105,7 +97,7 @@ public abstract class MainSupport
     @Option(name="-X", aliases={"--trace"})
     protected void setTrace(final boolean flag) {
         if (flag) {
-            setConsoleLogLevel(TRACE);
+            setConsoleLogLevel(Log.Level.TRACE);
             io.setVerbosity(IO.Verbosity.DEBUG);
         }
     }
@@ -113,7 +105,7 @@ public abstract class MainSupport
     @Option(name="-v", aliases={"--verbose"})
     protected void setVerbose(final boolean flag) {
         if (flag) {
-            setConsoleLogLevel(INFO);
+            setConsoleLogLevel(Log.Level.INFO);
             io.setVerbosity(IO.Verbosity.VERBOSE);
         }
     }
@@ -121,7 +113,7 @@ public abstract class MainSupport
     @Option(name="-q", aliases={"--quiet"})
     protected void setQuiet(final boolean flag) {
         if (flag) {
-            setConsoleLogLevel(ERROR);
+            setConsoleLogLevel(Log.Level.ERROR);
             io.setVerbosity(IO.Verbosity.QUIET);
         }
     }
@@ -172,9 +164,12 @@ public abstract class MainSupport
     public void boot(final String... args) throws Exception {
         assert args != null;
 
+        Log.debug("Booting w/args: ", args);
+
         // Setup environment defaults
-        setConsoleLogLevel(WARN);
+        setConsoleLogLevel(Log.Level.WARN);
         AnsiConsole.systemInstall();
+        System.setProperty(WindowsTerminal.ANSI, Boolean.TRUE.toString());
         setTerminalType(TerminalFactory.Type.AUTO);
 
         // Process command line options & arguments
@@ -211,6 +206,7 @@ public abstract class MainSupport
         int code = ExitNotification.DEFAULT_CODE;
 
         Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
             public void run() {
                 if (codeRef.get() == null) {
                     // Give the user a warning when the JVM shutdown abnormally, normal shutdown
