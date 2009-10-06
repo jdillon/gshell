@@ -19,15 +19,12 @@
 
 package org.apache.gshell.core.completer;
 
+import jline.console.Completer;
 import org.apache.gshell.ShellHolder;
 import org.apache.gshell.VariableNames;
 import org.apache.gshell.Variables;
 
 import java.io.File;
-import java.util.Collections;
-import java.util.List;
-
-import jline.console.Completer;
 
 /**
  * {@link Completor} for file names.
@@ -37,74 +34,40 @@ import jline.console.Completer;
  * @since 2.0
  */
 public class FileNameCompleter
+    extends jline.console.completers.FileNameCompleter
     implements Completer, VariableNames
 {
-   public int complete(final String buf, final int cursor, final List<String> candidates) {
-        String buffer = (buf == null) ? "" : buf;
-        String translated = buffer;
-
+    @Override
+    protected File getUserHome() {
         Variables vars = ShellHolder.get().getVariables();
-        File homeDir = vars.get(SHELL_USER_HOME, File.class);
-
-        // special character: ~ maps to the user's home directory
-        if (translated.startsWith("~" + File.separator)) {
-            translated = homeDir.getPath() + translated.substring(1);
-        }
-        else if (translated.startsWith("~")) {
-            translated = homeDir.getParentFile().getAbsolutePath();
-        }
-        else if (!(translated.startsWith(File.separator))) {
-            String cwd = vars.get(SHELL_USER_DIR, String.class);
-            translated = cwd + File.separator + translated;
-        }
-
-        File file = new File(translated);
-
-        final File dir;
-
-        if (translated.endsWith(File.separator)) {
-            dir = file;
-        }
-        else {
-            dir = file.getParentFile();
-        }
-
-        final File[] entries = (dir == null) ? new File[0] : dir.listFiles();
-
-        try {
-            return matchFiles(buffer, translated, entries, candidates);
-        }
-        finally {
-            sortFileNames(candidates);
-        }
+        return vars.get(SHELL_USER_HOME, File.class);
     }
 
-    protected void sortFileNames(final List<String> fileNames) {
-        Collections.sort(fileNames);
+    @Override
+    protected File getUserDir() {
+        Variables vars = ShellHolder.get().getVariables();
+        return new File(vars.get(SHELL_USER_DIR, String.class));
     }
 
-    public int matchFiles(final String buffer, final String translated, final File[] files, final List<String> candidates) {
-        if (files == null) {
-            return -1;
+    @Override
+    protected String render(final File file, final String name) {
+        assert file != null;
+        assert name != null;
+
+        // FIXME: This causes all sorts of problems :-(
+        
+        /*
+        if (file.isDirectory()) {
+            return Ansi.ansi().fg(Ansi.Color.BLUE).a(name).reset().toString();
         }
-
-        int matches = 0;
-
-        // first pass: just count the matches
-        for (File file : files) {
-            if (file.getAbsolutePath().startsWith(translated)) {
-                matches++;
-            }
+        else if (file.isHidden()) {
+            return Ansi.ansi().a(Ansi.Attribute.INTENSITY_FAINT).a(name).reset().toString();
         }
-        for (File file : files) {
-            if (file.getAbsolutePath().startsWith(translated)) {
-                String name = file.getName() + (((matches == 1) && file.isDirectory()) ? File.separator : " ");
-                candidates.add(name);
-            }
+        else if (file.canExecute()) {
+            return Ansi.ansi().fg(Ansi.Color.GREEN).a(name).reset().toString();
         }
+        */
 
-        final int index = buffer.lastIndexOf(File.separator);
-
-        return index + File.separator.length();
+        return name;
     }
 }
