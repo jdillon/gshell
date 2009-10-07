@@ -20,17 +20,13 @@
 package org.apache.gshell;
 
 import com.google.inject.Injector;
+import jline.console.completers.AggregateCompleter;
 import org.apache.gshell.core.MainSupport;
 import org.apache.gshell.core.completer.AliasNameCompleter;
 import org.apache.gshell.core.completer.CommandsCompleter;
 import org.apache.gshell.core.console.ConsoleErrorHandlerImpl;
 import org.apache.gshell.core.console.ConsolePrompterImpl;
 import org.apache.gshell.core.guice.GuiceShellBuilder;
-import org.fusesource.jansi.AnsiConsole;
-import jline.console.completers.AggregateCompleter;
-import jline.WindowsTerminal;
-
-import java.io.PrintStream;
 
 /**
  * Command-line bootstrap for GShell (<tt>gsh</tt>).
@@ -64,23 +60,6 @@ public class Main
     }
 
     public static void main(final String[] args) throws Exception {
-        // FIXME: Need to set this here, some other stream muck must be getting in the way
-        //        think this must have something to do with StreamSet.SYSTEM
-        AnsiConsole.systemInstall();
-
-        // AnsiConsole does not install System.err, so do it ourself
-        final PrintStream err = System.err;
-        System.setErr(new PrintStream(AnsiConsole.wrapOutputStream(err)));
-
-        // We support Ansi on windows with jansi so flip it on
-        System.setProperty(WindowsTerminal.ANSI, Boolean.TRUE.toString());
-
-        try {
-            new Main().boot(args);
-        }
-        finally {
-            AnsiConsole.systemUninstall();
-            System.setErr(err);
-        }
+        new Main().boot(args);
     }
 }

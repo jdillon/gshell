@@ -21,9 +21,12 @@ package org.apache.gshell.ansi;
 
 import org.apache.gshell.io.IO;
 import org.apache.gshell.io.StreamSet;
+import org.fusesource.jansi.AnsiConsole;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;
+
+import jline.WindowsTerminal;
 
 /**
  * ANSI-aware {@link org.apache.gshell.io.IO}.
@@ -32,15 +35,30 @@ import java.io.PrintWriter;
  *
  * @since 2.0
  */
-public class AnsiRendererIO
+public class AnsiIO
     extends IO
 {
-    public AnsiRendererIO(final StreamSet streams, final boolean autoFlush) {
-        super(streams, autoFlush);
+    static {
+        // We support Ansi on windows with jansi so flip it on
+        System.setProperty(WindowsTerminal.ANSI, Boolean.TRUE.toString());
+    }
+    
+    public AnsiIO(final StreamSet streams, final boolean autoFlush) {
+        super(ansiStreams(streams), autoFlush);
     }
 
-    public AnsiRendererIO() {
-        super();
+    public AnsiIO() {
+        this(StreamSet.system(), true);
+    }
+
+    private static StreamSet ansiStreams(final StreamSet streams) {
+        assert streams != null;
+        return new StreamSet(streams.in, wrap(streams.out), wrap(streams.err));
+    }
+
+    private static PrintStream wrap(final PrintStream stream) {
+        assert stream != null;
+        return new PrintStream(AnsiConsole.wrapOutputStream(stream));
     }
 
     @Override

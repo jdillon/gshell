@@ -82,10 +82,10 @@ public class IO
     }
 
     /**
-     * Helper which uses current values from {@link System}.
+     * Helper which uses current values from {@link StreamSet#system}.
      */
     public IO() {
-        this(StreamSet.SYSTEM, true);
+        this(StreamSet.system(), true);
     }
 
     protected Reader createReader(final InputStream in) {
@@ -262,6 +262,8 @@ public class IO
 
     public ConsoleReader createConsoleReader(final InputStream bindings) throws IOException {
         InputStream input = streams.in;
+
+        // TODO: Change this to expect the setup framework to use a DirectStreamSet or something
 
         // If input is System.in then use a FIS for a better chance of unbuffered input
         if (streams.in == StreamSet.SYSTEM.in) {

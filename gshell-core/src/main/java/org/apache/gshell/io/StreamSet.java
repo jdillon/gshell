@@ -81,14 +81,14 @@ public class StreamSet
     }
 
     /**
-     * Create a new pair as System is currently configured.
+     * Create a new stream set as {@link System} is currently configured.
      */
     public static StreamSet system() {
         return new StreamSet(System.in, System.out, System.err);
     }
 
     /**
-     * Install the given stream pair as the System streams.
+     * Install the given stream set as the {@link System} streams.
      */
     public static void system(final StreamSet streams) {
         assert streams != null;
@@ -99,7 +99,7 @@ public class StreamSet
     }
 
     /**
-     * The original System streams (as they were when this class loads).
+     * The original {@link System} streams (as they were when this class loads).
      */
     public static final StreamSet SYSTEM = system();
 

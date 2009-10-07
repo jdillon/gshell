@@ -25,7 +25,7 @@ import org.apache.gshell.Shell;
 import org.apache.gshell.VariableNames;
 import org.apache.gshell.Variables;
 import org.apache.gshell.ansi.Ansi;
-import org.apache.gshell.ansi.AnsiRendererIO;
+import org.apache.gshell.ansi.AnsiIO;
 import org.apache.gshell.cli.Argument;
 import org.apache.gshell.cli.NameValue;
 import org.apache.gshell.cli.Option;
@@ -52,7 +52,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public abstract class MainSupport
     implements VariableNames
 {
-    protected final IO io = new AnsiRendererIO();
+    protected final IO io = new AnsiIO();
 
     protected final Variables vars = new Variables();
 
@@ -164,6 +164,7 @@ public abstract class MainSupport
         Log.debug("Booting w/args: ", args);
 
         // Setup environment defaults
+        // Ansi.install();
         setConsoleLogLevel(Log.Level.WARN);
         setTerminalType(TerminalFactory.Type.AUTO);
 
