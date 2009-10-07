@@ -20,28 +20,57 @@
 package org.apache.gshell.core.parser.impl;
 
 /**
- * Represents a quoted (with double quotes) argument.
+ * Support for argument types.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class ASTQuotedString
-    extends StringSupport
+public abstract class ArgumentSupport
+    extends SimpleNode
 {
-    public ASTQuotedString(final int id) {
+    protected Token token;
+
+    public ArgumentSupport(final int id) {
         super(id);
     }
 
-    public ASTQuotedString(final Parser p, final int id) {
+    public ArgumentSupport(final Parser p, final int id) {
         super(p, id);
     }
 
-    @Override
+    public void setToken(final Token token) {
+        assert token != null;
+
+        this.token = token;
+    }
+
+    public Token getToken() {
+        return token;
+    }
+
     public String getValue() {
-        return unquote(super.getValue());
+        Token t = getToken();
+        if (t == null) {
+            throw new IllegalStateException("Token not set");
+        }
+
+        return t.image;
     }
 
     @Override
-    public Object jjtAccept(final ParserVisitor visitor, final Object data) {
-        return visitor.visit(this, data);
+    public String toString() {
+        return String.format("%s (%s)", super.toString(), getToken());
+    }
+
+    /**
+     * Returns an unquoted value.
+     *
+     * @param value     String to unquote, must not be null; length must be at least 2
+     * @return          Unquoted value
+     */
+    protected String unquote(final String value) {
+        assert value != null;
+        assert value.length() >= 2;
+
+        return value.substring(1, value.length() - 1);
     }
 }

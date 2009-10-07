@@ -20,57 +20,28 @@
 package org.apache.gshell.core.parser.impl;
 
 /**
- * Support for string types.
+ * Represents an <em>opaque</em> argument.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public abstract class StringSupport
-    extends SimpleNode
+public class ASTOpaqueArgument
+    extends ArgumentSupport
 {
-    protected Token token;
-
-    public StringSupport(final int id) {
+    public ASTOpaqueArgument(final int id) {
         super(id);
     }
 
-    public StringSupport(final Parser p, final int id) {
+    public ASTOpaqueArgument(final Parser p, final int id) {
         super(p, id);
     }
 
-    public void setToken(final Token token) {
-        assert token != null;
-
-        this.token = token;
-    }
-
-    public Token getToken() {
-        return token;
-    }
-
+    @Override
     public String getValue() {
-        Token t = getToken();
-        if (t == null) {
-            throw new IllegalStateException("Token not set");
-        }
-
-        return t.image;
+        return unquote(super.getValue());
     }
 
     @Override
-    public String toString() {
-        return String.format("%s (%s)", super.toString(), getToken());
-    }
-
-    /**
-     * Returns an unquoted value.
-     *
-     * @param value     String to unquote, must not be null; length must be at least 2
-     * @return          Unquoted value
-     */
-    protected String unquote(final String value) {
-        assert value != null;
-        assert value.length() >= 2;
-
-        return value.substring(1, value.length() - 1);
+    public Object jjtAccept(final ParserVisitor visitor, final Object data) {
+        return visitor.visit(this, data);
     }
 }

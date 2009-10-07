@@ -21,9 +21,9 @@ package org.apache.gshell.core.parser.impl.visitor;
 
 import org.apache.gshell.core.parser.impl.ASTCommandLine;
 import org.apache.gshell.core.parser.impl.ASTExpression;
-import org.apache.gshell.core.parser.impl.ASTOpaqueString;
-import org.apache.gshell.core.parser.impl.ASTPlainString;
-import org.apache.gshell.core.parser.impl.ASTQuotedString;
+import org.apache.gshell.core.parser.impl.ASTOpaqueArgument;
+import org.apache.gshell.core.parser.impl.ASTPlainArgument;
+import org.apache.gshell.core.parser.impl.ASTQuotedArgument;
 import org.apache.gshell.core.parser.impl.ASTWhitespace;
 import org.apache.gshell.core.parser.impl.ParserVisitor;
 import org.apache.gshell.core.parser.impl.SimpleNode;
@@ -122,15 +122,15 @@ public class LoggingVisitor
         return log(ASTWhitespace.class, node, data);
     }
 
-    public Object visit(final ASTQuotedString node, Object data) {
-        return log(ASTQuotedString.class, node, data);
+    public Object visit(final ASTQuotedArgument node, Object data) {
+        return log(ASTQuotedArgument.class, node, data);
     }
 
-    public Object visit(final ASTOpaqueString node, Object data) {
-        return log(ASTOpaqueString.class, node, data);
+    public Object visit(final ASTOpaqueArgument node, Object data) {
+        return log(ASTOpaqueArgument.class, node, data);
     }
 
-    public Object visit(final ASTPlainString node, Object data) {
-        return log(ASTPlainString.class, node, data);
+    public Object visit(final ASTPlainArgument node, Object data) {
+        return log(ASTPlainArgument.class, node, data);
     }
 }

@@ -24,9 +24,9 @@ import org.apache.gshell.ShellHolder;
 import org.apache.gshell.Variables;
 import org.apache.gshell.core.parser.impl.ASTCommandLine;
 import org.apache.gshell.core.parser.impl.ASTExpression;
-import org.apache.gshell.core.parser.impl.ASTOpaqueString;
-import org.apache.gshell.core.parser.impl.ASTPlainString;
-import org.apache.gshell.core.parser.impl.ASTQuotedString;
+import org.apache.gshell.core.parser.impl.ASTOpaqueArgument;
+import org.apache.gshell.core.parser.impl.ASTPlainArgument;
+import org.apache.gshell.core.parser.impl.ASTQuotedArgument;
 import org.apache.gshell.core.parser.impl.ASTWhitespace;
 import org.apache.gshell.core.parser.impl.ParserVisitor;
 import org.apache.gshell.core.parser.impl.SimpleNode;
@@ -119,7 +119,7 @@ public class ExecutingVisitor
         return data;
     }
 
-    public Object visit(final ASTQuotedString node, final Object data) {
+    public Object visit(final ASTQuotedArgument node, final Object data) {
         assert node != null;
         assert data != null;
 
@@ -128,7 +128,7 @@ public class ExecutingVisitor
         return state.append(value);
     }
 
-    public Object visit(final ASTPlainString node, final Object data) {
+    public Object visit(final ASTPlainArgument node, final Object data) {
         assert node != null;
         assert data != null;
 
@@ -168,7 +168,7 @@ public class ExecutingVisitor
         }
     }
 
-    public Object visit(final ASTOpaqueString node, final Object data) {
+    public Object visit(final ASTOpaqueArgument node, final Object data) {
         assert node != null;
 
         ExpressionState state = (ExpressionState)data;

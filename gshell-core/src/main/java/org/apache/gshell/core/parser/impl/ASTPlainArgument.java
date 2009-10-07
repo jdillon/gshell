@@ -24,14 +24,14 @@ package org.apache.gshell.core.parser.impl;
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class ASTPlainString
-    extends StringSupport
+public class ASTPlainArgument
+    extends ArgumentSupport
 {
-    public ASTPlainString(final int id) {
+    public ASTPlainArgument(final int id) {
         super(id);
     }
 
-    public ASTPlainString(final Parser p, final int id) {
+    public ASTPlainArgument(final Parser p, final int id) {
         super(p, id);
     }
 

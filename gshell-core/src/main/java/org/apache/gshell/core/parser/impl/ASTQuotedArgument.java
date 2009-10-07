@@ -20,18 +20,18 @@
 package org.apache.gshell.core.parser.impl;
 
 /**
- * Represents an <em>opaque</em> argument.
+ * Represents a quoted (with double quotes) argument.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class ASTOpaqueString
-    extends StringSupport
+public class ASTQuotedArgument
+    extends ArgumentSupport
 {
-    public ASTOpaqueString(final int id) {
+    public ASTQuotedArgument(final int id) {
         super(id);
     }
 
-    public ASTOpaqueString(final Parser p, final int id) {
+    public ASTQuotedArgument(final Parser p, final int id) {
         super(p, id);
     }
 

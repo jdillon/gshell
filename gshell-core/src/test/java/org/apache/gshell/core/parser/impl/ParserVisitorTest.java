@@ -44,9 +44,9 @@ public class ParserVisitorTest
         assertNull(v.simpleNode);
         assertNotNull(v.commandLine);
         assertNotNull(v.expression);
-        assertNotNull(v.quotedString);
-        assertNotNull(v.opaqueString);
-        assertNotNull(v.plainString);
+        assertNotNull(v.quotedArgument);
+        assertNotNull(v.opaqueArgument);
+        assertNotNull(v.plainArgument);
         assertNotNull(v.whitespace);
     }
 
@@ -56,9 +56,9 @@ public class ParserVisitorTest
         private SimpleNode simpleNode;
         private ASTCommandLine commandLine;
         private ASTExpression expression;
-        private ASTQuotedString quotedString;
-        private ASTOpaqueString opaqueString;
-        private ASTPlainString plainString;
+        private ASTQuotedArgument quotedArgument;
+        private ASTOpaqueArgument opaqueArgument;
+        private ASTPlainArgument plainArgument;
         private ASTWhitespace whitespace;
 
         public Object visit(SimpleNode node, Object data) {
@@ -84,20 +84,20 @@ public class ParserVisitorTest
             return node.childrenAccept(this, data);
         }
 
-        public Object visit(ASTQuotedString node, Object data) {
-            this.quotedString = node;
+        public Object visit(ASTQuotedArgument node, Object data) {
+            this.quotedArgument = node;
 
             return node.childrenAccept(this, data);
         }
 
-        public Object visit(ASTOpaqueString node, Object data) {
-            this.opaqueString = node;
+        public Object visit(ASTOpaqueArgument node, Object data) {
+            this.opaqueArgument = node;
 
             return node.childrenAccept(this, data);
         }
 
-        public Object visit(ASTPlainString node, Object data) {
-            this.plainString = node;
+        public Object visit(ASTPlainArgument node, Object data) {
+            this.plainArgument = node;
 
             return node.childrenAccept(this, data);
         }

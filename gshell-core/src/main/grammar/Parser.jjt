@@ -151,10 +151,7 @@ PARSER_END(Parser)
 <DEFAULT> TOKEN :
 {
     < SEMICOLON: ";" >
-}
-
-<DEFAULT> TOKEN :
-{
+|
     < PIPE: "|" >
 }
 
@@ -183,15 +180,10 @@ void expression() #Expression: {}
 
 void argument() #void: {}
 {
-    string()
+    quotedArgument() | opaqueArgument() | plainArgument()
 }
 
-void string() #void: {}
-{
-    quotedString() | opaqueString() | plainString()
-}
-
-void quotedString() #QuotedString:
+void quotedArgument() #QuotedArgument:
 {
     Token t;
 }
@@ -202,7 +194,7 @@ void quotedString() #QuotedString:
     }
 }
 
-void opaqueString() #OpaqueString:
+void opaqueArgument() #OpaqueArgument:
 {
     Token t;
 }
@@ -213,7 +205,7 @@ void opaqueString() #OpaqueString:
     }
 }
 
-void plainString() #PlainString:
+void plainArgument() #PlainArgument:
 {
     Token t;
 }
