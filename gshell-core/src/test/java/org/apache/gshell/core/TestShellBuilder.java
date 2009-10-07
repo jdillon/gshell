@@ -35,6 +35,7 @@ import org.apache.gshell.registry.CommandRegistrar;
 public class TestShellBuilder
     extends GuiceShellBuilder
 {
+    @Override
     protected Injector createInjector() {
         return Guice.createInjector(Stage.DEVELOPMENT, new CoreModule());
     }

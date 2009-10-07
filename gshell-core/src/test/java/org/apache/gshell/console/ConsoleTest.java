@@ -85,6 +85,7 @@ public class ConsoleTest
             super(executor);
         }
 
+        @Override
         protected String readLine(final String prompt) throws IOException {
             return line;
         }

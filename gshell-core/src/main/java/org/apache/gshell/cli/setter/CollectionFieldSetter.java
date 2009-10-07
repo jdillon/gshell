@@ -46,10 +46,12 @@ public class CollectionFieldSetter
         }
     }
 
+    @Override
     public boolean isMultiValued() {
         return true;
     }
 
+    @Override
     public Class getType() {
         Type type = field.getGenericType();
 
@@ -67,6 +69,7 @@ public class CollectionFieldSetter
         return Object.class;
     }
 
+    @Override
     protected void doSet(final Object value) throws IllegalAccessException {
         Object obj = field.get(bean);
 

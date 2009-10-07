@@ -35,7 +35,7 @@ public class ASTPlainString
         super(p, id);
     }
 
-    /** Accept the visitor. **/
+    @Override
     public Object jjtAccept(final ParserVisitor visitor, final Object data) {
         return visitor.visit(this, data);
     }

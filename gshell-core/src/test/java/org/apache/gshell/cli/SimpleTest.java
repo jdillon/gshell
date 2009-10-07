@@ -35,6 +35,7 @@ public class SimpleTest
 {
     private Simple bean;
 
+    @Override
     protected Object createBean() {
         bean = new Simple();
         return bean;

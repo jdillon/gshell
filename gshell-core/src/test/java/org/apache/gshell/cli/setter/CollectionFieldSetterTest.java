@@ -37,6 +37,7 @@ public class CollectionFieldSetterTest
 {
     private TestBean bean;
 
+    @Override
     protected Object createBean() {
         bean = new TestBean();
         return bean;

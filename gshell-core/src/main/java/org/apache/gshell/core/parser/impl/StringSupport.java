@@ -56,6 +56,7 @@ public abstract class StringSupport
         return t.image;
     }
 
+    @Override
     public String toString() {
         return String.format("%s (%s)", super.toString(), getToken());
     }

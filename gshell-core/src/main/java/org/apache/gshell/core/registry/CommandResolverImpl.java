@@ -121,6 +121,7 @@ public class CommandResolverImpl
             this.target = target;
         }
 
+        @Override
         public String getName() {
             return name;
         }

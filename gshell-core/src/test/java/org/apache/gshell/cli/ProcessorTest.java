@@ -35,6 +35,7 @@ public class ProcessorTest
 {
     private TestBean bean;
 
+    @Override
     protected Object createBean() {
         bean = new TestBean();
         return bean;

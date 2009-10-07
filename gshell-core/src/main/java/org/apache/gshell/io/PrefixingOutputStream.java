@@ -42,6 +42,7 @@ public class PrefixingOutputStream
         this.prefix = prefix;
     }
 
+    @Override
     public void write(final int b) throws IOException {
         if (outputHeader) {
             outputHeader = false;
