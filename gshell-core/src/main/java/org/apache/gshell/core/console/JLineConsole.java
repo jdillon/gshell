@@ -21,7 +21,7 @@ package org.apache.gshell.core.console;
 
 import jline.console.ConsoleReader;
 import jline.console.CandidateListCompletionHandler;
-import jline.console.SimpleHistory;
+import jline.console.FileHistory;
 import jline.console.History;
 import jline.console.Completer;
 import org.apache.gshell.console.Console;
@@ -49,7 +49,7 @@ public class JLineConsole
         reader = io.createConsoleReader(bindings);
         reader.setUsePagination(true);
         reader.setCompletionHandler(new CandidateListCompletionHandler());
-        reader.setHistory(history != null ? history : new SimpleHistory());
+        reader.setHistory(history != null ? history : new FileHistory());
     }
 
     public JLineConsole(final Executor executor, final IO io) throws IOException {
@@ -65,6 +65,7 @@ public class JLineConsole
         reader.addCompletor(completer);
     }
 
+    @Override
     protected String readLine(final String prompt) throws IOException {
         // prompt may be null
         return reader.readLine(prompt);

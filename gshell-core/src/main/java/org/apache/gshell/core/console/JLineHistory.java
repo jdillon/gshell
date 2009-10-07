@@ -28,7 +28,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import jline.console.SimpleHistory;
+import jline.console.FileHistory;
 
 /**
  * Implementation of {@link History} for <a href="http://jline.sf.net">JLine</a>.
@@ -42,12 +42,13 @@ public class JLineHistory
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private SimpleHistory delegate = new SimpleHistory();
+    private FileHistory delegate = new FileHistory();
 
     private File storeFile;
 
     public JLineHistory() {
         Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
             public void run() {
                 try {
                     delegate.flush();
@@ -76,7 +77,7 @@ public class JLineHistory
         this.storeFile = file;
         log.debug("History file: {}", storeFile);
 
-        delegate.setHistoryFile(storeFile);
+        delegate.setFile(storeFile);
     }
 
     public void add(final String element) {
