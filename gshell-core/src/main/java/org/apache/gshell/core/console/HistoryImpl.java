@@ -56,7 +56,7 @@ public class HistoryImpl
                     delegate.flush();
                 }
                 catch (IOException e) {
-                    log.error("Failed to flush history buffer", e);
+                    log.error("Failed to flush history", e);
                 }
             }
         });
