@@ -48,9 +48,9 @@ public interface History
     int size();
     
     /**
-     * Returns a list of all history elements.
+     * Returns a list of all history items.
      * 
      * @return  List of history elements; never null
      */
-    List<String> elements();
+    List<String> items();
 }

@@ -92,7 +92,7 @@ public class RecallHistoryCommandTest
         history.clear();
         assertFalse(vars.contains("foo"));
 
-        // Then add 2 elements, both setting foo
+        // Then add 2 items, both setting foo
         history.add("set foo bar");
         history.add("set foo baz");
 

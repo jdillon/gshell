@@ -28,8 +28,8 @@ import org.apache.gshell.ShellHolder;
 import org.apache.gshell.VariableNames;
 import org.apache.gshell.Variables;
 import org.apache.gshell.console.Console;
-import org.apache.gshell.core.console.JLineConsole;
-import org.apache.gshell.core.console.JLineHistory;
+import org.apache.gshell.core.console.ConsoleImpl;
+import org.apache.gshell.core.console.HistoryImpl;
 import org.apache.gshell.execute.CommandExecutor;
 import org.apache.gshell.io.Closer;
 import org.apache.gshell.io.IO;
@@ -68,7 +68,7 @@ public class ShellImpl
 
     private final Variables variables;
 
-    private final JLineHistory history = new JLineHistory();
+    private final HistoryImpl history;
 
     private List<Completer> completers;
 
@@ -78,7 +78,7 @@ public class ShellImpl
 
     private boolean opened;
     
-    public ShellImpl(final Branding branding, final CommandExecutor executor, final IO io, final Variables variables) {
+    public ShellImpl(final Branding branding, final CommandExecutor executor, final IO io, final Variables variables) throws IOException {
         assert branding != null;
         assert executor != null;
         // io and variables may be null
@@ -87,6 +87,8 @@ public class ShellImpl
         this.executor = executor;
         this.io = io != null ? io : new IO();
         this.variables = variables != null ? variables : new Variables();
+        this.history = new HistoryImpl(new File(branding.getUserContextDir(), branding.getHistoryFileName()));
+
     }
 
     public Branding getBranding() {
@@ -154,11 +156,7 @@ public class ShellImpl
         if (!SystemInputOutputHijacker.isInstalled()) {
             SystemInputOutputHijacker.install();
         }
-
-        // Configure history storage
-        File file = new File(branding.getUserContextDir(), branding.getHistoryFileName());
-        history.setStoreFile(file);
-
+        
         // Customize the shell
         branding.customize(this);
 
@@ -225,7 +223,7 @@ public class ShellImpl
         IO io = getIo();
 
         // Setup the console
-        JLineConsole console = new JLineConsole(executor, io, history.getDelegate(), loadBindings());
+        ConsoleImpl console = new ConsoleImpl(executor, io, history.getDelegate(), loadBindings());
 
         if (prompter != null) {
             console.setPrompter(prompter);

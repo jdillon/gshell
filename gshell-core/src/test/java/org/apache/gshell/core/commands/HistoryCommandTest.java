@@ -80,7 +80,7 @@ public class HistoryCommandTest
         // first purge
         testPurge();
 
-        // Then seed 10 elements
+        // Then seed 10 items
         for (int i=0; i<10; i++) {
             execute("echo " + i);
         }
@@ -97,7 +97,7 @@ public class HistoryCommandTest
         // first purge
         testPurge();
 
-        // Then seed 10 elements
+        // Then seed 10 items
         for (int i=0; i<10; i++) {
             execute("echo " + i);
         }

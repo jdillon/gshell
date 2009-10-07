@@ -72,8 +72,8 @@ public class HistoryCommand
         History history = context.getShell().getHistory();
 
         if (range == null) {
-            // Display all elements
-            List<String> elements = history.elements();
+            // Display all items
+            List<String> elements = history.items();
             int i = 0;
             for (String element : elements) {
                 renderElement(io, i, element);
@@ -81,9 +81,9 @@ public class HistoryCommand
             }
         }
         else {
-            // Display elements in range
+            // Display items in range
             int n = Integer.parseInt(range);
-            List<String> elements = history.elements();
+            List<String> elements = history.items();
             if (n > elements.size()) {
                 n = 0;
             }

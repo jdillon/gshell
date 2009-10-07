@@ -37,16 +37,18 @@ import jline.console.FileHistory;
  *
  * @since 2.0
  */
-public class JLineHistory
+public class HistoryImpl
     implements History, VariableNames
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private FileHistory delegate = new FileHistory();
+    private FileHistory delegate;
 
-    private File storeFile;
+    public HistoryImpl(final File file) throws IOException {
+        assert file != null;
 
-    public JLineHistory() {
+        this.delegate = new FileHistory(file);
+
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
@@ -64,24 +66,7 @@ public class JLineHistory
         return delegate;
     }
 
-    public void setStoreFile(final File file) throws IOException {
-        assert file != null;
-
-        File dir = file.getParentFile();
-        if (!dir.exists()) {
-            if (!dir.mkdirs()) {
-                log.debug("Unable to create directory: {}", dir);
-            }
-        }
-
-        this.storeFile = file;
-        log.debug("History file: {}", storeFile);
-
-        delegate.setFile(storeFile);
-    }
-
     public void add(final String element) {
-        assert element != null;
         delegate.add(element);
     }
 
@@ -90,41 +75,14 @@ public class JLineHistory
     }
 
     public void purge() throws IOException {
-        clear();
-
-        if (storeFile == null) {
-            log.warn("History storage file not configured; nothing to purge");
-        }
-        else {
-            log.debug("Purging history file: {}", storeFile);
-
-            delegate.flush();
-
-            File originalFile = storeFile;
-
-            // Create and install a new history file, to deal with windows shit locking
-            // and lack of real control over the streams used by jline.History
-            File tmp = File.createTempFile(getClass().getSimpleName(), "temp");
-            tmp.deleteOnExit();
-            setStoreFile(tmp);
-
-            // Delete the original then re-install it
-            if (!originalFile.delete()) {
-                log.warn("Unable to remove history file: {}", originalFile);
-            }
-            setStoreFile(originalFile);
-
-            if (!tmp.delete()) {
-                log.warn("Unable to remove file: {}", tmp);
-            }
-        }
+        delegate.purge();
     }
 
     public int size() {
         return delegate.size();
     }
 
-    public List<String> elements() {
+    public List<String> items() {
         return delegate.items();
     }
 }

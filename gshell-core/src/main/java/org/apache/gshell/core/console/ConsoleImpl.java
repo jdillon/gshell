@@ -19,11 +19,11 @@
 
 package org.apache.gshell.core.console;
 
-import jline.console.ConsoleReader;
 import jline.console.CandidateListCompletionHandler;
-import jline.console.FileHistory;
-import jline.console.History;
 import jline.console.Completer;
+import jline.console.ConsoleReader;
+import jline.console.History;
+import jline.console.MemoryHistory;
 import org.apache.gshell.console.Console;
 import org.apache.gshell.io.IO;
 
@@ -37,22 +37,22 @@ import java.io.InputStream;
  *
  * @since 2.0
  */
-public class JLineConsole
+public class ConsoleImpl
     extends Console
 {
     private final ConsoleReader reader;
 
-    public JLineConsole(final Executor executor, final IO io, final History history, final InputStream bindings) throws IOException {
+    public ConsoleImpl(final Executor executor, final IO io, final History history, final InputStream bindings) throws IOException {
         super(executor);
         assert io != null;
 
         reader = io.createConsoleReader(bindings);
         reader.setUsePagination(true);
         reader.setCompletionHandler(new CandidateListCompletionHandler());
-        reader.setHistory(history != null ? history : new FileHistory());
+        reader.setHistory(history != null ? history : new MemoryHistory());
     }
 
-    public JLineConsole(final Executor executor, final IO io) throws IOException {
+    public ConsoleImpl(final Executor executor, final IO io) throws IOException {
         this(executor, io, null, null);
     }
 
