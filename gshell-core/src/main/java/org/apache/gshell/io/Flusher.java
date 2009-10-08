@@ -42,7 +42,7 @@ public class Flusher
                     f.flush();
                 }
                 catch (IOException e) {
-                    Log.trace("Failed to flush: ", f, e);
+                    Log.trace(e);
                 }
             }
         }

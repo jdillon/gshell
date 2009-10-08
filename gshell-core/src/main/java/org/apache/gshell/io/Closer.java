@@ -42,7 +42,7 @@ public class Closer
                     c.close();
                 }
                 catch (IOException e) {
-                    Log.trace("Failed to close: ", c, e);
+                    Log.trace(e);
                 }
             }
         }
