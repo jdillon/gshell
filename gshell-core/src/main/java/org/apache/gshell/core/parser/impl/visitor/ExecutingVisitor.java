@@ -20,8 +20,6 @@
 package org.apache.gshell.core.parser.impl.visitor;
 
 import org.apache.gshell.Shell;
-import org.apache.gshell.ShellHolder;
-import org.apache.gshell.Variables;
 import org.apache.gshell.core.parser.impl.ASTCommandLine;
 import org.apache.gshell.core.parser.impl.ASTExpression;
 import org.apache.gshell.core.parser.impl.ASTOpaqueArgument;
@@ -30,14 +28,12 @@ import org.apache.gshell.core.parser.impl.ASTQuotedArgument;
 import org.apache.gshell.core.parser.impl.ASTWhitespace;
 import org.apache.gshell.core.parser.impl.ParserVisitor;
 import org.apache.gshell.core.parser.impl.SimpleNode;
+import org.apache.gshell.core.parser.impl.eval.Evaluator;
+import org.apache.gshell.core.parser.impl.eval.EvaluatorFactory;
 import org.apache.gshell.execute.CommandExecutor;
 import org.apache.gshell.notification.ErrorNotification;
 import org.apache.gshell.util.Arguments;
 import org.apache.gshell.util.Strings;
-import org.codehaus.plexus.interpolation.AbstractValueSource;
-import org.codehaus.plexus.interpolation.InterpolationException;
-import org.codehaus.plexus.interpolation.Interpolator;
-import org.codehaus.plexus.interpolation.StringSearchInterpolator;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -55,7 +51,7 @@ public class ExecutingVisitor
 
     private final CommandExecutor executor;
 
-    private Interpolator interp;
+    private final Evaluator evaluator;
 
     public ExecutingVisitor(final Shell shell, final CommandExecutor executor) {
         assert shell != null;
@@ -63,6 +59,7 @@ public class ExecutingVisitor
 
         this.shell = shell;
         this.executor = executor;
+        this.evaluator = EvaluatorFactory.get();
     }
 
     public Object visit(final SimpleNode node, final Object data) {
@@ -124,7 +121,7 @@ public class ExecutingVisitor
         assert data != null;
 
         ExpressionState state = (ExpressionState)data;
-        String value = interpolate(node.getValue());
+        String value = eval(node.getValue());
         return state.append(value);
     }
 
@@ -133,39 +130,8 @@ public class ExecutingVisitor
         assert data != null;
 
         ExpressionState state = (ExpressionState)data;
-        String value = interpolate(node.getValue());
+        String value = eval(node.getValue());
         return state.append(value);
-    }
-
-    private String interpolate(final String value) {
-        assert value != null;
-
-        // Skip interpolation if there is no start token
-        if (!value.contains(StringSearchInterpolator.DEFAULT_START_EXPR)) {
-            return value;
-        }
-
-        if (interp == null) {
-            interp = new StringSearchInterpolator();
-            interp.addValueSource(new AbstractValueSource(false) {
-                public Object getValue(final String expression) {
-                    Variables vars = ShellHolder.get().getVariables();
-                    return vars.get(expression);
-                }
-            });
-            interp.addValueSource(new AbstractValueSource(false) {
-                public Object getValue(final String expression) {
-                    return System.getProperty(expression);
-                }
-            });
-        }
-
-        try {
-            return interp.interpolate(value);
-        }
-        catch (InterpolationException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public Object visit(final ASTOpaqueArgument node, final Object data) {
@@ -173,6 +139,20 @@ public class ExecutingVisitor
 
         ExpressionState state = (ExpressionState)data;
         return state.append(node.getValue());
+    }
+
+    private String eval(final String expression) {
+        // expression could be null
+        Object value;
+        try {
+            value = evaluator.eval(expression);
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        // FIXME: Need to return Object, but for now use String
+        return String.valueOf(value);
     }
 
     //
