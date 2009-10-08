@@ -19,6 +19,8 @@
 
 package org.apache.gshell.i18n;
 
+import org.apache.gshell.internal.Log;
+
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -57,7 +59,7 @@ public class AggregateMessageSource
                 if (result != null) break;
             }
             catch (ResourceNotFoundException e) {
-                // ignore
+                Log.trace(e);
             }
         }
 
@@ -77,7 +79,7 @@ public class AggregateMessageSource
                 if (result != null) break;
             }
             catch (ResourceNotFoundException e) {
-                // ignore
+                Log.trace(e);
             }
         }
 

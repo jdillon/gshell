@@ -19,6 +19,8 @@
 
 package org.apache.gshell.i18n;
 
+import org.apache.gshell.internal.Log;
+
 import java.text.MessageFormat;
 import java.util.LinkedList;
 import java.util.List;
@@ -84,7 +86,9 @@ public class ResourceBundleMessageSource
             try {
                 return bundle.getString(code);
             }
-            catch (MissingResourceException ignore) {}
+            catch (MissingResourceException e) {
+                Log.trace(e);
+            }
         }
 
         throw new ResourceNotFoundException(code);
