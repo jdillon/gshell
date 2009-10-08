@@ -59,7 +59,7 @@ public class ConsoleImpl
     public ConsoleReader getReader() {
         return reader;
     }
-
+    
     public void addCompleter(final Completer completer) {
         assert completer != null;
         reader.addCompleter(completer);
