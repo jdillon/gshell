@@ -109,79 +109,79 @@ public class InfoCommand
             switch (section) {
                 case SHELL:
                     io.info("Shell");
-                    printValue(io, "Display Name", branding.getDisplayName());
-                    printValue(io, "Program Name", branding.getProgramName());
-                    printValue(io, "Version", branding.getVersion());
-                    printValue(io, "Home Dir", branding.getShellHomeDir());
-                    printValue(io, "Context Dir", branding.getShellContextDir());
-                    printValue(io, "User Home Dir", branding.getUserHomeDir());
-                    printValue(io, "User Context Dir", branding.getUserContextDir());
-                    printValue(io, "Script Extension", branding.getScriptExtension());
-                    printValue(io, "ANSI", Ansi.isEnabled());
+                    println(io, "Display Name", branding.getDisplayName());
+                    println(io, "Program Name", branding.getProgramName());
+                    println(io, "Version", branding.getVersion());
+                    println(io, "Home Dir", branding.getShellHomeDir());
+                    println(io, "Context Dir", branding.getShellContextDir());
+                    println(io, "User Home Dir", branding.getUserHomeDir());
+                    println(io, "User Context Dir", branding.getUserContextDir());
+                    println(io, "Script Extension", branding.getScriptExtension());
+                    println(io, "ANSI", Ansi.isEnabled());
                     break;
 
                 case TERMINAL:
                     io.out.println("Terminal");
                     Terminal term = io.getTerminal();
-                    printValue(io, "Type", term.getClass().getName());
-                    printValue(io, "Supported", term.isSupported());
-                    printValue(io, "Height", term.getHeight());
-                    printValue(io, "Width", term.getWidth());
-                    printValue(io, "ANSI", term.isAnsiSupported());
-                    printValue(io, "Echo", term.isEchoEnabled());
+                    println(io, "Type", term.getClass().getName());
+                    println(io, "Supported", term.isSupported());
+                    println(io, "Height", term.getHeight());
+                    println(io, "Width", term.getWidth());
+                    println(io, "ANSI", term.isAnsiSupported());
+                    println(io, "Echo", term.isEchoEnabled());
                     if (term instanceof WindowsTerminal) {
-                        printValue(io, "Direct Console", ((WindowsTerminal)term).getDirectConsole());
+                        println(io, "Direct Console", ((WindowsTerminal)term).getDirectConsole());
                     }
                     break;
 
                 case JVM:
                     io.out.println("JVM");
-                    printValue(io, "Java Virtual Machine", runtime.getVmName() + " version " + runtime.getVmVersion());
-                    printValue(io, "Vendor", runtime.getVmVendor());
-                    printValue(io, "Uptime", printDuration(runtime.getUptime()));
+                    println(io, "Java Virtual Machine", runtime.getVmName() + " version " + runtime.getVmVersion());
+                    println(io, "Vendor", runtime.getVmVendor());
+                    println(io, "Uptime", printDuration(runtime.getUptime()));
                     try {
-                        printValue(io, "Process CPU time", printDuration(getSunOsValueAsLong(os, "getProcessCpuTime") / 1000000));
+                        println(io, "Process CPU time", printDuration(getSunOsValueAsLong(os, "getProcessCpuTime") / 1000000));
                     }
                     catch (Throwable t) {}
-                    printValue(io, "Total compile time", printDuration(ManagementFactory.getCompilationMXBean().getTotalCompilationTime()));
+                    println(io, "Total compile time", printDuration(ManagementFactory.getCompilationMXBean().getTotalCompilationTime()));
                     break;
 
                 case THREADS:
                     io.out.println("Threads");
-                    printValue(io, "Live threads", Integer.toString(threads.getThreadCount()));
-                    printValue(io, "Daemon threads", Integer.toString(threads.getDaemonThreadCount()));
-                    printValue(io, "Peak", Integer.toString(threads.getPeakThreadCount()));
-                    printValue(io, "Total started", Long.toString(threads.getTotalStartedThreadCount()));
+                    println(io, "Live threads", Integer.toString(threads.getThreadCount()));
+                    println(io, "Daemon threads", Integer.toString(threads.getDaemonThreadCount()));
+                    println(io, "Peak", Integer.toString(threads.getPeakThreadCount()));
+                    println(io, "Total started", Long.toString(threads.getTotalStartedThreadCount()));
 
                     io.out.println("Memory");
-                    printValue(io, "Current heap size", printSizeInKb(mem.getHeapMemoryUsage().getUsed()));
-                    printValue(io, "Maximum heap size", printSizeInKb(mem.getHeapMemoryUsage().getMax()));
-                    printValue(io, "Committed heap size", printSizeInKb(mem.getHeapMemoryUsage().getCommitted()));
-                    printValue(io, "Pending objects", Integer.toString(mem.getObjectPendingFinalizationCount()));
+                    println(io, "Current heap size", printSizeInKb(mem.getHeapMemoryUsage().getUsed()));
+                    println(io, "Maximum heap size", printSizeInKb(mem.getHeapMemoryUsage().getMax()));
+                    println(io, "Committed heap size", printSizeInKb(mem.getHeapMemoryUsage().getCommitted()));
+                    println(io, "Pending objects", Integer.toString(mem.getObjectPendingFinalizationCount()));
                     for (GarbageCollectorMXBean gc : ManagementFactory.getGarbageCollectorMXBeans()) {
                         String val = "Name = '" + gc.getName() + "', Collections = " + gc.getCollectionCount() + ", Time = " + printDuration(gc.getCollectionTime());
-                        printValue(io, "Garbage collector", val);
+                        println(io, "Garbage collector", val);
                     }
                     break;
 
                 case CLASSES:
                     io.out.println("Classes");
-                    printValue(io, "Current classes loaded", printLong(cl.getLoadedClassCount()));
-                    printValue(io, "Total classes loaded", printLong(cl.getTotalLoadedClassCount()));
-                    printValue(io, "Total classes unloaded", printLong(cl.getUnloadedClassCount()));
+                    println(io, "Current classes loaded", printLong(cl.getLoadedClassCount()));
+                    println(io, "Total classes loaded", printLong(cl.getTotalLoadedClassCount()));
+                    println(io, "Total classes unloaded", printLong(cl.getUnloadedClassCount()));
                     break;
 
                 case OS:
                     io.out.println("Operating system");
-                    printValue(io, "Name", os.getName() + " version " + os.getVersion());
-                    printValue(io, "Architecture", os.getArch());
-                    printValue(io, "Processors", Integer.toString(os.getAvailableProcessors()));
+                    println(io, "Name", os.getName() + " version " + os.getVersion());
+                    println(io, "Architecture", os.getArch());
+                    println(io, "Processors", Integer.toString(os.getAvailableProcessors()));
                     try {
-                        printValue(io, "Total physical memory", printSizeInKb(getSunOsValueAsLong(os, "getTotalPhysicalMemorySize")));
-                        printValue(io, "Free physical memory", printSizeInKb(getSunOsValueAsLong(os, "getFreePhysicalMemorySize")));
-                        printValue(io, "Committed virtual memory", printSizeInKb(getSunOsValueAsLong(os, "getCommittedVirtualMemorySize")));
-                        printValue(io, "Total swap space", printSizeInKb(getSunOsValueAsLong(os, "getTotalSwapSpaceSize")));
-                        printValue(io, "Free swap space", printSizeInKb(getSunOsValueAsLong(os, "getFreeSwapSpaceSize")));
+                        println(io, "Total physical memory", printSizeInKb(getSunOsValueAsLong(os, "getTotalPhysicalMemorySize")));
+                        println(io, "Free physical memory", printSizeInKb(getSunOsValueAsLong(os, "getFreePhysicalMemorySize")));
+                        println(io, "Committed virtual memory", printSizeInKb(getSunOsValueAsLong(os, "getCommittedVirtualMemorySize")));
+                        println(io, "Total swap space", printSizeInKb(getSunOsValueAsLong(os, "getTotalSwapSpaceSize")));
+                        println(io, "Free swap space", printSizeInKb(getSunOsValueAsLong(os, "getFreeSwapSpaceSize")));
                     }
                     catch (Throwable t) {}
                     break;
@@ -204,7 +204,7 @@ public class InfoCommand
     // TODO: i18n all this
     //
     
-    private String printSizeInKb(double size) {
+    private String printSizeInKb(final double size) {
         return FMTI.format((long) (size / 1024)) + " kbytes";
     }
 
@@ -239,7 +239,7 @@ public class InfoCommand
         return s;
     }
 
-    private void printValue(final IO io, final String name, final Object value) {
-        io.out.format("  @|bold %s| = %s", name, value).println();
+    private void println(final IO io, final String name, final Object value) {
+        io.out.format("  @|bold %s|: %s", name, value).println();
     }
 }
