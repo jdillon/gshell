@@ -19,6 +19,8 @@
 
 package org.apache.gshell.io;
 
+import org.apache.gshell.internal.Log;
+
 import java.io.Closeable;
 import java.io.IOException;
 
@@ -40,7 +42,7 @@ public class Closer
                     c.close();
                 }
                 catch (IOException e) {
-                    // ignore
+                    Log.trace("Failed to close: ", c, e);
                 }
             }
         }

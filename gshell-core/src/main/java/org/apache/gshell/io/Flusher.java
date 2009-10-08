@@ -19,6 +19,8 @@
 
 package org.apache.gshell.io;
 
+import org.apache.gshell.internal.Log;
+
 import java.io.Flushable;
 import java.io.IOException;
 
@@ -40,7 +42,7 @@ public class Flusher
                     f.flush();
                 }
                 catch (IOException e) {
-                    // ignore
+                    Log.trace("Failed to flush: ", f, e);
                 }
             }
         }
