@@ -71,10 +71,8 @@ public class Parser
 
     public ASTCommandLine parse(final Reader reader) throws ParseException {
         assert reader != null;
-
-        this.ReInit(reader);
-
-        return this.commandLine();
+        ReInit(reader);
+        return commandLine();
     }
 }
 
@@ -82,29 +80,44 @@ PARSER_END(Parser)
 
 ///////////////////////////////////////////////////////////////////////////////
 
-//
-// WHITE SPACE
-//
-
-<DEFAULT> TOKEN :
+<DEFAULT> TOKEN : // White Space
 {
     < WHITESPACE: ( " " | "\t" | "\n" | "\r" | "\f" ) >
 }
 
-//
-// COMMENTS
-//
-
-<DEFAULT> SPECIAL_TOKEN :
+<DEFAULT> SPECIAL_TOKEN : // Comments
 {
     < COMMENT: "#" (~["\n", "\r"])* ("\n" | "\r" | "\r\n")? >
 }
 
-//
-// STRINGS
-//
+/*
+<DEFAULT>TOKEN :
+{
+    < IDENTIFIER: <LETTER> (<LETTER>|<DIGIT>)* >
+|
+    < #LETTER: [ "a"-"z", "A"-"Z", "_", "$" ] >
+|
+    < #DIGIT: [ "0"-"9"] >
+}
 
 <DEFAULT> TOKEN :
+{
+    <STRING_LITERAL :
+        ("\"" ( ~["\"","\n","\r"] )* "\"" )
+     |
+        ("\'" ( ~["\'","\n","\r"] )* "\'" )
+    >
+}
+
+<DEFAULT> TOKEN : // LITERALS
+{
+    < INTEGER_LITERAL: (<DIGIT>)+ >
+|
+    < FLOAT_LITERAL: (<DIGIT>)+ "."(<DIGIT>)+ >
+}
+*/
+
+<DEFAULT> TOKEN : // Strings
 {
     < STRING:
       (   (~["\"","\\"," ","\t","\n","\r","\f",";","|","\"","'"])

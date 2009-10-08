@@ -22,6 +22,7 @@ package org.apache.gshell.core.parser.impl;
 import org.junit.Assert;
 import static org.junit.Assert.fail;
 import org.junit.Test;
+import org.junit.Ignore;
 
 /**
  * Unit tests for the {@link Parser} class.
@@ -31,6 +32,7 @@ import org.junit.Test;
 public class ParserTest
     extends ParserTestSupport
 {
+    @Test
     public void testParseNull() throws Exception {
         try {
             new Parser().parse(null);
@@ -40,14 +42,25 @@ public class ParserTest
             // expected
         }
     }
-    
+
+    @Test
+    public void testParseEOF() throws Exception {
+        parse("");
+    }
+
+    @Test
+    @Ignore("This should work but out parser is retarded")
+    public void testParseSemiColon() throws Exception {
+        parse(";");
+    }
+
     //
     // Comments
     //
 
     @Test
     public void testSingleComment1() throws Exception {
-        String input = "# this should be completly ignored";
+        String input = "# ignore";
 
         ASTCommandLine cl = parse(input);
 
