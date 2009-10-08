@@ -62,7 +62,7 @@ public class ConsoleImpl
 
     public void addCompleter(final Completer completer) {
         assert completer != null;
-        reader.addCompletor(completer);
+        reader.addCompleter(completer);
     }
 
     @Override
