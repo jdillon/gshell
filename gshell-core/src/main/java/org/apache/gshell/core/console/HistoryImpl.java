@@ -66,8 +66,8 @@ public class HistoryImpl
         return delegate;
     }
 
-    public void add(final String element) {
-        delegate.add(element);
+    public void add(final String item) {
+        delegate.add(item);
     }
 
     public void clear() {

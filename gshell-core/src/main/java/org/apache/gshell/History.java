@@ -31,7 +31,7 @@ import java.util.List;
  */
 public interface History
 {
-    void add(String element);
+    void add(String item);
 
     /**
      * Clear the history elements for the current shell's context.
