@@ -100,6 +100,10 @@ public class IO
 
         return new PrintWriter(out, autoFlush);
     }
+
+    public Terminal getTerminal() {
+        return TerminalFactory.get();
+    }
     
     /**
      * Set the verbosity level.
@@ -255,9 +259,5 @@ public class IO
 
     public void error(final String format, final Object... args) {
         err.println(MessageFormatter.arrayFormat(format, args));
-    }
-
-    public Terminal getTerminal() {
-        return TerminalFactory.get();
     }
 }
