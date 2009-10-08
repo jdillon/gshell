@@ -25,7 +25,7 @@ import org.apache.gshell.Variables;
 import org.apache.gshell.console.Console;
 import org.apache.gshell.i18n.MessageSource;
 import org.apache.gshell.i18n.ResourceBundleMessageSource;
-import org.apache.gshell.io.IO;
+import org.apache.gshell.command.IO;
 import org.apache.gshell.notification.ErrorNotification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

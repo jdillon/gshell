@@ -33,7 +33,7 @@ import org.apache.gshell.execute.CommandExecutor;
 import org.apache.gshell.execute.CommandLineParser;
 import org.apache.gshell.execute.CommandLineParser.CommandLine;
 import org.apache.gshell.i18n.PrefixingMessageSource;
-import org.apache.gshell.io.IO;
+import org.apache.gshell.command.IO;
 import org.apache.gshell.io.SystemInputOutputHijacker;
 import org.apache.gshell.notification.ErrorNotification;
 import org.apache.gshell.notification.ResultNotification;

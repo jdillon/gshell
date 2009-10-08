@@ -21,7 +21,7 @@ package org.apache.gshell.command;
 
 import org.apache.gshell.Shell;
 import org.apache.gshell.Variables;
-import org.apache.gshell.io.IO;
+import org.apache.gshell.command.IO;
 
 /**
  * Provides commands with the context of it's execution.

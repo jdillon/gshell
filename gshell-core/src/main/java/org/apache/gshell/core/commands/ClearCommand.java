@@ -24,7 +24,7 @@ import org.apache.gshell.ansi.Ansi;
 import org.apache.gshell.command.Command;
 import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.command.CommandContext;
-import org.apache.gshell.io.IO;
+import org.apache.gshell.command.IO;
 
 /**
  * Clear the terminal screen.

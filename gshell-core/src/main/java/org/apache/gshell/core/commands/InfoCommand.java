@@ -28,8 +28,8 @@ import org.apache.gshell.cli.Option;
 import org.apache.gshell.command.Command;
 import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.command.CommandContext;
+import org.apache.gshell.command.IO;
 import static org.apache.gshell.core.commands.InfoCommand.Section.*;
-import org.apache.gshell.io.IO;
 
 import java.lang.management.ClassLoadingMXBean;
 import java.lang.management.GarbageCollectorMXBean;

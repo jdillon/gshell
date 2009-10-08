@@ -17,12 +17,15 @@
  * under the License.
  */
 
-package org.apache.gshell.io;
+package org.apache.gshell.command;
 
 import jline.Terminal;
 import jline.TerminalFactory;
 import jline.console.ConsoleReader;
 import org.slf4j.helpers.MessageFormatter;
+import org.apache.gshell.io.StreamSet;
+import org.apache.gshell.io.Flusher;
+import org.apache.gshell.io.Closer;
 
 import java.io.IOException;
 import java.io.InputStream;

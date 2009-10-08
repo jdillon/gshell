@@ -21,9 +21,10 @@ package org.apache.gshell.io;
 
 import static org.junit.Assert.fail;
 import org.junit.Test;
+import org.apache.gshell.command.IO;
 
 /**
- * Unit tests for the {@link IO} class.
+ * Unit tests for the {@link org.apache.gshell.command.IO} class.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */

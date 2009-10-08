@@ -19,7 +19,7 @@
 
 package org.apache.gshell.testsupport;
 
-import org.apache.gshell.io.IO;
+import org.apache.gshell.command.IO;
 import org.apache.gshell.io.StreamSet;
 
 import java.io.ByteArrayOutputStream;

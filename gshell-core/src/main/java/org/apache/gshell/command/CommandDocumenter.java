@@ -19,7 +19,7 @@
 
 package org.apache.gshell.command;
 
-import org.apache.gshell.io.IO;
+import org.apache.gshell.command.IO;
 
 /**
  * Provides documentation support for commands.

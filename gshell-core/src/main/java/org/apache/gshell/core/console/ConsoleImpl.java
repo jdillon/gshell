@@ -25,7 +25,7 @@ import jline.console.ConsoleReader;
 import jline.console.History;
 import jline.console.MemoryHistory;
 import org.apache.gshell.console.Console;
-import org.apache.gshell.io.IO;
+import org.apache.gshell.command.IO;
 
 import java.io.IOException;
 import java.io.InputStream;

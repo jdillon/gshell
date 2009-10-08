@@ -28,7 +28,7 @@ import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.command.CommandContext;
 import org.apache.gshell.core.completer.VariableNameCompleter;
 import org.apache.gshell.i18n.MessageSource;
-import org.apache.gshell.io.IO;
+import org.apache.gshell.command.IO;
 import org.apache.gshell.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

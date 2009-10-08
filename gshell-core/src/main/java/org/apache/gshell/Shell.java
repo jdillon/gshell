@@ -19,7 +19,7 @@
 
 package org.apache.gshell;
 
-import org.apache.gshell.io.IO;
+import org.apache.gshell.command.IO;
 
 /**
  * Provides access to execute commands.

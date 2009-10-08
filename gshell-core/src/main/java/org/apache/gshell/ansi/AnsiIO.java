@@ -19,7 +19,7 @@
 
 package org.apache.gshell.ansi;
 
-import org.apache.gshell.io.IO;
+import org.apache.gshell.command.IO;
 import org.apache.gshell.io.StreamSet;
 import org.fusesource.jansi.AnsiConsole;
 
@@ -29,7 +29,7 @@ import java.io.PrintWriter;
 import jline.WindowsTerminal;
 
 /**
- * ANSI-aware {@link org.apache.gshell.io.IO}.
+ * ANSI-aware {@link org.apache.gshell.command.IO}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *

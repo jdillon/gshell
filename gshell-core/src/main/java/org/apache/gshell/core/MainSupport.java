@@ -24,6 +24,7 @@ import org.apache.gshell.Branding;
 import org.apache.gshell.Shell;
 import org.apache.gshell.VariableNames;
 import org.apache.gshell.Variables;
+import org.apache.gshell.command.IO;
 import org.apache.gshell.ansi.Ansi;
 import org.apache.gshell.ansi.AnsiIO;
 import org.apache.gshell.cli.Argument;
@@ -36,7 +37,6 @@ import org.apache.gshell.cli.handler.StopHandler;
 import org.apache.gshell.i18n.MessageSource;
 import org.apache.gshell.i18n.ResourceBundleMessageSource;
 import org.apache.gshell.internal.Log;
-import org.apache.gshell.io.IO;
 import org.apache.gshell.io.StreamSet;
 import org.apache.gshell.notification.ExitNotification;
 

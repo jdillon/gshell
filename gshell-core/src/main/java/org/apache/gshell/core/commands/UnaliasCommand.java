@@ -25,7 +25,7 @@ import org.apache.gshell.command.Command;
 import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.command.CommandContext;
 import org.apache.gshell.core.completer.AliasNameCompleter;
-import org.apache.gshell.io.IO;
+import org.apache.gshell.command.IO;
 import org.apache.gshell.registry.AliasRegistry;
 import org.apache.gshell.registry.NoSuchAliasException;
 
