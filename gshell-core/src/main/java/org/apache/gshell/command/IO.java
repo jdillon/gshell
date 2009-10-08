@@ -260,18 +260,4 @@ public class IO
     public Terminal getTerminal() {
         return TerminalFactory.get();
     }
-
-    // FIXME: This doesn't really belong here
-    
-    public ConsoleReader createConsoleReader(final InputStream bindings) throws IOException {
-        return new ConsoleReader(
-            streams.in,
-            new PrintWriter(streams.out, true),
-            bindings,
-            getTerminal());
-    }
-
-    public ConsoleReader createConsoleReader() throws IOException {
-        return createConsoleReader(null);
-    }
 }

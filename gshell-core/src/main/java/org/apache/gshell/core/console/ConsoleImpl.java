@@ -29,6 +29,7 @@ import org.apache.gshell.command.IO;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 
 /**
  * Support for running console using the <a href="http://jline.sf.net">JLine</a> library.
@@ -46,7 +47,12 @@ public class ConsoleImpl
         super(executor);
         assert io != null;
 
-        reader = io.createConsoleReader(bindings);
+        reader = new ConsoleReader(
+            io.streams.in,
+            new PrintWriter(io.streams.out, true),
+            bindings,
+            io.getTerminal());
+
         reader.setUsePagination(true);
         reader.setCompletionHandler(new CandidateListCompletionHandler());
         reader.setHistory(history != null ? history : new MemoryHistory());

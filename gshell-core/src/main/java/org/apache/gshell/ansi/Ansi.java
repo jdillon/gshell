@@ -35,6 +35,8 @@ public class Ansi
     @SuppressWarnings({ "StringConcatenation" })
     public static final String FORCE = Ansi.class.getName() + ".force";
 
+    public static final String ESCAPE = String.valueOf((char) 27 + (char) 91);
+
     /**
      * Tries to detect if the current system supports ANSI.
      */
