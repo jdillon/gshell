@@ -26,6 +26,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.text.MessageFormat;
 
 /**
  * Hijacks the systems standard output and error streams on a per-thread basis
@@ -150,7 +151,7 @@ public class SystemInputOutputHijacker
         ensureInstalled();
 
         if (!isRegistered()) {
-            throw new IllegalStateException("Streams not registered for thread: " + Thread.currentThread());
+            throw new IllegalStateException(MessageFormat.format("Not registered: {0}", Thread.currentThread()));
         }
     }
 
