@@ -21,9 +21,9 @@ package org.apache.gshell.core.commands;
 
 import org.apache.gshell.History;
 import org.apache.gshell.Shell;
+import org.apache.gshell.core.command.CommandActionSupport;
 import org.apache.gshell.cli.Argument;
 import org.apache.gshell.command.Command;
-import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.command.CommandContext;
 import org.apache.gshell.command.IO;
 

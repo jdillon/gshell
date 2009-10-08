@@ -24,9 +24,9 @@ import org.apache.gshell.Variables;
 import org.apache.gshell.cli.Argument;
 import org.apache.gshell.cli.Option;
 import org.apache.gshell.command.Command;
-import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.command.CommandContext;
 import org.apache.gshell.core.completer.VariableNameCompleter;
+import org.apache.gshell.core.command.CommandActionSupport;
 import org.apache.gshell.i18n.MessageSource;
 import org.apache.gshell.command.IO;
 import org.apache.gshell.util.Strings;
@@ -48,8 +48,6 @@ import java.util.Properties;
 public class SetCommand
     extends CommandActionSupport
 {
-    private final Logger log = LoggerFactory.getLogger(getClass());
-
     enum Mode
     {
         VARIABLE,

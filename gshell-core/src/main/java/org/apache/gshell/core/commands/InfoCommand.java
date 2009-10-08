@@ -26,10 +26,10 @@ import org.apache.gshell.ansi.Ansi;
 import org.apache.gshell.cli.Argument;
 import org.apache.gshell.cli.Option;
 import org.apache.gshell.command.Command;
-import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.command.CommandContext;
 import org.apache.gshell.command.IO;
 import static org.apache.gshell.core.commands.InfoCommand.Section.*;
+import org.apache.gshell.core.command.CommandActionSupport;
 
 import java.lang.management.ClassLoadingMXBean;
 import java.lang.management.GarbageCollectorMXBean;

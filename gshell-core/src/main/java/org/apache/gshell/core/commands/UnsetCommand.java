@@ -24,10 +24,10 @@ import org.apache.gshell.Variables;
 import org.apache.gshell.cli.Argument;
 import org.apache.gshell.cli.Option;
 import org.apache.gshell.command.Command;
-import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.command.CommandContext;
 import org.apache.gshell.core.commands.SetCommand.Mode;
 import org.apache.gshell.core.completer.VariableNameCompleter;
+import org.apache.gshell.core.command.CommandActionSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,8 +44,6 @@ import java.util.List;
 public class UnsetCommand
     extends CommandActionSupport
 {
-    private final Logger log = LoggerFactory.getLogger(getClass());
-
     @Option(name="-m", aliases={"--mode"})
     private Mode mode = Mode.VARIABLE;
 

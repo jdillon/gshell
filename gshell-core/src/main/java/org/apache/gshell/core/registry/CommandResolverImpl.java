@@ -22,13 +22,13 @@ package org.apache.gshell.core.registry;
 import com.google.inject.Inject;
 import org.apache.gshell.cli.OpaqueArguments;
 import org.apache.gshell.command.CommandAction;
-import org.apache.gshell.command.CommandActionSupport;
 import org.apache.gshell.command.CommandContext;
 import org.apache.gshell.command.CommandException;
 import org.apache.gshell.registry.AliasRegistry;
 import org.apache.gshell.registry.CommandRegistry;
 import org.apache.gshell.registry.CommandResolver;
 import org.apache.gshell.util.Strings;
+import org.apache.gshell.core.command.CommandActionSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

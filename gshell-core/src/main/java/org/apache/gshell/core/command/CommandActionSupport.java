@@ -17,17 +17,17 @@
  * under the License.
  */
 
-package org.apache.gshell.command;
+package org.apache.gshell.core.command;
 
 import jline.console.Completer;
 import org.apache.gshell.i18n.MessageSource;
 import org.apache.gshell.i18n.ResourceBundleMessageSource;
+import org.apache.gshell.command.CommandAction;
+import org.apache.gshell.command.NameAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
-
-// FIXME: This does not belong in api
 
 /**
  * Provides support for {@link CommandAction} implementations.
