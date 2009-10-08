@@ -258,6 +258,8 @@ public class IO
         return TerminalFactory.get();
     }
 
+    // FIXME: This doesn't really belong here
+    
     public ConsoleReader createConsoleReader(final InputStream bindings) throws IOException {
         return new ConsoleReader(
             streams.in,
