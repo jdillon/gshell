@@ -144,20 +144,6 @@ PARSER_END(Parser)
     >
 }
 
-//
-// SEPARATORS
-//
-
-<DEFAULT> TOKEN :
-{
-    < SEMICOLON: ";" >
-|
-    < PIPE: "|" >
-|
-    < BANG: "!" >
-}
-
-
 ///////////////////////////////////////////////////////////////////////////////
 
 ASTCommandLine commandLine() #CommandLine: {}
