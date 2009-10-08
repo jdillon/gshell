@@ -38,51 +38,24 @@ import jline.console.FileHistory;
  * @since 2.0
  */
 public class HistoryImpl
+    extends FileHistory
     implements History, VariableNames
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private final FileHistory delegate;
-
     public HistoryImpl(final File file) throws IOException {
-        assert file != null;
-
-        this.delegate = new FileHistory(file);
+        super(file);
 
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
                 try {
-                    delegate.flush();
+                    flush();
                 }
                 catch (IOException e) {
                     log.error("Failed to flush history", e);
                 }
             }
         });
-    }
-
-    public jline.console.History getDelegate() {
-        return delegate;
-    }
-
-    public void add(final String item) {
-        delegate.add(item);
-    }
-
-    public void clear() {
-        delegate.clear();
-    }
-
-    public void purge() throws IOException {
-        delegate.purge();
-    }
-
-    public int size() {
-        return delegate.size();
-    }
-
-    public List<String> items() {
-        return delegate.items();
     }
 }

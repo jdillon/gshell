@@ -223,7 +223,7 @@ public class ShellImpl
         IO io = getIo();
 
         // Setup the console
-        ConsoleImpl console = new ConsoleImpl(executor, io, history.getDelegate(), loadBindings());
+        ConsoleImpl console = new ConsoleImpl(executor, io, history, loadBindings());
 
         if (prompter != null) {
             console.setPrompter(prompter);
