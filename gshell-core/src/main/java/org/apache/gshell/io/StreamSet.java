@@ -21,6 +21,9 @@ package org.apache.gshell.io;
 
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.io.FileInputStream;
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
 
 /**
  * A set of input, output and error streams.
@@ -102,6 +105,14 @@ public class StreamSet
      * The original {@link System} streams (as they were when this class loads).
      */
     public static final StreamSet SYSTEM = system();
+
+    /**
+     * The {@link System} streams as file streams, for a better chance of non-buffered I/O.
+     */
+    public static final StreamSet SYSTEM_FD = new StreamSet(
+                new FileInputStream(FileDescriptor.in),
+                new PrintStream(new FileOutputStream(FileDescriptor.out)),
+                new PrintStream(new FileOutputStream(FileDescriptor.err)));
 
     /**
      * Output stream type.
