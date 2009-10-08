@@ -27,7 +27,7 @@ package org.apache.gshell.core.parser.impl;
 public abstract class ArgumentSupport
     extends SimpleNode
 {
-    protected Token token;
+    private String value;
 
     public ArgumentSupport(final int id) {
         super(id);
@@ -37,28 +37,17 @@ public abstract class ArgumentSupport
         super(p, id);
     }
 
-    public void setToken(final Token token) {
-        assert token != null;
-
-        this.token = token;
-    }
-
-    public Token getToken() {
-        return token;
+    public void setValue(final String value) {
+        this.value = value;
     }
 
     public String getValue() {
-        Token t = getToken();
-        if (t == null) {
-            throw new IllegalStateException("Token not set");
-        }
-
-        return t.image;
+        return value;
     }
 
     @Override
     public String toString() {
-        return String.format("%s (%s)", super.toString(), getToken());
+        return String.format("%s (%s)", super.toString(), getValue());
     }
 
     /**

@@ -153,6 +153,8 @@ PARSER_END(Parser)
     < SEMICOLON: ";" >
 |
     < PIPE: "|" >
+|
+    < BANG: "!" >
 }
 
 
@@ -160,22 +162,20 @@ PARSER_END(Parser)
 
 ASTCommandLine commandLine() #CommandLine: {}
 {
-    (
-        expression() ( ";" [ expression() ] )* | <EOF>
-    )
+    ( expression() ( ";" [ expression() ] )* | <EOF> )
     {
         return jjtThis;
     }
 }
 
-void whitespace() #Whitespace: {}
-{
-    <WHITESPACE>
-}
-
 void expression() #Expression: {}
 {
     ( argument() | whitespace() )+
+}
+
+void whitespace() #Whitespace: {}
+{
+    <WHITESPACE>
 }
 
 void argument() #void: {}
@@ -190,7 +190,7 @@ void quotedArgument() #QuotedArgument:
 {
     t=<QUOTED_STRING>
     {
-        jjtThis.setToken(t);
+        jjtThis.setValue(t.image);
     }
 }
 
@@ -201,7 +201,7 @@ void opaqueArgument() #OpaqueArgument:
 {
     t=<OPAQUE_STRING>
     {
-        jjtThis.setToken(t);
+        jjtThis.setValue(t.image);
     }
 }
 
@@ -212,7 +212,7 @@ void plainArgument() #PlainArgument:
 {
     t=<STRING>
     {
-        jjtThis.setToken(t);
+        jjtThis.setValue(t.image);
     }
 }
 
