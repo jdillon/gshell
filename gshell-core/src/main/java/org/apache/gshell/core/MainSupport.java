@@ -55,7 +55,7 @@ public abstract class MainSupport
 {
     protected final IO io = new AnsiIO(StreamSet.SYSTEM_FD, true);
 
-    protected final Variables vars = new Variables();
+    protected final Variables vars = new VariablesImpl();
 
     protected final MessageSource messages = new ResourceBundleMessageSource()
             .add(false, getClass())

@@ -86,7 +86,7 @@ public class ShellImpl
         this.branding = branding;
         this.executor = executor;
         this.io = io != null ? io : new IO();
-        this.variables = variables != null ? variables : new Variables();
+        this.variables = variables != null ? variables : new VariablesImpl();
         this.history = new HistoryImpl(new File(branding.getUserContextDir(), branding.getHistoryFileName()));
 
     }

@@ -29,6 +29,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
+import org.apache.gshell.core.VariablesImpl;
 
 import java.util.Iterator;
 
@@ -41,9 +42,12 @@ public class VariablesTest
 {
     private Variables vars;
 
+    private Variables parent;
+
     @Before
     public void setUp() {
-        vars = new Variables();
+        vars = new VariablesImpl();
+        parent = new VariablesImpl();
     }
 
     @Test
@@ -82,8 +86,7 @@ public class VariablesTest
 
     @Test
     public void testSetAsImmutableInParent() throws Exception {
-        Variables parent = new Variables();
-        Variables vars = new Variables(parent);
+        Variables vars = new VariablesImpl(parent);
         String name = "a";
         Object value = new Object();
 
@@ -102,8 +105,7 @@ public class VariablesTest
 
     @Test
     public void testSetParentFromChild() throws Exception {
-        Variables parent = new Variables();
-        Variables vars = new Variables(parent);
+        Variables vars = new VariablesImpl(parent);
         String name = "a";
         Object value = new Object();
 
@@ -142,8 +144,7 @@ public class VariablesTest
 
     @Test
     public void testGetCloaked() throws Exception {
-        Variables parent = new Variables();
-        Variables vars = new Variables(parent);
+        Variables vars = new VariablesImpl(parent);
         String name = "a";
         Object value = new Object();
 
@@ -179,8 +180,7 @@ public class VariablesTest
 
     @Test
     public void testUnsetAsImmutableInParent() throws Exception {
-        Variables parent = new Variables();
-        Variables vars = new Variables(parent);
+        Variables vars = new VariablesImpl(parent);
         String name = "a";
         Object value = new Object();
 
@@ -199,8 +199,7 @@ public class VariablesTest
 
     @Test
     public void testCloaking() throws Exception {
-        Variables parent = new Variables();
-        Variables vars = new Variables(parent);
+        Variables vars = new VariablesImpl(parent);
         String name = "a";
         Object value = new Object();
 
@@ -214,10 +213,9 @@ public class VariablesTest
 
     @Test
     public void testParent() throws Exception {
-        Variables parent = new Variables();
         assertNull(parent.parent());
 
-        Variables vars = new Variables(parent);
+        Variables vars = new VariablesImpl(parent);
         assertNotNull(vars.parent());
 
         assertEquals(parent, vars.parent());
