@@ -30,8 +30,6 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.Reader;
-import java.io.FileInputStream;
-import java.io.FileDescriptor;
 
 /**
  * Provides access to input/output handles.
@@ -73,7 +71,7 @@ public class IO
         this.out = createWriter(streams.out, autoFlush);
 
         /// Don't rewrite the error stream if we have the same stream for out and error
-        if (streams.isCombinedOutput()) {
+        if (streams.isOutputCombined()) {
             this.err = this.out;
         }
         else {
@@ -163,7 +161,7 @@ public class IO
         Flusher.flush(out);
 
         // Only attempt to flush the err stream if we aren't sharing it with out
-        if (!streams.isCombinedOutput()) {
+        if (!streams.isOutputCombined()) {
             Flusher.flush(err);
         }
     }
@@ -175,7 +173,7 @@ public class IO
         Closer.close(in, out);
 
         // Only attempt to close the err stream if we aren't sharing it with out
-        if (!streams.isCombinedOutput()) {
+        if (!streams.isOutputCombined()) {
             Closer.close(err);
         }
     }

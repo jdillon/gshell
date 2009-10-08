@@ -54,7 +54,7 @@ public class StreamSet
         this(in, out, out);
     }
 
-    public boolean isCombinedOutput() {
+    public boolean isOutputCombined() {
         return out == err;
     }
 
@@ -70,7 +70,7 @@ public class StreamSet
     public void flush() {
         Flusher.flush(out);
 
-        if (!isCombinedOutput()) {
+        if (!isOutputCombined()) {
             Flusher.flush(err);
         }
     }
@@ -78,7 +78,7 @@ public class StreamSet
     public void close() {
         Closer.close(in, out);
 
-        if (!isCombinedOutput()) {
+        if (!isOutputCombined()) {
             Closer.close(err);
         }
     }
