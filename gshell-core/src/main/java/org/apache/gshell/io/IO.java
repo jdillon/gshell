@@ -261,17 +261,8 @@ public class IO
     }
 
     public ConsoleReader createConsoleReader(final InputStream bindings) throws IOException {
-        InputStream input = streams.in;
-
-        // TODO: Change this to expect the setup framework to use a DirectStreamSet or something
-
-        // If input is System.in then use a FIS for a better chance of unbuffered input
-        if (streams.in == StreamSet.SYSTEM.in) {
-            input = new FileInputStream(FileDescriptor.in);
-        }
-        
         return new ConsoleReader(
-            input,
+            streams.in,
             new PrintWriter(streams.out, true),
             bindings,
             getTerminal());
