@@ -37,6 +37,7 @@ import org.apache.gshell.i18n.MessageSource;
 import org.apache.gshell.i18n.ResourceBundleMessageSource;
 import org.apache.gshell.internal.Log;
 import org.apache.gshell.io.IO;
+import org.apache.gshell.io.StreamSet;
 import org.apache.gshell.notification.ExitNotification;
 
 import java.util.List;
@@ -52,7 +53,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public abstract class MainSupport
     implements VariableNames
 {
-    protected final IO io = new AnsiIO();
+    protected final IO io = new AnsiIO(StreamSet.SYSTEM_FD, true);
 
     protected final Variables vars = new Variables();
 
