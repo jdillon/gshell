@@ -42,7 +42,7 @@ public class HistoryImpl
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private FileHistory delegate;
+    private final FileHistory delegate;
 
     public HistoryImpl(final File file) throws IOException {
         assert file != null;
