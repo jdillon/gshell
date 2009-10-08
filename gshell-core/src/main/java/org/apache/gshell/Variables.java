@@ -34,6 +34,10 @@ import java.util.Set;
  */
 public class Variables
 {
+    //
+    // TODO: Add some event support, probably just add optional EventManager to be manually injected
+    //
+
     private final Map<String,Object> map;
 
     private final Variables parent;
