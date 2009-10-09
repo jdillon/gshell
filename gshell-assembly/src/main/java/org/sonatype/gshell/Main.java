@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.gshell;
+package org.sonatype.gshell;
 
 import com.google.inject.Injector;
 import jline.console.completers.AggregateCompleter;
@@ -27,6 +27,8 @@ import org.apache.gshell.core.completer.CommandsCompleter;
 import org.apache.gshell.core.console.ConsoleErrorHandlerImpl;
 import org.apache.gshell.core.console.ConsolePrompterImpl;
 import org.apache.gshell.core.guice.GuiceShellBuilder;
+import org.apache.gshell.Branding;
+import org.apache.gshell.Shell;
 
 /**
  * Command-line bootstrap for GShell (<tt>gsh</tt>).

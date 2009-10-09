@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.gshell;
+package org.sonatype.gshell;
 
 import org.apache.gshell.ansi.Ansi;
 import org.apache.gshell.core.BrandingSupport;
