@@ -23,6 +23,8 @@ import jline.console.Completer;
 import org.sonatype.gshell.ShellHolder;
 import org.sonatype.gshell.VariableNames;
 import org.sonatype.gshell.Variables;
+import org.sonatype.gshell.ansi.Ansi;
+import org.sonatype.gshell.ansi.AnsiString;
 
 import java.io.File;
 
@@ -50,22 +52,25 @@ public class FileNameCompleter
     }
 
     @Override
-    protected String render(final File file, final String name) {
+    protected CharSequence render(final File file, CharSequence name) {
         assert file != null;
         assert name != null;
 
-        // FIXME: This causes all sorts of problems... probably due to the ConsoleReader.printColumns() impl
-        
+        // FIXME: This is still unhappy, even with AnsiString :-(
+
         /*
         if (file.isDirectory()) {
-            return Ansi.ansi().fg(Ansi.Color.BLUE).a(name).reset().toString();
-        }
-        else if (file.isHidden()) {
-            return Ansi.ansi().a(Ansi.Attribute.INTENSITY_FAINT).a(name).reset().toString();
+            name = Ansi.ansi().fg(Ansi.Color.BLUE).a(name).a(File.separator).reset().toString();
         }
         else if (file.canExecute()) {
-            return Ansi.ansi().fg(Ansi.Color.GREEN).a(name).reset().toString();
+            name = Ansi.ansi().fg(Ansi.Color.GREEN).a(name).a("*").reset().toString();
         }
+
+        if (file.isHidden()) {
+            name = Ansi.ansi().a(Ansi.Attribute.INTENSITY_FAINT).a(name).reset().toString();
+        }
+
+        return new AnsiString(name);
         */
 
         return name;
