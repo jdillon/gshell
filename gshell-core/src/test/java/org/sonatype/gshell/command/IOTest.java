@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.sonatype.gshell.io;
+package org.sonatype.gshell.command;
 
 import static org.junit.Assert.fail;
 import org.junit.Test;
