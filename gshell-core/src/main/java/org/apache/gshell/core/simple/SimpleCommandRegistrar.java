@@ -45,13 +45,12 @@ public class SimpleCommandRegistrar
         // Nothing
     }
 
-    @SuppressWarnings({ "unchecked" })
     public void registerCommand(final String name, final String classname) throws Exception {
         assert name != null;
         assert classname != null;
 
-        Class<CommandAction> type = (Class<CommandAction>) Thread.currentThread().getContextClassLoader().loadClass(classname);
-        CommandAction command = type.newInstance();
+        Class type = Thread.currentThread().getContextClassLoader().loadClass(classname);
+        CommandAction command = (CommandAction) type.newInstance();
 
         commandRegistry.registerCommand(name, command);
     }
