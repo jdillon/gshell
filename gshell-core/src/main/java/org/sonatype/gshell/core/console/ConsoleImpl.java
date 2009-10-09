@@ -53,7 +53,7 @@ public class ConsoleImpl
             bindings,
             io.getTerminal());
 
-        reader.setUsePagination(true);
+        reader.setPaginationEnabled(true);
         reader.setCompletionHandler(new CandidateListCompletionHandler());
         reader.setHistory(history != null ? history : new MemoryHistory());
     }
