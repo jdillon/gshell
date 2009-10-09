@@ -71,6 +71,8 @@ public class AnsiString
         return unencoded;
     }
 
+    // FIXME: charAt() and subSequence() will make shit barf, need to call toString() first to get expected results
+    
     public char charAt(final int index) {
         return getEncoded().charAt(index);
     }
