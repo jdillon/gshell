@@ -86,19 +86,17 @@ public class ConsolePrompterImpl
     }
 
     private String evaluate(String input) {
-        if (input != null) {
-            Matcher matcher = PATTERN.matcher(input);
+        Matcher matcher = PATTERN.matcher(input);
 
-            while (matcher.find()) {
-                String key = matcher.group(1);
-                Object rep = vars.get(key);
-                if (rep == null) {
-                    rep = System.getProperty(key);
-                }
-                if (rep != null) {
-                    input = input.replace(matcher.group(0), rep.toString());
-                    matcher.reset(input);
-                }
+        while (matcher.find()) {
+            String key = matcher.group(1);
+            Object rep = vars.get(key);
+            if (rep == null) {
+                rep = System.getProperty(key);
+            }
+            if (rep != null) {
+                input = input.replace(matcher.group(0), rep.toString());
+                matcher.reset(input);
             }
         }
 
