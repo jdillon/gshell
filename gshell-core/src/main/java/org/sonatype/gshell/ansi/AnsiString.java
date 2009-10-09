@@ -80,7 +80,7 @@ public class AnsiString
     }
 
     public int length() {
-        return getEncoded().length();
+        return getUnencoded().length();
     }
 
     @Override
