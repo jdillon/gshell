@@ -48,6 +48,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -139,6 +140,11 @@ public class ShellImpl
 
     public void setCompleters(final List<Completer> completers) {
         this.completers = completers;
+    }
+
+    public void setCompleters(final Completer... completers) {
+        assert completers != null;
+        setCompleters(Arrays.asList(completers));
     }
 
     public synchronized boolean isOpened() {

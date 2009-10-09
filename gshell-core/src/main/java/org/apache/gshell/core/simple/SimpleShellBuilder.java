@@ -63,6 +63,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Arrays;
 
 import jline.console.Completer;
+import jline.console.completers.AggregateCompleter;
 
 /**
  * Builds {@link Shell} instances w/o any IoC container.
@@ -163,13 +164,7 @@ public class SimpleShellBuilder
         ShellImpl shell = new ShellImpl(components.getEventManager(), components.getCommandExecutor(), branding, io, variables);
         shell.setPrompter(prompter);
         shell.setErrorHandler(errorHandler);
-
-        Completer[] completers = {
-            components.getAliasNameCompleter(),
-            components.getCommandsCompleter()
-        };
-
-        shell.setCompleters(Arrays.asList(completers));
+        shell.setCompleters(new AggregateCompleter(components.getAliasNameCompleter(), components.getCommandsCompleter()));
 
         return shell;
     }
