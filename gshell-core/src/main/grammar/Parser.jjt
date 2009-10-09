@@ -51,7 +51,7 @@ PARSER_BEGIN(Parser)
  * under the License.
  */
 
-package org.apache.gshell.core.parser.impl;
+package org.sonatype.gshell.core.parser.impl;
 
 import java.io.Reader;
 import java.io.StringReader;

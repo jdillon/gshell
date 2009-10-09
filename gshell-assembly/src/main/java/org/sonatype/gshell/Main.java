@@ -21,14 +21,14 @@ package org.sonatype.gshell;
 
 import com.google.inject.Injector;
 import jline.console.completers.AggregateCompleter;
-import org.apache.gshell.core.MainSupport;
-import org.apache.gshell.core.completer.AliasNameCompleter;
-import org.apache.gshell.core.completer.CommandsCompleter;
-import org.apache.gshell.core.console.ConsoleErrorHandlerImpl;
-import org.apache.gshell.core.console.ConsolePrompterImpl;
-import org.apache.gshell.core.guice.GuiceShellBuilder;
-import org.apache.gshell.Branding;
-import org.apache.gshell.Shell;
+import org.sonatype.gshell.core.MainSupport;
+import org.sonatype.gshell.core.completer.AliasNameCompleter;
+import org.sonatype.gshell.core.completer.CommandsCompleter;
+import org.sonatype.gshell.core.console.ConsoleErrorHandlerImpl;
+import org.sonatype.gshell.core.console.ConsolePrompterImpl;
+import org.sonatype.gshell.core.guice.GuiceShellBuilder;
+import org.sonatype.gshell.Branding;
+import org.sonatype.gshell.Shell;
 
 /**
  * Command-line bootstrap for GShell (<tt>gsh</tt>).
