@@ -25,30 +25,30 @@ import java.io.Writer;
 import java.util.Locale;
 
 /**
- * Print writer implementation which supports automatic ANSI color rendering.
+ * Print writer which supports automatic ANSI color rendering via {@link AnsiRenderer}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *
  * @since 2.0
  */
-public class AnsiRendererWriter
+public class AnsiRenderWriter
     extends PrintWriter
 {
     private final AnsiRenderer renderer = new AnsiRenderer();
 
-    public AnsiRendererWriter(final OutputStream out) {
+    public AnsiRenderWriter(final OutputStream out) {
         super(out);
     }
 
-    public AnsiRendererWriter(final OutputStream out, final boolean autoFlush) {
+    public AnsiRenderWriter(final OutputStream out, final boolean autoFlush) {
         super(out, autoFlush);
     }
 
-    public AnsiRendererWriter(final Writer out) {
+    public AnsiRenderWriter(final Writer out) {
         super(out);
     }
 
-    public AnsiRendererWriter(final Writer out, final boolean autoFlush) {
+    public AnsiRenderWriter(final Writer out, final boolean autoFlush) {
         super(out, autoFlush);
     }
 

@@ -64,6 +64,6 @@ public class AnsiIO
     @Override
     protected PrintWriter createWriter(final PrintStream out, final boolean autoFlush) {
         assert out != null;
-        return new AnsiRendererWriter(out, autoFlush);
+        return new AnsiRenderWriter(out, autoFlush);
     }
 }

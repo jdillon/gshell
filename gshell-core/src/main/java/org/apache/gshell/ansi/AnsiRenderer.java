@@ -31,7 +31,7 @@ import java.util.regex.Pattern;
  * The syntax for embedded ANSI codes is:
  * 
  * <pre>
- *  @|<code>(,<code>)*<space><text>|
+ *     @|<code>(,<code>)*<space><text>|
  * </pre>
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
