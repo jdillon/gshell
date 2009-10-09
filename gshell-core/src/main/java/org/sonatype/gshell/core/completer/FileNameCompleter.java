@@ -54,7 +54,7 @@ public class FileNameCompleter
         assert file != null;
         assert name != null;
 
-        // FIXME: This causes all sorts of problems :-(
+        // FIXME: This causes all sorts of problems... probably due to the ConsoleReader.printColumns() impl
         
         /*
         if (file.isDirectory()) {
