@@ -19,23 +19,20 @@
 
 package org.sonatype.gshell.core.parser.impl.eval;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.codehaus.plexus.interpolation.StringSearchInterpolator;
-import org.apache.commons.jexl.ExpressionFactory;
 import org.apache.commons.jexl.Expression;
-import org.apache.commons.jexl.JexlHelper;
+import org.apache.commons.jexl.ExpressionFactory;
 import org.apache.commons.jexl.JexlContext;
 import org.apache.commons.jexl.resolver.FlatResolver;
-import org.sonatype.gshell.Variables;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.ShellHolder;
+import org.sonatype.gshell.Variables;
 
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-import java.util.Map;
-import java.util.AbstractMap;
-import java.util.Set;
 import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Uses Commons Jexl to evaluate expressions.
