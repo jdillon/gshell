@@ -26,6 +26,7 @@ import jline.console.Completer;
 import org.apache.gshell.Branding;
 import org.apache.gshell.Shell;
 import org.apache.gshell.Variables;
+import org.apache.gshell.event.EventManager;
 import org.apache.gshell.command.IO;
 import org.apache.gshell.console.Console;
 import org.apache.gshell.core.ShellImpl;
@@ -126,7 +127,8 @@ public class GuiceShellBuilder
 
         // Create the shell instance
         CommandExecutor executor = injector.getInstance(CommandExecutor.class);
-        ShellImpl shell = new ShellImpl(branding, executor, io, variables);
+        EventManager eventManager = injector.getInstance(EventManager.class);
+        ShellImpl shell = new ShellImpl(eventManager, executor, branding, io, variables);
         shell.setPrompter(prompter);
         shell.setErrorHandler(errorHandler);
         shell.setCompleters(completers);

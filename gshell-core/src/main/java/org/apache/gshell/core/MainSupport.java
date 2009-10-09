@@ -64,7 +64,8 @@ public abstract class MainSupport
     private Branding branding;
 
     //
-    // TODO: Add flag to capture output to log file
+    // TODO: Add flag to capture output to log file. Need to bring back TeeOutputStream ans
+    //       get prefixed stuff working proper.
     //
 
     @Option(name="-h", aliases={"--help"}, requireOverride=true)

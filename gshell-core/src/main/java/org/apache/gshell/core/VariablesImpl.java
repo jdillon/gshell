@@ -21,6 +21,7 @@ package org.apache.gshell.core;
 
 import org.apache.gshell.Variables;
 import org.apache.gshell.event.EventManager;
+import org.apache.gshell.event.EventAware;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -36,7 +37,7 @@ import java.util.Set;
  * @since 2.0
  */
 public class VariablesImpl
-    implements Variables
+    implements Variables, EventAware
 {
     private final Map<String,Object> map;
 

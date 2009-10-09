@@ -27,6 +27,8 @@ import org.apache.gshell.Shell;
 import org.apache.gshell.ShellHolder;
 import org.apache.gshell.VariableNames;
 import org.apache.gshell.Variables;
+import org.apache.gshell.event.EventManager;
+import org.apache.gshell.event.EventAware;
 import org.apache.gshell.command.IO;
 import org.apache.gshell.console.Console;
 import org.apache.gshell.core.console.ConsoleImpl;
@@ -60,6 +62,8 @@ public class ShellImpl
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
+    private final EventManager eventManager;
+
     private final Branding branding;
 
     private final CommandExecutor executor;
@@ -77,16 +81,22 @@ public class ShellImpl
     private Console.ErrorHandler errorHandler;
 
     private boolean opened;
-    
-    public ShellImpl(final Branding branding, final CommandExecutor executor, final IO io, final Variables variables) throws IOException {
-        assert branding != null;
+
+    public ShellImpl(final EventManager eventManager, final CommandExecutor executor, final Branding branding,
+             final IO io, final Variables variables) throws IOException {
+        assert eventManager != null;
         assert executor != null;
+        assert branding != null;
         // io and variables may be null
 
-        this.branding = branding;
+        this.eventManager = eventManager;
         this.executor = executor;
+        this.branding = branding;
         this.io = io != null ? io : new IO();
         this.variables = variables != null ? variables : new VariablesImpl();
+        if (variables instanceof EventAware) {
+            ((EventAware)variables).setEventManager(eventManager);
+        }
         this.history = new HistoryImpl(new File(branding.getUserContextDir(), branding.getHistoryFileName()));
 
     }
