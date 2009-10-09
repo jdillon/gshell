@@ -142,7 +142,7 @@ public class CommandsCompleter
         delegate.getCompleters().remove(completer);
     }
 
-    public int complete(final String buffer, final int cursor, final List<String> candidates) {
+    public int complete(final String buffer, final int cursor, final List<CharSequence> candidates) {
         if (!initialized) {
             init();
         }

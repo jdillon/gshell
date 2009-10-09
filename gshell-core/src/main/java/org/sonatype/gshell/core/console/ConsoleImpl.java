@@ -23,7 +23,7 @@ import jline.console.CandidateListCompletionHandler;
 import jline.console.Completer;
 import jline.console.ConsoleReader;
 import jline.console.History;
-import jline.console.MemoryHistory;
+import jline.console.history.MemoryHistory;
 import org.sonatype.gshell.console.Console;
 import org.sonatype.gshell.command.IO;
 

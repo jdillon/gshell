@@ -39,7 +39,7 @@ import jline.console.completers.StringsCompleter;
 public class VariableNameCompleter
     implements Completer
 {
-    public int complete(final String buffer, final int cursor, final List<String> candidates) {
+    public int complete(final String buffer, final int cursor, final List<CharSequence> candidates) {
         Variables vars = ShellHolder.get().getVariables();
 
         // There are no events for variables muck, so each time we have to rebuild the list.
