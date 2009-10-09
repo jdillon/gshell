@@ -19,6 +19,8 @@
 
 package org.sonatype.gshell.core.command;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.ShellHolder;
 import org.sonatype.gshell.Variables;
 import org.sonatype.gshell.ansi.AnsiRenderer;
@@ -32,15 +34,10 @@ import org.sonatype.gshell.i18n.MessageSource;
 import org.sonatype.gshell.i18n.PrefixingMessageSource;
 import org.sonatype.gshell.i18n.ResourceBundleMessageSource;
 import org.sonatype.gshell.io.PrefixingOutputStream;
-import org.codehaus.plexus.interpolation.AbstractValueSource;
-import org.codehaus.plexus.interpolation.InterpolationException;
-import org.codehaus.plexus.interpolation.Interpolator;
-import org.codehaus.plexus.interpolation.PrefixedObjectValueSource;
-import org.codehaus.plexus.interpolation.StringSearchInterpolator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.PrintStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * The default {@link CommandDocumenter} component.
@@ -56,49 +53,42 @@ public class CommandDocumenterImpl
 
     private final MessageSource messages = new ResourceBundleMessageSource(getClass());
 
-    private String interpolate(final CommandAction command, final String text) {
-        assert command != null;
-        assert text != null;
+    private static final Pattern PATTERN = Pattern.compile("\\$\\{([^}]+)\\}");
 
-        if (text.contains(StringSearchInterpolator.DEFAULT_START_EXPR)) {
-            Interpolator interp = new StringSearchInterpolator();
-            interp.addValueSource(new PrefixedObjectValueSource(COMMAND, command));
-            interp.addValueSource(new AbstractValueSource(false) {
-                public Object getValue(final String expression) {
-                    Variables vars = ShellHolder.get().getVariables();
-                    return vars.get(expression);
-                }
-            });
-            interp.addValueSource(new AbstractValueSource(false) {
-                public Object getValue(final String expression) {
-                    return System.getProperty(expression);
-                }
-            });
+    private String evaluate(final CommandAction command, String input) {
+        Matcher matcher = PATTERN.matcher(input);
 
-            try {
-                return interp.interpolate(text);
-            }
-            catch (InterpolationException e) {
-                throw new RuntimeException(e);
+        if (input.contains("${")) {
+            while (matcher.find()) {
+                String key = matcher.group(1);
+                // FIXME: Add "command." prefix to access command instance
+                Variables vars = ShellHolder.get().getVariables();
+                Object rep = vars.get(key);
+                if (rep == null) {
+                    rep = System.getProperty(key);
+                }
+                if (rep != null) {
+                    input = input.replace(matcher.group(0), rep.toString());
+                    matcher.reset(input);
+                }
             }
         }
-        else {
-            return text;
-        }
+
+        return input;
     }
 
     public String getDescription(final CommandAction command) {
         assert command != null;
 
         String text = command.getMessages().getMessage(COMMAND_DESCRIPTION);
-        return interpolate(command, text);
+        return evaluate(command, text);
     }
 
     public String getManual(final CommandAction command) {
         assert command != null;
         
         String text = command.getMessages().getMessage(COMMAND_MANUAL);
-        return interpolate(command, text);
+        return evaluate(command, text);
     }
 
     public void renderUsage(final CommandAction command, final IO io) {
