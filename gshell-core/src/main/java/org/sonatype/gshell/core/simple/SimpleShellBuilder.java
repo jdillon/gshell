@@ -150,11 +150,14 @@ public class SimpleShellBuilder
                 .installCompleters(components.getAliasNameCompleter(), components.getCommandNameCompleter()));
         registry.registerCommand("info", new InfoCommand());
         registry.registerCommand("exit", new ExitCommand());
-        registry.registerCommand("set", new SetCommand().installCompleters(components.getVariableNameCompleter()));
-        registry.registerCommand("unset", new UnsetCommand().installCompleters(components.getVariableNameCompleter()));
+        registry.registerCommand("set", new SetCommand()
+                .installCompleters(components.getVariableNameCompleter()));
+        registry.registerCommand("unset", new UnsetCommand()
+                .installCompleters(components.getVariableNameCompleter()));
         registry.registerCommand("history", new HistoryCommand());
         registry.registerCommand("recall", new RecallHistoryCommand());
-        registry.registerCommand("source", new SourceCommand().installCompleters(components.getFileNameCompleter()));
+        registry.registerCommand("source", new SourceCommand()
+                .installCompleters(components.getFileNameCompleter()));
         registry.registerCommand("alias", new AliasCommand(components.getAliasRegistry()));
         registry.registerCommand("unalias", new UnaliasCommand(components.getAliasRegistry())
                 .installCompleters(components.getAliasNameCompleter()));
