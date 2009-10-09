@@ -65,6 +65,10 @@ import java.util.Arrays;
 import jline.console.Completer;
 import jline.console.completers.AggregateCompleter;
 
+//
+// TODO: See how we can generify this builder so we can effectivly share its base-code with other builders
+//
+
 /**
  * Builds {@link Shell} instances w/o any IoC container.
  *
