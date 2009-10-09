@@ -19,18 +19,16 @@
 
 package org.sonatype.gshell.core.console;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.Branding;
 import org.sonatype.gshell.VariableNames;
 import org.sonatype.gshell.Variables;
 import org.sonatype.gshell.ansi.AnsiRenderer;
 import org.sonatype.gshell.console.Console;
-import org.codehaus.plexus.interpolation.AbstractValueSource;
-import org.codehaus.plexus.interpolation.InterpolationException;
-import org.codehaus.plexus.interpolation.Interpolator;
-import org.codehaus.plexus.interpolation.PrefixedObjectValueSource;
-import org.codehaus.plexus.interpolation.StringSearchInterpolator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * {@link org.sonatype.gshell.console.Console.Prompter} component.
@@ -48,7 +46,7 @@ public class ConsolePrompterImpl
 
     // NOTE: Have to use %{} here to avoid causing problems with ${} variable interpolation
 
-    private final Interpolator interp = new StringSearchInterpolator("%{", "}");
+    private static final Pattern PATTERN = Pattern.compile("\\%\\{([^}]+)\\}");
 
     private final AnsiRenderer renderer = new AnsiRenderer();
 
@@ -61,18 +59,6 @@ public class ConsolePrompterImpl
         assert branding != null;
         this.vars = vars;
         this.branding = branding;
-
-        interp.addValueSource(new AbstractValueSource(false) {
-            public Object getValue(final String expression) {
-                return vars.get(expression);
-            }
-        });
-        interp.addValueSource(new PrefixedObjectValueSource(SHELL_BRANDING, branding));
-        interp.addValueSource(new AbstractValueSource(false) {
-            public Object getValue(final String expression) {
-                return System.getProperty(expression);
-            }
-        });
     }
 
     public String prompt() {
@@ -99,15 +85,30 @@ public class ConsolePrompterImpl
         return prompt;
     }
 
+    private String evaluate(String input) {
+        if (input != null) {
+            Matcher matcher = PATTERN.matcher(input);
+
+            while (matcher.find()) {
+                String key = matcher.group(1);
+                Object rep = vars.get(key);
+                if (rep == null) {
+                    rep = System.getProperty(key);
+                }
+                if (rep != null) {
+                    input = input.replace(matcher.group(0), rep.toString());
+                    matcher.reset(input);
+                }
+            }
+        }
+
+        return input;
+    }
+
     private String interpolate(final String pattern) {
         String prompt = null;
         if (pattern != null) {
-            try {
-                prompt = interp.interpolate(pattern);
-            }
-            catch (InterpolationException e) {
-                log.warn("Failed to interpolate: " + pattern, e);
-            }
+            prompt = evaluate(pattern);
         }
         return prompt;
     }
