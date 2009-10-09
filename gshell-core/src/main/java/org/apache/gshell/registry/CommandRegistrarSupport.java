@@ -136,7 +136,6 @@ public abstract class CommandRegistrarSupport
             return props.getProperty(CommandDocumenter.COMMAND_DOT + name);
         }
 
-        @Override
         public int compareTo(final CommandsConfiguration target) {
             int us = getAutoRegisterPriority();
             int them = target.getAutoRegisterPriority();

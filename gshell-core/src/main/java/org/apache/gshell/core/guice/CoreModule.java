@@ -37,7 +37,7 @@ import org.apache.gshell.registry.CommandRegistry;
 import org.apache.gshell.registry.CommandResolver;
 
 /**
- * Mvnsh module.
+ * Guice module for <tt>gshell-core</tt> components.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *

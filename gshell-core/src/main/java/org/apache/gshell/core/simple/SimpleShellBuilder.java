@@ -65,7 +65,7 @@ import java.util.Arrays;
 import jline.console.Completer;
 
 /**
- * Builds {@link org.apache.maven.shell.Shell} instances.
+ * Builds {@link Shell} instances w/o any IoC container.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *

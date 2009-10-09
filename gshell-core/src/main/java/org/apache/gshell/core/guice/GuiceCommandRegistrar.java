@@ -27,7 +27,7 @@ import org.apache.gshell.registry.CommandRegistrarSupport;
 import org.apache.gshell.registry.CommandRegistry;
 
 /**
- * Default implementation of the {@link CommandRegistrar}.
+ * Guice {@link CommandRegistrar}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *
@@ -48,7 +48,6 @@ public class GuiceCommandRegistrar
         this.injector = injector;
     }
 
-    @Override
     public void registerCommand(final String name, final String classname) throws Exception {
         assert name != null;
         assert classname != null;

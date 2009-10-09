@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Builds {@link org.apache.maven.shell.Shell} instances.
+ * Builds {@link Shell} instances using Guice to wire components.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *
