@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.gshell.bootstrap;
+package org.sonatype.gshell.bootstrap;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -97,7 +97,12 @@ public class Configuration
             props.load(input);
         }
         finally {
-            input.close();
+            try {
+                input.close();
+            }
+            catch (Exception e) {
+                // ignore
+            }
         }
     }
 

@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.gshell.bootstrap;
+package org.sonatype.gshell.bootstrap;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

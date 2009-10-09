@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.gshell.bootstrap;
+package org.sonatype.gshell.bootstrap;
 
 /**
  * Bootstrap logger.
