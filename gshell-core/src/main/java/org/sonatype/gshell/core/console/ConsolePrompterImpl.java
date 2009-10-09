@@ -33,7 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * {@link org.apache.gshell.console.Console.Prompter} component.
+ * {@link org.sonatype.gshell.console.Console.Prompter} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *

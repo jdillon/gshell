@@ -27,7 +27,7 @@ import org.junit.Test;
 import java.net.URI;
 
 /**
- * Tests for the {@link org.apache.gshell.cli.handler.UriHandler} class.
+ * Tests for the {@link org.sonatype.gshell.cli.handler.UriHandler} class.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */

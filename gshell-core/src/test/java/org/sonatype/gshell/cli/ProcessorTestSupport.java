@@ -24,7 +24,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 
 /**
- * Support for {@link org.apache.gshell.cli.Processor} tests.
+ * Support for {@link org.sonatype.gshell.cli.Processor} tests.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */

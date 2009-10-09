@@ -28,7 +28,7 @@ import org.junit.Test;
 import java.util.List;
 
 /**
- * Tests for the {@link org.apache.gshell.cli.handler.ObjectHandler} class.
+ * Tests for the {@link org.sonatype.gshell.cli.handler.ObjectHandler} class.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */

@@ -27,7 +27,7 @@ import org.junit.Test;
 import java.io.File;
 
 /**
- * Tests for the {@link org.apache.gshell.cli.handler.FileHandler} class.
+ * Tests for the {@link org.sonatype.gshell.cli.handler.FileHandler} class.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */

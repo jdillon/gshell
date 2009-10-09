@@ -52,7 +52,7 @@ import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * The default {@link org.apache.gshell.Shell} component.
+ * The default {@link org.sonatype.gshell.Shell} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *

@@ -78,7 +78,7 @@
             <outputDirectory>lib</outputDirectory>
             <useStrictFiltering>true</useStrictFiltering>
             <excludes>
-                <exclude>org.apache.gshell:gshell-bootstrap</exclude>
+                <exclude>org.sonatype.gshell:gshell-bootstrap</exclude>
             </excludes>
         </dependencySet>
     </dependencySets>

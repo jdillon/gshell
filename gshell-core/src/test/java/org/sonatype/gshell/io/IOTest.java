@@ -24,7 +24,7 @@ import org.junit.Test;
 import org.sonatype.gshell.command.IO;
 
 /**
- * Unit tests for the {@link org.apache.gshell.command.IO} class.
+ * Unit tests for the {@link org.sonatype.gshell.command.IO} class.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */

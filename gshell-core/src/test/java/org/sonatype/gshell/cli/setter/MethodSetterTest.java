@@ -26,7 +26,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 /**
- * Tests for the {@link org.apache.gshell.cli.setter.MethodSetter} class.
+ * Tests for the {@link org.sonatype.gshell.cli.setter.MethodSetter} class.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */

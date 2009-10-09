@@ -33,7 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The default {@link org.apache.gshell.registry.CommandResolver} component.
+ * The default {@link org.sonatype.gshell.registry.CommandResolver} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *

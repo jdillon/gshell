@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 /**
- * The default {@link org.apache.gshell.execute.CommandExecutor} component.
+ * The default {@link org.sonatype.gshell.execute.CommandExecutor} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *

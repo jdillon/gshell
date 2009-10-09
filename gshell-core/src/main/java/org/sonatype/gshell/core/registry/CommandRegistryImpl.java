@@ -36,7 +36,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * The default {@link org.apache.gshell.registry.CommandRegistry} component.
+ * The default {@link org.sonatype.gshell.registry.CommandRegistry} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *

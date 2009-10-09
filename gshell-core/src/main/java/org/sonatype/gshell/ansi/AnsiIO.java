@@ -29,7 +29,7 @@ import java.io.PrintWriter;
 import jline.WindowsTerminal;
 
 /**
- * ANSI-aware {@link org.apache.gshell.command.IO}.
+ * ANSI-aware {@link org.sonatype.gshell.command.IO}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *

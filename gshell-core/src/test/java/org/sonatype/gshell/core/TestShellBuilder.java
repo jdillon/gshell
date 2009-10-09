@@ -28,7 +28,7 @@ import org.sonatype.gshell.core.guice.GuiceShellBuilder;
 import org.sonatype.gshell.registry.CommandRegistrar;
 
 /**
- * Builds {@link org.apache.gshell.Shell} instances for testing.
+ * Builds {@link org.sonatype.gshell.Shell} instances for testing.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */

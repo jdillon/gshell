@@ -34,7 +34,7 @@ import org.junit.Test;
 import java.util.EventObject;
 
 /**
- * Tests for the {@link org.apache.gshell.core.event.EventManagerImpl}.
+ * Tests for the {@link org.sonatype.gshell.core.event.EventManagerImpl}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */

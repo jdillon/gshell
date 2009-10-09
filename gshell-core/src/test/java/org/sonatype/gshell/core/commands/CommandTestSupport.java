@@ -44,7 +44,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Support for testing {@link org.apache.gshell.command.CommandAction} instances.
+ * Support for testing {@link org.sonatype.gshell.command.CommandAction} instances.
  * 
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */

@@ -22,7 +22,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.apache.gshell</groupId>
+    <groupId>org.sonatype.gshell</groupId>
     <artifactId>gshell</artifactId>
     <name>GShell - ${project.version}</name>
     <version>2.0-SNAPSHOT</version>
@@ -99,26 +99,26 @@
             <!-- INTERNAL -->
 
             <dependency>
-                <groupId>org.apache.gshell</groupId>
+                <groupId>org.sonatype.gshell</groupId>
                 <artifactId>gshell-core</artifactId>
                 <version>2.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>org.apache.gshell</groupId>
+                <groupId>org.sonatype.gshell</groupId>
                 <artifactId>gshell-core</artifactId>
                 <classifier>tests</classifier>
                 <version>2.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>org.apache.gshell</groupId>
+                <groupId>org.sonatype.gshell</groupId>
                 <artifactId>gshell-bootstrap</artifactId>
                 <version>2.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>org.apache.gshell</groupId>
+                <groupId>org.sonatype.gshell</groupId>
                 <artifactId>gshell-assembly</artifactId>
                 <version>2.0-SNAPSHOT</version>
             </dependency>
