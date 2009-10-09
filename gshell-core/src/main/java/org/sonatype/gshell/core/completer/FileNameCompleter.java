@@ -57,6 +57,8 @@ public class FileNameCompleter
         assert name != null;
 
         // FIXME: This is still unhappy, even with AnsiString :-(
+        //         Basically the problem is that what we want to display (ansi-encoced string)
+        //         is different than what we want to be completed (non-ansi string)
 
         /*
         if (file.isDirectory()) {
