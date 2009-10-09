@@ -35,6 +35,8 @@ import org.sonatype.gshell.registry.CommandRegistry;
 import java.util.Collection;
 import java.util.LinkedList;
 
+import jline.console.completers.AggregateCompleter;
+
 /**
  * Display command help.
  *
@@ -68,7 +70,7 @@ public class HelpCommand
     @Inject
     public HelpCommand installCompleters(final AliasNameCompleter c1, final CommandNameCompleter c2) {
         assert c1 != null;
-        setCompleters(c1, c2, null);
+        setCompleters(new AggregateCompleter(c1, c2), null);
         return this;
     }
     
