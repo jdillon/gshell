@@ -28,7 +28,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import jline.console.FileHistory;
+import jline.console.history.FileHistory;
 
 /**
  * Implementation of {@link History} for <a href="http://jline.sf.net">JLine</a>.
