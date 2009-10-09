@@ -45,11 +45,11 @@ public class SimpleCommandRegistrar
         // Nothing
     }
 
-    public void registerCommand(final String name, final String classname) throws Exception {
+    public void registerCommand(final String name, final String className) throws Exception {
         assert name != null;
-        assert classname != null;
+        assert className != null;
 
-        Class type = Thread.currentThread().getContextClassLoader().loadClass(classname);
+        Class type = Thread.currentThread().getContextClassLoader().loadClass(className);
         CommandAction command = (CommandAction) type.newInstance();
 
         commandRegistry.registerCommand(name, command);
