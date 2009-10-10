@@ -20,22 +20,21 @@
 package org.sonatype.gshell.core.commands;
 
 import com.google.inject.Inject;
+import jline.console.completers.AggregateCompleter;
 import org.sonatype.gshell.cli.Argument;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.CommandDocumenter;
 import org.sonatype.gshell.command.IO;
+import org.sonatype.gshell.core.command.CommandActionSupport;
 import org.sonatype.gshell.core.completer.AliasNameCompleter;
 import org.sonatype.gshell.core.completer.CommandNameCompleter;
-import org.sonatype.gshell.core.command.CommandActionSupport;
 import org.sonatype.gshell.registry.AliasRegistry;
 import org.sonatype.gshell.registry.CommandRegistry;
 
 import java.util.Collection;
 import java.util.LinkedList;
-
-import jline.console.completers.AggregateCompleter;
 
 /**
  * Display command help.

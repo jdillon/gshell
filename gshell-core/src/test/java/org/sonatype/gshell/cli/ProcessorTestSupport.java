@@ -20,7 +20,7 @@
 package org.sonatype.gshell.cli;
 
 import org.junit.After;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import org.junit.Before;
 
 /**

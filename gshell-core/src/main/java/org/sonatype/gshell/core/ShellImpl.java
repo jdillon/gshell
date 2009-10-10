@@ -21,24 +21,24 @@ package org.sonatype.gshell.core;
 
 import jline.console.Completer;
 import jline.console.ConsoleReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.Branding;
 import org.sonatype.gshell.History;
 import org.sonatype.gshell.Shell;
 import org.sonatype.gshell.ShellHolder;
 import org.sonatype.gshell.VariableNames;
 import org.sonatype.gshell.Variables;
-import org.sonatype.gshell.event.EventManager;
-import org.sonatype.gshell.event.EventAware;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.console.Console;
 import org.sonatype.gshell.core.console.ConsoleImpl;
 import org.sonatype.gshell.core.console.HistoryImpl;
+import org.sonatype.gshell.event.EventAware;
+import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.execute.CommandExecutor;
 import org.sonatype.gshell.io.Closer;
 import org.sonatype.gshell.io.SystemInputOutputHijacker;
 import org.sonatype.gshell.notification.ExitNotification;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -47,8 +47,8 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**

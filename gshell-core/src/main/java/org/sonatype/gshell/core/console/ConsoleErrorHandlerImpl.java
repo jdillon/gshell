@@ -19,16 +19,16 @@
 
 package org.sonatype.gshell.core.console;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.ShellHolder;
 import org.sonatype.gshell.VariableNames;
 import org.sonatype.gshell.Variables;
+import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.console.Console;
 import org.sonatype.gshell.i18n.MessageSource;
 import org.sonatype.gshell.i18n.ResourceBundleMessageSource;
-import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.notification.ErrorNotification;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * {@link org.sonatype.gshell.console.Console.ErrorHandler} component.

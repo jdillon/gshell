@@ -19,16 +19,14 @@
 
 package org.sonatype.gshell.core.console;
 
-import org.sonatype.gshell.History;
-import org.sonatype.gshell.VariableNames;
+import jline.console.history.FileHistory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.sonatype.gshell.History;
+import org.sonatype.gshell.VariableNames;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
-
-import jline.console.history.FileHistory;
 
 /**
  * Implementation of {@link History} for <a href="http://jline.sf.net">JLine</a>.

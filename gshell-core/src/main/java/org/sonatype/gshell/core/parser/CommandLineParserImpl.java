@@ -19,6 +19,8 @@
 
 package org.sonatype.gshell.core.parser;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.Shell;
 import org.sonatype.gshell.core.parser.impl.ASTCommandLine;
 import org.sonatype.gshell.core.parser.impl.Parser;
@@ -27,8 +29,6 @@ import org.sonatype.gshell.core.parser.impl.visitor.LoggingVisitor;
 import org.sonatype.gshell.execute.CommandExecutor;
 import org.sonatype.gshell.execute.CommandLineParser;
 import org.sonatype.gshell.io.Closer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.Reader;
 import java.io.StringReader;

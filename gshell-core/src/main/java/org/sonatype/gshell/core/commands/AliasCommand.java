@@ -24,9 +24,9 @@ import org.sonatype.gshell.cli.Argument;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
+import org.sonatype.gshell.core.command.CommandActionSupport;
 import org.sonatype.gshell.registry.AliasRegistry;
 import org.sonatype.gshell.util.Strings;
-import org.sonatype.gshell.core.command.CommandActionSupport;
 
 import java.util.Collection;
 import java.util.List;

@@ -19,6 +19,8 @@
 
 package org.sonatype.gshell.core.parser.impl.visitor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.core.parser.impl.ASTCommandLine;
 import org.sonatype.gshell.core.parser.impl.ASTExpression;
 import org.sonatype.gshell.core.parser.impl.ASTOpaqueArgument;
@@ -28,8 +30,6 @@ import org.sonatype.gshell.core.parser.impl.ASTWhitespace;
 import org.sonatype.gshell.core.parser.impl.ParserVisitor;
 import org.sonatype.gshell.core.parser.impl.SimpleNode;
 import org.sonatype.gshell.util.Strings;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Visitor whichs logs nodes in the tree.

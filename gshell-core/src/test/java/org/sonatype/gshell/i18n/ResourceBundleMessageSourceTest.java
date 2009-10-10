@@ -19,7 +19,7 @@
 
 package org.sonatype.gshell.i18n;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 

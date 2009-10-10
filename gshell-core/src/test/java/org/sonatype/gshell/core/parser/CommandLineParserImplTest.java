@@ -23,11 +23,11 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Stage;
-import org.sonatype.gshell.execute.CommandLineParser;
 import org.junit.After;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+import org.sonatype.gshell.execute.CommandLineParser;
 
 /**
  * Unit tests for the {@link CommandLineParserImpl} class.

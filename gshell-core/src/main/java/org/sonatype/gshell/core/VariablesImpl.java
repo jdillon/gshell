@@ -20,8 +20,8 @@
 package org.sonatype.gshell.core;
 
 import org.sonatype.gshell.Variables;
-import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.event.EventAware;
+import org.sonatype.gshell.event.EventManager;
 
 import java.util.HashSet;
 import java.util.Iterator;

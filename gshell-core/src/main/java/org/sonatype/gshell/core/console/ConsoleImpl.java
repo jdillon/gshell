@@ -24,8 +24,8 @@ import jline.console.Completer;
 import jline.console.ConsoleReader;
 import jline.console.History;
 import jline.console.history.MemoryHistory;
-import org.sonatype.gshell.console.Console;
 import org.sonatype.gshell.command.IO;
+import org.sonatype.gshell.console.Console;
 
 import java.io.IOException;
 import java.io.InputStream;

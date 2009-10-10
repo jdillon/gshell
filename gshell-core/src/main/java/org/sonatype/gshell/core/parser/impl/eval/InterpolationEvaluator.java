@@ -19,12 +19,12 @@
 
 package org.sonatype.gshell.core.parser.impl.eval;
 
+import org.codehaus.plexus.interpolation.AbstractValueSource;
+import org.codehaus.plexus.interpolation.StringSearchInterpolator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.codehaus.plexus.interpolation.StringSearchInterpolator;
-import org.codehaus.plexus.interpolation.AbstractValueSource;
-import org.sonatype.gshell.Variables;
 import org.sonatype.gshell.ShellHolder;
+import org.sonatype.gshell.Variables;
 
 /**
  * Uses Plexus Interpolation to evaluate expressions.

@@ -19,14 +19,13 @@
 
 package org.sonatype.gshell.ansi;
 
+import jline.WindowsTerminal;
+import org.fusesource.jansi.AnsiConsole;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.io.StreamSet;
-import org.fusesource.jansi.AnsiConsole;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;
-
-import jline.WindowsTerminal;
 
 /**
  * ANSI-aware {@link org.sonatype.gshell.command.IO}.

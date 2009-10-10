@@ -19,6 +19,7 @@
 
 package org.sonatype.gshell.cli;
 
+import jline.TerminalFactory;
 import org.sonatype.gshell.cli.handler.Handler;
 import org.sonatype.gshell.i18n.AggregateMessageSource;
 import org.sonatype.gshell.i18n.MessageSource;
@@ -29,8 +30,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import jline.TerminalFactory;
 
 /**
  * Helper to print formatted help and usage text.

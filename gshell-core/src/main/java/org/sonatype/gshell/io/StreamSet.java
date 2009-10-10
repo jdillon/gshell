@@ -19,11 +19,11 @@
 
 package org.sonatype.gshell.io;
 
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.io.FileInputStream;
-import java.io.FileDescriptor;
-import java.io.FileOutputStream;
 
 /**
  * A set of input, output and error streams.

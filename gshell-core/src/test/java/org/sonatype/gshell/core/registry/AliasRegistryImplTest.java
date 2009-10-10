@@ -23,18 +23,14 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Stage;
+import org.junit.After;
+import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
 import org.sonatype.gshell.core.event.EventManagerImpl;
 import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.registry.AliasRegistry;
 import org.sonatype.gshell.registry.NoSuchAliasException;
-import org.junit.After;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.util.Collection;
 

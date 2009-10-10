@@ -19,10 +19,10 @@
 
 package org.sonatype.gshell.cli.handler;
 
+import static org.junit.Assert.*;
+import org.junit.Test;
 import org.sonatype.gshell.cli.Option;
 import org.sonatype.gshell.cli.ProcessorTestSupport;
-import static org.junit.Assert.assertEquals;
-import org.junit.Test;
 
 import java.io.File;
 

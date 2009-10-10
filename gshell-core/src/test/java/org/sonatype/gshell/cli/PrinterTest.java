@@ -19,7 +19,7 @@
 
 package org.sonatype.gshell.cli;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import org.junit.Test;
 
 import java.io.PrintWriter;

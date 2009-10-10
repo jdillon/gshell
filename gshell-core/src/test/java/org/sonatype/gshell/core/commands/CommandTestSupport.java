@@ -20,6 +20,10 @@
 package org.sonatype.gshell.core.commands;
 
 import com.google.inject.Injector;
+import org.junit.After;
+import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
 import org.sonatype.gshell.Shell;
 import org.sonatype.gshell.VariableNames;
 import org.sonatype.gshell.Variables;
@@ -33,12 +37,6 @@ import org.sonatype.gshell.registry.CommandRegistry;
 import org.sonatype.gshell.testsupport.TestIO;
 import org.sonatype.gshell.testsupport.TestUtil;
 import org.sonatype.gshell.util.Strings;
-import org.junit.After;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;

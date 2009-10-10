@@ -23,15 +23,15 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Stage;
-import org.sonatype.gshell.command.CommandContext;
-import org.sonatype.gshell.core.event.EventManagerImpl;
-import org.sonatype.gshell.core.command.CommandActionSupport;
-import org.sonatype.gshell.event.EventManager;
-import org.sonatype.gshell.registry.CommandRegistry;
 import org.junit.After;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+import org.sonatype.gshell.command.CommandContext;
+import org.sonatype.gshell.core.command.CommandActionSupport;
+import org.sonatype.gshell.core.event.EventManagerImpl;
+import org.sonatype.gshell.event.EventManager;
+import org.sonatype.gshell.registry.CommandRegistry;
 
 /**
  * Tests for the {@link CommandRegistryImpl}.

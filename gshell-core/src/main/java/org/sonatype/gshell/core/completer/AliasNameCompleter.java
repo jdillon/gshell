@@ -20,7 +20,6 @@
 package org.sonatype.gshell.core.completer;
 
 import com.google.inject.Inject;
-
 import jline.console.Completer;
 import jline.console.completers.StringsCompleter;
 import org.sonatype.gshell.core.registry.AliasRegisteredEvent;

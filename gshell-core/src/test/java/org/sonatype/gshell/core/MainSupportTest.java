@@ -19,6 +19,10 @@
 
 package org.sonatype.gshell.core;
 
+import org.junit.After;
+import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
 import org.sonatype.gshell.Branding;
 import org.sonatype.gshell.History;
 import org.sonatype.gshell.Shell;
@@ -27,10 +31,6 @@ import org.sonatype.gshell.ansi.Ansi;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.notification.ExitNotification;
 import org.sonatype.gshell.testsupport.TestUtil;
-import org.junit.After;
-import static org.junit.Assert.assertEquals;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for {@link MainSupport}.

@@ -25,11 +25,9 @@ import org.sonatype.gshell.cli.Argument;
 import org.sonatype.gshell.cli.Option;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
+import org.sonatype.gshell.core.command.CommandActionSupport;
 import org.sonatype.gshell.core.commands.SetCommand.Mode;
 import org.sonatype.gshell.core.completer.VariableNameCompleter;
-import org.sonatype.gshell.core.command.CommandActionSupport;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 

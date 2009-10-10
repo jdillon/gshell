@@ -19,9 +19,9 @@
 
 package org.sonatype.gshell.registry;
 
-import org.sonatype.gshell.command.CommandDocumenter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.sonatype.gshell.command.CommandDocumenter;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;

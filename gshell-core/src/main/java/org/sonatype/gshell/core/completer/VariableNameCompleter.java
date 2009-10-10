@@ -19,15 +19,14 @@
 
 package org.sonatype.gshell.core.completer;
 
+import jline.console.Completer;
+import jline.console.completers.StringsCompleter;
 import org.sonatype.gshell.ShellHolder;
 import org.sonatype.gshell.Variables;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-
-import jline.console.Completer;
-import jline.console.completers.StringsCompleter;
 
 /**
  * {@link jline.Completor} for {@link Application} variable names.

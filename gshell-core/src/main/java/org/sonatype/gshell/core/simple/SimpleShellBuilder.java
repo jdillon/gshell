@@ -19,10 +19,13 @@
 
 package org.sonatype.gshell.core.simple;
 
+import jline.console.completers.AggregateCompleter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.Branding;
 import org.sonatype.gshell.Shell;
-import org.sonatype.gshell.Variables;
 import org.sonatype.gshell.ShellFactory;
+import org.sonatype.gshell.Variables;
 import org.sonatype.gshell.command.CommandDocumenter;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.console.Console;
@@ -57,13 +60,6 @@ import org.sonatype.gshell.registry.AliasRegistry;
 import org.sonatype.gshell.registry.CommandRegistrar;
 import org.sonatype.gshell.registry.CommandRegistry;
 import org.sonatype.gshell.registry.CommandResolver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.Arrays;
-
-import jline.console.Completer;
-import jline.console.completers.AggregateCompleter;
 
 //
 // TODO: See how we can generify this builder so we can effectivly share its base-code with other builders

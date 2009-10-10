@@ -20,14 +20,19 @@
 package org.sonatype.gshell.core.completer;
 
 import com.google.inject.Inject;
+import jline.console.Completer;
+import jline.console.completers.AggregateCompleter;
+import jline.console.completers.ArgumentCompleter;
+import jline.console.completers.NullCompleter;
+import jline.console.completers.StringsCompleter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.core.registry.CommandRegisteredEvent;
 import org.sonatype.gshell.core.registry.CommandRemovedEvent;
 import org.sonatype.gshell.event.EventListener;
 import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.registry.CommandRegistry;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -35,12 +40,6 @@ import java.util.EventObject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import jline.console.Completer;
-import jline.console.completers.AggregateCompleter;
-import jline.console.completers.StringsCompleter;
-import jline.console.completers.NullCompleter;
-import jline.console.completers.ArgumentCompleter;
 
 /**
  * {@link Completor} for commands, including support for command-specific sub-completion.

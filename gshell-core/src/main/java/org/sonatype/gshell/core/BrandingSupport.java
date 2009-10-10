@@ -19,6 +19,7 @@
 
 package org.sonatype.gshell.core;
 
+import jline.TerminalFactory;
 import org.sonatype.gshell.Branding;
 import org.sonatype.gshell.Shell;
 import org.sonatype.gshell.VariableNames;
@@ -32,8 +33,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Properties;
-
-import jline.TerminalFactory;
 
 /**
  * Support for {@link Branding} implementations.
@@ -176,7 +175,7 @@ public class BrandingSupport
             vars.set(SHELL_PROMPT, getPrompt());
         }
         if (!vars.contains(SHELL_USER_DIR)) {
-            vars.set(SHELL_USER_DIR, new File(".").getCanonicalPath());
+            vars.set(SHELL_USER_DIR, new File(".").getCanonicalPath()); // FIXME: Can just bind the File?
         }
     }
 }

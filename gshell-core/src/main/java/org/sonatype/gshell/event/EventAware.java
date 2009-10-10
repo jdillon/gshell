@@ -19,8 +19,6 @@
 
 package org.sonatype.gshell.event;
 
-import java.util.EventObject;
-
 /**
  * Allows objects to become event aware.
  *

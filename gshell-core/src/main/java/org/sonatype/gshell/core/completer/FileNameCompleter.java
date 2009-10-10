@@ -23,8 +23,6 @@ import jline.console.Completer;
 import org.sonatype.gshell.ShellHolder;
 import org.sonatype.gshell.VariableNames;
 import org.sonatype.gshell.Variables;
-import org.sonatype.gshell.ansi.Ansi;
-import org.sonatype.gshell.ansi.AnsiString;
 
 import java.io.File;
 

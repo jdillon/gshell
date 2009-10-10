@@ -19,8 +19,6 @@
 
 package org.sonatype.gshell.command;
 
-import org.sonatype.gshell.command.IO;
-
 /**
  * Provides documentation support for commands.
  *

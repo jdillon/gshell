@@ -28,8 +28,8 @@ import org.sonatype.gshell.cli.Option;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
-import static org.sonatype.gshell.core.commands.InfoCommand.Section.*;
 import org.sonatype.gshell.core.command.CommandActionSupport;
+import static org.sonatype.gshell.core.commands.InfoCommand.Section.*;
 
 import java.lang.management.ClassLoadingMXBean;
 import java.lang.management.GarbageCollectorMXBean;

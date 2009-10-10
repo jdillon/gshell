@@ -20,6 +20,8 @@
 package org.sonatype.gshell.core.completer;
 
 import com.google.inject.Inject;
+import jline.console.Completer;
+import jline.console.completers.StringsCompleter;
 import org.sonatype.gshell.core.registry.CommandRegisteredEvent;
 import org.sonatype.gshell.core.registry.CommandRemovedEvent;
 import org.sonatype.gshell.event.EventListener;
@@ -29,9 +31,6 @@ import org.sonatype.gshell.registry.CommandRegistry;
 import java.util.Collection;
 import java.util.EventObject;
 import java.util.List;
-
-import jline.console.Completer;
-import jline.console.completers.StringsCompleter;
 
 /**
  * {@link Completor} for command names.

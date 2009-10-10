@@ -20,9 +20,9 @@
 package org.sonatype.gshell.core.parser.impl;
 
 import org.junit.Assert;
-import static org.junit.Assert.fail;
-import org.junit.Test;
+import static org.junit.Assert.*;
 import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * Unit tests for the {@link Parser} class.

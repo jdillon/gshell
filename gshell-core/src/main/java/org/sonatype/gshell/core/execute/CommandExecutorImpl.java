@@ -20,6 +20,9 @@
 package org.sonatype.gshell.core.execute;
 
 import com.google.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.sonatype.gshell.Shell;
 import org.sonatype.gshell.ShellHolder;
 import org.sonatype.gshell.Variables;
@@ -28,21 +31,18 @@ import org.sonatype.gshell.cli.Processor;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.CommandDocumenter;
+import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.core.command.CommandHelpSupport;
 import org.sonatype.gshell.execute.CommandExecutor;
 import org.sonatype.gshell.execute.CommandLineParser;
 import org.sonatype.gshell.execute.CommandLineParser.CommandLine;
 import org.sonatype.gshell.i18n.PrefixingMessageSource;
-import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.io.SystemInputOutputHijacker;
 import org.sonatype.gshell.notification.ErrorNotification;
 import org.sonatype.gshell.notification.ResultNotification;
 import org.sonatype.gshell.registry.CommandResolver;
 import org.sonatype.gshell.util.Arguments;
 import org.sonatype.gshell.util.Strings;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
 
 /**
  * The default {@link org.sonatype.gshell.execute.CommandExecutor} component.
