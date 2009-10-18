@@ -10,13 +10,8 @@ Building
 
 * Maven 2.x
 * Java 5
-* JLine 2.0
-
-At the moment JLine 2.0 must be built manually, as it is not yet in any public repositories:
-
-    git clone git://github.com/jdillon/jline2.git
-    cd jline2
-    mvn install
+* JLine 2.x
+* Gossip 1.x
 
 Check out and build:
 
