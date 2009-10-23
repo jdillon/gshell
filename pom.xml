@@ -273,6 +273,15 @@
                         <target>1.5</target>
                     </configuration>
                 </plugin>
+                
+                <plugin>
+                    <groupId>org.codehaus.groovy.maven</groupId>
+                    <artifactId>gmaven-plugin</artifactId>
+                    <version>1.0</version>
+                    <configuration>
+                        <providerSelection>1.6</providerSelection>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
