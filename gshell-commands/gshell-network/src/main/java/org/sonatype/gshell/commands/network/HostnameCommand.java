@@ -14,38 +14,31 @@
  * limitations under the License.
  */
 
-package org.apache.geronimo.gshell.commands.text;
+package org.apache.geronimo.gshell.commands.network;
 
 import org.sonatype.gshell.core.command.CommandActionSupport;
-import org.sonatype.gshell.cli.Argument;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.command.Command;
 
-import java.util.Collection;
+import java.net.InetAddress;
 
 /**
- * Prints formatted output.
+ * Displays the name of the current host.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *
  * @since 2.0
  */
-@Command
-public class PrintfCommand
+public class HostnameCommand
     extends CommandActionSupport
 {
-    @Argument(index=0, required=true)
-    private String format;
-
-    @Argument(index=1, multiValued=true, required=true)
-    private Collection<String> arguments = null;
-
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
         IO io = context.getIo();
 
-        io.out.printf(format, arguments.toArray());
+        InetAddress localhost = InetAddress.getLocalHost();
+        io.info(localhost.getHostName());
+        io.verbose(localhost.getHostAddress());
 
         return Result.SUCCESS;
     }
