@@ -57,7 +57,7 @@ public class EvaluatorFactory
             // ignore
         }
 
-        return new InterpolationEvaluator();
+        return new DefaultEvaluator();
     }
 
     public static Evaluator get() {

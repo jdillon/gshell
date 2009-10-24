@@ -58,12 +58,21 @@ public class CommandDocumenterImpl
         if (input.contains("${")) {
             while (matcher.find()) {
                 String key = matcher.group(1);
-                // FIXME: Add "command." prefix to access command instance
-                Variables vars = ShellHolder.get().getVariables();
-                Object rep = vars.get(key);
+
+                Object rep = null;
+                if (key.equals("command.name")) {
+                    rep = command.getName();
+                }
+
+                if (rep == null) {
+                    Variables vars = ShellHolder.get().getVariables();
+                    rep = vars.get(key);
+                }
+
                 if (rep == null) {
                     rep = System.getProperty(key);
                 }
+                
                 if (rep != null) {
                     input = input.replace(matcher.group(0), rep.toString());
                     matcher.reset(input);
@@ -121,11 +130,6 @@ public class CommandDocumenterImpl
 
         PrintStream out = new PrintStream(new PrefixingOutputStream(io.streams.out, "   "));
         AnsiRenderer renderer = new AnsiRenderer();
-
-        //
-        // HACK: PrefixingOutputStream has a problem with state and using io.out, so we have to
-        //       add more println()s to compensate for now
-        //
 
         io.out.format("@|bold %s|", messages.getMessage("section.name")).println();
         io.out.println();

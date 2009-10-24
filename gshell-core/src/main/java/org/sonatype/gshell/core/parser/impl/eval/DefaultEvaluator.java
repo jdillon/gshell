@@ -16,50 +16,57 @@
 
 package org.sonatype.gshell.core.parser.impl.eval;
 
-import org.codehaus.plexus.interpolation.AbstractValueSource;
-import org.codehaus.plexus.interpolation.StringSearchInterpolator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.ShellHolder;
 import org.sonatype.gshell.Variables;
 
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 /**
- * Uses Plexus Interpolation to evaluate expressions.
+ * Evaluates expressions using regular expressions.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class InterpolationEvaluator
+public class DefaultEvaluator
     implements Evaluator
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private StringSearchInterpolator interp;
+    private static final Pattern PATTERN = Pattern.compile("\\$\\{([^}]+)\\}");
 
-    public Object eval(String expression) throws Exception {
+    public Object eval(final String expression) throws Exception {
         // expression could be null
-        
+
         // Skip interpolation if null or there is no start token
-        if (expression == null || !expression.contains(StringSearchInterpolator.DEFAULT_START_EXPR)) {
+        if (expression == null || !expression.contains("${")) {
             return expression;
         }
 
-        if (interp == null) {
-            interp = new StringSearchInterpolator();
+        String input = expression;
+        Matcher matcher = PATTERN.matcher(input);
 
-            interp.addValueSource(new AbstractValueSource(false) {
-                public Object getValue(final String expression) {
-                    Variables vars = ShellHolder.get().getVariables();
-                    return vars.get(expression);
-                }
-            });
+        while (matcher.find()) {
+            String key = matcher.group(1);
 
-            interp.addValueSource(new AbstractValueSource(false) {
-                public Object getValue(final String expression) {
-                    return System.getProperty(expression);
-                }
-            });
+            Object rep = null;
+
+            if (rep == null) {
+                Variables vars = ShellHolder.get().getVariables();
+                rep = vars.get(key);
+            }
+
+            if (rep == null) {
+                rep = System.getProperty(key);
+            }
+
+            if (rep != null) {
+                input = input.replace(matcher.group(0), rep.toString());
+                matcher.reset(input);
+            }
         }
 
-        return interp.interpolate(expression);
+        return input;
     }
 }
