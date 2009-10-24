@@ -153,8 +153,9 @@
     </dependencies>
 
     <modules>
-        <module>gshell-core</module>
         <module>gshell-bootstrap</module>
+        <module>gshell-core</module>
+        <module>gshell-commands</module>
         <module>gshell-assembly</module>
     </modules>
     
