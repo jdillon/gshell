@@ -25,6 +25,7 @@
         <version>2.0-SNAPSHOT</version>
     </parent>
 
+    <groupId>org.sonatype.gshell.commands</groupId>
     <artifactId>gshell-commands</artifactId>
     <name>GShell Commands</name>
     <packaging>pom</packaging>
