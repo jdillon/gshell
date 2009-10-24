@@ -266,38 +266,5 @@
             </plugins>
         </pluginManagement>
     </build>
-
-    <profiles>
-        <profile>
-            <id>smaller</id>
-            <activation>
-                <property>
-                    <name>smaller</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <!--
-                    NOTE: Remove legal and descriptors for better size.
-                    -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-jar-plugin</artifactId>
-                        <configuration>
-                            <archive>
-                                <addMavenDescriptor>false</addMavenDescriptor>
-                            </archive>
-                            <excludes>
-                                <exclude>META-INF/DEPENDENCIES</exclude>
-                                <exclude>META-INF/LICENSE</exclude>
-                                <exclude>META-INF/NOTICE</exclude>
-                            </excludes>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
-
 </project>
 
