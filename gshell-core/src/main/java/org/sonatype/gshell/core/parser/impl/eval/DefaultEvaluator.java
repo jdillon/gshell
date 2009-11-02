@@ -50,12 +50,8 @@ public class DefaultEvaluator
         while (matcher.find()) {
             String key = matcher.group(1);
 
-            Object rep = null;
-
-            if (rep == null) {
-                Variables vars = ShellHolder.get().getVariables();
-                rep = vars.get(key);
-            }
+            Variables vars = ShellHolder.get().getVariables();
+            Object rep = vars.get(key);
 
             if (rep == null) {
                 rep = System.getProperty(key);

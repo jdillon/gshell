@@ -65,7 +65,6 @@ public class JexlEvaluator
             }
         }
 
-
         return expression;
     }
 
