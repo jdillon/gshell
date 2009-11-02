@@ -16,13 +16,11 @@
 
 package org.sonatype.gshell.core.parser.impl.eval;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.ShellHolder;
 import org.sonatype.gshell.Variables;
 
-import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Evaluates expressions using regular expressions.
@@ -32,8 +30,6 @@ import java.util.regex.Matcher;
 public class DefaultEvaluator
     implements Evaluator
 {
-    private final Logger log = LoggerFactory.getLogger(getClass());
-
     private static final Pattern PATTERN = Pattern.compile("\\$\\{([^}]+)\\}");
 
     public Object eval(final String expression) throws Exception {
