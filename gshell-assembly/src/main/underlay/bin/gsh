@@ -18,8 +18,6 @@
 ## under the License.
 ##
 
-DIRNAME=`dirname "$0"`
-
 # OS specific support (must be 'true' or 'false').
 cygwin=false;
 case "`uname`" in
@@ -34,6 +32,21 @@ if $cygwin ; then
     [ -n "$JAVACMD" ] && JAVACMD=`cygpath --unix "$JAVACMD"`
     [ -n "$JAVA_HOME" ] && JAVA_HOME=`cygpath --unix "$JAVA_HOME"`
 fi
+
+# resolve links - $0 may be a soft-link
+PRG="$0"
+
+while [ -h "$PRG" ] ; do
+    ls=`ls -ld "$PRG"`
+    link=`expr "$ls" : '.*-> \(.*\)$'`
+    if expr "$link" : '/.*' > /dev/null; then
+        PRG="$link"
+    else
+        PRG=`dirname "$PRG"`/"$link"
+    fi
+done
+
+DIRNAME=`dirname "$PRG"`
 
 # Locate SHELL_HOME if not it is not set
 if [ "x$SHELL_HOME" = "x" ]; then
