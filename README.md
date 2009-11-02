@@ -15,11 +15,11 @@ Building
 
 Check out and build:
 
-    git clone git://github.com/jdillon/gshell.git
+    git clone git://github.com/sonatype/gshell.git
     cd gshell
     mvn install
 
 After this completes, you can unzip the assembly and launch the shell:
 
-    gunzip -c gshell-assembly/target/gshell-*-bin.tar.gz | tar xf -
+    unzip gshell-assembly/target/gshell-*-bin.zip
     ./gshell-*/bin/gsh
