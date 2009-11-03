@@ -65,6 +65,10 @@ public class PreferenceCommand
     @Argument(index=2, multiValued=true)
     private List<String> args;
 
+    //
+    // TODO: Install completer for Mode
+    //
+
     public void setProcessor(final Processor processor) {
         processor.setStopAtNonOption(true);
     }
@@ -217,7 +221,9 @@ public class PreferenceCommand
         }
 
         public Object execute(final Preferences prefs) throws Exception {
-            return prefs.get(key, null);
+            Object result = prefs.get(key, null);
+            io.info("{}", result);
+            return result;
         }
     }
 
