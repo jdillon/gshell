@@ -272,6 +272,10 @@ public class PreferenceCommand
         }
     }
 
+//  FIXME: For load to work, we need to move the path from the command into the operation, since load is static
+//         and does not work off of a prefs node.  Also the Operation#execute() needs to be changed, as well
+//         as the support class.
+//
 //    private class LoadOperation
 //        extends OperationSupport
 //    {
