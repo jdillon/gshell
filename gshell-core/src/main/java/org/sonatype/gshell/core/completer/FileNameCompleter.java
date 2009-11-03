@@ -24,7 +24,7 @@ import org.sonatype.gshell.Variables;
 import java.io.File;
 
 /**
- * {@link Completor} for file names.
+ * {@link Completer} for file names.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *

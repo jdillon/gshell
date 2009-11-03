@@ -30,7 +30,7 @@ import java.util.EventObject;
 import java.util.List;
 
 /**
- * {@link Completor} for alias names.
+ * {@link Completer} for alias names.
  *
  * Keeps up to date automatically by handling alias-related events.
  *

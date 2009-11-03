@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * {@link Completor} for commands, including support for command-specific sub-completion.
+ * {@link Completer} for commands, including support for command-specific sub-completion.
  *
  * Keeps up to date automatically by handling command-related events.
  *

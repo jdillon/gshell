@@ -26,7 +26,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * {@link jline.Completor} for {@link Application} variable names.
+ * {@link Completer} for variable names.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *

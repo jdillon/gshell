@@ -30,7 +30,7 @@ import java.util.EventObject;
 import java.util.List;
 
 /**
- * {@link Completor} for command names.
+ * {@link Completer} for command names.
  *
  * Keeps up to date automatically by handling command-related events.
  *
