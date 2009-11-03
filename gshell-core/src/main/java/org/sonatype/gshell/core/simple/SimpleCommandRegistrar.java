@@ -21,7 +21,7 @@ import org.sonatype.gshell.registry.CommandRegistrarSupport;
 import org.sonatype.gshell.registry.CommandRegistry;
 
 /**
- * Simple {@link CommandRegistrar}.
+ * Simple {@link org.sonatype.gshell.registry.CommandRegistrar}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *

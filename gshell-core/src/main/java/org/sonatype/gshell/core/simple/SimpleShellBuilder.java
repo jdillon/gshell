@@ -34,6 +34,7 @@ import org.sonatype.gshell.core.commands.ExitCommand;
 import org.sonatype.gshell.core.commands.HelpCommand;
 import org.sonatype.gshell.core.commands.HistoryCommand;
 import org.sonatype.gshell.core.commands.InfoCommand;
+import org.sonatype.gshell.core.commands.PreferenceCommand;
 import org.sonatype.gshell.core.commands.RecallHistoryCommand;
 import org.sonatype.gshell.core.commands.SetCommand;
 import org.sonatype.gshell.core.commands.SourceCommand;
@@ -57,10 +58,6 @@ import org.sonatype.gshell.registry.AliasRegistry;
 import org.sonatype.gshell.registry.CommandRegistrar;
 import org.sonatype.gshell.registry.CommandRegistry;
 import org.sonatype.gshell.registry.CommandResolver;
-
-//
-// TODO: See how we can generify this builder so we can effectivly share its base-code with other builders
-//
 
 /**
  * Builds {@link Shell} instances w/o any IoC container.
@@ -141,19 +138,31 @@ public class SimpleShellBuilder
 
         registry.registerCommand("help", new HelpCommand(components.getAliasRegistry(), registry, components.getCommandDocumenter())
                 .installCompleters(components.getAliasNameCompleter(), components.getCommandNameCompleter()));
+
         registry.registerCommand("info", new InfoCommand());
+
         registry.registerCommand("exit", new ExitCommand());
+
         registry.registerCommand("set", new SetCommand()
                 .installCompleters(components.getVariableNameCompleter()));
+
         registry.registerCommand("unset", new UnsetCommand()
                 .installCompleters(components.getVariableNameCompleter()));
+
         registry.registerCommand("history", new HistoryCommand());
+
         registry.registerCommand("recall", new RecallHistoryCommand());
+
         registry.registerCommand("source", new SourceCommand()
                 .installCompleters(components.getFileNameCompleter()));
+
         registry.registerCommand("alias", new AliasCommand(components.getAliasRegistry()));
+
         registry.registerCommand("unalias", new UnaliasCommand(components.getAliasRegistry())
                 .installCompleters(components.getAliasNameCompleter()));
+
+        registry.registerCommand("pref", new PreferenceCommand());
+        
         registry.registerCommand("echo", new EchoCommand());
     }
 
@@ -281,7 +290,6 @@ public class SimpleShellBuilder
         public AliasNameCompleter getAliasNameCompleter() {
             return aliasNameCompleter;
         }
-
 
         public CommandNameCompleter getCommandNameCompleter() {
             return commandNameCompleter;

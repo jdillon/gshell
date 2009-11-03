@@ -319,6 +319,16 @@ public class Processor
         }
     }
 
+    public void process(final List<String> args) throws ProcessingException {
+        if (args == null) {
+            //noinspection RedundantArrayCreation
+            process(new String[0]);
+        }
+        else {
+            process(args.toArray(new String[args.size()]));
+        }
+    }
+
     //
     // Option Handler lookup
     //
