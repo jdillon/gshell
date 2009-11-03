@@ -49,7 +49,7 @@ public class PreferenceCommand
     extends CommandActionSupport
     implements ProcessorAware
 {
-    public static enum Mode
+    private static enum Mode
     {
         LIST,
         REMOVE,
@@ -84,6 +84,7 @@ public class PreferenceCommand
         assert context != null;
         
         Operation op = createOperation(context);
+        
         Processor cli = new Processor(op);
         cli.process(args);
 
@@ -302,7 +303,7 @@ public class PreferenceCommand
                 out = io.streams.out;
             }
             else {
-                io.info("Exporting to: {}", file);
+                io.info("Exporting to: {}", file); // TODO: i18n
                 out = new BufferedOutputStream(new FileOutputStream(file));
             }
 
@@ -337,7 +338,7 @@ public class PreferenceCommand
         }
 
         public Object execute() throws Exception {
-            io.info("Importing preferences from: {}", source);
+            io.info("Importing preferences from: {}", source); // TODO: i18n
 
             InputStream in = new BufferedInputStream(new FileInputStream(source));
 
