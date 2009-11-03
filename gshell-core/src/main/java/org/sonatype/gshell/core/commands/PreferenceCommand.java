@@ -16,6 +16,7 @@
 
 package org.sonatype.gshell.core.commands;
 
+import com.google.inject.Inject;
 import org.sonatype.gshell.cli.Argument;
 import org.sonatype.gshell.cli.Option;
 import org.sonatype.gshell.cli.Processor;
@@ -24,6 +25,8 @@ import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.core.command.CommandActionSupport;
+import org.sonatype.gshell.core.completer.EnumCompleter;
+import org.sonatype.gshell.core.completer.VariableNameCompleter;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -68,6 +71,10 @@ public class PreferenceCommand
 
     @Argument(index=2, multiValued=true)
     private List<String> args;
+
+    public PreferenceCommand() {
+        this.setCompleters(new EnumCompleter(Mode.class), null);
+    }
 
     //
     // TODO: Install completer for Mode
