@@ -48,7 +48,7 @@ public class PreferenceCommand
         UNSET,
         CLEAR,
         DUMP,
-        LOAD,
+//        LOAD,
 
         // TODO: Once we can effectively take objects, add listener support
     }
@@ -120,8 +120,8 @@ public class PreferenceCommand
             case DUMP:
                 return new DumpOperation(context);
 
-            case LOAD:
-                return new LoadOperation(context);
+//            case LOAD:
+//                return new LoadOperation(context);
 
             default:
                 // Should never happen
@@ -183,7 +183,7 @@ public class PreferenceCommand
         }
 
         public Object execute(final Preferences prefs) throws Exception {
-            // TODO:
+            prefs.removeNode();
             return Result.SUCCESS;
         }
     }
@@ -191,12 +191,18 @@ public class PreferenceCommand
     private class SetOperation
         extends OperationSupport
     {
+        @Argument(index=0, required=true)
+        private String key;
+
+        @Argument(index=1, required=true)
+        private String value;
+
         private SetOperation(final CommandContext context) {
             super(context);
         }
 
         public Object execute(final Preferences prefs) throws Exception {
-            // TODO:
+            prefs.put(key, value);
             return Result.SUCCESS;
         }
     }
@@ -204,25 +210,30 @@ public class PreferenceCommand
     private class GetOperation
         extends OperationSupport
     {
+        @Argument(index=0, required=true)
+        private String key;
+
         private GetOperation(final CommandContext context) {
             super(context);
         }
 
         public Object execute(final Preferences prefs) throws Exception {
-            // TODO:
-            return Result.SUCCESS;
+            return prefs.get(key, null);
         }
     }
 
     private class UnsetOperation
         extends OperationSupport
     {
+        @Argument(index=0, required=true)
+        private String key;
+
         private UnsetOperation(final CommandContext context) {
             super(context);
         }
 
         public Object execute(final Preferences prefs) throws Exception {
-            // TODO:
+            prefs.remove(key);
             return Result.SUCCESS;
         }
     }
@@ -235,7 +246,7 @@ public class PreferenceCommand
         }
 
         public Object execute(final Preferences prefs) throws Exception {
-            // TODO:
+            prefs.clear();
             return Result.SUCCESS;
         }
     }
@@ -243,28 +254,37 @@ public class PreferenceCommand
     private class DumpOperation
         extends OperationSupport
     {
-        // TODO: exportNode or exportSubtree
+        @Option(name="-t", aliases={"--subtree"})
+        private boolean subtree;
 
         private DumpOperation(final CommandContext context) {
             super(context);
         }
 
         public Object execute(final Preferences prefs) throws Exception {
-            prefs.exportNode(io.streams.out);
+            if (subtree) {
+                prefs.exportSubtree(io.streams.out);
+            }
+            else {
+                prefs.exportNode(io.streams.out);
+            }
             return Result.SUCCESS;
         }
     }
 
-    private class LoadOperation
-        extends OperationSupport
-    {
-        private LoadOperation(final CommandContext context) {
-            super(context);
-        }
-
-        public Object execute(final Preferences prefs) throws Exception {
-            // TODO:
-            return Result.SUCCESS;
-        }
-    }
+//    private class LoadOperation
+//        extends OperationSupport
+//    {
+//        @Argument(index=0, required=true)
+//        private String source;
+//
+//        private LoadOperation(final CommandContext context) {
+//            super(context);
+//        }
+//
+//        public Object execute(final Preferences prefs) throws Exception {
+//            // TODO:
+//            return Result.SUCCESS;
+//        }
+//    }
 }
