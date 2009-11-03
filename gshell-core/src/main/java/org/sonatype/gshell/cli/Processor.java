@@ -87,6 +87,10 @@ public class Processor
 
     public void addBean(final Object bean) {
         discoverDescriptors(bean);
+        
+        if (bean instanceof ProcessorAware) {
+            ((ProcessorAware)bean).setProcessor(this);
+        }
     }
 
     //
