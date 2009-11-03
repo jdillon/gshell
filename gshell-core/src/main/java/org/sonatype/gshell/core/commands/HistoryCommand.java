@@ -38,10 +38,10 @@ public class HistoryCommand
     extends CommandActionSupport
 {
     @Option(name="-c", aliases={"--clear"})
-    private boolean clear = false;
+    private boolean clear;
 
     @Option(name="-p", aliases={"--purge"})
-    private boolean purge = false;
+    private boolean purge;
     
     @Argument()
     private String range;

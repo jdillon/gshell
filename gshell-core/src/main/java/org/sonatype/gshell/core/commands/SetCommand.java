@@ -59,7 +59,7 @@ public class SetCommand
     private String name;
 
     @Argument(index=1, multiValued=true)
-    private List<String> values = null;
+    private List<String> values;
 
     @Inject
     public SetCommand installCompleters(final VariableNameCompleter c1) {

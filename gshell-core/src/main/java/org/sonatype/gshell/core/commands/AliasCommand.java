@@ -45,7 +45,7 @@ public class AliasCommand
     private String name;
 
     @Argument(index=1, multiValued=true)
-    private List<String> target = null;
+    private List<String> target;
 
     @Inject
     public AliasCommand(final AliasRegistry aliasRegistry) {

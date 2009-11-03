@@ -41,7 +41,7 @@ public class EchoCommand
     private boolean trailingNewline = true;
 
     @Argument
-    private List<String> args = null;
+    private List<String> args;
 
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;

@@ -43,7 +43,7 @@ public class UnsetCommand
     private Mode mode = Mode.VARIABLE;
 
     @Argument(required=true)
-    private List<String> args = null;
+    private List<String> args;
 
     @Inject
     public UnsetCommand installCompleters(final VariableNameCompleter c1) {
