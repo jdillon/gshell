@@ -25,6 +25,10 @@ import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.core.command.CommandActionSupport;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.prefs.Preferences;
 
@@ -47,7 +51,7 @@ public class PreferenceCommand
         GET,
         UNSET,
         CLEAR,
-        DUMP,
+        EXPORT,
 //        LOAD,
 
         // TODO: Once we can effectively take objects, add listener support
@@ -120,8 +124,8 @@ public class PreferenceCommand
             case CLEAR:
                 return new ClearOperation(context);
 
-            case DUMP:
-                return new DumpOperation(context);
+            case EXPORT:
+                return new ExportOperation(context);
 
 //            case LOAD:
 //                return new LoadOperation(context);
@@ -256,23 +260,41 @@ public class PreferenceCommand
         }
     }
 
-    private class DumpOperation
+    private class ExportOperation
         extends OperationSupport
     {
         @Option(name="-t", aliases={"--subtree"})
         private boolean subtree;
 
-        private DumpOperation(final CommandContext context) {
+        @Argument
+        private File file;
+
+        private ExportOperation(final CommandContext context) {
             super(context);
         }
 
         public Object execute(final Preferences prefs) throws Exception {
-            if (subtree) {
-                prefs.exportSubtree(io.streams.out);
+            OutputStream out;
+            if (file == null) {
+                out = io.streams.out;
             }
             else {
-                prefs.exportNode(io.streams.out);
+                io.info("Exporting to: {}", file);
+                out = new BufferedOutputStream(new FileOutputStream(file));
             }
+
+            if (subtree) {
+                prefs.exportSubtree(out);
+            }
+            else {
+                prefs.exportNode(out);
+            }
+
+            out.flush();
+            if (file != null) {
+                out.close();
+            }
+
             return Result.SUCCESS;
         }
     }
