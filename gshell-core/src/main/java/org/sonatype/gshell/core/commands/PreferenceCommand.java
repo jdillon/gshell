@@ -25,6 +25,8 @@ import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.core.command.CommandActionSupport;
+import org.sonatype.gshell.io.Closer;
+import org.sonatype.gshell.io.Flusher;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -312,11 +314,11 @@ public class PreferenceCommand
                     prefs.exportNode(out);
                 }
 
-                out.flush();
+                Flusher.flush(out);
             }
             finally {
                 if (file != null) {
-                    out.close();
+                    Closer.close(out);
                 }
             }
             
@@ -343,7 +345,7 @@ public class PreferenceCommand
                 Preferences.importPreferences(in);
             }
             finally {
-                in.close();
+                Closer.close(in);
             }
 
             return Result.SUCCESS;
