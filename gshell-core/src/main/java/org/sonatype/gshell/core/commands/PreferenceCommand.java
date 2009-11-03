@@ -26,9 +26,12 @@ import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.core.command.CommandActionSupport;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.prefs.Preferences;
@@ -53,7 +56,7 @@ public class PreferenceCommand
         UNSET,
         CLEAR,
         EXPORT,
-//        IMPORT,
+        IMPORT,
 
         // TODO: Once we can effectively take objects, add listener support
     }
@@ -63,11 +66,8 @@ public class PreferenceCommand
 
     @Argument(index=0, required=true)
     private Mode mode;
-    
-    @Argument(index=1, required=true)
-    private String path;
 
-    @Argument(index=2, multiValued=true)
+    @Argument(index=1, multiValued=true)
     private List<String> args;
 
     public PreferenceCommand() {
@@ -81,26 +81,11 @@ public class PreferenceCommand
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
         
-        Preferences root;
-        if (system) {
-            root = Preferences.systemRoot();
-        }
-        else {
-            root = Preferences.userRoot();
-        }
-
         Operation op = createOperation(context);
         Processor cli = new Processor(op);
         cli.process(args);
 
-        Preferences node = root.node(path);
-        log.debug("Selected node: {}", node);
-
-        Object result = op.execute(node);
-
-        node.sync();
-
-        return result;
+        return op.execute();
     }
 
     private Operation createOperation(CommandContext context) {
@@ -128,8 +113,8 @@ public class PreferenceCommand
             case EXPORT:
                 return new ExportOperation(context);
 
-//            case LOAD:
-//                return new LoadOperation(context);
+            case IMPORT:
+                return new ImportOperation(context);
 
             default:
                 // Should never happen
@@ -139,13 +124,14 @@ public class PreferenceCommand
 
     private interface Operation
     {
-        Object execute(Preferences prefs) throws Exception;
+        Object execute() throws Exception;
     }
 
     private abstract class OperationSupport
         implements Operation
     {
         protected final CommandContext context;
+
         protected final IO io;
 
         protected OperationSupport(final CommandContext context) {
@@ -153,10 +139,41 @@ public class PreferenceCommand
             this.context = context;
             this.io = context.getIo();
         }
+
+        protected Preferences root() {
+            Preferences root;
+            if (system) {
+                root = Preferences.systemRoot();
+            }
+            else {
+                root = Preferences.userRoot();
+            }
+            return root;
+        }
+    }
+
+    private abstract class NodeOperationSupport
+        extends OperationSupport
+    {
+        @Argument(index=0, required=true)
+        private String path;
+
+        protected NodeOperationSupport(final CommandContext context) {
+            super(context);
+        }
+
+        public abstract Object execute(Preferences prefs) throws Exception;
+
+        public Object execute() throws Exception {
+            Preferences root = root();
+            Preferences node = root.node(path);
+
+            return execute(node);
+        }
     }
 
     private class ListOperation
-        extends OperationSupport
+        extends NodeOperationSupport
     {
         @Option(name="-r", aliases={"--recursive"})
         private boolean recursive;
@@ -184,7 +201,7 @@ public class PreferenceCommand
     }
 
     private class RemoveOperation
-        extends OperationSupport
+        extends NodeOperationSupport
     {
         private RemoveOperation(final CommandContext context) {
             super(context);
@@ -197,12 +214,12 @@ public class PreferenceCommand
     }
 
     private class SetOperation
-        extends OperationSupport
+        extends NodeOperationSupport
     {
-        @Argument(index=0, required=true)
+        @Argument(index=1, required=true)
         private String key;
 
-        @Argument(index=1, required=true)
+        @Argument(index=2, required=true)
         private String value;
 
         private SetOperation(final CommandContext context) {
@@ -216,9 +233,9 @@ public class PreferenceCommand
     }
 
     private class GetOperation
-        extends OperationSupport
+        extends NodeOperationSupport
     {
-        @Argument(index=0, required=true)
+        @Argument(index=1, required=true)
         private String key;
 
         private GetOperation(final CommandContext context) {
@@ -233,9 +250,9 @@ public class PreferenceCommand
     }
 
     private class UnsetOperation
-        extends OperationSupport
+        extends NodeOperationSupport
     {
-        @Argument(index=0, required=true)
+        @Argument(index=1, required=true)
         private String key;
 
         private UnsetOperation(final CommandContext context) {
@@ -249,7 +266,7 @@ public class PreferenceCommand
     }
 
     private class ClearOperation
-        extends OperationSupport
+        extends NodeOperationSupport
     {
         private ClearOperation(final CommandContext context) {
             super(context);
@@ -262,12 +279,12 @@ public class PreferenceCommand
     }
 
     private class ExportOperation
-        extends OperationSupport
+        extends NodeOperationSupport
     {
         @Option(name="-t", aliases={"--subtree"})
-        private boolean subtree;
+        private boolean subTree;
 
-        @Argument
+        @Argument(index=1)
         private File file;
 
         private ExportOperation(final CommandContext context) {
@@ -285,7 +302,7 @@ public class PreferenceCommand
             }
 
             try {
-                if (subtree) {
+                if (subTree) {
                     prefs.exportSubtree(out);
                 }
                 else {
@@ -304,23 +321,29 @@ public class PreferenceCommand
         }
     }
 
-//  FIXME: For import to work, we need to move the path from the command into the operation, since load is static
-//         and does not work off of a prefs node.  Also the Operation#execute() needs to be changed, as well
-//         as the support class.
-//
-//    private class ImportOperation
-//        extends OperationSupport
-//    {
-//        @Argument(index=0, required=true)
-//        private String source;
-//
-//        private ImportOperation(final CommandContext context) {
-//            super(context);
-//        }
-//
-//        public Object execute(final Preferences prefs) throws Exception {
-//            // TODO:
-//            return Result.SUCCESS;
-//        }
-//    }
+    private class ImportOperation
+        extends OperationSupport
+    {
+        @Argument(index=0, required=true)
+        private File source;
+
+        private ImportOperation(final CommandContext context) {
+            super(context);
+        }
+
+        public Object execute() throws Exception {
+            io.info("Importing preferences from: {}", source);
+
+            InputStream in = new BufferedInputStream(new FileInputStream(source));
+
+            try {
+                Preferences.importPreferences(in);
+            }
+            finally {
+                in.close();
+            }
+
+            return Result.SUCCESS;
+        }
+    }
 }
