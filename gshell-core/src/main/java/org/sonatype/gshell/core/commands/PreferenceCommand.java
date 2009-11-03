@@ -71,8 +71,7 @@ public class PreferenceCommand
 
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
-        IO io = context.getIo();
-
+        
         Preferences root;
         if (system) {
             root = Preferences.systemRoot();
