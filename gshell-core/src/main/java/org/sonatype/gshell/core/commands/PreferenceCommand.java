@@ -283,18 +283,22 @@ public class PreferenceCommand
                 out = new BufferedOutputStream(new FileOutputStream(file));
             }
 
-            if (subtree) {
-                prefs.exportSubtree(out);
-            }
-            else {
-                prefs.exportNode(out);
-            }
+            try {
+                if (subtree) {
+                    prefs.exportSubtree(out);
+                }
+                else {
+                    prefs.exportNode(out);
+                }
 
-            out.flush();
-            if (file != null) {
-                out.close();
+                out.flush();
             }
-
+            finally {
+                if (file != null) {
+                    out.close();
+                }
+            }
+            
             return Result.SUCCESS;
         }
     }
