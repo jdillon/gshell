@@ -16,7 +16,7 @@
 
 package org.sonatype.gshell.core.commands;
 
-import com.google.inject.Inject;
+import jline.console.completers.EnumCompleter;
 import org.sonatype.gshell.cli.Argument;
 import org.sonatype.gshell.cli.Option;
 import org.sonatype.gshell.cli.Processor;
@@ -25,8 +25,6 @@ import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.core.command.CommandActionSupport;
-import org.sonatype.gshell.core.completer.EnumCompleter;
-import org.sonatype.gshell.core.completer.VariableNameCompleter;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -55,7 +53,7 @@ public class PreferenceCommand
         UNSET,
         CLEAR,
         EXPORT,
-//        LOAD,
+//        IMPORT,
 
         // TODO: Once we can effectively take objects, add listener support
     }
@@ -75,10 +73,6 @@ public class PreferenceCommand
     public PreferenceCommand() {
         this.setCompleters(new EnumCompleter(Mode.class), null);
     }
-
-    //
-    // TODO: Install completer for Mode
-    //
 
     public void setProcessor(final Processor processor) {
         processor.setStopAtNonOption(true);
@@ -310,17 +304,17 @@ public class PreferenceCommand
         }
     }
 
-//  FIXME: For load to work, we need to move the path from the command into the operation, since load is static
+//  FIXME: For import to work, we need to move the path from the command into the operation, since load is static
 //         and does not work off of a prefs node.  Also the Operation#execute() needs to be changed, as well
 //         as the support class.
 //
-//    private class LoadOperation
+//    private class ImportOperation
 //        extends OperationSupport
 //    {
 //        @Argument(index=0, required=true)
 //        private String source;
 //
-//        private LoadOperation(final CommandContext context) {
+//        private ImportOperation(final CommandContext context) {
 //            super(context);
 //        }
 //
