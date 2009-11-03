@@ -166,7 +166,10 @@ public class PreferenceCommand
 
         public Object execute() throws Exception {
             Preferences root = root();
+            log.debug("Root: {}", root);
+
             Preferences node = root.node(path);
+            log.debug("Node: {}", node);
 
             return execute(node);
         }
