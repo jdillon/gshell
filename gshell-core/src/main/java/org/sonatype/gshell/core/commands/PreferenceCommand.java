@@ -19,6 +19,7 @@ package org.sonatype.gshell.core.commands;
 import org.sonatype.gshell.cli.Argument;
 import org.sonatype.gshell.cli.Option;
 import org.sonatype.gshell.cli.Processor;
+import org.sonatype.gshell.cli.ProcessorAware;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
@@ -36,6 +37,7 @@ import java.util.prefs.Preferences;
 @Command
 public class PreferenceCommand
     extends CommandActionSupport
+    implements ProcessorAware
 {
     public static enum Mode
     {
@@ -62,6 +64,10 @@ public class PreferenceCommand
 
     @Argument(index=2, multiValued=true)
     private List<String> args;
+
+    public void setProcessor(final Processor processor) {
+        processor.setStopAtNonOption(true);
+    }
 
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
