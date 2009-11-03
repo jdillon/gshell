@@ -149,7 +149,9 @@ public class InfoCommand
                     println(io, "Daemon threads", Integer.toString(threads.getDaemonThreadCount()));
                     println(io, "Peak", Integer.toString(threads.getPeakThreadCount()));
                     println(io, "Total started", Long.toString(threads.getTotalStartedThreadCount()));
-
+                    break;
+                
+                case MEMORY:
                     io.out.println("Memory");
                     println(io, "Current heap size", printSizeInKb(mem.getHeapMemoryUsage().getUsed()));
                     println(io, "Maximum heap size", printSizeInKb(mem.getHeapMemoryUsage().getMax()));
