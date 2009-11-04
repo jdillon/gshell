@@ -31,7 +31,8 @@ public class PropertiesConverter
         super(Properties.class);
     }
 
-    protected Map createMap(Map map) throws Exception {
+    @SuppressWarnings({"unchecked"})
+    protected Map createMap(final Map map) throws Exception {
         Properties properties = new Properties();
         properties.putAll(map);
         return properties;

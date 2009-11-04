@@ -21,10 +21,10 @@ import org.sonatype.gshell.util.converter.ConverterSupport;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Converter for {@link Date} types.
@@ -106,7 +106,7 @@ public class DateConverter
         return formats.parse(text);
     }
 
-    protected String toStringImpl(Object value) {
+    protected String toStringImpl(final Object value) {
         Date date = (Date) value;
         String text = formats.get(0).format(date);
         return text;

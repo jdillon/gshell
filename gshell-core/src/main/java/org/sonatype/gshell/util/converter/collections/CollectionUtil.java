@@ -20,17 +20,17 @@ import org.sonatype.gshell.util.converter.ConversionException;
 import org.sonatype.gshell.util.converter.Converter;
 
 import java.beans.PropertyEditor;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.StringTokenizer;
-import java.util.Collection;
-import java.util.Properties;
 import java.util.Map;
-import java.util.LinkedHashMap;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.ByteArrayOutputStream;
+import java.util.Properties;
+import java.util.StringTokenizer;
 
 /**
  * Utilities for collection converters.
@@ -39,7 +39,8 @@ import java.io.ByteArrayOutputStream;
  */
 public final class CollectionUtil
 {
-    public static List toList(String text, PropertyEditor componentEditor) {
+    @SuppressWarnings({"unchecked"})
+    public static List toList(String text, final PropertyEditor componentEditor) {
         if (text.length() == 0) {
             return null;
         }
@@ -63,7 +64,7 @@ public final class CollectionUtil
         return list;
     }
 
-    public static String toString(Collection values, PropertyEditor componentEditor) {
+    public static String toString(final Collection values, final PropertyEditor componentEditor) {
         if (values.size() == 0) {
             return "[]";
         }
@@ -85,7 +86,8 @@ public final class CollectionUtil
         return result.toString();
     }
 
-    public static final Map toMap(String text, PropertyEditor keyEditor, PropertyEditor valueEditor) {
+    @SuppressWarnings({"unchecked"})
+    public static final Map toMap(final String text, final PropertyEditor keyEditor, final PropertyEditor valueEditor) {
         Properties properties = new Properties();
         try {
             ByteArrayInputStream stream = new ByteArrayInputStream(text.getBytes());
@@ -111,7 +113,7 @@ public final class CollectionUtil
         return map;
     }
 
-    public static final String toString(Map map, PropertyEditor keyEditor, PropertyEditor valueEditor) {
+    public static final String toString(final Map map, final PropertyEditor keyEditor, final PropertyEditor valueEditor) {
         // run the properties through the editors
         Properties properties = new Properties();
         for (Iterator iterator = map.entrySet().iterator(); iterator.hasNext();) {
@@ -129,8 +131,7 @@ public final class CollectionUtil
         try {
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             properties.store(out, null);
-            String text = new String(out.toByteArray());
-            return text;
+            return new String(out.toByteArray());
         }
         catch (IOException e) {
             // any errors here are just a property exception
@@ -138,7 +139,7 @@ public final class CollectionUtil
         }
     }
 
-    private static final String componentToString(Object value, PropertyEditor componentEditor) {
+    private static final String componentToString(final Object value, final PropertyEditor componentEditor) {
         if (value == null) {
             return null;
         }
@@ -152,25 +153,22 @@ public final class CollectionUtil
         }
         else {
             componentEditor.setValue(value);
-            String text = componentEditor.getAsText();
-            return text;
+            return componentEditor.getAsText();
         }
     }
 
-    private static final Object componentToObject(String text, PropertyEditor componentEditor) {
+    private static final Object componentToObject(final String text, final PropertyEditor componentEditor) {
         if (text == null) {
             return null;
         }
 
         if (componentEditor instanceof Converter) {
             Converter converter = (Converter) componentEditor;
-            Object value = converter.toObject(text.trim());
-            return value;
+            return converter.toObject(text.trim());
         }
         else {
             componentEditor.setAsText(text);
-            Object value = componentEditor.getValue();
-            return value;
+            return componentEditor.getValue();
         }
     }
 }

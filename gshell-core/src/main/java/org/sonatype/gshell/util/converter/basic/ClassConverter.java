@@ -34,7 +34,7 @@ public class ClassConverter
         return Class.forName(text, true, Thread.currentThread().getContextClassLoader());
     }
 
-    protected String toStringImpl(Object value) {
+    protected String toStringImpl(final Object value) {
         Class type = (Class) value;
         return type.getSimpleName();
     }

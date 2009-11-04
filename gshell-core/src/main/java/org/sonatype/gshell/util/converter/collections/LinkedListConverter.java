@@ -16,8 +16,8 @@
 
 package org.sonatype.gshell.util.converter.collections;
 
-import java.util.List;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Converter for {@link LinkedList} types.
@@ -31,7 +31,8 @@ public final class LinkedListConverter
         super(LinkedList.class);
     }
 
-    protected Object createCollection(List list) throws Exception {
+    @SuppressWarnings({"unchecked"})
+    protected Object createCollection(final List list) throws Exception {
         return new LinkedList(list);
     }
 }

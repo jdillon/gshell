@@ -31,7 +31,8 @@ public class IdentityHashMapConverter
         super(IdentityHashMap.class);
     }
 
-    protected Map createMap(Map map) throws Exception {
+    @SuppressWarnings({"unchecked"})
+    protected Map createMap(final Map map) throws Exception {
         return new IdentityHashMap(map);
     }
 }

@@ -96,5 +96,5 @@ public abstract class ConverterSupport
      * @return              An instance of the converted type
      * @throws Exception    Conversion failed
      */
-    protected abstract Object toObjectImpl(String text) throws Exception;
+    protected abstract Object toObjectImpl(final String text) throws Exception;
 }

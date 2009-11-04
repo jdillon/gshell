@@ -20,10 +20,10 @@ import org.sonatype.gshell.util.converter.ConverterSupport;
 import org.sonatype.gshell.util.converter.basic.StringConverter;
 
 import java.beans.PropertyEditor;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.ArrayList;
-import java.lang.reflect.Array;
 
 /**
  * Support for collection converters.
@@ -56,7 +56,8 @@ public abstract class CollectionConverterSupport
 
     protected abstract Object createCollection(final List list) throws Exception;
 
-    protected final String toStringImpl(Object value) {
+    @SuppressWarnings({"unchecked"})
+    protected final String toStringImpl(final Object value) {
         Collection values;
         if (value.getClass().isArray()) {
             values = new ArrayList(Array.getLength(value));

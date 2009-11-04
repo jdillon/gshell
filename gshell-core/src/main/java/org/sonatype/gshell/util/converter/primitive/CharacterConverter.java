@@ -31,9 +31,7 @@ public class CharacterConverter
     }
 
     protected Object toObjectImpl(final String text) throws Exception {
-        if (text.length() != 1) {
-            throw new IllegalArgumentException("wrong size: " + text);
-        }
+        assert text.length() != 1;
         return new Character(text.charAt(0));
     }
 }

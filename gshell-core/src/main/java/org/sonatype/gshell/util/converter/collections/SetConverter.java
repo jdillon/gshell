@@ -32,7 +32,8 @@ public final class SetConverter
         super(Set.class);
     }
 
-    protected Object createCollection(List list) throws Exception {
+    @SuppressWarnings({"unchecked"})
+    protected Object createCollection(final List list) throws Exception {
         return new LinkedHashSet(list);
     }
 }

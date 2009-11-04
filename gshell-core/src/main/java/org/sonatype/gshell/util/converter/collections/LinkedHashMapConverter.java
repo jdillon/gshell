@@ -31,7 +31,8 @@ public class LinkedHashMapConverter
         super(LinkedHashMap.class);
     }
 
-    protected Map createMap(Map map) throws Exception {
+    @SuppressWarnings({"unchecked"})
+    protected Map createMap(final Map map) throws Exception {
         return new LinkedHashMap(map);
     }
 }

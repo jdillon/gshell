@@ -40,13 +40,14 @@ public final class ConverterHelper
         if (Modifier.isAbstract(type.getModifiers())) {
             return false;
         }
-        Constructor[] constructors = type.getConstructors();
-        for (Constructor constructor : constructors) {
+
+        for (Constructor constructor : type.getConstructors()) {
             if (Modifier.isPublic(constructor.getModifiers()) &&
                 constructor.getParameterTypes().length == 0) {
                 return true;
             }
         }
+
         return false;
     }
 
@@ -93,6 +94,7 @@ public final class ConverterHelper
         if (expectedTypes.size() != actualTypes.size()) {
             return false;
         }
+
         for (int i = 0; i < expectedTypes.size(); i++) {
             Class expectedType = expectedTypes.get(i);
             Class actualType = actualTypes.get(i);
@@ -100,6 +102,7 @@ public final class ConverterHelper
                 return false;
             }
         }
+
         return true;
     }
 
@@ -139,8 +142,7 @@ public final class ConverterHelper
                 }
             }
 
-            Type[] collectionType = getTypeParameters(desiredType, rawClass.getGenericSuperclass());
-            return collectionType;
+            return getTypeParameters(desiredType, rawClass.getGenericSuperclass());
         }
         else if (type instanceof ParameterizedType) {
             ParameterizedType parameterizedType = (ParameterizedType) type;
@@ -150,6 +152,7 @@ public final class ConverterHelper
                 Type[] argument = parameterizedType.getActualTypeArguments();
                 return argument;
             }
+
             Type[] collectionTypes = getTypeParameters(desiredType, rawType);
             if (collectionTypes != null) {
                 for (int i = 0; i < collectionTypes.length; i++) {
@@ -164,8 +167,10 @@ public final class ConverterHelper
                     }
                 }
             }
+
             return collectionTypes;
         }
+
         return null;
     }
 }

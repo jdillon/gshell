@@ -17,8 +17,8 @@
 package org.sonatype.gshell.util.converter.collections;
 
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.SortedMap;
+import java.util.TreeMap;
 
 /**
  * Converter for {@link SortedMap} types.
@@ -32,7 +32,8 @@ public class SortedMapConverter
         super(SortedMap.class);
     }
 
-    protected Map createMap(Map map) throws Exception {
+    @SuppressWarnings({"unchecked"})
+    protected Map createMap(final Map map) throws Exception {
         return new TreeMap(map);
     }
 }

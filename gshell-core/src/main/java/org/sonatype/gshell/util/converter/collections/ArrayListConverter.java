@@ -31,7 +31,8 @@ public final class ArrayListConverter
         super(ArrayList.class);
     }
 
-    protected Object createCollection(List list) {
+    @SuppressWarnings({"unchecked"})
+    protected Object createCollection(final List list) {
         return new ArrayList(list);
     }
 }

@@ -17,8 +17,8 @@
 package org.sonatype.gshell.util.converter.collections;
 
 import java.beans.PropertyEditor;
-import java.util.List;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Converter for generic {@link Collection} types.
@@ -28,11 +28,12 @@ import java.util.Collection;
 public class GenericCollectionConverter
     extends CollectionConverterSupport
 {
-    public GenericCollectionConverter(Class type, PropertyEditor editor) {
+    public GenericCollectionConverter(final Class type, final PropertyEditor editor) {
         super(type, editor);
     }
 
-    protected Object createCollection(List list) throws Exception {
+    @SuppressWarnings({"unchecked"})
+    protected Object createCollection(final List list) throws Exception {
         Collection collection = (Collection) getType().newInstance();
         collection.addAll(list);
         return collection;

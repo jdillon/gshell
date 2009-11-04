@@ -27,11 +27,12 @@ import java.util.Map;
 public class GenericMapConverter
     extends MapConverterSupport
 {
-    public GenericMapConverter(Class type, PropertyEditor keyEditor, PropertyEditor valueEditor) {
+    public GenericMapConverter(final Class type, final PropertyEditor keyEditor, final PropertyEditor valueEditor) {
         super(type, keyEditor, valueEditor);
     }
 
-    protected Map createMap(Map data) throws Exception {
+    @SuppressWarnings({"unchecked"})
+    protected Map createMap(final Map data) throws Exception {
         Map map = (Map) getType().newInstance();
         map.putAll(data);
         return map;

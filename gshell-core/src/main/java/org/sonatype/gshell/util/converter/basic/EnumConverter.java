@@ -17,7 +17,6 @@
 package org.sonatype.gshell.util.converter.basic;
 
 import org.sonatype.gshell.util.converter.ConverterSupport;
-import org.sonatype.gshell.util.converter.ConversionException;
 
 import java.lang.reflect.Method;
 
@@ -34,16 +33,15 @@ public class EnumConverter
     }
 
     protected Object toObjectImpl(final String text) throws Exception {
-        Class type = getType();
-
-        for (Enum n : (Enum[])type.getEnumConstants()) {
+        for (Enum n : (Enum[])getType().getEnumConstants()) {
             if (n.name().equalsIgnoreCase(text)) {
                 return n;
             }
         }
 
+        // Else try an index
         int index = Integer.parseInt(text);
-        Method method = type.getMethod("values");
+        Method method = getType().getMethod("values");
         Object[] values = (Object[]) method.invoke(null);
         return values[index];
     }

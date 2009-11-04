@@ -31,7 +31,8 @@ public class HashMapConverter
         super(HashMap.class);
     }
 
-    protected Map createMap(Map map) throws Exception {
+    @SuppressWarnings({"unchecked"})
+    protected Map createMap(final Map map) throws Exception {
         return new HashMap(map);
     }
 }

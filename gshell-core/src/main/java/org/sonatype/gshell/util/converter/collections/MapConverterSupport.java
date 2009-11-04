@@ -31,15 +31,14 @@ public abstract class MapConverterSupport
     extends ConverterSupport
 {
     private final PropertyEditor keyEditor;
+    
     private final PropertyEditor valueEditor;
 
-    public MapConverterSupport(Class type) {
-        super(type);
-        this.keyEditor = new StringConverter();
-        this.valueEditor = new StringConverter();
+    public MapConverterSupport(final Class type) {
+        this(type, new StringConverter(), new StringConverter());
     }
 
-    protected MapConverterSupport(Class type, PropertyEditor keyEditor, PropertyEditor valueEditor) {
+    protected MapConverterSupport(final Class type, final PropertyEditor keyEditor, final PropertyEditor valueEditor) {
         super(type);
         this.keyEditor = keyEditor;
         this.valueEditor = valueEditor;
@@ -52,7 +51,7 @@ public abstract class MapConverterSupport
      * @return a Properties object
      * @throws org.sonatype.gshell.util.converter.ConversionException An error occurred creating the Properties object.
      */
-    protected final Object toObjectImpl(String text) throws Exception {
+    protected final Object toObjectImpl(final String text) throws Exception {
         Map map = CollectionUtil.toMap(text, keyEditor, valueEditor);
         if (map == null) {
             return null;
@@ -62,7 +61,7 @@ public abstract class MapConverterSupport
 
     protected abstract Map createMap(Map map) throws Exception;
 
-    protected final String toStringImpl(Object value) {
+    protected final String toStringImpl(final Object value) {
         Map map = (Map) value;
         return CollectionUtil.toString(map, keyEditor, valueEditor);
     }

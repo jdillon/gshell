@@ -28,6 +28,8 @@ public interface Converter
 {
     /**
      * Gets the the type of object supported by this converter.
+     *
+     * @return  The type supported by this converter.
      */
     Class getType();
 

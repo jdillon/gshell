@@ -31,7 +31,8 @@ public final class TreeSetConverter
         super(TreeSet.class);
     }
 
-    protected Object createCollection(List list) throws Exception {
+    @SuppressWarnings({"unchecked"})
+    protected Object createCollection(final List list) throws Exception {
         return new TreeSet(list);
     }
 }
