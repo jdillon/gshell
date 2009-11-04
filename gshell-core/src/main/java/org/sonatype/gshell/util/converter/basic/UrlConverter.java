@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.util.converter.net;
+package org.sonatype.gshell.util.converter.basic;
 
 import org.sonatype.gshell.util.converter.ConverterSupport;
 

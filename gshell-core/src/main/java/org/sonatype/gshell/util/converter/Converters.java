@@ -20,6 +20,9 @@ import org.sonatype.gshell.util.ReferenceIdentityMap;
 import org.sonatype.gshell.util.converter.basic.ArrayConverter;
 import org.sonatype.gshell.util.converter.basic.BigDecimalConverter;
 import org.sonatype.gshell.util.converter.basic.BigIntegerConverter;
+import org.sonatype.gshell.util.converter.basic.Inet4AddressConverter;
+import org.sonatype.gshell.util.converter.basic.InetAddressConverter;
+import org.sonatype.gshell.util.converter.basic.UriConverter;
 import org.sonatype.gshell.util.converter.primitive.BooleanConverter;
 import org.sonatype.gshell.util.converter.primitive.ByteConverter;
 import org.sonatype.gshell.util.converter.primitive.CharacterConverter;
@@ -52,11 +55,8 @@ import org.sonatype.gshell.util.converter.collections.SortedSetConverter;
 import org.sonatype.gshell.util.converter.collections.TreeMapConverter;
 import org.sonatype.gshell.util.converter.collections.TreeSetConverter;
 import org.sonatype.gshell.util.converter.collections.WeakHashMapConverter;
-import org.sonatype.gshell.util.converter.net.Inet4AddressConverter;
-import org.sonatype.gshell.util.converter.net.Inet6AddressConverter;
-import org.sonatype.gshell.util.converter.net.InetAddressConverter;
-import org.sonatype.gshell.util.converter.net.UriConverter;
-import org.sonatype.gshell.util.converter.net.UrlConverter;
+import org.sonatype.gshell.util.converter.basic.Inet6AddressConverter;
+import org.sonatype.gshell.util.converter.basic.UrlConverter;
 
 import static org.sonatype.gshell.util.converter.ConverterHelper.*;
 

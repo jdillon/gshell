@@ -14,25 +14,25 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.util.converter.net;
+package org.sonatype.gshell.util.converter.basic;
 
 import org.sonatype.gshell.util.converter.ConverterSupport;
 
-import java.net.Inet6Address;
+import java.net.URI;
 
 /**
  * ???
  *
  * @since 2.0
  */
-public class Inet6AddressConverter
+public class UriConverter
     extends ConverterSupport
 {
-    public Inet6AddressConverter() {
-        super(Inet6Address.class);
+    public UriConverter() {
+        super(URI.class);
     }
 
     protected Object toObjectImpl(final String text) throws Exception {
-        return Inet6Address.getByName(text);
+        return new URI(text);
     }
 }
