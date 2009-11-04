@@ -19,6 +19,7 @@ package org.sonatype.gshell.cli.handler;
 import org.sonatype.gshell.cli.ArgumentDescriptor;
 import org.sonatype.gshell.cli.Descriptor;
 import org.sonatype.gshell.cli.OptionDescriptor;
+import org.sonatype.gshell.cli.Parameters;
 import org.sonatype.gshell.cli.ProcessingException;
 import org.sonatype.gshell.util.setter.Setter;
 import org.sonatype.gshell.i18n.MessageSource;

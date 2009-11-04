@@ -18,7 +18,7 @@ package org.sonatype.gshell.cli;
 
 import org.sonatype.gshell.cli.handler.Handler;
 import org.sonatype.gshell.cli.handler.Handlers;
-import org.sonatype.gshell.cli.handler.Parameters;
+import org.sonatype.gshell.cli.Parameters;
 import org.sonatype.gshell.util.setter.CollectionFieldSetter;
 import org.sonatype.gshell.util.setter.FieldSetter;
 import org.sonatype.gshell.util.setter.MethodSetter;

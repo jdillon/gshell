@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.cli.handler;
+package org.sonatype.gshell.cli;
 
 import org.sonatype.gshell.cli.ProcessingException;
 
