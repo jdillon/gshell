@@ -19,7 +19,7 @@ package org.sonatype.gshell.util.converter.primitive;
 import org.sonatype.gshell.util.converter.ConverterSupport;
 
 /**
- * ???
+ * Converter for {@link Float} types.
  *
  * @since 2.0
  */

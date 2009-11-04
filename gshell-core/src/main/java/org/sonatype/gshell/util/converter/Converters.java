@@ -80,7 +80,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.lang.reflect.Type;
 
 /**
- * ???
+ * Provides access to conversion.
  *
  * @since 2.0
  */

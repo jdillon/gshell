@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.TreeSet;
 
 /**
- * ???
+ * Converter for {@link TreeSet} types.
  *
  * @since 2.0
  */

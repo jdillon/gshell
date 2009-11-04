@@ -21,7 +21,7 @@ import java.util.TreeMap;
 import java.util.SortedMap;
 
 /**
- * ???
+ * Converter for {@link SortedMap} types.
  *
  * @since 2.0
  */

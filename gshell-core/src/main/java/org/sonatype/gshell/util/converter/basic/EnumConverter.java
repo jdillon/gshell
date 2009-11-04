@@ -22,39 +22,29 @@ import org.sonatype.gshell.util.converter.ConversionException;
 import java.lang.reflect.Method;
 
 /**
- * ???
+ * Converter for {@link Enum} types.
  *
  * @since 2.0
  */
 public class EnumConverter
     extends ConverterSupport
 {
-
-    public EnumConverter(Class type) {
+    public EnumConverter(final Class<? extends Enum> type) {
         super(type);
     }
 
     protected Object toObjectImpl(final String text) throws Exception {
         Class type = getType();
 
-        try {
-            return Enum.valueOf(type, text);
+        for (Enum n : (Enum[])type.getEnumConstants()) {
+            if (n.name().equalsIgnoreCase(text)) {
+                return n;
+            }
         }
-        catch (Exception cause) {
-            try {
-                int index = Integer.parseInt(text);
-                Method method = type.getMethod("values");
-                Object[] values = (Object[]) method.invoke(null);
-                return values[index];
-            }
-            catch (NumberFormatException e) {
-                // ignore
-            }
-            catch (Exception e) {
-                cause = e;
-            }
 
-            throw new ConversionException("Value \"" + text + "\" cannot be converted to enum type " + type.getName(), cause);
-        }
+        int index = Integer.parseInt(text);
+        Method method = type.getMethod("values");
+        Object[] values = (Object[]) method.invoke(null);
+        return values[index];
     }
 }

@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * ???
+ * Converter for {@link LinkedHashSet} types.
  *
  * @since 2.0
  */

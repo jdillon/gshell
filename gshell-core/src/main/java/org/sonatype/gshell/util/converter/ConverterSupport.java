@@ -59,6 +59,7 @@ public abstract class ConverterSupport
         if (value == null) {
             return null;
         }
+
         // Don't validate the type. Type validation is not required by spec and some setters (e.g. Spring) expect this.
         return toStringImpl(value);
     }
@@ -91,8 +92,9 @@ public abstract class ConverterSupport
      * Converts the supplied text in to an instance of the editor type.  The text will never be null, and trim() will
      * already have been called.
      *
-     * @param text the text to convert
-     * @return an instance of the editor type
+     * @param text          The text to convert
+     * @return              An instance of the converted type
+     * @throws Exception    Conversion failed
      */
     protected abstract Object toObjectImpl(String text) throws Exception;
 }

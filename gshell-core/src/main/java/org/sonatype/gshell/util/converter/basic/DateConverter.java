@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
- * ???
+ * Converter for {@link Date} types.
  *
  * @since 2.0
  */

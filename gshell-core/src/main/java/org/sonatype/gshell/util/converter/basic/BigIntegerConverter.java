@@ -21,7 +21,7 @@ import org.sonatype.gshell.util.converter.ConverterSupport;
 import java.math.BigInteger;
 
 /**
- * ???
+ * Converter for {@link BigInteger} types.
  *
  * @since 2.0
  */

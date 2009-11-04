@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.WeakHashMap;
 
 /**
- * ???
+ * Converter for {@link WeakHashMap} types.
  *
  * @since 2.0
  */

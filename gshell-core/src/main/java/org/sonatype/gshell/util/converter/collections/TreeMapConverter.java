@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * ???
+ * Converter for {@link TreeMap} types.
  *
  * @since 2.0
  */

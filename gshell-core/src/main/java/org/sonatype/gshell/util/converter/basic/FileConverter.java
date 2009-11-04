@@ -21,7 +21,7 @@ import org.sonatype.gshell.util.converter.ConverterSupport;
 import java.io.File;
 
 /**
- * ???
+ * Converter for {@link File} types.
  *
  * @since 2.0
  */

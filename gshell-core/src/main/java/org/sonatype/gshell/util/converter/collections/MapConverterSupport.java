@@ -23,7 +23,7 @@ import java.beans.PropertyEditor;
 import java.util.Map;
 
 /**
- * ???
+ * Support for {@link Map} converters.
  *
  * @since 2.0
  */
@@ -64,7 +64,6 @@ public abstract class MapConverterSupport
 
     protected final String toStringImpl(Object value) {
         Map map = (Map) value;
-        String text = CollectionUtil.toString(map, keyEditor, valueEditor);
-        return text;
+        return CollectionUtil.toString(map, keyEditor, valueEditor);
     }
 }

@@ -21,7 +21,7 @@ import org.sonatype.gshell.util.converter.ConverterSupport;
 import java.util.regex.Pattern;
 
 /**
- * ???
+ * Converter for {@link Pattern} types.
  *
  * @since 2.0
  */

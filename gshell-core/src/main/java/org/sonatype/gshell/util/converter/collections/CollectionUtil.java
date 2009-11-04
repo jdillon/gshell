@@ -33,7 +33,7 @@ import java.io.IOException;
 import java.io.ByteArrayOutputStream;
 
 /**
- * ???
+ * Utilities for collection converters.
  *
  * @since 2.0
  */

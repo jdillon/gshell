@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * ???
+ * Converter for {@link ArrayList} types.
  *
  * @since 2.0
  */

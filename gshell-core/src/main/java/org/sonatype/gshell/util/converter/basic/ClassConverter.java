@@ -19,7 +19,7 @@ package org.sonatype.gshell.util.converter.basic;
 import org.sonatype.gshell.util.converter.ConverterSupport;
 
 /**
- * ???
+ * Converter for {@link Class} types.
  *
  * @since 2.0
  */

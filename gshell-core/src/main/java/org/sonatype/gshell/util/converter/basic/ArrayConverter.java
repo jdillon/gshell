@@ -24,30 +24,20 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * ???
+ * Converter for arrays.
  *
  * @since 2.0
  */
 public final class ArrayConverter
     extends CollectionConverterSupport
 {
-    public ArrayConverter(Class type, PropertyEditor editor) {
+    public ArrayConverter(final Class type, final PropertyEditor editor) {
         super(type, editor);
-
-        if (!type.isArray()) {
-            throw new IllegalArgumentException("type is not an array " + type.getSimpleName());
-        }
-
-        if (type.getComponentType().isArray()) {
-            throw new IllegalArgumentException("type is a multi-dimensional array " + type.getSimpleName());
-        }
-
-        if (editor == null) {
-            throw new NullPointerException("editor is null");
-        }
+        assert type.isArray();
+        assert type.getComponentType().isArray();
     }
 
-    protected Object createCollection(List list) {
+    protected Object createCollection(final List list) {
         Object array = Array.newInstance(getType().getComponentType(), list.size());
         for (ListIterator iterator = list.listIterator(); iterator.hasNext();) {
             Object item = iterator.next();

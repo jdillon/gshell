@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.lang.reflect.Array;
 
 /**
- * ???
+ * Support for collection converters.
  *
  * @since 2.0
  */
@@ -35,21 +35,17 @@ public abstract class CollectionConverterSupport
 {
     private final PropertyEditor editor;
 
-    public CollectionConverterSupport(Class type) {
-        super(type);
-        this.editor = new StringConverter();
+    public CollectionConverterSupport(final Class type) {
+        this(type, new StringConverter());
     }
 
-    public CollectionConverterSupport(Class type, PropertyEditor editor) {
+    public CollectionConverterSupport(final Class type, final PropertyEditor editor) {
         super(type);
-
-        if (editor == null) {
-            throw new NullPointerException("editor is null");
-        }
+        assert editor != null;
         this.editor = editor;
     }
 
-    protected final Object toObjectImpl(String text) throws Exception {
+    protected final Object toObjectImpl(final String text) throws Exception {
         List list = CollectionUtil.toList(text, editor);
         if (list == null) {
             return null;
@@ -58,7 +54,7 @@ public abstract class CollectionConverterSupport
         return createCollection(list);
     }
 
-    protected abstract Object createCollection(List list) throws Exception;
+    protected abstract Object createCollection(final List list) throws Exception;
 
     protected final String toStringImpl(Object value) {
         Collection values;
@@ -72,7 +68,6 @@ public abstract class CollectionConverterSupport
             values = (Collection) value;
         }
 
-        String text = CollectionUtil.toString(values, editor);
-        return text;
+        return CollectionUtil.toString(values, editor);
     }
 }

@@ -21,7 +21,7 @@ import org.sonatype.gshell.util.converter.ConverterSupport;
 import java.net.URI;
 
 /**
- * ???
+ * Converter for {@link URI} types.
  *
  * @since 2.0
  */

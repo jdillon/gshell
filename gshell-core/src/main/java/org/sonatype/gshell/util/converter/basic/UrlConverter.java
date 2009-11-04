@@ -23,7 +23,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * ???
+ * Converter for {@link URL} types.
  *
  * @since 2.0
  */

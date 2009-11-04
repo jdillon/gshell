@@ -21,7 +21,7 @@ import org.sonatype.gshell.util.converter.ConverterSupport;
 import javax.management.ObjectName;
 
 /**
- * ???
+ * Converter for {@link ObjectName} types.
  *
  * @since 2.0
  */

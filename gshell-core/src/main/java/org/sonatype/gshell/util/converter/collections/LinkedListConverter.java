@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.LinkedList;
 
 /**
- * ???
+ * Converter for {@link LinkedList} types.
  *
  * @since 2.0
  */

@@ -21,7 +21,7 @@ import org.sonatype.gshell.util.converter.ConverterSupport;
 import java.net.Inet4Address;
 
 /**
- * ???
+ * Converter for {@link Inet4Address} types.
  *
  * @since 2.0
  */

@@ -20,7 +20,7 @@ import java.beans.PropertyEditor;
 import java.util.Map;
 
 /**
- * ???
+ * Converter for generic {@link Map} types.
  *
  * @since 2.0
  */

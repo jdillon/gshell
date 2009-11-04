@@ -19,7 +19,7 @@ package org.sonatype.gshell.util.converter;
 import java.beans.PropertyEditor;
 
 /**
- * ???
+ * Provides the ability to convert strings to objects.
  *
  * @since 2.0
  */

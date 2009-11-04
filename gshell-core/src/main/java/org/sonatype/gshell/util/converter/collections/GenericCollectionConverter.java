@@ -21,14 +21,13 @@ import java.util.List;
 import java.util.Collection;
 
 /**
- * ???
+ * Converter for generic {@link Collection} types.
  *
  * @since 2.0
  */
 public class GenericCollectionConverter
     extends CollectionConverterSupport
 {
-
     public GenericCollectionConverter(Class type, PropertyEditor editor) {
         super(type, editor);
     }

@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * ???
+ * Converter for {@link Properties} types.
  *
  * @since 2.0
  */

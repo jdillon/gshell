@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * ???
+ * Converter for {@link HashMap} types.
  *
  * @since 2.0
  */

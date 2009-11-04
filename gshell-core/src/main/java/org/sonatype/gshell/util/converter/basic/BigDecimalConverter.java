@@ -21,7 +21,7 @@ import org.sonatype.gshell.util.converter.ConverterSupport;
 import java.math.BigDecimal;
 
 /**
- * ???
+ * Converter for {@link BigDecimal} types.
  *
  * @since 2.0
  */
