@@ -20,6 +20,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.sonatype.gshell.cli.ProcessingException;
 import org.sonatype.gshell.notification.ExitNotification;
+import org.sonatype.gshell.util.converter.ConversionException;
 
 /**
  * Tests for the {@link ExitCommand}.
@@ -51,7 +52,7 @@ public class ExitCommandTest
             executeWithArgs("1 2");
             fail();
         }
-        catch (ProcessingException e) {
+        catch (Exception e) {
             // expected
         }
     }
@@ -73,7 +74,7 @@ public class ExitCommandTest
             executeWithArgs("foo");
             fail();
         }
-        catch (NumberFormatException e) {
+        catch (Exception e) {
             // expected
         }
     }

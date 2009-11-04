@@ -30,7 +30,7 @@ import org.sonatype.gshell.util.setter.Setter;
 public class StopHandler
     extends Handler<String>
 {
-    public StopHandler(final Descriptor desc, Setter<? super String> setter) {
+    public StopHandler(final Descriptor desc, Setter setter) {
         super(desc, setter);
     }
 

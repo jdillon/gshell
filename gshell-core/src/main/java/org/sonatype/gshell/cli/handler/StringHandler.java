@@ -19,6 +19,7 @@ package org.sonatype.gshell.cli.handler;
 import org.sonatype.gshell.cli.Descriptor;
 import org.sonatype.gshell.cli.Parameters;
 import org.sonatype.gshell.cli.ProcessingException;
+import org.sonatype.gshell.util.converter.Converters;
 import org.sonatype.gshell.util.setter.Setter;
 
 /**
@@ -29,17 +30,14 @@ import org.sonatype.gshell.util.setter.Setter;
 public class StringHandler
     extends Handler<String>
 {
-    public StringHandler(Descriptor desc, Setter<? super String> setter) {
+    public StringHandler(Descriptor desc, Setter setter) {
         super(desc, setter);
     }
 
     @Override
     public int handle(final Parameters params) throws ProcessingException {
         assert params != null;
-
-        String token = params.get(0);
-        getSetter().set(token);
-
+        getSetter().set(Converters.getValue(String.class, params.get(0)));
         return 1;
     }
 

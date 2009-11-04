@@ -23,7 +23,7 @@ import org.sonatype.gshell.cli.ProcessingException;
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public interface Setter<T>
+public interface Setter
 {
     /**
      * Adds/sets a value to the property of the option bean.
@@ -32,14 +32,14 @@ public interface Setter<T>
      * A {@link Setter} object has an implicit knowledge about the property it's setting,
      * and the instance of the option bean.
      */
-    void set(T value) throws ProcessingException;
+    void set(Object value) throws ProcessingException;
 
     String getName();
     
     /**
      * Gets the type of the underlying method/field.
      */
-    Class<T> getType();
+    Class getType();
     
     /**
      * Whether this setter is instrinsically multi-valued.

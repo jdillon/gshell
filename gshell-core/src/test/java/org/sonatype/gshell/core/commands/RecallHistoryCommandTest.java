@@ -20,6 +20,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.sonatype.gshell.History;
 import org.sonatype.gshell.cli.ProcessingException;
+import org.sonatype.gshell.util.converter.ConversionException;
 
 /**
  * Tests for the {@link RecallHistoryCommand}.
@@ -74,7 +75,7 @@ public class RecallHistoryCommandTest
             executeWithArgs("foo");
             fail();
         }
-        catch (NumberFormatException e) {
+        catch (ConversionException e) {
             // expected
         }
     }

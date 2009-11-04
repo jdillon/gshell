@@ -20,6 +20,7 @@ import org.sonatype.gshell.cli.Descriptor;
 import org.sonatype.gshell.cli.OptionDescriptor;
 import org.sonatype.gshell.cli.Parameters;
 import org.sonatype.gshell.cli.ProcessingException;
+import org.sonatype.gshell.util.converter.Converters;
 import org.sonatype.gshell.util.setter.Setter;
 
 /**
@@ -30,7 +31,7 @@ import org.sonatype.gshell.util.setter.Setter;
 public class BooleanHandler
     extends Handler<Boolean>
 {
-    public BooleanHandler(final Descriptor desc, final Setter<? super Boolean> setter) {
+    public BooleanHandler(final Descriptor desc, final Setter setter) {
         super(desc, setter);
     }
 
@@ -39,8 +40,7 @@ public class BooleanHandler
         assert params != null;
 
         if (isArgument() || ((OptionDescriptor)getDescriptor()).isArgumentRequired()) {
-            // TODO: support on/off as well as true/false
-            getSetter().set(Boolean.parseBoolean(params.get(0)));
+            getSetter().set(Converters.getValue(Boolean.class, params.get(0)));
 
             return 1;
         }

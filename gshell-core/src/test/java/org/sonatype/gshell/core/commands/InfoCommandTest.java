@@ -31,15 +31,4 @@ public class InfoCommandTest
     public InfoCommandTest() {
         super("info", InfoCommand.class);
     }
-
-    @Test
-    public void testTooManyArguments() throws Exception {
-        try {
-            executeWithArgs("1");
-            fail();
-        }
-        catch (ProcessingException e) {
-            // expected
-        }
-    }
 }

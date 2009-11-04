@@ -19,6 +19,7 @@ package org.sonatype.gshell.cli.handler;
 import org.sonatype.gshell.cli.Descriptor;
 import org.sonatype.gshell.cli.Parameters;
 import org.sonatype.gshell.cli.ProcessingException;
+import org.sonatype.gshell.util.converter.Converters;
 import org.sonatype.gshell.util.setter.Setter;
 
 import java.io.File;
@@ -31,17 +32,14 @@ import java.io.File;
 public class FileHandler
     extends Handler<File>
 {
-    public FileHandler(final Descriptor desc, final Setter<? super File> setter) {
+    public FileHandler(final Descriptor desc, final Setter setter) {
         super(desc, setter);
     }
 
     @Override
     public int handle(final Parameters params) throws ProcessingException {
         assert params != null;
-
-        String token = params.get(0);
-        getSetter().set(new File(token));
-
+        getSetter().set(Converters.getValue(File.class, params.get(0)));
         return 1;
     }
 

@@ -19,6 +19,7 @@ package org.sonatype.gshell.cli.handler;
 import org.sonatype.gshell.cli.Descriptor;
 import org.sonatype.gshell.cli.Parameters;
 import org.sonatype.gshell.cli.ProcessingException;
+import org.sonatype.gshell.util.converter.Converters;
 import org.sonatype.gshell.util.setter.Setter;
 
 /**
@@ -31,9 +32,8 @@ public class EnumHandler<T extends Enum<T>>
 {
     private final Class<T> type;
 
-    public EnumHandler(final Descriptor desc, final Setter<? super T> setter, final Class<T> type) {
+    public EnumHandler(final Descriptor desc, final Setter setter, final Class<T> type) {
         super(desc, setter);
-
         assert type != null;
         this.type = type;
     }
@@ -41,23 +41,7 @@ public class EnumHandler<T extends Enum<T>>
     @Override
     public int handle(final Parameters params) throws ProcessingException {
         assert params != null;
-        
-        String token = params.get(0);
-        T value = null;
-
-        for (T constant : type.getEnumConstants()) {
-            if (constant.name().equalsIgnoreCase(token)) {
-                value = constant;
-                break;
-            }
-        }
-
-        if (value == null) {
-            throw new ProcessingException(Messages.ILLEGAL_OPERAND.format(getDescriptor().toString(), token));
-        }
-
-        getSetter().set(value);
-        
+        getSetter().set(Converters.getValue(type, params.get(0)));
         return 1;
     }
 

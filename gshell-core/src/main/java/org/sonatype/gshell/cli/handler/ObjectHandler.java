@@ -32,16 +32,14 @@ import org.sonatype.gshell.util.setter.Setter;
 public class ObjectHandler
     extends Handler<Object>
 {
-    public ObjectHandler(final Descriptor desc, Setter<? super Object> setter) {
+    public ObjectHandler(final Descriptor desc, Setter setter) {
         super(desc, setter);
     }
 
     @Override
     public int handle(final Parameters params) throws ProcessingException {
         assert params != null;
-
         getSetter().set(params.get(0));
-
         return 1;
     }
 

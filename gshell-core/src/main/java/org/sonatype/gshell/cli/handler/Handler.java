@@ -34,11 +34,11 @@ public abstract class Handler<T>
 {
     private final Descriptor descriptor;
     
-    private final Setter<? super T> setter;
+    private final Setter setter;
 
     private boolean kvp = false;
 
-    protected Handler(final Descriptor descriptor, final Setter<? super T> setter) {
+    protected Handler(final Descriptor descriptor, final Setter setter) {
         assert descriptor != null;
         this.descriptor = descriptor;
         assert setter != null;
@@ -49,7 +49,7 @@ public abstract class Handler<T>
         return descriptor;
     }
 
-    public Setter<? super T> getSetter() {
+    public Setter getSetter() {
         return setter;
     }
 

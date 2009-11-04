@@ -21,6 +21,7 @@ import org.junit.Test;
 import org.sonatype.gshell.cli.Option;
 import org.sonatype.gshell.cli.ProcessingException;
 import org.sonatype.gshell.cli.ProcessorTestSupport;
+import org.sonatype.gshell.util.converter.ConversionException;
 
 /**
  * Tests for the {@link org.sonatype.gshell.cli.handler.EnumHandler} class.
@@ -63,7 +64,7 @@ public class EnumHandlerTest
             clp.process("-t", "c");
             fail();
         }
-        catch (ProcessingException e) {
+        catch (ConversionException e) {
             // expected
         }
     }

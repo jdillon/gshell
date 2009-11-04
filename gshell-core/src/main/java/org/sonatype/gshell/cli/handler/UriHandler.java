@@ -19,6 +19,7 @@ package org.sonatype.gshell.cli.handler;
 import org.sonatype.gshell.cli.Descriptor;
 import org.sonatype.gshell.cli.Parameters;
 import org.sonatype.gshell.cli.ProcessingException;
+import org.sonatype.gshell.util.converter.Converters;
 import org.sonatype.gshell.util.setter.Setter;
 
 import java.net.URI;
@@ -32,23 +33,14 @@ import java.net.URISyntaxException;
 public class UriHandler
     extends Handler<URI>
 {
-    public UriHandler(final Descriptor desc, final Setter<? super URI> setter) {
+    public UriHandler(final Descriptor desc, final Setter setter) {
         super(desc, setter);
     }
 
     @Override
     public int handle(final Parameters params) throws ProcessingException {
         assert params != null;
-
-        String token = params.get(0);
-
-        try {
-            getSetter().set(new URI(token));
-        }
-        catch (URISyntaxException e) {
-            throw new ProcessingException(e);
-        }
-
+        getSetter().set(Converters.getValue(URI.class, params.get(0)));
         return 1;
     }
 
