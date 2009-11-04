@@ -20,7 +20,7 @@ import org.sonatype.gshell.cli.ArgumentDescriptor;
 import org.sonatype.gshell.cli.Descriptor;
 import org.sonatype.gshell.cli.OptionDescriptor;
 import org.sonatype.gshell.cli.ProcessingException;
-import org.sonatype.gshell.cli.setter.Setter;
+import org.sonatype.gshell.util.setter.Setter;
 import org.sonatype.gshell.i18n.MessageSource;
 import org.sonatype.gshell.i18n.ResourceNotFoundException;
 

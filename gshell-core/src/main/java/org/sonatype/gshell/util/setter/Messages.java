@@ -14,36 +14,29 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.cli.handler;
+package org.sonatype.gshell.util.setter;
 
-import org.sonatype.gshell.cli.Descriptor;
-import org.sonatype.gshell.cli.ProcessingException;
-import org.sonatype.gshell.util.setter.Setter;
+import org.sonatype.gshell.i18n.MessageSource;
+import org.sonatype.gshell.i18n.ResourceBundleMessageSource;
 
 /**
- * Handler for string types.
+ * Messages for the {@link org.apache.maven.shell.cli.setter} package.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class StringHandler
-    extends Handler<String>
+enum Messages
 {
-    public StringHandler(Descriptor desc, Setter<? super String> setter) {
-        super(desc, setter);
-    }
+    ///CLOVER:OFF
+    
+    ILLEGAL_OPERAND,
+    ILLEGAL_BOOLEAN,
+    ILLEGAL_METHOD_SIGNATURE,
+    ILLEGAL_FIELD_SIGNATURE,
+    ;
 
-    @Override
-    public int handle(final Parameters params) throws ProcessingException {
-        assert params != null;
+    private final MessageSource messages = new ResourceBundleMessageSource(getClass());
 
-        String token = params.get(0);
-        getSetter().set(token);
-
-        return 1;
-    }
-
-    @Override
-    public String getDefaultToken() {
-        return "VAL";
+    String format(final Object... args) {
+        return messages.format(name(), args);
     }
 }

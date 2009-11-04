@@ -19,7 +19,7 @@ package org.sonatype.gshell.cli.handler;
 import org.sonatype.gshell.cli.Descriptor;
 import org.sonatype.gshell.cli.ProcessingException;
 import org.sonatype.gshell.cli.StopProcessingOptionsNotification;
-import org.sonatype.gshell.cli.setter.Setter;
+import org.sonatype.gshell.util.setter.Setter;
 
 /**
  * Handler to abort further option processing (and soak up remaining tokens as arguments).

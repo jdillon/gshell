@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.cli.setter;
+package org.sonatype.gshell.util.setter;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
@@ -24,7 +24,7 @@ import org.sonatype.gshell.cli.ProcessorTestSupport;
 import java.util.List;
 
 /**
- * Tests for the {@link org.sonatype.gshell.cli.setter.CollectionFieldSetter} class.
+ * Tests for the {@link org.sonatype.gshell.util.setter.CollectionFieldSetter} class.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */

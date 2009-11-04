@@ -14,29 +14,23 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.cli.setter;
+package org.sonatype.gshell.util.converter.basic;
 
-import org.sonatype.gshell.i18n.MessageSource;
-import org.sonatype.gshell.i18n.ResourceBundleMessageSource;
+import org.sonatype.gshell.util.converter.ConverterSupport;
 
 /**
- * Messages for the {@link org.apache.maven.shell.cli.setter} package.
+ * ???
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ * @since 2.0
  */
-enum Messages
+public class StringConverter
+    extends ConverterSupport
 {
-    ///CLOVER:OFF
-    
-    ILLEGAL_OPERAND,
-    ILLEGAL_BOOLEAN,
-    ILLEGAL_METHOD_SIGNATURE,
-    ILLEGAL_FIELD_SIGNATURE,
-    ;
+    public StringConverter() {
+        super(String.class);
+    }
 
-    private final MessageSource messages = new ResourceBundleMessageSource(getClass());
-
-    String format(final Object... args) {
-        return messages.format(name(), args);
+    protected Object toObjectImpl(final String text) throws Exception {
+        return text;
     }
 }

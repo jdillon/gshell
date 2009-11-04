@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.cli.setter;
+package org.sonatype.gshell.util.setter;
 
 import org.sonatype.gshell.cli.IllegalAnnotationError;
 import org.sonatype.gshell.cli.ProcessingException;

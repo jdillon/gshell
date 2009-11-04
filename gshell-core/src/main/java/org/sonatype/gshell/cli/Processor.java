@@ -19,10 +19,10 @@ package org.sonatype.gshell.cli;
 import org.sonatype.gshell.cli.handler.Handler;
 import org.sonatype.gshell.cli.handler.Handlers;
 import org.sonatype.gshell.cli.handler.Parameters;
-import org.sonatype.gshell.cli.setter.CollectionFieldSetter;
-import org.sonatype.gshell.cli.setter.FieldSetter;
-import org.sonatype.gshell.cli.setter.MethodSetter;
-import org.sonatype.gshell.cli.setter.Setter;
+import org.sonatype.gshell.util.setter.CollectionFieldSetter;
+import org.sonatype.gshell.util.setter.FieldSetter;
+import org.sonatype.gshell.util.setter.MethodSetter;
+import org.sonatype.gshell.util.setter.Setter;
 import org.sonatype.gshell.i18n.MessageSource;
 
 import java.lang.reflect.Field;
