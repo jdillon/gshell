@@ -67,7 +67,7 @@ public class SimpleTest
             clp.process("-f");
             fail();
         }
-        catch (ProcessingException ignore) {}
+        catch (Exception ignore) {}
 
         assertFalse(bean.help);
     }

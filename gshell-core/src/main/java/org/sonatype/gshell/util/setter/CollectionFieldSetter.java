@@ -16,7 +16,7 @@
 
 package org.sonatype.gshell.util.setter;
 
-import org.sonatype.gshell.cli.IllegalAnnotationError;
+import org.sonatype.gshell.util.IllegalAnnotationError;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;

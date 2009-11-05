@@ -14,31 +14,26 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.cli;
+package org.sonatype.gshell.pref;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * Thrown to indicate that while processing an illegal annotation definition was discovered.
+ * Configures a field or method for processing as a preference.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
-public class IllegalAnnotationError
-    extends Error
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.FIELD, ElementType.METHOD})
+public @interface Preference
 {
-    ///CLOVER:OFF
-    
-    private static final long serialVersionUID = 1;
+    public abstract String name() default "";
 
-    public IllegalAnnotationError(String msg) {
-        super(msg);
-    }
+    public abstract Class<?> base() default Void.class;
 
-    public IllegalAnnotationError(String msg, Throwable cause) {
-        super(msg, cause);
-    }
-
-    public IllegalAnnotationError(Throwable cause) {
-        super(cause);
-    }
+    public abstract boolean system() default false;
 }

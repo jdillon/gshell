@@ -20,7 +20,6 @@ import org.sonatype.gshell.cli.ArgumentDescriptor;
 import org.sonatype.gshell.cli.Descriptor;
 import org.sonatype.gshell.cli.OptionDescriptor;
 import org.sonatype.gshell.cli.Parameters;
-import org.sonatype.gshell.cli.ProcessingException;
 import org.sonatype.gshell.i18n.MessageSource;
 import org.sonatype.gshell.i18n.ResourceNotFoundException;
 import org.sonatype.gshell.util.setter.Setter;
@@ -63,7 +62,7 @@ public abstract class Handler
         this.kvp = flag;
     }
 
-    public abstract int handle(Parameters params) throws ProcessingException;
+    public abstract int handle(Parameters params) throws Exception;
 
     public abstract String getDefaultToken();
 

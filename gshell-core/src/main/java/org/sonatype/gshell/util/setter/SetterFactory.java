@@ -16,33 +16,27 @@
 
 package org.sonatype.gshell.util.setter;
 
+import java.lang.reflect.Field;
+import java.util.Collection;
+
 /**
- * Provides the basic mechanism to set values.
+ * ???
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *
  * @since 2.0
  */
-public interface Setter
+public class SetterFactory
 {
-    /**
-     * Adds/sets a value to the property of the option bean.
-     *
-     * <p>
-     * A {@link Setter} object has an implicit knowledge about the property it's setting,
-     * and the instance of the option bean.
-     */
-    void set(Object value) throws Exception;
+    public static Setter create(final Object bean, final Field field) {
+        assert bean != null;
+        assert field != null;
 
-    String getName();
-    
-    /**
-     * Gets the type of the underlying method/field.
-     */
-    Class getType();
-    
-    /**
-     * Whether this setter is instrinsically multi-valued.
-     */
-    boolean isMultiValued();
+        if (Collection.class.isAssignableFrom(field.getType())) {
+            return new CollectionFieldSetter(bean, field);
+        }
+        else {
+            return new FieldSetter(bean, field);
+        }
+    }
 }

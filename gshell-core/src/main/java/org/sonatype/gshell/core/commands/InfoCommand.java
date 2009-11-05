@@ -26,7 +26,6 @@ import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.core.command.CommandActionSupport;
-import static org.sonatype.gshell.core.commands.InfoCommand.Section.*;
 
 import java.lang.management.ClassLoadingMXBean;
 import java.lang.management.GarbageCollectorMXBean;
@@ -42,6 +41,8 @@ import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+
+import static org.sonatype.gshell.core.commands.InfoCommand.Section.SHELL;
 
 //
 // Based on info command from Apache Felix

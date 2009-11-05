@@ -16,13 +16,6 @@
 
 package org.sonatype.gshell.util;
 
-import java.lang.ref.Reference;
-import java.lang.ref.ReferenceQueue;
-import java.lang.ref.WeakReference;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
-
 /**
  * Common <code>String</code> manipulation routines from <tt>org.codehaus.plexus:plexus-utils</tt>.
  * 

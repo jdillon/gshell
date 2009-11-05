@@ -44,7 +44,7 @@ public class HistoryCommandTest
             executeWithArgs("1 2");
             fail();
         }
-        catch (ProcessingException e) {
+        catch (Exception e) {
             // expected
         }
     }

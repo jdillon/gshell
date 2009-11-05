@@ -16,10 +16,8 @@
 
 package org.sonatype.gshell.util.setter;
 
-import org.sonatype.gshell.cli.IllegalAnnotationError;
-import org.sonatype.gshell.cli.ProcessingException;
+import org.sonatype.gshell.util.IllegalAnnotationError;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -60,41 +58,18 @@ public class MethodSetter
         return false;
     }
 
-    public void set(final Object value) throws ProcessingException {
+    public void set(final Object value) throws Exception {
         try {
+            method.invoke(bean, value);
+        }
+        catch (IllegalAccessException ignore) {
+            method.setAccessible(true);
+
             try {
                 method.invoke(bean, value);
             }
-            catch (IllegalAccessException ignore) {
-                method.setAccessible(true);
-
-                try {
-                    method.invoke(bean, value);
-                }
-                catch (IllegalAccessException e) {
-                    throw new IllegalAccessError(e.getMessage());
-                }
-            }
-        }
-        catch (InvocationTargetException e) {
-            // Decode or wrap the target exception
-            Throwable t = e.getTargetException();
-
-            if (t instanceof RuntimeException) {
-                throw (RuntimeException)t;
-            }
-            if (t instanceof Error) {
-                throw (Error)t;
-            }
-            if (t instanceof ProcessingException) {
-                throw (ProcessingException)t;
-            }
-
-            if (t != null) {
-                throw new ProcessingException(t);
-            }
-            else {
-                throw new ProcessingException(e);
+            catch (IllegalAccessException e) {
+                throw new IllegalAccessError(e.getMessage());
             }
         }
     }

@@ -39,7 +39,7 @@ public class UnsetCommandTest
             super.testDefault();
             fail();
         }
-        catch (ProcessingException e) {
+        catch (Exception e) {
             // expected
         }
     }

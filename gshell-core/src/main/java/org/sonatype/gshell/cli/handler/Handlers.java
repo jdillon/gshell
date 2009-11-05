@@ -17,7 +17,7 @@
 package org.sonatype.gshell.cli.handler;
 
 import org.sonatype.gshell.cli.Descriptor;
-import org.sonatype.gshell.cli.IllegalAnnotationError;
+import org.sonatype.gshell.util.IllegalAnnotationError;
 import org.sonatype.gshell.util.setter.Setter;
 
 import java.lang.reflect.Constructor;

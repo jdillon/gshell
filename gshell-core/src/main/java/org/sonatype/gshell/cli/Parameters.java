@@ -25,5 +25,5 @@ package org.sonatype.gshell.cli;
  */
 public interface Parameters
 {
-    String get(int i) throws ProcessingException;
+    String get(int i) throws Exception;
 }

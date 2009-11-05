@@ -14,35 +14,31 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.util.setter;
+package org.sonatype.gshell.util;
 
 /**
- * Provides the basic mechanism to set values.
+ * Thrown to indicate that while processing an illegal annotation definition was discovered.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *
  * @since 2.0
  */
-public interface Setter
+public class IllegalAnnotationError
+    extends Error
 {
-    /**
-     * Adds/sets a value to the property of the option bean.
-     *
-     * <p>
-     * A {@link Setter} object has an implicit knowledge about the property it's setting,
-     * and the instance of the option bean.
-     */
-    void set(Object value) throws Exception;
+    ///CLOVER:OFF
+    
+    private static final long serialVersionUID = 1;
 
-    String getName();
-    
-    /**
-     * Gets the type of the underlying method/field.
-     */
-    Class getType();
-    
-    /**
-     * Whether this setter is instrinsically multi-valued.
-     */
-    boolean isMultiValued();
+    public IllegalAnnotationError(String msg) {
+        super(msg);
+    }
+
+    public IllegalAnnotationError(String msg, Throwable cause) {
+        super(msg, cause);
+    }
+
+    public IllegalAnnotationError(Throwable cause) {
+        super(cause);
+    }
 }

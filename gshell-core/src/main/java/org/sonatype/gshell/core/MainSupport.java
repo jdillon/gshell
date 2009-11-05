@@ -24,10 +24,8 @@ import org.sonatype.gshell.Variables;
 import org.sonatype.gshell.ansi.Ansi;
 import org.sonatype.gshell.ansi.AnsiIO;
 import org.sonatype.gshell.cli.Argument;
-import org.sonatype.gshell.util.NameValue;
 import org.sonatype.gshell.cli.Option;
 import org.sonatype.gshell.cli.Printer;
-import org.sonatype.gshell.cli.ProcessingException;
 import org.sonatype.gshell.cli.Processor;
 import org.sonatype.gshell.cli.handler.StopHandler;
 import org.sonatype.gshell.command.IO;
@@ -36,6 +34,7 @@ import org.sonatype.gshell.i18n.ResourceBundleMessageSource;
 import org.sonatype.gshell.internal.Log;
 import org.sonatype.gshell.io.StreamSet;
 import org.sonatype.gshell.notification.ExitNotification;
+import org.sonatype.gshell.util.NameValue;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -175,7 +174,7 @@ public abstract class MainSupport
         try {
             clp.process(args);
         }
-        catch (ProcessingException e) {
+        catch (Exception e) {
             if (showErrorTraces) {
                 e.printStackTrace(io.err);
             }

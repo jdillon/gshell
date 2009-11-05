@@ -18,18 +18,16 @@ package org.sonatype.gshell.cli;
 
 import org.sonatype.gshell.cli.handler.Handler;
 import org.sonatype.gshell.cli.handler.Handlers;
-import org.sonatype.gshell.cli.Parameters;
+import org.sonatype.gshell.i18n.MessageSource;
+import org.sonatype.gshell.util.IllegalAnnotationError;
 import org.sonatype.gshell.util.NameValue;
-import org.sonatype.gshell.util.setter.CollectionFieldSetter;
-import org.sonatype.gshell.util.setter.FieldSetter;
 import org.sonatype.gshell.util.setter.MethodSetter;
 import org.sonatype.gshell.util.setter.Setter;
-import org.sonatype.gshell.i18n.MessageSource;
+import org.sonatype.gshell.util.setter.SetterFactory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -122,12 +120,12 @@ public class Processor
             for (Field field : type.getDeclaredFields()) {
                 Option option = field.getAnnotation(Option.class);
                 if (option != null) {
-                    addOption(createFieldSetter(bean, field), option);
+                    addOption(SetterFactory.create(bean, field), option);
                 }
 
                 Argument argument = field.getAnnotation(Argument.class);
                 if (argument != null) {
-                    addArgument(createFieldSetter(bean, field), argument);
+                    addArgument(SetterFactory.create(bean, field), argument);
                 }
             }
         }
@@ -137,18 +135,6 @@ public class Processor
             if (argumentHandlers.get(i) == null) {
                 throw new IllegalAnnotationError("No argument annotation for index: " + i);
             }
-        }
-    }
-    
-    private Setter createFieldSetter(final Object bean, final Field field) {
-        assert bean != null;
-        assert field != null;
-
-        if (Collection.class.isAssignableFrom(field.getType())) {
-            return new CollectionFieldSetter(bean, field);
-        }
-        else {
-            return new FieldSetter(bean, field);
         }
     }
 
@@ -215,7 +201,7 @@ public class Processor
             pos += n;
         }
 
-        public String get(final int idx) throws ProcessingException {
+        public String get(final int idx) throws Exception {
             if (pos + idx >= args.length) {
                 throw new ProcessingException(Messages.MISSING_OPERAND.format(handler.getDescriptor(), handler.getToken(messages)));
             }
@@ -232,7 +218,7 @@ public class Processor
         }
     }
 
-    public void process(final String... args) throws ProcessingException {
+    public void process(final String... args) throws Exception {
         ParametersImpl params = new ParametersImpl(args);
         Set<Handler> present = new HashSet<Handler>();
         int argIndex = 0;
@@ -326,7 +312,7 @@ public class Processor
         }
     }
 
-    public void process(final List<String> args) throws ProcessingException {
+    public void process(final List<String> args) throws Exception {
         if (args == null) {
             //noinspection RedundantArrayCreation
             process(new String[0]);

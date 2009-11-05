@@ -47,7 +47,7 @@ public class RecallHistoryCommandTest
             super.testDefault();
             fail();
         }
-        catch (ProcessingException e) {
+        catch (Exception e) {
             // expected
         }
     }
@@ -58,7 +58,7 @@ public class RecallHistoryCommandTest
             executeWithArgs("1 2");
             fail();
         }
-        catch (ProcessingException e) {
+        catch (Exception e) {
             // expected
         }
     }

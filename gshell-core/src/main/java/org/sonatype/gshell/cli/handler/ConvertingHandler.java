@@ -18,7 +18,6 @@ package org.sonatype.gshell.cli.handler;
 
 import org.sonatype.gshell.cli.Descriptor;
 import org.sonatype.gshell.cli.Parameters;
-import org.sonatype.gshell.cli.ProcessingException;
 import org.sonatype.gshell.util.converter.Converters;
 import org.sonatype.gshell.util.setter.Setter;
 
@@ -37,7 +36,7 @@ public class ConvertingHandler
     }
 
     @Override
-    public int handle(final Parameters params) throws ProcessingException {
+    public int handle(final Parameters params) throws Exception {
         assert params != null;
         Setter setter = getSetter();
         setter.set(Converters.getValue(setter.getType(), params.get(0)));

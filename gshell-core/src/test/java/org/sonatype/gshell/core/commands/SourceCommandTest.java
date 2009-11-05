@@ -49,7 +49,7 @@ public class SourceCommandTest
             super.testDefault();
             fail();
         }
-        catch (ProcessingException e) {
+        catch (Exception e) {
             // expected
         }
     }
@@ -60,7 +60,7 @@ public class SourceCommandTest
             executeWithArgs("1 2");
             fail();
         }
-        catch (ProcessingException e) {
+        catch (Exception e) {
             // expected
         }
     }
