@@ -39,7 +39,6 @@ import java.util.Set;
 public class ReferenceIdentityMap
     implements Map
 {
-
     /** The default capacity to use. Always use a power of 2!!! */
     private static final int DEFAULT_CAPACITY = 16;
     /** The default load factor to use */

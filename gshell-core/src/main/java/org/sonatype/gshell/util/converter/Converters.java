@@ -87,11 +87,11 @@ import static org.sonatype.gshell.util.converter.ConverterHelper.toClass;
  */
 public class Converters
 {
-    private static final Map<Class, Converter> registry = Collections.synchronizedMap(new ReferenceIdentityMap());
+    private static final Map<Class,Converter> REGISTRY = Collections.synchronizedMap(new ReferenceIdentityMap());
 
-    private static final Map<Class, Class> PRIMITIVE_TO_WRAPPER;
+    private static final Map<Class,Class> PRIMITIVE_TO_WRAPPER;
 
-    private static final Map<Class, Class> WRAPPER_TO_PRIMITIVE;
+    private static final Map<Class,Class> WRAPPER_TO_PRIMITIVE;
 
     private static boolean registerWithVM;
 
@@ -182,7 +182,7 @@ public class Converters
 
             // register all converters with the VM
             if (registerWithVM) {
-                for (Entry<Class, Converter> entry : registry.entrySet()) {
+                for (Entry<Class, Converter> entry : REGISTRY.entrySet()) {
                     Class type = entry.getKey();
                     Converter converter = entry.getValue();
                     PropertyEditorManager.registerEditor(type, converter.getClass());
@@ -195,21 +195,21 @@ public class Converters
         assert converter != null;
 
         Class type = converter.getType();
-        registry.put(type, converter);
+        REGISTRY.put(type, converter);
         if (registerWithVM) {
             PropertyEditorManager.registerEditor(type, converter.getClass());
         }
 
         if (PRIMITIVE_TO_WRAPPER.containsKey(type)) {
             Class wrapperType = PRIMITIVE_TO_WRAPPER.get(type);
-            registry.put(wrapperType, converter);
+            REGISTRY.put(wrapperType, converter);
             if (registerWithVM) {
                 PropertyEditorManager.registerEditor(wrapperType, converter.getClass());
             }
         }
         else if (WRAPPER_TO_PRIMITIVE.containsKey(type)) {
             Class primitiveType = WRAPPER_TO_PRIMITIVE.get(type);
-            registry.put(primitiveType, converter);
+            REGISTRY.put(primitiveType, converter);
             if (registerWithVM) {
                 PropertyEditorManager.registerEditor(primitiveType, converter.getClass());
             }
@@ -424,7 +424,7 @@ public class Converters
             return null;
         }
 
-        Converter converter = registry.get(clazz);
+        Converter converter = REGISTRY.get(clazz);
 
         // we're outta here if we got one.
         if (converter != null) {
@@ -440,7 +440,7 @@ public class Converters
 
                     // try to get the converter from the registry... the converter
                     // created above may have been for another class
-                    converter = registry.get(clazz);
+                    converter = REGISTRY.get(clazz);
                     if (converter != null) {
                         return converter;
                     }
