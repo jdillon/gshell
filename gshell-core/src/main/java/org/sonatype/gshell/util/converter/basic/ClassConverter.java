@@ -30,11 +30,11 @@ public class ClassConverter
         super(Class.class);
     }
 
-    protected Object toObjectImpl(final String text) throws Exception {
+    protected Object convertToObject(final String text) throws Exception {
         return Class.forName(text, true, Thread.currentThread().getContextClassLoader());
     }
 
-    protected String toStringImpl(final Object value) {
+    protected String convertToString(final Object value) {
         Class type = (Class) value;
         return type.getSimpleName();
     }

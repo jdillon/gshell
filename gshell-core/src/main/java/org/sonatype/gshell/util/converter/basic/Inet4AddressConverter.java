@@ -32,7 +32,7 @@ public class Inet4AddressConverter
         super(Inet4Address.class);
     }
 
-    protected Object toObjectImpl(final String text) throws Exception {
+    protected Object convertToObject(final String text) throws Exception {
         return Inet4Address.getByName(text);
     }
 }

@@ -34,7 +34,7 @@ public class UrlConverter
         super(URL.class);
     }
 
-    protected Object toObjectImpl(final String text) throws Exception {
+    protected Object convertToObject(final String text) throws Exception {
         try {
             // try to create directly from the text property.
             URL url = new URL(text);
@@ -43,7 +43,7 @@ public class UrlConverter
             // absolute directory form.
             if (url.getProtocol().equals("file")) {
                 // ok, this is a file URL, so get the file string portion,
-                // convert that to a file object, then go through the URI()/URL()
+                // convertToObject that to a file object, then go through the URI()/URL()
                 // conversion sequence to get a fully valid URL().
                 return new File(url.getFile()).toURI().toURL();
             }

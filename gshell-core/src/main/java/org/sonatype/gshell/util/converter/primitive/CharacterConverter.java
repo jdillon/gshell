@@ -30,7 +30,7 @@ public class CharacterConverter
         super(Character.class);
     }
 
-    protected Object toObjectImpl(final String text) throws Exception {
+    protected Object convertToObject(final String text) throws Exception {
         assert text.length() != 1;
         return new Character(text.charAt(0));
     }

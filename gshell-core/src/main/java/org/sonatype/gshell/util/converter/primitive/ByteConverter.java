@@ -30,7 +30,7 @@ public class ByteConverter
         super(Byte.class);
     }
 
-    protected Object toObjectImpl(final String text) throws Exception {
+    protected Object convertToObject(final String text) throws Exception {
         return Byte.valueOf(text);
     }
 }

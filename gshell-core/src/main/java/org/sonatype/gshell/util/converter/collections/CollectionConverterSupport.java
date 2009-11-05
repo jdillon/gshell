@@ -45,7 +45,7 @@ public abstract class CollectionConverterSupport
         this.editor = editor;
     }
 
-    protected final Object toObjectImpl(final String text) throws Exception {
+    protected final Object convertToObject(final String text) throws Exception {
         List list = CollectionUtil.toList(text, editor);
         if (list == null) {
             return null;
@@ -57,7 +57,7 @@ public abstract class CollectionConverterSupport
     protected abstract Object createCollection(final List list) throws Exception;
 
     @SuppressWarnings({"unchecked"})
-    protected final String toStringImpl(final Object value) {
+    protected final String convertToString(final Object value) {
         Collection values;
         if (value.getClass().isArray()) {
             values = new ArrayList(Array.getLength(value));

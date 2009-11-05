@@ -19,7 +19,7 @@ package org.sonatype.gshell.util.converter;
 import java.beans.PropertyEditor;
 
 /**
- * Provides the ability to convert strings to objects.
+ * Provides the ability to convertToObject strings to objects.
  *
  * @since 2.0
  */
@@ -46,7 +46,7 @@ public interface Converter
     /**
      * Converts the supplied text in to an instance of the editor type.  If text is null, null will be returned.
      *
-     * @param text the text to convert
+     * @param text the text to convertToObject
      * @return an instance of the editor type
      * @throws ConversionException if an error occurs while converting the text to an object
      */

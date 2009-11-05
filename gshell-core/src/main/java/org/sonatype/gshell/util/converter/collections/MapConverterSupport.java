@@ -52,7 +52,7 @@ public abstract class MapConverterSupport
      * @throws org.sonatype.gshell.util.converter.ConversionException
      *          An error occurred creating the Properties object.
      */
-    protected final Object toObjectImpl(final String text) throws Exception {
+    protected final Object convertToObject(final String text) throws Exception {
         Map map = CollectionUtil.toMap(text, keyEditor, valueEditor);
         if (map == null) {
             return null;
@@ -62,7 +62,7 @@ public abstract class MapConverterSupport
 
     protected abstract Map createMap(Map map) throws Exception;
 
-    protected final String toStringImpl(final Object value) {
+    protected final String convertToString(final Object value) {
         Map map = (Map) value;
         return CollectionUtil.toString(map, keyEditor, valueEditor);
     }

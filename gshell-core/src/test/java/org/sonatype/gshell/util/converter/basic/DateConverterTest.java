@@ -32,14 +32,14 @@ public class DateConverterTest
     @Test
     public void testToObjectImpl() throws Exception {
         Date expected = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.US).parse("Mar 1, 1954");
-        Date actual = (Date) new DateConverter().toObjectImpl("locale=en_US format=MEDIUM Mar 1, 1954");
+        Date actual = (Date) new DateConverter().convertToObject("locale=en_US format=MEDIUM Mar 1, 1954");
         assertEquals(expected, actual);
     }
 
     @Test
     public void testFallbackFormats() throws Exception {
         DateConverter converter = new DateConverter();
-        converter.toObjectImpl("2007-10-31");
-        converter.toObjectImpl("2007-10-31T19:19:19PDT");
+        converter.convertToObject("2007-10-31");
+        converter.convertToObject("2007-10-31T19:19:19PDT");
     }
 }

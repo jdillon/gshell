@@ -32,7 +32,7 @@ public class BigIntegerConverter
         super(BigInteger.class);
     }
 
-    protected Object toObjectImpl(final String text) throws Exception {
+    protected Object convertToObject(final String text) throws Exception {
         return new BigInteger(text);
     }
 }

@@ -61,7 +61,7 @@ public abstract class ConverterSupport
         }
 
         // Don't validate the type. Type validation is not required by spec and some setters (e.g. Spring) expect this.
-        return toStringImpl(value);
+        return convertToString(value);
     }
 
     public final Object toObject(final String text) {
@@ -70,7 +70,7 @@ public abstract class ConverterSupport
         }
 
         try {
-            return toObjectImpl(text.trim());
+            return convertToObject(text.trim());
         }
         catch (Exception e) {
             throw new ConversionException(e);
@@ -84,17 +84,18 @@ public abstract class ConverterSupport
      * @param value an instance of the editor type
      * @return the text equivalent of the value
      */
-    protected String toStringImpl(final Object value) {
-        return String.valueOf(value);
+    protected String convertToString(final Object value) {
+        assert value != null;
+        return value.toString();
     }
 
     /**
      * Converts the supplied text in to an instance of the editor type.  The text will never be null, and trim() will
      * already have been called.
      *
-     * @param text The text to convert
+     * @param text The text to convertToObject
      * @return An instance of the converted type
      * @throws Exception Conversion failed
      */
-    protected abstract Object toObjectImpl(final String text) throws Exception;
+    protected abstract Object convertToObject(final String text) throws Exception;
 }
