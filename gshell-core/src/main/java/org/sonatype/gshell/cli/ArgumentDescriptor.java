@@ -20,6 +20,8 @@ package org.sonatype.gshell.cli;
  * Descriptor for {@link Argument} annotations.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 2.0
  */
 public class ArgumentDescriptor
     extends Descriptor

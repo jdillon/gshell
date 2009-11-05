@@ -19,6 +19,7 @@ package org.sonatype.gshell.cli;
 import org.sonatype.gshell.cli.handler.Handler;
 import org.sonatype.gshell.cli.handler.Handlers;
 import org.sonatype.gshell.cli.Parameters;
+import org.sonatype.gshell.util.NameValue;
 import org.sonatype.gshell.util.setter.CollectionFieldSetter;
 import org.sonatype.gshell.util.setter.FieldSetter;
 import org.sonatype.gshell.util.setter.MethodSetter;
@@ -40,6 +41,8 @@ import java.util.TreeMap;
  * Processes an object for command-line configuration annotations.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 2.0
  */
 public class Processor
 {

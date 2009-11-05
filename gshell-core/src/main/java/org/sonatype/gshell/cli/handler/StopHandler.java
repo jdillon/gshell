@@ -26,9 +26,11 @@ import org.sonatype.gshell.util.setter.Setter;
  * Handler to abort further option processing (and soak up remaining tokens as arguments).
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 2.0
  */
 public class StopHandler
-    extends Handler<String>
+    extends Handler
 {
     public StopHandler(final Descriptor desc, Setter setter) {
         super(desc, setter);

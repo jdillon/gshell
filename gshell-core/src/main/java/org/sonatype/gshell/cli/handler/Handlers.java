@@ -20,23 +20,18 @@ import org.sonatype.gshell.cli.Descriptor;
 import org.sonatype.gshell.cli.IllegalAnnotationError;
 import org.sonatype.gshell.util.setter.Setter;
 
-import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URI;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Provides access to handlers.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 2.0
  */
 public class Handlers
 {
-    private static final Map<Class,Constructor<? extends Handler>> handlerClasses = Collections.synchronizedMap(new HashMap<Class,Constructor<? extends Handler>>());
-
     private static Constructor<? extends Handler> createHandlerFactory(final Class<? extends Handler> handlerType) {
         assert handlerType != null;
 
@@ -48,18 +43,6 @@ public class Handlers
         }
     }
 
-    private static Constructor<? extends Handler> getHandlerFactory(final Class type) {
-        assert type != null;
-
-        Constructor<? extends Handler> factory = handlerClasses.get(type);
-
-        if (factory == null) {
-            throw new IllegalAnnotationError("No handler registered for type: " + type);    
-        }
-
-        return factory;
-    }
-
     @SuppressWarnings({"unchecked"})
     public static Handler create(final Descriptor desc, final Setter setter) {
         assert desc != null;
@@ -69,14 +52,17 @@ public class Handlers
         Class<? extends Handler> handlerType = desc.getHandlerType();
 
         if (handlerType == Handler.class) {
-            Class valueType = setter.getType();
-
-            // Enum requires some special handling
-            if (Enum.class.isAssignableFrom(valueType)) {
-                return new EnumHandler(desc, setter, valueType);
+            if (Enum.class.isAssignableFrom(setter.getType())) {
+                // Enum requires some special handling
+                return new EnumHandler(desc, setter);
             }
-
-            factory = Handlers.getHandlerFactory(valueType);
+            else if (Boolean.class.isAssignableFrom(setter.getType()) || boolean.class.isAssignableFrom(setter.getType())) {
+                // Boolean requires some special handling
+                return new BooleanHandler(desc, setter);
+            }
+            else {
+                return new ConvertingHandler(desc, setter);
+            }
         }
         else {
             factory = Handlers.createHandlerFactory(handlerType);
@@ -94,34 +80,5 @@ public class Handlers
         catch (InvocationTargetException e) {
             throw new IllegalAnnotationError(e);
         }
-    }
-
-    //
-    // Registration
-    //
-
-    public static void register(final Class valueType, final Class<? extends Handler> handlerType) {
-        assert valueType != null;
-        assert handlerType != null;
-        assert Handler.class.isAssignableFrom(handlerType);
-
-        Constructor<? extends Handler> factory = createHandlerFactory(handlerType);
-
-        handlerClasses.put(valueType, factory);
-    }
-
-    static {
-        register(Boolean.class, BooleanHandler.class);
-        register(boolean.class, BooleanHandler.class);
-        register(Integer.class, IntegerHandler.class);
-        register(int.class, IntegerHandler.class);
-        register(Long.class, LongHandler.class);
-        register(long.class, LongHandler.class);
-        register(Double.class, DoubleHandler.class);
-        register(double.class, DoubleHandler.class);
-        register(String.class, StringHandler.class);
-        register(Object.class, ObjectHandler.class);
-        register(File.class, FileHandler.class);
-        register(URI.class, UriHandler.class);
     }
 }

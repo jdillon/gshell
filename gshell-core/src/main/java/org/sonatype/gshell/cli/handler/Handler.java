@@ -21,19 +21,21 @@ import org.sonatype.gshell.cli.Descriptor;
 import org.sonatype.gshell.cli.OptionDescriptor;
 import org.sonatype.gshell.cli.Parameters;
 import org.sonatype.gshell.cli.ProcessingException;
-import org.sonatype.gshell.util.setter.Setter;
 import org.sonatype.gshell.i18n.MessageSource;
 import org.sonatype.gshell.i18n.ResourceNotFoundException;
+import org.sonatype.gshell.util.setter.Setter;
 
 /**
  * Provides the basic mechanism to handle custom option and argument processing.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 2.0
  */
-public abstract class Handler<T>
+public abstract class Handler
 {
     private final Descriptor descriptor;
-    
+
     private final Setter setter;
 
     private boolean kvp = false;

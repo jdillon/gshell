@@ -17,32 +17,20 @@
 package org.sonatype.gshell.cli.handler;
 
 import org.sonatype.gshell.cli.Descriptor;
-import org.sonatype.gshell.cli.Parameters;
-import org.sonatype.gshell.cli.ProcessingException;
-import org.sonatype.gshell.util.converter.Converters;
 import org.sonatype.gshell.util.setter.Setter;
 
 /**
  * Handler for enum types.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 2.0
  */
-public class EnumHandler<T extends Enum<T>>
-    extends Handler<T>
+public class EnumHandler
+    extends ConvertingHandler
 {
-    private final Class<T> type;
-
-    public EnumHandler(final Descriptor desc, final Setter setter, final Class<T> type) {
+    public EnumHandler(final Descriptor desc, final Setter setter) {
         super(desc, setter);
-        assert type != null;
-        this.type = type;
-    }
-
-    @Override
-    public int handle(final Parameters params) throws ProcessingException {
-        assert params != null;
-        getSetter().set(Converters.getValue(type, params.get(0)));
-        return 1;
     }
 
     @Override
@@ -50,11 +38,11 @@ public class EnumHandler<T extends Enum<T>>
         StringBuilder buff = new StringBuilder();
         buff.append('[');
 
-        T[] constants = type.getEnumConstants();
-        
-        for (int i=0; i<constants.length; i++) {
+        Enum[] constants = (Enum[]) getSetter().getType().getEnumConstants();
+
+        for (int i = 0; i < constants.length; i++) {
             buff.append(constants[i].name().toLowerCase());
-            if (i+1<constants.length) {
+            if (i + 1 < constants.length) {
                 buff.append('|');
             }
         }

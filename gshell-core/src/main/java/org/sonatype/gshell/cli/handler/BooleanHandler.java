@@ -27,9 +27,11 @@ import org.sonatype.gshell.util.setter.Setter;
  * Handler for boolean types.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 2.0
  */
 public class BooleanHandler
-    extends Handler<Boolean>
+    extends Handler
 {
     public BooleanHandler(final Descriptor desc, final Setter setter) {
         super(desc, setter);
@@ -39,14 +41,12 @@ public class BooleanHandler
     public int handle(final Parameters params) throws ProcessingException {
         assert params != null;
 
-        if (isArgument() || ((OptionDescriptor)getDescriptor()).isArgumentRequired()) {
+        if (isArgument() || ((OptionDescriptor) getDescriptor()).isArgumentRequired()) {
             getSetter().set(Converters.getValue(Boolean.class, params.get(0)));
-
             return 1;
         }
         else {
             getSetter().set(true);
-
             return 0;
         }
     }

@@ -20,9 +20,11 @@ import org.sonatype.gshell.i18n.MessageSource;
 import org.sonatype.gshell.i18n.ResourceBundleMessageSource;
 
 /**
- * Messages for the {@link org.apache.maven.shell.cli} package.
+ * Messages for the {@link org.sonatype.gshell.cli} package.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 2.0
  */
 enum Messages
 {

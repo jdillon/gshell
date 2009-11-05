@@ -19,32 +19,33 @@ package org.sonatype.gshell.cli.handler;
 import org.sonatype.gshell.cli.Descriptor;
 import org.sonatype.gshell.cli.Parameters;
 import org.sonatype.gshell.cli.ProcessingException;
+import org.sonatype.gshell.util.converter.Converters;
 import org.sonatype.gshell.util.setter.Setter;
 
 /**
- * Handler for object types, simply treating them as strings.
- *
- * <p>This is for compatibility with multi-valued bits that don't use generics to
- *    indicate the class of contained elements.
+ * Handler which uses a {@link org.sonatype.gshell.util.converter.Converter} to coerce types.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 2.0
  */
-public class ObjectHandler
-    extends Handler<Object>
+public class ConvertingHandler
+    extends Handler
 {
-    public ObjectHandler(final Descriptor desc, Setter setter) {
+    public ConvertingHandler(final Descriptor desc, final Setter setter) {
         super(desc, setter);
     }
 
     @Override
     public int handle(final Parameters params) throws ProcessingException {
         assert params != null;
-        getSetter().set(params.get(0));
+        Setter setter = getSetter();
+        setter.set(Converters.getValue(setter.getType(), params.get(0)));
         return 1;
     }
 
     @Override
     public String getDefaultToken() {
-        return "OBJ";
+        return "VAL";
     }
 }

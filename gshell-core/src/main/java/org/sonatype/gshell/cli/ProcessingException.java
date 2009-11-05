@@ -20,6 +20,8 @@ package org.sonatype.gshell.cli;
  * Thrown to indicate a problem processing command line arguments and options.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 2.0
  */
 public class ProcessingException
     extends Exception

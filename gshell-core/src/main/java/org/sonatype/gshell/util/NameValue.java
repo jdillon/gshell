@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.cli;
+package org.sonatype.gshell.util;
 
 /**
  * Container and parser for <tt>name=value</tt> bits.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 2.0
  */
 public class NameValue
 {
