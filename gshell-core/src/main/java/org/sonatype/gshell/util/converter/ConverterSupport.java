@@ -92,9 +92,9 @@ public abstract class ConverterSupport
      * Converts the supplied text in to an instance of the editor type.  The text will never be null, and trim() will
      * already have been called.
      *
-     * @param text          The text to convert
-     * @return              An instance of the converted type
-     * @throws Exception    Conversion failed
+     * @param text The text to convert
+     * @return An instance of the converted type
+     * @throws Exception Conversion failed
      */
     protected abstract Object toObjectImpl(final String text) throws Exception;
 }

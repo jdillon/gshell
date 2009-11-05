@@ -18,7 +18,6 @@ package org.sonatype.gshell.util.converter.collections;
 
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Converter for {@link LinkedHashSet} types.

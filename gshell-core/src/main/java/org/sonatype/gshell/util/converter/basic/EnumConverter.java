@@ -33,7 +33,7 @@ public class EnumConverter
     }
 
     protected Object toObjectImpl(final String text) throws Exception {
-        for (Enum n : (Enum[])getType().getEnumConstants()) {
+        for (Enum n : (Enum[]) getType().getEnumConstants()) {
             if (n.name().equalsIgnoreCase(text)) {
                 return n;
             }

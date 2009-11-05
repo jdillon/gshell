@@ -31,7 +31,7 @@ public abstract class MapConverterSupport
     extends ConverterSupport
 {
     private final PropertyEditor keyEditor;
-    
+
     private final PropertyEditor valueEditor;
 
     public MapConverterSupport(final Class type) {
@@ -49,7 +49,8 @@ public abstract class MapConverterSupport
      * is converted into a Property bundle.
      *
      * @return a Properties object
-     * @throws org.sonatype.gshell.util.converter.ConversionException An error occurred creating the Properties object.
+     * @throws org.sonatype.gshell.util.converter.ConversionException
+     *          An error occurred creating the Properties object.
      */
     protected final Object toObjectImpl(final String text) throws Exception {
         Map map = CollectionUtil.toMap(text, keyEditor, valueEditor);

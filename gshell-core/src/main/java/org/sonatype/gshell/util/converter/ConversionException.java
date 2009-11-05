@@ -26,7 +26,8 @@ public class ConversionException
 {
     ///CLOVER:OFF
 
-    public ConversionException() {}
+    public ConversionException() {
+    }
 
     public ConversionException(final Throwable cause) {
         super(cause);

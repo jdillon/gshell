@@ -31,7 +31,7 @@ public class FileConverter
     public FileConverter() {
         super(File.class);
     }
-    
+
     protected Object toObjectImpl(final String text) throws Exception {
         return new File(text);
     }
