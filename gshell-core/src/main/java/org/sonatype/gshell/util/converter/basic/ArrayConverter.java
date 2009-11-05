@@ -28,7 +28,7 @@ import java.util.ListIterator;
  *
  * @since 2.0
  */
-public final class ArrayConverter
+public class ArrayConverter
     extends CollectionConverterSupport
 {
     public ArrayConverter(final Class type, final PropertyEditor editor) {

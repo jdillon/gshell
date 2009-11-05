@@ -25,7 +25,7 @@ import java.util.Set;
  *
  * @since 2.0
  */
-public final class LinkedHashSetConverter
+public class LinkedHashSetConverter
     extends CollectionConverterSupport
 {
     public LinkedHashSetConverter() {

@@ -24,7 +24,7 @@ import java.util.List;
  *
  * @since 2.0
  */
-public final class LinkedListConverter
+public class LinkedListConverter
     extends CollectionConverterSupport
 {
     public LinkedListConverter() {

@@ -24,7 +24,7 @@ import java.util.TreeSet;
  *
  * @since 2.0
  */
-public final class SortedSetConverter
+public class SortedSetConverter
     extends CollectionConverterSupport
 {
     public SortedSetConverter() {

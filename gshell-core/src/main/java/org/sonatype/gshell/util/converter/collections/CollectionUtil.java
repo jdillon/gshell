@@ -37,7 +37,7 @@ import java.util.StringTokenizer;
  *
  * @since 2.0
  */
-public final class CollectionUtil
+public class CollectionUtil
 {
     @SuppressWarnings({"unchecked"})
     public static List toList(String text, final PropertyEditor componentEditor) {
