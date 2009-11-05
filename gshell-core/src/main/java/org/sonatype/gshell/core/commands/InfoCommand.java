@@ -239,6 +239,6 @@ public class InfoCommand
     }
 
     private void println(final IO io, final String name, final Object value) {
-        io.out.format("  @|bold %s|: %s", name, value).println();
+        io.out.format("  @|bold %s|@: %s", name, value).println();
     }
 }

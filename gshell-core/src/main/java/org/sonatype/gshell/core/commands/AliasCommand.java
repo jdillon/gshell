@@ -91,7 +91,7 @@ public class AliasCommand
                 String alias = aliasRegistry.getAlias(name);
                 String formattedName = String.format(nameFormat, name);
 
-                io.out.format("  @|bold %s|  ", formattedName);
+                io.out.format("  @|bold %s|@  ", formattedName);
                 io.out.println(getMessages().format("info.alias-to", alias));
             }
         }

@@ -107,7 +107,7 @@ public class BrandingSupport
     }
 
     public String getPrompt() {
-        return String.format("@|bold %s|> ", getProgramName());
+        return String.format("@|bold %s|@> ", getProgramName());
     }
 
     public String getProfileScriptName() {

@@ -96,6 +96,6 @@ public class HistoryCommand
 
     private void renderElement(final IO io, final int i, final String element) {
         String index = String.format("%3d", i);
-        io.info("  @|bold {}| {}", index, element);
+        io.info("  @|bold {}|@ {}", index, element);
     }
 }

@@ -50,28 +50,28 @@ public class AnsiRendererTest
 
     @Test
     public void testRender() {
-        String str = renderer.render("@|bold foo|");
+        String str = renderer.render("@|bold foo|@");
         System.out.println(str);
         assertEquals(Ansi.ansi().a(Ansi.Attribute.INTENSITY_BOLD).a("foo").reset().toString(), str);
     }
 
     @Test
     public void testRender2() {
-        String str = renderer.render("@|bold,red foo|");
+        String str = renderer.render("@|bold,red foo|@");
         System.out.println(str);
         assertEquals(Ansi.ansi().a(Ansi.Attribute.INTENSITY_BOLD).fg(Ansi.Color.RED).a("foo").reset().toString(), str);
     }
 
     @Test
     public void testRender3() {
-        String str = renderer.render("@|bold,red foo bar baz|");
+        String str = renderer.render("@|bold,red foo bar baz|@");
         System.out.println(str);
         assertEquals(Ansi.ansi().a(Ansi.Attribute.INTENSITY_BOLD).fg(Ansi.Color.RED).a("foo bar baz").reset().toString(), str);
     }
 
     @Test
     public void testRender4() {
-        String str = renderer.render("@|bold,red foo bar baz| ick @|bold,red foo bar baz|");
+        String str = renderer.render("@|bold,red foo bar baz|@ ick @|bold,red foo bar baz|@");
         System.out.println(str);
         assertEquals(Ansi.ansi()
                 .a(Ansi.Attribute.INTENSITY_BOLD).fg(Ansi.Color.RED).a("foo bar baz").reset()
@@ -93,7 +93,7 @@ public class AnsiRendererTest
 
     @Test
     public void testRenderInvalidMissingText() {
-        String str = renderer.render("@|bold|");
-        assertEquals("@|bold|", str);
+        String str = renderer.render("@|bold|@");
+        assertEquals("@|bold|@", str);
     }
 }

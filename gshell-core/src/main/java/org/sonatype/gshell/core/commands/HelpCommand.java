@@ -121,7 +121,7 @@ public class HelpCommand
             String formattedName = String.format(nameFormat, command.getName());
             String desc = commandDocumeter.getDescription(command);
 
-            io.out.format("  @|bold %s|", formattedName);
+            io.out.format("  @|bold %s|@", formattedName);
             if (desc != null) {
                 io.out.print("  ");
                 io.out.println(desc);

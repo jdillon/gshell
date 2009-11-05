@@ -16,10 +16,8 @@
 
 package org.sonatype.gshell.ansi;
 
-import org.fusesource.jansi.Ansi;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import org.fusesource.jansi.Ansi.Color;
+import org.fusesource.jansi.Ansi.Attribute;
 
 /**
  * Renders ANSI color escape-codes in strings by parsing out some special syntax to pick up the correct fluff to use.
@@ -28,7 +26,7 @@ import java.util.regex.Pattern;
  * The syntax for embedded ANSI codes is:
  * 
  * <pre>
- *     @|<code>(,<code>)*<space><text>|
+ *     @|<code>(,<code>)*<space><text>|@
  * </pre>
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
@@ -39,28 +37,56 @@ public class AnsiRenderer
 {
     public static final String BEGIN_TOKEN = "@|";
 
-    public static final String END_TOKEN = "|";
+    private static final int BEGIN_TOKEN_LEN = 2;
+
+    public static final String END_TOKEN = "|@";
+
+    private static final int END_TOKEN_LEN = 2;
 
     public static final String CODE_TEXT_SEPARATOR  = " ";
 
     public static final String CODE_LIST_SEPARATOR  = ",";
 
-    private static final Pattern PATTERN = Pattern.compile("\\@\\|([^ ]+) ([^|]+)\\|");
+    public String render(final String input) throws IllegalArgumentException {
+        StringBuffer buff = new StringBuffer();
 
-    public String render(String input) {
-        if (input != null) {
-            Matcher matcher = PATTERN.matcher(input);
+        int i = 0;
+        int j, k;
 
-            while (matcher.find()) {
-                String rep = render(matcher.group(2), matcher.group(1).split(CODE_LIST_SEPARATOR));
-                if (rep != null) {
-                    input = input.replace(matcher.group(0), rep);
-                    matcher.reset(input);
+        while (true) {
+            j = input.indexOf(BEGIN_TOKEN, i);
+            if (j == -1) {
+                if (i == 0) {
+                    return input;
+                }
+                else {
+                    buff.append(input.substring(i, input.length()));
+                    return buff.toString();
+                }
+            }
+            else {
+                buff.append(input.substring(i, j));
+                k = input.indexOf(END_TOKEN, j);
+
+                if (k == -1) {
+                    return input;
+                }
+                else {
+                    j += BEGIN_TOKEN_LEN;
+                    String spec = input.substring(j, k);
+
+                    String[] items = spec.split(CODE_TEXT_SEPARATOR, 2);
+                    if (items.length == 1) {
+                        return input;
+                    }
+                    String replacement = render(items[1], items[0].split(CODE_LIST_SEPARATOR));
+
+                    buff.append(replacement);
+
+                    i = k + END_TOKEN_LEN;
                 }
             }
         }
-
-        return input;
     }
 
     private String render(final String text, final String... codes) {
@@ -92,55 +118,55 @@ public class AnsiRenderer
     public static enum Code
     {
         // Colors
-        BLACK(org.fusesource.jansi.Ansi.Color.BLACK),
-        RED(Ansi.Color.RED),
-        GREEN(Ansi.Color.GREEN),
-        YELLOW(Ansi.Color.YELLOW),
-        BLUE(Ansi.Color.BLUE),
-        MAGENTA(Ansi.Color.MAGENTA),
-        CYAN(Ansi.Color.CYAN),
-        WHITE(Ansi.Color.WHITE),
+        BLACK(Color.BLACK),
+        RED(Color.RED),
+        GREEN(Color.GREEN),
+        YELLOW(Color.YELLOW),
+        BLUE(Color.BLUE),
+        MAGENTA(Color.MAGENTA),
+        CYAN(Color.CYAN),
+        WHITE(Color.WHITE),
 
         // Forground Colors
-        FG_BLACK(Ansi.Color.BLACK, false),
-        FG_RED(Ansi.Color.RED, false),
-        FG_GREEN(Ansi.Color.GREEN, false),
-        FG_YELLOW(Ansi.Color.YELLOW, false),
-        FG_BLUE(Ansi.Color.BLUE, false),
-        FG_MAGENTA(Ansi.Color.MAGENTA, false),
-        FG_CYAN(Ansi.Color.CYAN, false),
-        FG_WHITE(Ansi.Color.WHITE, false),
+        FG_BLACK(Color.BLACK, false),
+        FG_RED(Color.RED, false),
+        FG_GREEN(Color.GREEN, false),
+        FG_YELLOW(Color.YELLOW, false),
+        FG_BLUE(Color.BLUE, false),
+        FG_MAGENTA(Color.MAGENTA, false),
+        FG_CYAN(Color.CYAN, false),
+        FG_WHITE(Color.WHITE, false),
 
         // Background Colors
-        BG_BLACK(Ansi.Color.BLACK, true),
-        BG_RED(Ansi.Color.RED, true),
-        BG_GREEN(Ansi.Color.GREEN, true),
-        BG_YELLOW(Ansi.Color.YELLOW, true),
-        BG_BLUE(Ansi.Color.BLUE, true),
-        BG_MAGENTA(Ansi.Color.MAGENTA, true),
-        BG_CYAN(Ansi.Color.CYAN, true),
-        BG_WHITE(Ansi.Color.WHITE, true),
+        BG_BLACK(Color.BLACK, true),
+        BG_RED(Color.RED, true),
+        BG_GREEN(Color.GREEN, true),
+        BG_YELLOW(Color.YELLOW, true),
+        BG_BLUE(Color.BLUE, true),
+        BG_MAGENTA(Color.MAGENTA, true),
+        BG_CYAN(Color.CYAN, true),
+        BG_WHITE(Color.WHITE, true),
 
         // Attributes
-        RESET(Ansi.Attribute.RESET),
-        INTENSITY_BOLD(Ansi.Attribute.INTENSITY_BOLD),
-        INTENSITY_FAINT(Ansi.Attribute.INTENSITY_FAINT),
-        ITALIC(Ansi.Attribute.ITALIC),
-        UNDERLINE(Ansi.Attribute.UNDERLINE),
-        BLINK_SLOW(Ansi.Attribute.BLINK_SLOW),
-        BLINK_FAST(Ansi.Attribute.BLINK_FAST),
-        BLINK_OFF(Ansi.Attribute.BLINK_OFF),
-        NEGATIVE_ON(Ansi.Attribute.NEGATIVE_ON),
-        NEGATIVE_OFF(Ansi.Attribute.NEGATIVE_OFF),
-        CONCEAL_ON(Ansi.Attribute.CONCEAL_ON),
-        CONCEAL_OFF(Ansi.Attribute.CONCEAL_OFF),
-        UNDERLINE_DOUBLE(Ansi.Attribute.UNDERLINE_DOUBLE),
-        INTENSITY_NORMAL(Ansi.Attribute.INTENSITY_NORMAL),
-        UNDERLINE_OFF(Ansi.Attribute.UNDERLINE_OFF),
+        RESET(Attribute.RESET),
+        INTENSITY_BOLD(Attribute.INTENSITY_BOLD),
+        INTENSITY_FAINT(Attribute.INTENSITY_FAINT),
+        ITALIC(Attribute.ITALIC),
+        UNDERLINE(Attribute.UNDERLINE),
+        BLINK_SLOW(Attribute.BLINK_SLOW),
+        BLINK_FAST(Attribute.BLINK_FAST),
+        BLINK_OFF(Attribute.BLINK_OFF),
+        NEGATIVE_ON(Attribute.NEGATIVE_ON),
+        NEGATIVE_OFF(Attribute.NEGATIVE_OFF),
+        CONCEAL_ON(Attribute.CONCEAL_ON),
+        CONCEAL_OFF(Attribute.CONCEAL_OFF),
+        UNDERLINE_DOUBLE(Attribute.UNDERLINE_DOUBLE),
+        INTENSITY_NORMAL(Attribute.INTENSITY_NORMAL),
+        UNDERLINE_OFF(Attribute.UNDERLINE_OFF),
 
         // Aliases
-        BOLD(Ansi.Attribute.INTENSITY_BOLD),
-        FAINT(Ansi.Attribute.INTENSITY_FAINT),
+        BOLD(Attribute.INTENSITY_BOLD),
+        FAINT(Attribute.INTENSITY_FAINT),
         ;
 
         private final Enum n;
@@ -165,11 +191,11 @@ public class AnsiRenderer
         }
 
         public boolean isAttribute() {
-            return n instanceof Ansi.Attribute;
+            return n instanceof Attribute;
         }
 
-        public Ansi.Attribute getAttribute() {
-            return (Ansi.Attribute) n;
+        public Attribute getAttribute() {
+            return (Attribute) n;
         }
 
         public boolean isBackground() {

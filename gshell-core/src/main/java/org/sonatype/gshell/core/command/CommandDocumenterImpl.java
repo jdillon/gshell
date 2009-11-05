@@ -131,14 +131,14 @@ public class CommandDocumenterImpl
         PrintStream out = new PrintStream(new PrefixingOutputStream(io.streams.out, "   "));
         AnsiRenderer renderer = new AnsiRenderer();
 
-        io.out.format("@|bold %s|", messages.getMessage("section.name")).println();
+        io.out.format("@|bold %s|@", messages.getMessage("section.name")).println();
         io.out.println();
         out.println(command.getName());
         io.out.println();
 
         String text;
 
-        io.out.format("@|bold %s|", messages.getMessage("section.description")).println();
+        io.out.format("@|bold %s|@", messages.getMessage("section.description")).println();
         text = getDescription(command);
         text = renderer.render(text);
         out.println();
@@ -147,7 +147,7 @@ public class CommandDocumenterImpl
 
         String manual = getManual(command);
         if (manual != null && manual.trim().length() != 0) {
-            io.out.format("@|bold %s|", messages.getMessage("section.manual")).println();
+            io.out.format("@|bold %s|@", messages.getMessage("section.manual")).println();
             text = manual;
             text = renderer.render(text);
             out.println();

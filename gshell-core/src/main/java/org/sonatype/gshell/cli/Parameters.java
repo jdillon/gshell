@@ -16,8 +16,6 @@
 
 package org.sonatype.gshell.cli;
 
-import org.sonatype.gshell.cli.ProcessingException;
-
 /**
  * Provides handlers with access to parameters to be consumed while processing.
  *

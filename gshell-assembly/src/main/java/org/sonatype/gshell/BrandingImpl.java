@@ -66,7 +66,7 @@ public class BrandingImpl
         out.println();
         out.format("%s (%s)", getDisplayName(), getVersion()).println();
         out.println();
-        out.println("Type '@|bold help|' for more information.");
+        out.println("Type '@|bold help|@' for more information.");
         out.print(line());
         out.flush();
 
