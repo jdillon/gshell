@@ -28,7 +28,7 @@ import java.lang.reflect.Method;
 public class EnumConverter
     extends ConverterSupport
 {
-    public EnumConverter(final Class<? extends Enum> type) {
+    public EnumConverter(final Class type) {
         super(type);
     }
 
