@@ -28,6 +28,7 @@ import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.core.command.CommandActionSupport;
 import org.sonatype.gshell.io.Closer;
 import org.sonatype.gshell.io.Flusher;
+import org.sonatype.gshell.pref.PreferenceProcessor;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -86,8 +87,11 @@ public class PreferenceCommand
 
         Operation op = createOperation(context);
 
-        CommandLineProcessor cli = new CommandLineProcessor(op);
-        cli.process(args);
+        PreferenceProcessor pp = new PreferenceProcessor(op);
+        pp.process();
+        
+        CommandLineProcessor clp = new CommandLineProcessor(op);
+        clp.process(args);
 
         return op.execute();
     }
