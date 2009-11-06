@@ -18,6 +18,7 @@ package org.sonatype.gshell.util.setter;
 
 import org.sonatype.gshell.util.IllegalAnnotationError;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -28,21 +29,18 @@ import java.lang.reflect.Method;
  * @since 2.0
  */
 public class MethodSetter
-    implements Setter
+    extends SetterSupport
 {
-    private final Object bean;
-    
     private final Method method;
 
-    public MethodSetter(final Object bean, final Method method) {
-        assert bean != null;
+    public MethodSetter(final Method method, final Object bean) {
+        super(method, bean);
+
         assert method != null;
-        
-        this.bean = bean;
         this.method = method;
-        
+
         if (method.getParameterTypes().length != 1) {
-            throw new IllegalAnnotationError(Messages.ILLEGAL_METHOD_SIGNATURE.format(method));
+            throw new IllegalArgumentException(Messages.ILLEGAL_METHOD_SIGNATURE.format(method));
         }
     }
 
@@ -58,19 +56,21 @@ public class MethodSetter
         return false;
     }
 
-    public void set(final Object value) throws Exception {
+    protected void doSet(final Object value) throws IllegalAccessException {
         try {
-            method.invoke(bean, value);
+            method.invoke(getBean(), value);
         }
-        catch (IllegalAccessException ignore) {
-            method.setAccessible(true);
+        catch (InvocationTargetException e) {
+            // Decode or wrap the target exception
+            Throwable t = e.getTargetException();
 
-            try {
-                method.invoke(bean, value);
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException)t;
             }
-            catch (IllegalAccessException e) {
-                throw new IllegalAccessError(e.getMessage());
+            if (t instanceof Error) {
+                throw (Error)t;
             }
+            throw new Error(t);
         }
     }
 }

@@ -14,41 +14,31 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.util.setter;
+package org.sonatype.gshell.pref;
 
-import java.lang.reflect.Field;
+import org.junit.After;
+import org.junit.Before;
+
+import static org.junit.Assert.assertEquals;
 
 /**
- * Setter for fields.
+ * Support for {@link org.sonatype.gshell.pref.Processor} tests.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
- * @since 2.0
  */
-public class FieldSetter
-    extends SetterSupport
+public abstract class ProcessorTestSupport
 {
-    protected final Field field;
+    protected Processor processor;
 
-    public FieldSetter(final Field field, final Object bean) {
-        super(field, bean);
-        assert field != null;
-        this.field = field;
+    @Before
+    public void setUp() {
+        processor = new Processor(createBean());
     }
 
-    public String getName() {
-        return field.getName();
+    @After
+    public void tearDown() {
+        processor = null;
     }
 
-    public Class getType() {
-        return field.getType();
-    }
-
-    public boolean isMultiValued() {
-        return false;
-    }
-
-    protected void doSet(final Object value) throws IllegalAccessException {
-        field.set(getBean(), value);
-    }
+    protected abstract Object createBean();
 }

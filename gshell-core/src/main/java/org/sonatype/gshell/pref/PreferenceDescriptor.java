@@ -30,6 +30,8 @@ import java.util.prefs.Preferences;
  */
 public class PreferenceDescriptor
 {
+    private final Preference spec;
+
     private final Setter setter;
 
     private final String name;
@@ -38,12 +40,13 @@ public class PreferenceDescriptor
 
     private final boolean system;
 
-    protected PreferenceDescriptor(final Setter setter, final Preference pref) {
+    protected PreferenceDescriptor(final Preference pref, final Setter setter) {
+        assert pref != null;
+        this.spec = pref;
         assert setter != null;
         this.setter = setter;
-        assert pref != null;
 
-        // Handle "" = null, since default values in annotations can be set to null
+        // Handle "" = null, since default values in annotations cannot be set to null
         if (pref.name() != null && pref.name().length() == 0) {
             this.name = null;
         }
@@ -73,30 +76,31 @@ public class PreferenceDescriptor
         return system;
     }
 
-    public void set() throws Exception {
-        Preferences root = getRoot();
-        Preferences node = root.node(name);
-        setter.set(Converters.getValue(setter.getType(), node.get(name, null)));
+    public String getId() {
+        if (name != null) {
+            return name;
+        }
+        return getSetter().getName();
     }
 
-    private Preferences getRoot() {
-        Preferences root;
-        if (base != Void.class) {
-            if (system) {
-                root = Preferences.systemNodeForPackage(base);
-            }
-            else {
-                root = Preferences.userNodeForPackage(base);
-            }
+    private Preferences getPreferences() {
+        Class type = base;
+        if (type == Void.class) {
+            type = getSetter().getBean().getClass();
+        }
+
+        if (system) {
+            return Preferences.systemNodeForPackage(type);
         }
         else {
-            if (system) {
-                root = Preferences.systemRoot();
-            }
-            else {
-                root = Preferences.userRoot();
-            }
+            return Preferences.userNodeForPackage(type);
         }
-        return root;
+    }
+
+    public void set() throws Exception {
+        String value = getPreferences().get(getId(), null);
+        if (value != null) {
+            setter.set(Converters.getValue(setter.getType(), value));
+        }
     }
 }

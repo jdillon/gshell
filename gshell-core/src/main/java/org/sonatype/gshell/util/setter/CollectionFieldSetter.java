@@ -16,8 +16,6 @@
 
 package org.sonatype.gshell.util.setter;
 
-import org.sonatype.gshell.util.IllegalAnnotationError;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -38,39 +36,36 @@ public class CollectionFieldSetter
     extends FieldSetter
 {
     public CollectionFieldSetter(final Object bean, final Field field) {
-        super(bean, field);
+        super(field, bean);
 
         if (!Collection.class.isAssignableFrom(field.getType())) {
-            throw new IllegalAnnotationError(Messages.ILLEGAL_FIELD_SIGNATURE.format(field.getType()));
+            throw new IllegalArgumentException(Messages.ILLEGAL_FIELD_SIGNATURE.format(field.getType()));
         }
     }
 
-    @Override
     public boolean isMultiValued() {
         return true;
     }
 
-    @Override
     public Class getType() {
         Type type = field.getGenericType();
 
         if (type instanceof ParameterizedType) {
             ParameterizedType ptype = (ParameterizedType)type;
             type = ptype.getActualTypeArguments()[0];
-            
+
             if (type instanceof Class) {
                 return (Class)type;
             }
         }
-        
+
         // If collection types don't have a parameter type, then the ObjectHandler will be used
         // which basically is the same as the StringHandler
         return Object.class;
     }
 
-    @Override
     protected void doSet(final Object value) throws IllegalAccessException {
-        Object obj = field.get(bean);
+        Object obj = field.get(getBean());
 
         // If the field is not set, then create a new instance of the collection and set it
         if (obj == null) {
@@ -90,16 +85,16 @@ public class CollectionFieldSetter
                     obj = type.newInstance();
                 }
                 catch (Exception e) {
-                    throw new IllegalAnnotationError("Unsupported collection type: " + field.getType(), e);
+                    throw new IllegalStateException("Unsupported collection type: " + field.getType(), e);
                 }
             }
 
-            field.set(bean, obj);
+            field.set(getBean(), obj);
         }
 
         // This should never happen
         if (!(obj instanceof Collection)) {
-            throw new IllegalAnnotationError("Field is not a collection type: " + field);
+            throw new IllegalStateException("Field is not a collection type: " + field);
         }
 
         // noinspection unchecked

@@ -16,11 +16,13 @@
 
 package org.sonatype.gshell.util.setter;
 
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Collection;
 
 /**
- * ???
+ * Creates {@link Setter} instances.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *
@@ -28,15 +30,27 @@ import java.util.Collection;
  */
 public class SetterFactory
 {
-    public static Setter create(final Object bean, final Field field) {
+    public static Setter create(final AnnotatedElement element, final Object bean) {
+        assert element != null;
         assert bean != null;
-        assert field != null;
 
-        if (Collection.class.isAssignableFrom(field.getType())) {
-            return new CollectionFieldSetter(bean, field);
+        if (element instanceof Field) {
+            Field field = (Field)element;
+
+            if (Collection.class.isAssignableFrom(field.getType())) {
+                return new CollectionFieldSetter(bean, field);
+            }
+            else {
+                return new FieldSetter(field, bean);
+            }
+        }
+        else if (element instanceof Method) {
+            Method method = (Method)element;
+
+            return new MethodSetter(method, bean);
         }
         else {
-            return new FieldSetter(bean, field);
+            throw new Error();
         }
     }
 }

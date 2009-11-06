@@ -21,10 +21,10 @@ import org.sonatype.gshell.cli.handler.Handlers;
 import org.sonatype.gshell.i18n.MessageSource;
 import org.sonatype.gshell.util.IllegalAnnotationError;
 import org.sonatype.gshell.util.NameValue;
-import org.sonatype.gshell.util.setter.MethodSetter;
 import org.sonatype.gshell.util.setter.Setter;
 import org.sonatype.gshell.util.setter.SetterFactory;
 
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -97,36 +97,17 @@ public class Processor
     //
     // Discovery
     //
-    
+
     private void discoverDescriptors(final Object bean) {
         assert bean != null;
 
         // Recursively process all the methods/fields (@Inherited won't work here)
         for (Class type=bean.getClass(); type!=null; type=type.getSuperclass()) {
-            // Discover methods
             for (Method method : type.getDeclaredMethods()) {
-                Option option = method.getAnnotation(Option.class);
-                if (option != null) {
-                    addOption(new MethodSetter(bean, method), option);
-                }
-
-                Argument argument = method.getAnnotation(Argument.class);
-                if (argument != null) {
-                    addArgument(new MethodSetter(bean, method), argument);
-                }
+                discoverDescriptor(bean, method);
             }
-
-            // Discover fields
             for (Field field : type.getDeclaredFields()) {
-                Option option = field.getAnnotation(Option.class);
-                if (option != null) {
-                    addOption(SetterFactory.create(bean, field), option);
-                }
-
-                Argument argument = field.getAnnotation(Argument.class);
-                if (argument != null) {
-                    addArgument(SetterFactory.create(bean, field), argument);
-                }
+                discoverDescriptor(bean, field);
             }
         }
 
@@ -138,7 +119,25 @@ public class Processor
         }
     }
 
-    private void addArgument(final Setter setter, final Argument argument) {
+    private void discoverDescriptor(final Object bean, final AnnotatedElement element) {
+        assert bean != null;
+        assert element != null;
+
+        Option option = element.getAnnotation(Option.class);
+        Argument argument = element.getAnnotation(Argument.class);
+
+        if (option != null && argument != null) {
+            throw new IllegalAnnotationError("Element can only be Option or Argument, not both: " + element);
+        }
+        else if (option != null) {
+            addOption(option, SetterFactory.create(element, bean));
+        }
+        else if (argument != null) {
+            addArgument(argument, SetterFactory.create(element, bean));
+        }
+    }
+
+    private void addArgument(final Argument argument, final Setter setter) {
         Handler handler = Handlers.create(new ArgumentDescriptor(setter.getName(), argument, setter.isMultiValued()), setter);
         int index = argument.index();
 
@@ -154,7 +153,7 @@ public class Processor
         argumentHandlers.set(index, handler);
     }
 
-    private void addOption(final Setter setter, final Option option) {
+    private void addOption(final Option option, final Setter setter) {
         Handler handler = Handlers.create(new OptionDescriptor(setter.getName(), option, setter.isMultiValued()), setter);
         ensureUniqueOptionName(option.name());
 

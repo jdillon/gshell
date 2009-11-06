@@ -14,41 +14,43 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.util.setter;
+package org.sonatype.gshell.pref;
 
-import java.lang.reflect.Field;
+import org.junit.Test;
+
+import java.util.prefs.Preferences;
+
+import static org.junit.Assert.assertEquals;
 
 /**
- * Setter for fields.
+ * Some simple tests to validate basic functionality.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
- * @since 2.0
  */
-public class FieldSetter
-    extends SetterSupport
+public class BaseTest
+    extends ProcessorTestSupport
 {
-    protected final Field field;
+    private Simple bean;
 
-    public FieldSetter(final Field field, final Object bean) {
-        super(field, bean);
-        assert field != null;
-        this.field = field;
+    @Override
+    protected Object createBean() {
+        bean = new Simple();
+        return bean;
     }
 
-    public String getName() {
-        return field.getName();
+    @Test
+    public void test1() throws Exception {
+        Preferences prefs = Preferences.userNodeForPackage(BaseTest.class);
+        prefs.put("name", "foo");
+
+        processor.process();
+
+        assertEquals("foo", bean.name);
     }
 
-    public Class getType() {
-        return field.getType();
-    }
-
-    public boolean isMultiValued() {
-        return false;
-    }
-
-    protected void doSet(final Object value) throws IllegalAccessException {
-        field.set(getBean(), value);
+    private static class Simple
+    {
+        @Preference(base=BaseTest.class)
+        String name;
     }
 }

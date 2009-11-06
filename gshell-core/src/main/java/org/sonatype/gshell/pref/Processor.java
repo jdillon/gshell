@@ -16,10 +16,10 @@
 
 package org.sonatype.gshell.pref;
 
-import org.sonatype.gshell.util.setter.MethodSetter;
 import org.sonatype.gshell.util.setter.Setter;
 import org.sonatype.gshell.util.setter.SetterFactory;
 
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -55,26 +55,27 @@ public class Processor
 
         // Recursively process all the methods/fields (@Inherited won't work here)
         for (Class type=bean.getClass(); type!=null; type=type.getSuperclass()) {
-            // Discover methods
             for (Method method : type.getDeclaredMethods()) {
-                Preference option = method.getAnnotation(Preference.class);
-                if (option != null) {
-                    addPreference(new MethodSetter(bean, method), option);
-                }
+                discoverDescriptor(bean, method);
             }
-
-            // Discover fields
             for (Field field : type.getDeclaredFields()) {
-                Preference option = field.getAnnotation(Preference.class);
-                if (option != null) {
-                    addPreference(SetterFactory.create(bean, field), option);
-                }
+                discoverDescriptor(bean, field);
             }
         }
     }
 
-    private void addPreference(final Setter setter, final Preference preference) {
-        descriptors.add(new PreferenceDescriptor(setter, preference));
+    private void discoverDescriptor(final Object bean, final AnnotatedElement element) {
+        assert bean != null;
+        assert element != null;
+
+        Preference pref = element.getAnnotation(Preference.class);
+        if (pref != null) {
+            addPreference(pref, SetterFactory.create(element, bean));
+        }
+    }
+
+    private void addPreference(final Preference preference, final Setter setter) {
+        descriptors.add(new PreferenceDescriptor(preference, setter));
     }
 
     public void process() throws Exception {

@@ -25,24 +25,16 @@ package org.sonatype.gshell.util.setter;
  */
 public interface Setter
 {
-    /**
-     * Adds/sets a value to the property of the option bean.
-     *
-     * <p>
-     * A {@link Setter} object has an implicit knowledge about the property it's setting,
-     * and the instance of the option bean.
-     */
     void set(Object value) throws Exception;
 
+    Object getBean();
+
     String getName();
-    
+
+    Class<?> getType();
+
     /**
-     * Gets the type of the underlying method/field.
-     */
-    Class getType();
-    
-    /**
-     * Whether this setter is instrinsically multi-valued.
+     * Whether this setter is intrinsically multi-valued.
      */
     boolean isMultiValued();
 }

@@ -43,7 +43,7 @@ public abstract class Descriptor
         assert id != null;
         this.id = id;
 
-        // Handle "" = null, since default values in annotations can be set to null
+        // Handle "" = null, since default values in annotations cannot be set to null
         if (description != null && description.length() == 0) {
             this.description = null;
         }
