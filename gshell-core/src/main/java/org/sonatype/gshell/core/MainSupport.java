@@ -83,6 +83,7 @@ public abstract class MainSupport
         vars.set(SHELL_LOGGING, level);
     }
 
+    @Preference(name="debug")
     @Option(name = "-d", aliases = {"--debug"})
     protected void setDebug(final boolean flag) {
         if (flag) {
@@ -91,6 +92,7 @@ public abstract class MainSupport
         }
     }
 
+    @Preference(name="trace")
     @Option(name = "-X", aliases = {"--trace"})
     protected void setTrace(final boolean flag) {
         if (flag) {
@@ -99,6 +101,7 @@ public abstract class MainSupport
         }
     }
 
+    @Preference(name="verbose")
     @Option(name = "-v", aliases = {"--verbose"})
     protected void setVerbose(final boolean flag) {
         if (flag) {
@@ -107,6 +110,7 @@ public abstract class MainSupport
         }
     }
 
+    @Preference(name="quiet")
     @Option(name = "-q", aliases = {"--quiet"})
     protected void setQuiet(final boolean flag) {
         if (flag) {
@@ -130,11 +134,13 @@ public abstract class MainSupport
         System.setProperty(nv.name, nv.value);
     }
 
+    @Preference(name="color")
     @Option(name = "-C", aliases = {"--color"}, argumentRequired = true)
     protected void enableAnsiColors(final boolean flag) {
         Ansi.setEnabled(flag);
     }
 
+    @Preference(name="terminal")
     @Option(name = "-T", aliases = {"--terminal"}, argumentRequired = true)
     protected void setTerminalType(final String type) {
         TerminalFactory.configure(type);
