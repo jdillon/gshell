@@ -26,6 +26,7 @@ import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.core.command.CommandActionSupport;
+import org.sonatype.gshell.pref.Preference;
 
 import java.lang.management.ClassLoadingMXBean;
 import java.lang.management.GarbageCollectorMXBean;
@@ -73,6 +74,7 @@ public class InfoCommand
         OS,
     }
 
+    @Preference
     @Argument(multiValued = true)
     private List<Section> sections;
 
