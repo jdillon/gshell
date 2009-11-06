@@ -52,4 +52,8 @@ public class NameValue
 
         return new NameValue(name.trim(), value);
     }
+
+    public String toString() {
+        return name + SEPARATOR + value;
+    }
 }
