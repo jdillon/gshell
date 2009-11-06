@@ -54,6 +54,6 @@ public class NameValue
     }
 
     public String toString() {
-        return name + SEPARATOR + value;
+        return name + SEPARATOR + "'" + value + "'";
     }
 }
