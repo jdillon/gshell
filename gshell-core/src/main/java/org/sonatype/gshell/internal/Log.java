@@ -19,7 +19,7 @@ package org.sonatype.gshell.internal;
 import java.io.PrintStream;
 
 /**
- * Intenal logger.  For use by classes which can not use Slf4j due to bootstrap+logging configuration issues.
+ * Internal logger.  For use by classes which can not use Slf4j due to bootstrap+logging configuration issues.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
@@ -58,7 +58,7 @@ public final class Log
         if (message instanceof Throwable) {
             ((Throwable) message).printStackTrace();
         }
-        else if (message.getClass().isArray()) {
+        else if (message != null && message.getClass().isArray()) {
             Object[] array = (Object[]) message;
 
             for (int i = 0; i < array.length; i++) {
