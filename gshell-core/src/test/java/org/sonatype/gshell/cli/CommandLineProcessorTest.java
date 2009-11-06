@@ -22,12 +22,12 @@ import org.junit.Test;
 import java.util.List;
 
 /**
- * Tests for the {@link org.sonatype.gshell.cli.Processor} class.
+ * Tests for the {@link CommandLineProcessor} class.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class ProcessorTest
-    extends ProcessorTestSupport
+public class CommandLineProcessorTest
+    extends CommandLineProcessorTestSupport
 {
     private TestBean bean;
 

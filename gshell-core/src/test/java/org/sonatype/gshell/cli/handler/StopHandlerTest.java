@@ -19,8 +19,8 @@ package org.sonatype.gshell.cli.handler;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import org.sonatype.gshell.cli.Argument;
+import org.sonatype.gshell.cli.CommandLineProcessorTestSupport;
 import org.sonatype.gshell.cli.Option;
-import org.sonatype.gshell.cli.ProcessorTestSupport;
 
 import java.util.List;
 
@@ -30,7 +30,7 @@ import java.util.List;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class StopHandlerTest
-    extends ProcessorTestSupport
+    extends CommandLineProcessorTestSupport
 {
     private TestBean bean;
 

@@ -21,8 +21,8 @@ import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.ShellHolder;
 import org.sonatype.gshell.Variables;
 import org.sonatype.gshell.ansi.AnsiRenderer;
+import org.sonatype.gshell.cli.CommandLineProcessor;
 import org.sonatype.gshell.cli.Printer;
-import org.sonatype.gshell.cli.Processor;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.CommandDocumenter;
 import org.sonatype.gshell.command.IO;
@@ -103,7 +103,7 @@ public class CommandDocumenterImpl
 
         log.trace("Rendering command usage");
 
-        Processor clp = new Processor();
+        CommandLineProcessor clp = new CommandLineProcessor();
 
         // Attach our helper to inject --help
         CommandHelpSupport help = new CommandHelpSupport();

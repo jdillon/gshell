@@ -18,9 +18,8 @@ package org.sonatype.gshell.cli.handler;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
+import org.sonatype.gshell.cli.CommandLineProcessorTestSupport;
 import org.sonatype.gshell.cli.Option;
-import org.sonatype.gshell.cli.ProcessingException;
-import org.sonatype.gshell.cli.ProcessorTestSupport;
 import org.sonatype.gshell.util.converter.ConversionException;
 
 /**
@@ -29,7 +28,7 @@ import org.sonatype.gshell.util.converter.ConversionException;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class EnumHandlerTest
-    extends ProcessorTestSupport
+    extends CommandLineProcessorTestSupport
 {
     private TestBean bean;
 

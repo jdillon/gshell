@@ -14,35 +14,31 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.cli;
+package org.sonatype.gshell.pref;
 
 import org.junit.After;
-import static org.junit.Assert.*;
 import org.junit.Before;
 
+import static org.junit.Assert.assertEquals;
+
 /**
- * Support for {@link org.sonatype.gshell.cli.Processor} tests.
+ * Support for {@link PreferenceProcessor} tests.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public abstract class ProcessorTestSupport
+public abstract class PreferenceProcessorTestSupport
 {
-    protected Processor clp;
+    protected PreferenceProcessor processor;
 
     @Before
     public void setUp() {
-        clp = new Processor(createBean());
+        processor = new PreferenceProcessor(createBean());
     }
 
     @After
     public void tearDown() {
-        clp = null;
+        processor = null;
     }
 
     protected abstract Object createBean();
-
-    protected void assertOptionsArgumentsSize(final int expectedOptions, final int expectedArguments) {
-        assertEquals(expectedOptions, clp.getOptionHandlers().size());
-        assertEquals(expectedArguments, clp.getArgumentHandlers().size());
-    }
 }

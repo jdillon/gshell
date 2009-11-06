@@ -25,7 +25,7 @@ import org.junit.Test;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class SimpleTest
-    extends ProcessorTestSupport
+    extends CommandLineProcessorTestSupport
 {
     private Simple bean;
 

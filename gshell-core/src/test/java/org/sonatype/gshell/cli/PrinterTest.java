@@ -29,7 +29,7 @@ import java.util.List;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class PrinterTest
-    extends ProcessorTestSupport
+    extends CommandLineProcessorTestSupport
 {
     private TestBean bean;
 

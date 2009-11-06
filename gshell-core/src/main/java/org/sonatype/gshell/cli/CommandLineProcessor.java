@@ -42,7 +42,7 @@ import java.util.TreeMap;
  *
  * @since 2.0
  */
-public class Processor
+public class CommandLineProcessor
 {
     public static final String DASH_DASH = "--";
 
@@ -56,9 +56,9 @@ public class Processor
 
     private MessageSource messages;
 
-    public Processor() {}
+    public CommandLineProcessor() {}
     
-    public Processor(final Object bean) {
+    public CommandLineProcessor(final Object bean) {
         addBean(bean);
     }
 
@@ -89,8 +89,8 @@ public class Processor
     public void addBean(final Object bean) {
         discoverDescriptors(bean);
         
-        if (bean instanceof ProcessorAware) {
-            ((ProcessorAware)bean).setProcessor(this);
+        if (bean instanceof CommandLineProcessorAware) {
+            ((CommandLineProcessorAware)bean).setProcessor(this);
         }
     }
 

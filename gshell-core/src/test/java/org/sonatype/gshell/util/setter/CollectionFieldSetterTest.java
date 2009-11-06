@@ -19,7 +19,7 @@ package org.sonatype.gshell.util.setter;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import org.sonatype.gshell.cli.Argument;
-import org.sonatype.gshell.cli.ProcessorTestSupport;
+import org.sonatype.gshell.cli.CommandLineProcessorTestSupport;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ import java.util.List;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class CollectionFieldSetterTest
-    extends ProcessorTestSupport
+    extends CommandLineProcessorTestSupport
 {
     private TestBean bean;
 

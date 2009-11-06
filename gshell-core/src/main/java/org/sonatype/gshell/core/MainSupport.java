@@ -24,9 +24,9 @@ import org.sonatype.gshell.Variables;
 import org.sonatype.gshell.ansi.Ansi;
 import org.sonatype.gshell.ansi.AnsiIO;
 import org.sonatype.gshell.cli.Argument;
+import org.sonatype.gshell.cli.CommandLineProcessor;
 import org.sonatype.gshell.cli.Option;
 import org.sonatype.gshell.cli.Printer;
-import org.sonatype.gshell.cli.Processor;
 import org.sonatype.gshell.cli.handler.StopHandler;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.i18n.MessageSource;
@@ -167,7 +167,7 @@ public abstract class MainSupport
         setTerminalType(TerminalFactory.Type.AUTO);
 
         // Process command line options & arguments
-        Processor clp = new Processor(this);
+        CommandLineProcessor clp = new CommandLineProcessor(this);
         clp.setMessages(messages);
         clp.setStopAtNonOption(true);
 

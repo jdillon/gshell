@@ -14,31 +14,35 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.pref;
+package org.sonatype.gshell.cli;
 
 import org.junit.After;
+import static org.junit.Assert.*;
 import org.junit.Before;
 
-import static org.junit.Assert.assertEquals;
-
 /**
- * Support for {@link org.sonatype.gshell.pref.Processor} tests.
+ * Support for {@link CommandLineProcessor} tests.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public abstract class ProcessorTestSupport
+public abstract class CommandLineProcessorTestSupport
 {
-    protected Processor processor;
+    protected CommandLineProcessor clp;
 
     @Before
     public void setUp() {
-        processor = new Processor(createBean());
+        clp = new CommandLineProcessor(createBean());
     }
 
     @After
     public void tearDown() {
-        processor = null;
+        clp = null;
     }
 
     protected abstract Object createBean();
+
+    protected void assertOptionsArgumentsSize(final int expectedOptions, final int expectedArguments) {
+        assertEquals(expectedOptions, clp.getOptionHandlers().size());
+        assertEquals(expectedArguments, clp.getArgumentHandlers().size());
+    }
 }

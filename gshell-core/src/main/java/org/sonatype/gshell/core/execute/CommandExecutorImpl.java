@@ -23,8 +23,8 @@ import org.slf4j.MDC;
 import org.sonatype.gshell.Shell;
 import org.sonatype.gshell.ShellHolder;
 import org.sonatype.gshell.Variables;
+import org.sonatype.gshell.cli.CommandLineProcessor;
 import org.sonatype.gshell.cli.OpaqueArguments;
-import org.sonatype.gshell.cli.Processor;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.CommandDocumenter;
@@ -37,6 +37,7 @@ import org.sonatype.gshell.i18n.PrefixingMessageSource;
 import org.sonatype.gshell.io.SystemInputOutputHijacker;
 import org.sonatype.gshell.notification.ErrorNotification;
 import org.sonatype.gshell.notification.ResultNotification;
+import org.sonatype.gshell.pref.PreferenceProcessor;
 import org.sonatype.gshell.registry.CommandResolver;
 import org.sonatype.gshell.util.Arguments;
 import org.sonatype.gshell.util.Strings;
@@ -138,8 +139,11 @@ public class CommandExecutorImpl
         try {
             boolean execute = true;
 
+            PreferenceProcessor pp = new PreferenceProcessor(command);
+            pp.process();
+            
             if (!(command instanceof OpaqueArguments)) {
-                Processor clp = new Processor(command);
+                CommandLineProcessor clp = new CommandLineProcessor(command);
                 clp.setMessages(new PrefixingMessageSource(command.getMessages(), CommandDocumenter.COMMAND_DOT));
                 CommandHelpSupport help = new CommandHelpSupport();
                 clp.addBean(help);

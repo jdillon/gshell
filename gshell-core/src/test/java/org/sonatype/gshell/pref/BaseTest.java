@@ -28,7 +28,7 @@ import static org.junit.Assert.assertEquals;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class BaseTest
-    extends ProcessorTestSupport
+    extends PreferenceProcessorTestSupport
 {
     private Simple bean;
 

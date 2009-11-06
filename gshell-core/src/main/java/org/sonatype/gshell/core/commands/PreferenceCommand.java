@@ -18,9 +18,9 @@ package org.sonatype.gshell.core.commands;
 
 import jline.console.completers.EnumCompleter;
 import org.sonatype.gshell.cli.Argument;
+import org.sonatype.gshell.cli.CommandLineProcessor;
+import org.sonatype.gshell.cli.CommandLineProcessorAware;
 import org.sonatype.gshell.cli.Option;
-import org.sonatype.gshell.cli.Processor;
-import org.sonatype.gshell.cli.ProcessorAware;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
@@ -47,7 +47,7 @@ import java.util.prefs.Preferences;
 @Command
 public class PreferenceCommand
     extends CommandActionSupport
-    implements ProcessorAware
+    implements CommandLineProcessorAware
 {
     private static enum Mode
     {
@@ -76,7 +76,7 @@ public class PreferenceCommand
         this.setCompleters(new EnumCompleter(Mode.class), null);
     }
 
-    public void setProcessor(final Processor processor) {
+    public void setProcessor(final CommandLineProcessor processor) {
         processor.setStopAtNonOption(true);
     }
 
@@ -85,7 +85,7 @@ public class PreferenceCommand
         
         Operation op = createOperation(context);
         
-        Processor cli = new Processor(op);
+        CommandLineProcessor cli = new CommandLineProcessor(op);
         cli.process(args);
 
         return op.execute();

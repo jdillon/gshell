@@ -32,13 +32,13 @@ import java.util.List;
  *
  * @since 2.0
  */
-public class Processor
+public class PreferenceProcessor
 {
     private final List<PreferenceDescriptor> descriptors = new ArrayList<PreferenceDescriptor>();
 
-    public Processor() {}
+    public PreferenceProcessor() {}
 
-    public Processor(final Object bean) {
+    public PreferenceProcessor(final Object bean) {
         addBean(bean);
     }
 

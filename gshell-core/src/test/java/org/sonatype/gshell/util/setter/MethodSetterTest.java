@@ -19,8 +19,8 @@ package org.sonatype.gshell.util.setter;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import org.sonatype.gshell.cli.Argument;
+import org.sonatype.gshell.cli.CommandLineProcessorTestSupport;
 import org.sonatype.gshell.cli.Option;
-import org.sonatype.gshell.cli.ProcessorTestSupport;
 
 /**
  * Tests for the {@link org.sonatype.gshell.util.setter.MethodSetter} class.
@@ -28,7 +28,7 @@ import org.sonatype.gshell.cli.ProcessorTestSupport;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class MethodSetterTest
-    extends ProcessorTestSupport
+    extends CommandLineProcessorTestSupport
 {
     private TestBean bean;
 

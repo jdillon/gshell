@@ -37,7 +37,7 @@ import java.util.List;
  */
 public class Printer
 {
-    private final Processor processor;
+    private final CommandLineProcessor processor;
 
     private AggregateMessageSource messages = new AggregateMessageSource(new ResourceBundleMessageSource(getClass()));
 
@@ -47,7 +47,7 @@ public class Printer
 
     private String separator = "    ";
 
-    public Printer(final Processor processor) {
+    public Printer(final CommandLineProcessor processor) {
         assert processor != null;
         this.processor = processor;
 

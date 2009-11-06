@@ -17,13 +17,13 @@
 package org.sonatype.gshell.cli;
 
 /**
- * Allows beans to become aware of their {@link Processor}
+ * Allows beans to become aware of their {@link CommandLineProcessor}
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *
  * @since 2.0
  */
-public interface ProcessorAware
+public interface CommandLineProcessorAware
 {
-    void setProcessor(Processor processor);
+    void setProcessor(CommandLineProcessor processor);
 }
