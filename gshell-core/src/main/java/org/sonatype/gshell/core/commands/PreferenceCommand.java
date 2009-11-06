@@ -17,6 +17,7 @@
 package org.sonatype.gshell.core.commands;
 
 import jline.console.completers.EnumCompleter;
+import org.sonatype.gshell.ansi.Ansi;
 import org.sonatype.gshell.cli.Argument;
 import org.sonatype.gshell.cli.CommandLineProcessor;
 import org.sonatype.gshell.cli.CommandLineProcessorAware;
@@ -194,9 +195,10 @@ public class PreferenceCommand
         }
 
         private void list(final Preferences node) throws Exception {
-            io.info("{}", node.absolutePath());
+            io.info("{}", Ansi.ansi().fg(Ansi.Color.GREEN).a(node.absolutePath()).reset());
+
             for (String key : node.keys()) {
-                io.info("  {}={}", key, node.get(key, null));
+                io.info("  {}={}", Ansi.ansi().a(Ansi.Attribute.INTENSITY_BOLD).a(key).reset(), node.get(key, null));
             }
             if (recursive) {
                 for (String name : node.childrenNames()) {
