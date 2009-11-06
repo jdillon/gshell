@@ -142,6 +142,7 @@ public class InfoCommand
                         println(io, "Process CPU time", printDuration(getSunOsValueAsLong(os, "getProcessCpuTime") / 1000000));
                     }
                     catch (Throwable t) {
+                        // ignore
                     }
                     println(io, "Total compile time", printDuration(ManagementFactory.getCompilationMXBean().getTotalCompilationTime()));
                     break;
@@ -186,6 +187,7 @@ public class InfoCommand
                         println(io, "Free swap space", printSizeInKb(getSunOsValueAsLong(os, "getFreeSwapSpaceSize")));
                     }
                     catch (Throwable t) {
+                        // ignore
                     }
                     break;
             }
