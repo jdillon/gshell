@@ -200,7 +200,7 @@ public class IO
     // Output Helpers
     //
 
-    public void debug(final String msg) {
+    public void debug(final Object msg) {
         if (isDebug()) {
             out.println(msg);
         }
@@ -212,7 +212,7 @@ public class IO
         }
     }
 
-    public void verbose(final String msg) {
+    public void verbose(final Object msg) {
         if (isVerbose()) {
             out.println(msg);
         }
@@ -224,7 +224,7 @@ public class IO
         }
     }
 
-    public void info(final String msg) {
+    public void info(final Object msg) {
         if (!isQuiet()) {
             out.println(msg);
         }
@@ -236,7 +236,7 @@ public class IO
         }
     }
 
-    public void warn(final String msg) {
+    public void warn(final Object msg) {
         if (!isQuiet()) {
             err.println(msg);
         }
@@ -248,7 +248,7 @@ public class IO
         }
     }
 
-    public void error(final String msg) {
+    public void error(final Object msg) {
         err.println(msg);
     }
 
