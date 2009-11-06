@@ -51,7 +51,7 @@ public class HistoryCommand
 
         if (clear) {
             history.clear();
-            log.debug("History clearend");
+            log.debug("History cleared");
         }
 
         if (purge) {
