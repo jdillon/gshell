@@ -17,7 +17,7 @@
 package org.apache.geronimo.gshell.commands.text;
 
 import org.sonatype.gshell.core.command.CommandActionSupport;
-import org.sonatype.gshell.cli.Argument;
+import org.sonatype.gshell.util.cli.Argument;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.command.Command;

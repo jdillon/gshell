@@ -21,8 +21,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.NameAware;
-import org.sonatype.gshell.i18n.MessageSource;
-import org.sonatype.gshell.i18n.ResourceBundleMessageSource;
+import org.sonatype.gshell.util.i18n.MessageSource;
+import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
 
 import java.util.List;
 

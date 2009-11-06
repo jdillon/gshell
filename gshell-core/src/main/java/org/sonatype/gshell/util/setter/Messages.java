@@ -16,8 +16,8 @@
 
 package org.sonatype.gshell.util.setter;
 
-import org.sonatype.gshell.i18n.MessageSource;
-import org.sonatype.gshell.i18n.ResourceBundleMessageSource;
+import org.sonatype.gshell.util.i18n.MessageSource;
+import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
 
 /**
  * Messages for the {@link org.sonatype.gshell.util.setter} package.

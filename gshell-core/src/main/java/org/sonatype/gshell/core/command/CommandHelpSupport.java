@@ -16,10 +16,10 @@
 
 package org.sonatype.gshell.core.command;
 
-import org.sonatype.gshell.cli.Option;
-import org.sonatype.gshell.cli.handler.StopHandler;
-import org.sonatype.gshell.i18n.MessageSource;
-import org.sonatype.gshell.i18n.ResourceBundleMessageSource;
+import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.util.cli.handler.StopHandler;
+import org.sonatype.gshell.util.i18n.MessageSource;
+import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
 
 /**
  * Helper to inject <tt>--help<tt> support.

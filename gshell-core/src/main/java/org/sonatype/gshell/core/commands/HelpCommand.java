@@ -18,7 +18,7 @@ package org.sonatype.gshell.core.commands;
 
 import com.google.inject.Inject;
 import jline.console.completers.AggregateCompleter;
-import org.sonatype.gshell.cli.Argument;
+import org.sonatype.gshell.util.cli.Argument;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.CommandContext;

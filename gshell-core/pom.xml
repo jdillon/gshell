@@ -214,7 +214,7 @@
 
                                             -keep class org.sonatype.gshell.**
 
-                                            -keep public class org.sonatype.gshell.console.*,org.sonatype.gshell.i18n.* {
+                                            -keep public class org.sonatype.gshell.console.*,org.sonatype.gshell.util.i18n.* {
                                                 public <methods>;
                                             }
 
@@ -223,11 +223,11 @@
                                                 public protected <methods>;
                                             }
 
-                                            -keep public class org.sonatype.gshell.ansi.Ansi {
+                                            -keep public class org.sonatype.gshell.util.ansi.Ansi {
                                                 public <methods>;
                                             }
 
-                                            -keep public class org.sonatype.gshell.cli.handler.* {
+                                            -keep public class org.sonatype.gshell.util.cli.handler.* {
                                                 <init>(...);
                                             }
 

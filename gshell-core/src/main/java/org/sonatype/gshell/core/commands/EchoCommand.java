@@ -16,8 +16,8 @@
 
 package org.sonatype.gshell.core.commands;
 
-import org.sonatype.gshell.cli.Argument;
-import org.sonatype.gshell.cli.Option;
+import org.sonatype.gshell.util.cli.Argument;
+import org.sonatype.gshell.util.cli.Option;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;

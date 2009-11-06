@@ -17,9 +17,9 @@
 package org.sonatype.gshell.util.setter;
 
 import org.junit.Test;
-import org.sonatype.gshell.cli.Argument;
-import org.sonatype.gshell.cli.CommandLineProcessorTestSupport;
-import org.sonatype.gshell.cli.Option;
+import org.sonatype.gshell.util.cli.Argument;
+import org.sonatype.gshell.util.cli.CommandLineProcessorTestSupport;
+import org.sonatype.gshell.util.cli.Option;
 
 import static org.junit.Assert.assertEquals;
 

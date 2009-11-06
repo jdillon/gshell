@@ -19,7 +19,7 @@ package org.sonatype.gshell.core.registry;
 import com.google.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonatype.gshell.cli.OpaqueArguments;
+import org.sonatype.gshell.util.cli.OpaqueArguments;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.CommandException;

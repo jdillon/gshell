@@ -17,19 +17,19 @@
 package org.sonatype.gshell.core.commands;
 
 import jline.console.completers.EnumCompleter;
-import org.sonatype.gshell.ansi.Ansi;
-import org.sonatype.gshell.cli.Argument;
-import org.sonatype.gshell.cli.CommandLineProcessor;
-import org.sonatype.gshell.cli.CommandLineProcessorAware;
-import org.sonatype.gshell.cli.Option;
+import org.sonatype.gshell.util.ansi.Ansi;
+import org.sonatype.gshell.util.cli.Argument;
+import org.sonatype.gshell.util.cli.CommandLineProcessor;
+import org.sonatype.gshell.util.cli.CommandLineProcessorAware;
+import org.sonatype.gshell.util.cli.Option;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.core.command.CommandActionSupport;
 import org.sonatype.gshell.io.Closer;
 import org.sonatype.gshell.io.Flusher;
-import org.sonatype.gshell.pref.Preference;
-import org.sonatype.gshell.pref.PreferenceProcessor;
+import org.sonatype.gshell.util.pref.Preference;
+import org.sonatype.gshell.util.pref.PreferenceProcessor;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

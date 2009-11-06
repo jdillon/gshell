@@ -17,7 +17,7 @@
 package org.sonatype.gshell.command;
 
 import jline.console.Completer;
-import org.sonatype.gshell.i18n.MessageSource;
+import org.sonatype.gshell.util.i18n.MessageSource;
 
 /**
  * Provides the user-action for a command.

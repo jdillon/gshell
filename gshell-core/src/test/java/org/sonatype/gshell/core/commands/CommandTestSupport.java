@@ -23,7 +23,7 @@ import org.junit.Test;
 import org.sonatype.gshell.Shell;
 import org.sonatype.gshell.VariableNames;
 import org.sonatype.gshell.Variables;
-import org.sonatype.gshell.ansi.Ansi;
+import org.sonatype.gshell.util.ansi.Ansi;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.core.TestBranding;
 import org.sonatype.gshell.core.TestShellBuilder;

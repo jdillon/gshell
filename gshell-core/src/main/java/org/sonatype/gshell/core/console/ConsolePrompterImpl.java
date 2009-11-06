@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.Branding;
 import org.sonatype.gshell.VariableNames;
 import org.sonatype.gshell.Variables;
-import org.sonatype.gshell.ansi.AnsiRenderer;
+import org.sonatype.gshell.util.ansi.AnsiRenderer;
 import org.sonatype.gshell.console.Console;
 
 import java.util.regex.Matcher;

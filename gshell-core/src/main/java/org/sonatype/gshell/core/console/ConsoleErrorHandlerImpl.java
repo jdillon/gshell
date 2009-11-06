@@ -23,8 +23,8 @@ import org.sonatype.gshell.VariableNames;
 import org.sonatype.gshell.Variables;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.console.Console;
-import org.sonatype.gshell.i18n.MessageSource;
-import org.sonatype.gshell.i18n.ResourceBundleMessageSource;
+import org.sonatype.gshell.util.i18n.MessageSource;
+import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
 import org.sonatype.gshell.notification.ErrorNotification;
 
 /**
