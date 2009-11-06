@@ -16,7 +16,6 @@
 
 package org.sonatype.gshell.util.converter;
 
-import org.sonatype.gshell.util.ReferenceIdentityMap;
 import org.sonatype.gshell.util.converter.basic.ArrayConverter;
 import org.sonatype.gshell.util.converter.basic.BigDecimalConverter;
 import org.sonatype.gshell.util.converter.basic.BigIntegerConverter;
@@ -87,7 +86,7 @@ import static org.sonatype.gshell.util.converter.ConverterHelper.toClass;
  */
 public class Converters
 {
-    private static final Map<Class, Converter> REGISTRY = Collections.synchronizedMap(new ReferenceIdentityMap());
+    private static final Map<Class, Converter> REGISTRY = Collections.synchronizedMap(new HashMap<Class,Converter>());
 
     private static final Map<Class, Class> PRIMITIVE_TO_WRAPPER;
 
