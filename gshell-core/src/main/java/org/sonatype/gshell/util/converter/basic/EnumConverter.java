@@ -30,6 +30,7 @@ public class EnumConverter
 {
     public EnumConverter(final Class type) {
         super(type);
+        assert type.isEnum();
     }
 
     protected Object convertToObject(final String text) throws Exception {
