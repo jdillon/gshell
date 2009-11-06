@@ -16,7 +16,7 @@
 
 package org.sonatype.gshell.i18n;
 
-import org.sonatype.gshell.internal.Log;
+import org.sonatype.gshell.util.Log;
 
 import java.util.Arrays;
 import java.util.LinkedList;

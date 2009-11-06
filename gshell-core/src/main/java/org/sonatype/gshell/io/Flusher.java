@@ -16,7 +16,7 @@
 
 package org.sonatype.gshell.io;
 
-import org.sonatype.gshell.internal.Log;
+import org.sonatype.gshell.util.Log;
 
 import java.io.Flushable;
 import java.io.IOException;

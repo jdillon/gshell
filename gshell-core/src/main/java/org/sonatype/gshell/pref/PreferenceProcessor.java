@@ -16,7 +16,7 @@
 
 package org.sonatype.gshell.pref;
 
-import org.sonatype.gshell.internal.Log;
+import org.sonatype.gshell.util.Log;
 import org.sonatype.gshell.util.setter.Setter;
 import org.sonatype.gshell.util.setter.SetterFactory;
 

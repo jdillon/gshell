@@ -17,7 +17,7 @@
 package org.sonatype.gshell.ansi;
 
 import jline.TerminalFactory;
-import org.sonatype.gshell.internal.Log;
+import org.sonatype.gshell.util.Log;
 
 /**
  * Provides support for using ANSI color escape codes.

@@ -31,7 +31,7 @@ import org.sonatype.gshell.cli.handler.StopHandler;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.i18n.MessageSource;
 import org.sonatype.gshell.i18n.ResourceBundleMessageSource;
-import org.sonatype.gshell.internal.Log;
+import org.sonatype.gshell.util.Log;
 import org.sonatype.gshell.io.StreamSet;
 import org.sonatype.gshell.notification.ExitNotification;
 import org.sonatype.gshell.pref.Preference;

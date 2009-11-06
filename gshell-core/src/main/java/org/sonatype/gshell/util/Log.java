@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.internal;
+package org.sonatype.gshell.util;
 
 import java.io.PrintStream;
 

@@ -16,7 +16,7 @@
 
 package org.sonatype.gshell.util.setter;
 
-import org.sonatype.gshell.internal.Log;
+import org.sonatype.gshell.util.Log;
 
 import java.lang.reflect.AccessibleObject;
 
