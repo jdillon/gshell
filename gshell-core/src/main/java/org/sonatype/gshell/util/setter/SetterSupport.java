@@ -16,6 +16,8 @@
 
 package org.sonatype.gshell.util.setter;
 
+import org.sonatype.gshell.internal.Log;
+
 import java.lang.reflect.AccessibleObject;
 
 /**
@@ -47,6 +49,8 @@ public abstract class SetterSupport
     }
 
     public void set(final Object value) {
+        Log.trace("Setting '", value, "' on: ", bean, " using: ", accessible);
+        
         try {
             doSet(value);
         }

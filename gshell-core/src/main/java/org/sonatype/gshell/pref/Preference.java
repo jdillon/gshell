@@ -36,4 +36,6 @@ public @interface Preference
     public abstract Class<?> base() default Void.class;
 
     public abstract boolean system() default false;
+
+    // TODO: Consider adding listener support
 }

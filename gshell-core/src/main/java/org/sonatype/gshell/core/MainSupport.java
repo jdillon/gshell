@@ -34,6 +34,8 @@ import org.sonatype.gshell.i18n.ResourceBundleMessageSource;
 import org.sonatype.gshell.internal.Log;
 import org.sonatype.gshell.io.StreamSet;
 import org.sonatype.gshell.notification.ExitNotification;
+import org.sonatype.gshell.pref.Preference;
+import org.sonatype.gshell.pref.PreferenceProcessor;
 import org.sonatype.gshell.util.NameValue;
 
 import java.util.List;
@@ -72,6 +74,7 @@ public abstract class MainSupport
     @Option(name = "-V", aliases = {"--version"}, requireOverride = true)
     protected boolean version;
 
+    @Preference
     @Option(name = "-e", aliases = {"--errors"})
     protected boolean showErrorTraces = false;
 
@@ -165,6 +168,10 @@ public abstract class MainSupport
         // Ansi.install();
         setConsoleLogLevel(Log.Level.WARN);
         setTerminalType(TerminalFactory.Type.AUTO);
+
+        // Process preferences
+        PreferenceProcessor pp = new PreferenceProcessor(this);
+        pp.process();
 
         // Process command line options & arguments
         CommandLineProcessor clp = new CommandLineProcessor(this);

@@ -16,6 +16,7 @@
 
 package org.sonatype.gshell.pref;
 
+import org.sonatype.gshell.internal.Log;
 import org.sonatype.gshell.util.setter.Setter;
 import org.sonatype.gshell.util.setter.SetterFactory;
 
@@ -70,6 +71,7 @@ public class PreferenceProcessor
 
         Preference pref = element.getAnnotation(Preference.class);
         if (pref != null) {
+            Log.trace("Discovered preference configuration for: ", element);
             addPreference(pref, SetterFactory.create(element, bean));
         }
     }
@@ -79,7 +81,9 @@ public class PreferenceProcessor
     }
 
     public void process() throws Exception {
+        Log.trace("Processing preference descriptors");
         for (PreferenceDescriptor desc : descriptors) {
+            Log.trace("Descriptor: ", desc);
             desc.set();
         }
     }

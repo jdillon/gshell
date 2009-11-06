@@ -16,6 +16,7 @@
 
 package org.sonatype.gshell.pref;
 
+import org.sonatype.gshell.internal.Log;
 import org.sonatype.gshell.util.converter.Converters;
 import org.sonatype.gshell.util.setter.Setter;
 
@@ -97,7 +98,13 @@ public class PreferenceDescriptor
     }
 
     public void set() throws Exception {
-        String value = getPreferences().get(getId(), null);
+        Preferences prefs = getPreferences();
+        Log.debug("Using preferences: ", prefs);
+
+        String key = getId();
+        String value = prefs.get(key, null);
+        Log.debug("  ", key, "=", value);
+        
         if (value != null) {
             setter.set(Converters.getValue(setter.getType(), value));
         }
