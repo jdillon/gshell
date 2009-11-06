@@ -107,7 +107,7 @@ public class InfoCommand
         for (Section section : sections) {
             switch (section) {
                 case SHELL:
-                    io.info("Shell");
+                    printlnHeader(io, "Shell");
                     println(io, "Display Name", branding.getDisplayName());
                     println(io, "Program Name", branding.getProgramName());
                     println(io, "Version", branding.getVersion());
@@ -120,7 +120,7 @@ public class InfoCommand
                     break;
 
                 case TERMINAL:
-                    io.out.println("Terminal");
+                    printlnHeader(io, "Terminal");
                     Terminal term = io.getTerminal();
                     println(io, "Type", term.getClass().getName());
                     println(io, "Supported", term.isSupported());
@@ -134,7 +134,7 @@ public class InfoCommand
                     break;
 
                 case JVM:
-                    io.out.println("JVM");
+                    printlnHeader(io, "JVM");
                     println(io, "Java Virtual Machine", runtime.getVmName() + " version " + runtime.getVmVersion());
                     println(io, "Vendor", runtime.getVmVendor());
                     println(io, "Uptime", printDuration(runtime.getUptime()));
@@ -148,7 +148,7 @@ public class InfoCommand
                     break;
 
                 case THREADS:
-                    io.out.println("Threads");
+                    printlnHeader(io, "Threads");
                     println(io, "Live threads", Integer.toString(threads.getThreadCount()));
                     println(io, "Daemon threads", Integer.toString(threads.getDaemonThreadCount()));
                     println(io, "Peak", Integer.toString(threads.getPeakThreadCount()));
@@ -156,7 +156,7 @@ public class InfoCommand
                     break;
 
                 case MEMORY:
-                    io.out.println("Memory");
+                    printlnHeader(io, "Memory");
                     println(io, "Current heap size", printSizeInKb(mem.getHeapMemoryUsage().getUsed()));
                     println(io, "Maximum heap size", printSizeInKb(mem.getHeapMemoryUsage().getMax()));
                     println(io, "Committed heap size", printSizeInKb(mem.getHeapMemoryUsage().getCommitted()));
@@ -168,14 +168,14 @@ public class InfoCommand
                     break;
 
                 case CLASSES:
-                    io.out.println("Classes");
+                    printlnHeader(io, "Classes");
                     println(io, "Current classes loaded", printLong(cl.getLoadedClassCount()));
                     println(io, "Total classes loaded", printLong(cl.getTotalLoadedClassCount()));
                     println(io, "Total classes unloaded", printLong(cl.getUnloadedClassCount()));
                     break;
 
                 case OS:
-                    io.out.println("Operating system");
+                    printlnHeader(io, "Operating system");
                     println(io, "Name", os.getName() + " version " + os.getVersion());
                     println(io, "Architecture", os.getArch());
                     println(io, "Processors", Integer.toString(os.getAvailableProcessors()));
@@ -194,6 +194,10 @@ public class InfoCommand
         }
 
         return Result.SUCCESS;
+    }
+
+    private void printlnHeader(final IO io, final String name) {
+        io.info(Ansi.ansi().a(Ansi.Attribute.INTENSITY_BOLD).fg(Ansi.Color.GREEN).a(name).reset());
     }
 
     private long getSunOsValueAsLong(OperatingSystemMXBean os, String name) throws Exception {
