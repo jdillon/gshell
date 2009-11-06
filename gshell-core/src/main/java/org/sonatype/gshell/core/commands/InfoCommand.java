@@ -18,6 +18,7 @@ package org.sonatype.gshell.core.commands;
 
 import jline.Terminal;
 import jline.WindowsTerminal;
+import jline.console.completers.EnumCompleter;
 import org.sonatype.gshell.Branding;
 import org.sonatype.gshell.ansi.Ansi;
 import org.sonatype.gshell.cli.Argument;
@@ -80,6 +81,10 @@ public class InfoCommand
 
     @Option(name = "-a", aliases = {"--all"})
     private boolean all;
+
+    public InfoCommand() {
+        this.setCompleters(new EnumCompleter(Section.class));
+    }
 
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
