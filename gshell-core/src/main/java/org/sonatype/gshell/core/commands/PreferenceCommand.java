@@ -28,6 +28,7 @@ import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.core.command.CommandActionSupport;
 import org.sonatype.gshell.io.Closer;
 import org.sonatype.gshell.io.Flusher;
+import org.sonatype.gshell.pref.Preference;
 import org.sonatype.gshell.pref.PreferenceProcessor;
 
 import java.io.BufferedInputStream;
@@ -186,6 +187,7 @@ public class PreferenceCommand
     private class ListOperation
         extends NodeOperationSupport
     {
+        @Preference
         @Option(name = "-r", aliases = {"--recursive"})
         private boolean recursive;
 
@@ -293,6 +295,7 @@ public class PreferenceCommand
     private class ExportOperation
         extends NodeOperationSupport
     {
+        @Preference
         @Option(name = "-t", aliases = {"--subtree"})
         private boolean subTree;
 
