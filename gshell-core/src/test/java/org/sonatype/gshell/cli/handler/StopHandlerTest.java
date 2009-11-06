@@ -16,13 +16,15 @@
 
 package org.sonatype.gshell.cli.handler;
 
-import static org.junit.Assert.*;
 import org.junit.Test;
 import org.sonatype.gshell.cli.Argument;
 import org.sonatype.gshell.cli.CommandLineProcessorTestSupport;
 import org.sonatype.gshell.cli.Option;
 
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Tests for the {@link StopHandler} class.

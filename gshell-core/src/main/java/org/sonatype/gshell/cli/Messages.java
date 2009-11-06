@@ -23,7 +23,6 @@ import org.sonatype.gshell.i18n.ResourceBundleMessageSource;
  * Messages for the {@link org.sonatype.gshell.cli} package.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 enum Messages
@@ -35,8 +34,7 @@ enum Messages
     NO_ARGUMENT_ALLOWED,
     REQUIRED_OPTION_MISSING,
     TOO_MANY_ARGUMENTS,
-    REQUIRED_ARGUMENT_MISSING
-    ;
+    REQUIRED_ARGUMENT_MISSING;
 
     private final MessageSource messages = new ResourceBundleMessageSource(getClass());
 

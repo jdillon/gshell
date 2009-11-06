@@ -17,11 +17,12 @@
 package org.sonatype.gshell.ansi;
 
 import org.junit.After;
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Tests for the {@link AnsiRenderWriter} class.

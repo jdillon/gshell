@@ -39,7 +39,6 @@ import java.util.List;
  * Builds {@link Shell} instances using Guice to wire components.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class GuiceShellBuilder

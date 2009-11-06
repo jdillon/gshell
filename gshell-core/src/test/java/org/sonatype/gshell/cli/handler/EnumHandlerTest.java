@@ -16,11 +16,13 @@
 
 package org.sonatype.gshell.cli.handler;
 
-import static org.junit.Assert.*;
 import org.junit.Test;
 import org.sonatype.gshell.cli.CommandLineProcessorTestSupport;
 import org.sonatype.gshell.cli.Option;
 import org.sonatype.gshell.util.converter.ConversionException;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link org.sonatype.gshell.cli.handler.EnumHandler} class.

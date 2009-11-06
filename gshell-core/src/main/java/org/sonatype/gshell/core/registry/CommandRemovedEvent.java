@@ -22,14 +22,13 @@ import java.util.EventObject;
  * Event fired once a command has been removed.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class CommandRemovedEvent
     extends EventObject
 {
     ///CLOVER:OFF
-    
+
     private final String name;
 
     public CommandRemovedEvent(final String name) {

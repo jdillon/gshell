@@ -52,7 +52,6 @@ import java.util.concurrent.atomic.AtomicReference;
  * The default {@link org.sonatype.gshell.Shell} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class ShellImpl
@@ -81,7 +80,8 @@ public class ShellImpl
     private boolean opened;
 
     public ShellImpl(final EventManager eventManager, final CommandExecutor executor, final Branding branding,
-             final IO io, final Variables variables) throws IOException {
+                     final IO io, final Variables variables) throws IOException
+    {
         assert eventManager != null;
         assert executor != null;
         assert branding != null;
@@ -93,7 +93,7 @@ public class ShellImpl
         this.io = io != null ? io : new IO();
         this.variables = variables != null ? variables : new VariablesImpl();
         if (variables instanceof EventAware) {
-            ((EventAware)variables).setEventManager(eventManager);
+            ((EventAware) variables).setEventManager(eventManager);
         }
         this.history = new HistoryImpl(new File(branding.getUserContextDir(), branding.getHistoryFileName()));
 
@@ -169,7 +169,7 @@ public class ShellImpl
         if (!SystemInputOutputHijacker.isInstalled()) {
             SystemInputOutputHijacker.install();
         }
-        
+
         // Customize the shell
         branding.customize(this);
 
@@ -186,7 +186,7 @@ public class ShellImpl
     }
 
     // FIXME: History should still be appended if not running inside of a JLineConsole
-    
+
     public Object execute(final String line) throws Exception {
         ensureOpened();
         return executor.execute(this, line);
@@ -215,7 +215,8 @@ public class ShellImpl
         final AtomicReference<Object> lastResultHolder = new AtomicReference<Object>();
 
         // Whip up a tiny console executor that will execute shell command-lines
-        Console.Executor executor = new Console.Executor() {
+        Console.Executor executor = new Console.Executor()
+        {
             public Console.Result execute(final String line) throws Exception {
                 assert line != null;
 
@@ -241,7 +242,7 @@ public class ShellImpl
         if (prompter != null) {
             console.setPrompter(prompter);
         }
-        
+
         if (errorHandler != null) {
             console.setErrorHandler(errorHandler);
         }
@@ -302,7 +303,7 @@ public class ShellImpl
         }
 
         InputStream bindings;
-        
+
         if (file.exists() && file.isFile() && file.canRead()) {
             log.debug("Using bindings from file: {}", file);
             bindings = new BufferedInputStream(new FileInputStream(file));

@@ -63,7 +63,6 @@ import org.sonatype.gshell.registry.CommandResolver;
  * Builds {@link Shell} instances w/o any IoC container.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class SimpleShellBuilder
@@ -137,32 +136,32 @@ public class SimpleShellBuilder
         CommandRegistry registry = components.getCommandRegistry();
 
         registry.registerCommand("help", new HelpCommand(components.getAliasRegistry(), registry, components.getCommandDocumenter())
-                .installCompleters(components.getAliasNameCompleter(), components.getCommandNameCompleter()));
+            .installCompleters(components.getAliasNameCompleter(), components.getCommandNameCompleter()));
 
         registry.registerCommand("info", new InfoCommand());
 
         registry.registerCommand("exit", new ExitCommand());
 
         registry.registerCommand("set", new SetCommand()
-                .installCompleters(components.getVariableNameCompleter()));
+            .installCompleters(components.getVariableNameCompleter()));
 
         registry.registerCommand("unset", new UnsetCommand()
-                .installCompleters(components.getVariableNameCompleter()));
+            .installCompleters(components.getVariableNameCompleter()));
 
         registry.registerCommand("history", new HistoryCommand());
 
         registry.registerCommand("recall", new RecallHistoryCommand());
 
         registry.registerCommand("source", new SourceCommand()
-                .installCompleters(components.getFileNameCompleter()));
+            .installCompleters(components.getFileNameCompleter()));
 
         registry.registerCommand("alias", new AliasCommand(components.getAliasRegistry()));
 
         registry.registerCommand("unalias", new UnaliasCommand(components.getAliasRegistry())
-                .installCompleters(components.getAliasNameCompleter()));
+            .installCompleters(components.getAliasNameCompleter()));
 
         registry.registerCommand("pref", new PreferenceCommand());
-        
+
         registry.registerCommand("echo", new EchoCommand());
     }
 

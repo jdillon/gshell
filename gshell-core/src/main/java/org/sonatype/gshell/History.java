@@ -21,9 +21,8 @@ import java.util.List;
 
 /**
  * Provides access to a shells history.
- * 
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 public interface History
@@ -43,11 +42,11 @@ public interface History
     void purge() throws IOException;
 
     int size();
-    
+
     /**
      * Returns a list of all history items.
-     * 
-     * @return  List of history elements; never null
+     *
+     * @return List of history elements; never null
      */
     List<String> items();
 }

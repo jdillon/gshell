@@ -16,10 +16,11 @@
 
 package org.sonatype.gshell.console;
 
-import static org.junit.Assert.*;
 import org.junit.Test;
 
 import java.io.IOException;
+
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link org.sonatype.gshell.console.Console} class.

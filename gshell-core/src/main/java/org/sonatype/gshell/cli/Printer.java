@@ -32,7 +32,6 @@ import java.util.List;
  * Helper to print formatted help and usage text.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class Printer
@@ -101,7 +100,7 @@ public class Printer
             }
             str += token;
         }
-        
+
         return str;
     }
 
@@ -126,7 +125,8 @@ public class Printer
 
         // For display purposes, we like the argument handlers in argument order,
         // but the option handlers in alphabetical order
-        Collections.sort(optionHandlers, new Comparator<Handler>() {
+        Collections.sort(optionHandlers, new Comparator<Handler>()
+        {
             public int compare(final Handler a, final Handler b) {
                 return a.getDescriptor().toString().compareTo(b.getDescriptor().toString());
             }
@@ -170,14 +170,14 @@ public class Printer
 
         if (!optionHandlers.isEmpty()) {
             out.println(messages.getMessage("options.header"));
-            
+
             for (Handler handler : optionHandlers) {
                 printHandler(out, handler, len);
             }
 
             out.println();
         }
-        
+
         out.flush();
     }
 
@@ -228,7 +228,7 @@ public class Printer
     private void indent(final PrintWriter out, int i) {
         assert out != null;
 
-        for (; i>0; i--) {
+        for (; i > 0; i--) {
             out.print(' ');
         }
     }

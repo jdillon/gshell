@@ -20,17 +20,16 @@ import org.sonatype.gshell.command.IO;
 
 /**
  * Provides access to execute commands.
- * 
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 public interface Shell
 {
     Branding getBranding();
-    
+
     IO getIo();
-    
+
     Variables getVariables();
 
     History getHistory();
@@ -38,7 +37,7 @@ public interface Shell
     boolean isOpened();
 
     void close();
-    
+
     Object execute(String line) throws Exception;
 
     Object execute(String command, Object[] args) throws Exception;
@@ -48,17 +47,16 @@ public interface Shell
     /**
      * Check if the shell can be run interactivly.
      *
-     * @return  True if the shell is interactive.
+     * @return True if the shell is interactive.
      */
     boolean isInteractive();
 
     /**
      * Run the shell interactivly.
      *
-     * @param args  The initial commands to execute interactivly.
-     *
-     * @throws Exception                        Failed to execute commands.
-     * @throws UnsupportedOperationException    The shell does not support interactive execution.
+     * @param args The initial commands to execute interactivly.
+     * @throws Exception                     Failed to execute commands.
+     * @throws UnsupportedOperationException The shell does not support interactive execution.
      */
     void run(Object... args) throws Exception;
 }

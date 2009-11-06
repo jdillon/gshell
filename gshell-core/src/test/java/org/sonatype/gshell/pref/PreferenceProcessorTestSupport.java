@@ -19,8 +19,6 @@ package org.sonatype.gshell.pref;
 import org.junit.After;
 import org.junit.Before;
 
-import static org.junit.Assert.assertEquals;
-
 /**
  * Support for {@link PreferenceProcessor} tests.
  *

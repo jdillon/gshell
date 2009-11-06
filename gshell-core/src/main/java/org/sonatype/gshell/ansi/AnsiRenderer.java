@@ -21,16 +21,15 @@ import org.fusesource.jansi.Ansi.Color;
 
 /**
  * Renders ANSI color escape-codes in strings by parsing out some special syntax to pick up the correct fluff to use.
- *
- * <p>
+ * <p/>
+ * <p/>
  * The syntax for embedded ANSI codes is:
- * 
+ * <p/>
  * <pre>
  *     @|<code>(,<code>)*<space><text>|@
  * </pre>
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class AnsiRenderer
@@ -43,9 +42,9 @@ public class AnsiRenderer
 
     private static final int END_TOKEN_LEN = 2;
 
-    public static final String CODE_TEXT_SEPARATOR  = " ";
+    public static final String CODE_TEXT_SEPARATOR = " ";
 
-    public static final String CODE_LIST_SEPARATOR  = ",";
+    public static final String CODE_LIST_SEPARATOR = ",";
 
     public String render(final String input) throws IllegalArgumentException {
         StringBuffer buff = new StringBuffer();
@@ -166,8 +165,7 @@ public class AnsiRenderer
 
         // Aliases
         BOLD(Attribute.INTENSITY_BOLD),
-        FAINT(Attribute.INTENSITY_FAINT),
-        ;
+        FAINT(Attribute.INTENSITY_FAINT),;
 
         private final Enum n;
 

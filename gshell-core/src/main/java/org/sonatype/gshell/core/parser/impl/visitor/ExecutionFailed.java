@@ -25,7 +25,7 @@ public class ExecutionFailed
     extends Exception
 {
     ///CLOVER:OFF
-    
+
     private static final long serialVersionUID = 1;
 
     public ExecutionFailed(final Throwable cause) {

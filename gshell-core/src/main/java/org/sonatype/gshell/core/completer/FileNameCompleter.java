@@ -27,7 +27,6 @@ import java.io.File;
  * {@link Completer} for file names.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class FileNameCompleter

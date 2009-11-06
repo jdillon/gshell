@@ -18,18 +18,17 @@ package org.sonatype.gshell.notification;
 
 /**
  * Thrown to indicate a notification state.
- *
+ * <p/>
  * <p>Extending from Error to prevent need to declare throwable.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public abstract class Notification
     extends Error
 {
     ///CLOVER:OFF
-    
+
     public Notification(final String msg, final Throwable cause) {
         super(msg, cause);
     }

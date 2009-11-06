@@ -25,7 +25,6 @@ import java.io.IOException;
  * An ANSI string which reports the size of rendered text correctly (ignoring any ANSI escapes).
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class AnsiString
@@ -69,7 +68,7 @@ public class AnsiString
     }
 
     // FIXME: charAt() and subSequence() will make shit barf, need to call toString() first to get expected results
-    
+
     public char charAt(final int index) {
         return getEncoded().charAt(index);
     }

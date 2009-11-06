@@ -52,7 +52,6 @@ import static org.sonatype.gshell.core.commands.InfoCommand.Section.SHELL;
  * Display shell information.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 @Command
@@ -74,10 +73,10 @@ public class InfoCommand
         OS,
     }
 
-    @Argument(multiValued=true)
+    @Argument(multiValued = true)
     private List<Section> sections;
 
-    @Option(name="-a", aliases={ "--all" })
+    @Option(name = "-a", aliases = {"--all"})
     private boolean all;
 
     public Object execute(final CommandContext context) throws Exception {
@@ -94,11 +93,11 @@ public class InfoCommand
         if (all) {
             sections = Arrays.asList(Section.values());
         }
-        
+
         if (sections == null) {
             sections = Arrays.asList(SHELL);
         }
-        
+
         //
         // TODO: i18n all this
         //
@@ -128,7 +127,7 @@ public class InfoCommand
                     println(io, "ANSI", term.isAnsiSupported());
                     println(io, "Echo", term.isEchoEnabled());
                     if (term instanceof WindowsTerminal) {
-                        println(io, "Direct Console", ((WindowsTerminal)term).getDirectConsole());
+                        println(io, "Direct Console", ((WindowsTerminal) term).getDirectConsole());
                     }
                     break;
 
@@ -140,7 +139,8 @@ public class InfoCommand
                     try {
                         println(io, "Process CPU time", printDuration(getSunOsValueAsLong(os, "getProcessCpuTime") / 1000000));
                     }
-                    catch (Throwable t) {}
+                    catch (Throwable t) {
+                    }
                     println(io, "Total compile time", printDuration(ManagementFactory.getCompilationMXBean().getTotalCompilationTime()));
                     break;
 
@@ -151,7 +151,7 @@ public class InfoCommand
                     println(io, "Peak", Integer.toString(threads.getPeakThreadCount()));
                     println(io, "Total started", Long.toString(threads.getTotalStartedThreadCount()));
                     break;
-                
+
                 case MEMORY:
                     io.out.println("Memory");
                     println(io, "Current heap size", printSizeInKb(mem.getHeapMemoryUsage().getUsed()));
@@ -183,11 +183,12 @@ public class InfoCommand
                         println(io, "Total swap space", printSizeInKb(getSunOsValueAsLong(os, "getTotalSwapSpaceSize")));
                         println(io, "Free swap space", printSizeInKb(getSunOsValueAsLong(os, "getFreeSwapSpaceSize")));
                     }
-                    catch (Throwable t) {}
+                    catch (Throwable t) {
+                    }
                     break;
             }
         }
-        
+
         return Result.SUCCESS;
     }
 
@@ -203,7 +204,7 @@ public class InfoCommand
     //
     // TODO: i18n all this
     //
-    
+
     private String printSizeInKb(final double size) {
         return FMTI.format((long) (size / 1024)) + " kbytes";
     }

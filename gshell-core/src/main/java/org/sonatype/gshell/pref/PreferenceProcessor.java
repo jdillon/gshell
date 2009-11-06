@@ -29,14 +29,14 @@ import java.util.List;
  * Processes an object for preference annotations.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class PreferenceProcessor
 {
     private final List<PreferenceDescriptor> descriptors = new ArrayList<PreferenceDescriptor>();
 
-    public PreferenceProcessor() {}
+    public PreferenceProcessor() {
+    }
 
     public PreferenceProcessor(final Object bean) {
         addBean(bean);
@@ -54,7 +54,7 @@ public class PreferenceProcessor
         assert bean != null;
 
         // Recursively process all the methods/fields (@Inherited won't work here)
-        for (Class type=bean.getClass(); type!=null; type=type.getSuperclass()) {
+        for (Class type = bean.getClass(); type != null; type = type.getSuperclass()) {
             for (Method method : type.getDeclaredMethods()) {
                 discoverDescriptor(bean, method);
             }

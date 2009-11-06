@@ -39,7 +39,6 @@ import java.util.TreeMap;
  * Processes an object for command-line configuration annotations.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class CommandLineProcessor
@@ -56,8 +55,9 @@ public class CommandLineProcessor
 
     private MessageSource messages;
 
-    public CommandLineProcessor() {}
-    
+    public CommandLineProcessor() {
+    }
+
     public CommandLineProcessor(final Object bean) {
         addBean(bean);
     }
@@ -88,9 +88,9 @@ public class CommandLineProcessor
 
     public void addBean(final Object bean) {
         discoverDescriptors(bean);
-        
+
         if (bean instanceof CommandLineProcessorAware) {
-            ((CommandLineProcessorAware)bean).setProcessor(this);
+            ((CommandLineProcessorAware) bean).setProcessor(this);
         }
     }
 
@@ -102,7 +102,7 @@ public class CommandLineProcessor
         assert bean != null;
 
         // Recursively process all the methods/fields (@Inherited won't work here)
-        for (Class type=bean.getClass(); type!=null; type=type.getSuperclass()) {
+        for (Class type = bean.getClass(); type != null; type = type.getSuperclass()) {
             for (Method method : type.getDeclaredMethods()) {
                 discoverDescriptor(bean, method);
             }
@@ -112,7 +112,7 @@ public class CommandLineProcessor
         }
 
         // Sanity check the argument indexes
-        for (int i=0; i< argumentHandlers.size(); i++) {
+        for (int i = 0; i < argumentHandlers.size(); i++) {
             if (argumentHandlers.get(i) == null) {
                 throw new IllegalAnnotationError("No argument annotation for index: " + i);
             }
@@ -173,12 +173,12 @@ public class CommandLineProcessor
     //
     // Processing
     //
-    
+
     private class ParametersImpl
         implements Parameters
     {
         private final String[] args;
-        
+
         private int pos = 0;
 
         Handler handler;
@@ -228,7 +228,7 @@ public class CommandLineProcessor
         // TODO: Need to rewrite some of this to allow more posix-style argument processing,
         //       like --foo=bar and --foo bar, and -vvvv
         //
-        
+
         while (params.hasMore()) {
             String arg = params.current();
             Handler handler;
@@ -250,7 +250,7 @@ public class CommandLineProcessor
                         throw new ProcessingException(Messages.UNDEFINED_OPTION.format(arg));
                     }
                 }
-                else if (nv){
+                else if (nv) {
                     // known option, but further processing is required in the handler.
                     handler.setKeyValuePair(nv);
                 }
@@ -279,7 +279,7 @@ public class CommandLineProcessor
 
                 // If this is an option which overrides requirements track it
                 if (!requireOverride && handler.isOption()) {
-                    requireOverride = ((OptionDescriptor)handler.getDescriptor()).isRequireOverride();
+                    requireOverride = ((OptionDescriptor) handler.getDescriptor()).isRequireOverride();
                 }
 
                 // Invoker the handler and then skip arguments which it has eaten up
@@ -293,7 +293,7 @@ public class CommandLineProcessor
             // Keep a list of the handlers which have been processed (for required validation below)
             present.add(handler);
         }
-        
+
         // Ensure that all required option handlers are present, unless a processed option has overridden requirements
         if (!requireOverride) {
             for (Handler handler : optionHandlers) {
@@ -324,14 +324,14 @@ public class CommandLineProcessor
     //
     // Option Handler lookup
     //
-    
+
     private Handler findOptionHandler(final String name) {
         Handler handler = findOptionByName(name);
 
         if (handler == null) {
             // Have not found by its name, maybe its a property?
             // Search for parts of the name (=prefix) - most specific first 
-            for (int i=name.length(); i>1; i--) {
+            for (int i = name.length(); i > 1; i--) {
                 String prefix = name.substring(0, i);
                 Map<String, Handler> possibleHandlers = filter(optionHandlers, prefix);
                 handler = possibleHandlers.get(prefix);
@@ -345,11 +345,11 @@ public class CommandLineProcessor
         return handler;
     }
 
-    private Map<String,Handler> filter(final List<Handler> handlers, final String keyFilter) {
-        Map<String,Handler> map = new TreeMap<String, Handler>();
+    private Map<String, Handler> filter(final List<Handler> handlers, final String keyFilter) {
+        Map<String, Handler> map = new TreeMap<String, Handler>();
 
         for (Handler handler : handlers) {
-            OptionDescriptor descriptor = (OptionDescriptor)handler.getDescriptor();
+            OptionDescriptor descriptor = (OptionDescriptor) handler.getDescriptor();
 
             if (keyFilter.contains(DASH_DASH)) {
                 for (String alias : descriptor.getAliases()) {
@@ -367,10 +367,10 @@ public class CommandLineProcessor
 
         return map;
     }
-    
+
     private Handler findOptionByName(final String name) {
         for (Handler handler : optionHandlers) {
-            OptionDescriptor descriptor = (OptionDescriptor)handler.getDescriptor();
+            OptionDescriptor descriptor = (OptionDescriptor) handler.getDescriptor();
 
             if (name.equals(descriptor.getName())) {
                 return handler;

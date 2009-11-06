@@ -32,7 +32,6 @@ import java.util.List;
  * Define an alias or list defined aliases.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 @Command
@@ -40,11 +39,11 @@ public class AliasCommand
     extends CommandActionSupport
 {
     private final AliasRegistry aliasRegistry;
-    
-    @Argument(index=0)
+
+    @Argument(index = 0)
     private String name;
 
-    @Argument(index=1, multiValued=true)
+    @Argument(index = 1, multiValued = true)
     private List<String> target;
 
     @Inject
@@ -109,7 +108,7 @@ public class AliasCommand
         }
 
         String alias = Strings.join(target.toArray(), " ");
-        
+
         log.debug("Defining alias: {} -> {}", name, alias);
 
         aliasRegistry.registerAlias(name, alias);

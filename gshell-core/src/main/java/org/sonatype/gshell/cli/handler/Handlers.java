@@ -27,7 +27,6 @@ import java.lang.reflect.InvocationTargetException;
  * Provides access to handlers.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class Handlers

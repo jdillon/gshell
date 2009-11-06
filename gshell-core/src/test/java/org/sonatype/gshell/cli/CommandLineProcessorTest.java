@@ -16,10 +16,12 @@
 
 package org.sonatype.gshell.cli;
 
-import static org.junit.Assert.*;
 import org.junit.Test;
 
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Tests for the {@link CommandLineProcessor} class.

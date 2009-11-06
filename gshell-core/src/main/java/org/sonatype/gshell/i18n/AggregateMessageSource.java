@@ -26,7 +26,6 @@ import java.util.List;
  * A message source which aggregates messages sources in order.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class AggregateMessageSource
@@ -53,7 +52,9 @@ public class AggregateMessageSource
         for (MessageSource source : sources) {
             try {
                 result = source.getMessage(code);
-                if (result != null) break;
+                if (result != null) {
+                    break;
+                }
             }
             catch (ResourceNotFoundException e) {
                 Log.trace(e);
@@ -73,7 +74,9 @@ public class AggregateMessageSource
         for (MessageSource source : sources) {
             try {
                 result = source.format(code, args);
-                if (result != null) break;
+                if (result != null) {
+                    break;
+                }
             }
             catch (ResourceNotFoundException e) {
                 Log.trace(e);

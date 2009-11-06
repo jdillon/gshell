@@ -40,11 +40,10 @@ import java.util.Map;
 
 /**
  * {@link Completer} for commands, including support for command-specific sub-completion.
- *
+ * <p/>
  * Keeps up to date automatically by handling command-related events.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class CommandsCompleter
@@ -56,7 +55,7 @@ public class CommandsCompleter
 
     private final CommandRegistry commandRegistry;
 
-    private final Map<String,Completer> completors = new HashMap<String,Completer>();
+    private final Map<String, Completer> completors = new HashMap<String, Completer>();
 
     private final AggregateCompleter delegate = new AggregateCompleter();
 
@@ -79,14 +78,15 @@ public class CommandsCompleter
             }
 
             // Register for updates to command registrations
-            eventManager.addListener(new EventListener() {
+            eventManager.addListener(new EventListener()
+            {
                 public void onEvent(final EventObject event) throws Exception {
                     if (event instanceof CommandRegisteredEvent) {
-                        CommandRegisteredEvent targetEvent = (CommandRegisteredEvent)event;
+                        CommandRegisteredEvent targetEvent = (CommandRegisteredEvent) event;
                         addCompleter(targetEvent.getName());
                     }
                     else if (event instanceof CommandRemovedEvent) {
-                        CommandRemovedEvent targetEvent = (CommandRemovedEvent)event;
+                        CommandRemovedEvent targetEvent = (CommandRemovedEvent) event;
                         removeCompleter(targetEvent.getName());
                     }
                 }
@@ -103,7 +103,7 @@ public class CommandsCompleter
         assert name != null;
 
         log.trace("Adding completer for: {}", name);
-        
+
         List<Completer> children = new ArrayList<Completer>();
 
         // Attach completion for the command name

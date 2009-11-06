@@ -22,7 +22,6 @@ import java.lang.reflect.Array;
  * Utils for command-line arguments.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class Arguments
@@ -35,7 +34,7 @@ public class Arguments
         assert source != null;
         assert source.length >= pos;
 
-        Object[] target = (Object[])Array.newInstance(source.getClass().getComponentType(), source.length - pos);
+        Object[] target = (Object[]) Array.newInstance(source.getClass().getComponentType(), source.length - pos);
 
         System.arraycopy(source, pos, target, 0, target.length);
 
@@ -47,7 +46,7 @@ public class Arguments
 
         String[] strings = new String[args.length];
 
-        for (int i=0; i<args.length; i++ ) {
+        for (int i = 0; i < args.length; i++) {
             strings[i] = String.valueOf(args[i]);
         }
 

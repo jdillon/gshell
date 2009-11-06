@@ -33,7 +33,6 @@ import org.sonatype.gshell.util.Strings;
  * The default {@link org.sonatype.gshell.registry.CommandResolver} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class CommandResolverImpl

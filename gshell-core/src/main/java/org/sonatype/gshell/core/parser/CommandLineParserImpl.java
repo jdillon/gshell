@@ -34,7 +34,6 @@ import java.io.StringReader;
  * The default {@link org.sonatype.gshell.execute.CommandLineParser} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class CommandLineParserImpl

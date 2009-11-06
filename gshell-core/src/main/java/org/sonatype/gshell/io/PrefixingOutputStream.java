@@ -24,7 +24,6 @@ import java.io.OutputStream;
  * Prefixes printed lines.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class PrefixingOutputStream

@@ -30,14 +30,13 @@ import java.util.List;
  * Recall history.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 @Command
 public class RecallHistoryCommand
     extends CommandActionSupport
 {
-    @Argument(required=true)
+    @Argument(required = true)
     private int index;
 
     public Object execute(final CommandContext context) throws Exception {
@@ -53,7 +52,7 @@ public class RecallHistoryCommand
 
         String element = elements.get(index);
         log.debug("Recalling from history: {}", element);
-        
+
         Shell shell = context.getShell();
         return shell.execute(element);
     }

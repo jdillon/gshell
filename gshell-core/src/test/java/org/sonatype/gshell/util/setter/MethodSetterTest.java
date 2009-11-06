@@ -16,11 +16,12 @@
 
 package org.sonatype.gshell.util.setter;
 
-import static org.junit.Assert.*;
 import org.junit.Test;
 import org.sonatype.gshell.cli.Argument;
 import org.sonatype.gshell.cli.CommandLineProcessorTestSupport;
 import org.sonatype.gshell.cli.Option;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Tests for the {@link org.sonatype.gshell.util.setter.MethodSetter} class.

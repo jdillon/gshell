@@ -25,7 +25,6 @@ import org.sonatype.gshell.util.setter.Setter;
  * Handler which uses a {@link org.sonatype.gshell.util.converter.Converter} to coerce types.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class ConvertingHandler

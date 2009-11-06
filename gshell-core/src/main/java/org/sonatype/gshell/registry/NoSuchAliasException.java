@@ -22,14 +22,13 @@ import org.sonatype.gshell.command.CommandException;
  * Thrown to indicate that a requested named-alias was not found.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class NoSuchAliasException
     extends CommandException
 {
     ///CLOVER:OFF
-    
+
     private static final long serialVersionUID = 1;
 
     public NoSuchAliasException(final String msg) {

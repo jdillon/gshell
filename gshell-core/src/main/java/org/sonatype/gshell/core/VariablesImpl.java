@@ -30,13 +30,12 @@ import java.util.Set;
  * Provides a nested-namespace for command variables.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class VariablesImpl
     implements Variables, EventAware
 {
-    private final Map<String,Object> map;
+    private final Map<String, Object> map;
 
     private final Variables parent;
 
@@ -44,7 +43,7 @@ public class VariablesImpl
 
     private EventManager eventManager;
 
-    public VariablesImpl(final Map<String,Object> map, final Variables parent) {
+    public VariablesImpl(final Map<String, Object> map, final Variables parent) {
         assert map != null;
         // parent may be null
 
@@ -53,15 +52,15 @@ public class VariablesImpl
     }
 
     public VariablesImpl(final Variables parent) {
-        this(new LinkedHashMap<String,Object>(), parent);
+        this(new LinkedHashMap<String, Object>(), parent);
     }
 
-    public VariablesImpl(final Map<String,Object> map) {
+    public VariablesImpl(final Map<String, Object> map) {
         this(map, null);
     }
 
     public VariablesImpl() {
-        this(new LinkedHashMap<String,Object>());
+        this(new LinkedHashMap<String, Object>());
     }
 
     public void setEventManager(final EventManager eventManager) {
@@ -107,10 +106,10 @@ public class VariablesImpl
 
         // Support coercion to string by default
         if (type == String.class) {
-            return (T)String.valueOf(value);
+            return (T) String.valueOf(value);
         }
         else {
-            return (T)value;
+            return (T) value;
         }
     }
 
@@ -185,7 +184,8 @@ public class VariablesImpl
 
     public Iterator<String> names() {
         // Chain to parent iterator if we have a parent
-        return new Iterator<String>() {
+        return new Iterator<String>()
+        {
             Iterator<String> iter = map.keySet().iterator();
             boolean more = parent() != null;
 

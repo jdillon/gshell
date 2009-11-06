@@ -36,7 +36,6 @@ import java.util.Properties;
  * Set a variable or property.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 @Command
@@ -49,16 +48,16 @@ public class SetCommand
         PROPERTY
     }
 
-    @Option(name="-m", aliases={"--mode"})
+    @Option(name = "-m", aliases = {"--mode"})
     private Mode mode = Mode.VARIABLE;
 
-    @Option(name="-v", aliases={"--verbose"})
+    @Option(name = "-v", aliases = {"--verbose"})
     private boolean verbose;
 
-    @Argument(index=0)
+    @Argument(index = 0)
     private String name;
 
-    @Argument(index=1, multiValued=true)
+    @Argument(index = 1, multiValued = true)
     private List<String> values;
 
     @Inject
@@ -104,7 +103,7 @@ public class SetCommand
         IO io = context.getIo();
 
         // NOTE: Using io.outputStream to display values to avoid any ANSI encoding or other translation.
-        
+
         switch (mode) {
             case PROPERTY: {
                 Properties props = System.getProperties();

@@ -27,7 +27,6 @@ import java.lang.annotation.Target;
  * Configures a field or method for processing as a command-line option.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 @Retention(RetentionPolicy.RUNTIME)
@@ -35,7 +34,7 @@ import java.lang.annotation.Target;
 public @interface Option
 {
     String name();
-    
+
     String[] aliases() default {};
 
     String description() default "";
@@ -47,8 +46,8 @@ public @interface Option
     boolean argumentRequired() default false;
 
     Class<? extends Handler> handler() default Handler.class;
-    
+
     boolean multiValued() default false;
-    
+
     boolean requireOverride() default false;
 }

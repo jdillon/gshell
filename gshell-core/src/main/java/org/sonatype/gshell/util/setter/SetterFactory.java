@@ -25,7 +25,6 @@ import java.util.Collection;
  * Creates {@link Setter} instances.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class SetterFactory
@@ -35,7 +34,7 @@ public class SetterFactory
         assert bean != null;
 
         if (element instanceof Field) {
-            Field field = (Field)element;
+            Field field = (Field) element;
 
             if (Collection.class.isAssignableFrom(field.getType())) {
                 return new CollectionFieldSetter(bean, field);
@@ -45,7 +44,7 @@ public class SetterFactory
             }
         }
         else if (element instanceof Method) {
-            Method method = (Method)element;
+            Method method = (Method) element;
 
             return new MethodSetter(method, bean);
         }

@@ -22,14 +22,13 @@ import java.util.EventObject;
  * Event fired once an alias has been registered.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class AliasRegisteredEvent
     extends EventObject
 {
     ///CLOVER:OFF
-    
+
     private final String name;
 
     private final String alias;

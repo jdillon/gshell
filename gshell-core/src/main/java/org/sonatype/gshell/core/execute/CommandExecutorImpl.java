@@ -46,7 +46,6 @@ import org.sonatype.gshell.util.Strings;
  * The default {@link org.sonatype.gshell.execute.CommandExecutor} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class CommandExecutorImpl
@@ -80,9 +79,9 @@ public class CommandExecutorImpl
         }
 
         final Shell lastShell = ShellHolder.set(shell);
-        
+
         CommandLine cl = parser.parse(line);
-        
+
         try {
             return cl.execute(shell, this);
         }
@@ -91,10 +90,10 @@ public class CommandExecutorImpl
             Throwable cause = n.getCause();
 
             if (cause instanceof Exception) {
-                throw (Exception)cause;
+                throw (Exception) cause;
             }
             else if (cause instanceof Error) {
-                throw (Error)cause;
+                throw (Error) cause;
             }
             else {
                 throw n;
@@ -111,7 +110,7 @@ public class CommandExecutorImpl
 
         return execute(shell, String.valueOf(args[0]), Arguments.shift(args));
     }
-    
+
     public Object execute(final Shell shell, final String name, final Object[] args) throws Exception {
         assert shell != null;
         assert name != null;
@@ -134,14 +133,14 @@ public class CommandExecutorImpl
         else {
             SystemInputOutputHijacker.register(io.streams);
         }
-        
+
         Object result = null;
         try {
             boolean execute = true;
 
             PreferenceProcessor pp = new PreferenceProcessor(command);
             pp.process();
-            
+
             if (!(command instanceof OpaqueArguments)) {
                 CommandLineProcessor clp = new CommandLineProcessor(command);
                 clp.setMessages(new PrefixingMessageSource(command.getMessages(), CommandDocumenter.COMMAND_DOT));
@@ -162,7 +161,8 @@ public class CommandExecutorImpl
 
             if (execute) {
                 try {
-                    result = command.execute(new CommandContext() {
+                    result = command.execute(new CommandContext()
+                    {
                         public Shell getShell() {
                             return shell;
                         }
@@ -181,7 +181,7 @@ public class CommandExecutorImpl
                     });
                 }
                 catch (ResultNotification n) {
-                    result = n.getResult();   
+                    result = n.getResult();
                 }
             }
         }
@@ -191,7 +191,7 @@ public class CommandExecutorImpl
             SystemInputOutputHijacker.deregister();
 
             ShellHolder.set(lastShell);
-            
+
             MDC.remove(CommandAction.class.getName());
         }
 

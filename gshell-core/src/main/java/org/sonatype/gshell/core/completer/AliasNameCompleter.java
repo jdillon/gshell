@@ -31,11 +31,10 @@ import java.util.List;
 
 /**
  * {@link Completer} for alias names.
- *
+ * <p/>
  * Keeps up to date automatically by handling alias-related events.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class AliasNameCompleter
@@ -63,14 +62,15 @@ public class AliasNameCompleter
         delegate.getStrings().addAll(names);
 
         // Register for updates to alias registrations
-        eventManager.addListener(new EventListener() {
+        eventManager.addListener(new EventListener()
+        {
             public void onEvent(final EventObject event) throws Exception {
                 if (event instanceof AliasRegisteredEvent) {
-                    AliasRegisteredEvent targetEvent = (AliasRegisteredEvent)event;
+                    AliasRegisteredEvent targetEvent = (AliasRegisteredEvent) event;
                     delegate.getStrings().add(targetEvent.getName());
                 }
                 else if (event instanceof AliasRemovedEvent) {
-                    AliasRemovedEvent targetEvent = (AliasRemovedEvent)event;
+                    AliasRemovedEvent targetEvent = (AliasRemovedEvent) event;
                     delegate.getStrings().remove(targetEvent.getName());
                 }
             }

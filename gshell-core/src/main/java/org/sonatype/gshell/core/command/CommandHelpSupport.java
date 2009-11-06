@@ -25,17 +25,16 @@ import org.sonatype.gshell.i18n.ResourceBundleMessageSource;
  * Helper to inject <tt>--help<tt> support.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class CommandHelpSupport
 {
     ///CLOVER:OFF
-    
-    @Option(name="-h", aliases={"--help"}, requireOverride=true)
+
+    @Option(name = "-h", aliases = {"--help"}, requireOverride = true)
     public boolean displayHelp;
 
-    @Option(name="--", handler=StopHandler.class)
+    @Option(name = "--", handler = StopHandler.class)
     public boolean stop;
 
     private MessageSource messages;

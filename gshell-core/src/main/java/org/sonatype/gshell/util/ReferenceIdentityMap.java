@@ -30,7 +30,7 @@ import java.util.Set;
  * proxy is no longer needed. Note that this is not a full Map implementation.
  * The iteration and collection capabilities of Map have been discarded to keep the
  * implementation lightweight.
- * <p>
+ * <p/>
  * Much of this code was cribbed from the Commons Collection 3.1 implementation of
  * <code>ReferenceIdentityMap</code> and <code>AbstractReferenceMap</code>.
  *
@@ -39,20 +39,34 @@ import java.util.Set;
 public class ReferenceIdentityMap
     implements Map
 {
-    /** The default capacity to use. Always use a power of 2!!! */
+    /**
+     * The default capacity to use. Always use a power of 2!!!
+     */
     private static final int DEFAULT_CAPACITY = 16;
-    /** The default load factor to use */
+    /**
+     * The default load factor to use
+     */
     private static final float DEFAULT_LOAD_FACTOR = 0.75f;
-    /** The maximum capacity allowed */
+    /**
+     * The maximum capacity allowed
+     */
     private static final int MAXIMUM_CAPACITY = 1 << 30;
 
-    /** Load factor, normally 0.75 */
+    /**
+     * Load factor, normally 0.75
+     */
     private float loadFactor;
-    /** The size of the map */
+    /**
+     * The size of the map
+     */
     private transient int size;
-    /** Map entries */
+    /**
+     * Map entries
+     */
     private transient ReferenceEntry[] data;
-    /** Size at which to rehash */
+    /**
+     * Size at which to rehash
+     */
     private transient int threshold;
 
     /**
@@ -90,7 +104,7 @@ public class ReferenceIdentityMap
     /**
      * Checks whether the map contains the specified key.
      *
-     * @param key  the key to search for
+     * @param key the key to search for
      * @return true if the map contains the key
      */
     public boolean containsKey(Object key) {
@@ -105,7 +119,7 @@ public class ReferenceIdentityMap
     /**
      * Checks whether the map contains the specified value.
      *
-     * @param value  the value to search for
+     * @param value the value to search for
      * @return true if the map contains the value
      */
     public boolean containsValue(Object value) {
@@ -129,7 +143,7 @@ public class ReferenceIdentityMap
     /**
      * Gets the value mapped to the key specified.
      *
-     * @param key  the key
+     * @param key the key
      * @return the mapped value, null if no match
      */
     public Object get(Object key) {
@@ -146,13 +160,13 @@ public class ReferenceIdentityMap
      * Puts a key-value entry into this map.
      * Neither the key nor the value may be null.
      *
-     * @param key  the key to add, must not be null
-     * @param value  the value to add, must not be null
+     * @param key   the key to add, must not be null
+     * @param value the value to add, must not be null
      * @return the value previously mapped to this key, null if none
      */
     public Object put(Object key, Object value) {
-        assert key != null: "key is null";
-        assert value != null: "value is null";
+        assert key != null : "key is null";
+        assert value != null : "value is null";
 
         purge();
 
@@ -173,7 +187,7 @@ public class ReferenceIdentityMap
     /**
      * Removes the specified mapping from this map.
      *
-     * @param key  the mapping to remove
+     * @param key the mapping to remove
      * @return the value mapped to the removed key, null if key not in map
      */
     public Object remove(Object key) {
@@ -207,7 +221,8 @@ public class ReferenceIdentityMap
             data[i] = null;
         }
         size = 0;
-        while (purgeQueue.poll() != null) {} // drain the queue
+        while (purgeQueue.poll() != null) {
+        } // drain the queue
     }
 
     public Collection values() {
@@ -230,7 +245,8 @@ public class ReferenceIdentityMap
 
     /**
      * Gets the entry mapped to the key specified.
-     * @param key  the key
+     *
+     * @param key the key
      * @return the entry, null if no match
      */
     private ReferenceEntry getEntry(Object key) {
@@ -251,10 +267,10 @@ public class ReferenceIdentityMap
     /**
      * Creates a new ReferenceEntry.
      *
-     * @param index the index into the data map
-     * @param hashCode  the hash code for the new entry
-     * @param key  the key to store
-     * @param value  the value to store
+     * @param index    the index into the data map
+     * @param hashCode the hash code for the new entry
+     * @param key      the key to store
+     * @param value    the value to store
      * @return the newly created entry
      */
     private ReferenceEntry createEntry(int index, int hashCode, Object key, Object value) {
@@ -267,18 +283,19 @@ public class ReferenceIdentityMap
 
     /**
      * Removes an entry from the chain stored in a particular index.
-     * <p>
+     * <p/>
      * This implementation removes the entry from the data storage table.
      * The size is not updated.
      *
-     * @param entry  the entry to remove
-     * @param hashIndex  the index into the data structure
+     * @param entry     the entry to remove
+     * @param hashIndex the index into the data structure
      * @param previous  the previous entry in the chain
      */
     private void removeEntry(ReferenceEntry entry, int hashIndex, ReferenceEntry previous) {
         if (previous == null) {
             data[hashIndex] = entry.next;
-        } else {
+        }
+        else {
             previous.next = entry.next;
         }
         size--;
@@ -289,7 +306,7 @@ public class ReferenceIdentityMap
 
     /**
      * Checks the capacity of the map and enlarges it if necessary.
-     * <p>
+     * <p/>
      * This implementation uses the threshold to check if the map needs enlarging
      */
     private void checkCapacity() {
@@ -304,7 +321,7 @@ public class ReferenceIdentityMap
     /**
      * Changes the size of the data structure to the capacity proposed.
      *
-     * @param newCapacity  the new capacity of the array (a power of two, less or equal to max)
+     * @param newCapacity the new capacity of the array (a power of two, less or equal to max)
      */
     private void ensureCapacity(int newCapacity) {
         int oldCapacity = data.length;
@@ -325,7 +342,8 @@ public class ReferenceIdentityMap
                     entry.next = newEntries[index];
                     newEntries[index] = entry;
                     entry = next;
-                } while (entry != null);
+                }
+                while (entry != null);
             }
         }
         threshold = calculateThreshold(newCapacity, loadFactor);
@@ -336,8 +354,8 @@ public class ReferenceIdentityMap
      * Calculates the new threshold of the map, where it will be resized.
      * This implementation uses the load factor.
      *
-     * @param newCapacity  the new capacity
-     * @param factor  the load factor
+     * @param newCapacity the new capacity
+     * @param factor      the load factor
      * @return the new resize threshold
      */
     private int calculateThreshold(int newCapacity, float factor) {
@@ -346,10 +364,10 @@ public class ReferenceIdentityMap
 
     /**
      * Gets the hash code for the key specified.
-     * <p>
+     * <p/>
      * This implementation uses the identity hash code.
      *
-     * @param key  the key to get a hash code for
+     * @param key the key to get a hash code for
      * @return the hash code
      */
     private int hash(Object key) {
@@ -360,8 +378,8 @@ public class ReferenceIdentityMap
      * Gets the index into the data storage for the hashCode specified.
      * This implementation uses the least significant bits of the hashCode.
      *
-     * @param hashCode  the hash code to use
-     * @param dataSize  the size of the data to pick a bucket from
+     * @param hashCode the hash code to use
+     * @param dataSize the size of the data to pick a bucket from
      * @return the bucket index
      */
     private int hashIndex(int hashCode, int dataSize) {
@@ -373,7 +391,7 @@ public class ReferenceIdentityMap
 
     /**
      * Purges stale mappings from this map.
-     * <p>
+     * <p/>
      * Note that this method is not synchronized!  Special
      * care must be taken if, for instance, you want stale
      * mappings to be removed on a periodic basis by some
@@ -393,7 +411,7 @@ public class ReferenceIdentityMap
      * @param purgedEntry the reference to purge
      */
     private void purge(Reference purgedEntry) {
-        int hash = ((ReferenceEntry)purgedEntry).hashCode;
+        int hash = ((ReferenceEntry) purgedEntry).hashCode;
         int index = hashIndex(hash, data.length);
         ReferenceEntry previous = null;
         ReferenceEntry currentEntry = data[index];
@@ -402,7 +420,8 @@ public class ReferenceIdentityMap
                 currentEntry.purged();
                 if (previous == null) {
                     data[index] = currentEntry.next;
-                } else {
+                }
+                else {
                     previous.next = currentEntry.next;
                 }
                 this.size--;
@@ -415,29 +434,36 @@ public class ReferenceIdentityMap
 
     /**
      * Each entry in the Map is represented with a ReferenceEntry.
-     * <p>
+     * <p/>
      * If getKey() or getValue() returns null, it means
      * the mapping is stale and should be removed.
      *
      * @since Commons Collections 3.1
      */
-    private static class ReferenceEntry extends WeakReference
+    private static class ReferenceEntry
+        extends WeakReference
     {
-        /** The next entry in the hash chain */
+        /**
+         * The next entry in the hash chain
+         */
         private ReferenceEntry next;
-        /** The hash code of the key */
+        /**
+         * The hash code of the key
+         */
         private int hashCode;
-        /** The value */
+        /**
+         * The value
+         */
         private Object value;
 
         /**
          * Creates a new entry object for the ReferenceMap.
          *
-         * @param parent  the parent map
-         * @param next  the next entry in the hash bucket
-         * @param hashCode  the hash code of the key
-         * @param key  the key
-         * @param value  the value
+         * @param parent   the parent map
+         * @param next     the next entry in the hash bucket
+         * @param hashCode the hash code of the key
+         * @param key      the key
+         * @param value    the value
          */
         private ReferenceEntry(ReferenceIdentityMap parent, ReferenceEntry next, int hashCode, Object key, Object value) {
             super(key, parent.purgeQueue);
@@ -469,7 +495,7 @@ public class ReferenceIdentityMap
         /**
          * Sets the value of the entry.
          *
-         * @param obj  the object to store
+         * @param obj the object to store
          * @return the previous value
          */
         private Object setValue(Object obj) {

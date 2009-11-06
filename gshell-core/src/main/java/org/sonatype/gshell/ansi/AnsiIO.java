@@ -28,7 +28,6 @@ import java.io.PrintWriter;
  * ANSI-aware {@link org.sonatype.gshell.command.IO}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class AnsiIO
@@ -38,7 +37,7 @@ public class AnsiIO
         // We support Ansi on windows with jansi so flip it on
         System.setProperty(WindowsTerminal.ANSI, Boolean.TRUE.toString());
     }
-    
+
     public AnsiIO(final StreamSet streams, final boolean autoFlush) {
         super(ansiStreams(streams), autoFlush);
     }

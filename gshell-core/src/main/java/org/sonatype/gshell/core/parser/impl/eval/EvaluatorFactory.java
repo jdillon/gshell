@@ -65,7 +65,7 @@ public class EvaluatorFactory
             instance = create();
             log.debug("Using evaluator: {}", instance);
         }
-        
+
         return instance;
     }
 }

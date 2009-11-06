@@ -18,7 +18,7 @@ package org.sonatype.gshell.util;
 
 /**
  * Common <code>String</code> manipulation routines from <tt>org.codehaus.plexus:plexus-utils</tt>.
- * 
+ *
  * @since 2.0
  */
 public class Strings
@@ -40,7 +40,7 @@ public class Strings
 
         return buff.toString();
     }
-    
+
     public static String repeat(final String str, final int repeat) {
         StringBuilder buff = new StringBuilder(repeat * str.length());
         for (int i = 0; i < repeat; i++) {

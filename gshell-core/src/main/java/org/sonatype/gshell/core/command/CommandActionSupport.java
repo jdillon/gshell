@@ -30,7 +30,6 @@ import java.util.List;
  * Provides support for {@link CommandAction} implementations.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public abstract class CommandActionSupport
@@ -91,6 +90,6 @@ public abstract class CommandActionSupport
     }
 
     public CommandAction copy() {
-        return (CommandAction)clone();
+        return (CommandAction) clone();
     }
 }

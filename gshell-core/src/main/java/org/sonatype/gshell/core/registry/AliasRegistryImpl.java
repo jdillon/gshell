@@ -33,7 +33,6 @@ import java.util.Map;
  * The default {@link org.sonatype.gshell.registry.AliasRegistry} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 @Singleton
@@ -42,7 +41,7 @@ public class AliasRegistryImpl
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private final Map<String,String> aliases = new LinkedHashMap<String,String>();
+    private final Map<String, String> aliases = new LinkedHashMap<String, String>();
 
     private final EventManager eventManager;
 

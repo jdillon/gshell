@@ -16,10 +16,6 @@
 
 package org.sonatype.gshell.core.commands;
 
-import static org.junit.Assert.*;
-import org.junit.Test;
-import org.sonatype.gshell.cli.ProcessingException;
-
 /**
  * Tests for the {@link InfoCommand}.
  *

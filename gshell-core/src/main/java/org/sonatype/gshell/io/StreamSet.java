@@ -26,7 +26,6 @@ import java.io.PrintStream;
  * A set of input, output and error streams.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class StreamSet
@@ -107,9 +106,9 @@ public class StreamSet
      * The {@link System} streams as file streams, for a better chance of non-buffered I/O.
      */
     public static final StreamSet SYSTEM_FD = new StreamSet(
-                new FileInputStream(FileDescriptor.in),
-                new PrintStream(new FileOutputStream(FileDescriptor.out)),
-                new PrintStream(new FileOutputStream(FileDescriptor.err)));
+        new FileInputStream(FileDescriptor.in),
+        new PrintStream(new FileOutputStream(FileDescriptor.out)),
+        new PrintStream(new FileOutputStream(FileDescriptor.err)));
 
     /**
      * Output stream type.

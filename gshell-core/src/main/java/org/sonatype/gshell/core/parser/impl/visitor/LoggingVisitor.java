@@ -36,7 +36,8 @@ import org.sonatype.gshell.util.Strings;
 public class LoggingVisitor
     implements ParserVisitor
 {
-    public static enum Level {
+    public static enum Level
+    {
         INFO,
         DEBUG
     }

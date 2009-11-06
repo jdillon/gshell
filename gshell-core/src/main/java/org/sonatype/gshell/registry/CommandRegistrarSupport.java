@@ -136,7 +136,7 @@ public abstract class CommandRegistrarSupport
         public int compareTo(final CommandsConfiguration target) {
             int us = getAutoRegisterPriority();
             int them = target.getAutoRegisterPriority();
-            return (us<them ? -1 : (us==them ? 0 : 1));
+            return (us < them ? -1 : (us == them ? 0 : 1));
         }
 
         @Override

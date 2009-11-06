@@ -28,9 +28,8 @@ import org.sonatype.gshell.registry.NoSuchAliasException;
 
 /**
  * Undefine an alias.
- * 
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Command
@@ -39,7 +38,7 @@ public class UnaliasCommand
 {
     private final AliasRegistry aliasRegistry;
 
-    @Argument(index=0, required=true)
+    @Argument(index = 0, required = true)
     private String name;
 
     @Inject

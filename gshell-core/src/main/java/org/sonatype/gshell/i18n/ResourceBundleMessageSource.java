@@ -29,7 +29,6 @@ import java.util.ResourceBundle;
  * Message source backed up by {@link ResourceBundle} instances.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class ResourceBundleMessageSource
@@ -58,7 +57,9 @@ public class ResourceBundleMessageSource
                 bundles.add(bundle);
             }
             catch (MissingResourceException e) {
-                if (required) throw e;
+                if (required) {
+                    throw e;
+                }
             }
         }
 

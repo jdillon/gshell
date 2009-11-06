@@ -37,7 +37,6 @@ import java.util.LinkedList;
  * Display command help.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 @Command
@@ -69,7 +68,7 @@ public class HelpCommand
         setCompleters(new AggregateCompleter(c1, c2), null);
         return this;
     }
-    
+
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
         IO io = context.getIo();
@@ -79,7 +78,7 @@ public class HelpCommand
         }
         else {
             // TODO: Use the resolver
-            
+
             if (commandRegistry.containsCommand(commandName)) {
                 CommandAction command = commandRegistry.getCommand(commandName);
                 commandDocumeter.renderManual(command, io);

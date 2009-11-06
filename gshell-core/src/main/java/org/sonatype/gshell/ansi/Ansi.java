@@ -23,13 +23,12 @@ import org.sonatype.gshell.internal.Log;
  * Provides support for using ANSI color escape codes.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class Ansi
     extends org.fusesource.jansi.Ansi
 {
-    @SuppressWarnings({ "StringConcatenation" })
+    @SuppressWarnings({"StringConcatenation"})
     public static final String FORCE = Ansi.class.getName() + ".force";
 
     /**
@@ -52,13 +51,14 @@ public class Ansi
         return detect();
     }
 
-    private static final InheritableThreadLocal<Boolean> holder = new InheritableThreadLocal<Boolean>() {
+    private static final InheritableThreadLocal<Boolean> holder = new InheritableThreadLocal<Boolean>()
+    {
         @Override
         protected Boolean initialValue() {
             return isDetected();
         }
     };
-    
+
     public static void setEnabled(final boolean flag) {
         holder.set(flag);
     }

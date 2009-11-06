@@ -22,7 +22,6 @@ import java.util.EventObject;
  * Provides access to published events.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public interface EventListener

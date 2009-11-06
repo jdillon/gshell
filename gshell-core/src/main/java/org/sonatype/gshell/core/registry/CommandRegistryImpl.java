@@ -36,7 +36,6 @@ import java.util.Map;
  * The default {@link org.sonatype.gshell.registry.CommandRegistry} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 @Singleton
@@ -62,7 +61,7 @@ public class CommandRegistryImpl
             log.trace("Registering command: {} -> {}", name, command);
         }
         else {
-            log.trace("Registering command: {}", name);    
+            log.trace("Registering command: {}", name);
         }
 
         if (containsCommand(name)) {
@@ -71,9 +70,9 @@ public class CommandRegistryImpl
 
         // Inject the name of the command
         if (command instanceof NameAware) {
-            ((NameAware)command).setName(name);
+            ((NameAware) command).setName(name);
         }
-        
+
         commands.put(name, command);
 
         eventManager.publish(new CommandRegisteredEvent(name, command));

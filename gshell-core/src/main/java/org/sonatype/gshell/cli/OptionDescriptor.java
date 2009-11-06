@@ -20,14 +20,13 @@ package org.sonatype.gshell.cli;
  * Descriptor for {@link Option} annotations.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class OptionDescriptor
     extends Descriptor
 {
     private final String name;
-    
+
     private final String[] aliases;
 
     private final boolean argumentRequired;
@@ -46,7 +45,7 @@ public class OptionDescriptor
     public String getName() {
         return name;
     }
-    
+
     public String[] getAliases() {
         return aliases;
     }
@@ -74,10 +73,10 @@ public class OptionDescriptor
             buff.insert(0, " (");
             buff.insert(0, getName());
             buff.append(")");
-            
+
             return buff.toString();
         }
-        
+
         return getName();
     }
 }

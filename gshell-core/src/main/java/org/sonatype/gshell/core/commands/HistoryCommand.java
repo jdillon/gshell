@@ -30,19 +30,18 @@ import java.util.List;
  * Display history.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 @Command
 public class HistoryCommand
     extends CommandActionSupport
 {
-    @Option(name="-c", aliases={"--clear"})
+    @Option(name = "-c", aliases = {"--clear"})
     private boolean clear;
 
-    @Option(name="-p", aliases={"--purge"})
+    @Option(name = "-p", aliases = {"--purge"})
     private boolean purge;
-    
+
     @Argument()
     private String range;
 

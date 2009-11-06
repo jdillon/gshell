@@ -16,8 +16,10 @@
 
 package org.sonatype.gshell.core.commands;
 
-import static org.junit.Assert.*;
 import org.junit.Test;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link HelpCommand}.

@@ -30,14 +30,13 @@ import java.util.List;
  * Print all arguments to the commands standard output.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 @Command
 public class EchoCommand
     extends CommandActionSupport
 {
-    @Option(name="-n")
+    @Option(name = "-n")
     private boolean trailingNewline = true;
 
     @Argument
@@ -49,7 +48,7 @@ public class EchoCommand
 
         if (args != null && !args.isEmpty()) {
             Iterator iter = args.iterator();
-            
+
             while (iter.hasNext()) {
                 io.out.print(iter.next());
                 if (iter.hasNext()) {

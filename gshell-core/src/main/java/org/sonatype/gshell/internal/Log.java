@@ -22,7 +22,6 @@ import java.io.PrintStream;
  * Intenal logger.  For use by classes which can not use Slf4j due to bootstrap+logging configuration issues.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public final class Log
@@ -38,10 +37,10 @@ public final class Log
         ERROR
     }
 
-    @SuppressWarnings({ "StringConcatenation" })
+    @SuppressWarnings({"StringConcatenation"})
     public static final boolean DEBUG = Boolean.getBoolean(Log.class.getName() + ".debug");
 
-    @SuppressWarnings({ "StringConcatenation" })
+    @SuppressWarnings({"StringConcatenation"})
     public static final boolean TRACE = Boolean.getBoolean(Log.class.getName() + ".trace");
 
     private static PrintStream output = System.err;
@@ -57,14 +56,14 @@ public final class Log
 
     private static void print(final Object message) {
         if (message instanceof Throwable) {
-            ((Throwable)message).printStackTrace();
+            ((Throwable) message).printStackTrace();
         }
         else if (message.getClass().isArray()) {
-            Object[] array = (Object[])message;
+            Object[] array = (Object[]) message;
 
-            for (int i=0; i<array.length; i++) {
+            for (int i = 0; i < array.length; i++) {
                 output.print(array[i]);
-                if (i+1<array.length) {
+                if (i + 1 < array.length) {
                     output.print(",");
                 }
             }

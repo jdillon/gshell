@@ -22,7 +22,6 @@ import java.util.EventObject;
  * Event fired once a variable has been unset.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class VariableUnsetEvent

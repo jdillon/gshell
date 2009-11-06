@@ -25,7 +25,6 @@ import java.io.IOException;
  * Quietly closes {@link Closeable}s.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class Closer
@@ -33,7 +32,9 @@ public class Closer
     public static void close(final Closeable... closeables) {
         if (closeables != null) {
             for (Closeable c : closeables) {
-                if (c == null) continue;
+                if (c == null) {
+                    continue;
+                }
 
                 try {
                     c.close();

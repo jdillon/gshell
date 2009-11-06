@@ -16,11 +16,11 @@
 
 package org.sonatype.gshell.core.commands;
 
-import static org.junit.Assert.*;
 import org.junit.Test;
-import org.sonatype.gshell.cli.ProcessingException;
 import org.sonatype.gshell.notification.ExitNotification;
-import org.sonatype.gshell.util.converter.ConversionException;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link ExitCommand}.

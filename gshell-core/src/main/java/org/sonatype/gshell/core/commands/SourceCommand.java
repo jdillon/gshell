@@ -37,14 +37,13 @@ import java.net.URL;
  * Read and execute commands from a file in the current shell.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 @Command
 public class SourceCommand
     extends CommandActionSupport
 {
-    @Argument(required=true)
+    @Argument(required = true)
     private String path;
 
     @Inject
@@ -84,13 +83,13 @@ public class SourceCommand
         BufferedReader reader;
 
         if (source instanceof File) {
-            File file = (File)source;
+            File file = (File) source;
             log.info("Using source file: {}", file);
 
             reader = new BufferedReader(new FileReader(file));
         }
         else if (source instanceof URL) {
-            URL url = (URL)source;
+            URL url = (URL) source;
             log.info("Using source URL: {}", url);
 
             reader = new BufferedReader(new InputStreamReader(url.openStream()));

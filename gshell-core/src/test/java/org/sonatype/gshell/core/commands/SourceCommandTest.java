@@ -16,12 +16,16 @@
 
 package org.sonatype.gshell.core.commands;
 
-import static org.junit.Assert.*;
 import org.junit.Test;
-import org.sonatype.gshell.cli.ProcessingException;
 
 import java.io.FileNotFoundException;
 import java.net.URL;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link SourceCommand}.

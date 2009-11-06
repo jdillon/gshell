@@ -25,7 +25,6 @@ import java.util.Locale;
  * Print writer which supports automatic ANSI color rendering via {@link AnsiRenderer}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class AnsiRenderWriter
@@ -62,7 +61,7 @@ public class AnsiRenderWriter
     //
     // Need to prevent partial output from being written while formatting or we will get rendering exceptions
     //
-    
+
     @Override
     public PrintWriter format(final String format, final Object... args) {
         print(String.format(format, args));

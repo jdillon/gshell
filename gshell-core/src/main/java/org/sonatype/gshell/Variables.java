@@ -20,9 +20,8 @@ import java.util.Iterator;
 
 /**
  * Provides a nested-namespace for command variables.
- * 
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 public interface Variables
@@ -48,9 +47,9 @@ public interface Variables
     Iterator<String> names();
 
     Variables parent();
-    
+
     ///CLOVER:OFF
-    
+
     /**
      * Throw to indicate that a variable change was attempted but the variable was not muable.
      */

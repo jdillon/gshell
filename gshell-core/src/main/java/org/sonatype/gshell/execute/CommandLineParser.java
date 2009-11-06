@@ -22,7 +22,6 @@ import org.sonatype.gshell.Shell;
  * Parse command lines for execution.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public interface CommandLineParser

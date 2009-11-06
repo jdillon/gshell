@@ -63,13 +63,13 @@ public class PreferenceCommand
         // TODO: Once we can effectively take objects, add listener support
     }
 
-    @Option(name="-s", aliases={"--system"})
+    @Option(name = "-s", aliases = {"--system"})
     private boolean system;
 
-    @Argument(index=0, required=true)
+    @Argument(index = 0, required = true)
     private Mode mode;
 
-    @Argument(index=1, multiValued=true)
+    @Argument(index = 1, multiValued = true)
     private List<String> args;
 
     public PreferenceCommand() {
@@ -82,9 +82,9 @@ public class PreferenceCommand
 
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
-        
+
         Operation op = createOperation(context);
-        
+
         CommandLineProcessor cli = new CommandLineProcessor(op);
         cli.process(args);
 
@@ -158,7 +158,7 @@ public class PreferenceCommand
     private abstract class NodeOperationSupport
         extends OperationSupport
     {
-        @Argument(index=0, required=true)
+        @Argument(index = 0, required = true)
         private String path;
 
         protected NodeOperationSupport(final CommandContext context) {
@@ -181,9 +181,9 @@ public class PreferenceCommand
     private class ListOperation
         extends NodeOperationSupport
     {
-        @Option(name="-r", aliases={"--recursive"})
+        @Option(name = "-r", aliases = {"--recursive"})
         private boolean recursive;
-        
+
         private ListOperation(final CommandContext context) {
             super(context);
         }
@@ -222,10 +222,10 @@ public class PreferenceCommand
     private class SetOperation
         extends NodeOperationSupport
     {
-        @Argument(index=1, required=true)
+        @Argument(index = 1, required = true)
         private String key;
 
-        @Argument(index=2, required=true)
+        @Argument(index = 2, required = true)
         private String value;
 
         private SetOperation(final CommandContext context) {
@@ -241,7 +241,7 @@ public class PreferenceCommand
     private class GetOperation
         extends NodeOperationSupport
     {
-        @Argument(index=1, required=true)
+        @Argument(index = 1, required = true)
         private String key;
 
         private GetOperation(final CommandContext context) {
@@ -258,7 +258,7 @@ public class PreferenceCommand
     private class UnsetOperation
         extends NodeOperationSupport
     {
-        @Argument(index=1, required=true)
+        @Argument(index = 1, required = true)
         private String key;
 
         private UnsetOperation(final CommandContext context) {
@@ -287,10 +287,10 @@ public class PreferenceCommand
     private class ExportOperation
         extends NodeOperationSupport
     {
-        @Option(name="-t", aliases={"--subtree"})
+        @Option(name = "-t", aliases = {"--subtree"})
         private boolean subTree;
 
-        @Argument(index=1)
+        @Argument(index = 1)
         private File file;
 
         private ExportOperation(final CommandContext context) {
@@ -322,7 +322,7 @@ public class PreferenceCommand
                     Closer.close(out);
                 }
             }
-            
+
             return Result.SUCCESS;
         }
     }
@@ -330,7 +330,7 @@ public class PreferenceCommand
     private class ImportOperation
         extends OperationSupport
     {
-        @Argument(index=0, required=true)
+        @Argument(index = 0, required = true)
         private File source;
 
         private ImportOperation(final CommandContext context) {

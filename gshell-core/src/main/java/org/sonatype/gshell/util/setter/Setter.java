@@ -20,7 +20,6 @@ package org.sonatype.gshell.util.setter;
  * Provides the basic mechanism to set values.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public interface Setter

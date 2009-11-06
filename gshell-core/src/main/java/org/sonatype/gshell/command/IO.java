@@ -34,7 +34,6 @@ import java.io.Reader;
  * Provides access to input/output handles.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class IO
@@ -100,7 +99,7 @@ public class IO
     public Terminal getTerminal() {
         return TerminalFactory.get();
     }
-    
+
     /**
      * Set the verbosity level.
      *
@@ -149,7 +148,7 @@ public class IO
 
     /**
      * Check if the verbosity level is set to {@link Verbosity#DEBUG}.
-     *
+     * <p/>
      * <p>For generaly usage, when debug output is required, it is better
      * to use the logging facility instead.
      */

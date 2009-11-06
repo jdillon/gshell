@@ -27,7 +27,6 @@ import org.sonatype.gshell.registry.CommandRegistry;
  * Guice {@link CommandRegistrar}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class GuiceCommandRegistrar
@@ -51,7 +50,7 @@ public class GuiceCommandRegistrar
 
         log.trace("Registering command: {} -> {}", name, classname);
 
-        Class<CommandAction> type = (Class<CommandAction>)Thread.currentThread().getContextClassLoader().loadClass(classname);
+        Class<CommandAction> type = (Class<CommandAction>) Thread.currentThread().getContextClassLoader().loadClass(classname);
         CommandAction command = injector.getInstance(type);
         registry.registerCommand(name, command);
     }

@@ -25,7 +25,6 @@ import java.io.IOException;
  * Quietly flushes {@link Flushable}s.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class Flusher
@@ -33,8 +32,10 @@ public class Flusher
     public static void flush(final Flushable... flushable) {
         if (flushable != null) {
             for (Flushable f : flushable) {
-                if (f == null) continue;
-                
+                if (f == null) {
+                    continue;
+                }
+
                 try {
                     f.flush();
                 }

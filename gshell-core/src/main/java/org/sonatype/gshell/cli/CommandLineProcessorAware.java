@@ -20,7 +20,6 @@ package org.sonatype.gshell.cli;
  * Allows beans to become aware of their {@link CommandLineProcessor}
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public interface CommandLineProcessorAware

@@ -22,7 +22,6 @@ import org.sonatype.gshell.cli.handler.Handler;
  * Basic container for option and argument descriptors.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public abstract class Descriptor
@@ -57,10 +56,10 @@ public abstract class Descriptor
         else {
             this.token = token;
         }
-        
+
         this.required = required;
         this.multiValued = multiValued;
-        
+
         // On IBM JDK, the value passed is null instead of the default value, so fix it in case
         this.handlerType = handlerType != null ? handlerType : Handler.class;
     }

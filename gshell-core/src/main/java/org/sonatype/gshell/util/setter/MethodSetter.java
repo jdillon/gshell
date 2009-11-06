@@ -16,8 +16,6 @@
 
 package org.sonatype.gshell.util.setter;
 
-import org.sonatype.gshell.util.IllegalAnnotationError;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -25,7 +23,6 @@ import java.lang.reflect.Method;
  * Setter for methods.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class MethodSetter
@@ -65,10 +62,10 @@ public class MethodSetter
             Throwable t = e.getTargetException();
 
             if (t instanceof RuntimeException) {
-                throw (RuntimeException)t;
+                throw (RuntimeException) t;
             }
             if (t instanceof Error) {
-                throw (Error)t;
+                throw (Error) t;
             }
             throw new Error(t);
         }

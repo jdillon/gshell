@@ -50,8 +50,8 @@ public abstract class ArgumentSupport
     /**
      * Returns an unquoted value.
      *
-     * @param value     String to unquote, must not be null; length must be at least 2
-     * @return          Unquoted value
+     * @param value String to unquote, must not be null; length must be at least 2
+     * @return Unquoted value
      */
     protected String unquote(final String value) {
         assert value != null;

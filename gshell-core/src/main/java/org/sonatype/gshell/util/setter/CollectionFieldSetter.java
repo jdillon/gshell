@@ -29,7 +29,6 @@ import java.util.Set;
  * Setter for fields of collection types.  Currently supports lists and sets.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class CollectionFieldSetter
@@ -51,11 +50,11 @@ public class CollectionFieldSetter
         Type type = field.getGenericType();
 
         if (type instanceof ParameterizedType) {
-            ParameterizedType ptype = (ParameterizedType)type;
+            ParameterizedType ptype = (ParameterizedType) type;
             type = ptype.getActualTypeArguments()[0];
 
             if (type instanceof Class) {
-                return (Class)type;
+                return (Class) type;
             }
         }
 
@@ -98,6 +97,6 @@ public class CollectionFieldSetter
         }
 
         // noinspection unchecked
-        ((Collection)obj).add(value);
+        ((Collection) obj).add(value);
     }
 }

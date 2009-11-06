@@ -31,11 +31,10 @@ import java.util.List;
 
 /**
  * {@link Completer} for command names.
- *
+ * <p/>
  * Keeps up to date automatically by handling command-related events.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class CommandNameCompleter
@@ -63,14 +62,15 @@ public class CommandNameCompleter
         delegate.getStrings().addAll(names);
 
         // Register for updates to command registrations
-        eventManager.addListener(new EventListener() {
+        eventManager.addListener(new EventListener()
+        {
             public void onEvent(final EventObject event) throws Exception {
                 if (event instanceof CommandRegisteredEvent) {
-                    CommandRegisteredEvent targetEvent = (CommandRegisteredEvent)event;
+                    CommandRegisteredEvent targetEvent = (CommandRegisteredEvent) event;
                     delegate.getStrings().add(targetEvent.getName());
                 }
                 else if (event instanceof CommandRemovedEvent) {
-                    CommandRemovedEvent targetEvent = (CommandRemovedEvent)event;
+                    CommandRemovedEvent targetEvent = (CommandRemovedEvent) event;
                     delegate.getStrings().remove(targetEvent.getName());
                 }
             }

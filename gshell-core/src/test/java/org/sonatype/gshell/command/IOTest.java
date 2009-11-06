@@ -16,8 +16,9 @@
 
 package org.sonatype.gshell.command;
 
-import static org.junit.Assert.*;
 import org.junit.Test;
+
+import static org.junit.Assert.fail;
 
 /**
  * Unit tests for the {@link org.sonatype.gshell.command.IO} class.

@@ -18,7 +18,6 @@ package org.sonatype.gshell.core.commands;
 
 import com.google.inject.Injector;
 import org.junit.After;
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.sonatype.gshell.Shell;
@@ -37,6 +36,10 @@ import org.sonatype.gshell.util.Strings;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Support for testing {@link org.sonatype.gshell.command.CommandAction} instances.

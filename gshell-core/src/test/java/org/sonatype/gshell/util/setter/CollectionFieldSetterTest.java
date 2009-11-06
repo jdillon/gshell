@@ -16,12 +16,14 @@
 
 package org.sonatype.gshell.util.setter;
 
-import static org.junit.Assert.*;
 import org.junit.Test;
 import org.sonatype.gshell.cli.Argument;
 import org.sonatype.gshell.cli.CommandLineProcessorTestSupport;
 
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Tests for the {@link org.sonatype.gshell.util.setter.CollectionFieldSetter} class.

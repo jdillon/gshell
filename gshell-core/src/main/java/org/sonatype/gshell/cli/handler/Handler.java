@@ -28,7 +28,6 @@ import org.sonatype.gshell.util.setter.Setter;
  * Provides the basic mechanism to handle custom option and argument processing.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public abstract class Handler

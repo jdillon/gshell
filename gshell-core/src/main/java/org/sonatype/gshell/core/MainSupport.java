@@ -43,7 +43,6 @@ import java.util.concurrent.atomic.AtomicReference;
  * Support for booting shell applications.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public abstract class MainSupport
@@ -54,8 +53,8 @@ public abstract class MainSupport
     protected final Variables vars = new VariablesImpl();
 
     protected final MessageSource messages = new ResourceBundleMessageSource()
-            .add(false, getClass())
-            .add(MainSupport.class);
+        .add(false, getClass())
+        .add(MainSupport.class);
 
     private Branding branding;
 
@@ -64,16 +63,16 @@ public abstract class MainSupport
     //       get prefixed stuff working proper.
     //
 
-    @Option(name="-h", aliases={"--help"}, requireOverride=true)
+    @Option(name = "-h", aliases = {"--help"}, requireOverride = true)
     protected boolean help;
 
-    @Option(name="--", handler= StopHandler.class)
+    @Option(name = "--", handler = StopHandler.class)
     private boolean stop;
 
-    @Option(name="-V", aliases={"--version"}, requireOverride=true)
+    @Option(name = "-V", aliases = {"--version"}, requireOverride = true)
     protected boolean version;
 
-    @Option(name="-e", aliases={"--errors"})
+    @Option(name = "-e", aliases = {"--errors"})
     protected boolean showErrorTraces = false;
 
     protected void setConsoleLogLevel(final Log.Level level) {
@@ -81,7 +80,7 @@ public abstract class MainSupport
         vars.set(SHELL_LOGGING, level);
     }
 
-    @Option(name="-d", aliases={"--debug"})
+    @Option(name = "-d", aliases = {"--debug"})
     protected void setDebug(final boolean flag) {
         if (flag) {
             setConsoleLogLevel(Log.Level.DEBUG);
@@ -89,7 +88,7 @@ public abstract class MainSupport
         }
     }
 
-    @Option(name="-X", aliases={"--trace"})
+    @Option(name = "-X", aliases = {"--trace"})
     protected void setTrace(final boolean flag) {
         if (flag) {
             setConsoleLogLevel(Log.Level.TRACE);
@@ -97,7 +96,7 @@ public abstract class MainSupport
         }
     }
 
-    @Option(name="-v", aliases={"--verbose"})
+    @Option(name = "-v", aliases = {"--verbose"})
     protected void setVerbose(final boolean flag) {
         if (flag) {
             setConsoleLogLevel(Log.Level.INFO);
@@ -105,7 +104,7 @@ public abstract class MainSupport
         }
     }
 
-    @Option(name="-q", aliases={"--quiet"})
+    @Option(name = "-q", aliases = {"--quiet"})
     protected void setQuiet(final boolean flag) {
         if (flag) {
             setConsoleLogLevel(Log.Level.ERROR);
@@ -113,30 +112,31 @@ public abstract class MainSupport
         }
     }
 
-    @Option(name="-c", aliases={"--command"}, argumentRequired=true)
+    @Option(name = "-c", aliases = {"--command"}, argumentRequired = true)
     protected String command;
 
-    @Option(name="-D", aliases={"--define"}, argumentRequired=true)
+    @Option(name = "-D", aliases = {"--define"}, argumentRequired = true)
     protected void setVariable(final String input) {
         NameValue nv = NameValue.parse(input);
         vars.set(nv.name, nv.value);
     }
 
-    @Option(name="-P", aliases={"--property"}, argumentRequired=true)
+    @Option(name = "-P", aliases = {"--property"}, argumentRequired = true)
     protected void setSystemProperty(final String input) {
         NameValue nv = NameValue.parse(input);
         System.setProperty(nv.name, nv.value);
     }
 
-    @Option(name="-C", aliases={"--color"}, argumentRequired=true)
+    @Option(name = "-C", aliases = {"--color"}, argumentRequired = true)
     protected void enableAnsiColors(final boolean flag) {
         Ansi.setEnabled(flag);
     }
 
-    @Option(name="-T", aliases={"--terminal"}, argumentRequired=true)
+    @Option(name = "-T", aliases = {"--terminal"}, argumentRequired = true)
     protected void setTerminalType(final String type) {
         TerminalFactory.configure(type);
     }
+
     protected void setTerminalType(final TerminalFactory.Type type) {
         TerminalFactory.configure(type);
     }
@@ -199,7 +199,8 @@ public abstract class MainSupport
         final AtomicReference<Integer> codeRef = new AtomicReference<Integer>();
         int code = ExitNotification.DEFAULT_CODE;
 
-        Runtime.getRuntime().addShutdownHook(new Thread() {
+        Runtime.getRuntime().addShutdownHook(new Thread()
+        {
             @Override
             public void run() {
                 if (codeRef.get() == null) {
@@ -239,6 +240,6 @@ public abstract class MainSupport
     }
 
     protected abstract Branding createBranding() throws Exception;
-    
+
     protected abstract Shell createShell() throws Exception;
 }

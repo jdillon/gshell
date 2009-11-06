@@ -16,9 +16,10 @@
 
 package org.sonatype.gshell.i18n;
 
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Unit tests for the {@link ResourceBundleMessageSource} class.

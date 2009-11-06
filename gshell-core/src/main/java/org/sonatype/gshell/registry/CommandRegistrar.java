@@ -20,13 +20,12 @@ package org.sonatype.gshell.registry;
  * Registers commands.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public interface CommandRegistrar
 {
     String COMMANDS_PROPERTIES = "META-INF/org.sonatype.gshell/commands.properties";
-    
+
     void registerCommands() throws Exception;
 
     void registerCommand(String name, String type) throws Exception;

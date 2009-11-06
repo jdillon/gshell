@@ -26,7 +26,6 @@ import org.sonatype.gshell.notification.ExitNotification;
  * Exit the current shell.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 @Command

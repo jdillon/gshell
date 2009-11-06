@@ -27,10 +27,9 @@ import org.sonatype.gshell.i18n.ResourceBundleMessageSource;
 enum Messages
 {
     ///CLOVER:OFF
-    
+
     ILLEGAL_METHOD_SIGNATURE,
-    ILLEGAL_FIELD_SIGNATURE,
-    ;
+    ILLEGAL_FIELD_SIGNATURE,;
 
     private final MessageSource messages = new ResourceBundleMessageSource(getClass());
 

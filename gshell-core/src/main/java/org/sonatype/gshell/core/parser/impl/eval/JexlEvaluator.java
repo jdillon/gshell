@@ -76,7 +76,7 @@ public class JexlEvaluator
         JexlContext ctx = new Context();
         Expression expr = ExpressionFactory.createExpression(expression);
         expr.addPostResolver(resolver);
-        
+
         Object result = expr.evaluate(ctx);
 
         log.debug("Result: {}", result);
@@ -88,7 +88,7 @@ public class JexlEvaluator
         implements JexlContext
     {
         private final ContextVariables vars = new ContextVariables();
-        
+
         public void setVars(final Map map) {
             throw new UnsupportedOperationException();
         }
@@ -97,9 +97,9 @@ public class JexlEvaluator
             return vars;
         }
     }
-    
+
     private static class ContextVariables
-        implements Map<String,Object>
+        implements Map<String, Object>
     {
         private final Variables vars = ShellHolder.get().getVariables();
 
@@ -126,9 +126,9 @@ public class JexlEvaluator
 
             return prev;
         }
-        
+
         // Jexl only uses Map.put() and Map.get() stub everything else
-        
+
         public int size() {
             return 0;
         }

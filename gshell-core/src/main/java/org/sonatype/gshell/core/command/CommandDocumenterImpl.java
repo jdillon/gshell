@@ -40,7 +40,6 @@ import java.util.regex.Pattern;
  * The default {@link CommandDocumenter} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class CommandDocumenterImpl
@@ -72,7 +71,7 @@ public class CommandDocumenterImpl
                 if (rep == null) {
                     rep = System.getProperty(key);
                 }
-                
+
                 if (rep != null) {
                     input = input.replace(matcher.group(0), rep.toString());
                     matcher.reset(input);
@@ -92,7 +91,7 @@ public class CommandDocumenterImpl
 
     public String getManual(final CommandAction command) {
         assert command != null;
-        
+
         String text = command.getMessages().getMessage(COMMAND_MANUAL);
         return evaluate(command, text);
     }

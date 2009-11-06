@@ -25,7 +25,6 @@ import java.io.IOException;
  * Provides an abstraction of a console.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public abstract class Console
@@ -41,7 +40,8 @@ public abstract class Console
 
     protected boolean ignoreEmpty = true;
 
-    protected Prompter prompter = new Prompter() {
+    protected Prompter prompter = new Prompter()
+    {
         public String prompt() {
             return DEFAULT_PROMPT;
         }
@@ -49,7 +49,8 @@ public abstract class Console
 
     protected Executor executor;
 
-    protected ErrorHandler errorHandler = new ErrorHandler() {
+    protected ErrorHandler errorHandler = new ErrorHandler()
+    {
         public Result handleError(Throwable error) {
             return Result.STOP;
         }
@@ -183,7 +184,7 @@ public abstract class Console
 
     protected void traceLine(final String line) {
         assert line != null;
-        
+
         StringBuilder idx = new StringBuilder();
         StringBuilder hex = new StringBuilder();
 
@@ -192,7 +193,7 @@ public abstract class Console
             String h = Integer.toHexString(b);
 
             hex.append('x').append(h).append(' ');
-            idx.append(' ').append((char)b).append("  ");
+            idx.append(' ').append((char) b).append("  ");
         }
 
         log.trace("HEX: {}", hex);
@@ -216,7 +217,8 @@ public abstract class Console
     // Result
     //
 
-    public static enum Result {
+    public static enum Result
+    {
         CONTINUE,
         STOP
     }

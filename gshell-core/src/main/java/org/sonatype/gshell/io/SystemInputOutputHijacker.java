@@ -30,13 +30,12 @@ import java.text.MessageFormat;
  * and redirects to given streams.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class SystemInputOutputHijacker
 {
     private static Logger log = LoggerFactory.getLogger(SystemInputOutputHijacker.class);
-    
+
     /**
      * Contains a {@link StreamRegistration} for the current thread if its registered, else null.
      */
@@ -82,7 +81,7 @@ public class SystemInputOutputHijacker
         System.setErr(new DelegateOutputStream(StreamSet.OutputType.ERR));
 
         installed = true;
-        
+
         log.debug("Installed");
     }
 
@@ -159,13 +158,13 @@ public class SystemInputOutputHijacker
         ensureInstalled();
 
         if (log.isTraceEnabled()) {
-            log.trace("Registering: {} -> {}, {}, {}", new Object[] { Thread.currentThread(), in, out, err });
+            log.trace("Registering: {} -> {}, {}, {}", new Object[]{Thread.currentThread(), in, out, err});
         }
-        
+
         StreamRegistration prev = registration(false);
         StreamSet set = new StreamSet(in, out, err);
         StreamRegistration next = new StreamRegistration(set, prev);
-        
+
         registrations.set(next);
     }
 

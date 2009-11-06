@@ -87,11 +87,11 @@ import static org.sonatype.gshell.util.converter.ConverterHelper.toClass;
  */
 public class Converters
 {
-    private static final Map<Class,Converter> REGISTRY = Collections.synchronizedMap(new ReferenceIdentityMap());
+    private static final Map<Class, Converter> REGISTRY = Collections.synchronizedMap(new ReferenceIdentityMap());
 
-    private static final Map<Class,Class> PRIMITIVE_TO_WRAPPER;
+    private static final Map<Class, Class> PRIMITIVE_TO_WRAPPER;
 
-    private static final Map<Class,Class> WRAPPER_TO_PRIMITIVE;
+    private static final Map<Class, Class> WRAPPER_TO_PRIMITIVE;
 
     private static boolean registerWithVM;
 

@@ -30,19 +30,18 @@ import java.util.List;
 
 /**
  * Unset a variable or property.
- * 
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  *
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Command
 public class UnsetCommand
     extends CommandActionSupport
 {
-    @Option(name="-m", aliases={"--mode"})
+    @Option(name = "-m", aliases = {"--mode"})
     private Mode mode = Mode.VARIABLE;
 
-    @Argument(required=true)
+    @Argument(required = true)
     private List<String> args;
 
     @Inject

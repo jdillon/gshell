@@ -97,7 +97,7 @@ public class ExecutingVisitor
             throw new ErrorNotification("Shell execution failed; path=" + path + "; args=" + Strings.join(args, ", "), e);
         }
 
-        List results = (List)data;
+        List results = (List) data;
         //noinspection unchecked
         results.add(result);
 
@@ -108,7 +108,7 @@ public class ExecutingVisitor
         assert node != null;
         assert data != null;
 
-        ExpressionState state = (ExpressionState)data;
+        ExpressionState state = (ExpressionState) data;
         state.next();
         return data;
     }
@@ -117,7 +117,7 @@ public class ExecutingVisitor
         assert node != null;
         assert data != null;
 
-        ExpressionState state = (ExpressionState)data;
+        ExpressionState state = (ExpressionState) data;
         String value = eval(node.getValue());
         return state.append(value);
     }
@@ -126,7 +126,7 @@ public class ExecutingVisitor
         assert node != null;
         assert data != null;
 
-        ExpressionState state = (ExpressionState)data;
+        ExpressionState state = (ExpressionState) data;
         String value = eval(node.getValue());
         return state.append(value);
     }
@@ -134,7 +134,7 @@ public class ExecutingVisitor
     public Object visit(final ASTOpaqueArgument node, final Object data) {
         assert node != null;
 
-        ExpressionState state = (ExpressionState)data;
+        ExpressionState state = (ExpressionState) data;
         return state.append(node.getValue());
     }
 

@@ -29,7 +29,6 @@ import java.io.IOException;
  * Implementation of {@link History} for <a href="http://jline.sf.net">JLine</a>.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class HistoryImpl
@@ -41,7 +40,8 @@ public class HistoryImpl
     public HistoryImpl(final File file) throws IOException {
         super(file);
 
-        Runtime.getRuntime().addShutdownHook(new Thread() {
+        Runtime.getRuntime().addShutdownHook(new Thread()
+        {
             @Override
             public void run() {
                 try {

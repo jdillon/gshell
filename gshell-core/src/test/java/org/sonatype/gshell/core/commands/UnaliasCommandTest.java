@@ -16,9 +16,10 @@
 
 package org.sonatype.gshell.core.commands;
 
-import static org.junit.Assert.*;
 import org.junit.Test;
-import org.sonatype.gshell.cli.ProcessingException;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link UnaliasCommand}.

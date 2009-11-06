@@ -37,7 +37,6 @@ import org.sonatype.gshell.registry.CommandResolver;
  * Guice module for <tt>gshell-core</tt> components.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class CoreModule

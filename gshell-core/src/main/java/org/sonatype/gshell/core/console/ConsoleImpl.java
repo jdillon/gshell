@@ -32,7 +32,6 @@ import java.io.PrintWriter;
  * Support for running console using the <a href="http://jline.sf.net">JLine</a> library.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class ConsoleImpl
@@ -62,7 +61,7 @@ public class ConsoleImpl
     public ConsoleReader getReader() {
         return reader;
     }
-    
+
     public void addCompleter(final Completer completer) {
         assert completer != null;
         reader.addCompleter(completer);

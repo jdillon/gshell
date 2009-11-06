@@ -20,14 +20,13 @@ package org.sonatype.gshell.command;
  * Thrown to indicate a command failure.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class CommandException
     extends Exception
 {
     ///CLOVER:OFF
-    
+
     private static final long serialVersionUID = 1;
 
     public CommandException(final String msg) {

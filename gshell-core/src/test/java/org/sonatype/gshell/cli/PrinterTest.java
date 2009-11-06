@@ -16,12 +16,13 @@
 
 package org.sonatype.gshell.cli;
 
-import static org.junit.Assert.*;
 import org.junit.Test;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
+
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Tests for the {@link Printer} class.

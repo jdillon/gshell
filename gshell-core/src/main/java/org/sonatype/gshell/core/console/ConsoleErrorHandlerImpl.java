@@ -31,7 +31,6 @@ import org.sonatype.gshell.notification.ErrorNotification;
  * {@link org.sonatype.gshell.console.Console.ErrorHandler} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
 public class ConsoleErrorHandlerImpl
@@ -90,7 +89,7 @@ public class ConsoleErrorHandlerImpl
         }
 
         // Spit out the terse reason why we've failed
-        io.err.println(messages.format(ERROR_EXCEPTION_NAME,  cause.getClass().getName(), cause.getMessage()));
+        io.err.println(messages.format(ERROR_EXCEPTION_NAME, cause.getClass().getName(), cause.getMessage()));
 
         if (showTrace || io.isVerbose()) {
             while (cause != null) {
