@@ -21,6 +21,7 @@ import org.sonatype.gshell.util.cli.handler.Handlers;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.IllegalAnnotationError;
 import org.sonatype.gshell.util.NameValue;
+import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
 import org.sonatype.gshell.util.setter.Setter;
 import org.sonatype.gshell.util.setter.SetterFactory;
 
@@ -384,5 +385,21 @@ public class CommandLineProcessor
         }
 
         return null;
+    }
+
+    private static enum Messages
+    {
+        MISSING_OPERAND,
+        UNDEFINED_OPTION,
+        NO_ARGUMENT_ALLOWED,
+        REQUIRED_OPTION_MISSING,
+        TOO_MANY_ARGUMENTS,
+        REQUIRED_ARGUMENT_MISSING;
+
+        private final MessageSource messages = new ResourceBundleMessageSource(CommandLineProcessor.class);
+
+        String format(final Object... args) {
+            return messages.format(name(), args);
+        }
     }
 }

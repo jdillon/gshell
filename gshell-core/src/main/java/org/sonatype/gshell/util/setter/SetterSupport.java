@@ -17,6 +17,8 @@
 package org.sonatype.gshell.util.setter;
 
 import org.sonatype.gshell.util.Log;
+import org.sonatype.gshell.util.i18n.MessageSource;
+import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
 
 import java.lang.reflect.AccessibleObject;
 
@@ -68,4 +70,18 @@ public abstract class SetterSupport
     }
 
     protected abstract void doSet(Object value) throws IllegalAccessException;
+
+    protected static enum Messages
+    {
+        ///CLOVER:OFF
+
+        ILLEGAL_METHOD_SIGNATURE,
+        ILLEGAL_FIELD_SIGNATURE,;
+
+        private final MessageSource messages = new ResourceBundleMessageSource(SetterSupport.class);
+
+        String format(final Object... args) {
+            return messages.format(name(), args);
+        }
+    }
 }

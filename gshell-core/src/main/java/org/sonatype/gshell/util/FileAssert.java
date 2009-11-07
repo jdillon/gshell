@@ -197,6 +197,8 @@ public class FileAssert
     public class AssertionException
         extends RuntimeException
     {
+        private static final long serialVersionUID = 1;
+        
         public AssertionException(final String message) {
             super(message);
         }
