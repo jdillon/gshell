@@ -40,10 +40,10 @@ public class FileValidator
     public FileValidator exists(final boolean flag) {
         if (getFile().exists() != flag) {
             if (flag) {
-                throw new InvalidFileException("File does not exist: " + getFile()); // TODO: i18n
+                throw new InvalidFileException("File does not exist", getFile()); // TODO: i18n
             }
             else {
-                throw new InvalidFileException("File exists: " + getFile()); // TODO: i18n
+                throw new InvalidFileException("File exists", getFile()); // TODO: i18n
             }
         }
         return this;
@@ -52,10 +52,10 @@ public class FileValidator
     public FileValidator isFile(final boolean flag) {
         if (getFile().isFile() != flag) {
             if (flag) {
-                throw new InvalidFileException("File is not a file: " + getFile()); // TODO: i18n
+                throw new InvalidFileException("File is not a file", getFile()); // TODO: i18n
             }
             else {
-                throw new InvalidFileException("File is a file: " + getFile()); // TODO: i18n
+                throw new InvalidFileException("File is a file", getFile()); // TODO: i18n
             }
         }
         return this;
@@ -64,10 +64,10 @@ public class FileValidator
     public FileValidator isDirectory(final boolean flag) {
         if (getFile().isDirectory() != flag) {
             if (flag) {
-                throw new InvalidFileException("File is not a directory: " + getFile()); // TODO: i18n
+                throw new InvalidFileException("File is not a directory", getFile()); // TODO: i18n
             }
             else {
-                throw new InvalidFileException("File is a directory: " + getFile()); // TODO: i18n
+                throw new InvalidFileException("File is a directory", getFile()); // TODO: i18n
             }
         }
         return this;
@@ -76,10 +76,10 @@ public class FileValidator
     public FileValidator isReadable(final boolean flag) {
         if (getFile().canRead() != flag) {
             if (flag) {
-                throw new InvalidFileException("File is not readable: " + getFile()); // TODO: i18n
+                throw new InvalidFileException("File is not readable", getFile()); // TODO: i18n
             }
             else {
-                throw new InvalidFileException("File is readable: " + getFile()); // TODO: i18n
+                throw new InvalidFileException("File is readable", getFile()); // TODO: i18n
             }
         }
         return this;
@@ -88,10 +88,10 @@ public class FileValidator
     public FileValidator isWritable(final boolean flag) {
         if (getFile().canWrite() != flag) {
             if (flag) {
-                throw new InvalidFileException("File is not writable: " + getFile()); // TODO: i18n
+                throw new InvalidFileException("File is not writable", getFile()); // TODO: i18n
             }
             else {
-                throw new InvalidFileException("File is a writable: " + getFile()); // TODO: i18n
+                throw new InvalidFileException("File is a writable", getFile()); // TODO: i18n
             }
         }
         return this;
@@ -100,10 +100,10 @@ public class FileValidator
     public FileValidator isHidden(final boolean flag) {
         if (getFile().isHidden() != flag) {
             if (flag) {
-                throw new InvalidFileException("File is not hidden: " + getFile()); // TODO: i18n
+                throw new InvalidFileException("File is not hidden", getFile()); // TODO: i18n
             }
             else {
-                throw new InvalidFileException("File is a hidden: " + getFile()); // TODO: i18n
+                throw new InvalidFileException("File is a hidden", getFile()); // TODO: i18n
             }
         }
         return this;
@@ -112,10 +112,10 @@ public class FileValidator
     public FileValidator isExecutable(final boolean flag) {
         if (getFile().canExecute() != flag) {
             if (flag) {
-                throw new InvalidFileException("File is not executable: " + getFile()); // TODO: i18n
+                throw new InvalidFileException("File is not executable", getFile()); // TODO: i18n
             }
             else {
-                throw new InvalidFileException("File is executable: " + getFile()); // TODO: i18n
+                throw new InvalidFileException("File is executable", getFile()); // TODO: i18n
             }
         }
         return this;
@@ -124,10 +124,10 @@ public class FileValidator
     public FileValidator isAbsolute(final boolean flag) {
         if (getFile().isAbsolute() != flag) {
             if (flag) {
-                throw new InvalidFileException("File is not absolute: " + getFile()); // TODO: i18n
+                throw new InvalidFileException("File is not absolute", getFile()); // TODO: i18n
             }
             else {
-                throw new InvalidFileException("File is absolute: " + getFile()); // TODO: i18n
+                throw new InvalidFileException("File is absolute", getFile()); // TODO: i18n
             }
         }
         return this;
@@ -136,8 +136,15 @@ public class FileValidator
     public static class InvalidFileException
         extends RuntimeException
     {
-        public InvalidFileException(final String message) {
-            super(message);
+        private final File file;
+
+        public InvalidFileException(final String message, final File file) {
+            super(message + ": " + file);
+            this.file = file;
+        }
+
+        public File getFile() {
+            return file;
         }
     }
 }
