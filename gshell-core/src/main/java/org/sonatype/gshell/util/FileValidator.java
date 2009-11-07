@@ -16,6 +16,9 @@
 
 package org.sonatype.gshell.util;
 
+import org.sonatype.gshell.util.i18n.MessageSource;
+import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
+
 import java.io.File;
 
 /**
@@ -26,6 +29,34 @@ import java.io.File;
  */
 public class FileValidator
 {
+    private static enum Messages
+    {
+        ///CLOVER:OFF
+
+        NOT_FOUND,
+        EXISTS,
+        NOT_FILE,
+        IS_FILE,
+        NOT_DIRECTORY,
+        IS_DIRECTORY,
+        NOT_READABLE,
+        IS_READABLE,
+        NOT_WRITABLE,
+        IS_WRITABLE,
+        NOT_HIDDEN,
+        IS_HIDDEN,
+        NOT_EXECUTABLE,
+        IS_EXECUTABLE,
+        NOT_ABSOLUTE,
+        IS_ABSOLUTE;
+
+        private static final MessageSource MESSAGES = new ResourceBundleMessageSource(FileValidator.class);
+
+        String format(final Object... args) {
+            return MESSAGES.format(name(), args);
+        }
+    }
+
     private final File file;
 
     public FileValidator(final File file) {
@@ -40,10 +71,10 @@ public class FileValidator
     public FileValidator exists(final boolean flag) {
         if (getFile().exists() != flag) {
             if (flag) {
-                throw new InvalidFileException("File does not exist", getFile()); // TODO: i18n
+                throw new InvalidFileException(Messages.NOT_FOUND.format(getFile()));
             }
             else {
-                throw new InvalidFileException("File exists", getFile()); // TODO: i18n
+                throw new InvalidFileException(Messages.EXISTS.format(getFile()));
             }
         }
         return this;
@@ -52,10 +83,10 @@ public class FileValidator
     public FileValidator isFile(final boolean flag) {
         if (getFile().isFile() != flag) {
             if (flag) {
-                throw new InvalidFileException("File is not a file", getFile()); // TODO: i18n
+                throw new InvalidFileException(Messages.NOT_FILE.format(getFile()));
             }
             else {
-                throw new InvalidFileException("File is a file", getFile()); // TODO: i18n
+                throw new InvalidFileException(Messages.IS_FILE.format(getFile()));
             }
         }
         return this;
@@ -64,10 +95,10 @@ public class FileValidator
     public FileValidator isDirectory(final boolean flag) {
         if (getFile().isDirectory() != flag) {
             if (flag) {
-                throw new InvalidFileException("File is not a directory", getFile()); // TODO: i18n
+                throw new InvalidFileException(Messages.NOT_DIRECTORY.format(getFile()));
             }
             else {
-                throw new InvalidFileException("File is a directory", getFile()); // TODO: i18n
+                throw new InvalidFileException(Messages.IS_DIRECTORY.format(getFile()));
             }
         }
         return this;
@@ -76,10 +107,10 @@ public class FileValidator
     public FileValidator isReadable(final boolean flag) {
         if (getFile().canRead() != flag) {
             if (flag) {
-                throw new InvalidFileException("File is not readable", getFile()); // TODO: i18n
+                throw new InvalidFileException(Messages.NOT_READABLE.format(getFile()));
             }
             else {
-                throw new InvalidFileException("File is readable", getFile()); // TODO: i18n
+                throw new InvalidFileException(Messages.IS_READABLE.format(getFile()));
             }
         }
         return this;
@@ -88,10 +119,10 @@ public class FileValidator
     public FileValidator isWritable(final boolean flag) {
         if (getFile().canWrite() != flag) {
             if (flag) {
-                throw new InvalidFileException("File is not writable", getFile()); // TODO: i18n
+                throw new InvalidFileException(Messages.NOT_WRITABLE.format(getFile()));
             }
             else {
-                throw new InvalidFileException("File is a writable", getFile()); // TODO: i18n
+                throw new InvalidFileException(Messages.IS_WRITABLE.format(getFile()));
             }
         }
         return this;
@@ -100,10 +131,10 @@ public class FileValidator
     public FileValidator isHidden(final boolean flag) {
         if (getFile().isHidden() != flag) {
             if (flag) {
-                throw new InvalidFileException("File is not hidden", getFile()); // TODO: i18n
+                throw new InvalidFileException(Messages.NOT_HIDDEN.format(getFile()));
             }
             else {
-                throw new InvalidFileException("File is a hidden", getFile()); // TODO: i18n
+                throw new InvalidFileException(Messages.IS_HIDDEN.format(getFile()));
             }
         }
         return this;
@@ -112,10 +143,10 @@ public class FileValidator
     public FileValidator isExecutable(final boolean flag) {
         if (getFile().canExecute() != flag) {
             if (flag) {
-                throw new InvalidFileException("File is not executable", getFile()); // TODO: i18n
+                throw new InvalidFileException(Messages.NOT_EXECUTABLE.format(getFile()));
             }
             else {
-                throw new InvalidFileException("File is executable", getFile()); // TODO: i18n
+                throw new InvalidFileException(Messages.IS_EXECUTABLE.format(getFile()));
             }
         }
         return this;
@@ -124,27 +155,24 @@ public class FileValidator
     public FileValidator isAbsolute(final boolean flag) {
         if (getFile().isAbsolute() != flag) {
             if (flag) {
-                throw new InvalidFileException("File is not absolute", getFile()); // TODO: i18n
+                throw new InvalidFileException(Messages.NOT_ABSOLUTE.format(getFile()));
             }
             else {
-                throw new InvalidFileException("File is absolute", getFile()); // TODO: i18n
+                throw new InvalidFileException(Messages.IS_ABSOLUTE.format(getFile()));
             }
         }
         return this;
     }
 
-    public static class InvalidFileException
+    public class InvalidFileException
         extends RuntimeException
     {
-        private final File file;
-
-        public InvalidFileException(final String message, final File file) {
-            super(message + ": " + file);
-            this.file = file;
+        public InvalidFileException(final String message) {
+            super(message);
         }
 
         public File getFile() {
-            return file;
+            return FileValidator.this.getFile();
         }
     }
 }
