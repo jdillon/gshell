@@ -18,6 +18,7 @@ package org.sonatype.gshell.core.commands;
 
 import com.google.inject.Inject;
 import org.sonatype.gshell.Shell;
+import org.sonatype.gshell.util.FileAssert;
 import org.sonatype.gshell.util.cli.Argument;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
@@ -85,6 +86,8 @@ public class SourceCommand
         if (source instanceof File) {
             File file = (File) source;
             log.info("Using source file: {}", file);
+
+            new FileAssert(file).exists().isFile().isReadable();
 
             reader = new BufferedReader(new FileReader(file));
         }
