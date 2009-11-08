@@ -18,9 +18,7 @@ package org.sonatype.gshell.core.parser.impl.eval;
 
 import org.sonatype.gshell.ShellHolder;
 import org.sonatype.gshell.Variables;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import org.sonatype.gshell.util.ReplacementParser;
 
 /**
  * Evaluates expressions using regular expressions.
@@ -30,7 +28,19 @@ import java.util.regex.Pattern;
 public class DefaultEvaluator
     implements Evaluator
 {
-    private static final Pattern PATTERN = Pattern.compile("\\$\\{([^}]+)\\}");
+    private final ReplacementParser parser = new ReplacementParser()
+    {
+        @Override
+        protected Object replace(final String key) {
+            Variables vars = ShellHolder.get().getVariables();
+            Object rep = vars.get(key);
+
+            if (rep == null) {
+                rep = System.getProperty(key);
+            }
+            return rep;
+        }
+    };
 
     public Object eval(final String expression) throws Exception {
         // expression could be null
@@ -40,25 +50,6 @@ public class DefaultEvaluator
             return expression;
         }
 
-        String input = expression;
-        Matcher matcher = PATTERN.matcher(input);
-
-        while (matcher.find()) {
-            String key = matcher.group(1);
-
-            Variables vars = ShellHolder.get().getVariables();
-            Object rep = vars.get(key);
-
-            if (rep == null) {
-                rep = System.getProperty(key);
-            }
-
-            if (rep != null) {
-                input = input.replace(matcher.group(0), rep.toString());
-                matcher.reset(input);
-            }
-        }
-
-        return input;
+        return parser.parse(expression);
     }
 }

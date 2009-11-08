@@ -24,12 +24,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.ShellHolder;
 import org.sonatype.gshell.Variables;
+import org.sonatype.gshell.util.ReplacementParser;
 
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Uses Commons Jexl to evaluate expressions.
@@ -41,7 +40,25 @@ public class JexlEvaluator
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private static final Pattern PATTERN = Pattern.compile("\\$\\{([^}]+)\\}");
+    private final ReplacementParser parser = new ReplacementParser()
+    {
+        @Override
+        protected Object replace(final String key) throws Exception {
+            assert key != null;
+
+            log.debug("Evaluating: {}", key);
+
+            JexlContext ctx = new Context();
+            Expression expr = ExpressionFactory.createExpression(key);
+            expr.addPostResolver(resolver);
+
+            Object result = expr.evaluate(ctx);
+
+            log.debug("Result: {}", result);
+
+            return result;
+        }
+    };
 
     private final FlatResolver resolver = new FlatResolver(true);
 
@@ -53,35 +70,7 @@ public class JexlEvaluator
             return expression;
         }
 
-        // FIXME: Need a parse, then evaluate so we can keep our Objects
-
-        Matcher matcher = PATTERN.matcher(expression);
-
-        while (matcher.find()) {
-            Object rep = get(matcher.group(1));
-            if (rep != null) {
-                expression = expression.replace(matcher.group(0), rep.toString());
-                matcher.reset(expression);
-            }
-        }
-
-        return expression;
-    }
-
-    private Object get(final String expression) throws Exception {
-        assert expression != null;
-
-        log.debug("Evaluating: {}", expression);
-
-        JexlContext ctx = new Context();
-        Expression expr = ExpressionFactory.createExpression(expression);
-        expr.addPostResolver(resolver);
-
-        Object result = expr.evaluate(ctx);
-
-        log.debug("Result: {}", result);
-
-        return result;
+        return parser.parse(expression);
     }
 
     private static class Context

@@ -16,16 +16,12 @@
 
 package org.sonatype.gshell.core.console;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.Branding;
 import org.sonatype.gshell.VariableNames;
 import org.sonatype.gshell.Variables;
-import org.sonatype.gshell.util.ansi.AnsiRenderer;
 import org.sonatype.gshell.console.Console;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import org.sonatype.gshell.util.ReplacementParser;
+import org.sonatype.gshell.util.ansi.AnsiRenderer;
 
 /**
  * {@link org.sonatype.gshell.console.Console.Prompter} component.
@@ -36,19 +32,30 @@ import java.util.regex.Pattern;
 public class ConsolePrompterImpl
     implements Console.Prompter, VariableNames
 {
-    private static final Pattern PATTERN = Pattern.compile("\\$\\{([^}]+)\\}");
-
     private final AnsiRenderer renderer = new AnsiRenderer();
 
     private final Variables vars;
 
     private final Branding branding;
 
+    private final ReplacementParser parser;
+
     public ConsolePrompterImpl(final Variables vars, final Branding branding) {
         assert vars != null;
-        assert branding != null;
         this.vars = vars;
+        assert branding != null;
         this.branding = branding;
+        this.parser = new ReplacementParser()
+        {
+            @Override
+            protected Object replace(final String key) {
+                Object rep = vars.get(key);
+                if (rep == null) {
+                    rep = System.getProperty(key);
+                }
+                return rep;
+            }
+        };
     }
 
     public String prompt() {
@@ -75,28 +82,10 @@ public class ConsolePrompterImpl
         return prompt;
     }
 
-    private String evaluate(String input) {
-        Matcher matcher = PATTERN.matcher(input);
-
-        while (matcher.find()) {
-            String key = matcher.group(1);
-            Object rep = vars.get(key);
-            if (rep == null) {
-                rep = System.getProperty(key);
-            }
-            if (rep != null) {
-                input = input.replace(matcher.group(0), rep.toString());
-                matcher.reset(input);
-            }
-        }
-
-        return input;
-    }
-
     private String interpolate(final String pattern) {
         String prompt = null;
         if (pattern != null) {
-            prompt = evaluate(pattern);
+            prompt = parser.parse(pattern);
         }
         return prompt;
     }

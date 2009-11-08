@@ -20,21 +20,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.ShellHolder;
 import org.sonatype.gshell.Variables;
-import org.sonatype.gshell.util.ansi.AnsiRenderer;
-import org.sonatype.gshell.util.cli.CommandLineProcessor;
-import org.sonatype.gshell.util.cli.Printer;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.CommandDocumenter;
 import org.sonatype.gshell.command.IO;
+import org.sonatype.gshell.io.PrefixingOutputStream;
+import org.sonatype.gshell.util.ReplacementParser;
+import org.sonatype.gshell.util.ansi.AnsiRenderer;
+import org.sonatype.gshell.util.cli.CommandLineProcessor;
+import org.sonatype.gshell.util.cli.Printer;
 import org.sonatype.gshell.util.i18n.AggregateMessageSource;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.PrefixingMessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
-import org.sonatype.gshell.io.PrefixingOutputStream;
 
 import java.io.PrintStream;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * The default {@link CommandDocumenter} component.
@@ -49,34 +48,31 @@ public class CommandDocumenterImpl
 
     private final MessageSource messages = new ResourceBundleMessageSource(getClass());
 
-    private static final Pattern PATTERN = Pattern.compile("\\$\\{([^}]+)\\}");
-
-    private String evaluate(final CommandAction command, String input) {
-        Matcher matcher = PATTERN.matcher(input);
-
+    private String evaluate(final CommandAction command, final String input) {
         if (input.contains("${")) {
-            while (matcher.find()) {
-                String key = matcher.group(1);
+            ReplacementParser parser = new ReplacementParser()
+            {
+                @Override
+                protected Object replace(final String key) throws Exception {
+                    Object rep = null;
+                    if (key.equals("command.name")) {
+                        rep = command.getName();
+                    }
 
-                Object rep = null;
-                if (key.equals("command.name")) {
-                    rep = command.getName();
-                }
+                    if (rep == null) {
+                        Variables vars = ShellHolder.get().getVariables();
+                        rep = vars.get(key);
+                    }
 
-                if (rep == null) {
-                    Variables vars = ShellHolder.get().getVariables();
-                    rep = vars.get(key);
+                    if (rep == null) {
+                        rep = System.getProperty(key);
+                    }
+                    return rep;
                 }
+            };
 
-                if (rep == null) {
-                    rep = System.getProperty(key);
-                }
+            return parser.parse(input);
 
-                if (rep != null) {
-                    input = input.replace(matcher.group(0), rep.toString());
-                    matcher.reset(input);
-                }
-            }
         }
 
         return input;
