@@ -57,15 +57,15 @@ public class UnsetCommand
         Variables variables = context.getVariables();
 
         for (String arg : args) {
-            String namevalue = String.valueOf(arg);
+            String name = String.valueOf(arg);
 
             switch (mode) {
                 case PROPERTY:
-                    unsetProperty(namevalue);
+                    unsetProperty(name);
                     break;
 
                 case VARIABLE:
-                    unsetVariable(variables, namevalue);
+                    unsetVariable(variables, name);
                     break;
             }
         }
@@ -74,13 +74,13 @@ public class UnsetCommand
     }
 
     private void unsetProperty(final String name) {
-        log.info("Unsetting system property: {}", name);
+        log.info("Un-setting system property: {}", name);
 
         System.getProperties().remove(name);
     }
 
     private void unsetVariable(final Variables vars, final String name) {
-        log.info("Unsetting variable: {}", name);
+        log.info("Un-setting variable: {}", name);
 
         vars.unset(name);
     }

@@ -41,7 +41,7 @@ import java.net.URL;
  * @since 2.0
  */
 @Command
-public class SourceCommand
+public class ;SourceCommand
     extends CommandActionSupport
 {
     @Argument(required = true)

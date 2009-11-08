@@ -58,7 +58,7 @@ public class UnaliasCommand
         assert context != null;
         IO io = context.getIo();
 
-        log.debug("Undefining alias: {}", name);
+        log.debug("Un-defining alias: {}", name);
 
         try {
             aliasRegistry.removeAlias(name);
