@@ -297,7 +297,7 @@ public class ShellImpl
                     }
                 }
                 catch (Exception e) {
-                    log.warn("Failed to load keybindings", e);
+                    log.warn("Failed to load key-bindings", e);
                 }
             }
         }
