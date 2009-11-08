@@ -38,19 +38,22 @@ public class ConsoleErrorHandlerImpl
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private static final String ERROR_EXCEPTION_NAME = "error.exception.name";
+    private static enum Messages
+    {
+        ERROR_EXCEPTION_NAME,
+        ERROR_EXCEPTION_AT,
+        ERROR_EXCEPTION_CAUSED_BY,
+        ERROR_LOCATION_NATIVE,
+        ERROR_LOCATION_UNKNOWN;
+        
+        private static final MessageSource messages = new ResourceBundleMessageSource(ConsoleErrorHandlerImpl.class);
 
-    private static final String ERROR_EXCEPTION_AT = "error.exception.at";
-
-    private static final String ERROR_EXCEPTION_CAUSEBY = "error.exception.causeby";
-
-    private static final String ERROR_LOCATION_NATIVE = "error.location.native";
-
-    private static final String ERROR_LOCATION_UNKNOWN = "error.location.unknown";
-
+        String format(final Object... args) {
+            return messages.format(name(), args);
+        }
+    }
+    
     private final IO io;
-
-    private final MessageSource messages = new ResourceBundleMessageSource(getClass());
 
     public ConsoleErrorHandlerImpl(final IO io) {
         assert io != null;
@@ -89,18 +92,18 @@ public class ConsoleErrorHandlerImpl
         }
 
         // Spit out the terse reason why we've failed
-        io.err.println(messages.format(ERROR_EXCEPTION_NAME, cause.getClass().getName(), cause.getMessage()));
+        io.err.println(Messages.ERROR_EXCEPTION_NAME.format(cause.getClass().getName(), cause.getMessage()));
 
         if (showTrace || io.isVerbose()) {
             while (cause != null) {
                 for (StackTraceElement e : cause.getStackTrace()) {
                     io.err.print("    ");
-                    io.err.println(messages.format(ERROR_EXCEPTION_AT, e.getClassName(), e.getMethodName(), getLocation(e)));
+                    io.err.println(Messages.ERROR_EXCEPTION_AT.format(e.getClassName(), e.getMethodName(), getLocation(e)));
                 }
 
                 cause = cause.getCause();
                 if (cause != null) {
-                    io.err.println(messages.format(ERROR_EXCEPTION_CAUSEBY, cause.getClass().getName(), cause.getMessage()));
+                    io.err.println(Messages.ERROR_EXCEPTION_CAUSED_BY.format(cause.getClass().getName(), cause.getMessage()));
                 }
             }
         }
@@ -112,10 +115,10 @@ public class ConsoleErrorHandlerImpl
         assert e != null;
 
         if (e.isNativeMethod()) {
-            return messages.format(ERROR_LOCATION_NATIVE);
+            return Messages.ERROR_LOCATION_NATIVE.format();
         }
         else if (e.getFileName() == null) {
-            return messages.format(ERROR_LOCATION_UNKNOWN);
+            return Messages.ERROR_LOCATION_UNKNOWN.format();
         }
         else if (e.getLineNumber() >= 0) {
             return String.format("%s:%s", e.getFileName(), e.getLineNumber());
