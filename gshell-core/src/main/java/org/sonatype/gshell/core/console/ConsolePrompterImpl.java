@@ -36,13 +36,7 @@ import java.util.regex.Pattern;
 public class ConsolePrompterImpl
     implements Console.Prompter, VariableNames
 {
-    private final Logger log = LoggerFactory.getLogger(getClass());
-
-    private static final String SHELL_BRANDING = "shell.branding";
-
-    // NOTE: Have to use %{} here to avoid causing problems with ${} variable interpolation
-
-    private static final Pattern PATTERN = Pattern.compile("\\%\\{([^}]+)\\}");
+    private static final Pattern PATTERN = Pattern.compile("\\$\\{([^}]+)\\}");
 
     private final AnsiRenderer renderer = new AnsiRenderer();
 
