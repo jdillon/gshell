@@ -102,8 +102,6 @@ public class IO
 
     /**
      * Set the verbosity level.
-     *
-     * @param verbosity
      */
     public void setVerbosity(final Verbosity verbosity) {
         assert verbosity != null;
