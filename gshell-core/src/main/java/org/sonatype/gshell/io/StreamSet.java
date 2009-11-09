@@ -36,6 +36,14 @@ public class StreamSet
 
     public final PrintStream err;
 
+    /**
+     * Output stream type.
+     */
+    public static enum OutputType
+    {
+        OUT, ERR;
+    }
+
     public StreamSet(final InputStream in, final PrintStream out, final PrintStream err) {
         assert in != null;
         assert out != null;
@@ -60,7 +68,18 @@ public class StreamSet
 
     public PrintStream getOutput(final OutputType type) {
         assert type != null;
-        return type.get(this);
+
+        switch (type) {
+            case OUT:
+                return out;
+
+            case ERR:
+                return err;
+
+            default:
+                // Should never happen
+                throw new InternalError();
+        }
     }
 
     public void flush() {
@@ -109,27 +128,4 @@ public class StreamSet
         new FileInputStream(FileDescriptor.in),
         new PrintStream(new FileOutputStream(FileDescriptor.out)),
         new PrintStream(new FileOutputStream(FileDescriptor.err)));
-
-    /**
-     * Output stream type.
-     */
-    public static enum OutputType
-    {
-        OUT, ERR;
-
-        private PrintStream get(final StreamSet set) {
-            assert set != null;
-
-            switch (this) {
-                case OUT:
-                    return set.out;
-
-                case ERR:
-                    return set.err;
-            }
-
-            // Should never happen
-            throw new InternalError();
-        }
-    }
 }
