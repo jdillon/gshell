@@ -16,6 +16,8 @@
 
 package org.sonatype.gshell.core;
 
+import jline.AnsiWindowsTerminal;
+import jline.NoInterruptUnixTerminal;
 import jline.TerminalFactory;
 import org.sonatype.gshell.Branding;
 import org.sonatype.gshell.Shell;
@@ -50,6 +52,12 @@ import java.util.concurrent.atomic.AtomicReference;
 public abstract class MainSupport
     implements VariableNames
 {
+    static {
+        // Register some different terminal flavors for added functionality
+        TerminalFactory.registerFlavor(TerminalFactory.Flavor.UNIX, NoInterruptUnixTerminal.class);
+        TerminalFactory.registerFlavor(TerminalFactory.Flavor.WINDOWS, AnsiWindowsTerminal.class);
+    }
+    
     protected final IO io = new AnsiIO(StreamSet.SYSTEM_FD, true);
 
     protected final Variables vars = new VariablesImpl();

@@ -16,7 +16,6 @@
 
 package org.sonatype.gshell.util.ansi;
 
-import jline.WindowsTerminal;
 import org.fusesource.jansi.AnsiConsole;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.io.StreamSet;
@@ -33,11 +32,6 @@ import java.io.PrintWriter;
 public class AnsiIO
     extends IO
 {
-    static {
-        // We support Ansi on windows with jansi so flip it on
-        System.setProperty(WindowsTerminal.ANSI, Boolean.TRUE.toString());
-    }
-
     public AnsiIO(final StreamSet streams, final boolean autoFlush) {
         super(ansiStreams(streams), autoFlush);
     }
