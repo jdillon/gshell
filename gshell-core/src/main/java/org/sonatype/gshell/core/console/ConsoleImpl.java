@@ -46,23 +46,17 @@ public class ConsoleImpl
 {
     private final ConsoleReader reader;
 
-    private final Thread pipe;
+    private final Pipe pipe;
 
-    private final BlockingQueue<Integer> queue;
-
-    private boolean interrupt;
+    private volatile boolean interrupt;
 
     public ConsoleImpl(final Executor executor, final IO io, final History history, final InputStream bindings) throws IOException {
         super(executor);
         assert io != null;
 
-        this.queue = new ArrayBlockingQueue<Integer>(1024);
-        this.pipe = new Thread(new Pipe(io));
-        this.pipe.setName("Console Pipe");
-        this.pipe.setDaemon(true);
-
+        this.pipe = new Pipe(io);
         this.reader = new ConsoleReader(
-            new ConsoleInputStream(),
+            pipe.getInputStream(),
             new PrintWriter(io.streams.out),
             bindings,
             io.getTerminal());
@@ -104,8 +98,9 @@ public class ConsoleImpl
         }
     }
 
-    private void interrupt() {
+    private void doInterrupt() {
         log.debug("Interrupted");
+        reader.getCursorBuffer().clear();
         interrupt = true;
     }
 
@@ -116,9 +111,89 @@ public class ConsoleImpl
         Thread.interrupted();
     }
 
-    private class ConsoleInputStream
+    private class Pipe
+        extends Thread
+    {
+        private final BlockingQueue<Integer> queue = new ArrayBlockingQueue<Integer>(1024);
+
+        private final Terminal term;
+
+        private final InputStream in;
+
+        private final PrintStream err;
+
+        private Pipe(final IO io) {
+            super("Console Pipe");
+            this.setDaemon(true);
+
+            assert io != null;
+            this.term = io.getTerminal();
+            this.in = io.streams.in;
+            this.err = io.streams.err;
+        }
+
+        public BlockingQueue<Integer> getQueue() {
+            return queue;
+        }
+
+        public InputStream getInputStream() {
+            return new PipeInputStream(this);
+        }
+
+        private int read() throws IOException {
+            // FIXME: See if this is really needed and figure out why...
+//            if (term instanceof AnsiWindowsTerminal) {
+//                c = ((AnsiWindowsTerminal) term).readDirectChar(in);
+//            }
+//            else {
+//                c = terminal.readCharacter(in);
+//            }
+            return term.readCharacter(in);
+        }
+
+        public void run() {
+            try {
+                while (running) {
+                    try {
+                        int c = read();
+
+                        switch (c) {
+                            case -1:
+                                queue.put(c);
+                                return;
+
+                            case 3:
+                                err.println("^C");
+                                doInterrupt();
+                                break;
+
+                            case 4:
+                                err.println("^D");
+                                break;
+                        }
+
+                        queue.put(c);
+                    }
+                    catch (Throwable t) {
+                        return;
+                    }
+                }
+            }
+            finally {
+                close();
+            }
+        }
+    }
+
+    private class PipeInputStream
         extends InputStream
     {
+        private final BlockingQueue<Integer> queue;
+
+        private PipeInputStream(final Pipe pipe) {
+            this.queue = pipe.getQueue();
+        }
+
         private int read(final boolean wait) throws IOException {
             if (!running) {
                 return -1;
@@ -178,65 +253,4 @@ public class ConsoleImpl
         }
     }
 
-    private class Pipe
-        implements Runnable
-    {
-        private final Terminal term;
-
-        private final InputStream in;
-
-        private final PrintStream err;
-
-        private Pipe(final IO io) {
-            assert io != null;
-            this.term = io.getTerminal();
-            this.in = io.streams.in;
-            this.err = io.streams.err;
-        }
-
-        private int read() throws IOException {
-            // FIXME: See if this is really needed and figure out why...
-//            if (term instanceof AnsiWindowsTerminal) {
-//                c = ((AnsiWindowsTerminal) term).readDirectChar(in);
-//            }
-//            else {
-//                c = terminal.readCharacter(in);
-//            }
-            return term.readCharacter(in);
-        }
-
-        public void run() {
-            try {
-                while (running) {
-                    try {
-                        int c = read();
-
-                        switch (c) {
-                            case -1:
-                                queue.put(c);
-                                return;
-
-                            case 3:
-                                err.println("^C");
-                                reader.getCursorBuffer().clear();
-                                interrupt();
-                                break;
-
-                            case 4:
-                                err.println("^D");
-                                break;
-                        }
-
-                        queue.put(c);
-                    }
-                    catch (Throwable t) {
-                        return;
-                    }
-                }
-            }
-            finally {
-                close();
-            }
-        }
-    }
 }
