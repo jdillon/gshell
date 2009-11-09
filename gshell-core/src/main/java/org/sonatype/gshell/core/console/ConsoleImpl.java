@@ -48,8 +48,6 @@ public class ConsoleImpl
 
     private final Pipe pipe;
 
-    private volatile boolean interrupt;
-
     public ConsoleImpl(final Executor executor, final IO io, final History history, final InputStream bindings) throws IOException {
         super(executor);
         assert io != null;
@@ -91,19 +89,6 @@ public class ConsoleImpl
         super.run();
     }
 
-    private void checkInterrupt() throws IOException {
-        if (interrupt) {
-            interrupt = false;
-            throw new InterruptedIOException("Keyboard interruption");
-        }
-    }
-
-    private void doInterrupt() {
-        log.debug("Interrupted");
-        reader.getCursorBuffer().clear();
-        interrupt = true;
-    }
-
     private void close() {
         log.debug("Closing");
         this.setRunning(false);
@@ -122,6 +107,8 @@ public class ConsoleImpl
 
         private final PrintStream err;
 
+        private volatile boolean interrupt;
+
         private Pipe(final IO io) {
             super("Console Pipe");
             this.setDaemon(true);
@@ -132,12 +119,25 @@ public class ConsoleImpl
             this.err = io.streams.err;
         }
 
-        public BlockingQueue<Integer> getQueue() {
+        private BlockingQueue<Integer> getQueue() {
             return queue;
         }
 
-        public InputStream getInputStream() {
+        private InputStream getInputStream() {
             return new PipeInputStream(this);
+        }
+
+        private void checkInterrupt() throws InterruptedIOException {
+            if (interrupt) {
+                interrupt = false;
+                throw new InterruptedIOException("Keyboard interruption");
+            }
+        }
+
+        private void doInterrupt() {
+            log.debug("Interrupted");
+            reader.getCursorBuffer().clear();
+            interrupt = true;
         }
 
         private int read() throws IOException {
@@ -188,9 +188,13 @@ public class ConsoleImpl
     private class PipeInputStream
         extends InputStream
     {
+        private final Pipe pipe;
+
         private final BlockingQueue<Integer> queue;
 
         private PipeInputStream(final Pipe pipe) {
+            assert pipe != null;
+            this.pipe = pipe;
             this.queue = pipe.getQueue();
         }
 
@@ -198,7 +202,7 @@ public class ConsoleImpl
             if (!running) {
                 return -1;
             }
-            checkInterrupt();
+            pipe.checkInterrupt();
             Integer i;
             if (wait) {
                 try {
@@ -207,7 +211,7 @@ public class ConsoleImpl
                 catch (InterruptedException e) {
                     throw new InterruptedIOException();
                 }
-                checkInterrupt();
+                pipe.checkInterrupt();
             }
             else {
                 i = queue.poll();
