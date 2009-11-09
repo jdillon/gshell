@@ -84,7 +84,7 @@ public class SetCommand
 
         switch (mode) {
             case PROPERTY:
-                log.debug("Setting system property: {}={}", name, value);
+                log.info("Setting system property: {}={}", name, value);
                 System.setProperty(name, value);
                 break;
 

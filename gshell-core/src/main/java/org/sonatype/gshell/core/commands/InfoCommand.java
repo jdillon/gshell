@@ -21,6 +21,8 @@ import jline.WindowsTerminal;
 import jline.console.completers.EnumCompleter;
 import org.sonatype.gshell.Branding;
 import org.sonatype.gshell.util.ansi.Ansi;
+import static org.sonatype.gshell.util.ansi.Ansi.Attribute;
+import static org.sonatype.gshell.util.ansi.Ansi.Color;
 import org.sonatype.gshell.util.cli.Argument;
 import org.sonatype.gshell.util.cli.Option;
 import org.sonatype.gshell.command.Command;
@@ -202,7 +204,7 @@ public class InfoCommand
     }
 
     private void printlnHeader(final IO io, final String name) {
-        io.info(Ansi.ansi().a(Ansi.Attribute.INTENSITY_BOLD).fg(Ansi.Color.GREEN).a(name).reset());
+        io.info(Ansi.ansi().a(Attribute.INTENSITY_BOLD).fg(Color.GREEN).a(name).reset());
     }
 
     private long getSunOsValueAsLong(OperatingSystemMXBean os, String name) throws Exception {
@@ -254,6 +256,6 @@ public class InfoCommand
     }
 
     private void println(final IO io, final String name, final Object value) {
-        io.out.format("  @|bold %s|@: %s", name, value).println();
+        io.info(Ansi.ansi().a(Attribute.INTENSITY_BOLD).a(name).reset().a(": ").a(value));
     }
 }
