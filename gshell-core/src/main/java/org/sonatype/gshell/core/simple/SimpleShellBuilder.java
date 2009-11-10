@@ -37,6 +37,7 @@ import org.sonatype.gshell.core.commands.InfoCommand;
 import org.sonatype.gshell.core.commands.PreferenceCommand;
 import org.sonatype.gshell.core.commands.RecallHistoryCommand;
 import org.sonatype.gshell.core.commands.SetCommand;
+import org.sonatype.gshell.core.commands.SleepCommand;
 import org.sonatype.gshell.core.commands.SourceCommand;
 import org.sonatype.gshell.core.commands.UnaliasCommand;
 import org.sonatype.gshell.core.commands.UnsetCommand;
@@ -163,6 +164,8 @@ public class SimpleShellBuilder
         registry.registerCommand("pref", new PreferenceCommand());
 
         registry.registerCommand("echo", new EchoCommand());
+
+        registry.registerCommand("sleep", new SleepCommand());
     }
 
     protected Shell createShell(final Components components) throws Exception {

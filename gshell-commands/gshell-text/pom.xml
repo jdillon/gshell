@@ -27,13 +27,6 @@
 
     <artifactId>gshell-text</artifactId>
     <name>GShell Commands :: Text</name>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.sonatype.gshell</groupId>
-            <artifactId>gshell-core</artifactId>
-        </dependency>
-    </dependencies>
     
 </project>
 

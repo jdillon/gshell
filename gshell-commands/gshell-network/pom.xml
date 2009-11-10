@@ -28,12 +28,5 @@
     <artifactId>gshell-network</artifactId>
     <name>GShell Commands :: Network</name>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.sonatype.gshell</groupId>
-            <artifactId>gshell-core</artifactId>
-        </dependency>
-    </dependencies>
-    
 </project>
 
