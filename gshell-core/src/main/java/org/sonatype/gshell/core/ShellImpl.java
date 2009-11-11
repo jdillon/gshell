@@ -113,24 +113,12 @@ public class ShellImpl
         return history;
     }
 
-    public ConsolePrompt getPrompt() {
-        return prompt;
-    }
-
     public void setPrompt(final ConsolePrompt prompt) {
         this.prompt = prompt;
     }
 
-    public ConsoleErrorHandler getErrorHandler() {
-        return errorHandler;
-    }
-
     public void setErrorHandler(final ConsoleErrorHandler errorHandler) {
         this.errorHandler = errorHandler;
-    }
-
-    public List<Completer> getCompleters() {
-        return completers;
     }
 
     public void setCompleters(final List<Completer> completers) {
