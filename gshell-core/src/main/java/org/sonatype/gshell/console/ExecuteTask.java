@@ -93,6 +93,8 @@ public abstract class ExecuteTask
     public static class AbortTaskError
         extends Error
     {
-        // ???
+        ///CLOVER:OFF
+
+        private static final long serialVersionUID = 1;
     }
 }

@@ -20,7 +20,6 @@ import org.sonatype.gshell.Branding;
 import org.sonatype.gshell.VariableNames;
 import org.sonatype.gshell.Variables;
 import org.sonatype.gshell.console.ConsolePrompt;
-import org.sonatype.gshell.console.DefaultPrompt;
 import org.sonatype.gshell.util.ReplacementParser;
 import org.sonatype.gshell.util.ansi.AnsiRenderer;
 
@@ -67,7 +66,7 @@ public class ConsolePromptImpl
         if (prompt == null) {
             prompt = interpolate(branding.getPrompt());
             if (prompt == null) {
-                prompt = DefaultPrompt.DEFAULT_PROMPT;
+                prompt = ConsolePrompt.DEFAULT_PROMPT;
             }
         }
 
