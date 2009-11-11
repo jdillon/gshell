@@ -51,15 +51,15 @@ public class Console
 
     private final InputPipe pipe;
 
-    protected ConsolePrompt prompt;
+    private ConsolePrompt prompt;
 
-    protected ConsoleErrorHandler errorHandler;
+    private ConsoleErrorHandler errorHandler;
 
-    protected ExecuteTask currentTask;
+    private ExecuteTask currentTask;
 
     private volatile boolean interrupt;
 
-    protected boolean running;
+    private volatile boolean running;
 
     public Console(final ExecuteTaskFactory taskFactory, final IO io, final History history, final InputStream bindings) throws IOException {
         assert taskFactory != null;
@@ -84,10 +84,6 @@ public class Console
         reader.addCompleter(completer);
     }
 
-    public ConsolePrompt getPrompt() {
-        return prompt;
-    }
-
     public void setPrompt(final ConsolePrompt prompt) {
         this.prompt = prompt;
     }
@@ -98,14 +94,6 @@ public class Console
 
     public void setErrorHandler(final ConsoleErrorHandler errorHandler) {
         this.errorHandler = errorHandler;
-    }
-
-    public ExecuteTaskFactory getTaskFactory() {
-        return taskFactory;
-    }
-
-    public boolean isRunning() {
-        return running;
     }
 
     public ExecuteTask getCurrentTask() {
@@ -130,7 +118,6 @@ public class Console
                 running = work();
             }
             catch (Throwable t) {
-                // Don't use {} here so we get the throwable detail in the log stream
                 log.trace("Work failed", t);
 
                 if (getErrorHandler() != null) {
@@ -151,7 +138,7 @@ public class Console
      * @return False to abort, true to continue running.
      * @throws Exception Work failed.
      */
-    protected boolean work() throws Exception {
+    private boolean work() throws Exception {
         String line = readLine(prompt != null ? prompt.prompt() : ConsolePrompt.DEFAULT_PROMPT);
 
         log.trace("Read line: {}", line);
@@ -181,7 +168,7 @@ public class Console
         }
     }
 
-    protected void traceLine(final String line) {
+    private void traceLine(final String line) {
         assert line != null;
 
         StringBuilder idx = new StringBuilder();
@@ -198,7 +185,7 @@ public class Console
         log.trace("     {}", idx);
     }
 
-    protected String readLine(final String prompt) throws IOException {
+    private String readLine(final String prompt) throws IOException {
         // prompt may be null
         return reader.readLine(prompt);
     }
