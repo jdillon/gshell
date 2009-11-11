@@ -268,6 +268,7 @@ public abstract class Console
                         case 3:
                             err.println("^C");
                             reader.getCursorBuffer().clear();
+                            reader.redrawLine();
                             interruptTask();
                             break;
 
