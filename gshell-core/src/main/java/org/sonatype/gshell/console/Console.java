@@ -40,12 +40,10 @@ import java.util.concurrent.BlockingQueue;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public class Console
+public abstract class Console
     implements Runnable
 {
     protected final Logger log = LoggerFactory.getLogger(getClass());
-
-    private final ExecuteTaskFactory taskFactory;
 
     private final ConsoleReader reader;
 
@@ -55,16 +53,13 @@ public class Console
 
     private ConsoleErrorHandler errorHandler;
 
-    private ExecuteTask currentTask;
+    private ConsoleTask currentTask;
 
     private volatile boolean interrupt;
 
     private volatile boolean running;
 
-    public Console(final ExecuteTaskFactory taskFactory, final IO io, final History history, final InputStream bindings) throws IOException {
-        assert taskFactory != null;
-        this.taskFactory = taskFactory;
-
+    public Console(final IO io, final History history, final InputStream bindings) throws IOException {
         assert io != null;
         this.pipe = new InputPipe(io);
 
@@ -96,7 +91,7 @@ public class Console
         this.errorHandler = errorHandler;
     }
 
-    public ExecuteTask getCurrentTask() {
+    public ConsoleTask getCurrentTask() {
         return currentTask;
     }
 
@@ -132,6 +127,8 @@ public class Console
         log.trace("Stopped");
     }
 
+    protected abstract ConsoleTask createTask();
+
     /**
      * Read and execute a line.
      *
@@ -157,7 +154,7 @@ public class Console
 
         // Build the task and execute it
         assert currentTask == null;
-        currentTask = taskFactory.create();
+        currentTask = createTask();
         log.trace("Current task: {}", currentTask);
 
         try {
@@ -198,7 +195,7 @@ public class Console
     }
 
     private void interruptTask() {
-        ExecuteTask task = getCurrentTask();
+        ConsoleTask task = getCurrentTask();
 
         if (task != null) {
             synchronized (task) {

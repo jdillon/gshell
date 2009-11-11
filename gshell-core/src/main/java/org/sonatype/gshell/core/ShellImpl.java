@@ -30,9 +30,7 @@ import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.console.Console;
 import org.sonatype.gshell.console.ConsoleErrorHandler;
 import org.sonatype.gshell.console.ConsolePrompt;
-import org.sonatype.gshell.console.ExecuteTask;
-import org.sonatype.gshell.console.ExecuteTaskFactory;
-import org.sonatype.gshell.core.ShellHistory;
+import org.sonatype.gshell.console.ConsoleTask;
 import org.sonatype.gshell.event.EventAware;
 import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.execute.CommandExecutor;
@@ -217,10 +215,12 @@ public class ShellImpl
         final AtomicReference<ExitNotification> exitNotifHolder = new AtomicReference<ExitNotification>();
         final AtomicReference<Object> lastResultHolder = new AtomicReference<Object>();
 
-        ExecuteTaskFactory taskFactory = new ExecuteTaskFactory()
-        {
-            public ExecuteTask create() {
-                return new ExecuteTask() {
+        IO io = getIo();
+
+        Console console = new Console(io, history, loadBindings()) {
+            @Override
+            protected ConsoleTask createTask() {
+                return new ConsoleTask() {
                     @Override
                     public boolean doExecute(final String input) throws Exception {
                         try {
@@ -238,10 +238,6 @@ public class ShellImpl
                 };
             }
         };
-
-        IO io = getIo();
-
-        Console console = new Console(taskFactory, io, history, loadBindings());
 
         if (prompt != null) {
             console.setPrompt(prompt);

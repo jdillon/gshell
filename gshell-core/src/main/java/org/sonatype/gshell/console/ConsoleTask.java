@@ -25,9 +25,9 @@ import org.slf4j.LoggerFactory;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public abstract class ExecuteTask
+public abstract class ConsoleTask
 {
-    protected static final Logger log = LoggerFactory.getLogger(ExecuteTask.class);
+    protected static final Logger log = LoggerFactory.getLogger(ConsoleTask.class);
 
     private Thread thread;
 
