@@ -39,6 +39,8 @@ import java.util.concurrent.BlockingQueue;
 
 // Based on Apache Karaf impl
 
+// TODO: Consider merging Console with ConsoleImpl
+
 /**
  * Support for running console using the <a href="http://jline.sf.net">JLine</a> library.
  *
