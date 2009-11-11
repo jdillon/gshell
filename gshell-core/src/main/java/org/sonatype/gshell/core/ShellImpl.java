@@ -60,8 +60,6 @@ public class ShellImpl
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private final EventManager eventManager;
-
     private final Branding branding;
 
     private final CommandExecutor executor;
@@ -88,7 +86,6 @@ public class ShellImpl
         assert branding != null;
         // io and variables may be null
 
-        this.eventManager = eventManager;
         this.executor = executor;
         this.branding = branding;
         this.io = io != null ? io : new IO();
