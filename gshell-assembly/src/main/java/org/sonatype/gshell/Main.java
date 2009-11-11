@@ -37,14 +37,20 @@ public class Main
     @Override
     protected Shell createShell() throws Exception {
         SimpleShellBuilder builder = new SimpleShellBuilder();
-        
-        return builder
+
+
+        Shell shell = builder
                 .setBranding(getBranding())
                 .setIo(io)
                 .setVariables(vars)
                 .setPrompt(new ConsolePromptImpl(vars, getBranding()))
                 .setErrorHandler(new ConsoleErrorHandlerImpl(io))
                 .create();
+
+        // HACK: Register some more muck
+        builder.getComponents().getCommandRegistrar().registerCommand("sleep", "org.sonatype.gshell.commands.shell.SleepCommand");
+
+        return shell;
     }
 
     public static void main(final String[] args) throws Exception {

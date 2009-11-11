@@ -27,7 +27,6 @@ import org.sonatype.gshell.ShellHolder;
 import org.sonatype.gshell.VariableNames;
 import org.sonatype.gshell.Variables;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.console.Console;
 import org.sonatype.gshell.console.ConsoleErrorHandler;
 import org.sonatype.gshell.console.ConsolePrompt;
 import org.sonatype.gshell.console.ExecuteTask;
@@ -222,8 +221,8 @@ public class ShellImpl
         {
             public ExecuteTask create() {
                 return new ExecuteTask() {
-
-                    public boolean execute(String input) throws Exception {
+                    @Override
+                    public boolean doExecute(final String input) throws Exception {
                         try {
                             Object result = ShellImpl.this.execute(input);
                             lastResultHolder.set(result);
@@ -236,29 +235,12 @@ public class ShellImpl
 
                         return true;
                     }
-
-                    public boolean isRunning() {
-                        return false;  //To change body of implemented methods use File | Settings | File Templates.
-                    }
-
-                    public void stop() {
-                        //To change body of implemented methods use File | Settings | File Templates.
-                    }
-
-                    public boolean isStopping() {
-                        return false;  //To change body of implemented methods use File | Settings | File Templates.
-                    }
-
-                    public void abort() {
-                        //To change body of implemented methods use File | Settings | File Templates.
-                    }
                 };
             }
         };
 
         IO io = getIo();
 
-        // Setup the console
         ConsoleImpl console = new ConsoleImpl(taskFactory, io, history, loadBindings());
 
         if (prompt != null) {

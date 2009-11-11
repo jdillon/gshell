@@ -72,6 +72,8 @@ public class SimpleShellBuilder
 {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
+    protected final Components components;
+
     protected Branding branding;
 
     protected IO io;
@@ -83,6 +85,14 @@ public class SimpleShellBuilder
     protected ConsolePrompt prompt;
 
     protected ConsoleErrorHandler errorHandler;
+
+    public SimpleShellBuilder() throws Exception {
+        this.components = new ComponentsImpl();
+    }
+
+    public Components getComponents() {
+        return components;
+    }
 
     public SimpleShellBuilder setBranding(final Branding branding) {
         this.branding = branding;
@@ -119,14 +129,12 @@ public class SimpleShellBuilder
             throw new IllegalStateException("Missing branding");
         }
 
-        ComponentsImpl components = new ComponentsImpl();
-
         // Maybe register default commands
         if (registerCommands) {
-            registerCommands(components);
+            registerCommands(getComponents());
         }
 
-        Shell shell = createShell(components);
+        Shell shell = createShell(getComponents());
         log.debug("Created shell: {}", shell);
 
         return shell;

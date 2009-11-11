@@ -120,12 +120,14 @@ public abstract class Console
 
     public void run() {
         log.trace("Running");
-
-        assert prompt != null;
-        assert taskFactory != null;
-
         running = true;
 
+        doRun();
+
+        log.trace("Stopped");
+    }
+
+    protected void doRun() {
         while (running) {
             try {
                 running = work();
@@ -139,8 +141,6 @@ public abstract class Console
                 }
             }
         }
-
-        log.trace("Finished");
     }
 
     /**

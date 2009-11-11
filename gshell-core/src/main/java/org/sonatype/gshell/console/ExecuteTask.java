@@ -16,21 +16,83 @@
 
 package org.sonatype.gshell.console;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Encapsulates a console execute task.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public interface ExecuteTask
+public abstract class ExecuteTask
 {
-    boolean execute(String input) throws Exception;
+    protected final Logger log = LoggerFactory.getLogger(getClass());
 
-    boolean isRunning();
+    private final Object lock = new Object();
 
-    void stop();
+    private Thread thread;
 
-    boolean isStopping();
+    private boolean running;
 
-    void abort();
+    private boolean stopping;
+
+    public boolean isRunning() {
+        synchronized (lock) {
+            return running;
+        }
+    }
+
+    public void stop() {
+        synchronized (lock) {
+            if (running) {
+                log.info("Stopping");
+                thread.interrupt();
+                stopping = true;
+            }
+        }
+    }
+
+    public boolean isStopping() {
+        synchronized (lock) {
+            return stopping;
+        }
+    }
+
+    public void abort() {
+        synchronized (lock) {
+            if (running) {
+                log.info("Aborting");
+                thread.stop(new AbortTaskError());
+            }
+        }
+    }
+
+    public boolean execute(final String input) throws Exception {
+        synchronized (lock) {
+            log.info("Running");
+            thread = Thread.currentThread();
+            running = true;
+        }
+
+        try {
+            return doExecute(input);
+        }
+        finally {
+            synchronized (lock) {
+                stopping = false;
+                running = false;
+                thread = null;
+                log.info("Stopped");
+            }
+        }
+    }
+
+    public abstract boolean doExecute(String input) throws Exception;
+
+    public static class AbortTaskError
+        extends Error
+    {
+        // ???
+    }
 }

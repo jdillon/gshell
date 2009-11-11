@@ -22,8 +22,11 @@ import jline.console.Completer;
 import jline.console.ConsoleReader;
 import jline.console.History;
 import jline.console.history.MemoryHistory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.console.Console;
+import org.sonatype.gshell.console.ExecuteTask;
 import org.sonatype.gshell.console.ExecuteTaskFactory;
 
 import java.io.IOException;
@@ -80,9 +83,9 @@ public class ConsoleImpl
     }
 
     @Override
-    public void run() {
+    protected void doRun() {
         pipe.start();
-        super.run();
+        super.doRun();
     }
 
     private void checkTaskInterrupted() throws InterruptedIOException {
@@ -93,12 +96,27 @@ public class ConsoleImpl
     }
 
     private void interruptTask() {
-        log.debug("Interrupting task");
-        interrupt = true;
+        ExecuteTask task = getCurrentTask();
+
+        if (task != null) {
+            log.debug("Interrupting task");
+            interrupt = true;
+
+            if (task.isStopping()) {
+                task.abort();
+            }
+            else if (task.isRunning()) {
+                task.stop();
+            }
+        }
+        else {
+            log.debug("No task running to interrupt");
+        }
     }
 
     @Override
     public void close() {
+        log.info("Closing");
         super.close();
         pipe.interrupt();
     }
@@ -106,6 +124,8 @@ public class ConsoleImpl
     private class InputPipe
         extends Thread
     {
+        private final Logger log = LoggerFactory.getLogger(getClass());
+
         private final BlockingQueue<Integer> queue = new ArrayBlockingQueue<Integer>(1024);
 
         private final Terminal term;
@@ -136,6 +156,8 @@ public class ConsoleImpl
         }
 
         public void run() {
+            log.info("Running");
+
             try {
                 while (running) {
                     int c = read();
@@ -174,6 +196,8 @@ public class ConsoleImpl
             finally {
                 close();
             }
+
+            log.info("Stopped");
         }
 
         public InputStream getInputStream() {
