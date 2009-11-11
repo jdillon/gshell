@@ -14,40 +14,42 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.core.registry;
+package org.sonatype.gshell.registry;
+
+import org.sonatype.gshell.command.CommandAction;
 
 import java.util.EventObject;
 
 /**
- * Event fired once an alias has been registered.
+ * Event fired once a command has been registered.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public class AliasRegisteredEvent
+public class CommandRegisteredEvent
     extends EventObject
 {
     ///CLOVER:OFF
 
     private final String name;
 
-    private final String alias;
+    private final CommandAction command;
 
-    public AliasRegisteredEvent(final String name, final String alias) {
+    public CommandRegisteredEvent(final String name, final CommandAction command) {
         super(name);
 
         assert name != null;
-        assert alias != null;
-
         this.name = name;
-        this.alias = alias;
+
+        assert command != null;
+        this.command = command;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getAlias() {
-        return alias;
+    public CommandAction getCommand() {
+        return command;
     }
 }

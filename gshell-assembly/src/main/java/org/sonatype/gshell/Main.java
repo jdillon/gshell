@@ -16,10 +16,10 @@
 
 package org.sonatype.gshell;
 
-import org.sonatype.gshell.core.MainSupport;
-import org.sonatype.gshell.core.ShellErrorHandler;
-import org.sonatype.gshell.core.ShellPrompt;
-import org.sonatype.gshell.core.simple.SimpleShellBuilder;
+import org.sonatype.gshell.MainSupport;
+import org.sonatype.gshell.ShellErrorHandler;
+import org.sonatype.gshell.ShellPrompt;
+import org.sonatype.gshell.builder.simple.SimpleShellBuilder;
 
 /**
  * Command-line bootstrap for GShell (<tt>gsh</tt>).

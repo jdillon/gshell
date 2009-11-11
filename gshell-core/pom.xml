@@ -223,7 +223,7 @@
                                                 public <methods>;
                                             }
 
-                                            -keep public class org.sonatype.gshell.core.MainSupport,org.sonatype.gshell.core.BrandingSupport {
+                                            -keep public class org.sonatype.gshell.MainSupporg.sonatype.gshell.BrandingSupportport {
                                                 public protected <fields>;
                                                 public protected <methods>;
                                             }
@@ -240,11 +240,11 @@
                                                 public <methods>;
                                             }
 
-                                            -keep public class org.sonatype.gshell.core.simple.* {
+                                            -keep public class org.sonatype.gshell.builder.simple.* {
                                                 public <methods>;
                                             }
 
-                                            -keep public class org.sonatype.gshell.core.commands.*,org.sonatype.gshell.core.command.CommandHelpSupport {
+                                            -keep public class org.sonatype.gshell.core.commands.*,org.sonatype.gshell.command.CommandHelpSupport {
                                                 public protected private <fields>;
                                                 public protected private <methods>;
                                             }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.core.guice;
+package org.sonatype.gshell.builder.guice;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;

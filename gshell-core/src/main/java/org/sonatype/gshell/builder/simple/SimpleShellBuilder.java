@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.core.simple;
+package org.sonatype.gshell.builder.simple;
 
 import jline.console.completers.AggregateCompleter;
 import org.slf4j.Logger;
@@ -27,8 +27,8 @@ import org.sonatype.gshell.command.CommandDocumenter;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.console.ConsoleErrorHandler;
 import org.sonatype.gshell.console.ConsolePrompt;
-import org.sonatype.gshell.core.ShellImpl;
-import org.sonatype.gshell.core.command.CommandDocumenterImpl;
+import org.sonatype.gshell.ShellImpl;
+import org.sonatype.gshell.command.CommandDocumenterImpl;
 import org.sonatype.gshell.core.commands.AliasCommand;
 import org.sonatype.gshell.core.commands.EchoCommand;
 import org.sonatype.gshell.core.commands.ExitCommand;
@@ -47,11 +47,11 @@ import org.sonatype.gshell.core.completer.CommandsCompleter;
 import org.sonatype.gshell.core.completer.FileNameCompleter;
 import org.sonatype.gshell.core.completer.VariableNameCompleter;
 import org.sonatype.gshell.event.EventManagerImpl;
-import org.sonatype.gshell.core.execute.CommandExecutorImpl;
+import org.sonatype.gshell.execute.CommandExecutorImpl;
 import org.sonatype.gshell.core.parser.CommandLineParserImpl;
-import org.sonatype.gshell.core.registry.AliasRegistryImpl;
-import org.sonatype.gshell.core.registry.CommandRegistryImpl;
-import org.sonatype.gshell.core.registry.CommandResolverImpl;
+import org.sonatype.gshell.registry.AliasRegistryImpl;
+import org.sonatype.gshell.registry.CommandRegistryImpl;
+import org.sonatype.gshell.registry.CommandResolverImpl;
 import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.execute.CommandExecutor;
 import org.sonatype.gshell.execute.CommandLineParser;

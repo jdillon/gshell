@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.core.guice;
+package org.sonatype.gshell.builder.guice;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -28,7 +28,7 @@ import org.sonatype.gshell.Variables;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.console.ConsoleErrorHandler;
 import org.sonatype.gshell.console.ConsolePrompt;
-import org.sonatype.gshell.core.ShellImpl;
+import org.sonatype.gshell.ShellImpl;
 import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.execute.CommandExecutor;
 import org.sonatype.gshell.registry.CommandRegistrar;

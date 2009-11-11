@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.core;
+package org.sonatype.gshell;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

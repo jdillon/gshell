@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.core.execute;
+package org.sonatype.gshell.execute;
 
 import com.google.inject.Inject;
 import org.slf4j.Logger;
@@ -23,13 +23,13 @@ import org.slf4j.MDC;
 import org.sonatype.gshell.Shell;
 import org.sonatype.gshell.ShellHolder;
 import org.sonatype.gshell.Variables;
+import org.sonatype.gshell.command.CommandHelpSupport;
 import org.sonatype.gshell.util.cli.CommandLineProcessor;
 import org.sonatype.gshell.util.cli.OpaqueArguments;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.CommandDocumenter;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.core.command.CommandHelpSupport;
 import org.sonatype.gshell.execute.CommandExecutor;
 import org.sonatype.gshell.execute.CommandLineParser;
 import org.sonatype.gshell.execute.CommandLineParser.CommandLine;

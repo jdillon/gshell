@@ -14,42 +14,36 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.core.registry;
+package org.sonatype.gshell.command;
 
-import org.sonatype.gshell.command.CommandAction;
-
-import java.util.EventObject;
+import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.util.cli.handler.StopHandler;
+import org.sonatype.gshell.util.i18n.MessageSource;
+import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
 
 /**
- * Event fired once a command has been registered.
+ * Helper to inject <tt>--help<tt> support.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public class CommandRegisteredEvent
-    extends EventObject
+public class CommandHelpSupport
 {
     ///CLOVER:OFF
 
-    private final String name;
+    @Option(name = "-h", aliases = {"--help"}, requireOverride = true)
+    public boolean displayHelp;
 
-    private final CommandAction command;
+    @Option(name = "--", handler = StopHandler.class)
+    public boolean stop;
 
-    public CommandRegisteredEvent(final String name, final CommandAction command) {
-        super(name);
+    private MessageSource messages;
 
-        assert name != null;
-        this.name = name;
+    public MessageSource getMessages() {
+        if (messages == null) {
+            messages = new ResourceBundleMessageSource(getClass());
+        }
 
-        assert command != null;
-        this.command = command;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public CommandAction getCommand() {
-        return command;
+        return messages;
     }
 }

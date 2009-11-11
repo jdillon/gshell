@@ -23,16 +23,17 @@ import com.google.inject.Stage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
-import org.sonatype.gshell.core.command.CommandActionSupport;
 import org.sonatype.gshell.event.EventManagerImpl;
 import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.registry.CommandRegistry;
+import org.sonatype.gshell.registry.CommandRegistryImpl;
 
 import static org.junit.Assert.fail;
 
 /**
- * Tests for the {@link CommandRegistryImpl}.
+ * Tests for the {@link org.sonatype.gshell.registry.CommandRegistryImpl}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */

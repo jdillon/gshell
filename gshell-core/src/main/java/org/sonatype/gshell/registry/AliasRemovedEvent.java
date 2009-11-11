@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.core.registry;
+package org.sonatype.gshell.registry;
 
 import java.util.EventObject;
 

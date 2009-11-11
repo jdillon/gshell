@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.core;
+package org.sonatype.gshell;
 
 import org.sonatype.gshell.Variables;
 import org.sonatype.gshell.event.EventAware;

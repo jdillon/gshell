@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.core.command;
+package org.sonatype.gshell.command;
 
 import jline.console.Completer;
 import org.slf4j.Logger;

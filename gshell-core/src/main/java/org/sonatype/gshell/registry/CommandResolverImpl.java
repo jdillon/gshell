@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.core.registry;
+package org.sonatype.gshell.registry;
 
 import com.google.inject.Inject;
 import org.slf4j.Logger;
@@ -23,7 +23,7 @@ import org.sonatype.gshell.util.cli.OpaqueArguments;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.CommandException;
-import org.sonatype.gshell.core.command.CommandActionSupport;
+import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.registry.AliasRegistry;
 import org.sonatype.gshell.registry.CommandRegistry;
 import org.sonatype.gshell.registry.CommandResolver;

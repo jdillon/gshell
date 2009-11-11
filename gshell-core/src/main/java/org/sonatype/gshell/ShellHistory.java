@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.core;
+package org.sonatype.gshell;
 
 import jline.console.history.FileHistory;
 import org.slf4j.Logger;

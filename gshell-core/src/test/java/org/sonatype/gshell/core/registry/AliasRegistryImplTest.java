@@ -26,6 +26,7 @@ import org.junit.Test;
 import org.sonatype.gshell.event.EventManagerImpl;
 import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.registry.AliasRegistry;
+import org.sonatype.gshell.registry.AliasRegistryImpl;
 import org.sonatype.gshell.registry.NoSuchAliasException;
 
 import java.util.Collection;
@@ -37,7 +38,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
- * Tests for the {@link AliasRegistryImpl}.
+ * Tests for the {@link org.sonatype.gshell.registry.AliasRegistryImpl}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.core.simple;
+package org.sonatype.gshell.builder.simple;
 
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.registry.CommandRegistrarSupport;

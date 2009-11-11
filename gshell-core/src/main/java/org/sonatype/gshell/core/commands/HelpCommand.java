@@ -24,7 +24,7 @@ import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.CommandDocumenter;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.core.command.CommandActionSupport;
+import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.core.completer.AliasNameCompleter;
 import org.sonatype.gshell.core.completer.CommandNameCompleter;
 import org.sonatype.gshell.registry.AliasRegistry;

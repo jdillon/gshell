@@ -21,6 +21,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.sonatype.gshell.Branding;
 import org.sonatype.gshell.History;
+import org.sonatype.gshell.MainSupport;
 import org.sonatype.gshell.Shell;
 import org.sonatype.gshell.Variables;
 import org.sonatype.gshell.util.ansi.Ansi;
@@ -31,7 +32,7 @@ import org.sonatype.gshell.testsupport.TestUtil;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Tests for {@link MainSupport}.
+ * Tests for {@link org.sonatype.gshell.MainSupport}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */

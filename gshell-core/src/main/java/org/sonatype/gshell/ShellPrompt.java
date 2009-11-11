@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.core;
+package org.sonatype.gshell;
 
 import org.sonatype.gshell.Branding;
 import org.sonatype.gshell.VariableNames;

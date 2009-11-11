@@ -28,7 +28,7 @@ import org.sonatype.gshell.util.cli.Option;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.core.command.CommandActionSupport;
+import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.util.pref.Preference;
 
 import java.lang.management.ClassLoadingMXBean;

@@ -14,32 +14,40 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.core;
+package org.sonatype.gshell.registry;
 
 import java.util.EventObject;
 
 /**
- * Event fired once a variable has been unset.
+ * Event fired once an alias has been registered.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public class VariableUnsetEvent
+public class AliasRegisteredEvent
     extends EventObject
 {
     ///CLOVER:OFF
 
     private final String name;
 
-    public VariableUnsetEvent(final String name) {
+    private final String alias;
+
+    public AliasRegisteredEvent(final String name, final String alias) {
         super(name);
 
         assert name != null;
+        assert alias != null;
 
         this.name = name;
+        this.alias = alias;
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getAlias() {
+        return alias;
     }
 }

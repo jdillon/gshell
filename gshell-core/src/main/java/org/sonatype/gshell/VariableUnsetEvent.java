@@ -14,36 +14,32 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.core.command;
+package org.sonatype.gshell;
 
-import org.sonatype.gshell.util.cli.Option;
-import org.sonatype.gshell.util.cli.handler.StopHandler;
-import org.sonatype.gshell.util.i18n.MessageSource;
-import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
+import java.util.EventObject;
 
 /**
- * Helper to inject <tt>--help<tt> support.
+ * Event fired once a variable has been unset.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public class CommandHelpSupport
+public class VariableUnsetEvent
+    extends EventObject
 {
     ///CLOVER:OFF
 
-    @Option(name = "-h", aliases = {"--help"}, requireOverride = true)
-    public boolean displayHelp;
+    private final String name;
 
-    @Option(name = "--", handler = StopHandler.class)
-    public boolean stop;
+    public VariableUnsetEvent(final String name) {
+        super(name);
 
-    private MessageSource messages;
+        assert name != null;
 
-    public MessageSource getMessages() {
-        if (messages == null) {
-            messages = new ResourceBundleMessageSource(getClass());
-        }
+        this.name = name;
+    }
 
-        return messages;
+    public String getName() {
+        return name;
     }
 }
