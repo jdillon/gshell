@@ -34,9 +34,9 @@ import org.sonatype.gshell.console.ConsoleTask;
 import org.sonatype.gshell.event.EventAware;
 import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.execute.CommandExecutor;
-import org.sonatype.gshell.io.Closer;
-import org.sonatype.gshell.io.SystemInputOutputHijacker;
 import org.sonatype.gshell.notification.ExitNotification;
+import org.sonatype.iohijack.Closer;
+import org.sonatype.iohijack.InputOutputHijacker;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -152,8 +152,8 @@ public class ShellImpl
     private synchronized void open() throws Exception {
         log.debug("Opening");
 
-        if (!SystemInputOutputHijacker.isInstalled()) {
-            SystemInputOutputHijacker.install();
+        if (!InputOutputHijacker.isInstalled()) {
+            InputOutputHijacker.install();
         }
 
         // Customize the shell

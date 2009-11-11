@@ -51,6 +51,7 @@ public abstract class ConsoleTask
         return stopping;
     }
 
+    @SuppressWarnings({"deprecation"})
     public synchronized void abort() {
         if (running) {
             log.trace("Aborting");

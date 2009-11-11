@@ -26,10 +26,10 @@ import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.core.command.CommandActionSupport;
-import org.sonatype.gshell.io.Closer;
-import org.sonatype.gshell.io.Flusher;
 import org.sonatype.gshell.util.pref.Preference;
 import org.sonatype.gshell.util.pref.PreferenceProcessor;
+import org.sonatype.iohijack.Closer;
+import org.sonatype.iohijack.Flusher;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

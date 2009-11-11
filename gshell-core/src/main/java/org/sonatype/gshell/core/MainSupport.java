@@ -34,11 +34,11 @@ import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
 import org.sonatype.gshell.util.Log;
-import org.sonatype.gshell.io.StreamSet;
 import org.sonatype.gshell.notification.ExitNotification;
 import org.sonatype.gshell.util.pref.Preference;
 import org.sonatype.gshell.util.pref.PreferenceProcessor;
 import org.sonatype.gshell.util.NameValue;
+import org.sonatype.iohijack.StreamSet;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;

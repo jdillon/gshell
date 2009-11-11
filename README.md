@@ -12,6 +12,7 @@ Building
 * Java 5
 * JLine 2.x
 * Gossip 1.x
+* IOHijack 1.x
 
 Check out and build:
 

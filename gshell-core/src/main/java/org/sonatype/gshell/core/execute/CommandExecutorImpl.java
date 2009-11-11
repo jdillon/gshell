@@ -34,13 +34,13 @@ import org.sonatype.gshell.execute.CommandExecutor;
 import org.sonatype.gshell.execute.CommandLineParser;
 import org.sonatype.gshell.execute.CommandLineParser.CommandLine;
 import org.sonatype.gshell.util.i18n.PrefixingMessageSource;
-import org.sonatype.gshell.io.SystemInputOutputHijacker;
 import org.sonatype.gshell.notification.ErrorNotification;
 import org.sonatype.gshell.notification.ResultNotification;
 import org.sonatype.gshell.util.pref.PreferenceProcessor;
 import org.sonatype.gshell.registry.CommandResolver;
 import org.sonatype.gshell.util.Arguments;
 import org.sonatype.gshell.util.Strings;
+import org.sonatype.iohijack.InputOutputHijacker;
 
 /**
  * The default {@link org.sonatype.gshell.execute.CommandExecutor} component.
@@ -127,11 +127,11 @@ public class CommandExecutorImpl
         final IO io = shell.getIo();
 
         // Hijack the system output streams
-        if (!SystemInputOutputHijacker.isInstalled()) {
-            SystemInputOutputHijacker.install(io.streams);
+        if (!InputOutputHijacker.isInstalled()) {
+            InputOutputHijacker.install(io.streams);
         }
         else {
-            SystemInputOutputHijacker.register(io.streams);
+            InputOutputHijacker.register(io.streams);
         }
 
         Object result = null;
@@ -188,7 +188,7 @@ public class CommandExecutorImpl
         finally {
             io.flush();
 
-            SystemInputOutputHijacker.deregister();
+            InputOutputHijacker.deregister();
 
             ShellHolder.set(lastShell);
 

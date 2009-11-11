@@ -18,7 +18,7 @@ package org.sonatype.gshell.util.ansi;
 
 import org.fusesource.jansi.AnsiConsole;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.io.StreamSet;
+import org.sonatype.iohijack.StreamSet;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;

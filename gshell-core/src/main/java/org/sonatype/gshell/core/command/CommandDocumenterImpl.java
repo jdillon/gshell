@@ -23,7 +23,6 @@ import org.sonatype.gshell.Variables;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.CommandDocumenter;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.io.PrefixingOutputStream;
 import org.sonatype.gshell.util.ReplacementParser;
 import org.sonatype.gshell.util.ansi.AnsiRenderer;
 import org.sonatype.gshell.util.cli.CommandLineProcessor;
@@ -32,6 +31,7 @@ import org.sonatype.gshell.util.i18n.AggregateMessageSource;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.PrefixingMessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
+import org.sonatype.iohijack.PrefixingOutputStream;
 
 import java.io.PrintStream;
 
