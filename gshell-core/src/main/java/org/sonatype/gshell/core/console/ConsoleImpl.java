@@ -118,7 +118,7 @@ public class ConsoleImpl
 
     @Override
     public void close() {
-        log.info("Closing");
+        log.trace("Closing");
         super.close();
         pipe.interrupt();
     }
@@ -158,7 +158,7 @@ public class ConsoleImpl
         }
 
         public void run() {
-            log.info("Running");
+            log.trace("Running");
 
             try {
                 while (running) {
@@ -199,7 +199,7 @@ public class ConsoleImpl
                 close();
             }
 
-            log.info("Stopped");
+            log.trace("Stopped");
         }
 
         public InputStream getInputStream() {
