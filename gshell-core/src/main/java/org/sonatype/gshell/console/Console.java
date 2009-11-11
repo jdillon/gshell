@@ -304,7 +304,7 @@ public class Console
         public InputStream getInputStream() {
             return new PipeInputStream();
         }
-
+        
         private class PipeInputStream
             extends InputStream
         {
