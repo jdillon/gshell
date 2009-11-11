@@ -32,9 +32,9 @@ public abstract class Console
 {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
-    protected ConsolePrompt prompt = new DefaultPrompt();
+    protected ConsolePrompt prompt;
 
-    protected ConsoleErrorHandler errorHandler = new DefaultErrorHandler();
+    protected ConsoleErrorHandler errorHandler;
 
     protected ExecuteTaskFactory taskFactory;
 
@@ -139,6 +139,9 @@ public abstract class Console
                 if (getErrorHandler() != null) {
                     running = getErrorHandler().handleError(t);
                 }
+                else {
+                    t.printStackTrace();
+                }
             }
         }
     }
@@ -147,7 +150,7 @@ public abstract class Console
      * @return  False to abort, true to continue running.
      */
     protected boolean work() throws Exception {
-        String line = readLine(prompt.prompt());
+        String line = readLine(prompt != null ? prompt.prompt() : ConsolePrompt.DEFAULT_PROMPT);
 
         log.trace("Read line: {}", line);
 

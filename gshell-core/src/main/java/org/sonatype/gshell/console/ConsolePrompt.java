@@ -24,5 +24,7 @@ package org.sonatype.gshell.console;
  */
 public interface ConsolePrompt
 {
+    String DEFAULT_PROMPT = "> ";
+
     String prompt();
 }
