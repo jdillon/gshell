@@ -46,7 +46,7 @@ public abstract class ExecuteTask
     public void stop() {
         synchronized (lock) {
             if (running) {
-                log.info("Stopping");
+                log.trace("Stopping");
                 thread.interrupt();
                 stopping = true;
             }
@@ -62,7 +62,7 @@ public abstract class ExecuteTask
     public void abort() {
         synchronized (lock) {
             if (running) {
-                log.info("Aborting");
+                log.trace("Aborting");
                 thread.stop(new AbortTaskError());
             }
         }
@@ -70,7 +70,7 @@ public abstract class ExecuteTask
 
     public boolean execute(final String input) throws Exception {
         synchronized (lock) {
-            log.info("Running");
+            log.trace("Running");
             thread = Thread.currentThread();
             running = true;
         }
@@ -83,7 +83,7 @@ public abstract class ExecuteTask
                 stopping = false;
                 running = false;
                 thread = null;
-                log.info("Stopped");
+                log.trace("Stopped");
             }
         }
     }
