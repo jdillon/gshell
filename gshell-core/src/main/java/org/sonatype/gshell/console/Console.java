@@ -40,7 +40,7 @@ public abstract class Console
 
     protected ExecuteTask currentTask;
 
-    protected boolean running = false;
+    protected boolean running;
 
     protected boolean breakOnNull = true;
 
