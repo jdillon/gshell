@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.core.console;
+package org.sonatype.gshell.core;
 
 import org.sonatype.gshell.Branding;
 import org.sonatype.gshell.VariableNames;
@@ -29,7 +29,7 @@ import org.sonatype.gshell.util.ansi.AnsiRenderer;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public class ConsolePromptImpl
+public class ShellPrompt
     implements ConsolePrompt, VariableNames
 {
     private final AnsiRenderer renderer = new AnsiRenderer();
@@ -40,7 +40,7 @@ public class ConsolePromptImpl
 
     private final ReplacementParser parser;
 
-    public ConsolePromptImpl(final Variables vars, final Branding branding) {
+    public ShellPrompt(final Variables vars, final Branding branding) {
         assert vars != null;
         this.vars = vars;
         assert branding != null;

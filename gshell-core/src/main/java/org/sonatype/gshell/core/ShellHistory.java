@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.core.console;
+package org.sonatype.gshell.core;
 
 import jline.console.history.FileHistory;
 import org.slf4j.Logger;
@@ -31,13 +31,13 @@ import java.io.IOException;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public class HistoryImpl
+public class ShellHistory
     extends FileHistory
     implements History, VariableNames
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    public HistoryImpl(final File file) throws IOException {
+    public ShellHistory(final File file) throws IOException {
         super(file);
 
         Runtime.getRuntime().addShutdownHook(new Thread()

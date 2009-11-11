@@ -29,47 +29,37 @@ public abstract class ExecuteTask
 {
     protected static final Logger log = LoggerFactory.getLogger(ExecuteTask.class);
 
-    private final Object lock = new Object();
-
     private Thread thread;
 
     private boolean running;
 
     private boolean stopping;
 
-    public boolean isRunning() {
-        synchronized (lock) {
-            return running;
+    public synchronized boolean isRunning() {
+        return running;
+    }
+
+    public synchronized void stop() {
+        if (running) {
+            log.trace("Stopping");
+            thread.interrupt();
+            stopping = true;
         }
     }
 
-    public void stop() {
-        synchronized (lock) {
-            if (running) {
-                log.trace("Stopping");
-                thread.interrupt();
-                stopping = true;
-            }
-        }
+    public synchronized boolean isStopping() {
+        return stopping;
     }
 
-    public boolean isStopping() {
-        synchronized (lock) {
-            return stopping;
-        }
-    }
-
-    public void abort() {
-        synchronized (lock) {
-            if (running) {
-                log.trace("Aborting");
-                thread.stop(new AbortTaskError());
-            }
+    public synchronized void abort() {
+        if (running) {
+            log.trace("Aborting");
+            thread.stop(new AbortTaskError());
         }
     }
 
     public boolean execute(final String input) throws Exception {
-        synchronized (lock) {
+        synchronized (this) {
             log.trace("Running");
             thread = Thread.currentThread();
             running = true;
@@ -79,7 +69,7 @@ public abstract class ExecuteTask
             return doExecute(input);
         }
         finally {
-            synchronized (lock) {
+            synchronized (this) {
                 stopping = false;
                 running = false;
                 thread = null;

@@ -27,12 +27,12 @@ import org.sonatype.gshell.ShellHolder;
 import org.sonatype.gshell.VariableNames;
 import org.sonatype.gshell.Variables;
 import org.sonatype.gshell.command.IO;
+import org.sonatype.gshell.console.Console;
 import org.sonatype.gshell.console.ConsoleErrorHandler;
 import org.sonatype.gshell.console.ConsolePrompt;
 import org.sonatype.gshell.console.ExecuteTask;
 import org.sonatype.gshell.console.ExecuteTaskFactory;
-import org.sonatype.gshell.core.console.ConsoleImpl;
-import org.sonatype.gshell.core.console.HistoryImpl;
+import org.sonatype.gshell.core.ShellHistory;
 import org.sonatype.gshell.event.EventAware;
 import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.execute.CommandExecutor;
@@ -72,7 +72,7 @@ public class ShellImpl
 
     private final Variables variables;
 
-    private final HistoryImpl history;
+    private final ShellHistory history;
 
     private List<Completer> completers;
 
@@ -98,7 +98,7 @@ public class ShellImpl
         if (variables instanceof EventAware) {
             ((EventAware) variables).setEventManager(eventManager);
         }
-        this.history = new HistoryImpl(new File(branding.getUserContextDir(), branding.getHistoryFileName()));
+        this.history = new ShellHistory(new File(branding.getUserContextDir(), branding.getHistoryFileName()));
 
     }
 
@@ -241,7 +241,7 @@ public class ShellImpl
 
         IO io = getIo();
 
-        ConsoleImpl console = new ConsoleImpl(taskFactory, io, history, loadBindings());
+        Console console = new Console(taskFactory, io, history, loadBindings());
 
         if (prompt != null) {
             console.setPrompt(prompt);

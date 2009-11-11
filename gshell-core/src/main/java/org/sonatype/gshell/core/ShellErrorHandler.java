@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.core.console;
+package org.sonatype.gshell.core;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,10 +33,10 @@ import org.sonatype.gshell.notification.ErrorNotification;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public class ConsoleErrorHandlerImpl
+public class ShellErrorHandler
     implements ConsoleErrorHandler, VariableNames
 {
-    private static final Logger log = LoggerFactory.getLogger(ConsoleErrorHandlerImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(ShellErrorHandler.class);
 
     private static enum Messages
     {
@@ -46,7 +46,7 @@ public class ConsoleErrorHandlerImpl
         ERROR_LOCATION_NATIVE,
         ERROR_LOCATION_UNKNOWN;
         
-        private static final MessageSource messages = new ResourceBundleMessageSource(ConsoleErrorHandlerImpl.class);
+        private static final MessageSource messages = new ResourceBundleMessageSource(ShellErrorHandler.class);
 
         String format(final Object... args) {
             return messages.format(name(), args);
@@ -55,7 +55,7 @@ public class ConsoleErrorHandlerImpl
     
     private final IO io;
 
-    public ConsoleErrorHandlerImpl(final IO io) {
+    public ShellErrorHandler(final IO io) {
         assert io != null;
         this.io = io;
     }

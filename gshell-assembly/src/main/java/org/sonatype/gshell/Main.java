@@ -17,8 +17,8 @@
 package org.sonatype.gshell;
 
 import org.sonatype.gshell.core.MainSupport;
-import org.sonatype.gshell.core.console.ConsoleErrorHandlerImpl;
-import org.sonatype.gshell.core.console.ConsolePromptImpl;
+import org.sonatype.gshell.core.ShellErrorHandler;
+import org.sonatype.gshell.core.ShellPrompt;
 import org.sonatype.gshell.core.simple.SimpleShellBuilder;
 
 /**
@@ -43,8 +43,8 @@ public class Main
                 .setBranding(getBranding())
                 .setIo(io)
                 .setVariables(vars)
-                .setPrompt(new ConsolePromptImpl(vars, getBranding()))
-                .setErrorHandler(new ConsoleErrorHandlerImpl(io))
+                .setPrompt(new ShellPrompt(vars, getBranding()))
+                .setErrorHandler(new ShellErrorHandler(io))
                 .create();
 
         // HACK: Register some more muck
