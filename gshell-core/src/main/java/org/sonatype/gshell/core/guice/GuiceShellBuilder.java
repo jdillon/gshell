@@ -26,7 +26,8 @@ import org.sonatype.gshell.Branding;
 import org.sonatype.gshell.Shell;
 import org.sonatype.gshell.Variables;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.console.Console;
+import org.sonatype.gshell.console.ConsoleErrorHandler;
+import org.sonatype.gshell.console.ConsolePrompt;
 import org.sonatype.gshell.core.ShellImpl;
 import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.execute.CommandExecutor;
@@ -55,9 +56,9 @@ public class GuiceShellBuilder
 
     private boolean registerCommands = true;
 
-    private Console.Prompter prompter;
+    private ConsolePrompt prompt;
 
-    private Console.ErrorHandler errorHandler;
+    private ConsoleErrorHandler errorHandler;
 
     private final List<Completer> completers = new ArrayList<Completer>();
 
@@ -98,12 +99,12 @@ public class GuiceShellBuilder
         return this;
     }
 
-    public GuiceShellBuilder setPrompter(final Console.Prompter prompter) {
-        this.prompter = prompter;
+    public GuiceShellBuilder setPrompt(final ConsolePrompt prompt) {
+        this.prompt = prompt;
         return this;
     }
 
-    public GuiceShellBuilder setErrorHandler(final Console.ErrorHandler errorHandler) {
+    public GuiceShellBuilder setErrorHandler(final ConsoleErrorHandler errorHandler) {
         this.errorHandler = errorHandler;
         return this;
     }
@@ -125,7 +126,7 @@ public class GuiceShellBuilder
         CommandExecutor executor = injector.getInstance(CommandExecutor.class);
         EventManager eventManager = injector.getInstance(EventManager.class);
         ShellImpl shell = new ShellImpl(eventManager, executor, branding, io, variables);
-        shell.setPrompter(prompter);
+        shell.setPrompt(prompt);
         shell.setErrorHandler(errorHandler);
         shell.setCompleters(completers);
 

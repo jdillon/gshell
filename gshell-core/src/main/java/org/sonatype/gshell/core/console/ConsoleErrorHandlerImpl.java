@@ -22,21 +22,21 @@ import org.sonatype.gshell.ShellHolder;
 import org.sonatype.gshell.VariableNames;
 import org.sonatype.gshell.Variables;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.console.Console;
+import org.sonatype.gshell.console.ConsoleErrorHandler;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
 import org.sonatype.gshell.notification.ErrorNotification;
 
 /**
- * {@link org.sonatype.gshell.console.Console.ErrorHandler} component.
+ * Default GShell {@link ConsoleErrorHandler}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 public class ConsoleErrorHandlerImpl
-    implements Console.ErrorHandler, VariableNames
+    implements ConsoleErrorHandler, VariableNames
 {
-    private final Logger log = LoggerFactory.getLogger(getClass());
+    private static final Logger log = LoggerFactory.getLogger(ConsoleErrorHandlerImpl.class);
 
     private static enum Messages
     {
@@ -60,12 +60,10 @@ public class ConsoleErrorHandlerImpl
         this.io = io;
     }
 
-    public Console.Result handleError(final Throwable error) {
+    public boolean handleError(final Throwable error) {
         assert error != null;
-
         displayError(error);
-
-        return Console.Result.CONTINUE;
+        return true;
     }
 
     private void displayError(final Throwable error) {

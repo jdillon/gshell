@@ -24,6 +24,7 @@ import jline.console.History;
 import jline.console.history.MemoryHistory;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.console.Console;
+import org.sonatype.gshell.console.ExecuteTaskFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -46,18 +47,18 @@ public class ConsoleImpl
 {
     private final ConsoleReader reader;
 
-    private final BlockingQueue<Integer> queue = new ArrayBlockingQueue<Integer>(1024);
-
-    private final Pipe pipe;
+    private final InputPipe pipe;
 
     private volatile boolean interrupt;
 
-    public ConsoleImpl(final Executor executor, final IO io, final History history, final InputStream bindings) throws IOException {
-        super(executor);
+    public ConsoleImpl(final ExecuteTaskFactory taskFactory, final IO io, final History history, final InputStream bindings) throws IOException {
+        super(taskFactory);
         assert io != null;
 
+        this.pipe = new InputPipe(io);
+
         this.reader = new ConsoleReader(
-            new PipeInputStream(),
+            pipe.getInputStream(),
             new PrintWriter(io.streams.out),
             bindings,
             io.getTerminal());
@@ -65,16 +66,6 @@ public class ConsoleImpl
         this.reader.setPaginationEnabled(true);
         this.reader.setCompletionHandler(new CandidateListCompletionHandler());
         this.reader.setHistory(history != null ? history : new MemoryHistory());
-
-        this.pipe = new Pipe(io);
-    }
-
-    public ConsoleImpl(final Executor executor, final IO io) throws IOException {
-        this(executor, io, null, null);
-    }
-
-    public ConsoleReader getReader() {
-        return reader;
     }
 
     public void addCompleter(final Completer completer) {
@@ -94,37 +85,37 @@ public class ConsoleImpl
         super.run();
     }
 
-    private void checkInterrupt() throws InterruptedIOException {
+    private void checkTaskInterrupted() throws InterruptedIOException {
         if (interrupt) {
             interrupt = false;
             throw new InterruptedIOException("Keyboard interruption");
         }
     }
 
-    private void doInterrupt() {
-        log.debug("Interrupted");
-        reader.getCursorBuffer().clear();
+    private void interruptTask() {
+        log.debug("Interrupting task");
         interrupt = true;
     }
 
-    private void close() {
-        log.debug("Closing");
-        this.setRunning(false);
+    @Override
+    public void close() {
+        super.close();
         pipe.interrupt();
-        Thread.interrupted();
     }
 
-    private class Pipe
+    private class InputPipe
         extends Thread
     {
+        private final BlockingQueue<Integer> queue = new ArrayBlockingQueue<Integer>(1024);
+
         private final Terminal term;
 
         private final InputStream in;
 
         private final PrintStream err;
 
-        private Pipe(final IO io) {
-            super("Console Pipe");
+        private InputPipe(final IO io) {
+            super("Console InputPipe");
             this.setDaemon(true);
 
             assert io != null;
@@ -133,12 +124,8 @@ public class ConsoleImpl
             this.err = io.streams.err;
         }
 
-        private BlockingQueue<Integer> getQueue() {
-            return queue;
-        }
-
         private int read() throws IOException {
-            // FIXME: See if this is really needed and figure out why...
+// FIXME: See if this is really needed and figure out why...
 //            if (term instanceof AnsiWindowsTerminal) {
 //                c = ((AnsiWindowsTerminal) term).readDirectChar(in);
 //            }
@@ -151,97 +138,108 @@ public class ConsoleImpl
         public void run() {
             try {
                 while (running) {
-                    try {
-                        int c = read();
+                    int c = read();
 
-                        switch (c) {
-                            case -1:
-                                queue.put(c);
-                                return;
+                    switch (c) {
+                        case -1:
+                            queue.put(c);
+                            return;
 
-                            case 3:
-                                err.println("^C");
-                                doInterrupt();
-                                break;
+                        case 3:
+                            err.println("^C");
+                            reader.getCursorBuffer().clear();
+                            interruptTask();
+                            break;
 
-                            case 4:
-                                err.println("^D");
-                                break;
-                        }
-
-                        queue.put(c);
+                        case 4:
+                            err.println("^D");
+                            break;
                     }
-                    catch (Throwable t) {
-                        return;
-                    }
+
+                    queue.put(c);
+                }
+            }
+            catch (Throwable t) {
+                log.error("Pipe read failed", t);
+                if (t instanceof RuntimeException) {
+                    throw (RuntimeException)t;
+                }
+                else if (t instanceof Error) {
+                    throw (Error)t;
+                }
+                else {
+                    throw new Error(t);
                 }
             }
             finally {
                 close();
             }
         }
-    }
 
-    private class PipeInputStream
-        extends InputStream
-    {
-        private int read(final boolean wait) throws IOException {
-            if (!running) {
-                return -1;
-            }
-            checkInterrupt();
-            Integer i;
-            if (wait) {
-                try {
-                    i = queue.take();
-                }
-                catch (InterruptedException e) {
-                    throw new InterruptedIOException();
-                }
-                checkInterrupt();
-            }
-            else {
-                i = queue.poll();
-            }
-            if (i == null) {
-                return -1;
-            }
-            return i;
+        public InputStream getInputStream() {
+            return new PipeInputStream();
         }
 
-        @Override
-        public int read() throws IOException {
-            return read(true);
-        }
+        private class PipeInputStream
+            extends InputStream
+        {
+            private int read(final boolean wait) throws IOException {
+                if (!running) {
+                    return -1;
+                }
+                checkTaskInterrupted();
+                Integer i;
+                if (wait) {
+                    try {
+                        i = queue.take();
+                    }
+                    catch (InterruptedException e) {
+                        throw new InterruptedIOException();
+                    }
+                    checkTaskInterrupted();
+                }
+                else {
+                    i = queue.poll();
+                }
+                if (i == null) {
+                    return -1;
+                }
+                return i;
+            }
 
-        @Override
-        public int read(final byte b[], int off, final int len) throws IOException {
-            if (b == null) {
-                throw new NullPointerException();
-            }
-            else if (off < 0 || len < 0 || len > b.length - off) {
-                throw new IndexOutOfBoundsException();
-            }
-            else if (len == 0) {
-                return 0;
+            @Override
+            public int read() throws IOException {
+                return read(true);
             }
 
-            int nb = 1;
-            int i = read(true);
-            if (i < 0) {
-                return -1;
-            }
-            b[off++] = (byte) i;
-            while (nb < len) {
-                i = read(false);
+            @Override
+            public int read(final byte b[], int off, final int len) throws IOException {
+                if (b == null) {
+                    throw new NullPointerException();
+                }
+                else if (off < 0 || len < 0 || len > b.length - off) {
+                    throw new IndexOutOfBoundsException();
+                }
+                else if (len == 0) {
+                    return 0;
+                }
+
+                int nb = 1;
+                int i = read(true);
                 if (i < 0) {
-                    return nb;
+                    return -1;
                 }
                 b[off++] = (byte) i;
-                nb++;
+                while (nb < len) {
+                    i = read(false);
+                    if (i < 0) {
+                        return nb;
+                    }
+                    b[off++] = (byte) i;
+                    nb++;
+                }
+                return nb;
             }
-            return nb;
         }
     }
-
 }

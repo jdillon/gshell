@@ -18,7 +18,7 @@ package org.sonatype.gshell;
 
 import org.sonatype.gshell.core.MainSupport;
 import org.sonatype.gshell.core.console.ConsoleErrorHandlerImpl;
-import org.sonatype.gshell.core.console.ConsolePrompterImpl;
+import org.sonatype.gshell.core.console.ConsolePromptImpl;
 import org.sonatype.gshell.core.simple.SimpleShellBuilder;
 
 /**
@@ -42,7 +42,7 @@ public class Main
                 .setBranding(getBranding())
                 .setIo(io)
                 .setVariables(vars)
-                .setPrompter(new ConsolePrompterImpl(vars, getBranding()))
+                .setPrompt(new ConsolePromptImpl(vars, getBranding()))
                 .setErrorHandler(new ConsoleErrorHandlerImpl(io))
                 .create();
     }

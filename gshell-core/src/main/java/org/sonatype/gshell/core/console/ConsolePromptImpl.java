@@ -19,18 +19,19 @@ package org.sonatype.gshell.core.console;
 import org.sonatype.gshell.Branding;
 import org.sonatype.gshell.VariableNames;
 import org.sonatype.gshell.Variables;
-import org.sonatype.gshell.console.Console;
+import org.sonatype.gshell.console.ConsolePrompt;
+import org.sonatype.gshell.console.DefaultPrompt;
 import org.sonatype.gshell.util.ReplacementParser;
 import org.sonatype.gshell.util.ansi.AnsiRenderer;
 
 /**
- * {@link org.sonatype.gshell.console.Console.Prompter} component.
+ * Default GShell {@link ConsolePrompt}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public class ConsolePrompterImpl
-    implements Console.Prompter, VariableNames
+public class ConsolePromptImpl
+    implements ConsolePrompt, VariableNames
 {
     private final AnsiRenderer renderer = new AnsiRenderer();
 
@@ -40,7 +41,7 @@ public class ConsolePrompterImpl
 
     private final ReplacementParser parser;
 
-    public ConsolePrompterImpl(final Variables vars, final Branding branding) {
+    public ConsolePromptImpl(final Variables vars, final Branding branding) {
         assert vars != null;
         this.vars = vars;
         assert branding != null;
@@ -66,7 +67,7 @@ public class ConsolePrompterImpl
         if (prompt == null) {
             prompt = interpolate(branding.getPrompt());
             if (prompt == null) {
-                prompt = DEFAULT_PROMPT;
+                prompt = DefaultPrompt.DEFAULT_PROMPT;
             }
         }
 

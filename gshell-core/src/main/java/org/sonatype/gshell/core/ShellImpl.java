@@ -28,6 +28,10 @@ import org.sonatype.gshell.VariableNames;
 import org.sonatype.gshell.Variables;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.console.Console;
+import org.sonatype.gshell.console.ConsoleErrorHandler;
+import org.sonatype.gshell.console.ConsolePrompt;
+import org.sonatype.gshell.console.ExecuteTask;
+import org.sonatype.gshell.console.ExecuteTaskFactory;
 import org.sonatype.gshell.core.console.ConsoleImpl;
 import org.sonatype.gshell.core.console.HistoryImpl;
 import org.sonatype.gshell.event.EventAware;
@@ -73,9 +77,9 @@ public class ShellImpl
 
     private List<Completer> completers;
 
-    private Console.Prompter prompter;
+    private ConsolePrompt prompt;
 
-    private Console.ErrorHandler errorHandler;
+    private ConsoleErrorHandler errorHandler;
 
     private boolean opened;
 
@@ -115,19 +119,19 @@ public class ShellImpl
         return history;
     }
 
-    public Console.Prompter getPrompter() {
-        return prompter;
+    public ConsolePrompt getPrompt() {
+        return prompt;
     }
 
-    public void setPrompter(final Console.Prompter prompter) {
-        this.prompter = prompter;
+    public void setPrompt(final ConsolePrompt prompt) {
+        this.prompt = prompt;
     }
 
-    public Console.ErrorHandler getErrorHandler() {
+    public ConsoleErrorHandler getErrorHandler() {
         return errorHandler;
     }
 
-    public void setErrorHandler(final Console.ErrorHandler errorHandler) {
+    public void setErrorHandler(final ConsoleErrorHandler errorHandler) {
         this.errorHandler = errorHandler;
     }
 
@@ -214,33 +218,51 @@ public class ShellImpl
         final AtomicReference<ExitNotification> exitNotifHolder = new AtomicReference<ExitNotification>();
         final AtomicReference<Object> lastResultHolder = new AtomicReference<Object>();
 
-        // Whip up a tiny console executor that will execute shell command-lines
-        Console.Executor executor = new Console.Executor()
+        ExecuteTaskFactory taskFactory = new ExecuteTaskFactory()
         {
-            public Console.Result execute(final String line) throws Exception {
-                assert line != null;
+            public ExecuteTask create() {
+                return new ExecuteTask() {
 
-                try {
-                    Object result = ShellImpl.this.execute(line);
-                    lastResultHolder.set(result);
-                    setLastResult(result);
-                }
-                catch (ExitNotification n) {
-                    exitNotifHolder.set(n);
-                    return Console.Result.STOP;
-                }
+                    public boolean execute(String input) throws Exception {
+                        try {
+                            Object result = ShellImpl.this.execute(input);
+                            lastResultHolder.set(result);
+                            setLastResult(result);
+                        }
+                        catch (ExitNotification n) {
+                            exitNotifHolder.set(n);
+                            return false;
+                        }
 
-                return Console.Result.CONTINUE;
+                        return true;
+                    }
+
+                    public boolean isRunning() {
+                        return false;  //To change body of implemented methods use File | Settings | File Templates.
+                    }
+
+                    public void stop() {
+                        //To change body of implemented methods use File | Settings | File Templates.
+                    }
+
+                    public boolean isStopping() {
+                        return false;  //To change body of implemented methods use File | Settings | File Templates.
+                    }
+
+                    public void abort() {
+                        //To change body of implemented methods use File | Settings | File Templates.
+                    }
+                };
             }
         };
 
         IO io = getIo();
 
         // Setup the console
-        ConsoleImpl console = new ConsoleImpl(executor, io, history, loadBindings());
+        ConsoleImpl console = new ConsoleImpl(taskFactory, io, history, loadBindings());
 
-        if (prompter != null) {
-            console.setPrompter(prompter);
+        if (prompt != null) {
+            console.setPrompt(prompt);
         }
 
         if (errorHandler != null) {

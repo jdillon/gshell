@@ -26,6 +26,8 @@ import org.sonatype.gshell.Variables;
 import org.sonatype.gshell.command.CommandDocumenter;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.console.Console;
+import org.sonatype.gshell.console.ConsoleErrorHandler;
+import org.sonatype.gshell.console.ConsolePrompt;
 import org.sonatype.gshell.core.ShellImpl;
 import org.sonatype.gshell.core.command.CommandDocumenterImpl;
 import org.sonatype.gshell.core.commands.AliasCommand;
@@ -37,7 +39,6 @@ import org.sonatype.gshell.core.commands.InfoCommand;
 import org.sonatype.gshell.core.commands.PreferenceCommand;
 import org.sonatype.gshell.core.commands.RecallHistoryCommand;
 import org.sonatype.gshell.core.commands.SetCommand;
-import org.sonatype.gshell.core.commands.SleepCommand;
 import org.sonatype.gshell.core.commands.SourceCommand;
 import org.sonatype.gshell.core.commands.UnaliasCommand;
 import org.sonatype.gshell.core.commands.UnsetCommand;
@@ -79,9 +80,9 @@ public class SimpleShellBuilder
 
     protected boolean registerCommands = true;
 
-    protected Console.Prompter prompter;
+    protected ConsolePrompt prompt;
 
-    protected Console.ErrorHandler errorHandler;
+    protected ConsoleErrorHandler errorHandler;
 
     public SimpleShellBuilder setBranding(final Branding branding) {
         this.branding = branding;
@@ -103,12 +104,12 @@ public class SimpleShellBuilder
         return this;
     }
 
-    public SimpleShellBuilder setPrompter(final Console.Prompter prompter) {
-        this.prompter = prompter;
+    public SimpleShellBuilder setPrompt(final ConsolePrompt prompt) {
+        this.prompt = prompt;
         return this;
     }
 
-    public SimpleShellBuilder setErrorHandler(final Console.ErrorHandler errorHandler) {
+    public SimpleShellBuilder setErrorHandler(final ConsoleErrorHandler errorHandler) {
         this.errorHandler = errorHandler;
         return this;
     }
@@ -165,7 +166,7 @@ public class SimpleShellBuilder
 
         registry.registerCommand("echo", new EchoCommand());
 
-        registry.registerCommand("sleep", new SleepCommand());
+        // registry.registerCommand("sleep", new SleepCommand());
     }
 
     protected Shell createShell(final Components components) throws Exception {
@@ -173,7 +174,7 @@ public class SimpleShellBuilder
 
         // Create the shell instance
         ShellImpl shell = new ShellImpl(components.getEventManager(), components.getCommandExecutor(), branding, io, variables);
-        shell.setPrompter(prompter);
+        shell.setPrompt(prompt);
         shell.setErrorHandler(errorHandler);
         shell.setCompleters(new AggregateCompleter(components.getAliasNameCompleter(), components.getCommandsCompleter()));
 

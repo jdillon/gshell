@@ -32,6 +32,14 @@ public abstract class Console
 {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
+    protected ConsolePrompt prompt = new DefaultPrompt();
+
+    protected ConsoleErrorHandler errorHandler = new DefaultErrorHandler();
+
+    protected ExecuteTaskFactory taskFactory;
+
+    protected ExecuteTask currentTask;
+
     protected boolean running = false;
 
     protected boolean breakOnNull = true;
@@ -40,25 +48,33 @@ public abstract class Console
 
     protected boolean ignoreEmpty = true;
 
-    protected Prompter prompter = new Prompter()
-    {
-        public String prompt() {
-            return DEFAULT_PROMPT;
-        }
-    };
+    protected Console(final ExecuteTaskFactory taskFactory) {
+        assert taskFactory != null;
+        this.taskFactory = taskFactory;
+    }
 
-    protected Executor executor;
+    public ConsolePrompt getPrompt() {
+        return prompt;
+    }
 
-    protected ErrorHandler errorHandler = new ErrorHandler()
-    {
-        public Result handleError(Throwable error) {
-            return Result.STOP;
-        }
-    };
+    public void setPrompt(final ConsolePrompt prompt) {
+        this.prompt = prompt;
+    }
 
-    public Console(final Executor executor) {
-        assert executor != null;
-        this.executor = executor;
+    public ConsoleErrorHandler getErrorHandler() {
+        return errorHandler;
+    }
+
+    public void setErrorHandler(final ConsoleErrorHandler errorHandler) {
+        this.errorHandler = errorHandler;
+    }
+
+    public ExecuteTaskFactory getTaskFactory() {
+        return taskFactory;
+    }
+
+    public void setTaskFactory(final ExecuteTaskFactory taskFactory) {
+        this.taskFactory = taskFactory;
     }
 
     public boolean isRunning() {
@@ -93,32 +109,20 @@ public abstract class Console
         this.ignoreEmpty = ignoreEmpty;
     }
 
-    public ErrorHandler getErrorHandler() {
-        return errorHandler;
+    public ExecuteTask getCurrentTask() {
+        return currentTask;
     }
 
-    public void setErrorHandler(final ErrorHandler errorHandler) {
-        this.errorHandler = errorHandler;
-    }
-
-    public Prompter getPrompter() {
-        return prompter;
-    }
-
-    public void setPrompter(final Prompter prompter) {
-        this.prompter = prompter;
-    }
-
-    public Executor getExecutor() {
-        return executor;
-    }
-
-    public void setExecutor(final Executor executor) {
-        this.executor = executor;
+    public void close() {
+        log.trace("Closing");
+        running = false;
     }
 
     public void run() {
         log.trace("Running");
+
+        assert prompt != null;
+        assert taskFactory != null;
 
         running = true;
 
@@ -130,14 +134,8 @@ public abstract class Console
                 // Don't use {} here so we get the throwable detail in the log stream
                 log.trace("Work failed", t);
 
-                if (errorHandler != null) {
-                    Result result = errorHandler.handleError(t);
-
-                    // Allow the error handler to request that the loop stop
-                    if (result == Result.STOP) {
-                        log.trace("Error handler requested STOP");
-                        running = false;
-                    }
+                if (getErrorHandler() != null) {
+                    running = getErrorHandler().handleError(t);
                 }
             }
         }
@@ -145,41 +143,41 @@ public abstract class Console
         log.trace("Finished");
     }
 
+    /**
+     * @return  False to abort, true to continue running.
+     */
     protected boolean work() throws Exception {
-        String line = readLine(prompter.prompt());
+        String line = readLine(prompt.prompt());
 
         log.trace("Read line: {}", line);
 
-        // Log the line as HEX if trace is enabled
         if (log.isTraceEnabled()) {
             traceLine(line);
         }
 
-        // Stop on null (maybe, else ignore)
         if (line == null) {
             return !breakOnNull;
         }
 
-        // Auto trim the line (maybe)
         if (autoTrim) {
             line = line.trim();
         }
 
-        // Ignore empty lines (maybe)
         if (ignoreEmpty && line.length() == 0) {
             return true;
         }
 
-        // Execute the line
-        Result result = executor.execute(line);
+        // Build the task and execute it
+        assert currentTask == null;
+        currentTask = taskFactory.create();
+        log.trace("Current task: {}", currentTask);
 
-        // Allow executor to request that the loop stop
-        if (result == Result.STOP) {
-            log.trace("Executor requested STOP");
-            return false;
+        try {
+            return currentTask.execute(line);
         }
-
-        return true;
+        finally {
+            currentTask = null;
+        }
     }
 
     protected void traceLine(final String line) {
@@ -188,8 +186,7 @@ public abstract class Console
         StringBuilder idx = new StringBuilder();
         StringBuilder hex = new StringBuilder();
 
-        byte[] bytes = line.getBytes();
-        for (byte b : bytes) {
+        for (byte b : line.getBytes()) {
             String h = Integer.toHexString(b);
 
             hex.append('x').append(h).append(' ');
@@ -201,43 +198,4 @@ public abstract class Console
     }
 
     protected abstract String readLine(String prompt) throws IOException;
-
-    //
-    // Prompter
-    //
-
-    public static interface Prompter
-    {
-        String DEFAULT_PROMPT = "> ";
-
-        String prompt();
-    }
-
-    //
-    // Result
-    //
-
-    public static enum Result
-    {
-        CONTINUE,
-        STOP
-    }
-
-    //
-    // Executor
-    //
-
-    public static interface Executor
-    {
-        Result execute(String line) throws Exception;
-    }
-
-    //
-    // ErrorHandler
-    //
-
-    public static interface ErrorHandler
-    {
-        Result handleError(Throwable error);
-    }
 }
