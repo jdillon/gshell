@@ -57,7 +57,7 @@ public class CommandExecutorImpl
 
     private final CommandLineParser parser;
 
-    private final CommandDocumenter documeter;
+    private final CommandDocumenter documenter;
 
     @Inject
     public CommandExecutorImpl(final CommandResolver resolver, final CommandLineParser parser, final CommandDocumenter documenter) {
@@ -66,7 +66,7 @@ public class CommandExecutorImpl
         assert parser != null;
         this.parser = parser;
         assert documenter != null;
-        this.documeter = documenter;
+        this.documenter = documenter;
     }
 
     public Object execute(final Shell shell, final String line) throws Exception {
@@ -153,7 +153,7 @@ public class CommandExecutorImpl
                 // Render command-line usage
                 if (help.displayHelp) {
                     log.trace("Render command-line usage");
-                    documeter.renderUsage(command, io);
+                    documenter.renderUsage(command, io);
                     result = CommandAction.Result.SUCCESS;
                     execute = false;
                 }
