@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class ExecuteTask
 {
-    protected final Logger log = LoggerFactory.getLogger(getClass());
+    protected static final Logger log = LoggerFactory.getLogger(ExecuteTask.class);
 
     private final Object lock = new Object();
 
