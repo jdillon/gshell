@@ -25,6 +25,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.sonatype.gshell.event.EventListener;
 import org.sonatype.gshell.event.EventManager;
+import org.sonatype.gshell.event.EventManagerImpl;
 
 import java.util.EventObject;
 
@@ -32,7 +33,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 /**
- * Tests for the {@link org.sonatype.gshell.core.event.EventManagerImpl}.
+ * Tests for the {@link org.sonatype.gshell.event.EventManagerImpl}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */

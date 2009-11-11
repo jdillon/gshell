@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.core.event;
+package org.sonatype.gshell.event;
 
 import com.google.inject.Singleton;
 import org.slf4j.Logger;

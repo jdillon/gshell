@@ -25,7 +25,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.core.command.CommandActionSupport;
-import org.sonatype.gshell.core.event.EventManagerImpl;
+import org.sonatype.gshell.event.EventManagerImpl;
 import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.registry.CommandRegistry;
 

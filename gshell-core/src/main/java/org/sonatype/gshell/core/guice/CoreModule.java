@@ -19,7 +19,7 @@ package org.sonatype.gshell.core.guice;
 import com.google.inject.AbstractModule;
 import org.sonatype.gshell.command.CommandDocumenter;
 import org.sonatype.gshell.core.command.CommandDocumenterImpl;
-import org.sonatype.gshell.core.event.EventManagerImpl;
+import org.sonatype.gshell.event.EventManagerImpl;
 import org.sonatype.gshell.core.execute.CommandExecutorImpl;
 import org.sonatype.gshell.core.parser.CommandLineParserImpl;
 import org.sonatype.gshell.core.registry.AliasRegistryImpl;
