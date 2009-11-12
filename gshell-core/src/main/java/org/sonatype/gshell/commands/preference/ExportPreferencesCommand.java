@@ -32,7 +32,7 @@ import java.io.OutputStream;
 import java.util.prefs.Preferences;
 
 /**
- * ???
+ * Export preference nodes to a file.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
