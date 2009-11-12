@@ -58,7 +58,7 @@ public class ExportPreferencesCommand
             out = io.streams.out;
         }
         else {
-            io.info("Exporting to: {}", file); // TODO: i18n
+            io.info("Exporting preferences to: {}", file); // TODO: i18n
             out = new BufferedOutputStream(new FileOutputStream(file));
         }
 

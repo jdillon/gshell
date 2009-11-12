@@ -21,6 +21,8 @@ import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.util.cli.Option;
 import org.sonatype.gshell.util.pref.Preference;
 
+import java.util.prefs.Preferences;
+
 /**
  * Remove a tree of preferences.
  *
@@ -37,14 +39,18 @@ public class RemovePreferencesCommand
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
 
+        Preferences prefs = node();
+
+        log.debug("Removing preferences: {}", prefs);
+
         if (tree) {
-            node().clear();
+            prefs.clear();
         }
         else {
-            node().removeNode();
+            prefs.removeNode();
         }
 
-        node().sync();
+        prefs.sync();
         
         return Result.SUCCESS;
     }

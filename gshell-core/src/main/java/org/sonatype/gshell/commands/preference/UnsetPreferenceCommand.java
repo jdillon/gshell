@@ -20,6 +20,8 @@ import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.util.cli.Argument;
 
+import java.util.prefs.Preferences;
+
 /**
  * Unset a preference value.
  *
@@ -36,9 +38,11 @@ public class UnsetPreferenceCommand
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
 
-        node().remove(key);
+        log.debug("Unsetting preference: {}", key);
 
-        node().sync();
+        Preferences prefs = node();
+        prefs.remove(key);
+        prefs.sync();
         
         return Result.SUCCESS;
     }
