@@ -244,7 +244,7 @@
                                                 public <methods>;
                                             }
 
-                                            -keep public class org.sonatype.gshell.core.commands.*,org.sonatype.gshell.command.CommandHelpSupport {
+                                            -keep public class org.sonatype.gshell.commands.*,org.sonatype.gshell.command.CommandHelpSupport {
                                                 public protected private <fields>;
                                                 public protected private <methods>;
                                             }

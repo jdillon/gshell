@@ -14,26 +14,21 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.commands.shell;
-
-import org.junit.Test;
-import org.sonatype.gshell.commands.CommandTestSupport;
+package org.sonatype.gshell.parser.impl.visitor;
 
 /**
- * Tests for the {@link SleepCommand}.
+ * Thrown when a command execution fails.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class SleepCommandTest
-    extends CommandTestSupport
+public class ExecutionFailed
+    extends Exception
 {
-    public SleepCommandTest() {
-        super("sleep", SleepCommand.class);
-    }
+    ///CLOVER:OFF
 
-    @Override
-    @Test
-    public void testDefault() throws Exception {
-        executeWithArgs("1");
+    private static final long serialVersionUID = 1;
+
+    public ExecutionFailed(final Throwable cause) {
+        super(cause);
     }
 }

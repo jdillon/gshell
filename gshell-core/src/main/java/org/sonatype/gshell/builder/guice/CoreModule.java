@@ -21,7 +21,7 @@ import org.sonatype.gshell.command.CommandDocumenter;
 import org.sonatype.gshell.command.CommandDocumenterImpl;
 import org.sonatype.gshell.event.EventManagerImpl;
 import org.sonatype.gshell.execute.CommandExecutorImpl;
-import org.sonatype.gshell.core.parser.CommandLineParserImpl;
+import org.sonatype.gshell.parser.CommandLineParserImpl;
 import org.sonatype.gshell.registry.AliasRegistryImpl;
 import org.sonatype.gshell.registry.CommandRegistryImpl;
 import org.sonatype.gshell.registry.CommandResolverImpl;

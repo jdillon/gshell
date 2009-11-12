@@ -14,26 +14,31 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.commands.shell;
-
-import org.junit.Test;
-import org.sonatype.gshell.commands.CommandTestSupport;
+package org.sonatype.gshell.parser.impl;
 
 /**
- * Tests for the {@link SleepCommand}.
+ * Represents an <em>opaque</em> argument.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class SleepCommandTest
-    extends CommandTestSupport
+public class ASTOpaqueArgument
+    extends ArgumentSupport
 {
-    public SleepCommandTest() {
-        super("sleep", SleepCommand.class);
+    public ASTOpaqueArgument(final int id) {
+        super(id);
+    }
+
+    public ASTOpaqueArgument(final Parser p, final int id) {
+        super(p, id);
     }
 
     @Override
-    @Test
-    public void testDefault() throws Exception {
-        executeWithArgs("1");
+    public String getValue() {
+        return unquote(super.getValue());
+    }
+
+    @Override
+    public Object jjtAccept(final ParserVisitor visitor, final Object data) {
+        return visitor.visit(this, data);
     }
 }

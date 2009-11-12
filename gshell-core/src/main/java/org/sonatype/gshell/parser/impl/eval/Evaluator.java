@@ -14,26 +14,16 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.commands.shell;
-
-import org.junit.Test;
-import org.sonatype.gshell.commands.CommandTestSupport;
+package org.sonatype.gshell.parser.impl.eval;
 
 /**
- * Tests for the {@link SleepCommand}.
+ * Provides pluggable expression evaluation.
+ * <p/>
+ * Need this abstraction until the parser can handle evaluating bits inside of <tt>${}</tt>.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class SleepCommandTest
-    extends CommandTestSupport
+public interface Evaluator
 {
-    public SleepCommandTest() {
-        super("sleep", SleepCommand.class);
-    }
-
-    @Override
-    @Test
-    public void testDefault() throws Exception {
-        executeWithArgs("1");
-    }
+    Object eval(String expression) throws Exception;
 }

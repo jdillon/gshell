@@ -14,26 +14,19 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.commands.shell;
+package org.sonatype.gshell.commands;
 
-import org.junit.Test;
-import org.sonatype.gshell.commands.CommandTestSupport;
+import org.sonatype.gshell.commands.InfoCommand;
 
 /**
- * Tests for the {@link SleepCommand}.
+ * Tests for the {@link org.sonatype.gshell.commands.InfoCommand}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class SleepCommandTest
+public class InfoCommandTest
     extends CommandTestSupport
 {
-    public SleepCommandTest() {
-        super("sleep", SleepCommand.class);
-    }
-
-    @Override
-    @Test
-    public void testDefault() throws Exception {
-        executeWithArgs("1");
+    public InfoCommandTest() {
+        super("info", InfoCommand.class);
     }
 }
