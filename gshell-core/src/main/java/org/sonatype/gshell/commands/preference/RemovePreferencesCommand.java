@@ -31,19 +31,21 @@ import org.sonatype.gshell.util.pref.Preference;
 public class RemovePreferencesCommand
     extends PreferenceNodeCommandSupport
 {
-    @Option(name = "-r", aliases = {"--recursive"})
-    private boolean recursive;
+    @Option(name = "-r", aliases = {"--tree"})
+    private boolean tree;
 
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
 
-        if (recursive) {
+        if (tree) {
             node().clear();
         }
         else {
             node().removeNode();
         }
 
+        node().sync();
+        
         return Result.SUCCESS;
     }
 }

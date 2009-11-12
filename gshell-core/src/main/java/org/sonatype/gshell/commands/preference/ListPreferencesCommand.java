@@ -45,6 +45,8 @@ public class ListPreferencesCommand
 
         list(io, node());
 
+        node().sync();
+        
         return Result.SUCCESS;
     }
 

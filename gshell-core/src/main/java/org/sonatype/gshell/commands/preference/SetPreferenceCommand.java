@@ -43,6 +43,8 @@ public class SetPreferenceCommand
 
         Object result = node().get(key, null);
         io.info("{}", result);
+
+        node().sync();
         
         return result;
     }

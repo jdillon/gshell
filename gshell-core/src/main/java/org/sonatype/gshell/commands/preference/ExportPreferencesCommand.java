@@ -78,6 +78,8 @@ public class ExportPreferencesCommand
             }
         }
 
+        prefs.sync();
+        
         return Result.SUCCESS;
     }
 }

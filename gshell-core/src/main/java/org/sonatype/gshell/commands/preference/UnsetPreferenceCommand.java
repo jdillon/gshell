@@ -38,6 +38,8 @@ public class UnsetPreferenceCommand
 
         node().remove(key);
 
+        node().sync();
+        
         return Result.SUCCESS;
     }
 }
