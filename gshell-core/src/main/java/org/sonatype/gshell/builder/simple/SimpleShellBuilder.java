@@ -19,6 +19,8 @@ package org.sonatype.gshell.builder.simple;
 import jline.console.completers.AggregateCompleter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.sonatype.gshell.command.Command;
+import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.commands.AliasCommand;
 import org.sonatype.gshell.commands.HelpCommand;
 import org.sonatype.gshell.commands.HistoryCommand;
@@ -139,45 +141,51 @@ public class SimpleShellBuilder
         return shell;
     }
 
+    protected void registerCommand(final CommandAction command) throws Exception {
+        String name = command.getClass().getAnnotation(Command.class).name();
+        CommandRegistry registry = components.getCommandRegistry();
+        registry.registerCommand(name, command);
+    }
+
     protected void registerCommands(final Components components) throws Exception {
         assert components != null;
 
         CommandRegistry registry = components.getCommandRegistry();
 
-        registry.registerCommand("help", new HelpCommand(components.getAliasRegistry(), registry, components.getCommandDocumenter())
+        registerCommand(new HelpCommand(components.getAliasRegistry(), registry, components.getCommandDocumenter())
             .installCompleters(components.getAliasNameCompleter(), components.getCommandNameCompleter()));
 
-        registry.registerCommand("info", new InfoCommand());
+        registerCommand(new InfoCommand());
 
-        registry.registerCommand("exit", new ExitCommand());
+        registerCommand(new ExitCommand());
 
-        registry.registerCommand("set", new SetCommand()
+        registerCommand(new SetCommand()
             .installCompleters(components.getVariableNameCompleter()));
 
-        registry.registerCommand("unset", new UnsetCommand()
+        registerCommand(new UnsetCommand()
             .installCompleters(components.getVariableNameCompleter()));
 
-        registry.registerCommand("history", new HistoryCommand());
+        registerCommand(new HistoryCommand());
 
-        registry.registerCommand("recall", new RecallHistoryCommand());
+        registerCommand(new RecallHistoryCommand());
 
-        registry.registerCommand("source", new SourceCommand()
+        registerCommand(new SourceCommand()
             .installCompleters(components.getFileNameCompleter()));
 
-        registry.registerCommand("alias", new AliasCommand(components.getAliasRegistry()));
+        registerCommand(new AliasCommand(components.getAliasRegistry()));
 
-        registry.registerCommand("unalias", new UnaliasCommand(components.getAliasRegistry())
+        registerCommand(new UnaliasCommand(components.getAliasRegistry())
             .installCompleters(components.getAliasNameCompleter()));
 
-        registry.registerCommand("echo", new EchoCommand());
+        registerCommand(new EchoCommand());
 
-        registry.registerCommand("pref/list", new ListPreferencesCommand());
-        registry.registerCommand("pref/set", new SetPreferenceCommand());
-        registry.registerCommand("pref/get", new GetPreferenceCommand());
-        registry.registerCommand("pref/unset", new UnsetPreferenceCommand());
-        registry.registerCommand("pref/remove", new RemovePreferencesCommand());
-        registry.registerCommand("pref/import", new ImportPreferencesCommand());
-        registry.registerCommand("pref/export", new ExportPreferencesCommand());
+        registerCommand(new ListPreferencesCommand());
+        registerCommand(new SetPreferenceCommand());
+        registerCommand(new GetPreferenceCommand());
+        registerCommand(new UnsetPreferenceCommand());
+        registerCommand(new RemovePreferencesCommand());
+        registerCommand(new ImportPreferencesCommand());
+        registerCommand(new ExportPreferencesCommand());
     }
 
     protected Shell createShell(final Components components) throws Exception {

@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package org.apache.geronimo.gshell.commands.network;
+package org.sonatype.gshell.commands.network;
 
+import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
@@ -26,9 +27,9 @@ import java.net.InetAddress;
  * Displays the name of the current host.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
  * @since 2.0
  */
+@Command(name="hostname")
 public class HostnameCommand
     extends CommandActionSupport
 {

@@ -34,7 +34,7 @@ import java.util.prefs.Preferences;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command
+@Command(name="pref/import")
 public class ImportPreferencesCommand
     extends PreferenceCommandSupport
 {

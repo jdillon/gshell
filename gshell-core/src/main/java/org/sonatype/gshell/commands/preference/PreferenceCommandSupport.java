@@ -28,7 +28,6 @@ import java.util.prefs.Preferences;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command
 public abstract class PreferenceCommandSupport
     extends CommandActionSupport
 {

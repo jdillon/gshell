@@ -58,7 +58,7 @@ import static org.sonatype.gshell.commands.InfoCommand.Section.SHELL;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command
+@Command(name="info")
 public class InfoCommand
     extends CommandActionSupport
 {

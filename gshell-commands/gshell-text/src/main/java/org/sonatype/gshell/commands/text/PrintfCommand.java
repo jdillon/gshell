@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.apache.geronimo.gshell.commands.text;
+package org.sonatype.gshell.commands.text;
 
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.util.cli.Argument;
@@ -31,7 +31,7 @@ import java.util.Collection;
  *
  * @since 2.0
  */
-@Command
+@Command(name="printf")
 public class PrintfCommand
     extends CommandActionSupport
 {

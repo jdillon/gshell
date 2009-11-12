@@ -28,7 +28,7 @@ import org.sonatype.gshell.notification.ExitNotification;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command
+@Command(name="exit")
 public class ExitCommand
     extends CommandActionSupport
 {

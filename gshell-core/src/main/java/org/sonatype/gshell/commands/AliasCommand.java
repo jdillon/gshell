@@ -34,7 +34,7 @@ import java.util.List;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command
+@Command(name="alias")
 public class AliasCommand
     extends CommandActionSupport
 {

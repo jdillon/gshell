@@ -39,7 +39,7 @@ import java.util.LinkedList;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command
+@Command(name="help")
 public class HelpCommand
     extends CommandActionSupport
 {
