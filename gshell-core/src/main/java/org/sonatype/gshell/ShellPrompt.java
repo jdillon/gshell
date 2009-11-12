@@ -24,7 +24,7 @@ import org.sonatype.gshell.util.ReplacementParser;
 import org.sonatype.gshell.util.ansi.AnsiRenderer;
 
 /**
- * Default GShell {@link ConsolePrompt}.
+ * Shell {@link ConsolePrompt}, which determins the prompt from the {@link VariableNames#SHELL_PROMPT} expression.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
@@ -65,9 +65,6 @@ public class ShellPrompt
         // Use a default prompt if we don't have anything here
         if (prompt == null) {
             prompt = interpolate(branding.getPrompt());
-            if (prompt == null) {
-                prompt = ConsolePrompt.DEFAULT_PROMPT;
-            }
         }
 
         //

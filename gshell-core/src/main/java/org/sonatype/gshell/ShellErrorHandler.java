@@ -28,7 +28,7 @@ import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
 import org.sonatype.gshell.notification.ErrorNotification;
 
 /**
- * Default GShell {@link ConsoleErrorHandler}.
+ * Shell {@link ConsoleErrorHandler} which renders errors with ANSI codes.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
