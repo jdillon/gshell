@@ -18,6 +18,7 @@ package org.sonatype.gshell.console;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.sonatype.gshell.Shell;
 
 /**
  * Encapsulates a console execute task.
@@ -29,6 +30,8 @@ public abstract class ConsoleTask
 {
     protected static final Logger log = LoggerFactory.getLogger(ConsoleTask.class);
 
+    private static final InheritableThreadLocal<ConsoleTask> holder = new InheritableThreadLocal<ConsoleTask>();
+    
     private Thread thread;
 
     private boolean running;
@@ -60,8 +63,12 @@ public abstract class ConsoleTask
     }
 
     public boolean execute(final String input) throws Exception {
+        ConsoleTask ptask;
+
         synchronized (this) {
             log.trace("Running");
+            ptask = holder.get();
+            holder.set(this);
             thread = Thread.currentThread();
             running = true;
         }
@@ -74,6 +81,7 @@ public abstract class ConsoleTask
                 stopping = false;
                 running = false;
                 thread = null;
+                holder.set(ptask);
                 log.trace("Stopped");
             }
         }
@@ -81,6 +89,24 @@ public abstract class ConsoleTask
 
     public abstract boolean doExecute(String input) throws Exception;
 
+    public void setThread(final Thread thread) {
+        this.thread = thread;
+    }
+
+    public static ConsoleTask get(final boolean allowNull) {
+        ConsoleTask task = holder.get();
+
+        if (!allowNull && task == null) {
+            throw new IllegalStateException("ConsoleTask not initialized for thread: " + Thread.currentThread());
+        }
+
+        return task;
+    }
+
+    public static ConsoleTask get() {
+        return get(false);
+    }
+    
     public static class AbortTaskError
         extends Error
     {
