@@ -18,6 +18,8 @@ package org.sonatype.gshell.commands.preference;
 
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
+import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.util.pref.Preference;
 
 /**
  * Remove a tree of preferences.
@@ -29,11 +31,19 @@ import org.sonatype.gshell.command.CommandContext;
 public class RemovePreferencesCommand
     extends PreferenceNodeCommandSupport
 {
+    @Option(name = "-r", aliases = {"--recursive"})
+    private boolean recursive;
+
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
 
-        node().removeNode();
-        
+        if (recursive) {
+            node().clear();
+        }
+        else {
+            node().removeNode();
+        }
+
         return Result.SUCCESS;
     }
 }

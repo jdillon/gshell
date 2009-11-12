@@ -19,6 +19,8 @@ package org.sonatype.gshell.commands.preference;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
+import org.sonatype.gshell.command.IO;
+import org.sonatype.gshell.util.cli.Argument;
 
 /**
  * Get a preference value.
@@ -28,11 +30,20 @@ import org.sonatype.gshell.command.CommandContext;
  */
 @Command
 public class GetPreferenceCommand
-    extends CommandActionSupport
+    extends PreferenceNodeCommandSupport
 {
+    @Argument(index = 1, required = true)
+    private String key;
+
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
+        IO io = context.getIo();
 
-        return Result.SUCCESS;
+        log.info("Getting preference: {}", key);
+        
+        Object value = node().get(key, null);
+        io.info(value);
+
+        return value;
     }
 }

@@ -178,7 +178,6 @@ public class SimpleShellBuilder
         registry.registerCommand("pref/remove", new RemovePreferencesCommand());
         registry.registerCommand("pref/import", new ImportPreferencesCommand());
         registry.registerCommand("pref/export", new ExportPreferencesCommand());
-        registry.registerCommand("pref/clear", new ClearPreferencesCommand());
     }
 
     protected Shell createShell(final Components components) throws Exception {
