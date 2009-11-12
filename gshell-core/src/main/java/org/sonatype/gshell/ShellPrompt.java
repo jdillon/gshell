@@ -60,11 +60,11 @@ public class ShellPrompt
 
     public String prompt() {
         String pattern = vars.get(SHELL_PROMPT, String.class);
-        String prompt = interpolate(pattern);
+        String prompt = evaluate(pattern);
 
         // Use a default prompt if we don't have anything here
         if (prompt == null) {
-            prompt = interpolate(branding.getPrompt());
+            prompt = evaluate(branding.getPrompt());
         }
 
         //
@@ -79,10 +79,10 @@ public class ShellPrompt
         return prompt;
     }
 
-    private String interpolate(final String pattern) {
+    private String evaluate(final String expression) {
         String prompt = null;
-        if (pattern != null) {
-            prompt = parser.parse(pattern);
+        if (expression != null) {
+            prompt = parser.parse(expression);
         }
         return prompt;
     }
