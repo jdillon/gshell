@@ -75,11 +75,6 @@ public class ShellErrorHandler
             cause = error.getCause();
         }
 
-        if (io.isDebug()) {
-            // If we have debug enabled then skip the fancy bits below, and log the full error, don't decode shit
-            log.debug(error.toString(), error);
-        }
-
         Variables vars = ShellHolder.get().getVariables();
 
         // Determine if the stack trace flag is set
