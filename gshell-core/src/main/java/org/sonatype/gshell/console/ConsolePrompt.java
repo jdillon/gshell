@@ -24,7 +24,15 @@ package org.sonatype.gshell.console;
  */
 public interface ConsolePrompt
 {
+    /**
+     * The default prompt used, when {@link #prompt} returns a null value.
+     */
     String DEFAULT_PROMPT = "> ";
 
+    /**
+     * Render the prompt which the console should display for input.
+     *
+     * @return The console prompt or null for the {@link #DEFAULT_PROMPT}.
+     */
     String prompt();
 }

@@ -18,7 +18,6 @@ package org.sonatype.gshell.console;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonatype.gshell.Shell;
 
 /**
  * Encapsulates a console execute task.
@@ -30,18 +29,37 @@ public abstract class ConsoleTask
 {
     protected static final Logger log = LoggerFactory.getLogger(ConsoleTask.class);
 
+    /**
+     * Holds the currently executing task for the thread.  To allow for edge cases where the
+     * originating thread is not the desired thread to interrupt/stop.
+     */
     private static final InheritableThreadLocal<ConsoleTask> holder = new InheritableThreadLocal<ConsoleTask>();
-    
+
+    /**
+     * The thread which is executing this task.
+     */
     private Thread thread;
 
+    /**
+     * True if the task is running (ie. {@link #execute} was invoked.
+     */
     private boolean running;
 
+    /**
+     * True if the task is stopping (ie. {@link #stop} was invoked.
+     */
     private boolean stopping;
 
+    /**
+     * Rrue if the task is running (ie. {@link #execute} was invoked).
+     */
     public synchronized boolean isRunning() {
         return running;
     }
 
+    /**
+     * Ask the tasks execute thread to stop via {@link Thread#interrupt}.
+     */
     public synchronized void stop() {
         if (running) {
             log.trace("Stopping");
@@ -50,10 +68,16 @@ public abstract class ConsoleTask
         }
     }
 
+    /**
+     * True if {@link #stop} was invoked.
+     */
     public synchronized boolean isStopping() {
         return stopping;
     }
 
+    /**
+     * Kill the tasks execute thread via {@link Thread#stop}.  Thread is given a {@link AbortTaskError}.
+     */
     @SuppressWarnings({"deprecation"})
     public synchronized void abort() {
         if (running) {
@@ -62,6 +86,13 @@ public abstract class ConsoleTask
         }
     }
 
+    /**
+     * Execute a task for the given input.
+     *
+     * @param input The console input.
+     * @return True to allow the console to continue, false to abort.
+     * @throws Exception The console task failed.
+     */
     public boolean execute(final String input) throws Exception {
         ConsoleTask ptask;
 
@@ -87,12 +118,43 @@ public abstract class ConsoleTask
         }
     }
 
+    /**
+     * Execute the custom task for the given input.
+     *
+     * @param input The console input.
+     * @return True to allow the console to continue, false to abort.
+     * @throws Exception The console task failed.
+     */
     public abstract boolean doExecute(String input) throws Exception;
 
-    public void setThread(final Thread thread) {
+    /**
+     * Set the execution thread of the current task.  This is used when asking
+     * the task to stop or abort.
+     *
+     * @param thread The new thread considered to be the tasks execute thread.
+     */
+    public void setExecuteThread(final Thread thread) {
+        if (thread == null) {
+            throw new IllegalArgumentException();
+        }
         this.thread = thread;
     }
 
+    /**
+     * Get the execution thread of the current task.
+     *
+     * @return The tasks execution thread.  Null only if the task has completed.
+     */
+    public Thread getExecuteThread() {
+        return thread;
+    }
+
+    /**
+     * Get the currently running task.
+     *
+     * @param allowNull False to throw an {@link IllegalStateException} if there is not current task.
+     * @return The current task or null.
+     */
     public static ConsoleTask get(final boolean allowNull) {
         ConsoleTask task = holder.get();
 
@@ -103,10 +165,16 @@ public abstract class ConsoleTask
         return task;
     }
 
+    /**
+     * Get the currently running task.
+     */
     public static ConsoleTask get() {
         return get(false);
     }
-    
+
+    /**
+     * Error thrown to tasks which are asked to {link #abort}.
+     */
     public static class AbortTaskError
         extends Error
     {
