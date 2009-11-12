@@ -54,7 +54,7 @@ public class ListPreferencesCommand
         io.info("{}", Ansi.ansi().fg(Ansi.Color.GREEN).a(node.absolutePath()).reset());
 
         for (String key : node.keys()) {
-            io.info("  {}={}", Ansi.ansi().a(Ansi.Attribute.INTENSITY_BOLD).a(key).reset(), node.get(key, null));
+            io.info("  {}: {}", Ansi.ansi().a(Ansi.Attribute.INTENSITY_BOLD).a(key).reset(), node.get(key, null));
         }
         if (recursive) {
             for (String name : node.childrenNames()) {
