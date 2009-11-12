@@ -23,7 +23,6 @@ import org.sonatype.gshell.commands.AliasCommand;
 import org.sonatype.gshell.commands.HelpCommand;
 import org.sonatype.gshell.commands.HistoryCommand;
 import org.sonatype.gshell.commands.InfoCommand;
-import org.sonatype.gshell.commands.PreferenceCommand;
 import org.sonatype.gshell.commands.RecallHistoryCommand;
 import org.sonatype.gshell.commands.SetCommand;
 import org.sonatype.gshell.commands.SourceCommand;
@@ -33,6 +32,7 @@ import org.sonatype.gshell.ShellFactory;
 import org.sonatype.gshell.Variables;
 import org.sonatype.gshell.command.CommandDocumenter;
 import org.sonatype.gshell.command.IO;
+import org.sonatype.gshell.commands.preference.*;
 import org.sonatype.gshell.console.completer.AliasNameCompleter;
 import org.sonatype.gshell.console.completer.CommandNameCompleter;
 import org.sonatype.gshell.console.completer.CommandsCompleter;
@@ -169,11 +169,16 @@ public class SimpleShellBuilder
         registry.registerCommand("unalias", new UnaliasCommand(components.getAliasRegistry())
             .installCompleters(components.getAliasNameCompleter()));
 
-        registry.registerCommand("pref", new PreferenceCommand());
-
         registry.registerCommand("echo", new EchoCommand());
 
-        // registry.registerCommand("sleep", new SleepCommand());
+        registry.registerCommand("pref/list", new ListPreferencesCommand());
+        registry.registerCommand("pref/set", new SetPreferenceCommand());
+        registry.registerCommand("pref/get", new GetPreferenceCommand());
+        registry.registerCommand("pref/unset", new UnsetPreferenceCommand());
+        registry.registerCommand("pref/remove", new RemovePreferencesCommand());
+        registry.registerCommand("pref/import", new ImportPreferencesCommand());
+        registry.registerCommand("pref/export", new ExportPreferencesCommand());
+        registry.registerCommand("pref/clear", new ClearPreferencesCommand());
     }
 
     protected Shell createShell(final Components components) throws Exception {
