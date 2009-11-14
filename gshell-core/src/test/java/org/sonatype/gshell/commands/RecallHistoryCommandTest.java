@@ -35,7 +35,7 @@ public class RecallHistoryCommandTest
     extends CommandTestSupport
 {
     public RecallHistoryCommandTest() {
-        super("recall", RecallHistoryCommand.class);
+        super(RecallHistoryCommand.class);
     }
 
     @Override

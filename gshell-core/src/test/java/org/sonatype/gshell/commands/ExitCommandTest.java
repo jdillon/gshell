@@ -32,7 +32,7 @@ public class ExitCommandTest
     extends CommandTestSupport
 {
     public ExitCommandTest() {
-        super("exit", ExitCommand.class);
+        super(ExitCommand.class);
     }
 
     @Override

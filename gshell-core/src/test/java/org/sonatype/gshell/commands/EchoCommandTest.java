@@ -28,7 +28,7 @@ public class EchoCommandTest
     extends CommandTestSupport
 {
     public EchoCommandTest() {
-        super("echo", EchoCommand.class);
+        super(EchoCommand.class);
     }
 
     @Test

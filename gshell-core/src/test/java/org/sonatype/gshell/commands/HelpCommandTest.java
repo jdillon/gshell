@@ -31,7 +31,7 @@ public class HelpCommandTest
     extends CommandTestSupport
 {
     public HelpCommandTest() {
-        super("help", HelpCommand.class);
+        super(HelpCommand.class);
     }
 
     @Test

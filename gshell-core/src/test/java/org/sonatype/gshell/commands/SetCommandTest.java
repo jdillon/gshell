@@ -32,7 +32,7 @@ public class SetCommandTest
     extends CommandTestSupport
 {
     public SetCommandTest() {
-        super("set", SetCommand.class);
+        super(SetCommand.class);
     }
 
     @Test

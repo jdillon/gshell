@@ -32,7 +32,7 @@ public class UnsetCommandTest
     extends CommandTestSupport
 {
     public UnsetCommandTest() {
-        super("unset", UnsetCommand.class);
+        super(UnsetCommand.class);
     }
 
     @Override

@@ -32,7 +32,7 @@ public class HistoryCommandTest
     extends CommandTestSupport
 {
     public HistoryCommandTest() {
-        super("history", HistoryCommand.class);
+        super(HistoryCommand.class);
     }
 
     @Override

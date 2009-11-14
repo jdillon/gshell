@@ -25,6 +25,7 @@ import org.sonatype.gshell.TestBranding;
 import org.sonatype.gshell.TestShellBuilder;
 import org.sonatype.gshell.VariableNames;
 import org.sonatype.gshell.Variables;
+import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.util.ansi.Ansi;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.registry.AliasRegistry;
@@ -67,11 +68,15 @@ public abstract class CommandTestSupport
 
     protected final Map<String,Class> requiredCommands = new HashMap<String,Class>();
 
-    protected CommandTestSupport(final String name, final Class type) {
+    protected CommandTestSupport(final String name, final Class<?> type) {
         assertNotNull(name);
         assertNotNull(type);
         this.name = name;
         requiredCommands.put(name, type);
+    }
+
+    protected CommandTestSupport(final Class<?> type) {
+        this(type.getAnnotation(Command.class).name(), type);
     }
 
     @Before

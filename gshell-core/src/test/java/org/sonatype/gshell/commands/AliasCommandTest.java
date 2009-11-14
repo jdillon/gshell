@@ -32,7 +32,7 @@ public class AliasCommandTest
     extends CommandTestSupport
 {
     public AliasCommandTest() {
-        super("alias", AliasCommand.class);
+        super(AliasCommand.class);
     }
 
     @Test

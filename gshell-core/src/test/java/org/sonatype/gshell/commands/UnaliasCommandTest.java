@@ -31,7 +31,7 @@ public class UnaliasCommandTest
     extends CommandTestSupport
 {
     public UnaliasCommandTest() {
-        super("unalias", UnaliasCommand.class);
+        super(UnaliasCommand.class);
     }
     
     @Override

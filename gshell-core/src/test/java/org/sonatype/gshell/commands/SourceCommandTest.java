@@ -39,7 +39,7 @@ public class SourceCommandTest
     extends CommandTestSupport
 {
     public SourceCommandTest() {
-        super("source", SourceCommand.class);
+        super(SourceCommand.class);
     }
 
     @Override

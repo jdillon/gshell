@@ -27,6 +27,6 @@ public class InfoCommandTest
     extends CommandTestSupport
 {
     public InfoCommandTest() {
-        super("info", InfoCommand.class);
+        super(InfoCommand.class);
     }
 }
