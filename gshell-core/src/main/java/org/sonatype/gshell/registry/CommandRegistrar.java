@@ -28,5 +28,7 @@ public interface CommandRegistrar
 
     void registerCommands() throws Exception;
 
+    // TODO: Add registerCommand(String, type) using @Command.name detection
+    
     void registerCommand(String name, String type) throws Exception;
 }

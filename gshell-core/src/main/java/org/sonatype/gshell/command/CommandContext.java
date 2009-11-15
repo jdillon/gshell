@@ -54,4 +54,6 @@ public interface CommandContext
      * @return Command variables; never null.
      */
     Variables getVariables();
+
+    // TODO: Consider adding generic state set/get muck here to allow commands to pass state internally
 }
