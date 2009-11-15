@@ -16,44 +16,41 @@
 
 package org.sonatype.gshell.commands.shell;
 
+import jline.console.ConsoleReader;
+import org.sonatype.gshell.ShellHolder;
 import org.sonatype.gshell.command.Command;
-import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.CommandActionSupport;
+import org.sonatype.gshell.command.CommandContext;
+import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.util.cli.Argument;
+import org.sonatype.gshell.util.cli.Option;
 
 /**
- * Sleep for a period.
+ * Ask for some input.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name="sleep")
-public class SleepCommand
+@Command(name="ask")
+public class AskCommand
     extends CommandActionSupport
 {
-    @Argument(required=true)
-    private long time;
+    @Option(name="-m", aliases={"--mask"})
+    private Character mask;
+
+    @Argument
+    private String prompt;
 
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
+        IO io = context.getIo();
 
-        if (log.isDebugEnabled()) {
-            log.debug("Sleeping for {} on thread: {}", time, Thread.currentThread());
-        }
-        else {
-            log.info("Sleeping for {}", time);
-        }
+        ConsoleReader reader = new ConsoleReader(io.streams.in, io.out, io.getTerminal());
 
-        try {
-            Thread.sleep(time);
-        }
-        catch (InterruptedException ignore) {
-            log.debug("Sleep was interrupted... :-(");
-            return Result.FAILURE;
-        }
+        String input = reader.readLine(prompt, mask);
 
-        log.info("Awake now");
+        log.debug("Read input: {}", input);
 
-        return Result.SUCCESS;
+        return input;
     }
 }

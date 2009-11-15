@@ -49,6 +49,7 @@ public class Main
 
         // HACK: Register some more muck
         builder.getComponents().getCommandRegistrar().registerCommand("sleep", "org.sonatype.gshell.commands.shell.SleepCommand");
+        builder.getComponents().getCommandRegistrar().registerCommand("ask", "org.sonatype.gshell.commands.shell.AskCommand");
 
         return shell;
     }
