@@ -140,6 +140,7 @@ public abstract class Console
         log.trace("Stopped");
     }
 
+    // TODO: Could replace this with a Callable<ConsoleTask> factory field
     protected abstract ConsoleTask createTask();
 
     /**
@@ -207,7 +208,6 @@ public abstract class Console
         reader.redrawLine();
 
         ConsoleTask task = getCurrentTask();
-
         if (task != null) {
             synchronized (task) {
                 log.debug("Interrupting task");
