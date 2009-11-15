@@ -73,6 +73,8 @@ public abstract class MainSupport
     //       get prefixed stuff working proper.
     //
 
+    // TODO: Add --batch flag (for non-interactive)
+    
     @Option(name = "-h", aliases = {"--help"}, requireOverride = true)
     protected boolean help;
 

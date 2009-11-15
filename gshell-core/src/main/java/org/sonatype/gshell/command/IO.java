@@ -77,6 +77,32 @@ public class IO
         }
     }
 
+    public IO(final StreamSet streams, final Reader in, final PrintWriter out, final PrintWriter err, final boolean autoFlush) {
+        assert streams != null;
+        this.streams = streams;
+
+        if (in == null) {
+            this.in = createReader(streams.in);
+        }
+        else {
+            this.in = in;
+        }
+
+        if (out == null) {
+            this.out = createWriter(streams.out, autoFlush);
+        }
+        else {
+            this.out = out;
+        }
+
+        if (err == null) {
+            this.err = createWriter(streams.err, autoFlush);
+        }
+        else {
+            this.err = err;
+        }
+    }
+    
     /**
      * Helper which uses current values from {@link StreamSet#system}.
      */

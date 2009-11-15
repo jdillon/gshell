@@ -94,11 +94,11 @@ public abstract class ConsoleTask
      * @throws Exception The console task failed.
      */
     public boolean execute(final String input) throws Exception {
-        ConsoleTask ptask;
+        ConsoleTask prevTask;
 
         synchronized (this) {
             log.trace("Running");
-            ptask = holder.get();
+            prevTask = holder.get();
             holder.set(this);
             thread = Thread.currentThread();
             running = true;
@@ -112,7 +112,7 @@ public abstract class ConsoleTask
                 stopping = false;
                 running = false;
                 thread = null;
-                holder.set(ptask);
+                holder.set(prevTask);
                 log.trace("Stopped");
             }
         }

@@ -20,12 +20,6 @@ import jline.console.Completer;
 import jline.console.ConsoleReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonatype.gshell.Branding;
-import org.sonatype.gshell.History;
-import org.sonatype.gshell.Shell;
-import org.sonatype.gshell.ShellHolder;
-import org.sonatype.gshell.VariableNames;
-import org.sonatype.gshell.Variables;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.console.Console;
 import org.sonatype.gshell.console.ConsoleErrorHandler;
@@ -64,7 +58,7 @@ public class ShellImpl
 
     private final CommandExecutor executor;
 
-    private final IO io;
+    private IO io;
 
     private final Variables variables;
 
@@ -201,7 +195,7 @@ public class ShellImpl
         final AtomicReference<Object> lastResultHolder = new AtomicReference<Object>();
 
         IO io = getIo();
-
+        
         Console console = new Console(io, history, loadBindings()) {
             @Override
             protected ConsoleTask createTask() {
@@ -247,11 +241,17 @@ public class ShellImpl
             execute(args);
         }
 
+        // HACK: We have to replace the IO with the consoles so that children use the piped input
+        final IO lastIo = io;
+        this.io = console.getIo();
+
         final Shell lastShell = ShellHolder.set(this);
+        
         try {
             console.run();
         }
         finally {
+            this.io = lastIo;
             ShellHolder.set(lastShell);
         }
 

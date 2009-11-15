@@ -23,23 +23,21 @@ import org.slf4j.MDC;
 import org.sonatype.gshell.Shell;
 import org.sonatype.gshell.ShellHolder;
 import org.sonatype.gshell.Variables;
-import org.sonatype.gshell.command.CommandHelpSupport;
-import org.sonatype.gshell.util.cli.CommandLineProcessor;
-import org.sonatype.gshell.util.cli.OpaqueArguments;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.CommandDocumenter;
+import org.sonatype.gshell.command.CommandHelpSupport;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.execute.CommandExecutor;
-import org.sonatype.gshell.execute.CommandLineParser;
 import org.sonatype.gshell.execute.CommandLineParser.CommandLine;
-import org.sonatype.gshell.util.i18n.PrefixingMessageSource;
 import org.sonatype.gshell.notification.ErrorNotification;
 import org.sonatype.gshell.notification.ResultNotification;
-import org.sonatype.gshell.util.pref.PreferenceProcessor;
 import org.sonatype.gshell.registry.CommandResolver;
 import org.sonatype.gshell.util.Arguments;
 import org.sonatype.gshell.util.Strings;
+import org.sonatype.gshell.util.cli.CommandLineProcessor;
+import org.sonatype.gshell.util.cli.OpaqueArguments;
+import org.sonatype.gshell.util.i18n.PrefixingMessageSource;
+import org.sonatype.gshell.util.pref.PreferenceProcessor;
 import org.sonatype.iohijack.InputOutputHijacker;
 
 /**

@@ -16,7 +16,6 @@
 
 package org.sonatype.gshell.console;
 
-import jline.Terminal;
 import jline.console.CandidateListCompletionHandler;
 import jline.console.Completer;
 import jline.console.ConsoleReader;
@@ -25,14 +24,12 @@ import jline.console.history.MemoryHistory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.command.IO;
+import org.sonatype.gshell.util.io.InputPipe;
+import org.sonatype.iohijack.StreamSet;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InterruptedIOException;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Callable;
 
 /**
  * Provides an abstraction of a console.
@@ -45,9 +42,11 @@ public abstract class Console
 {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
-    private final ConsoleReader reader;
-
     private final InputPipe pipe;
+
+    private final IO io;
+
+    private final ConsoleReader reader;
 
     private ConsolePrompt prompt;
 
@@ -55,23 +54,37 @@ public abstract class Console
 
     private ConsoleTask currentTask;
 
-    private volatile boolean interrupt;
-
     private volatile boolean running;
 
     public Console(final IO io, final History history, final InputStream bindings) throws IOException {
         assert io != null;
-        this.pipe = new InputPipe(io);
+        // history could be null
+        // bindings could be null
+
+        this.pipe = new InputPipe(io, new Callable<Boolean>() {
+            public Boolean call() throws Exception {
+                return interruptTask();
+            }
+        });
+        this.pipe.setName("Console InputPipe");
+        this.pipe.setDaemon(true);
+
+        // Setup a new IO w/our pipe input stream & rebuilding the input reader
+        this.io = new IO(new StreamSet(pipe.getInputStream(), io.streams.out, io.streams.err), null, io.out, io.err, true);
 
         this.reader = new ConsoleReader(
-            pipe.getInputStream(),
-            new PrintWriter(io.streams.out),
+            this.io.streams.in,
+            this.io.out,
             bindings,
             io.getTerminal());
 
         this.reader.setPaginationEnabled(true);
         this.reader.setCompletionHandler(new CandidateListCompletionHandler());
         this.reader.setHistory(history != null ? history : new MemoryHistory());
+    }
+
+    public IO getIo() {
+        return io;
     }
 
     public void addCompleter(final Completer completer) {
@@ -187,14 +200,12 @@ public abstract class Console
         return reader.readLine(prompt);
     }
 
-    private void checkTaskInterrupted() throws InterruptedIOException {
-        if (interrupt) {
-            interrupt = false;
-            throw new InterruptedIOException("Keyboard interruption");
-        }
-    }
+    private boolean interruptTask() throws Exception {
+        boolean interrupt = false;
 
-    private void interruptTask() {
+        reader.getCursorBuffer().clear();
+        reader.redrawLine();
+
         ConsoleTask task = getCurrentTask();
 
         if (task != null) {
@@ -213,156 +224,7 @@ public abstract class Console
         else {
             log.debug("No task running to interrupt");
         }
-    }
 
-    //
-    // InputPipe
-    //
-
-    private class InputPipe
-        extends Thread
-    {
-        private final Logger log = LoggerFactory.getLogger(getClass());
-
-        private final BlockingQueue<Integer> queue = new ArrayBlockingQueue<Integer>(1024);
-
-        private final Terminal term;
-
-        private final InputStream in;
-
-        private final PrintStream err;
-
-        private InputPipe(final IO io) {
-            super("Console InputPipe");
-            this.setDaemon(true);
-
-            assert io != null;
-            this.term = io.getTerminal();
-            this.in = io.streams.in;
-            this.err = io.streams.err;
-        }
-
-        private int read() throws IOException {
-// FIXME: See if this is really needed and figure out why...
-//            if (term instanceof AnsiWindowsTerminal) {
-//                c = ((AnsiWindowsTerminal) term).readDirectChar(in);
-//            }
-//            else {
-//                c = terminal.readCharacter(in);
-//            }
-            return term.readCharacter(in);
-        }
-
-        public void run() {
-            log.trace("Running");
-
-            try {
-                while (running) {
-                    int c = read();
-
-                    switch (c) {
-                        case -1:
-                            queue.put(c);
-                            return;
-
-                        case 3:
-                            err.println("^C");
-                            reader.getCursorBuffer().clear();
-                            reader.redrawLine();
-                            interruptTask();
-                            break;
-
-                        case 4:
-                            err.println("^D");
-                            break;
-                    }
-
-                    queue.put(c);
-                }
-            }
-            catch (Throwable t) {
-                log.error("Pipe read failed", t);
-                if (t instanceof RuntimeException) {
-                    throw (RuntimeException)t;
-                }
-                else if (t instanceof Error) {
-                    throw (Error)t;
-                }
-                else {
-                    throw new Error(t);
-                }
-            }
-            finally {
-                close();
-            }
-
-            log.trace("Stopped");
-        }
-
-        public InputStream getInputStream() {
-            return new PipeInputStream();
-        }
-        
-        private class PipeInputStream
-            extends InputStream
-        {
-            private int read(final boolean wait) throws IOException {
-                if (!running) {
-                    return -1;
-                }
-                checkTaskInterrupted();
-                Integer i;
-                if (wait) {
-                    try {
-                        i = queue.take();
-                    }
-                    catch (InterruptedException e) {
-                        throw new InterruptedIOException();
-                    }
-                    checkTaskInterrupted();
-                }
-                else {
-                    i = queue.poll();
-                }
-                if (i == null) {
-                    return -1;
-                }
-                return i;
-            }
-
-            @Override
-            public int read() throws IOException {
-                return read(true);
-            }
-
-            @Override
-            public int read(final byte b[], int off, final int len) throws IOException {
-                if (b == null) {
-                    throw new NullPointerException();
-                }
-                else if (off < 0 || len < 0 || len > b.length - off) {
-                    throw new IndexOutOfBoundsException();
-                }
-                else if (len == 0) {
-                    return 0;
-                }
-
-                int nb = 1;
-                int i = read(true);
-                if (i < 0) {
-                    return -1;
-                }
-                b[off++] = (byte) i;
-                while (nb < len) {
-                    i = read(false);
-                    if (i < 0) {
-                        return nb;
-                    }
-                    b[off++] = (byte) i;
-                    nb++;
-                }
-                return nb;
-            }
-        }
+        return interrupt;
     }
 }
