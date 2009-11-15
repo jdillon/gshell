@@ -23,9 +23,6 @@ import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.NameAware;
 import org.sonatype.gshell.event.EventManager;
-import org.sonatype.gshell.registry.CommandRegistry;
-import org.sonatype.gshell.registry.DuplicateCommandException;
-import org.sonatype.gshell.registry.NoSuchCommandException;
 
 import java.util.Collection;
 import java.util.Collections;

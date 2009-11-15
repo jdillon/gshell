@@ -18,7 +18,6 @@ package org.sonatype.gshell.util.pref;
 
 import org.junit.After;
 import org.junit.Before;
-import org.sonatype.gshell.util.pref.PreferenceProcessor;
 
 /**
  * Support for {@link PreferenceProcessor} tests.

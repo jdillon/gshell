@@ -17,8 +17,6 @@
 package org.sonatype.gshell.commands;
 
 import org.junit.Test;
-import org.sonatype.gshell.commands.EchoCommand;
-import org.sonatype.gshell.commands.HistoryCommand;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;

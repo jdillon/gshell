@@ -17,13 +17,9 @@
 package org.sonatype.gshell;
 
 import jline.TerminalFactory;
-import org.sonatype.gshell.Branding;
-import org.sonatype.gshell.Shell;
-import org.sonatype.gshell.VariableNames;
-import org.sonatype.gshell.Variables;
+import org.sonatype.gshell.util.Strings;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
-import org.sonatype.gshell.util.Strings;
 
 import java.io.File;
 import java.io.IOException;

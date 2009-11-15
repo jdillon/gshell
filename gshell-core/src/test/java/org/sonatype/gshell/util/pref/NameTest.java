@@ -17,7 +17,6 @@
 package org.sonatype.gshell.util.pref;
 
 import org.junit.Test;
-import org.sonatype.gshell.util.pref.Preference;
 
 import java.util.prefs.Preferences;
 

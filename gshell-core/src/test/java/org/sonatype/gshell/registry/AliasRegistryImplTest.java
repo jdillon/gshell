@@ -23,11 +23,8 @@ import com.google.inject.Stage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.sonatype.gshell.event.EventManagerImpl;
 import org.sonatype.gshell.event.EventManager;
-import org.sonatype.gshell.registry.AliasRegistry;
-import org.sonatype.gshell.registry.AliasRegistryImpl;
-import org.sonatype.gshell.registry.NoSuchAliasException;
+import org.sonatype.gshell.event.EventManagerImpl;
 
 import java.util.Collection;
 

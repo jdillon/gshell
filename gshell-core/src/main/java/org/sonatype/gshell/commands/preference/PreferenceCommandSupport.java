@@ -16,7 +16,6 @@
 
 package org.sonatype.gshell.commands.preference;
 
-import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.util.cli.Option;
 

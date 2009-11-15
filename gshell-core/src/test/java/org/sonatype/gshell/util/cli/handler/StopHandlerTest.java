@@ -20,7 +20,6 @@ import org.junit.Test;
 import org.sonatype.gshell.util.cli.Argument;
 import org.sonatype.gshell.util.cli.CommandLineProcessorTestSupport;
 import org.sonatype.gshell.util.cli.Option;
-import org.sonatype.gshell.util.cli.handler.StopHandler;
 
 import java.util.List;
 

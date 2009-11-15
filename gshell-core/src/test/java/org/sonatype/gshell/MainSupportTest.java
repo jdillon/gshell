@@ -19,15 +19,10 @@ package org.sonatype.gshell;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.sonatype.gshell.Branding;
-import org.sonatype.gshell.History;
-import org.sonatype.gshell.MainSupport;
-import org.sonatype.gshell.Shell;
-import org.sonatype.gshell.Variables;
-import org.sonatype.gshell.util.ansi.Ansi;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.notification.ExitNotification;
 import org.sonatype.gshell.testsupport.TestUtil;
+import org.sonatype.gshell.util.ansi.Ansi;
 
 import static org.junit.Assert.assertEquals;
 
@@ -89,56 +84,45 @@ public class MainSupportTest
     private class MockShell
         implements Shell
     {
-        @Override
         public Branding getBranding() {
             return null;
         }
 
-        @Override
         public IO getIo() {
             return null;
         }
 
-        @Override
         public Variables getVariables() {
             return null;
         }
 
-        @Override
         public History getHistory() {
             return null;
         }
 
-        @Override
         public boolean isOpened() {
             return false;
         }
 
-        @Override
         public void close() {
         }
 
-        @Override
         public Object execute(String line) throws Exception {
             return null;
         }
 
-        @Override
         public Object execute(String command, Object[] args) throws Exception {
             return null;
         }
 
-        @Override
         public Object execute(Object... args) throws Exception {
             return null;
         }
 
-        @Override
         public boolean isInteractive() {
             return false;
         }
 
-        @Override
         public void run(Object... args) throws Exception {
         }
     }

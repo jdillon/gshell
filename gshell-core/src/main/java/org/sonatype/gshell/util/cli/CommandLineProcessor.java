@@ -16,11 +16,11 @@
 
 package org.sonatype.gshell.util.cli;
 
+import org.sonatype.gshell.util.IllegalAnnotationError;
+import org.sonatype.gshell.util.NameValue;
 import org.sonatype.gshell.util.cli.handler.Handler;
 import org.sonatype.gshell.util.cli.handler.Handlers;
 import org.sonatype.gshell.util.i18n.MessageSource;
-import org.sonatype.gshell.util.IllegalAnnotationError;
-import org.sonatype.gshell.util.NameValue;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
 import org.sonatype.gshell.util.setter.Setter;
 import org.sonatype.gshell.util.setter.SetterFactory;

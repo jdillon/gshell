@@ -19,9 +19,6 @@ package org.sonatype.gshell.parser.impl;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.sonatype.gshell.parser.impl.ASTCommandLine;
-import org.sonatype.gshell.parser.impl.Node;
-import org.sonatype.gshell.parser.impl.Parser;
 
 import static org.junit.Assert.fail;
 

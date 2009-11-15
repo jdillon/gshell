@@ -18,9 +18,6 @@ package org.sonatype.gshell.util.i18n;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.sonatype.gshell.util.i18n.MessageSource;
-import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
-import org.sonatype.gshell.util.i18n.ResourceNotFoundException;
 
 import static org.junit.Assert.assertEquals;
 

@@ -18,15 +18,15 @@ package org.sonatype.gshell.commands;
 
 import com.google.inject.Inject;
 import org.sonatype.gshell.Variables;
-import org.sonatype.gshell.console.completer.VariableNameCompleter;
-import org.sonatype.gshell.util.cli.Argument;
-import org.sonatype.gshell.util.cli.Option;
 import org.sonatype.gshell.command.Command;
+import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.command.CommandActionSupport;
-import org.sonatype.gshell.util.i18n.MessageSource;
+import org.sonatype.gshell.console.completer.VariableNameCompleter;
 import org.sonatype.gshell.util.Strings;
+import org.sonatype.gshell.util.cli.Argument;
+import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.util.i18n.MessageSource;
 
 import java.util.Iterator;
 import java.util.List;

@@ -17,7 +17,6 @@
 package org.sonatype.gshell.commands;
 
 import org.junit.Test;
-import org.sonatype.gshell.commands.SetCommand;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

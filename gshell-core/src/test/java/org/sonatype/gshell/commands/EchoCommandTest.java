@@ -17,7 +17,6 @@
 package org.sonatype.gshell.commands;
 
 import org.junit.Test;
-import org.sonatype.gshell.commands.EchoCommand;
 
 /**
  * Tests for the {@link org.sonatype.gshell.commands.EchoCommand}.

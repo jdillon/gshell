@@ -17,8 +17,6 @@
 package org.sonatype.gshell.commands;
 
 import org.junit.Test;
-import org.sonatype.gshell.commands.RecallHistoryCommand;
-import org.sonatype.gshell.commands.SetCommand;
 import org.sonatype.gshell.History;
 import org.sonatype.gshell.util.converter.ConversionException;
 

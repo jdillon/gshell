@@ -19,8 +19,6 @@ package org.sonatype.gshell.util.ansi;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.sonatype.gshell.util.ansi.Ansi;
-import org.sonatype.gshell.util.ansi.AnsiRenderer;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

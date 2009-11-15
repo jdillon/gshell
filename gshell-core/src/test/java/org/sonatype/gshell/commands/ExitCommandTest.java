@@ -17,7 +17,6 @@
 package org.sonatype.gshell.commands;
 
 import org.junit.Test;
-import org.sonatype.gshell.commands.ExitCommand;
 import org.sonatype.gshell.notification.ExitNotification;
 
 import static org.junit.Assert.assertEquals;

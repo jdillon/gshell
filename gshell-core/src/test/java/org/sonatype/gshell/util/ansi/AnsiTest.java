@@ -17,7 +17,6 @@
 package org.sonatype.gshell.util.ansi;
 
 import org.junit.Test;
-import org.sonatype.gshell.util.ansi.Ansi;
 
 import static org.junit.Assert.assertEquals;
 

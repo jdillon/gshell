@@ -18,7 +18,6 @@ package org.sonatype.gshell.util.cli;
 
 import org.junit.After;
 import org.junit.Before;
-import org.sonatype.gshell.util.cli.CommandLineProcessor;
 
 import static org.junit.Assert.assertEquals;
 

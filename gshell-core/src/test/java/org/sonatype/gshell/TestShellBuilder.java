@@ -19,7 +19,6 @@ package org.sonatype.gshell;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Stage;
-import org.sonatype.gshell.Shell;
 import org.sonatype.gshell.builder.guice.CoreModule;
 import org.sonatype.gshell.builder.guice.GuiceShellBuilder;
 import org.sonatype.gshell.registry.CommandRegistrar;

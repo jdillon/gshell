@@ -18,7 +18,6 @@ package org.sonatype.gshell;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.sonatype.gshell.VariablesImpl;
 
 import java.util.Iterator;
 

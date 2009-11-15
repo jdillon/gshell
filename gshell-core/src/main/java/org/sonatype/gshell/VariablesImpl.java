@@ -16,7 +16,6 @@
 
 package org.sonatype.gshell;
 
-import org.sonatype.gshell.Variables;
 import org.sonatype.gshell.event.EventAware;
 import org.sonatype.gshell.event.EventManager;
 

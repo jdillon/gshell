@@ -19,8 +19,6 @@ package org.sonatype.gshell.event;
 import com.google.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonatype.gshell.event.EventListener;
-import org.sonatype.gshell.event.EventManager;
 
 import java.util.EventObject;
 import java.util.LinkedHashSet;

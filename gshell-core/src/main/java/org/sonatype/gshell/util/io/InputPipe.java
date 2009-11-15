@@ -145,7 +145,9 @@ public class InputPipe
             if (!running) {
                 return -1;
             }
+
             checkInterrupted();
+
             Integer i;
             if (wait) {
                 try {
@@ -154,14 +156,17 @@ public class InputPipe
                 catch (InterruptedException e) {
                     throw new InterruptedIOException();
                 }
+                
                 checkInterrupted();
             }
             else {
                 i = queue.poll();
             }
+
             if (i == null) {
                 return -1;
             }
+
             return i;
         }
 
@@ -187,15 +192,18 @@ public class InputPipe
             if (i < 0) {
                 return -1;
             }
+
             b[off++] = (byte) i;
             while (nb < len) {
                 i = read(false);
                 if (i < 0) {
                     return nb;
                 }
+                
                 b[off++] = (byte) i;
                 nb++;
             }
+
             return nb;
         }
     }

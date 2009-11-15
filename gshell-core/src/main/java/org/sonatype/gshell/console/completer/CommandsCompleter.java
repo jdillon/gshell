@@ -25,11 +25,11 @@ import jline.console.completers.StringsCompleter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.command.CommandAction;
-import org.sonatype.gshell.registry.CommandRegisteredEvent;
-import org.sonatype.gshell.registry.CommandRemovedEvent;
 import org.sonatype.gshell.event.EventListener;
 import org.sonatype.gshell.event.EventManager;
+import org.sonatype.gshell.registry.CommandRegisteredEvent;
 import org.sonatype.gshell.registry.CommandRegistry;
+import org.sonatype.gshell.registry.CommandRemovedEvent;
 
 import java.util.ArrayList;
 import java.util.Collection;

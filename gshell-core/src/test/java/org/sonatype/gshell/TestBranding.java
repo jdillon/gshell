@@ -16,8 +16,6 @@
 
 package org.sonatype.gshell;
 
-import org.sonatype.gshell.BrandingSupport;
-
 import java.io.File;
 
 /**

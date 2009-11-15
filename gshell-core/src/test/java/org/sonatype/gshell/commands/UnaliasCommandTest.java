@@ -17,7 +17,6 @@
 package org.sonatype.gshell.commands;
 
 import org.junit.Test;
-import org.sonatype.gshell.commands.UnaliasCommand;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;

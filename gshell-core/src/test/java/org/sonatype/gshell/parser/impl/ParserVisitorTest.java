@@ -17,14 +17,6 @@
 package org.sonatype.gshell.parser.impl;
 
 import org.junit.Test;
-import org.sonatype.gshell.parser.impl.ASTCommandLine;
-import org.sonatype.gshell.parser.impl.ASTExpression;
-import org.sonatype.gshell.parser.impl.ASTOpaqueArgument;
-import org.sonatype.gshell.parser.impl.ASTPlainArgument;
-import org.sonatype.gshell.parser.impl.ASTQuotedArgument;
-import org.sonatype.gshell.parser.impl.ASTWhitespace;
-import org.sonatype.gshell.parser.impl.ParserVisitor;
-import org.sonatype.gshell.parser.impl.SimpleNode;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;

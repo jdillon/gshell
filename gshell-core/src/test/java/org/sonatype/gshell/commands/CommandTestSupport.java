@@ -26,7 +26,6 @@ import org.sonatype.gshell.TestShellBuilder;
 import org.sonatype.gshell.VariableNames;
 import org.sonatype.gshell.Variables;
 import org.sonatype.gshell.command.Command;
-import org.sonatype.gshell.util.ansi.Ansi;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.registry.AliasRegistry;
 import org.sonatype.gshell.registry.CommandRegistrar;
@@ -34,6 +33,7 @@ import org.sonatype.gshell.registry.CommandRegistry;
 import org.sonatype.gshell.testsupport.TestIO;
 import org.sonatype.gshell.testsupport.TestUtil;
 import org.sonatype.gshell.util.Strings;
+import org.sonatype.gshell.util.ansi.Ansi;
 
 import java.util.HashMap;
 import java.util.Map;

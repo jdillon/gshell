@@ -20,15 +20,13 @@ import jline.Terminal;
 import jline.WindowsTerminal;
 import jline.console.completers.EnumCompleter;
 import org.sonatype.gshell.Branding;
-import org.sonatype.gshell.util.ansi.Ansi;
-import static org.sonatype.gshell.util.ansi.Ansi.Attribute;
-import static org.sonatype.gshell.util.ansi.Ansi.Color;
-import org.sonatype.gshell.util.cli.Argument;
-import org.sonatype.gshell.util.cli.Option;
 import org.sonatype.gshell.command.Command;
+import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.command.CommandActionSupport;
+import org.sonatype.gshell.util.ansi.Ansi;
+import org.sonatype.gshell.util.cli.Argument;
+import org.sonatype.gshell.util.cli.Option;
 import org.sonatype.gshell.util.pref.Preference;
 
 import java.lang.management.ClassLoadingMXBean;
@@ -47,6 +45,8 @@ import java.util.List;
 import java.util.Locale;
 
 import static org.sonatype.gshell.commands.InfoCommand.Section.SHELL;
+import static org.sonatype.gshell.util.ansi.Ansi.Attribute;
+import static org.sonatype.gshell.util.ansi.Ansi.Color;
 
 //
 // Based on info command from Apache Felix

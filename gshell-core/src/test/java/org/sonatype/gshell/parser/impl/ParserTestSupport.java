@@ -16,10 +16,6 @@
 
 package org.sonatype.gshell.parser.impl;
 
-import org.sonatype.gshell.parser.impl.ASTCommandLine;
-import org.sonatype.gshell.parser.impl.ParseException;
-import org.sonatype.gshell.parser.impl.Parser;
-
 import java.io.Reader;
 import java.io.StringReader;
 

@@ -17,9 +17,6 @@
 package org.sonatype.gshell.util.cli;
 
 import org.junit.Test;
-import org.sonatype.gshell.util.cli.Argument;
-import org.sonatype.gshell.util.cli.Option;
-import org.sonatype.gshell.util.cli.Printer;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

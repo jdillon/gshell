@@ -19,15 +19,12 @@ package org.sonatype.gshell.registry;
 import com.google.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonatype.gshell.util.cli.OpaqueArguments;
 import org.sonatype.gshell.command.CommandAction;
+import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.CommandException;
-import org.sonatype.gshell.command.CommandActionSupport;
-import org.sonatype.gshell.registry.AliasRegistry;
-import org.sonatype.gshell.registry.CommandRegistry;
-import org.sonatype.gshell.registry.CommandResolver;
 import org.sonatype.gshell.util.Strings;
+import org.sonatype.gshell.util.cli.OpaqueArguments;
 
 /**
  * The default {@link org.sonatype.gshell.registry.CommandResolver} component.

@@ -16,8 +16,6 @@
 
 package org.sonatype.gshell.commands;
 
-import org.sonatype.gshell.commands.InfoCommand;
-
 /**
  * Tests for the {@link org.sonatype.gshell.commands.InfoCommand}.
  *

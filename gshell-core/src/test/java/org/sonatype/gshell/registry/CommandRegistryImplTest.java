@@ -25,10 +25,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
-import org.sonatype.gshell.event.EventManagerImpl;
 import org.sonatype.gshell.event.EventManager;
-import org.sonatype.gshell.registry.CommandRegistry;
-import org.sonatype.gshell.registry.CommandRegistryImpl;
+import org.sonatype.gshell.event.EventManagerImpl;
 
 import static org.junit.Assert.fail;
 

@@ -16,9 +16,6 @@
 
 package org.sonatype.gshell;
 
-import org.sonatype.gshell.Branding;
-import org.sonatype.gshell.VariableNames;
-import org.sonatype.gshell.Variables;
 import org.sonatype.gshell.console.ConsolePrompt;
 import org.sonatype.gshell.util.ReplacementParser;
 import org.sonatype.gshell.util.ansi.AnsiRenderer;

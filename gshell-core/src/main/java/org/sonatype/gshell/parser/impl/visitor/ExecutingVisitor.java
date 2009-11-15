@@ -17,6 +17,8 @@
 package org.sonatype.gshell.parser.impl.visitor;
 
 import org.sonatype.gshell.Shell;
+import org.sonatype.gshell.execute.CommandExecutor;
+import org.sonatype.gshell.notification.ErrorNotification;
 import org.sonatype.gshell.parser.impl.ASTCommandLine;
 import org.sonatype.gshell.parser.impl.ASTExpression;
 import org.sonatype.gshell.parser.impl.ASTOpaqueArgument;
@@ -27,8 +29,6 @@ import org.sonatype.gshell.parser.impl.ParserVisitor;
 import org.sonatype.gshell.parser.impl.SimpleNode;
 import org.sonatype.gshell.parser.impl.eval.Evaluator;
 import org.sonatype.gshell.parser.impl.eval.EvaluatorFactory;
-import org.sonatype.gshell.execute.CommandExecutor;
-import org.sonatype.gshell.notification.ErrorNotification;
 import org.sonatype.gshell.util.Arguments;
 import org.sonatype.gshell.util.Strings;
 

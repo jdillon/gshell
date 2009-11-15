@@ -17,9 +17,6 @@
 package org.sonatype.gshell.commands;
 
 import org.junit.Test;
-import org.sonatype.gshell.commands.EchoCommand;
-import org.sonatype.gshell.commands.SetCommand;
-import org.sonatype.gshell.commands.SourceCommand;
 
 import java.io.FileNotFoundException;
 import java.net.URL;

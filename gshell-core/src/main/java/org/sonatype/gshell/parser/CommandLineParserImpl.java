@@ -19,12 +19,12 @@ package org.sonatype.gshell.parser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.Shell;
+import org.sonatype.gshell.execute.CommandExecutor;
+import org.sonatype.gshell.execute.CommandLineParser;
 import org.sonatype.gshell.parser.impl.ASTCommandLine;
 import org.sonatype.gshell.parser.impl.Parser;
 import org.sonatype.gshell.parser.impl.visitor.ExecutingVisitor;
 import org.sonatype.gshell.parser.impl.visitor.LoggingVisitor;
-import org.sonatype.gshell.execute.CommandExecutor;
-import org.sonatype.gshell.execute.CommandLineParser;
 import org.sonatype.iohijack.Closer;
 
 import java.io.Reader;
