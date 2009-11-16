@@ -35,7 +35,7 @@
         </dependency>
 
         <dependency>
-            <groupId>jline</groupId>
+            <groupId>org.sonatype.jline</groupId>
             <artifactId>jline</artifactId>
         </dependency>
 
