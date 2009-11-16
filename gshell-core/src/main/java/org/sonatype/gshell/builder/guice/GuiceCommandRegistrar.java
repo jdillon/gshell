@@ -18,6 +18,7 @@ package org.sonatype.gshell.builder.guice;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.registry.CommandRegistrar;
 import org.sonatype.gshell.registry.CommandRegistrarSupport;
@@ -52,6 +53,21 @@ public class GuiceCommandRegistrar
 
         Class<CommandAction> type = (Class<CommandAction>) Thread.currentThread().getContextClassLoader().loadClass(classname);
         CommandAction command = injector.getInstance(type);
+        registry.registerCommand(name, command);
+    }
+
+    public void registerCommand(final String classname) throws Exception {
+        assert classname != null;
+
+        log.trace("Registering command: {}", classname);
+
+        Class<CommandAction> type = (Class<CommandAction>) Thread.currentThread().getContextClassLoader().loadClass(classname);
+        CommandAction command = injector.getInstance(type);
+
+        Command meta = type.getAnnotation(Command.class);
+        assert meta != null;
+        String name = meta.name();
+
         registry.registerCommand(name, command);
     }
 }
