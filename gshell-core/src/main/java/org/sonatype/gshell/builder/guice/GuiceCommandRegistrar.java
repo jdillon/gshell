@@ -45,29 +45,35 @@ public class GuiceCommandRegistrar
         this.injector = injector;
     }
 
-    public void registerCommand(final String name, final String classname) throws Exception {
+    public void registerCommand(final String name, final String className) throws Exception {
         assert name != null;
-        assert classname != null;
+        assert className != null;
 
-        log.trace("Registering command: {} -> {}", name, classname);
+        log.trace("Registering command: {} -> {}", name, className);
 
-        Class<CommandAction> type = (Class<CommandAction>) Thread.currentThread().getContextClassLoader().loadClass(classname);
-        CommandAction command = injector.getInstance(type);
+        CommandAction command = createAction(className);
         registry.registerCommand(name, command);
     }
 
-    public void registerCommand(final String classname) throws Exception {
-        assert classname != null;
+    public void registerCommand(final String className) throws Exception {
+        assert className != null;
 
-        log.trace("Registering command: {}", classname);
+        log.trace("Registering command: {}", className);
 
-        Class<CommandAction> type = (Class<CommandAction>) Thread.currentThread().getContextClassLoader().loadClass(classname);
-        CommandAction command = injector.getInstance(type);
+        CommandAction command = createAction(className);
 
-        Command meta = type.getAnnotation(Command.class);
+        Command meta = command.getClass().getAnnotation(Command.class);
         assert meta != null;
         String name = meta.name();
 
         registry.registerCommand(name, command);
+    }
+
+    @SuppressWarnings({"unchecked"})
+    private CommandAction createAction(final String className) throws ClassNotFoundException {
+        assert className != null;
+        Class type = Thread.currentThread().getContextClassLoader().loadClass(className);
+        CommandAction command = (CommandAction) injector.getInstance(type);
+        return command;
     }
 }
