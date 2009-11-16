@@ -16,10 +16,7 @@
 
 package org.sonatype.gshell;
 
-import org.sonatype.gshell.MainSupport;
-import org.sonatype.gshell.ShellErrorHandler;
-import org.sonatype.gshell.ShellPrompt;
-import org.sonatype.gshell.builder.simple.SimpleShellBuilder;
+import org.sonatype.gshell.builder.guice.GuiceShellBuilder;
 
 /**
  * Command-line bootstrap for GShell (<tt>gsh</tt>).
@@ -36,8 +33,7 @@ public class Main
 
     @Override
     protected Shell createShell() throws Exception {
-        SimpleShellBuilder builder = new SimpleShellBuilder();
-
+        GuiceShellBuilder builder = new GuiceShellBuilder();
 
         Shell shell = builder
                 .setBranding(getBranding())
@@ -46,10 +42,6 @@ public class Main
                 .setPrompt(new ShellPrompt(vars, getBranding()))
                 .setErrorHandler(new ShellErrorHandler(io))
                 .create();
-
-        // HACK: Register some more muck
-        builder.getComponents().getCommandRegistrar().registerCommand("sleep", "org.sonatype.gshell.commands.shell.SleepCommand");
-        builder.getComponents().getCommandRegistrar().registerCommand("ask", "org.sonatype.gshell.commands.shell.AskCommand");
 
         return shell;
     }

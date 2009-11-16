@@ -20,6 +20,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Stage;
 import jline.console.Completer;
+import jline.console.completers.AggregateCompleter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.Branding;
@@ -29,6 +30,8 @@ import org.sonatype.gshell.Variables;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.console.ConsoleErrorHandler;
 import org.sonatype.gshell.console.ConsolePrompt;
+import org.sonatype.gshell.console.completer.AliasNameCompleter;
+import org.sonatype.gshell.console.completer.CommandsCompleter;
 import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.execute.CommandExecutor;
 import org.sonatype.gshell.registry.CommandRegistrar;
@@ -128,12 +131,15 @@ public class GuiceShellBuilder
         ShellImpl shell = new ShellImpl(eventManager, executor, branding, io, variables);
         shell.setPrompt(prompt);
         shell.setErrorHandler(errorHandler);
-        shell.setCompleters(completers);
 
         // Maybe register default commands
         if (registerCommands) {
             injector.getInstance(CommandRegistrar.class).registerCommands();
         }
+
+        addCompleter(new AggregateCompleter(injector.getInstance(AliasNameCompleter.class), injector.getInstance(CommandsCompleter.class)));
+        
+        shell.setCompleters(completers);
 
         log.debug("Created shell: {}", shell);
 
