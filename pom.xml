@@ -21,7 +21,7 @@
 
     <groupId>org.sonatype.gshell</groupId>
     <artifactId>gshell</artifactId>
-    <name>GShell - ${project.version}</name>
+    <name>GShell</name>
     <version>2.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
