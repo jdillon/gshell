@@ -102,12 +102,6 @@
                 <artifactId>guice</artifactId>
                 <version>2.0</version>
             </dependency>
-
-            <dependency>
-                <groupId>org.sonatype.iohijack</groupId>
-                <artifactId>iohijack</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
             
             <!-- INTERNAL -->
 

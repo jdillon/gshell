@@ -22,8 +22,8 @@ import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.util.cli.Argument;
 import org.sonatype.gshell.util.cli.Option;
 import org.sonatype.gshell.util.pref.Preference;
-import org.sonatype.iohijack.Closer;
-import org.sonatype.iohijack.Flusher;
+import org.sonatype.gshell.util.io.Closer;
+import org.sonatype.gshell.util.io.Flusher;
 
 import java.io.BufferedOutputStream;
 import java.io.File;

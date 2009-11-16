@@ -28,7 +28,7 @@ import org.sonatype.gshell.util.i18n.AggregateMessageSource;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.PrefixingMessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
-import org.sonatype.iohijack.PrefixingOutputStream;
+import org.sonatype.gshell.util.io.PrefixingOutputStream;
 
 import java.io.PrintStream;
 

@@ -25,7 +25,7 @@ import org.sonatype.gshell.parser.impl.ASTCommandLine;
 import org.sonatype.gshell.parser.impl.Parser;
 import org.sonatype.gshell.parser.impl.visitor.ExecutingVisitor;
 import org.sonatype.gshell.parser.impl.visitor.LoggingVisitor;
-import org.sonatype.iohijack.Closer;
+import org.sonatype.gshell.util.io.Closer;
 
 import java.io.Reader;
 import java.io.StringReader;

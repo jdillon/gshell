@@ -19,9 +19,9 @@ package org.sonatype.gshell.command;
 import jline.Terminal;
 import jline.TerminalFactory;
 import org.slf4j.helpers.MessageFormatter;
-import org.sonatype.iohijack.Closer;
-import org.sonatype.iohijack.Flusher;
-import org.sonatype.iohijack.StreamSet;
+import org.sonatype.gshell.util.io.Closer;
+import org.sonatype.gshell.util.io.Flusher;
+import org.sonatype.gshell.util.io.StreamSet;
 
 import java.io.IOException;
 import java.io.InputStream;

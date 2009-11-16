@@ -45,11 +45,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.sonatype.iohijack</groupId>
-            <artifactId>iohijack</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
             <optional>true</optional>
