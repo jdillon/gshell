@@ -180,7 +180,7 @@ public abstract class Console
     }
 
     private void traceLine(final String line) {
-        assert line != null;
+        if (line == null) return;
 
         StringBuilder idx = new StringBuilder();
         StringBuilder hex = new StringBuilder();
