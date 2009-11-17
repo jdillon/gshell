@@ -81,6 +81,8 @@ public class ShellErrorHandler
             showTrace = Boolean.parseBoolean(tmp.trim());
         }
 
+        // FIXME: Need to handle when cause.getMessage() is null, to avoid weird error display
+
         // Spit out the terse reason why we've failed
         io.err.println(Messages.ERROR_EXCEPTION_NAME.format(cause.getClass().getName(), cause.getMessage()));
 
@@ -93,6 +95,7 @@ public class ShellErrorHandler
 
                 cause = cause.getCause();
                 if (cause != null) {
+                    // FIXME: Need to handle when cause.getMessage() is null, to avoid weird error display
                     io.err.println(Messages.ERROR_EXCEPTION_CAUSED_BY.format(cause.getClass().getName(), cause.getMessage()));
                 }
             }
