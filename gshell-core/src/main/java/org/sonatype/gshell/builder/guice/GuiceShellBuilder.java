@@ -128,6 +128,7 @@ public class GuiceShellBuilder
         // Create the shell instance
         CommandExecutor executor = injector.getInstance(CommandExecutor.class);
         EventManager eventManager = injector.getInstance(EventManager.class);
+        
         ShellImpl shell = new ShellImpl(eventManager, executor, branding, io, variables);
         shell.setPrompt(prompt);
         shell.setErrorHandler(errorHandler);

@@ -32,9 +32,9 @@ import org.sonatype.gshell.util.cli.Printer;
 import org.sonatype.gshell.util.cli.handler.StopHandler;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
+import org.sonatype.gshell.util.io.StreamSet;
 import org.sonatype.gshell.util.pref.Preference;
 import org.sonatype.gshell.util.pref.PreferenceProcessor;
-import org.sonatype.gshell.util.io.StreamSet;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;

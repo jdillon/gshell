@@ -44,7 +44,6 @@ public class CoreModule
 {
     @Override
     protected void configure() {
-        // Core components
         bind(EventManager.class).to(EventManagerImpl.class);
         bind(AliasRegistry.class).to(AliasRegistryImpl.class);
         bind(CommandRegistry.class).to(CommandRegistryImpl.class);

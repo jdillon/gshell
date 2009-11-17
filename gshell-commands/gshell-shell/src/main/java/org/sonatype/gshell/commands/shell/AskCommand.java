@@ -17,7 +17,6 @@
 package org.sonatype.gshell.commands.shell;
 
 import jline.console.ConsoleReader;
-import org.sonatype.gshell.ShellHolder;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;

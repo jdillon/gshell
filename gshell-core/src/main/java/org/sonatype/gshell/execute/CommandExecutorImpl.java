@@ -37,8 +37,8 @@ import org.sonatype.gshell.util.Strings;
 import org.sonatype.gshell.util.cli.CommandLineProcessor;
 import org.sonatype.gshell.util.cli.OpaqueArguments;
 import org.sonatype.gshell.util.i18n.PrefixingMessageSource;
-import org.sonatype.gshell.util.pref.PreferenceProcessor;
 import org.sonatype.gshell.util.io.InputOutputHijacker;
+import org.sonatype.gshell.util.pref.PreferenceProcessor;
 
 /**
  * The default {@link org.sonatype.gshell.execute.CommandExecutor} component.
