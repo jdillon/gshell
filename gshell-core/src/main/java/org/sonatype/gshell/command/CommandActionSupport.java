@@ -77,17 +77,12 @@ public abstract class CommandActionSupport
         setCompleters(completers.toArray(new Completer[completers.size()]));
     }
 
-    @Override
-    protected Object clone() {
+    public CommandAction clone() {
         try {
-            return super.clone();
+            return (CommandAction) super.clone();
         }
         catch (CloneNotSupportedException e) {
             throw new InternalError();
         }
-    }
-
-    public CommandAction copy() {
-        return (CommandAction) clone();
     }
 }

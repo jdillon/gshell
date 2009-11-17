@@ -51,7 +51,7 @@ public abstract class ConsoleTask
     private boolean stopping;
 
     /**
-     * Rrue if the task is running (ie. {@link #execute} was invoked).
+     * True if the task is running (ie. {@link #execute} was invoked).
      */
     public synchronized boolean isRunning() {
         return running;

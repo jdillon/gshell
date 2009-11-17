@@ -34,15 +34,14 @@ public interface CommandAction
 
     Completer[] getCompleters();
 
-    CommandAction copy();
+    CommandAction clone();
 
     /**
      * Execute the command action.
      *
      * @param context The execution context of the command.
      * @return The result of the command execution.
-     * @throws Notification Inform the shell of some non-exception exit state.
-     * @throws Exception    Command execution failed.
+     * @throws Exception Command execution failed.
      */
     Object execute(CommandContext context) throws Exception;
 

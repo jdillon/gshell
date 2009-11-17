@@ -59,7 +59,7 @@ public class CommandResolverImpl
             command = resolveRegistered(name);
             if (command != null) {
                 // Copy the prototype to use
-                command = command.copy();
+                command = command.clone();
             }
         }
 
