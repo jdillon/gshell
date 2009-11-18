@@ -25,7 +25,7 @@ import java.util.List;
 import static org.junit.Assert.assertNotNull;
 
 /**
- * Tests for the {@link Printer} class.
+ * Tests for the {@link CommandLinePrinter} class.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
@@ -47,7 +47,7 @@ public class PrinterTest
 
     @Test
     public void test1() throws Exception {
-        Printer printer = new Printer(clp);
+        CommandLinePrinter printer = new CommandLinePrinter(clp);
 
         StringWriter out = new StringWriter();
         printer.printUsage(new PrintWriter(out));

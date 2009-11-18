@@ -34,7 +34,7 @@ import java.util.List;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public class Printer
+public class CommandLinePrinter
 {
     private final CommandLineProcessor processor;
 
@@ -46,7 +46,7 @@ public class Printer
 
     private String separator = "    ";
 
-    public Printer(final CommandLineProcessor processor) {
+    public CommandLinePrinter(final CommandLineProcessor processor) {
         assert processor != null;
         this.processor = processor;
 

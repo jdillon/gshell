@@ -26,9 +26,9 @@ import org.sonatype.gshell.util.NameValue;
 import org.sonatype.gshell.util.ansi.Ansi;
 import org.sonatype.gshell.util.ansi.AnsiIO;
 import org.sonatype.gshell.util.cli.Argument;
+import org.sonatype.gshell.util.cli.CommandLinePrinter;
 import org.sonatype.gshell.util.cli.CommandLineProcessor;
 import org.sonatype.gshell.util.cli.Option;
-import org.sonatype.gshell.util.cli.Printer;
 import org.sonatype.gshell.util.cli.handler.StopHandler;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
@@ -203,7 +203,7 @@ public abstract class MainSupport
         }
 
         if (help) {
-            Printer printer = new Printer(clp);
+            CommandLinePrinter printer = new CommandLinePrinter(clp);
             printer.printUsage(io.out, getBranding().getProgramName());
             exit(ExitNotification.DEFAULT_CODE);
         }

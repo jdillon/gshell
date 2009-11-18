@@ -23,7 +23,7 @@ import org.sonatype.gshell.Variables;
 import org.sonatype.gshell.util.ReplacementParser;
 import org.sonatype.gshell.util.ansi.AnsiRenderer;
 import org.sonatype.gshell.util.cli.CommandLineProcessor;
-import org.sonatype.gshell.util.cli.Printer;
+import org.sonatype.gshell.util.cli.CommandLinePrinter;
 import org.sonatype.gshell.util.i18n.AggregateMessageSource;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.PrefixingMessageSource;
@@ -108,7 +108,7 @@ public class CommandDocumenterImpl
         io.out.println(getDescription(command));
         io.out.println();
 
-        Printer printer = new Printer(clp);
+        CommandLinePrinter printer = new CommandLinePrinter(clp);
         AggregateMessageSource messages = new AggregateMessageSource(command.getMessages(), help.getMessages());
         printer.addMessages(new PrefixingMessageSource(messages, COMMAND_DOT));
         printer.printUsage(io.out, command.getName());
