@@ -29,7 +29,7 @@ import static org.junit.Assert.assertNotNull;
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class PrinterTest
+public class CommandLinePrinterTest
     extends CommandLineProcessorTestSupport
 {
     private TestBean bean;
