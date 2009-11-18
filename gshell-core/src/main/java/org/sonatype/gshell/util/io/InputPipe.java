@@ -28,6 +28,7 @@ import java.io.PrintStream;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * An input pipe which can be interrupted.
@@ -49,6 +50,8 @@ public class InputPipe
     private final PrintStream err;
 
     private final Callable<Boolean> interruptHandler;
+
+    private final CountDownLatch startSignal = new CountDownLatch(1);
 
     private volatile boolean interrupt;
 
@@ -82,11 +85,26 @@ public class InputPipe
         return term.readCharacter(in);
     }
 
+    @Override
+    public void start() {
+        super.start();
+
+        // Wait for the run-loop to actually start before we return, to avoid race-conditions
+        try {
+            startSignal.await();
+        }
+        catch (InterruptedException e) {
+            // ignore
+        }
+    }
+
     public void run() {
         log.trace("Running");
         running = true;
 
         try {
+            startSignal.countDown();
+            
             while (running) {
                 int c = read();
 

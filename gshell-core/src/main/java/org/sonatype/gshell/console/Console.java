@@ -118,9 +118,9 @@ public abstract class Console
 
     public void run() {
         log.trace("Running");
-        running = true;
         pipe.start();
-
+        running = true;
+        
         while (running) {
             try {
                 running = work();
