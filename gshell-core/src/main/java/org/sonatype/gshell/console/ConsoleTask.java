@@ -41,12 +41,12 @@ public abstract class ConsoleTask
     private Thread thread;
 
     /**
-     * True if the task is running (ie. {@link #execute} was invoked.
+     * True if the task is running (ie. {@link #execute} was invoked).
      */
     private boolean running;
 
     /**
-     * True if the task is stopping (ie. {@link #stop} was invoked.
+     * True if the task is stopping (ie. {@link #stop} was invoked).
      */
     private boolean stopping;
 
