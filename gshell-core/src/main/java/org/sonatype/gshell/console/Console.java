@@ -140,7 +140,6 @@ public abstract class Console
         log.trace("Stopped");
     }
 
-    // TODO: Could replace this with a Callable<ConsoleTask> factory field
     protected abstract ConsoleTask createTask();
 
     /**
