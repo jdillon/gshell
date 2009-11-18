@@ -100,7 +100,7 @@ public class InputOutputHijacker
     }
 
     /**
-     * Install the hijacker and register combinded streams for the current thread.
+     * Install the hijacker and register combined streams for the current thread.
      */
     public static synchronized void install(final InputStream in, final PrintStream out) {
         install();
@@ -113,6 +113,18 @@ public class InputOutputHijacker
     public static synchronized void install(final StreamSet set) {
         install();
         register(set);
+    }
+
+    public static synchronized void maybeInstall() {
+        if (!isInstalled()) {
+            install();
+        }
+    }
+
+    public static synchronized void maybeInstall(final StreamSet set) {
+        if (!isInstalled()) {
+            install(set);
+        }
     }
 
     /**

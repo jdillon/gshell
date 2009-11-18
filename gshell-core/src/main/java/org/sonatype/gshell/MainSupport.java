@@ -32,6 +32,7 @@ import org.sonatype.gshell.util.cli.Printer;
 import org.sonatype.gshell.util.cli.handler.StopHandler;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
+import org.sonatype.gshell.util.io.InputOutputHijacker;
 import org.sonatype.gshell.util.io.StreamSet;
 import org.sonatype.gshell.util.pref.Preference;
 import org.sonatype.gshell.util.pref.PreferenceProcessor;
@@ -177,13 +178,11 @@ public abstract class MainSupport
         Log.debug("Booting w/args: ", args);
 
         // Setup environment defaults
-        // Ansi.install();
         setConsoleLogLevel(Log.Level.WARN);
         setTerminalType(TerminalFactory.Type.AUTO);
 
         // Process preferences
-        PreferenceProcessor pp = new PreferenceProcessor(this);
-        pp.process();
+        new PreferenceProcessor(this).process();
 
         // Process command line options & arguments
         CommandLineProcessor clp = new CommandLineProcessor(this);
@@ -214,6 +213,8 @@ public abstract class MainSupport
             exit(ExitNotification.DEFAULT_CODE);
         }
 
+        InputOutputHijacker.maybeInstall(io.streams);
+        
         // Setup a reference for our exit code so our callback thread can tell if we've shutdown normally or not
         final AtomicReference<Integer> codeRef = new AtomicReference<Integer>();
         int code = ExitNotification.DEFAULT_CODE;
