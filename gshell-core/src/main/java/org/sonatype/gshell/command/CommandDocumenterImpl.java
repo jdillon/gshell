@@ -28,7 +28,7 @@ import org.sonatype.gshell.util.i18n.AggregateMessageSource;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.PrefixingMessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
-import org.sonatype.gshell.util.io.PrefixingOutputStream;
+import org.sonatype.gshell.util.io.PrefixingStream;
 
 import java.io.PrintStream;
 
@@ -120,7 +120,7 @@ public class CommandDocumenterImpl
 
         log.trace("Rendering command manual");
 
-        PrintStream out = new PrintStream(new PrefixingOutputStream(io.streams.out, "   "));
+        PrintStream out = new PrintStream(new PrefixingStream("    ", io.streams.out));
         AnsiRenderer renderer = new AnsiRenderer();
 
         io.out.format("@|bold %s|@", messages.getMessage("section.name")).println();

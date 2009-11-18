@@ -23,7 +23,7 @@ import java.io.PrintStream;
  * Prefixes printed lines as instructed to by a given {@link Prefixer}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 2.0
+ * @since 1.0
  */
 public class PrefixingStream
     extends PrintStream
@@ -68,7 +68,7 @@ public class PrefixingStream
 
         //
         // FIXME: This is super-ughly embedded '\n' handling crap, just kinda hacked my want into this...
-        //        so it probabably sucks a lot :-P
+        //        so it probably sucks a lot :-P
         //
 
         /*
