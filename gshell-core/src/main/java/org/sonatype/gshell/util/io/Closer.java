@@ -22,19 +22,22 @@ package org.sonatype.gshell.util.io;
 import java.io.Closeable;
 import java.io.IOException;
 
+import org.sonatype.gshell.util.Log;
+
 /**
  * Quietly closes {@link Closeable}s.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
- * @since 1.0
+ * @since 2.0
  */
 public class Closer
 {
     public static void close(final Closeable... closeables) {
         if (closeables != null) {
             for (Closeable c : closeables) {
-                if (c == null) continue;
+                if (c == null) {
+                    continue;
+                }
 
                 try {
                     c.close();

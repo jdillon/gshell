@@ -22,20 +22,23 @@ package org.sonatype.gshell.util.io;
 import java.io.Flushable;
 import java.io.IOException;
 
+import org.sonatype.gshell.util.Log;
+
 /**
  * Quietly flushes {@link Flushable}s.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
- * @since 1.0
+ * @since 2.0
  */
 public class Flusher
 {
     public static void flush(final Flushable... flushable) {
         if (flushable != null) {
             for (Flushable f : flushable) {
-                if (f == null) continue;
-                
+                if (f == null) {
+                    continue;
+                }
+
                 try {
                     f.flush();
                 }

@@ -33,17 +33,19 @@ import java.text.MessageFormat;
  * and redirects to given streams.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
- * @since 1.0
+ * @since 2.0
  */
 public class InputOutputHijacker
 {
     private static Logger log = LoggerFactory.getLogger(InputOutputHijacker.class);
-    
+
     /**
      * Contains a {@link StreamRegistration} for the current thread if its registered, else null.
      */
-    private static final InheritableThreadLocal<StreamRegistration> registrations = new InheritableThreadLocal<StreamRegistration>();
+    private static final
+    InheritableThreadLocal<StreamRegistration>
+        registrations =
+        new InheritableThreadLocal<StreamRegistration>();
 
     /**
      * The previously installed System streams, initialized when installing.
@@ -85,7 +87,7 @@ public class InputOutputHijacker
         System.setErr(new DelegateOutputStream(StreamSet.OutputType.ERR));
 
         installed = true;
-        
+
         log.debug("Installed");
     }
 
@@ -162,13 +164,13 @@ public class InputOutputHijacker
         ensureInstalled();
 
         if (log.isTraceEnabled()) {
-            log.trace("Registering: {} -> {}, {}, {}", new Object[] { Thread.currentThread(), in, out, err });
+            log.trace("Registering: {} -> {}, {}, {}", new Object[]{Thread.currentThread(), in, out, err});
         }
-        
+
         StreamRegistration prev = registration(false);
         StreamSet set = new StreamSet(in, out, err);
         StreamRegistration next = new StreamRegistration(set, prev);
-        
+
         registrations.set(next);
     }
 

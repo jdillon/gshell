@@ -23,8 +23,7 @@ import java.io.PrintStream;
  * Prefixes printed lines as instructed to by a given {@link Prefixer}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
- * @since 1.0
+ * @since 2.0
  */
 public class PrefixingStream
     extends PrintStream

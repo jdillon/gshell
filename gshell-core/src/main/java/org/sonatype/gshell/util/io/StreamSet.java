@@ -29,11 +29,18 @@ import java.io.PrintStream;
  * A set of input, output and error streams.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
- * @since 1.0
+ * @since 2.0
  */
 public class StreamSet
 {
+    /**
+     * Output stream type.
+     */
+    public static enum OutputType
+    {
+        OUT, ERR;
+    }
+
     public final InputStream in;
 
     public final PrintStream out;
@@ -64,7 +71,17 @@ public class StreamSet
 
     public PrintStream getOutput(final OutputType type) {
         assert type != null;
-        return type.get(this);
+
+        switch (type) {
+            case OUT:
+                return out;
+
+            case ERR:
+                return err;
+        }
+
+        // Should never happen
+        throw new InternalError();
     }
 
     public void flush() {
@@ -81,6 +98,10 @@ public class StreamSet
         if (!isOutputCombined()) {
             Closer.close(err);
         }
+    }
+
+    public String toString() {
+        return getClass().getSimpleName() + "{in=" + in + ", out=" + out + ", err=" + err + "}";
     }
 
     /**
@@ -110,30 +131,7 @@ public class StreamSet
      * The {@link System} streams as file streams, for a better chance of non-buffered I/O.
      */
     public static final StreamSet SYSTEM_FD = new StreamSet(
-                new FileInputStream(FileDescriptor.in),
-                new PrintStream(new FileOutputStream(FileDescriptor.out)),
-                new PrintStream(new FileOutputStream(FileDescriptor.err)));
-
-    /**
-     * Output stream type.
-     */
-    public static enum OutputType
-    {
-        OUT, ERR;
-
-        private PrintStream get(final StreamSet set) {
-            assert set != null;
-
-            switch (this) {
-                case OUT:
-                    return set.out;
-
-                case ERR:
-                    return set.err;
-            }
-
-            // Should never happen
-            throw new InternalError();
-        }
-    }
+        new FileInputStream(FileDescriptor.in),
+        new PrintStream(new FileOutputStream(FileDescriptor.out)),
+        new PrintStream(new FileOutputStream(FileDescriptor.err)));
 }
