@@ -27,7 +27,7 @@ public interface ConsoleErrorHandler
     /**
      * Called when an error occurs while executing a {@link ConsoleTask}.
      *
-     * @param error The error which has occured.
+     * @param error The error which has occurred.
      * @return True to allow the console to continue, false to abort it.
      */
     boolean handleError(Throwable error);
