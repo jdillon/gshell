@@ -105,8 +105,6 @@ public class InputPipe
         try {
             startSignal.countDown();
             
-            // NOTE: There is a small window here, where the input stream might read from the queue, before the read() call is invoked
-            
             while (running) {
                 int c = read();
 
@@ -171,6 +169,10 @@ public class InputPipe
             Integer i;
             if (wait) {
                 try {
+                    // Wait for the pipe to actually start consuming bytes before we start taking
+                    startSignal.await();
+
+                    // Take a byte for the queue
                     i = queue.take();
                 }
                 catch (InterruptedException e) {
