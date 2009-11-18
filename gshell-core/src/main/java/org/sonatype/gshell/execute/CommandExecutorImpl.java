@@ -124,13 +124,7 @@ public class CommandExecutorImpl
 
         final IO io = shell.getIo();
 
-        // Hijack the system output streams
-        if (!InputOutputHijacker.isInstalled()) {
-            InputOutputHijacker.install(io.streams);
-        }
-        else {
-            InputOutputHijacker.register(io.streams);
-        }
+        InputOutputHijacker.maybeInstall(io.streams);
 
         Object result = null;
         try {

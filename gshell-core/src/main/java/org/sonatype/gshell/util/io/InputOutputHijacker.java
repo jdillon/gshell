@@ -19,8 +19,7 @@
 
 package org.sonatype.gshell.util.io;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.sonatype.gshell.util.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -37,15 +36,10 @@ import java.text.MessageFormat;
  */
 public class InputOutputHijacker
 {
-    private static Logger log = LoggerFactory.getLogger(InputOutputHijacker.class);
-
     /**
      * Contains a {@link StreamRegistration} for the current thread if its registered, else null.
      */
-    private static final
-    InheritableThreadLocal<StreamRegistration>
-        registrations =
-        new InheritableThreadLocal<StreamRegistration>();
+    private static final InheritableThreadLocal<StreamRegistration> registrations = new InheritableThreadLocal<StreamRegistration>();
 
     /**
      * The previously installed System streams, initialized when installing.
@@ -88,7 +82,7 @@ public class InputOutputHijacker
 
         installed = true;
 
-        log.debug("Installed");
+        Log.debug("Installed");
     }
 
     /**
@@ -125,6 +119,9 @@ public class InputOutputHijacker
         if (!isInstalled()) {
             install(set);
         }
+        else {
+            register(set);
+        }
     }
 
     /**
@@ -140,7 +137,7 @@ public class InputOutputHijacker
         previous = null;
         installed = false;
 
-        log.debug("Uninstalled");
+        Log.debug("Un-installed");
     }
 
     /**
@@ -175,9 +172,7 @@ public class InputOutputHijacker
     public static synchronized void register(final InputStream in, final PrintStream out, final PrintStream err) {
         ensureInstalled();
 
-        if (log.isTraceEnabled()) {
-            log.trace("Registering: {} -> {}, {}, {}", new Object[]{Thread.currentThread(), in, out, err});
-        }
+        Log.trace("Registering: {} -> {}, {}, {}", new Object[]{Thread.currentThread(), in, out, err});
 
         StreamRegistration prev = registration(false);
         StreamSet set = new StreamSet(in, out, err);
@@ -210,7 +205,7 @@ public class InputOutputHijacker
 
         registrations.set(cur.previous);
 
-        log.trace("Deregistered: {}", Thread.currentThread());
+        Log.trace("De-registered: {}", Thread.currentThread());
     }
 
     /**
@@ -262,7 +257,7 @@ public class InputOutputHijacker
      * the hijacker state to uninstalled.
      */
     public static synchronized void restore() {
-        restore(StreamSet.SYSTEM);
+        restore(StreamSet.system());
     }
 
     /**

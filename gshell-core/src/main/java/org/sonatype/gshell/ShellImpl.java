@@ -146,9 +146,7 @@ public class ShellImpl
     private synchronized void open() throws Exception {
         log.debug("Opening");
 
-        if (!InputOutputHijacker.isInstalled()) {
-            InputOutputHijacker.install();
-        }
+        InputOutputHijacker.maybeInstall();
 
         // Customize the shell
         branding.customize(this);
