@@ -146,5 +146,7 @@ public class CommandDocumenterImpl
             out.println(text);
             io.out.println();
         }
+
+        // TODO: Render preferences
     }
 }
