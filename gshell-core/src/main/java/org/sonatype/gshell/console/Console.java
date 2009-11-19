@@ -37,7 +37,7 @@ import java.util.concurrent.Callable;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public abstract class Console
+public class Console
     implements Runnable
 {
     protected final Logger log = LoggerFactory.getLogger(getClass());
@@ -48,6 +48,8 @@ public abstract class Console
 
     private final ConsoleReader reader;
 
+    private final Callable<ConsoleTask> taskFactory;
+
     private ConsolePrompt prompt;
 
     private ConsoleErrorHandler errorHandler;
@@ -56,7 +58,7 @@ public abstract class Console
 
     private volatile boolean running;
 
-    public Console(final IO io, final History history, final InputStream bindings) throws IOException {
+    public Console(final IO io, final Callable<ConsoleTask> taskFactory, final History history, final InputStream bindings) throws IOException {
         assert io != null;
         // history could be null
         // bindings could be null
@@ -81,6 +83,9 @@ public abstract class Console
         this.reader.setPaginationEnabled(true);
         this.reader.setCompletionHandler(new CandidateListCompletionHandler());
         this.reader.setHistory(history != null ? history : new MemoryHistory());
+
+        assert taskFactory != null;
+        this.taskFactory = taskFactory;
     }
 
     public IO getIo() {
@@ -140,7 +145,14 @@ public abstract class Console
         log.trace("Stopped");
     }
 
-    protected abstract ConsoleTask createTask();
+    protected ConsoleTask createTask() {
+        try {
+            return taskFactory.call();
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /**
      * Read and execute a line.

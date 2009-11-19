@@ -16,13 +16,14 @@
 
 package org.sonatype.gshell;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.console.ConsoleErrorHandler;
 import org.sonatype.gshell.notification.ErrorNotification;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
+import static org.sonatype.gshell.util.ansi.Ansi.ansi;
+import static org.fusesource.jansi.Ansi.Color.*;
+import static org.fusesource.jansi.Ansi.Attribute.*;
 
 /**
  * Shell {@link ConsoleErrorHandler} which renders errors with ANSI codes.
@@ -33,23 +34,20 @@ import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
 public class ShellErrorHandler
     implements ConsoleErrorHandler, VariableNames
 {
-    private static final Logger log = LoggerFactory.getLogger(ShellErrorHandler.class);
-
     private static enum Messages
     {
-        ERROR_EXCEPTION_NAME,
-        ERROR_EXCEPTION_AT,
-        ERROR_EXCEPTION_CAUSED_BY,
+        ERROR_AT,
+        ERROR_CAUSED_BY,
         ERROR_LOCATION_NATIVE,
         ERROR_LOCATION_UNKNOWN;
-        
+
         private static final MessageSource messages = new ResourceBundleMessageSource(ShellErrorHandler.class);
 
         String format(final Object... args) {
             return messages.format(name(), args);
         }
     }
-    
+
     private final IO io;
 
     public ShellErrorHandler(final IO io) {
@@ -66,7 +64,6 @@ public class ShellErrorHandler
     private void displayError(final Throwable error) {
         assert error != null;
 
-        // Decode any error notifications
         Throwable cause = error;
         if (error instanceof ErrorNotification) {
             cause = error.getCause();
@@ -81,22 +78,32 @@ public class ShellErrorHandler
             showTrace = Boolean.parseBoolean(tmp.trim());
         }
 
-        // FIXME: Need to handle when cause.getMessage() is null, to avoid weird error display
-
-        // Spit out the terse reason why we've failed
-        io.err.println(Messages.ERROR_EXCEPTION_NAME.format(cause.getClass().getName(), cause.getMessage()));
+        if (showTrace || !io.isSilent()) {
+            io.err.print(ansi().a(INTENSITY_BOLD).fg(RED).a(cause.getClass().getName()).reset());
+            if (cause.getMessage() != null) {
+                io.err.print(": ");
+                io.err.print(ansi().a(INTENSITY_BOLD).fg(RED).a(cause.getMessage()).reset());
+            }
+            io.err.println();
+        }
 
         if (showTrace || io.isVerbose()) {
             while (cause != null) {
                 for (StackTraceElement e : cause.getStackTrace()) {
                     io.err.print("    ");
-                    io.err.println(Messages.ERROR_EXCEPTION_AT.format(e.getClassName(), e.getMethodName(), getLocation(e)));
+                    io.err.print(ansi().a(INTENSITY_BOLD).a(Messages.ERROR_AT.format()).reset().a(" ").a(e.getClassName()).a(".").a(e.getMethodName()));
+                    io.err.print(ansi().a(" (").a(INTENSITY_BOLD).a(getLocation(e)).reset().a(")"));
+                    io.err.println();
                 }
 
                 cause = cause.getCause();
                 if (cause != null) {
-                    // FIXME: Need to handle when cause.getMessage() is null, to avoid weird error display
-                    io.err.println(Messages.ERROR_EXCEPTION_CAUSED_BY.format(cause.getClass().getName(), cause.getMessage()));
+                    io.err.print(ansi().a(INTENSITY_BOLD).a(Messages.ERROR_CAUSED_BY.format()).reset().a(" ").a(cause.getClass().getName()));
+                    if (cause.getMessage() != null) {
+                        io.err.print(": ");
+                        io.err.print(ansi().a(INTENSITY_BOLD).fg(RED).a(cause.getMessage()).reset());
+                    }
+                    io.err.println();
                 }
             }
         }

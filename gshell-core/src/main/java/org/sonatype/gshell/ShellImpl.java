@@ -41,6 +41,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -192,11 +193,8 @@ public class ShellImpl
         final AtomicReference<ExitNotification> exitNotifHolder = new AtomicReference<ExitNotification>();
         final AtomicReference<Object> lastResultHolder = new AtomicReference<Object>();
 
-        IO io = getIo();
-        
-        Console console = new Console(io, history, loadBindings()) {
-            @Override
-            protected ConsoleTask createTask() {
+        Callable<ConsoleTask> taskFactory = new Callable<ConsoleTask>() {
+            public ConsoleTask call() throws Exception {
                 return new ConsoleTask() {
                     @Override
                     public boolean doExecute(final String input) throws Exception {
@@ -215,6 +213,10 @@ public class ShellImpl
                 };
             }
         };
+
+        IO io = getIo();
+        
+        Console console = new Console(io, taskFactory, history, loadBindings());
 
         if (prompt != null) {
             console.setPrompt(prompt);
