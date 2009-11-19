@@ -41,11 +41,9 @@ public class SetPreferenceCommand
         assert context != null;
         IO io = context.getIo();
 
-        Object result = node().get(key, null);
-        io.info("{}", result);
-
+        node().put(key, value);
         node().sync();
         
-        return result;
+        return Result.SUCCESS;
     }
 }
