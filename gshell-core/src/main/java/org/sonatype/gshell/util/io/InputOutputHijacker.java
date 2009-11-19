@@ -228,7 +228,7 @@ public class InputOutputHijacker
     /**
      * Returns the currently registered streams.
      */
-    private static synchronized StreamSet current() {
+    public static synchronized StreamSet current() {
         StreamRegistration reg = registration(false);
         if (reg == null) {
             return previous;
@@ -241,7 +241,7 @@ public class InputOutputHijacker
     //
 
     /**
-     * Restores the System streams to the given pair and resets the hijacker state to uninstalled.
+     * Restores the System streams to the given pair and resets the hijacker state to un-installed.
      */
     public static synchronized void restore(final StreamSet streams) {
         assert streams != null;
@@ -254,7 +254,7 @@ public class InputOutputHijacker
 
     /**
      * Restores the original System streams from {@link StreamSet#SYSTEM} and resets
-     * the hijacker state to uninstalled.
+     * the hijacker state to un-installed.
      */
     public static synchronized void restore() {
         restore(StreamSet.system());
