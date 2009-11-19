@@ -32,11 +32,12 @@ public class ShellHolder
     private static final InheritableThreadLocal<Shell> holder = new InheritableThreadLocal<Shell>();
 
     public static Shell set(final Shell shell) {
-        log.trace("Setting shell: {}", shell);
-
         Shell last = holder.get();
 
-        holder.set(shell);
+        if (shell != last) {
+            log.trace("Setting shell: {}", shell);
+            holder.set(shell);
+        }
 
         return last;
     }
