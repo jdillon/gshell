@@ -182,7 +182,7 @@ public class InputOutputHijacker
     }
 
     /**
-     * Register combinded streams for the current thread.
+     * Register combined streams for the current thread.
      */
     public static synchronized void register(final InputStream in, final PrintStream out) {
         register(in, out, out);
@@ -198,7 +198,7 @@ public class InputOutputHijacker
     }
 
     /**
-     * Reregister streams for the current thread, and restore the previous if any.
+     * Re-register streams for the current thread, and restore the previous if any.
      */
     public static synchronized void deregister() {
         StreamRegistration cur = registration(true);
@@ -353,8 +353,8 @@ public class InputOutputHijacker
         }
 
         @Override
-        public void mark(final int readlimit) {
-            get().mark(readlimit);
+        public void mark(final int readLimit) {
+            get().mark(readLimit);
         }
 
         @Override
