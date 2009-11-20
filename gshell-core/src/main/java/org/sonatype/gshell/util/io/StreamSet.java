@@ -100,8 +100,13 @@ public class StreamSet
         }
     }
 
+    private String objectId(final Object obj) {
+        assert obj != null;
+        return obj.getClass().getSimpleName() + "@" + System.identityHashCode(obj);
+    }
+
     public String toString() {
-        return getClass().getSimpleName() + "{in=" + in + ", out=" + out + ", err=" + err + "}";
+        return getClass().getSimpleName() + "{in=" + objectId(in) + ", out=" + objectId(out) + ", err=" + objectId(err) + "}";
     }
 
     /**
