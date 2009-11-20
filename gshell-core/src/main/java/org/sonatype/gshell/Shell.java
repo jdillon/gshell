@@ -45,17 +45,17 @@ public interface Shell
     Object execute(Object... args) throws Exception;
 
     /**
-     * Check if the shell can be run interactivly.
+     * Check if the shell can be run interactively.
      *
      * @return True if the shell is interactive.
      */
     boolean isInteractive();
 
     /**
-     * Run the shell interactivly.
+     * Run the shell interactively.
      *
-     * @param args The initial commands to execute interactivly.
-     * @throws Exception                     Failed to execute commands.
+     * @param args The initial commands to execute interactively.
+     * @throws Exception Failed to execute commands.
      * @throws UnsupportedOperationException The shell does not support interactive execution.
      */
     void run(Object... args) throws Exception;

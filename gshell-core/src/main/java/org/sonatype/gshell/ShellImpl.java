@@ -29,6 +29,7 @@ import org.sonatype.gshell.event.EventAware;
 import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.execute.CommandExecutor;
 import org.sonatype.gshell.notification.ExitNotification;
+import org.sonatype.gshell.util.Arguments;
 import org.sonatype.gshell.util.io.Closer;
 import org.sonatype.gshell.util.io.InputOutputHijacker;
 
@@ -73,6 +74,15 @@ public class ShellImpl
 
     private boolean opened;
 
+    //
+    // TODO: Maybe these should be set in variables?  More supportable than adding new methods for little features like this.
+    //
+
+    private boolean loadProfileScripts = true;
+
+    private boolean loadInteractiveScripts = true;
+
+
     public ShellImpl(final EventManager eventManager, final CommandExecutor executor, final Branding branding,
                      final IO io, final Variables variables) throws IOException
     {
@@ -89,7 +99,6 @@ public class ShellImpl
             ((EventAware) variables).setEventManager(eventManager);
         }
         this.history = new ShellHistory(new File(branding.getUserContextDir(), branding.getHistoryFileName()));
-
     }
 
     public Branding getBranding() {
@@ -123,6 +132,22 @@ public class ShellImpl
     public void setCompleters(final Completer... completers) {
         assert completers != null;
         setCompleters(Arrays.asList(completers));
+    }
+
+    public boolean isLoadProfileScripts() {
+        return loadProfileScripts;
+    }
+
+    public void setLoadProfileScripts(boolean enable) {
+        this.loadProfileScripts = enable;
+    }
+
+    public boolean isLoadInteractiveScripts() {
+        return loadInteractiveScripts;
+    }
+
+    public void setLoadInteractiveScripts(boolean enable) {
+        this.loadInteractiveScripts = enable;
     }
 
     public synchronized boolean isOpened() {
@@ -185,7 +210,7 @@ public class ShellImpl
         assert args != null;
         ensureOpened();
 
-        log.debug("Starting interactive console; args: {}", args);
+        log.debug("Starting interactive console; args: {}", Arguments.toStringArray(args));
 
         loadInteractiveScripts();
 
@@ -325,12 +350,16 @@ public class ShellImpl
     // Script Loader
 
     protected void loadProfileScripts() throws Exception {
+        if (!isLoadProfileScripts()) return;
+
         String fileName = branding.getProfileScriptName();
         loadSharedScript(fileName);
         loadUserScript(fileName);
     }
 
     protected void loadInteractiveScripts() throws Exception {
+        if (!isLoadInteractiveScripts()) return;
+
         String fileName = branding.getInteractiveScriptName();
         loadSharedScript(fileName);
         loadUserScript(fileName);

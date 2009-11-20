@@ -157,6 +157,8 @@ public abstract class MainSupport
         TerminalFactory.configure(type);
     }
 
+    // TODO: Add --norc && --noprofile
+    
     @Argument
     protected List<String> appArgs = null;
 
