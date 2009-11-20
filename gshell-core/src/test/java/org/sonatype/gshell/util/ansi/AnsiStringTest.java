@@ -31,14 +31,14 @@ public class AnsiStringTest
     public void testNotEncoded() throws Exception {
         AnsiString as = new AnsiString("foo");
         assertEquals("foo", as.getEncoded());
-        assertEquals("foo", as.getUnencoded());
+        assertEquals("foo", as.getPlain());
         assertEquals(3, as.length());
     }
 
     @Test
     public void testEncoded() throws Exception {
         AnsiString as = new AnsiString(Ansi.ansi().a(Ansi.Attribute.INTENSITY_BOLD).a("foo").reset().toString());
-        assertEquals("foo", as.getUnencoded());
+        assertEquals("foo", as.getPlain());
         assertEquals(3, as.length());
     }
 }

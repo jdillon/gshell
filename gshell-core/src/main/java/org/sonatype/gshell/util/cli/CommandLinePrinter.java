@@ -189,8 +189,8 @@ public class CommandLinePrinter
         assert out != null;
         assert handler != null;
 
-        int prefixSeperatorWidth = prefix.length() + separator.length();
-        int descriptionWidth = terminalWidth - len - prefixSeperatorWidth;
+        int prefixSeparatorWidth = prefix.length() + separator.length();
+        int descriptionWidth = terminalWidth - len - prefixSeparatorWidth;
 
         // Only render if there is help-text, else its hidden
         String desc = handler.getHelpText(messages);
@@ -216,7 +216,7 @@ public class CommandLinePrinter
             if (word.length() + buff.length() > descriptionWidth) {
                 // spit out the current buffer and indent
                 out.println(buff);
-                indent(out, len + prefixSeperatorWidth);
+                indent(out, len + prefixSeparatorWidth);
                 buff.setLength(0);
             }
             buff.append(word);

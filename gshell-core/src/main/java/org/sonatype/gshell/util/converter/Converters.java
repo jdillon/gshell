@@ -456,7 +456,7 @@ public class Converters
     }
 
     /**
-     * Locate a property editor for qiven class of object.
+     * Locate a property editor for given class of object.
      *
      * @param type The target object class of the property.
      * @return The resolved editor, if any.  Returns null if a suitable editor could not be located.

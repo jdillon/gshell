@@ -47,17 +47,17 @@ public class HelpCommand
 
     private CommandRegistry commandRegistry;
 
-    private CommandDocumenter commandDocumeter;
+    private CommandDocumenter commandDocumenter;
 
     @Argument
     private String commandName;
 
     @Inject
-    public HelpCommand(final AliasRegistry aliasRegistry, final CommandRegistry commandRegistry, final CommandDocumenter commandDocumeter) {
+    public HelpCommand(final AliasRegistry aliasRegistry, final CommandRegistry commandRegistry, final CommandDocumenter commandDocumenter) {
         assert aliasRegistry != null;
         this.aliasRegistry = aliasRegistry;
-        assert commandDocumeter != null;
-        this.commandDocumeter = commandDocumeter;
+        assert commandDocumenter != null;
+        this.commandDocumenter = commandDocumenter;
         assert commandRegistry != null;
         this.commandRegistry = commandRegistry;
     }
@@ -81,7 +81,7 @@ public class HelpCommand
 
             if (commandRegistry.containsCommand(commandName)) {
                 CommandAction command = commandRegistry.getCommand(commandName);
-                commandDocumeter.renderManual(command, io);
+                commandDocumenter.renderManual(command, io);
 
                 return Result.SUCCESS;
             }
@@ -118,7 +118,7 @@ public class HelpCommand
         io.out.println(getMessages().format("info.available-commands"));
         for (CommandAction command : commands) {
             String formattedName = String.format(nameFormat, command.getName());
-            String desc = commandDocumeter.getDescription(command);
+            String desc = commandDocumenter.getDescription(command);
 
             io.out.format("  @|bold %s|@", formattedName);
             if (desc != null) {

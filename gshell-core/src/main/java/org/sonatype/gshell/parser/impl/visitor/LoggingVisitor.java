@@ -29,7 +29,7 @@ import org.sonatype.gshell.parser.impl.SimpleNode;
 import org.sonatype.gshell.util.Strings;
 
 /**
- * Visitor whichs logs nodes in the tree.
+ * Logs nodes in the tree.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */

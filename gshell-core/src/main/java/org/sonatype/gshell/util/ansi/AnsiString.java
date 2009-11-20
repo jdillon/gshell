@@ -32,12 +32,12 @@ public class AnsiString
 {
     private final CharSequence encoded;
 
-    private final CharSequence unencoded;
+    private final CharSequence plain;
 
     public AnsiString(final CharSequence str) {
         assert str != null;
         this.encoded = str;
-        this.unencoded = chew(str);
+        this.plain = chew(str);
     }
 
     private CharSequence chew(final CharSequence str) {
@@ -63,8 +63,8 @@ public class AnsiString
         return encoded;
     }
 
-    public CharSequence getUnencoded() {
-        return unencoded;
+    public CharSequence getPlain() {
+        return plain;
     }
 
     // FIXME: charAt() and subSequence() will make shit barf, need to call toString() first to get expected results
@@ -78,7 +78,7 @@ public class AnsiString
     }
 
     public int length() {
-        return getUnencoded().length();
+        return getPlain().length();
     }
 
     @Override

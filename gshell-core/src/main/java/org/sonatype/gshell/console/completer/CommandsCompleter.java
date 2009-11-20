@@ -55,7 +55,7 @@ public class CommandsCompleter
 
     private final CommandRegistry commandRegistry;
 
-    private final Map<String, Completer> completors = new HashMap<String, Completer>();
+    private final Map<String, Completer> completers = new HashMap<String, Completer>();
 
     private final AggregateCompleter delegate = new AggregateCompleter();
 
@@ -127,14 +127,14 @@ public class CommandsCompleter
         Completer root = new ArgumentCompleter(children);
 
         // Track and attach
-        completors.put(name, root);
+        this.completers.put(name, root);
         delegate.getCompleters().add(root);
     }
 
     private void removeCompleter(final String name) {
         assert name != null;
 
-        Completer completer = completors.remove(name);
+        Completer completer = completers.remove(name);
         delegate.getCompleters().remove(completer);
     }
 

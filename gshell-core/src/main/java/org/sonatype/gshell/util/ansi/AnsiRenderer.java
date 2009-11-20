@@ -126,7 +126,7 @@ public class AnsiRenderer
         CYAN(Color.CYAN),
         WHITE(Color.WHITE),
 
-        // Forground Colors
+        // Foreground Colors
         FG_BLACK(Color.BLACK, false),
         FG_RED(Color.RED, false),
         FG_GREEN(Color.GREEN, false),
