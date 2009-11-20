@@ -143,41 +143,41 @@ public class IO
     }
 
     /**
-     * Check if the verbosity level is set to {@link Verbosity#SILENT}.
+     * Check if the verbosity level is set to at least {@link Verbosity#SILENT}.
      */
     public boolean isSilent() {
-        return verbosity == Verbosity.SILENT;
+        return verbosity.ordinal() >= Verbosity.SILENT.ordinal();
     }
 
     /**
-     * Check if the verbosity level is set to {@link Verbosity#QUIET}.
+     * Check if the verbosity level is set to at least {@link Verbosity#QUIET}.
      */
     public boolean isQuiet() {
-        return verbosity == Verbosity.QUIET;
+        return verbosity.ordinal() >= Verbosity.QUIET.ordinal();
     }
 
     /**
-     * Check if the verbosity level is set to {@link Verbosity#INFO}.
+     * Check if the verbosity level is set to at least {@link Verbosity#INFO}.
      */
     public boolean isInfo() {
-        return verbosity == Verbosity.INFO;
+        return verbosity.ordinal() >= Verbosity.INFO.ordinal();
     }
 
     /**
-     * Check if the verbosity level is set to {@link Verbosity#VERBOSE}.
+     * Check if the verbosity level is set to at least {@link Verbosity#VERBOSE}.
      */
     public boolean isVerbose() {
-        return verbosity == Verbosity.VERBOSE;
+        return verbosity.ordinal() >= Verbosity.VERBOSE.ordinal();
     }
 
     /**
-     * Check if the verbosity level is set to {@link Verbosity#DEBUG}.
-     * <p/>
-     * <p>For generaly usage, when debug output is required, it is better
+     * Check if the verbosity level is set to at least {@link Verbosity#DEBUG}.
+     *
+     * For generally usage, when debug output is required, it is better
      * to use the logging facility instead.
      */
     public boolean isDebug() {
-        return verbosity == Verbosity.DEBUG;
+        return verbosity.ordinal() >= Verbosity.DEBUG.ordinal();
     }
 
     /**
@@ -213,11 +213,11 @@ public class IO
      */
     public static enum Verbosity
     {
-        SILENT,
-        QUIET,
-        INFO,
-        VERBOSE,
-        DEBUG
+        DEBUG,   // 0
+        VERBOSE, // 1
+        INFO,    // 2
+        QUIET,   // 3
+        SILENT,  // 4
     }
 
     //
