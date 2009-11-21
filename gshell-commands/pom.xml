@@ -37,15 +37,15 @@
         </dependency>
 
         <dependency>
-            <groupId>org.sonatype.gshell</groupId>
-            <artifactId>gshell-core</artifactId>
-            <classifier>tests</classifier>
-            <scope>test</scope>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
-            <groupId>com.google.inject</groupId>
-            <artifactId>guice</artifactId>
+            <groupId>org.sonatype.gshell</groupId>
+            <artifactId>gshell-core</artifactId>
+            <classifier>tests</classifier>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -54,6 +54,11 @@
         <module>gshell-text</module>
         <module>gshell-network</module>
         <module>gshell-shell</module>
+        <module>gshell-file</module>
+        <module>gshell-admin</module>
+        <module>gshell-vfs</module>
+        <module>gshell-ssh</module>
+        <module>gshell-bsf</module>
     </modules>
 
 </project>
