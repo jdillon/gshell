@@ -167,7 +167,7 @@ public class BrandingSupport
             vars.set(SHELL_PROMPT, getPrompt());
         }
         if (!vars.contains(SHELL_USER_DIR)) {
-            vars.set(SHELL_USER_DIR, new File(".").getCanonicalPath()); // FIXME: Can just bind the File?
+            vars.set(SHELL_USER_DIR, new File(".").getCanonicalFile());
         }
     }
 }

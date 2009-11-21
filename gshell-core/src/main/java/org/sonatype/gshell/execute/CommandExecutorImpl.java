@@ -29,6 +29,7 @@ import org.sonatype.gshell.command.CommandDocumenter;
 import org.sonatype.gshell.command.CommandHelpSupport;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.execute.CommandLineParser.CommandLine;
+import org.sonatype.gshell.io.StreamJack;
 import org.sonatype.gshell.notification.ErrorNotification;
 import org.sonatype.gshell.notification.ResultNotification;
 import org.sonatype.gshell.registry.CommandResolver;
@@ -37,7 +38,6 @@ import org.sonatype.gshell.util.Strings;
 import org.sonatype.gshell.util.cli.CommandLineProcessor;
 import org.sonatype.gshell.util.cli.OpaqueArguments;
 import org.sonatype.gshell.util.i18n.PrefixingMessageSource;
-import org.sonatype.gshell.util.io.InputOutputHijacker;
 import org.sonatype.gshell.util.pref.PreferenceProcessor;
 
 /**
@@ -124,7 +124,7 @@ public class CommandExecutorImpl
 
         final IO io = shell.getIo();
 
-        InputOutputHijacker.maybeInstall(io.streams);
+        StreamJack.maybeInstall(io.streams);
 
         Object result = null;
         try {
@@ -180,7 +180,7 @@ public class CommandExecutorImpl
         finally {
             io.flush();
 
-            InputOutputHijacker.deregister();
+            StreamJack.deregister();
 
             ShellHolder.set(lastShell);
 

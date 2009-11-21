@@ -17,7 +17,7 @@
 package org.sonatype.gshell.util.ansi;
 
 import jline.TerminalFactory;
-import org.sonatype.gshell.util.Log;
+import org.sonatype.gossip.Log;
 
 /**
  * Provides support for using ANSI color escape codes.
@@ -28,6 +28,8 @@ import org.sonatype.gshell.util.Log;
 public class Ansi
     extends org.fusesource.jansi.Ansi
 {
+    private static final Log log = Log.getLogger(Ansi.class);
+
     @SuppressWarnings({"StringConcatenation"})
     public static final String FORCE = Ansi.class.getName() + ".force";
 
@@ -37,11 +39,11 @@ public class Ansi
     private static boolean detect() {
         boolean enabled = TerminalFactory.get().isAnsiSupported();
 
-        Log.trace("ANSI Detected: ", enabled);
+        log.trace("ANSI Detected: {}", enabled);
 
         if (!enabled) {
             enabled = Boolean.getBoolean(FORCE);
-            Log.trace("ANSI Forced: ", enabled);
+            log.trace("ANSI Forced: {}", enabled);
         }
 
         return enabled;

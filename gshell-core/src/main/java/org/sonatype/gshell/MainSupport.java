@@ -19,9 +19,11 @@ package org.sonatype.gshell;
 import jline.AnsiWindowsTerminal;
 import jline.NoInterruptUnixTerminal;
 import jline.TerminalFactory;
+import org.sonatype.gossip.Log;
+import org.sonatype.gossip.Level;
 import org.sonatype.gshell.command.IO;
+import org.sonatype.gshell.io.StreamJack;
 import org.sonatype.gshell.notification.ExitNotification;
-import org.sonatype.gshell.util.Log;
 import org.sonatype.gshell.util.NameValue;
 import org.sonatype.gshell.util.ansi.Ansi;
 import org.sonatype.gshell.util.ansi.AnsiIO;
@@ -32,8 +34,7 @@ import org.sonatype.gshell.util.cli.Option;
 import org.sonatype.gshell.util.cli.handler.StopHandler;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
-import org.sonatype.gshell.util.io.InputOutputHijacker;
-import org.sonatype.gshell.util.io.StreamSet;
+import org.sonatype.gshell.io.StreamSet;
 import org.sonatype.gshell.util.pref.Preference;
 import org.sonatype.gshell.util.pref.PreferenceProcessor;
 
@@ -54,6 +55,8 @@ public abstract class MainSupport
         TerminalFactory.registerFlavor(TerminalFactory.Flavor.UNIX, NoInterruptUnixTerminal.class);
         TerminalFactory.registerFlavor(TerminalFactory.Flavor.WINDOWS, AnsiWindowsTerminal.class);
     }
+    
+    protected final Log log = Log.getLogger(MainSupport.class);
     
     protected final IO io = new AnsiIO(StreamSet.SYSTEM_FD, true);
 
@@ -85,7 +88,7 @@ public abstract class MainSupport
     @Option(name = "-e", aliases = {"--errors"})
     protected boolean showErrorTraces = false;
 
-    protected void setConsoleLogLevel(final Log.Level level) {
+    protected void setConsoleLogLevel(final Level level) {
         System.setProperty(SHELL_LOGGING, level.name());
         vars.set(SHELL_LOGGING, level);
     }
@@ -94,7 +97,7 @@ public abstract class MainSupport
     @Option(name = "-d", aliases = {"--debug"})
     protected void setDebug(final boolean flag) {
         if (flag) {
-            setConsoleLogLevel(Log.Level.DEBUG);
+            setConsoleLogLevel(Level.DEBUG);
             io.setVerbosity(IO.Verbosity.DEBUG);
         }
     }
@@ -103,7 +106,7 @@ public abstract class MainSupport
     @Option(name = "-X", aliases = {"--trace"})
     protected void setTrace(final boolean flag) {
         if (flag) {
-            setConsoleLogLevel(Log.Level.TRACE);
+            setConsoleLogLevel(Level.TRACE);
             io.setVerbosity(IO.Verbosity.DEBUG);
         }
     }
@@ -112,7 +115,7 @@ public abstract class MainSupport
     @Option(name = "-v", aliases = {"--verbose"})
     protected void setVerbose(final boolean flag) {
         if (flag) {
-            setConsoleLogLevel(Log.Level.INFO);
+            setConsoleLogLevel(Level.INFO);
             io.setVerbosity(IO.Verbosity.VERBOSE);
         }
     }
@@ -121,7 +124,7 @@ public abstract class MainSupport
     @Option(name = "-q", aliases = {"--quiet"})
     protected void setQuiet(final boolean flag) {
         if (flag) {
-            setConsoleLogLevel(Log.Level.ERROR);
+            setConsoleLogLevel(Level.ERROR);
             io.setVerbosity(IO.Verbosity.QUIET);
         }
     }
@@ -177,10 +180,10 @@ public abstract class MainSupport
     public void boot(final String... args) throws Exception {
         assert args != null;
 
-        Log.debug("Booting w/args: ", args);
+        log.debug("Booting w/args: {}", args);
 
         // Setup environment defaults
-        setConsoleLogLevel(Log.Level.WARN);
+        setConsoleLogLevel(Level.WARN);
         setTerminalType(TerminalFactory.Type.AUTO);
 
         // Process preferences
@@ -215,7 +218,7 @@ public abstract class MainSupport
             exit(ExitNotification.DEFAULT_CODE);
         }
 
-        InputOutputHijacker.maybeInstall(io.streams);
+        StreamJack.maybeInstall(io.streams);
         
         // Setup a reference for our exit code so our callback thread can tell if we've shutdown normally or not
         final AtomicReference<Integer> codeRef = new AtomicReference<Integer>();

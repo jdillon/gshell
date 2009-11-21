@@ -17,9 +17,9 @@
  * under the License.
  */
 
-package org.sonatype.gshell.util.io;
+package org.sonatype.gshell.io;
 
-import org.sonatype.gshell.util.Log;
+import org.sonatype.gossip.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -34,8 +34,10 @@ import java.text.MessageFormat;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public class InputOutputHijacker
+public class StreamJack
 {
+    private static final Log log = Log.getLogger(StreamJack.class);
+
     /**
      * Contains a {@link StreamRegistration} for the current thread if its registered, else null.
      */
@@ -82,7 +84,7 @@ public class InputOutputHijacker
 
         installed = true;
 
-        Log.debug("Installed");
+        log.debug("Installed");
     }
 
     /**
@@ -137,7 +139,7 @@ public class InputOutputHijacker
         previous = null;
         installed = false;
 
-        Log.debug("Un-installed");
+        log.debug("Uninstalled");
     }
 
     /**
@@ -172,7 +174,7 @@ public class InputOutputHijacker
     public static synchronized void register(final InputStream in, final PrintStream out, final PrintStream err) {
         ensureInstalled();
 
-        Log.trace("Registering: {} -> {}, {}, {}", new Object[]{Thread.currentThread(), in, out, err});
+        log.trace("Registering: {} -> {}, {}, {}", Thread.currentThread(), in, out, err);
 
         StreamRegistration prev = registration(false);
         StreamSet set = new StreamSet(in, out, err);
@@ -205,7 +207,7 @@ public class InputOutputHijacker
 
         registrations.set(cur.previous);
 
-        Log.trace("De-registered: {}", Thread.currentThread());
+        log.trace("De-registered: {}", Thread.currentThread(), ", using streams: ", cur.previous == null ? "null" : cur.previous.streams);
     }
 
     /**

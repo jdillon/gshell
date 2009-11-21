@@ -17,23 +17,24 @@
  * under the License.
  */
 
-package org.sonatype.gshell.util.io;
+package org.sonatype.gshell.io;
 
 import org.junit.After;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+import org.sonatype.gshell.io.StreamJack;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 
 /**
- * Tests for the {@link InputOutputHijacker} class.
+ * Tests for the {@link StreamJack} class.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class InputOutputHijackerTest
+public class StreamJackTest
 {
     private ByteArrayOutputStream buff;
 
@@ -48,8 +49,8 @@ public class InputOutputHijackerTest
         buff = new ByteArrayOutputStream();
         out = new PrintStream(buff);
 
-        if (InputOutputHijacker.isInstalled()) {
-            InputOutputHijacker.uninstall();
+        if (StreamJack.isInstalled()) {
+            StreamJack.uninstall();
         }
     }
 
@@ -58,28 +59,28 @@ public class InputOutputHijackerTest
         buff = null;
         out = null;
 
-        if (InputOutputHijacker.isInstalled()) {
-            InputOutputHijacker.uninstall();
+        if (StreamJack.isInstalled()) {
+            StreamJack.uninstall();
         }
     }
 
     private void installOut() throws Exception {
-        assertFalse(InputOutputHijacker.isRegistered());
+        assertFalse(StreamJack.isRegistered());
 
-        InputOutputHijacker.install(in, out);
+        StreamJack.install(in, out);
 
-        assertTrue(InputOutputHijacker.isInstalled());
-        assertTrue(InputOutputHijacker.isRegistered());
+        assertTrue(StreamJack.isInstalled());
+        assertTrue(StreamJack.isRegistered());
     }
 
     private void deregisterAndUninstall() throws Exception {
-        InputOutputHijacker.deregister();
+        StreamJack.deregister();
 
-        assertFalse(InputOutputHijacker.isRegistered());
+        assertFalse(StreamJack.isRegistered());
 
-        InputOutputHijacker.uninstall();
+        StreamJack.uninstall();
 
-        assertFalse(InputOutputHijacker.isInstalled());
+        assertFalse(StreamJack.isInstalled());
     }
 
     @Test
@@ -106,12 +107,12 @@ public class InputOutputHijackerTest
     public void testInstallRegisterWithStream() throws Exception {
         System.out.println("before");
 
-        InputOutputHijacker.install();
-        assertTrue(InputOutputHijacker.isInstalled());
+        StreamJack.install();
+        assertTrue(StreamJack.isInstalled());
 
-        assertFalse(InputOutputHijacker.isRegistered());
-        InputOutputHijacker.register(in, out);
-        assertTrue(InputOutputHijacker.isRegistered());
+        assertFalse(StreamJack.isRegistered());
+        StreamJack.register(in, out);
+        assertTrue(StreamJack.isRegistered());
 
         try {
             System.out.print("hijacked");
@@ -135,10 +136,10 @@ public class InputOutputHijackerTest
         System.out.println("before");
         System.err.println("BEFORE");
 
-        InputOutputHijacker.install(in, out, err);
+        StreamJack.install(in, out, err);
 
-        assertTrue(InputOutputHijacker.isInstalled());
-        assertTrue(InputOutputHijacker.isRegistered());
+        assertTrue(StreamJack.isInstalled());
+        assertTrue(StreamJack.isRegistered());
 
         try {
             System.out.print("hijacked");
@@ -201,13 +202,13 @@ public class InputOutputHijackerTest
 
             System.out.print("!");
 
-            InputOutputHijacker.register(in, childOut);
+            StreamJack.register(in, childOut);
 
             try {
                 System.out.print("child");
             }
             finally {
-                InputOutputHijacker.deregister();
+                StreamJack.deregister();
             }
 
             System.out.print("!");

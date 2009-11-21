@@ -17,7 +17,7 @@
 package org.sonatype.gshell.testsupport;
 
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.util.io.StreamSet;
+import org.sonatype.gshell.io.StreamSet;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;

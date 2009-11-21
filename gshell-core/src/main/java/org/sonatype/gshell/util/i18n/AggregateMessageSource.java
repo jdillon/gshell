@@ -16,7 +16,7 @@
 
 package org.sonatype.gshell.util.i18n;
 
-import org.sonatype.gshell.util.Log;
+import org.sonatype.gossip.Log;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -31,6 +31,8 @@ import java.util.List;
 public class AggregateMessageSource
     implements MessageSource
 {
+    private static final Log log = Log.getLogger(AggregateMessageSource.class);
+
     private final List<MessageSource> sources = new LinkedList<MessageSource>();
 
     public AggregateMessageSource(final List<MessageSource> sources) {
@@ -57,7 +59,7 @@ public class AggregateMessageSource
                 }
             }
             catch (ResourceNotFoundException e) {
-                Log.trace(e);
+                log.trace(e.toString(), e);
             }
         }
 
@@ -79,7 +81,7 @@ public class AggregateMessageSource
                 }
             }
             catch (ResourceNotFoundException e) {
-                Log.trace(e);
+                log.trace(e.toString(), e);
             }
         }
 

@@ -256,6 +256,6 @@ public class InfoCommand
     }
 
     private void println(final IO io, final String name, final Object value) {
-        io.info(Ansi.ansi().a(Attribute.INTENSITY_BOLD).a(name).reset().a(": ").a(value));
+        io.info(Ansi.ansi().a("  ").a(Attribute.INTENSITY_BOLD).a(name).reset().a(": ").a(value));
     }
 }

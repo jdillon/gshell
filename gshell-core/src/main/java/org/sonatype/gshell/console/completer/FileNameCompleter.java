@@ -42,7 +42,14 @@ public class FileNameCompleter
     @Override
     protected File getUserDir() {
         Variables vars = ShellHolder.get().getVariables();
-        return new File(vars.get(SHELL_USER_DIR, String.class));
+        Object tmp = vars.get(SHELL_USER_DIR);
+        assert tmp != null;
+        
+        if (tmp instanceof File) {
+            return (File)tmp;
+        }
+
+        return new File(String.valueOf(tmp));
     }
 
     @Override

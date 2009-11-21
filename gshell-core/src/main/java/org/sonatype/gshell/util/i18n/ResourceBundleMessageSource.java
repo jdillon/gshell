@@ -16,7 +16,7 @@
 
 package org.sonatype.gshell.util.i18n;
 
-import org.sonatype.gshell.util.Log;
+import org.sonatype.gossip.Log;
 
 import java.text.MessageFormat;
 import java.util.LinkedList;
@@ -34,6 +34,8 @@ import java.util.ResourceBundle;
 public class ResourceBundleMessageSource
     implements MessageSource
 {
+    private static final Log log = Log.getLogger(ResourceBundleMessageSource.class);
+
     private final List<ResourceBundle> bundles = new LinkedList<ResourceBundle>();
 
     private final Locale locale;
@@ -85,7 +87,7 @@ public class ResourceBundleMessageSource
                 return bundle.getString(code);
             }
             catch (MissingResourceException e) {
-                Log.trace(e);
+                log.trace(e.toString(), e);
             }
         }
 

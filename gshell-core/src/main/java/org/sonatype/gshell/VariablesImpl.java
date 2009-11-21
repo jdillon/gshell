@@ -18,6 +18,7 @@ package org.sonatype.gshell;
 
 import org.sonatype.gshell.event.EventAware;
 import org.sonatype.gshell.event.EventManager;
+import org.sonatype.gshell.util.converter.Converters;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -103,13 +104,19 @@ public class VariablesImpl
 
         Object value = get(name);
 
-        // Support coercion to string by default
-        if (type == String.class) {
-            return (T) String.valueOf(value);
+        if (value != null && !type.isAssignableFrom(value.getClass())) {
+            value = Converters.getValue(type, value.toString());
         }
-        else {
-            return (T) value;
+
+        return (T) value;
+    }
+
+    public <T> T get(final String name, final Class<T> type, final T defaultValue) {
+        T value = get(name, type);
+        if (value == null) {
+            return defaultValue;
         }
+        return value;
     }
 
     public Object get(final String name, final Object defaultValue) {

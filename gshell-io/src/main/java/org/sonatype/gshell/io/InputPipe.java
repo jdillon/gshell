@@ -14,17 +14,15 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.util.io;
+package org.sonatype.gshell.io;
 
 import jline.Terminal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonatype.gshell.command.IO;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InterruptedIOException;
-import java.io.PrintStream;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
@@ -45,9 +43,7 @@ public class InputPipe
 
     private final Terminal term;
 
-    private final InputStream in;
-
-    private final PrintStream err;
+    private final StreamSet streams;
 
     private final Callable<Boolean> interruptHandler;
 
@@ -57,11 +53,10 @@ public class InputPipe
 
     private volatile boolean running;
 
-    public InputPipe(final IO io, final Callable<Boolean> interruptHandler) {
-        assert io != null;
-        this.term = io.getTerminal();
-        this.in = io.streams.in;
-        this.err = io.streams.err;
+    public InputPipe(final StreamSet streams, final Terminal terminal, final Callable<Boolean> interruptHandler) {
+        assert streams != null;
+        this.streams = streams;
+        this.term = terminal;
         assert interruptHandler != null;
         this.interruptHandler = interruptHandler;
     }
@@ -75,14 +70,7 @@ public class InputPipe
     }
     
     private int read() throws IOException {
-// FIXME: See if this is really needed and figure out why...
-//            if (term instanceof AnsiWindowsTerminal) {
-//                c = ((AnsiWindowsTerminal) term).readDirectChar(in);
-//            }
-//            else {
-//                c = terminal.readCharacter(in);
-//            }
-        return term.readCharacter(in);
+        return term.readCharacter(streams.in);
     }
 
     @Override
@@ -114,12 +102,12 @@ public class InputPipe
                         return;
 
                     case 3:
-                        err.println("^C");
+                        streams.err.println("^C");
                         interrupt = interruptHandler.call();
                         break;
 
                     case 4:
-                        err.println("^D");
+                        streams.err.println("^D");
                         break;
                 }
 

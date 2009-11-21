@@ -28,10 +28,10 @@ import org.sonatype.gshell.console.ConsoleTask;
 import org.sonatype.gshell.event.EventAware;
 import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.execute.CommandExecutor;
+import org.sonatype.gshell.io.Closer;
 import org.sonatype.gshell.notification.ExitNotification;
 import org.sonatype.gshell.util.Arguments;
-import org.sonatype.gshell.util.io.Closer;
-import org.sonatype.gshell.util.io.InputOutputHijacker;
+import org.sonatype.gshell.io.StreamJack;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -172,7 +172,7 @@ public class ShellImpl
     private synchronized void open() throws Exception {
         log.debug("Opening");
 
-        InputOutputHijacker.maybeInstall();
+        StreamJack.maybeInstall();
 
         // Customize the shell
         branding.customize(this);

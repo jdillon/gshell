@@ -24,8 +24,8 @@ import jline.console.history.MemoryHistory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.util.io.InputPipe;
-import org.sonatype.gshell.util.io.StreamSet;
+import org.sonatype.gshell.io.InputPipe;
+import org.sonatype.gshell.io.StreamSet;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -63,7 +63,7 @@ public class Console
         // history could be null
         // bindings could be null
 
-        this.pipe = new InputPipe(io, new Callable<Boolean>() {
+        this.pipe = new InputPipe(io.streams, io.getTerminal(), new Callable<Boolean>() {
             public Boolean call() throws Exception {
                 return interruptTask();
             }

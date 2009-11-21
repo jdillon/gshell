@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.sonatype.gshell.util.io;
+package org.sonatype.gshell.io;
 
 import java.io.FileDescriptor;
 import java.io.FileInputStream;

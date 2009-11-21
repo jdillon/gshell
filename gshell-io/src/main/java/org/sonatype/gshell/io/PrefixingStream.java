@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.util.io;
+package org.sonatype.gshell.io;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -23,7 +23,7 @@ import java.io.PrintStream;
  * Prefixes printed lines as instructed to by a given {@link Prefixer}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 1.0
+ * @since 2.0
  */
 public class PrefixingStream
     extends PrintStream
@@ -65,34 +65,6 @@ public class PrefixingStream
         assert b != null;
         assert off > -1;
         assert len > -1;
-
-        //
-        // FIXME: This is super-ughly embedded '\n' handling crap, just kinda hacked my want into this...
-        //        so it probably sucks a lot :-P
-        //
-
-        /*
-        if (len > 1) {
-            for (int i=off; i<len; i++) {
-                if (b[i] == '\n') {
-                    synchronized (this) {
-                        // Write out the first bits before the new line
-                        write(b, off, i - off);
-
-                        // The write out the new line
-                        write('\n');
-                        newline = true;
-
-                        // The write out everything else (recurses to find more embedded \n muck)
-                        write(b, i + 1, len - i - off - 1);
-
-                        // and then stop
-                        return;
-                    }
-                }
-            }
-        }
-        */
 
         synchronized (this) {
             // if we are on a new line, then print the prefix
