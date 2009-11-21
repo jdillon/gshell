@@ -49,6 +49,11 @@ public abstract class CommandRegistrarSupport
             Collections.sort(configurations);
 
             for (CommandsConfiguration config : configurations) {
+                if (!config.isEnabled()) {
+                    log.debug("Skipping disabled commands: {}", config);
+                    continue;
+                }
+
                 log.debug("Registering commands for: {}", config);
 
                 this.configurations.add(config);
@@ -97,6 +102,8 @@ public abstract class CommandRegistrarSupport
     {
         private static final String ID = "id";
 
+        private static final String ENABLE = "enable";
+
         private static final String AUTO_REGISTER_PRIORITY = "auto-register-priority";
 
         private static final String DEFAULT_AUTO_REGISTER_PRIORITY = "50";
@@ -115,6 +122,13 @@ public abstract class CommandRegistrarSupport
 
         public String getId() {
             return props.getProperty(ID);
+        }
+
+        public boolean isEnabled() {
+            if (props.containsKey(ENABLE)) {
+                return Boolean.parseBoolean(props.getProperty(ENABLE));
+            }
+            return true;
         }
 
         public int getAutoRegisterPriority() {
