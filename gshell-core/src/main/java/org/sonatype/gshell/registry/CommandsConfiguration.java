@@ -36,11 +36,11 @@ public class CommandsConfiguration
 
     private static final String ENABLE = "enable";
 
+    private static final String COMMANDS = "commands";
+
     private static final String AUTO_REGISTER_PRIORITY = "auto-register-priority";
 
     private static final String DEFAULT_AUTO_REGISTER_PRIORITY = "50";
-
-    private static final String AUTO_REGISTER_COMMANDS = "auto-register-commands";
 
     private final URL source;
 
@@ -60,21 +60,16 @@ public class CommandsConfiguration
         return Boolean.parseBoolean(props.getProperty(ENABLE, Boolean.TRUE.toString()));
     }
 
-    public int getAutoRegisterPriority() {
-        return Integer.parseInt(props.getProperty(AUTO_REGISTER_PRIORITY, DEFAULT_AUTO_REGISTER_PRIORITY));
-    }
-
-    public String[] getAutoRegisterCommands() {
-        String tmp = props.getProperty(AUTO_REGISTER_COMMANDS);
-        if (tmp == null) {
+    public String[] getCommands() {
+        String tmp = props.getProperty(COMMANDS, "").trim();
+        if (tmp.length() == 0) {
             return new String[0];
         }
-
         return tmp.split(",");
     }
 
-    public String getCommandType(final String name) {
-        return props.getProperty(CommandDocumenter.COMMAND_DOT + name);
+    public int getAutoRegisterPriority() {
+        return Integer.parseInt(props.getProperty(AUTO_REGISTER_PRIORITY, DEFAULT_AUTO_REGISTER_PRIORITY));
     }
 
     public int compareTo(final CommandsConfiguration target) {

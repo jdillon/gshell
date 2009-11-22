@@ -55,18 +55,12 @@ public abstract class CommandRegistrarSupport
 
                 this.configurations.add(config);
 
-                for (String name : config.getAutoRegisterCommands()) {
-                    String type = config.getCommandType(name);
-                    if (type == null) {
-                        log.error("Missing class type for command: " + name);
-                        continue;
-                    }
-
+                for (String type : config.getCommands()) {
                     try {
-                        registerCommand(name, type);
+                        registerCommand(type);
                     }
                     catch (Exception e) {
-                        log.error("Failed to register command: " + name, e);
+                        log.error("Failed to register command: " + type, e);
                     }
                 }
             }
