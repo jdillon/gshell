@@ -16,6 +16,7 @@
 
 package org.sonatype.gshell.util.setter;
 
+import org.slf4j.Logger;
 import org.sonatype.gossip.Log;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
@@ -31,7 +32,7 @@ import java.lang.reflect.AccessibleObject;
 public abstract class SetterSupport
     implements Setter
 {
-    protected final Log log = Log.getLogger(getClass());
+    protected final Logger log = Log.getLogger(getClass());
 
     private final AccessibleObject accessible;
 
@@ -53,7 +54,7 @@ public abstract class SetterSupport
     }
 
     public void set(final Object value) {
-        log.trace("Setting '{}' on: {}, using: {}", value, bean, accessible);
+        log.trace("Setting '{}' on: {}, using: {}", new Object[] { value, bean, accessible });
         
         try {
             doSet(value);

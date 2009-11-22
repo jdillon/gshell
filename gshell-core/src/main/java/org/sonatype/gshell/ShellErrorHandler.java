@@ -21,7 +21,7 @@ import org.sonatype.gshell.console.ConsoleErrorHandler;
 import org.sonatype.gshell.notification.ErrorNotification;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
-import static org.sonatype.gshell.util.ansi.Ansi.ansi;
+import static org.fusesource.jansi.Ansi.ansi;
 import static org.fusesource.jansi.Ansi.Color.*;
 import static org.fusesource.jansi.Ansi.Attribute.*;
 

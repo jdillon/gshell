@@ -25,7 +25,6 @@ import java.io.InputStream;
 import java.io.InterruptedIOException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -45,7 +44,14 @@ public class InputPipe
 
     private final StreamSet streams;
 
-    private final Callable<Boolean> interruptHandler;
+    public static interface InterruptHandler
+    {
+        boolean interrupt() throws Exception;
+
+        boolean stop() throws Exception;
+    }
+
+    private final InterruptHandler interruptHandler;
 
     private final CountDownLatch startSignal = new CountDownLatch(1);
 
@@ -53,7 +59,7 @@ public class InputPipe
 
     private volatile boolean running;
 
-    public InputPipe(final StreamSet streams, final Terminal terminal, final Callable<Boolean> interruptHandler) {
+    public InputPipe(final StreamSet streams, final Terminal terminal, final InterruptHandler interruptHandler) {
         assert streams != null;
         this.streams = streams;
         this.term = terminal;
@@ -102,12 +108,11 @@ public class InputPipe
                         return;
 
                     case 3:
-                        streams.err.println("^C");
-                        interrupt = interruptHandler.call();
+                        interrupt = interruptHandler.interrupt();
                         break;
 
                     case 4:
-                        streams.err.println("^D");
+                        running = interruptHandler.stop();
                         break;
                 }
 

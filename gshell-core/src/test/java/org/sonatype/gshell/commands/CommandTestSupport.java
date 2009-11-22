@@ -17,6 +17,7 @@
 package org.sonatype.gshell.commands;
 
 import com.google.inject.Injector;
+import org.fusesource.jansi.Ansi;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +34,6 @@ import org.sonatype.gshell.registry.CommandRegistry;
 import org.sonatype.gshell.testsupport.TestIO;
 import org.sonatype.gshell.testsupport.TestUtil;
 import org.sonatype.gshell.util.Strings;
-import org.sonatype.gshell.util.ansi.Ansi;
 
 import java.util.HashMap;
 import java.util.Map;

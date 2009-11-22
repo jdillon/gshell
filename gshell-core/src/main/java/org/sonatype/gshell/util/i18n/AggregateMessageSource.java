@@ -16,6 +16,7 @@
 
 package org.sonatype.gshell.util.i18n;
 
+import org.slf4j.Logger;
 import org.sonatype.gossip.Log;
 
 import java.util.Arrays;
@@ -31,7 +32,7 @@ import java.util.List;
 public class AggregateMessageSource
     implements MessageSource
 {
-    private static final Log log = Log.getLogger(AggregateMessageSource.class);
+    private static final Logger log = Log.getLogger(AggregateMessageSource.class);
 
     private final List<MessageSource> sources = new LinkedList<MessageSource>();
 

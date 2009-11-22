@@ -54,6 +54,6 @@ public class TouchCommand
             FileObjects.close(file);
         }
 
-        return CommandAction.Result.SUCCESS;
+        return Result.SUCCESS;
     }
 }

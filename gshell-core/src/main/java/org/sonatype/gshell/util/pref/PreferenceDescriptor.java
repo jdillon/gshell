@@ -16,6 +16,7 @@
 
 package org.sonatype.gshell.util.pref;
 
+import org.slf4j.Logger;
 import org.sonatype.gossip.Log;
 import org.sonatype.gshell.util.converter.Converters;
 import org.sonatype.gshell.util.setter.Setter;
@@ -30,7 +31,7 @@ import java.util.prefs.Preferences;
  */
 public class PreferenceDescriptor
 {
-    private static final Log log = Log.getLogger(PreferenceDescriptor.class);
+    private static final Logger log = Log.getLogger(PreferenceDescriptor.class);
 
     private final Preference spec;
 

@@ -16,6 +16,7 @@
 
 package org.sonatype.gshell.commands.bsf;
 
+import com.google.inject.Inject;
 import org.apache.bsf.BSFEngine;
 import org.apache.bsf.BSFException;
 import org.apache.bsf.BSFManager;
@@ -56,7 +57,7 @@ public class ScriptCommand
         assert language != null;
 
         if (!BSFManager.isLanguageRegistered(language)) {
-            throw new RuntimeException("Language is not registered: " + language);
+            throw new RuntimeException("Language is not registered: " + language); // TODO: i18n
         }
 
         this.language = language;
@@ -68,6 +69,7 @@ public class ScriptCommand
     @Argument
     private String path;
 
+    @Inject
     public ScriptCommand(final BSFManager manager, final FileSystemAccess fileSystemAccess) {
         assert manager != null;
         this.manager = manager;
@@ -80,7 +82,7 @@ public class ScriptCommand
         IO io = context.getIo();
 
         if (expression != null && path != null) {
-            io.error("Can only specify an expression or a script file");
+            io.error("Can only specify an expression or a script file"); // TODO: i18n
             return Result.FAILURE;
         }
         else if (expression != null) {
@@ -117,7 +119,7 @@ public class ScriptCommand
         IO io = context.getIo();
 
         if (language == null) {
-            io.error("The scripting language must be configured via --language to evaluate an expression");
+            io.error("The scripting language must be configured via --language to evaluate an expression"); // TODO: i18n
             return Result.FAILURE;
         }
 
@@ -141,15 +143,15 @@ public class ScriptCommand
         FileObject file = fileSystemAccess.resolveFile(cwd, path);
 
         if (!file.exists()) {
-            io.error("File not found: {}", file.getName());
+            io.error("File not found: {}", file.getName()); // TODO: i18n
             return Result.FAILURE;
         }
         else if (!file.getType().hasContent()) {
-            io.error("File has not content: {}", file.getName());
+            io.error("File has not content: {}", file.getName()); // TODO: i18n
             return Result.FAILURE;
         }
         else if (!file.isReadable()) {
-            io.error("File is not readable: {}", file.getName());
+            io.error("File is not readable: {}", file.getName()); // TODO: i18n
             return Result.FAILURE;
         }
 
@@ -162,7 +164,7 @@ public class ScriptCommand
         byte[] bytes = FileUtil.getContent(file);
         String script = new String(bytes);
 
-        log.info("Evaluating file ({}): {}", language, path);
+        log.info("Evaluating file ({}): {}", language, path); // TODO: i18n
 
         try {
             return engine.eval(file.getName().getBaseName(), 1, 1, script);
@@ -178,7 +180,7 @@ public class ScriptCommand
         IO io = context.getIo();
 
         if (language == null) {
-            io.error("The scripting language must be configured via --language to run an interactive console");
+            io.error("The scripting language must be configured via --language to run an interactive console"); // TODO: i18n
             return Result.FAILURE;
         }
 
@@ -192,6 +194,10 @@ public class ScriptCommand
                 return new ConsoleTask() {
                     @Override
                     public boolean doExecute(String input) throws Exception {
+                        //
+                        // TODO: Update the allow the console to handle CTRL-D and have that cause the loop to exit
+                        //
+
                         if (input == null || input.trim().equals("exit") || input.trim().equals("quit")) {
                             return false;
                         }
@@ -209,13 +215,14 @@ public class ScriptCommand
 
         console.setErrorHandler(new ConsoleErrorHandler() {
             public boolean handleError(final Throwable error) {
-                log.error("Script evaluation failed: " + error, error);
+                log.error("Script evaluation failed: " + error, error); // TODO: i18n
                 return true;
             }
         });
 
         console.setPrompt(new ConsolePrompt() {
             public String prompt() {
+                // TODO: Add language to the prompt
                 return "> ";
             }
         });

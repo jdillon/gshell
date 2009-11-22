@@ -228,10 +228,6 @@
                                                 public protected <methods>;
                                             }
 
-                                            -keep public class org.sonatype.gshell.util.ansi.Ansi {
-                                                public <methods>;
-                                            }
-
                                             -keep public class org.sonatype.gshell.util.cli.handler.* {
                                                 <init>(...);
                                             }

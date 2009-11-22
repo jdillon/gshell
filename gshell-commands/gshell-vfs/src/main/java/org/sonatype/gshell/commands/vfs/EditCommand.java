@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.commands.shell;
+package org.sonatype.gshell.commands.vfs;
 
 import org.apache.commons.vfs.FileObject;
 import org.apache.commons.vfs.Selectors;
 import org.apache.commons.vfs.util.Os;
+import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
+import org.sonatype.gshell.vfs.FileObjectAssert;
 import org.sonatype.gshell.vfs.FileObjects;
 import org.sonatype.gshell.commands.vfs.VfsCommandSupport;
 import org.sonatype.gshell.util.cli.Argument;
@@ -35,6 +37,7 @@ import java.util.List;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
+@Command(name="edit")
 public class EditCommand
     extends VfsCommandSupport
 {
@@ -49,10 +52,10 @@ public class EditCommand
 
         FileObject file = resolveFile(context, path);
 
-        ensureFileExists(file);
+        new FileObjectAssert(file).exists().isReadable().isWritable();
+
+        // TODO: Add to FileObjectAssert
         ensureFileHasContent(file);
-        ensureFileIsReadable(file);
-        ensureFileIsWritable(file);
 
         FileObject tmp = file;
 

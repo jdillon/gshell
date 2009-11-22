@@ -16,9 +16,9 @@
 
 package org.sonatype.gshell;
 
+import org.fusesource.jansi.AnsiRenderer;
 import org.sonatype.gshell.console.ConsolePrompt;
 import org.sonatype.gshell.util.ReplacementParser;
-import org.sonatype.gshell.util.ansi.AnsiRenderer;
 
 /**
  * Shell {@link ConsolePrompt}, which determins the prompt from the {@link VariableNames#SHELL_PROMPT} expression.

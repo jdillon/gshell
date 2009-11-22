@@ -22,6 +22,7 @@ import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.util.cli.Argument;
+import org.sonatype.gshell.vfs.FileObjectAssert;
 import org.sonatype.gshell.vfs.FileObjects;
 
 /**
@@ -48,8 +49,7 @@ public class ChangeDirectoryCommand
 
         FileObject file = resolveFile(context, path);
 
-        ensureFileExists(file);
-        ensureFileHasChildren(file);
+        new FileObjectAssert(file).exists().isDirectory();
 
         setCurrentDirectory(context, file);
 

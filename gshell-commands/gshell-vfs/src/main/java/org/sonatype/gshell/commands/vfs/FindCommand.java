@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.commands.shell;
+package org.sonatype.gshell.commands.vfs;
 
 import java.net.URI;
 
@@ -29,8 +29,10 @@ import org.apache.oro.text.regex.Pattern;
 import org.apache.oro.text.regex.PatternCompiler;
 import org.apache.oro.text.regex.PatternMatcher;
 import org.apache.oro.text.regex.Perl5Matcher;
+import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
+import org.sonatype.gshell.vfs.FileObjectAssert;
 import org.sonatype.gshell.vfs.FileObjects;
 import org.sonatype.gshell.commands.vfs.VfsCommandSupport;
 import org.sonatype.gshell.util.cli.Argument;
@@ -43,6 +45,7 @@ import org.sonatype.gshell.vfs.selector.AggregateFileSelector;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
+@Command(name="find")
 public class FindCommand
     extends VfsCommandSupport
 {
@@ -75,7 +78,7 @@ public class FindCommand
 
         FileObject root = resolveFile(context, path);
 
-        ensureFileExists(root);
+        new FileObjectAssert(root).exists();
 
         find(context, root, selector);
 

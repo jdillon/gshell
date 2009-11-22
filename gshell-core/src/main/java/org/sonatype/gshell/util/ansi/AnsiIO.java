@@ -17,6 +17,7 @@
 package org.sonatype.gshell.util.ansi;
 
 import org.fusesource.jansi.AnsiConsole;
+import org.fusesource.jansi.AnsiRenderWriter;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.io.StreamSet;
 

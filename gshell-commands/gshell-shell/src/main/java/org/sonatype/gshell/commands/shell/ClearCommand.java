@@ -14,37 +14,31 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.util.ansi;
+package org.sonatype.gshell.commands.shell;
 
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
+import org.fusesource.jansi.Ansi;
+import org.sonatype.gshell.command.Command;
+import org.sonatype.gshell.command.CommandActionSupport;
+import org.sonatype.gshell.command.CommandContext;
+import org.sonatype.gshell.command.IO;
 
 /**
- * Tests for the {@link Ansi} class.
+ * Clear the screen.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ * @since 2.0
  */
-public class AnsiTest
+@Command(name="clear")
+public class ClearCommand
+    extends CommandActionSupport
 {
-    @Test
-    public void testSetEnabled() throws Exception {
-        Ansi.setEnabled(false);
-        new Thread()
-        {
-            @Override
-            public void run() {
-                assertEquals(false, Ansi.isEnabled());
-            }
-        }.run();
+    public Object execute(final CommandContext context) throws Exception {
+        assert context != null;
+        IO io = context.getIo();
 
-        Ansi.setEnabled(true);
-        new Thread()
-        {
-            @Override
-            public void run() {
-                assertEquals(true, Ansi.isEnabled());
-            }
-        }.run();
+        io.out.print(Ansi.ansi().eraseScreen(Ansi.Erase.ALL));
+        io.out.flush();
+        
+        return Result.SUCCESS;
     }
 }

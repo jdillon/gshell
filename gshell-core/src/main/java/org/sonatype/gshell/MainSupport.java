@@ -19,13 +19,14 @@ package org.sonatype.gshell;
 import jline.AnsiWindowsTerminal;
 import jline.NoInterruptUnixTerminal;
 import jline.TerminalFactory;
+import org.fusesource.jansi.Ansi;
+import org.slf4j.Logger;
 import org.sonatype.gossip.Log;
 import org.sonatype.gossip.Level;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.io.StreamJack;
 import org.sonatype.gshell.notification.ExitNotification;
 import org.sonatype.gshell.util.NameValue;
-import org.sonatype.gshell.util.ansi.Ansi;
 import org.sonatype.gshell.util.ansi.AnsiIO;
 import org.sonatype.gshell.util.cli.Argument;
 import org.sonatype.gshell.util.cli.CommandLinePrinter;
@@ -39,6 +40,7 @@ import org.sonatype.gshell.util.pref.Preference;
 import org.sonatype.gshell.util.pref.PreferenceProcessor;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -54,9 +56,16 @@ public abstract class MainSupport
         // Register some different terminal flavors for added functionality
         TerminalFactory.registerFlavor(TerminalFactory.Flavor.UNIX, NoInterruptUnixTerminal.class);
         TerminalFactory.registerFlavor(TerminalFactory.Flavor.WINDOWS, AnsiWindowsTerminal.class);
+
+        // Register jline ansi detector
+        Ansi.setDetector(new Callable<Boolean>() {
+            public Boolean call() throws Exception {
+                return TerminalFactory.get().isAnsiSupported();
+            }
+        });
     }
     
-    protected final Log log = Log.getLogger(MainSupport.class);
+    protected final Logger log = Log.getLogger(MainSupport.class);
     
     protected final IO io = new AnsiIO(StreamSet.SYSTEM_FD, true);
 

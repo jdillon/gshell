@@ -31,6 +31,7 @@ import org.apache.oro.text.regex.Perl5Matcher;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
+import org.sonatype.gshell.vfs.FileObjectAssert;
 import org.sonatype.gshell.vfs.FileObjects;
 import org.sonatype.gshell.commands.vfs.VfsCommandSupport;
 import org.sonatype.gshell.io.Closer;
@@ -145,9 +146,8 @@ public class GrepCommand
         assert processor != null;
         assert file != null;
 
-        ensureFileExists(file);
+        new FileObjectAssert(file).exists().isReadable();
         ensureFileHasContent(file);
-        ensureFileIsReadable(file);
 
         BufferedInputStream input = new BufferedInputStream(file.getContent().getInputStream());
         try {

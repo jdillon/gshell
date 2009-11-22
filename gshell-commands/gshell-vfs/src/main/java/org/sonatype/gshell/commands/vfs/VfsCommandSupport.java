@@ -70,51 +70,15 @@ public abstract class VfsCommandSupport
     }
 
     //
-    // TODO: Make these more generally available to other plugins.  Maybe even to FileObjects?
+    // FIXME: Move this validation the FileObjectAssert
     //
-
-    protected void ensureFileExists(final FileObject file) throws FileSystemException {
-        assert file != null;
-
-        if (!file.exists()) {
-            FileObjects.close(file);
-            throw new ResultNotification("File not found: " + file.getName(), Result.FAILURE);
-        }
-    }
-
+    
     protected void ensureFileHasContent(final FileObject file) throws FileSystemException {
         assert file != null;
 
         if (!file.getType().hasContent()) {
             FileObjects.close(file);
             throw new ResultNotification("File has no content: " + file.getName(), Result.FAILURE);
-        }
-    }
-
-    protected void ensureFileHasChildren(final FileObject file) throws FileSystemException {
-        assert file != null;
-
-        if (!file.getType().hasChildren()) {
-            FileObjects.close(file);
-            throw new ResultNotification("File has no children: " + file.getName(), Result.FAILURE);
-        }
-    }
-
-    protected void ensureFileIsReadable(final FileObject file) throws FileSystemException {
-        assert file != null;
-
-        if (!file.getType().hasChildren()) {
-            FileObjects.close(file);
-            throw new ResultNotification("File is not readable: " + file.getName(), Result.FAILURE);
-        }
-    }
-
-    protected void ensureFileIsWritable(final FileObject file) throws FileSystemException {
-        assert file != null;
-
-        if (!file.getType().hasChildren()) {
-            FileObjects.close(file);
-            throw new ResultNotification("File is not writable: " + file.getName(), Result.FAILURE);
         }
     }
 }

@@ -22,6 +22,7 @@ package org.sonatype.gshell.io;
 import java.io.Flushable;
 import java.io.IOException;
 
+import org.slf4j.Logger;
 import org.sonatype.gossip.Log;
 
 /**
@@ -32,7 +33,7 @@ import org.sonatype.gossip.Log;
  */
 public class Flusher
 {
-    private static final Log log = Log.getLogger(Flusher.class);
+    private static final Logger log = Log.getLogger(Flusher.class);
 
     public static void flush(final Flushable... flushable) {
         if (flushable != null) {

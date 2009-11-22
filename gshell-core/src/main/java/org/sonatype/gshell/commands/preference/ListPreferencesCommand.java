@@ -19,11 +19,14 @@ package org.sonatype.gshell.commands.preference;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.util.ansi.Ansi;
 import org.sonatype.gshell.util.cli.Option;
 import org.sonatype.gshell.util.pref.Preference;
 
 import java.util.prefs.Preferences;
+
+import static org.fusesource.jansi.Ansi.ansi;
+import static org.fusesource.jansi.Ansi.Color.*;
+import static org.fusesource.jansi.Ansi.Attribute.*;
 
 /**
  * List preferences.
@@ -51,10 +54,10 @@ public class ListPreferencesCommand
     }
 
     private void list(final IO io, final Preferences node) throws Exception {
-        io.info("{}", Ansi.ansi().fg(Ansi.Color.GREEN).a(node.absolutePath()).reset());
+        io.info("{}", ansi().fg(GREEN).a(node.absolutePath()).reset());
 
         for (String key : node.keys()) {
-            io.info("  {}: {}", Ansi.ansi().a(Ansi.Attribute.INTENSITY_BOLD).a(key).reset(), node.get(key, null));
+            io.info("  {}: {}", ansi().a(INTENSITY_BOLD).a(key).reset(), node.get(key, null));
         }
         if (recursive) {
             for (String name : node.childrenNames()) {

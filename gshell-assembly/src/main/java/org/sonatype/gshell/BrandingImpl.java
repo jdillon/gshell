@@ -16,8 +16,7 @@
 
 package org.sonatype.gshell;
 
-import org.sonatype.gshell.util.ansi.Ansi;
-import org.sonatype.gshell.BrandingSupport;
+import org.fusesource.jansi.Ansi;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

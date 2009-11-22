@@ -63,9 +63,13 @@ public class Console
         // history could be null
         // bindings could be null
 
-        this.pipe = new InputPipe(io.streams, io.getTerminal(), new Callable<Boolean>() {
-            public Boolean call() throws Exception {
+        this.pipe = new InputPipe(io.streams, io.getTerminal(), new InputPipe.InterruptHandler() {
+            public boolean interrupt() throws Exception {
                 return interruptTask();
+            }
+
+            public boolean stop() throws Exception {
+                return false;
             }
         });
         this.pipe.setName("Console InputPipe");

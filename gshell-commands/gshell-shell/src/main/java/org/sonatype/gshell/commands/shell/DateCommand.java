@@ -16,6 +16,7 @@
 
 package org.sonatype.gshell.commands.shell;
 
+import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
@@ -29,6 +30,7 @@ import java.util.Date;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
+@Command(name="date")
 public class DateCommand
     extends CommandActionSupport
 {

@@ -24,7 +24,6 @@ import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.util.ansi.Ansi;
 import org.sonatype.gshell.util.cli.Argument;
 import org.sonatype.gshell.util.cli.Option;
 import org.sonatype.gshell.util.pref.Preference;
@@ -45,8 +44,10 @@ import java.util.List;
 import java.util.Locale;
 
 import static org.sonatype.gshell.commands.InfoCommand.Section.SHELL;
-import static org.sonatype.gshell.util.ansi.Ansi.Attribute;
-import static org.sonatype.gshell.util.ansi.Ansi.Color;
+import org.fusesource.jansi.Ansi;
+import static org.fusesource.jansi.Ansi.ansi;
+import static org.fusesource.jansi.Ansi.Color.*;
+import static org.fusesource.jansi.Ansi.Attribute.*;
 
 //
 // Based on info command from Apache Felix
@@ -204,7 +205,7 @@ public class InfoCommand
     }
 
     private void printlnHeader(final IO io, final String name) {
-        io.info(Ansi.ansi().a(Attribute.INTENSITY_BOLD).fg(Color.GREEN).a(name).reset());
+        io.info(ansi().a(INTENSITY_BOLD).fg(GREEN).a(name).reset());
     }
 
     private long getSunOsValueAsLong(OperatingSystemMXBean os, String name) throws Exception {
@@ -256,6 +257,6 @@ public class InfoCommand
     }
 
     private void println(final IO io, final String name, final Object value) {
-        io.info(Ansi.ansi().a("  ").a(Attribute.INTENSITY_BOLD).a(name).reset().a(": ").a(value));
+        io.info(ansi().a("  ").a(INTENSITY_BOLD).a(name).reset().a(": ").a(value));
     }
 }

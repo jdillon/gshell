@@ -21,6 +21,7 @@ import org.apache.commons.vfs.FileObject;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
+import org.sonatype.gshell.vfs.FileObjectAssert;
 import org.sonatype.gshell.vfs.FileObjects;
 import org.sonatype.gshell.commands.vfs.VfsCommandSupport;
 import org.sonatype.gshell.io.Closer;
@@ -56,7 +57,7 @@ public class CatCommand
 
         FileObject file = resolveFile(context, path);
 
-        ensureFileExists(file);
+        new FileObjectAssert(file).exists();
         ensureFileHasContent(file);
 
         org.apache.commons.vfs.FileContent content = file.getContent();

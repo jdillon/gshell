@@ -18,16 +18,13 @@ package org.sonatype.gshell.registry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonatype.gshell.command.CommandDocumenter;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Properties;
 
 /**
  * Support for {@link CommandRegistrar} implementations
@@ -95,68 +92,5 @@ public abstract class CommandRegistrarSupport
         }
 
         return list;
-    }
-
-    public static class CommandsConfiguration
-        implements Comparable<CommandsConfiguration>
-    {
-        private static final String ID = "id";
-
-        private static final String ENABLE = "enable";
-
-        private static final String AUTO_REGISTER_PRIORITY = "auto-register-priority";
-
-        private static final String DEFAULT_AUTO_REGISTER_PRIORITY = "50";
-
-        private static final String AUTO_REGISTER_COMMANDS = "auto-register-commands";
-
-        private final URL source;
-
-        private final Properties props = new Properties();
-
-        private CommandsConfiguration(final URL source) throws IOException {
-            assert source != null;
-            this.source = source;
-            props.load(new BufferedInputStream(source.openStream()));
-        }
-
-        public String getId() {
-            return props.getProperty(ID);
-        }
-
-        public boolean isEnabled() {
-            if (props.containsKey(ENABLE)) {
-                return Boolean.parseBoolean(props.getProperty(ENABLE));
-            }
-            return true;
-        }
-
-        public int getAutoRegisterPriority() {
-            return Integer.parseInt(props.getProperty(AUTO_REGISTER_PRIORITY, DEFAULT_AUTO_REGISTER_PRIORITY));
-        }
-
-        public String[] getAutoRegisterCommands() {
-            String tmp = props.getProperty(AUTO_REGISTER_COMMANDS);
-            if (tmp == null) {
-                return new String[0];
-            }
-
-            return tmp.split(",");
-        }
-
-        public String getCommandType(final String name) {
-            return props.getProperty(CommandDocumenter.COMMAND_DOT + name);
-        }
-
-        public int compareTo(final CommandsConfiguration target) {
-            int us = getAutoRegisterPriority();
-            int them = target.getAutoRegisterPriority();
-            return (us < them ? -1 : (us == them ? 0 : 1));
-        }
-
-        @Override
-        public String toString() {
-            return getId() + " -> " + source.toString();
-        }
     }
 }

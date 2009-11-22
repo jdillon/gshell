@@ -19,6 +19,7 @@
 
 package org.sonatype.gshell.io;
 
+import org.slf4j.Logger;
 import org.sonatype.gossip.Log;
 
 import java.io.ByteArrayOutputStream;
@@ -36,7 +37,7 @@ import java.text.MessageFormat;
  */
 public class StreamJack
 {
-    private static final Log log = Log.getLogger(StreamJack.class);
+    private static final Logger log = Log.getLogger(StreamJack.class);
 
     /**
      * Contains a {@link StreamRegistration} for the current thread if its registered, else null.
@@ -174,7 +175,7 @@ public class StreamJack
     public static synchronized void register(final InputStream in, final PrintStream out, final PrintStream err) {
         ensureInstalled();
 
-        log.trace("Registering: {} -> {}, {}, {}", Thread.currentThread(), in, out, err);
+        log.trace("Registering: {} -> {}, {}, {}", new Object[] { Thread.currentThread(), in, out, err });
 
         StreamRegistration prev = registration(false);
         StreamSet set = new StreamSet(in, out, err);
@@ -207,7 +208,7 @@ public class StreamJack
 
         registrations.set(cur.previous);
 
-        log.trace("De-registered: {}", Thread.currentThread(), ", using streams: ", cur.previous == null ? "null" : cur.previous.streams);
+        log.trace("De-registered: {}, using streams: {}", Thread.currentThread(), cur.previous == null ? "null" : cur.previous.streams);
     }
 
     /**

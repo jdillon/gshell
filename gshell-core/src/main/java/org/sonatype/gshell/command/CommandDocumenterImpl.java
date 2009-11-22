@@ -16,13 +16,13 @@
 
 package org.sonatype.gshell.command;
 
+import org.fusesource.jansi.AnsiRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.ShellHolder;
 import org.sonatype.gshell.Variables;
 import org.sonatype.gshell.io.PrefixingStream;
 import org.sonatype.gshell.util.ReplacementParser;
-import org.sonatype.gshell.util.ansi.AnsiRenderer;
 import org.sonatype.gshell.util.cli.CommandLineProcessor;
 import org.sonatype.gshell.util.cli.CommandLinePrinter;
 import org.sonatype.gshell.util.i18n.AggregateMessageSource;

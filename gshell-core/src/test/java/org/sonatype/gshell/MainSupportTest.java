@@ -16,13 +16,13 @@
 
 package org.sonatype.gshell;
 
+import org.fusesource.jansi.Ansi;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.notification.ExitNotification;
 import org.sonatype.gshell.testsupport.TestUtil;
-import org.sonatype.gshell.util.ansi.Ansi;
 
 import static org.junit.Assert.assertEquals;
 

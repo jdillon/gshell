@@ -47,6 +47,10 @@ public class PumpStreamHandler
     // NOTE: May want to use a ThreadPool here, 3 threads per/pair seems kinda expensive :-(
     //
 
+    //
+    // TODO: Use StreamSet here
+    //
+    
     public PumpStreamHandler(final InputStream in, final OutputStream out, final OutputStream err) {
         assert in != null;
         assert out != null;

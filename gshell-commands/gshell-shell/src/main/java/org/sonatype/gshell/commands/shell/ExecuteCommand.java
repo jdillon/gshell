@@ -18,6 +18,7 @@ package org.sonatype.gshell.commands.shell;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
@@ -32,6 +33,7 @@ import java.util.List;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
+@Command(name="exec")
 public class ExecuteCommand
     extends CommandActionSupport
 {

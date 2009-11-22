@@ -22,6 +22,7 @@ import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.util.cli.Argument;
+import org.sonatype.gshell.vfs.FileObjectAssert;
 import org.sonatype.gshell.vfs.FileObjects;
 
 /**
@@ -51,7 +52,7 @@ public class CopyCommand
         FileObject source = resolveFile(context, sourcePath);
         FileObject target = resolveFile(context, targetPath);
 
-        ensureFileExists(source);
+        new FileObjectAssert(source).exists();
 
         // TODO: Validate more
 

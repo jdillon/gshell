@@ -19,6 +19,7 @@
 
 package org.sonatype.gshell.io;
 
+import org.slf4j.Logger;
 import org.sonatype.gossip.Log;
 
 import java.io.Closeable;
@@ -32,7 +33,7 @@ import java.io.IOException;
  */
 public class Closer
 {
-    private static final Log log = Log.getLogger(Closer.class);
+    private static final Logger log = Log.getLogger(Closer.class);
     
     public static void close(final Closeable... closeables) {
         if (closeables != null) {

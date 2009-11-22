@@ -18,12 +18,12 @@ package org.sonatype.gshell.commands.file;
 
 import com.google.inject.Inject;
 import jline.console.ConsoleReader;
+import org.fusesource.jansi.AnsiString;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.console.completer.FileNameCompleter;
 import org.sonatype.gshell.util.FileAssert;
-import org.sonatype.gshell.util.ansi.AnsiString;
 import org.sonatype.gshell.util.cli.Argument;
 import org.sonatype.gshell.util.cli.Option;
 
