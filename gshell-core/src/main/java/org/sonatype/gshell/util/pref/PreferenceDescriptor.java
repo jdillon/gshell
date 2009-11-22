@@ -86,11 +86,16 @@ public class PreferenceDescriptor
         return getSetter().getName();
     }
 
-    private Preferences getPreferences() {
+    public Class getType() {
         Class type = base;
         if (type == Void.class) {
             type = getSetter().getBean().getClass();
         }
+        return type;
+    }
+
+    public Preferences getPreferences() {
+        Class type = getType();
 
         if (system) {
             return Preferences.systemNodeForPackage(type);

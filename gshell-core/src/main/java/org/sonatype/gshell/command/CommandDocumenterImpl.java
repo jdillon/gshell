@@ -29,6 +29,8 @@ import org.sonatype.gshell.util.i18n.AggregateMessageSource;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.PrefixingMessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
+import org.sonatype.gshell.util.pref.PreferenceDescriptor;
+import org.sonatype.gshell.util.pref.PreferenceProcessor;
 
 import java.io.PrintStream;
 
@@ -147,6 +149,16 @@ public class CommandDocumenterImpl
             io.out.println();
         }
 
-        // TODO: Render preferences
+        PreferenceProcessor pp = new PreferenceProcessor(command);
+        if (!pp.getDescriptors().isEmpty()) {
+            io.out.format("@|bold %s|@", messages.getMessage("section.preferences")).println();
+            out.println();
+
+            for (PreferenceDescriptor pd : pp.getDescriptors()) {
+                out.format("%s: %s (%s)", pd.getPreferences().absolutePath(), pd.getId(), pd.getSetter().getType().getSimpleName()).println();
+            }
+
+            io.out.println();
+        }
     }
 }

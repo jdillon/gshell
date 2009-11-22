@@ -46,6 +46,10 @@ public class PreferenceProcessor
         addBean(bean);
     }
 
+    public List<PreferenceDescriptor> getDescriptors() {
+        return descriptors;
+    }
+
     public void addBean(final Object bean) {
         discoverDescriptors(bean);
     }
@@ -83,6 +87,10 @@ public class PreferenceProcessor
         descriptors.add(new PreferenceDescriptor(preference, setter));
     }
 
+    //
+    // Processing
+    //
+    
     public void process() throws Exception {
         log.trace("Processing preference descriptors");
         for (PreferenceDescriptor desc : descriptors) {
