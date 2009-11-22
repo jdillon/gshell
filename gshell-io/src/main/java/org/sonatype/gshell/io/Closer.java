@@ -35,9 +35,9 @@ public class Closer
 {
     private static final Logger log = Log.getLogger(Closer.class);
     
-    public static void close(final Closeable... closeables) {
-        if (closeables != null) {
-            for (Closeable c : closeables) {
+    public static void close(final Closeable... targets) {
+        if (targets != null) {
+            for (Closeable c : targets) {
                 if (c == null) {
                     continue;
                 }

@@ -35,9 +35,9 @@ public class Flusher
 {
     private static final Logger log = Log.getLogger(Flusher.class);
 
-    public static void flush(final Flushable... flushable) {
-        if (flushable != null) {
-            for (Flushable f : flushable) {
+    public static void flush(final Flushable... targets) {
+        if (targets != null) {
+            for (Flushable f : targets) {
                 if (f == null) {
                     continue;
                 }
