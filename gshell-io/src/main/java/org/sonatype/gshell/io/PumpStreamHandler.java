@@ -31,11 +31,7 @@ import java.io.IOException;
  */
 public class PumpStreamHandler
 {
-    private InputStream in;
-
-    private OutputStream out;
-
-    private OutputStream err;
+    private final StreamSet streams;
 
     private Thread outputThread;
 
@@ -43,30 +39,9 @@ public class PumpStreamHandler
 
     private StreamPumper inputPump;
 
-    //
-    // NOTE: May want to use a ThreadPool here, 3 threads per/pair seems kinda expensive :-(
-    //
-
-    //
-    // TODO: Use StreamSet here
-    //
-    
-    public PumpStreamHandler(final InputStream in, final OutputStream out, final OutputStream err) {
-        assert in != null;
-        assert out != null;
-        assert err != null;
-
-        this.in = in;
-        this.out = out;
-        this.err = err;
-    }
-
-    public PumpStreamHandler(final OutputStream out, final OutputStream err) {
-        this(null, out, err);
-    }
-
-    public PumpStreamHandler(final OutputStream outAndErr) {
-        this(outAndErr, outAndErr);
+    public PumpStreamHandler(final StreamSet streams) {
+        assert streams != null;
+        this.streams = streams;
     }
 
     /**
@@ -75,7 +50,7 @@ public class PumpStreamHandler
     public void setChildOutputStream(final InputStream in) {
         assert in != null;
 
-        createChildOutputPump(in, out);
+        createChildOutputPump(in, streams.out);
     }
 
     /**
@@ -84,8 +59,8 @@ public class PumpStreamHandler
     public void setChildErrorStream(final InputStream in) {
         assert in != null;
 
-        if (err != null) {
-            createChildErrorPump(in, err);
+        if (streams.err != null) {
+            createChildErrorPump(in, streams.err);
         }
     }
 
@@ -95,8 +70,8 @@ public class PumpStreamHandler
     public void setChildInputStream(final OutputStream out) {
         assert out != null;
 
-        if (in != null) {
-            inputPump = createInputPump(in, out, true);
+        if (streams.in != null) {
+            inputPump = createInputPump(streams.in, out, true);
         }
         else {
             try {
@@ -162,12 +137,7 @@ public class PumpStreamHandler
             inputPump.stop();
         }
 
-        try {
-            err.flush();
-        } catch (IOException e) { }
-        try {
-            out.flush();
-        } catch (IOException e) { }
+        streams.flush();
     }
 
     /**

@@ -54,7 +54,7 @@ public class ExecuteCommand
 
         Process p = builder.start();
 
-        PumpStreamHandler handler = new PumpStreamHandler(io.streams.in, io.streams.out, io.streams.err);
+        PumpStreamHandler handler = new PumpStreamHandler(io.streams);
         handler.attach(p);
         handler.start();
 
