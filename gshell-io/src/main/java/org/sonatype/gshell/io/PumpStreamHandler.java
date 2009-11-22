@@ -197,7 +197,7 @@ public class PumpStreamHandler
         assert out != null;
 
         StreamPumper pumper = new StreamPumper(in, out, closeWhenExhausted);
-        pumper.setAutoflush(true);
+        pumper.setAutoFlush(true);
         return pumper;
     }
 }

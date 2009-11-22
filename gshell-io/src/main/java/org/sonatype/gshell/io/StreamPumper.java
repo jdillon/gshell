@@ -42,7 +42,7 @@ public class StreamPumper
 
     private boolean closeWhenExhausted;
 
-    private boolean autoflush;
+    private boolean autoFlush;
 
     private Exception exception;
 
@@ -53,10 +53,9 @@ public class StreamPumper
     /**
      * Create a new stream pumper.
      *
-     * @param in                    Input stream to read data from
-     * @param out                   Output stream to write data to.
-     * @param closeWhenExhausted    If true, the output stream will be closed when
-     *                              the input is exhausted.
+     * @param in Input stream to read data from
+     * @param out Output stream to write data to.
+     * @param closeWhenExhausted If true, the output stream will be closed when the input is exhausted.
      */
     public StreamPumper(final InputStream in, final OutputStream out, final boolean closeWhenExhausted) {
         assert in != null;
@@ -70,8 +69,8 @@ public class StreamPumper
     /**
      * Create a new stream pumper.
      *
-     * @param in    Input stream to read data from
-     * @param out   Output stream to write data to.
+     * @param in Input stream to read data from
+     * @param out Output stream to write data to.
      */
     public StreamPumper(final InputStream in, final OutputStream out) {
         this(in, out, false);
@@ -80,10 +79,10 @@ public class StreamPumper
     /**
      * Set whether data should be flushed through to the output stream.
      *
-     * @param autoflush     If true, push through data; if false, let it be buffered
+     * @param autoFlush If true, push through data; if false, let it be buffered
      */
-    public void setAutoflush(boolean autoflush) {
-        this.autoflush = autoflush;
+    public void setAutoFlush(boolean autoFlush) {
+        this.autoFlush = autoFlush;
     }
 
     /**
@@ -109,7 +108,7 @@ public class StreamPumper
                         break;
                     }
                     out.write(buf, 0, length);
-                    if (autoflush) {
+                    if (autoFlush) {
                         out.flush();
                     }
                 }
@@ -139,7 +138,7 @@ public class StreamPumper
     /**
      * Tells whether the end of the stream has been reached.
      *
-     * @return true     If the stream has been exhausted.
+     * @return true If the stream has been exhausted.
      */
     public boolean isFinished() {
         return finished;
@@ -197,7 +196,6 @@ public class StreamPumper
      */
     public synchronized void stop() {
         finish = true;
-
         notifyAll();
     }
 }
