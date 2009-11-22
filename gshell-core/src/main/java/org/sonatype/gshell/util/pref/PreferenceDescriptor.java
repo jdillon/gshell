@@ -63,6 +63,10 @@ public class PreferenceDescriptor
         this.base = pref.base() != null ? pref.base() : Void.class;
     }
 
+    public Preference getSpec() {
+        return spec;
+    }
+
     public Setter getSetter() {
         return setter;
     }
