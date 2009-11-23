@@ -61,6 +61,9 @@ public class ResolveCommand
     @Option(name = "-T", aliases = {"--transitive"})
     private boolean transitive;
 
+    @Option(name = "-o", aliases = {"--offline"})
+    private boolean offline;
+
     @Argument(required = true)
     private String resolveId;
 
@@ -95,14 +98,16 @@ public class ResolveCommand
         else {
             artifact = rsys.createArtifact(groupId, artifactId, version, type);
         }
-
         io.info("Resolving artifact: {}", artifact); // TODO: i18n
-        request.setResolveRoot(true);
-        request.setResolveTransitively(true);
+
+        //
+        // TODO: Bring the ArtifactManager/ArtifactRepsitoryManager back to manage these components
 
         request.setLocalRepository(rsys.createDefaultLocalRepository());
         request.setRemoteRepositories(Collections.singletonList(rsys.createDefaultRemoteRepository()));
 
+        request.setResolveRoot(true);
+        request.setResolveTransitively(transitive);
         request.setArtifact(artifact);
 
         if (scope != null) {
@@ -110,7 +115,7 @@ public class ResolveCommand
             request.setCollectionFilter(new ScopeArtifactFilter(scope));
         }
 
-        request.setOffline(false);
+        request.setOffline(offline);
         request.setTransferListener(new ProgressSpinnerMonitor(io));
         ArtifactResolutionResult result = rsys.resolve(request);
 
