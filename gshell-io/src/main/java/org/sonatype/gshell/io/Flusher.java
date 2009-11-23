@@ -26,7 +26,7 @@ import org.slf4j.Logger;
 import org.sonatype.gossip.Log;
 
 /**
- * Quietly flushes {@link Flushable}s.
+ * Quietly flushes {@link Flushable} objects.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0

@@ -112,13 +112,11 @@ public class IO
 
     protected Reader createReader(final InputStream in) {
         assert in != null;
-
         return new InputStreamReader(in);
     }
 
     protected PrintWriter createWriter(final PrintStream out, final boolean autoFlush) {
         assert out != null;
-
         return new PrintWriter(out, autoFlush);
     }
 
@@ -126,12 +124,15 @@ public class IO
         return TerminalFactory.get();
     }
 
+    //
+    // FIXME: The verbosity stuff here appears to be plain broken...
+    //
+    
     /**
      * Set the verbosity level.
      */
     public void setVerbosity(final Verbosity verbosity) {
         assert verbosity != null;
-
         this.verbosity = verbosity;
     }
 
@@ -142,42 +143,24 @@ public class IO
         return verbosity;
     }
 
-    /**
-     * Check if the verbosity level is set to at least {@link Verbosity#SILENT}.
-     */
     public boolean isSilent() {
-        return verbosity.ordinal() >= Verbosity.SILENT.ordinal();
+        return verbosity == Verbosity.SILENT;
     }
 
-    /**
-     * Check if the verbosity level is set to at least {@link Verbosity#QUIET}.
-     */
     public boolean isQuiet() {
-        return verbosity.ordinal() >= Verbosity.QUIET.ordinal();
+        return verbosity == Verbosity.QUIET;
     }
 
-    /**
-     * Check if the verbosity level is set to at least {@link Verbosity#INFO}.
-     */
     public boolean isInfo() {
-        return verbosity.ordinal() >= Verbosity.INFO.ordinal();
+        return verbosity == Verbosity.INFO;
     }
 
-    /**
-     * Check if the verbosity level is set to at least {@link Verbosity#VERBOSE}.
-     */
     public boolean isVerbose() {
-        return verbosity.ordinal() >= Verbosity.VERBOSE.ordinal();
+        return verbosity == Verbosity.VERBOSE;
     }
 
-    /**
-     * Check if the verbosity level is set to at least {@link Verbosity#DEBUG}.
-     *
-     * For generally usage, when debug output is required, it is better
-     * to use the logging facility instead.
-     */
     public boolean isDebug() {
-        return verbosity.ordinal() >= Verbosity.DEBUG.ordinal();
+        return verbosity == Verbosity.DEBUG;
     }
 
     /**
@@ -249,13 +232,13 @@ public class IO
     }
 
     public void info(final Object msg) {
-        if (!isQuiet()) {
+        if (isInfo()) {
             out.println(msg);
         }
     }
 
     public void info(final String format, final Object... args) {
-        if (!isQuiet()) {
+        if (isInfo()) {
             out.println(MessageFormatter.arrayFormat(format, args));
         }
     }
@@ -273,10 +256,14 @@ public class IO
     }
 
     public void error(final Object msg) {
-        err.println(msg);
+        if (!isSilent()) {
+            err.println(msg);
+        }
     }
 
     public void error(final String format, final Object... args) {
-        err.println(MessageFormatter.arrayFormat(format, args));
+        if (!isSilent()) {
+            err.println(MessageFormatter.arrayFormat(format, args));
+        }
     }
 }
