@@ -19,10 +19,10 @@ package org.sonatype.gshell.commands.preference;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.util.cli.Argument;
-import org.sonatype.gshell.util.cli.Option;
 import org.sonatype.gshell.io.Closer;
 import org.sonatype.gshell.io.Flusher;
+import org.sonatype.gshell.util.cli.Argument;
+import org.sonatype.gshell.util.cli.Option;
 import org.sonatype.gshell.util.pref.Preference;
 
 import java.io.BufferedOutputStream;

@@ -21,9 +21,10 @@ import org.sonatype.gshell.console.ConsoleErrorHandler;
 import org.sonatype.gshell.notification.ErrorNotification;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
+
+import static org.fusesource.jansi.Ansi.Attribute.INTENSITY_BOLD;
+import static org.fusesource.jansi.Ansi.Color.RED;
 import static org.fusesource.jansi.Ansi.ansi;
-import static org.fusesource.jansi.Ansi.Color.*;
-import static org.fusesource.jansi.Ansi.Attribute.*;
 
 /**
  * Shell {@link ConsoleErrorHandler} which renders errors with ANSI codes.

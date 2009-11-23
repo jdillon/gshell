@@ -19,6 +19,7 @@ package org.sonatype.gshell.commands;
 import jline.Terminal;
 import jline.WindowsTerminal;
 import jline.console.completers.EnumCompleter;
+import org.fusesource.jansi.Ansi;
 import org.sonatype.gshell.Branding;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
@@ -43,11 +44,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-import static org.sonatype.gshell.commands.InfoCommand.Section.SHELL;
-import org.fusesource.jansi.Ansi;
+import static org.fusesource.jansi.Ansi.Attribute.INTENSITY_BOLD;
+import static org.fusesource.jansi.Ansi.Color.GREEN;
 import static org.fusesource.jansi.Ansi.ansi;
-import static org.fusesource.jansi.Ansi.Color.*;
-import static org.fusesource.jansi.Ansi.Attribute.*;
+import static org.sonatype.gshell.commands.InfoCommand.Section.SHELL;
 
 //
 // Based on info command from Apache Felix

@@ -24,9 +24,9 @@ import org.sonatype.gshell.util.pref.Preference;
 
 import java.util.prefs.Preferences;
 
+import static org.fusesource.jansi.Ansi.Attribute.INTENSITY_BOLD;
+import static org.fusesource.jansi.Ansi.Color.GREEN;
 import static org.fusesource.jansi.Ansi.ansi;
-import static org.fusesource.jansi.Ansi.Color.*;
-import static org.fusesource.jansi.Ansi.Attribute.*;
 
 /**
  * List preferences.

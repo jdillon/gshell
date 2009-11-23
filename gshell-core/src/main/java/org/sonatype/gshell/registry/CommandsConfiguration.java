@@ -16,8 +16,6 @@
 
 package org.sonatype.gshell.registry;
 
-import org.sonatype.gshell.command.CommandDocumenter;
-
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.net.URL;

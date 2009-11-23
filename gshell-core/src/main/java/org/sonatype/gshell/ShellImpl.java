@@ -29,9 +29,9 @@ import org.sonatype.gshell.event.EventAware;
 import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.execute.CommandExecutor;
 import org.sonatype.gshell.io.Closer;
+import org.sonatype.gshell.io.StreamJack;
 import org.sonatype.gshell.notification.ExitNotification;
 import org.sonatype.gshell.util.Arguments;
-import org.sonatype.gshell.io.StreamJack;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
