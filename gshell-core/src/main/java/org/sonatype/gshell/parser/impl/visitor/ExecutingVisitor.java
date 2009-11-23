@@ -40,6 +40,7 @@ import java.util.List;
  * Visitor which will execute command-lines as parsed.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ * @since 2.0
  */
 public class ExecutingVisitor
     implements ParserVisitor

@@ -20,6 +20,7 @@ package org.sonatype.gshell.parser.impl;
  * Represents a quoted (with double quotes) argument.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ * @since 2.0
  */
 public class ASTQuotedArgument
     extends ArgumentSupport

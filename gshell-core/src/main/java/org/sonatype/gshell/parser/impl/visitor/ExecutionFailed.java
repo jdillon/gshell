@@ -20,6 +20,7 @@ package org.sonatype.gshell.parser.impl.visitor;
  * Thrown when a command execution fails.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ * @since 2.0
  */
 public class ExecutionFailed
     extends Exception

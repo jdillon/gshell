@@ -34,6 +34,7 @@ import java.util.Set;
  * Uses Commons Jexl to evaluate expressions.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ * @since 2.0
  */
 public class JexlEvaluator
     implements Evaluator
