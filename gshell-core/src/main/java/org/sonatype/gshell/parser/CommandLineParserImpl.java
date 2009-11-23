@@ -20,7 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.Shell;
 import org.sonatype.gshell.execute.CommandExecutor;
-import org.sonatype.gshell.execute.CommandLineParser;
+import org.sonatype.gshell.parser.CommandLineParser;
 import org.sonatype.gshell.io.Closer;
 import org.sonatype.gshell.parser.impl.ASTCommandLine;
 import org.sonatype.gshell.parser.impl.Parser;
@@ -31,7 +31,7 @@ import java.io.Reader;
 import java.io.StringReader;
 
 /**
- * The default {@link org.sonatype.gshell.execute.CommandLineParser} component.
+ * The default {@link CommandLineParser} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0

@@ -23,7 +23,7 @@ import com.google.inject.Stage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.sonatype.gshell.execute.CommandLineParser;
+import org.sonatype.gshell.parser.CommandLineParser;
 
 import static org.junit.Assert.fail;
 

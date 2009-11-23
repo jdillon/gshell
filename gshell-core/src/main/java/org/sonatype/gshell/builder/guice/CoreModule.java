@@ -23,7 +23,7 @@ import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.event.EventManagerImpl;
 import org.sonatype.gshell.execute.CommandExecutor;
 import org.sonatype.gshell.execute.CommandExecutorImpl;
-import org.sonatype.gshell.execute.CommandLineParser;
+import org.sonatype.gshell.parser.CommandLineParser;
 import org.sonatype.gshell.parser.CommandLineParserImpl;
 import org.sonatype.gshell.registry.AliasRegistry;
 import org.sonatype.gshell.registry.AliasRegistryImpl;

@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.execute;
+package org.sonatype.gshell.parser;
 
 import org.sonatype.gshell.Shell;
+import org.sonatype.gshell.execute.CommandExecutor;
 
 /**
  * Parse command lines for execution.
