@@ -23,6 +23,7 @@ import com.google.inject.Inject;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.resolver.ArtifactResolutionRequest;
 import org.apache.maven.artifact.resolver.ArtifactResolutionResult;
+import org.apache.maven.artifact.resolver.filter.ScopeArtifactFilter;
 import org.apache.maven.repository.RepositorySystem;
 import org.sonatype.gshell.artifact.monitor.ProgressSpinnerMonitor;
 import org.sonatype.gshell.command.Command;
@@ -104,17 +105,10 @@ public class ResolveCommand
 
         request.setArtifact(artifact);
 
-//        if (scope != null) {
-//            io.debug("Using scope: {}", scope);
-//            request.setCollectionFilter(new ScopeArtifactFilter(scope));
-//        }
-
-//        CumulativeScopeArtifactFilter resolutionScopeFilter = new CumulativeScopeArtifactFilter(Collections.singletonList("compile"));
-//        CumulativeScopeArtifactFilter collectionScopeFilter = new CumulativeScopeArtifactFilter(Collections.singletonList("compile"));
-//        collectionScopeFilter = new CumulativeScopeArtifactFilter(collectionScopeFilter, resolutionScopeFilter);
-//
-//        request.setCollectionFilter(collectionScopeFilter);
-//        request.setResolutionFilter(resolutionScopeFilter);
+        if (scope != null) {
+            io.debug("Using scope: {}", scope);
+            request.setCollectionFilter(new ScopeArtifactFilter(scope));
+        }
 
         request.setOffline(false);
         request.setTransferListener(new ProgressSpinnerMonitor(io));
