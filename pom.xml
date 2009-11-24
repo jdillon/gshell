@@ -19,6 +19,12 @@
 
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.sonatype.forge</groupId>
+        <artifactId>forge-parent</artifactId>
+        <version>5</version>
+    </parent>
+
     <groupId>org.sonatype.gshell</groupId>
     <artifactId>gshell</artifactId>
     <name>GShell</name>
@@ -39,27 +45,15 @@
         <url>https://github.com/sonatype/gshell</url>
     </scm>
 
-    <!--
-    FIXME: Replace with Sonatype details...
-    <distributionManagement>
-        <repository>
-            <id>release.fusesource.org</id>
-            <name>RestMQ Release Repository</name>
-            <url>dav:http://fusesource.com/forge/dav/jansi/repo/release</url>
-        </repository>
-        <snapshotRepository>
-            <uniqueVersion>false</uniqueVersion>
-            <id>snapshot.fusesource.org</id>
-            <name>RestMQ Snapshot Repository</name>
-            <url>dav:http://fusesource.com/forge/dav/jansi/repo/snapshot</url>
-        </snapshotRepository>
-        <site>
-            <id>website.fusesource.org</id>
-            <name>website</name>
-            <url>dav:http://fusesource.com/forge/dav/jansi/maven/${project.version}</url>
-        </site>
-    </distributionManagement>
-    -->
+    <ciManagement>
+        <system>Hudson</system>
+        <url>https://grid.sonatype.org/ci/view/GShell</url>
+    </ciManagement>
+
+    <issueManagement>
+        <system>JIRA</system>
+        <url>https://issues.sonatype.org/browse/GSHELL</url>
+    </issueManagement>
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
