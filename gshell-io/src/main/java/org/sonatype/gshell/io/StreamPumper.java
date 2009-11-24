@@ -32,15 +32,15 @@ import java.io.IOException;
 public class StreamPumper
     implements Runnable
 {
-    private InputStream in;
+    private final InputStream in;
 
-    private OutputStream out;
+    private final OutputStream out;
 
+    private final boolean closeWhenExhausted;
+    
     private volatile boolean finish;
 
     private volatile boolean finished;
-
-    private boolean closeWhenExhausted;
 
     private boolean autoFlush;
 
