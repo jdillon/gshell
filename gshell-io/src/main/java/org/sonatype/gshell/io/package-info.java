@@ -15,7 +15,7 @@
  */
 
 /**
- * I/O Utilities.
+ * Input/Output Utilities.
  *
  * @since 2.0
  */
