@@ -75,16 +75,16 @@ public class TestUtil
 
     /**
      * Determine the value of <tt>${basedir}</tt>, which should be the base directory of
-     * the module which the concreate test class is defined in.
+     * the module which the concrete test class is defined in.
      *
      * <p>
      * If The system property <tt>basedir</tt> is already set, then that value is used,
-     * otherwise we determine the value from the codesource of the containing concrete class
+     * otherwise we determine the value from the code-source of the containing concrete class
      * and set the <tt>basedir</tt> system property to that value.
      *
      * @see #baseDir    This field is always initialized to the value which this method returns.
      *
-     * @return  The base directory of the module which contains the concreate test class.
+     * @return  The base directory of the module which contains the concrete test class.
      */
     protected final File initBaseDir() {
         File dir;
