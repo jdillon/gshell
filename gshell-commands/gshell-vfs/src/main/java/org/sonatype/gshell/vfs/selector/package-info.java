@@ -15,7 +15,7 @@
  */
 
 /**
- * ???
+ * VFS selectors.
  *
  * @since 2.0
  */
