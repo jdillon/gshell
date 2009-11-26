@@ -15,7 +15,7 @@
  */
 
 /**
- * ???
+ * Artifact transfer monitors.
  *
  * @since 2.0
  */

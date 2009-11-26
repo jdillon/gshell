@@ -15,7 +15,7 @@
  */
 
 /**
- * ???
+ * Artifact system.
  *
  * @since 2.0
  */

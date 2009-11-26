@@ -15,7 +15,7 @@
  */
 
 /**
- * ???
+ * Shell administrative commands.
  *
  * @since 2.0
  */

@@ -15,7 +15,7 @@
  */
 
 /**
- * ???
+ * File commands.
  *
  * @since 2.0
  */

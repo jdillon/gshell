@@ -15,7 +15,7 @@
  */
 
 /**
- * Application bootstrap.
+ * Shell bootstrap.
  *
  * @since 2.0
  */

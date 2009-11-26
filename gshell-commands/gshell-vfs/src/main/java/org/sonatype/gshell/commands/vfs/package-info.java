@@ -15,7 +15,7 @@
  */
 
 /**
- * ???
+ * <a href="http://commons.apache.org/vfs/">VFS</a> commands.
  *
  * @since 2.0
  */
