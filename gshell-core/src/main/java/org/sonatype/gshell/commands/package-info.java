@@ -15,7 +15,7 @@
  */
 
 /**
- * ???
+ * Core commands.
  *
  * @since 2.0
  */

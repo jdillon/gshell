@@ -15,7 +15,7 @@
  */
 
 /**
- * ???
+ * Support for building shells with <a href="http://code.google.com/p/google-guice/">Google Guice</a>.
  *
  * @since 2.0
  */

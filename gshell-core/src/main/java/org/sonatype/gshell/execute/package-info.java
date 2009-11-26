@@ -15,7 +15,7 @@
  */
 
 /**
- * ???
+ * Command execution.
  *
  * @since 2.0
  */

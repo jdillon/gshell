@@ -15,7 +15,7 @@
  */
 
 /**
- * ???
+ * ANSI support.
  *
  * @since 2.0
  */

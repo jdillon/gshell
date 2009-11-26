@@ -15,7 +15,7 @@
  */
 
 /**
- * ???
+ * Internationalization.
  *
  * @since 2.0
  */

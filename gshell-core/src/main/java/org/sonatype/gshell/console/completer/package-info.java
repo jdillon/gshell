@@ -15,7 +15,7 @@
  */
 
 /**
- * ???
+ * Command-line completers.
  *
  * @since 2.0
  */

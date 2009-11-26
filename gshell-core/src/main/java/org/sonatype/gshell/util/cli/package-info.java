@@ -15,7 +15,7 @@
  */
 
 /**
- * ???
+ * Command-line argument and option processing.
  *
  * @since 2.0
  */

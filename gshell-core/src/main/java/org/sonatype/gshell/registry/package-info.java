@@ -15,7 +15,7 @@
  */
 
 /**
- * ???
+ * Shell component registration.
  *
  * @since 2.0
  */

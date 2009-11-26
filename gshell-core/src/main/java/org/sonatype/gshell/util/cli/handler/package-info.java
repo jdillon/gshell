@@ -15,7 +15,7 @@
  */
 
 /**
- * ???
+ * Argument and option handlers.
  *
  * @since 2.0
  */

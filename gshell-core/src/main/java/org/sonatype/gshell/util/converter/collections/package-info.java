@@ -15,7 +15,7 @@
  */
 
 /**
- * ???
+ * Collection converters.
  *
  * @since 2.0
  */

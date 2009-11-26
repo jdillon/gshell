@@ -15,7 +15,7 @@
  */
 
 /**
- * ???
+ * Dynamic configuration setting.
  *
  * @since 2.0
  */

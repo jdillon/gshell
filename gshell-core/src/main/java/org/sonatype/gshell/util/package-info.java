@@ -15,7 +15,7 @@
  */
 
 /**
- * ???
+ * Shell utilities.
  *
  * @since 2.0
  */

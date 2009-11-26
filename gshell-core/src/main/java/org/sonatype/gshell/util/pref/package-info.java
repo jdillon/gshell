@@ -15,7 +15,7 @@
  */
 
 /**
- * ???
+ * Preference processing.
  *
  * @since 2.0
  */

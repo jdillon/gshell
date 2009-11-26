@@ -15,7 +15,7 @@
  */
 
 /**
- * ???
+ * Preference management commands.
  *
  * @since 2.0
  */

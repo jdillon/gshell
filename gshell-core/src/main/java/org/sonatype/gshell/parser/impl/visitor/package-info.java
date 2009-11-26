@@ -15,7 +15,7 @@
  */
 
 /**
- * ???
+ * AST visitors.
  *
  * @since 2.0
  */

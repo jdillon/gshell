@@ -15,7 +15,7 @@
  */
 
 /**
- * ???
+ * Variable evaluation.
  *
  * @since 2.0
  */

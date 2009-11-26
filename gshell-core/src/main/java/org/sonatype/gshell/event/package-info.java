@@ -15,7 +15,7 @@
  */
 
 /**
- * ???
+ * Event management.
  *
  * @since 2.0
  */

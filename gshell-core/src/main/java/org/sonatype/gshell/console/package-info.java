@@ -15,7 +15,7 @@
  */
 
 /**
- * ???
+ * Interactive console framework.
  *
  * @since 2.0
  */

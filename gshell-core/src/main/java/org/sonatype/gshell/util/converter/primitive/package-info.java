@@ -15,7 +15,7 @@
  */
 
 /**
- * ???
+ * Primitive converters.
  *
  * @since 2.0
  */

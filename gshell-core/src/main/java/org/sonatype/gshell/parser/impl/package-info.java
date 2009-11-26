@@ -15,7 +15,7 @@
  */
 
 /**
- * ???
+ * Shell syntax parser implementation.
  *
  * @since 2.0
  */

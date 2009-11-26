@@ -15,7 +15,7 @@
  */
 
 /**
- * ???
+ * Shell notifications.
  *
  * @since 2.0
  */
