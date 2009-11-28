@@ -20,6 +20,7 @@ import jline.Terminal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InterruptedIOException;
@@ -35,6 +36,7 @@ import java.util.concurrent.CountDownLatch;
  */
 public class InputPipe
     extends Thread
+    implements Closeable
 {
     private static final Logger log = LoggerFactory.getLogger(InputPipe.class);
 
