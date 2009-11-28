@@ -100,27 +100,36 @@ public class InputPipe
             startSignal.countDown();
             
             while (running) {
-                int c = read();
+                try {
+                    int c = read();
 
-                switch (c) {
-                    case -1:
-                        queue.put(c);
-                        return;
+                    switch (c) {
+                        case -1:
+                            queue.put(c);
+                            return;
 
-                    case 3:
-                        interrupt = interruptHandler.interrupt();
-                        break;
+                        case 3:
+                            interrupt = interruptHandler.interrupt();
+                            break;
 
-                    case 4:
-                        running = interruptHandler.stop();
-                        break;
+                        case 4:
+                            running = interruptHandler.stop();
+                            break;
+                    }
+
+                    queue.put(c);
                 }
+                catch (IOException e) {
+                    log.warn("Pipe read error", e);
 
-                queue.put(c);
+                    // HACK: Reset the terminal
+                    term.restore();
+                    term.init();
+                }
             }
         }
         catch (Throwable t) {
-            log.error("Pipe read failed", t);
+            log.error("Pipe read failure", t);
             if (t instanceof RuntimeException) {
                 throw (RuntimeException) t;
             }
