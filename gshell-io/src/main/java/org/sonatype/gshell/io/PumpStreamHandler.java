@@ -18,7 +18,6 @@ package org.sonatype.gshell.io;
 
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.IOException;
 
 //
 // Based on Apache Ant 1.6.5
@@ -74,9 +73,7 @@ public class PumpStreamHandler
             inputPump = createInputPump(streams.in, out, true);
         }
         else {
-            try {
-                out.close();
-            } catch (IOException e) { }
+            Closer.close(out);
         }
     }
 
