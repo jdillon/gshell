@@ -18,7 +18,6 @@ package org.sonatype.gshell.io;
 
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.IOException;
 
 //
 // Based on Apache Ant 1.6.5
@@ -81,7 +80,7 @@ public class StreamPumper
      *
      * @param autoFlush If true, push through data; if false, let it be buffered
      */
-    public void setAutoFlush(boolean autoFlush) {
+    public void setAutoFlush(final boolean autoFlush) {
         this.autoFlush = autoFlush;
     }
 
@@ -114,7 +113,8 @@ public class StreamPumper
                 }
                 out.flush();
                 Thread.sleep(200);  // Pause to avoid tight loop if external proc is slow
-            } while (!finish && closeWhenExhausted);
+            }
+            while (!finish && closeWhenExhausted);
         }
         catch (Exception e) {
             synchronized (this) {
@@ -123,9 +123,7 @@ public class StreamPumper
         }
         finally {
             if (closeWhenExhausted) {
-                try {
-                    out.close();
-                } catch (IOException e) { }
+                Closer.close(out);
             }
             finished = true;
 
