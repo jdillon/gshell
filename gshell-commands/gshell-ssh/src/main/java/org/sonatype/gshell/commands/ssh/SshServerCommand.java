@@ -19,21 +19,22 @@ package org.sonatype.gshell.commands.ssh;
 import org.apache.sshd.SshServer;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
+import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.util.cli.Option;
 
 /**
  * Start a SSH server.
  *
- * @version $Rev: 720411 $ $Date: 2008-11-25 05:32:43 +0100 (Tue, 25 Nov 2008) $
+ * @since 2.1
  */
 @Command(name="sshd")
 public class SshServerCommand
     extends CommandActionSupport
 {
-    @Option(name="-p", aliases={ "--port" }, description = "The port to setup the SSH server (Default: 8101)", required = false, multiValued = false)
+    @Option(name="-p", aliases={ "--port" })
     private int port = 8101;
 
-    @Option(name="-b", aliases={ "--background"}, description = "The service will run in the background (Default: true)", required = false, multiValued = false)
+    @Option(name="-b", aliases={ "--background"})
     private boolean background = true;
 
     private String sshServerId;
@@ -42,7 +43,7 @@ public class SshServerCommand
         this.sshServerId = sshServerId;
     }
 
-    protected Object doExecute() throws Exception {
+    public Object execute(CommandContext context) throws Exception {
         SshServer server = (SshServer) container.getComponentInstance(sshServerId);
 
         log.debug("Created server: {}", server);

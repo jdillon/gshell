@@ -17,6 +17,6 @@
 /**
  * SSH commands.
  *
- * @since 2.0
+ * @since 2.1
  */
 package org.sonatype.gshell.commands.ssh;

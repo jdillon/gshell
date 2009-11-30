@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.sonatype.gshell.commands.ssh;
 
 import java.io.Closeable;
@@ -25,11 +26,15 @@ import org.apache.sshd.server.Command;
 import org.apache.sshd.server.CommandFactory;
 import org.apache.sshd.server.Environment;
 import org.apache.sshd.server.ExitCallback;
-import org.osgi.service.command.CommandProcessor;
-import org.osgi.service.command.CommandSession;
 
-public class ShellCommandFactory implements CommandFactory {
-
+/**
+ * ???
+ *
+ * @since 2.1
+ */
+public class ShellCommandFactory
+    implements CommandFactory
+{
     private CommandProcessor commandProcessor;
 
     public void setCommandProcessor(CommandProcessor commandProcessor) {
@@ -72,9 +77,11 @@ public class ShellCommandFactory implements CommandFactory {
             try {
                 CommandSession session = commandProcessor.createSession(in, new PrintStream(out), new PrintStream(err));
                 session.execute(command);
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 throw (IOException) new IOException("Unable to start shell").initCause(e);
-            } finally {
+            }
+            finally {
                 close(in, out, err);
                 callback.onExit(0);
             }
@@ -82,16 +89,5 @@ public class ShellCommandFactory implements CommandFactory {
 
         public void destroy() {
 		}
-
-    }
-
-    private static void close(Closeable... closeables) {
-        for (Closeable c : closeables) {
-            try {
-                c.close();
-            } catch (IOException e) {
-                // Ignore
-            }
-        }
     }
 }

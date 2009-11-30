@@ -25,8 +25,15 @@ import org.apache.sshd.server.Environment;
 import org.apache.sshd.server.Signal;
 import org.apache.sshd.server.SignalListener;
 
-public class SshTerminal extends Terminal implements SignalListener {
-
+/**
+ * ???
+ *
+ * @since 2.1
+ */
+public class SshTerminal
+    extends Terminal
+    implements SignalListener
+{
     public static final short ARROW_START = 27;
     public static final short ARROW_PREFIX = 91;
     public static final short ARROW_LEFT = 68;

@@ -35,9 +35,10 @@ import org.apache.sshd.server.ExitCallback;
 /**
  * SSHD {@link org.apache.sshd.server.Command} factory which provides access to Shell.
  *
- * @version $Rev: 731517 $ $Date: 2009-01-05 11:25:19 +0100 (Mon, 05 Jan 2009) $
+ * @since 2.1
  */
-public class ShellFactoryImpl implements Factory<Command>
+public class ShellFactoryImpl
+    implements Factory<Command>
 {
     private CommandProcessor commandProcessor;
     private List<Completer> completers;
@@ -120,16 +121,6 @@ public class ShellFactoryImpl implements Factory<Command>
             }
         }
 
-    }
-
-    private static void close(Closeable... closeables) {
-        for (Closeable c : closeables) {
-            try {
-                c.close();
-            } catch (IOException e) {
-                // Ignore
-            }
-        }
     }
 
     public static Converter getConverter() {

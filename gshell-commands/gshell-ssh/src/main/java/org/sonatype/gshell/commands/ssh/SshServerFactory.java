@@ -13,12 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.sonatype.gshell.commands.ssh;
 
 import org.apache.sshd.SshServer;
 
-public class SshServerFactory {
-
+/**
+ * ???
+ *
+ * @since 2.1
+ */
+public class SshServerFactory
+{
     private SshServer server;
 
     private boolean start;

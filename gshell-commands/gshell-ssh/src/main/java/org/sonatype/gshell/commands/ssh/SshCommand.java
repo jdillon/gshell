@@ -34,23 +34,23 @@ import org.sonatype.gshell.util.cli.Option;
 /**
  * Connect to a SSH server.
  *
- * @version $Rev: 721244 $ $Date: 2008-11-27 18:19:56 +0100 (Thu, 27 Nov 2008) $
+ * @since 2.1
  */
 @Command(name="ssh")
 public class SshCommand
     extends CommandActionSupport
 {
-   @Option(name="-l", aliases={"--username"}, description = "The user name for remote login", required = false, multiValued = false)
+    @Option(name="-l", aliases={"--username"})
     private String username;
 
-    @Option(name="-P", aliases={"--password"}, description = "The password for remote login", required = false, multiValued = false)
+    @Option(name="-P", aliases={"--password"})
     private String password;
 
-    @Argument(index = 0, name = "hostname", description = "The host name to connect to via SSH", required = true, multiValued = false)
-    private String hostname;
-
-    @Option(name="-p", aliases={"--port"}, description = "The port to use for SSH connection", required = false, multiValued = false)
+    @Option(name="-p", aliases={"--port"})
     private int port = 22;
+
+    @Argument(index = 0)
+    private String hostname;
 
 	private ClientSession session;
 
