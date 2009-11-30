@@ -104,10 +104,12 @@ public class SshCommand
                 channel.setErr(new NoCloseOutputStream(System.err));
                 channel.open();
                 channel.waitFor(ClientChannel.CLOSED, 0);
-            } finally {
+            }
+            finally {
                 session.close(false);
             }
-        } finally {
+        }
+        finally {
             client.stop();
         }
 

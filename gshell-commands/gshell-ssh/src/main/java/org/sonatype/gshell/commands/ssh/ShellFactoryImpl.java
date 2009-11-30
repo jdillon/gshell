@@ -31,6 +31,7 @@ import org.apache.sshd.common.Factory;
 import org.apache.sshd.server.Command;
 import org.apache.sshd.server.Environment;
 import org.apache.sshd.server.ExitCallback;
+import org.sonatype.gshell.io.Closer;
 
 /**
  * SSHD {@link org.apache.sshd.server.Command} factory which provides access to Shell.
@@ -55,7 +56,8 @@ public class ShellFactoryImpl
         return new ShellImpl();
     }
 
-    public class ShellImpl implements Command
+    public class ShellImpl
+        implements Command
     {
         private InputStream in;
 
@@ -90,6 +92,7 @@ public class ShellFactoryImpl
                         return Boolean.valueOf(System.getProperty(Console.PRINT_STACK_TRACES));
                     }
                 };
+
                 Console console = new Console(commandProcessor,
                                               in,
                                               new PrintStream(out, true),
@@ -102,13 +105,16 @@ public class ShellFactoryImpl
                                                   }
                                               },
                                               printStackTraces);
+
                 CommandSession session = console.getSession();
                 session.put("APPLICATION", System.getProperty("karaf.name", "root"));
                 for (Map.Entry<String,String> e : env.getEnv().entrySet()) {
                     session.put(e.getKey(), e.getValue());
                 }
+
                 new Thread(console).start();
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 throw (IOException) new IOException("Unable to start shell").initCause(e);
             }
         }
@@ -116,28 +122,9 @@ public class ShellFactoryImpl
         public void destroy() {
             if (!closed) {
                 closed = true;
-                ShellFactoryImpl.close(in, out, err);
+                Closer.close(in, out, err);
                 callback.onExit(0);
             }
         }
-
     }
-
-    public static Converter getConverter() {
-        return new Converter();
-    }
-
-    public static class Converter implements org.osgi.service.blueprint.container.Converter {
-
-        public boolean canConvert(Object sourceObject, ReifiedType targetType) {
-            return ShellFactoryImpl.class.isAssignableFrom(sourceObject.getClass())
-                    && Factory.class.equals(targetType.getRawClass())
-                    && Command.class.equals(targetType.getActualTypeArgument(0).getRawClass());
-        }
-
-        public Object convert(Object sourceObject, ReifiedType targetType) throws Exception {
-            return sourceObject;
-        }
-    }
-
 }

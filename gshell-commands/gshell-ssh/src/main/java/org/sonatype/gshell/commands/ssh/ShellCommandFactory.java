@@ -26,6 +26,7 @@ import org.apache.sshd.server.Command;
 import org.apache.sshd.server.CommandFactory;
 import org.apache.sshd.server.Environment;
 import org.apache.sshd.server.ExitCallback;
+import org.sonatype.gshell.io.Closer;
 
 /**
  * ???
@@ -45,8 +46,9 @@ public class ShellCommandFactory
         return new ShellCommand(command);
     }
 
-    public class ShellCommand implements Command {
-
+    public class ShellCommand
+        implements Command
+    {
         private String command;
         private InputStream in;
         private OutputStream out;
@@ -82,7 +84,7 @@ public class ShellCommandFactory
                 throw (IOException) new IOException("Unable to start shell").initCause(e);
             }
             finally {
-                close(in, out, err);
+                Closer.close(in, out, err);
                 callback.onExit(0);
             }
         }

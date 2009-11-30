@@ -45,7 +45,9 @@ public class SshServerFactory
         if (start) {
             try {
                 server.start();
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
+                // FIXME: This is bad!!!
                 e.printStackTrace();
                 throw e;
             }
