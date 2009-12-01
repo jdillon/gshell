@@ -18,9 +18,15 @@ package org.sonatype.gshell.registry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.sonatype.gshell.command.descriptor.CommandDescriptor;
+import org.sonatype.gshell.command.descriptor.CommandSetDescriptor;
+import org.sonatype.gshell.command.descriptor.CommandsDescriptor;
+import org.sonatype.gshell.command.descriptor.io.xpp3.CommandsXpp3Reader;
+import org.sonatype.gshell.io.Closer;
 
-import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.LinkedList;
@@ -37,15 +43,19 @@ public abstract class CommandRegistrarSupport
 {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
-    private List<CommandsConfiguration> configurations = new LinkedList<CommandsConfiguration>();
+    private List<CommandSetDescriptor> descriptors = new LinkedList<CommandSetDescriptor>();
 
     public void registerCommands() throws Exception {
-        List<CommandsConfiguration> configurations = discoverConfigurations();
+        List<CommandsDescriptor> descriptors = discoverDescriptors();
+        List<CommandSetDescriptor> commandSets = new ArrayList<CommandSetDescriptor>();
+        for (CommandsDescriptor d : descriptors) {
+            commandSets.addAll(d.getCommandSets());
+        }
 
-        if (!configurations.isEmpty()) {
-            Collections.sort(configurations);
+        if (!commandSets.isEmpty()) {
+            Collections.sort(commandSets);
 
-            for (CommandsConfiguration config : configurations) {
+            for (CommandSetDescriptor config : commandSets) {
                 if (!config.isEnabled()) {
                     log.debug("Skipping disabled commands: {}", config);
                     continue;
@@ -53,35 +63,55 @@ public abstract class CommandRegistrarSupport
 
                 log.debug("Registering commands for: {}", config);
 
-                this.configurations.add(config);
+                this.descriptors.add(config);
 
-                for (String type : config.getCommands()) {
-                    try {
-                        registerCommand(type);
+                for (CommandDescriptor command : config.getCommands()) {
+                    if (command.isEnabled()) {
+                        String type = command.getType();
+                        String name = command.getName();
+
+                        try {
+                            if (name == null) {
+                                registerCommand(type);
+                            }
+                            else {
+                                registerCommand(name, type);
+                            }
+                        }
+                        catch (Exception e) {
+                            log.error("Failed to register command: " + type, e);
+                        }
                     }
-                    catch (Exception e) {
-                        log.error("Failed to register command: " + type, e);
+                    else {
+                        log.debug("Skipping disabled command: {}", command);
                     }
                 }
             }
         }
     }
 
-    protected List<CommandsConfiguration> discoverConfigurations() throws IOException {
+    protected List<CommandsDescriptor> discoverDescriptors() throws Exception {
         log.debug("Discovering commands configuration");
 
-        List<CommandsConfiguration> list = new LinkedList<CommandsConfiguration>();
+        List<CommandsDescriptor> list = new LinkedList<CommandsDescriptor>();
 
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
 
-        Enumeration<URL> resources = cl.getResources(COMMANDS_PROPERTIES);
+        Enumeration<URL> resources = cl.getResources(COMMANDS_DESCRIPTOR);
         if (resources != null && resources.hasMoreElements()) {
             log.debug("Discovered:");
             while (resources.hasMoreElements()) {
                 URL url = resources.nextElement();
                 log.debug("    {}", url);
-                CommandsConfiguration config = new CommandsConfiguration(url);
-                list.add(config);
+                CommandsXpp3Reader reader = new CommandsXpp3Reader();
+                InputStream input = url.openStream();
+                try {
+                    CommandsDescriptor config = reader.read(input);
+                    list.add(config);
+                }
+                finally {
+                    Closer.close(input);
+                }
             }
         }
 

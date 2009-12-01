@@ -24,7 +24,7 @@ package org.sonatype.gshell.registry;
  */
 public interface CommandRegistrar
 {
-    String COMMANDS_PROPERTIES = "META-INF/org.sonatype.gshell/commands.properties";
+    String COMMANDS_DESCRIPTOR = "META-INF/org.sonatype.gshell/commands.xml";
 
     void registerCommands() throws Exception;
 

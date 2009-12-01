@@ -50,6 +50,11 @@
         </dependency>
 
         <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-utils</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
             <optional>true</optional>
@@ -70,6 +75,27 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.codehaus.modello</groupId>
+                <artifactId>modello-maven-plugin</artifactId>
+                <configuration>
+                    <useJava5>true</useJava5>
+                    <models>
+                        <model>src/main/mdo/commands.mdo</model>
+                    </models>
+                    <version>1.0.0</version>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java</goal>
+                            <goal>xpp3-reader</goal>
+                            <goal>xsd</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>javacc-maven-plugin</artifactId>
