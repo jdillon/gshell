@@ -16,18 +16,20 @@
   ~ limitations under the License.
   -->
 
-<commands>
-    <commandSet>
-        <id>sshd</id>
+<commands xmlns="http://sonatype.org/gshell-commands/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://sonatype.org/gshell-commands/1.0.0 http://sonatype.org/xsd/gshell-commands-1.0.0.xsd"
+          version="1.0.0">
+
+    <command-set id="ssh">
         <enabled>true</enabled>
         <autoRegisterPriority>50</autoRegisterPriority>
-        <commands>
-            <command>
-                <type>org.sonatype.gshell.commands.ssh.SshCommand</type>
-            </command>
-            <command>
-                <type>org.sonatype.gshell.commands.ssh.SshServerCommand</type>
-            </command>
-        </commands>
-    </commandSet>
+        <command>
+            <action>org.sonatype.gshell.commands.ssh.SshCommand</action>
+        </command>
+        <command>
+            <action>org.sonatype.gshell.commands.ssh.SshServerCommand</action>
+        </command>
+    </command-set>
+
 </commands>

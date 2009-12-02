@@ -54,10 +54,10 @@
             <artifactId>gshell-artifact</artifactId>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>org.sonatype.gshell.commands</groupId>-->
-            <!--<artifactId>gshell-text</artifactId>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.sonatype.gshell.commands</groupId>
+            <artifactId>gshell-text</artifactId>
+        </dependency>
         
         <dependency>
             <groupId>org.sonatype.gshell.commands</groupId>

@@ -16,13 +16,14 @@
   ~ limitations under the License.
   -->
 
-<model xmlns="http://modello.codehaus.org/MODELLO/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://modello.codehaus.org/MODELLO/1.0.0 http://modello.codehaus.org/xsd/modello-1.0.0.xsd"
+<model xmlns="http://modello.codehaus.org/MODELLO/1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://modello.codehaus.org/MODELLO/1.1.0 http://modello.codehaus.org/xsd/modello-1.1.0.xsd"
        xml.namespace="http://sonatype.org/gshell-commands/${version}"
        xml.schemaLocation="http://sonatype.org/xsd/gshell-commands-${version}.xsd">
 
     <id>commands</id>
     <name>Commands</name>
+    <version>1.0.0+</version>
 
     <defaults>
         <default>
@@ -31,12 +32,17 @@
         </default>
     </defaults>
 
+    <versionDefinition>
+        <type>field</type>
+        <value>version</value>
+    </versionDefinition>
+
     <classes>
         <class rootElement="true" xml.tagName="commands" xsd.compositor="sequence">
             <name>CommandsDescriptor</name>
             <version>1.0.0+</version>
             <fields>
-                <field>
+                <field xml.attribute="true">
                     <name>version</name>
                     <version>1.0.0+</version>
                     <required>true</required>
@@ -46,7 +52,7 @@
                 <field>
                     <name>commandSets</name>
                     <version>1.0.0+</version>
-                    <association java.adder="false" java.bidi="false" xml.itemsStyle="flat">
+                    <association java.adder="false" java.bidi="false" xml.tagName="command-set" xml.itemsStyle="flat">
                         <type>CommandSetDescriptor</type>
                         <multiplicity>*</multiplicity>
                     </association>
@@ -54,14 +60,14 @@
             </fields>
         </class>
 
-        <class xml.tagName="commandSet">
+        <class xml.tagName="command-set" xsd.compositor="sequence">
             <name>CommandSetDescriptor</name>
             <version>1.0.0+</version>
             <interfaces>
                 <interface><![CDATA[Comparable<CommandSetDescriptor>]]></interface>
             </interfaces>
             <fields>
-                <field>
+                <field xml.attribute="true">
                     <name>id</name>
                     <version>1.0.0+</version>
                     <required>true</required>
@@ -82,11 +88,13 @@
                     <type>int</type>
                 </field>
 
+                <!-- TODO: Add modules, so we can have custom Guice bits included if needed. -->
+                
                 <field>
                     <name>commands</name>
                     <version>1.0.0+</version>
                     <required>true</required>
-                    <association java.adder="false" java.bidi="false">
+                    <association java.adder="false" java.bidi="false" xml.itemsStyle="flat">
                         <type>CommandDescriptor</type>
                         <multiplicity>*</multiplicity>
                     </association>
@@ -112,7 +120,7 @@
             <version>1.0.0+</version>
             <fields>
                 <field>
-                    <name>type</name>
+                    <name>action</name>
                     <version>1.0.0+</version>
                     <required>true</required>
                     <type>String</type>

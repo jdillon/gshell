@@ -80,6 +80,7 @@
                 <artifactId>modello-maven-plugin</artifactId>
                 <configuration>
                     <useJava5>true</useJava5>
+                    <encoding>UTF-8</encoding>
                     <models>
                         <model>src/main/mdo/commands.mdo</model>
                     </models>
@@ -90,6 +91,7 @@
                         <goals>
                             <goal>java</goal>
                             <goal>xpp3-reader</goal>
+                            <goal>xpp3-writer</goal>
                             <goal>xsd</goal>
                         </goals>
                     </execution>

@@ -67,7 +67,7 @@ public abstract class CommandRegistrarSupport
 
                 for (CommandDescriptor command : config.getCommands()) {
                     if (command.isEnabled()) {
-                        String type = command.getType();
+                        String type = command.getAction();
                         String name = command.getName();
 
                         try {

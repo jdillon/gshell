@@ -16,15 +16,17 @@
   ~ limitations under the License.
   -->
 
-<commands>
-    <commandSet>
-        <id>network</id>
+<commands xmlns="http://sonatype.org/gshell-commands/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://sonatype.org/gshell-commands/1.0.0 http://sonatype.org/xsd/gshell-commands-1.0.0.xsd"
+          version="1.0.0">
+
+    <command-set id="network">
         <enabled>true</enabled>
         <autoRegisterPriority>100</autoRegisterPriority>
-        <commands>
-            <command>
-                <type>org.sonatype.gshell.commands.network.HostnameCommand</type>
-            </command>
-        </commands>
-    </commandSet>
+        <command>
+            <action>org.sonatype.gshell.commands.network.HostnameCommand</action>
+        </command>
+    </command-set>
+
 </commands>

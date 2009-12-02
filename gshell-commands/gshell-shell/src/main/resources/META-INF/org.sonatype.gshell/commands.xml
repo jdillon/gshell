@@ -16,30 +16,32 @@
   ~ limitations under the License.
   -->
 
-<commands>
-    <commandSet>
-        <id>shell</id>
+<commands xmlns="http://sonatype.org/gshell-commands/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://sonatype.org/gshell-commands/1.0.0 http://sonatype.org/xsd/gshell-commands-1.0.0.xsd"
+          version="1.0.0">
+
+    <command-set id="shell">
         <enabled>true</enabled>
         <autoRegisterPriority>20</autoRegisterPriority>
-        <commands>
-            <command>
-                <type>org.sonatype.gshell.commands.shell.AskCommand</type>
-            </command>
-            <command>
-                <type>org.sonatype.gshell.commands.shell.SleepCommand</type>
-            </command>
-            <command>
-                <type>org.sonatype.gshell.commands.shell.ClearCommand</type>
-            </command>
-            <command>
-                <type>org.sonatype.gshell.commands.shell.DateCommand</type>
-            </command>
-            <command>
-                <type>org.sonatype.gshell.commands.shell.ExecuteCommand</type>
-            </command>
-            <command>
-                <type>org.sonatype.gshell.commands.shell.JavaCommand</type>
-            </command>
-        </commands>
-    </commandSet>
+        <command>
+            <action>org.sonatype.gshell.commands.shell.AskCommand</action>
+        </command>
+        <command>
+            <action>org.sonatype.gshell.commands.shell.SleepCommand</action>
+        </command>
+        <command>
+            <action>org.sonatype.gshell.commands.shell.ClearCommand</action>
+        </command>
+        <command>
+            <action>org.sonatype.gshell.commands.shell.DateCommand</action>
+        </command>
+        <command>
+            <action>org.sonatype.gshell.commands.shell.ExecuteCommand</action>
+        </command>
+        <command>
+            <action>org.sonatype.gshell.commands.shell.JavaCommand</action>
+        </command>
+    </command-set>
+    
 </commands>

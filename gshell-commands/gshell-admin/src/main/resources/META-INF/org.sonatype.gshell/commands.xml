@@ -16,13 +16,15 @@
   ~ limitations under the License.
   -->
 
-<commands>
-    <commandSet>
-        <id>admin</id>
+<commands xmlns="http://sonatype.org/gshell-commands/1.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://sonatype.org/gshell-commands/1.0.0 http://sonatype.org/xsd/gshell-commands-1.0.0.xsd"
+  version="1.0.0">
+
+    <command-set id="admin">
         <enabled>true</enabled>
         <autoRegisterPriority>20</autoRegisterPriority>
-        <commands>
-            <!-- TODO -->
-        </commands>
-    </commandSet>
+        <!-- TODO -->
+    </command-set>
+
 </commands>

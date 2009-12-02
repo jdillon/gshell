@@ -16,30 +16,32 @@
   ~ limitations under the License.
   -->
 
-<commands>
-    <commandSet>
-        <id>file</id>
+<commands xmlns="http://sonatype.org/gshell-commands/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://sonatype.org/gshell-commands/1.0.0 http://sonatype.org/xsd/gshell-commands-1.0.0.xsd"
+          version="1.0.0">
+
+    <command-set id="file">
         <enabled>true</enabled>
         <autoRegisterPriority>20</autoRegisterPriority>
-        <commands>
-            <command>
-                <type>org.sonatype.gshell.commands.file.ChangeDirectoryCommand</type>
-            </command>
-            <command>
-                <type>org.sonatype.gshell.commands.file.CreateDirectoryCommand</type>
-            </command>
-            <command>
-                <type>org.sonatype.gshell.commands.file.CurrentDirectoryCommand</type>
-            </command>
-            <command>
-                <type>org.sonatype.gshell.commands.file.DeleteDirectoryCommand</type>
-            </command>
-            <command>
-                <type>org.sonatype.gshell.commands.file.DeleteFileCommand</type>
-            </command>
-            <command>
-                <type>org.sonatype.gshell.commands.file.ListDirectoryCommand</type>
-            </command>
-        </commands>
-    </commandSet>
+        <command>
+            <action>org.sonatype.gshell.commands.file.ChangeDirectoryCommand</action>
+        </command>
+        <command>
+            <action>org.sonatype.gshell.commands.file.CreateDirectoryCommand</action>
+        </command>
+        <command>
+            <action>org.sonatype.gshell.commands.file.CurrentDirectoryCommand</action>
+        </command>
+        <command>
+            <action>org.sonatype.gshell.commands.file.DeleteDirectoryCommand</action>
+        </command>
+        <command>
+            <action>org.sonatype.gshell.commands.file.DeleteFileCommand</action>
+        </command>
+        <command>
+            <action>org.sonatype.gshell.commands.file.ListDirectoryCommand</action>
+        </command>
+    </command-set>
+
 </commands>
