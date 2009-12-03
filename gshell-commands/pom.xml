@@ -55,7 +55,7 @@
         <module>gshell-network</module>
         <module>gshell-shell</module>
         <module>gshell-file</module>
-        <module>gshell-admin</module>
+        <!--<module>gshell-admin</module>-->
         <module>gshell-vfs</module>
         <!--<module>gshell-ssh</module>-->
         <module>gshell-bsf</module>
