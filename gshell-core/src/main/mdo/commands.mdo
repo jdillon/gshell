@@ -25,6 +25,11 @@
     <name>Commands</name>
     <version>1.0.0</version>
 
+    <description><![CDATA[
+        Commands descriptor model.
+        @since 2.1
+    ]]></description>
+    
     <defaults>
         <default>
             <key>package</key>
@@ -39,8 +44,14 @@
 
     <classes>
         <class rootElement="true" xml.tagName="commands" xsd.compositor="sequence">
+            <description><![CDATA[
+                Commands descriptor.
+                @since 2.1
+            ]]></description>
+
             <name>CommandsDescriptor</name>
             <version>1.0.0+</version>
+
             <fields>
                 <field xml.attribute="true">
                     <name>version</name>
@@ -61,6 +72,11 @@
         </class>
 
         <class xml.tagName="command-set" xsd.compositor="sequence">
+            <description><![CDATA[
+                Command set descriptor.
+                @since 2.1
+            ]]></description>
+
             <name>CommandSetDescriptor</name>
             <version>1.0.0+</version>
             <interfaces>
@@ -116,6 +132,11 @@
         </class>
 
         <class xml.tagName="command">
+            <description><![CDATA[
+                Command descriptor.
+                @since 2.1
+            ]]></description>
+
             <name>CommandDescriptor</name>
             <version>1.0.0+</version>
             <fields>
