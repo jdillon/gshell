@@ -363,11 +363,11 @@
         <plugins>
             <!--
             <plugin>
-                <groupId>org.codehaus.groovy.maven</groupId>
+                <groupId>org.codehaus.gaven</groupId>
                 <artifactId>gmaven-plugin</artifactId>
-                <version>1.0</version>
+                <version>1.1</version>
                 <configuration>
-                    <providerSelection>1.6</providerSelection>
+                    <providerSelection>1.7</providerSelection>
                 </configuration>
                 <executions>
                     <execution>
