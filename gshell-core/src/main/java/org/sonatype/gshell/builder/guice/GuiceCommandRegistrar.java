@@ -18,6 +18,7 @@ package org.sonatype.gshell.builder.guice;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.google.inject.Singleton;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.registry.CommandRegistrar;
@@ -30,6 +31,7 @@ import org.sonatype.gshell.registry.CommandRegistry;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
+@Singleton
 public class GuiceCommandRegistrar
     extends CommandRegistrarSupport
 {
