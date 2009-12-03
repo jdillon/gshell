@@ -16,6 +16,10 @@
 
 package org.sonatype.gshell.registry;
 
+import org.sonatype.gshell.command.descriptor.CommandSetDescriptor;
+
+import java.util.List;
+
 /**
  * Registers commands.
  *
@@ -24,11 +28,29 @@ package org.sonatype.gshell.registry;
  */
 public interface CommandRegistrar
 {
-    String COMMANDS_DESCRIPTOR = "META-INF/org.sonatype.gshell/commands.xml";
+    /**
+     * @since 2.1
+     */
+    String DEFAULT_DESCRIPTOR_LOCATION = "META-INF/org.sonatype.gshell/commands.xml";
 
     void registerCommands() throws Exception;
 
     void registerCommand(String name, String type) throws Exception;
 
     void registerCommand(String type) throws Exception;
+
+    /**
+     * @since 2.1
+     */
+    String getDescriptorLocation();
+
+    /**
+     * @since 2.1
+     */
+    void setDescriptorLocation(final String path);
+
+    /**
+     * @since 2.1
+     */
+    List<CommandSetDescriptor> getDescriptors();
 }

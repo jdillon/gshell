@@ -43,7 +43,22 @@ public abstract class CommandRegistrarSupport
 {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
+    private String descriptorLocation = DEFAULT_DESCRIPTOR_LOCATION;
+
     private List<CommandSetDescriptor> descriptors = new LinkedList<CommandSetDescriptor>();
+
+    public String getDescriptorLocation() {
+        return descriptorLocation;
+    }
+
+    public void setDescriptorLocation(final String path) {
+        assert path != null;
+        this.descriptorLocation = path;
+    }
+
+    public List<CommandSetDescriptor> getDescriptors() {
+        return descriptors;
+    }
 
     public void registerCommands() throws Exception {
         List<CommandsDescriptor> descriptors = discoverDescriptors();
@@ -63,6 +78,7 @@ public abstract class CommandRegistrarSupport
 
                 log.debug("Registering commands for: {}", config);
 
+                // FIXME: Should expand on the API that exposes descriptors, including those that are not enabled
                 this.descriptors.add(config);
 
                 for (CommandDescriptor command : config.getCommands()) {
@@ -91,13 +107,14 @@ public abstract class CommandRegistrarSupport
     }
 
     protected List<CommandsDescriptor> discoverDescriptors() throws Exception {
-        log.debug("Discovering commands configuration");
+        String location = getDescriptorLocation();
+        log.debug("Discovering commands descriptors; location={}", location);
 
         List<CommandsDescriptor> list = new LinkedList<CommandsDescriptor>();
 
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
 
-        Enumeration<URL> resources = cl.getResources(COMMANDS_DESCRIPTOR);
+        Enumeration<URL> resources = cl.getResources(location);
         if (resources != null && resources.hasMoreElements()) {
             log.debug("Discovered:");
             while (resources.hasMoreElements()) {
