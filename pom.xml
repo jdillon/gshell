@@ -195,11 +195,11 @@
                 <version>2.1-SNAPSHOT</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.sonatype.gshell.commands</groupId>
-                <artifactId>gshell-admin</artifactId>
-                <version>2.1-SNAPSHOT</version>
-            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>org.sonatype.gshell.commands</groupId>-->
+                <!--<artifactId>gshell-admin</artifactId>-->
+                <!--<version>2.1-SNAPSHOT</version>-->
+            <!--</dependency>-->
 
             <dependency>
                 <groupId>org.sonatype.gshell.commands</groupId>
@@ -207,11 +207,11 @@
                 <version>2.1-SNAPSHOT</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.sonatype.gshell.commands</groupId>
-                <artifactId>gshell-ssh</artifactId>
-                <version>2.1-SNAPSHOT</version>
-            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>org.sonatype.gshell.commands</groupId>-->
+                <!--<artifactId>gshell-ssh</artifactId>-->
+                <!--<version>2.1-SNAPSHOT</version>-->
+            <!--</dependency>-->
 
             <dependency>
                 <groupId>org.sonatype.gshell.commands</groupId>
