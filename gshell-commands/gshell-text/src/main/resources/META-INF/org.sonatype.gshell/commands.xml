@@ -26,15 +26,18 @@
         <autoRegisterPriority>50</autoRegisterPriority>
         <command>
             <action>org.sonatype.gshell.commands.text.CatCommand</action>
+            <enabled>false</enabled>
         </command>
         <command>
             <action>org.sonatype.gshell.commands.text.GrepCommand</action>
+            <enabled>false</enabled>
         </command>
         <command>
             <action>org.sonatype.gshell.commands.text.PrintfCommand</action>
         </command>
         <command>
             <action>org.sonatype.gshell.commands.text.SortCommand</action>
+            <enabled>false</enabled>
         </command>
     </command-set>
 
