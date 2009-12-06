@@ -31,11 +31,13 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD, ElementType.METHOD})
 public @interface Preference
 {
-    public abstract String name() default "";
+    String name() default "";
 
-    public abstract Class<?> base() default Void.class;
+    Class<?> base() default Void.class;
 
-    public abstract boolean system() default false;
+    String path() default "";
+    
+    boolean system() default false;
 
     // TODO: Consider adding listener support
 }

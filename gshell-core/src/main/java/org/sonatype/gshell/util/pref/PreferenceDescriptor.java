@@ -41,6 +41,8 @@ public class PreferenceDescriptor
 
     private final Class<?> base;
 
+    private final String path;
+
     private final boolean system;
 
     protected PreferenceDescriptor(final Preference pref, final Setter setter) {
@@ -61,6 +63,13 @@ public class PreferenceDescriptor
 
         // On IBM JDK, the value passed is null instead of the default value, so fix it in case
         this.base = pref.base() != null ? pref.base() : Void.class;
+
+        if (pref.path() != null && pref.path().length() == 0) {
+            this.path = null;
+        }
+        else {
+            this.path = pref.path();
+        }
     }
 
     public Preference getSpec() {
@@ -77,6 +86,10 @@ public class PreferenceDescriptor
 
     public Class<?> getBase() {
         return base;
+    }
+
+    public String getPath() {
+        return path;
     }
 
     public boolean isSystem() {
@@ -99,13 +112,25 @@ public class PreferenceDescriptor
     }
 
     public Preferences getPreferences() {
-        Class type = getType();
+        String path = getPath();
 
-        if (system) {
-            return Preferences.systemNodeForPackage(type);
+        if (path == null) {
+            Class type = getType();
+
+            if (system) {
+                return Preferences.systemNodeForPackage(type);
+            }
+            else {
+                return Preferences.userNodeForPackage(type);
+            }
         }
         else {
-            return Preferences.userNodeForPackage(type);
+            if (system) {
+                return Preferences.systemRoot().node(path);
+            }
+            else {
+                return Preferences.userRoot().node(path);
+            }
         }
     }
 
