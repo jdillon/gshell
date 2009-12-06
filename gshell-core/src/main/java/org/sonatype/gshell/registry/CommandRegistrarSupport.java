@@ -71,15 +71,14 @@ public abstract class CommandRegistrarSupport
             Collections.sort(commandSets);
 
             for (CommandSetDescriptor config : commandSets) {
+                this.descriptors.add(config);
+
                 if (!config.isEnabled()) {
                     log.debug("Skipping disabled commands: {}", config);
                     continue;
                 }
 
                 log.debug("Registering commands for: {}", config);
-
-                // FIXME: Should expand on the API that exposes descriptors, including those that are not enabled
-                this.descriptors.add(config);
 
                 for (CommandDescriptor command : config.getCommands()) {
                     if (command.isEnabled()) {
