@@ -40,12 +40,12 @@ public interface CommandRegistrar
     void registerCommand(String type) throws Exception;
 
     /**
-     * @since 2.1
+     * @since 2.2
      */
     String[] getDescriptorSearchPath();
 
     /**
-     * @since 2.1
+     * @since 2.2
      */
     void setDescriptorSearchPath(final String... path);
 
