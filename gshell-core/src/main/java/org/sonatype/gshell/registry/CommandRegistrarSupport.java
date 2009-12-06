@@ -33,7 +33,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Support for {@link CommandRegistrar} implementations
+ * Support for {@link CommandRegistrar} implementations.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
