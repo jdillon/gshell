@@ -45,7 +45,7 @@ public abstract class CommandRegistrarSupport
 
     private String[] descriptorSearchPath = { DEFAULT_DESCRIPTOR_LOCATION };
 
-    private List<CommandSetDescriptor> descriptors = new LinkedList<CommandSetDescriptor>();
+    private final List<CommandSetDescriptor> descriptors = new LinkedList<CommandSetDescriptor>();
 
     public String[] getDescriptorSearchPath() {
         return descriptorSearchPath;
