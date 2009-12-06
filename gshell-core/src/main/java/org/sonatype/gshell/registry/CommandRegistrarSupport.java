@@ -43,17 +43,17 @@ public abstract class CommandRegistrarSupport
 {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
-    private String descriptorLocation = DEFAULT_DESCRIPTOR_LOCATION;
+    private String[] descriptorSearchPath = { DEFAULT_DESCRIPTOR_LOCATION };
 
     private List<CommandSetDescriptor> descriptors = new LinkedList<CommandSetDescriptor>();
 
-    public String getDescriptorLocation() {
-        return descriptorLocation;
+    public String[] getDescriptorSearchPath() {
+        return descriptorSearchPath;
     }
 
-    public void setDescriptorLocation(final String path) {
+    public void setDescriptorSearchPath(final String... path) {
         assert path != null;
-        this.descriptorLocation = path;
+        this.descriptorSearchPath = path;
     }
 
     public List<CommandSetDescriptor> getDescriptors() {
@@ -107,27 +107,28 @@ public abstract class CommandRegistrarSupport
     }
 
     protected List<CommandsDescriptor> discoverDescriptors() throws Exception {
-        String location = getDescriptorLocation();
-        log.debug("Discovering commands descriptors; location={}", location);
-
         List<CommandsDescriptor> list = new LinkedList<CommandsDescriptor>();
 
-        ClassLoader cl = Thread.currentThread().getContextClassLoader();
+        for (String location : getDescriptorSearchPath()) {
+            log.debug("Discovering commands descriptors; location={}", location);
 
-        Enumeration<URL> resources = cl.getResources(location);
-        if (resources != null && resources.hasMoreElements()) {
-            log.debug("Discovered:");
-            while (resources.hasMoreElements()) {
-                URL url = resources.nextElement();
-                log.debug("    {}", url);
-                CommandsXpp3Reader reader = new CommandsXpp3Reader();
-                InputStream input = url.openStream();
-                try {
-                    CommandsDescriptor config = reader.read(input);
-                    list.add(config);
-                }
-                finally {
-                    Closer.close(input);
+            ClassLoader cl = Thread.currentThread().getContextClassLoader();
+
+            Enumeration<URL> resources = cl.getResources(location);
+            if (resources != null && resources.hasMoreElements()) {
+                log.debug("Discovered:");
+                while (resources.hasMoreElements()) {
+                    URL url = resources.nextElement();
+                    log.debug("    {}", url);
+                    CommandsXpp3Reader reader = new CommandsXpp3Reader();
+                    InputStream input = url.openStream();
+                    try {
+                        CommandsDescriptor config = reader.read(input);
+                        list.add(config);
+                    }
+                    finally {
+                        Closer.close(input);
+                    }
                 }
             }
         }

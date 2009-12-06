@@ -42,12 +42,12 @@ public interface CommandRegistrar
     /**
      * @since 2.1
      */
-    String getDescriptorLocation();
+    String[] getDescriptorSearchPath();
 
     /**
      * @since 2.1
      */
-    void setDescriptorLocation(final String path);
+    void setDescriptorSearchPath(final String... path);
 
     /**
      * @since 2.1
