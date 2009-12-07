@@ -42,6 +42,12 @@
         <command>
             <action>org.sonatype.gshell.commands.shell.JavaCommand</action>
         </command>
+        <command>
+            <action>org.sonatype.gshell.commands.shell.ReturnCommand</action>
+        </command>
+        <command>
+            <action>org.sonatype.gshell.commands.shell.FailCommand</action>
+        </command>
     </command-set>
     
 </commands>
