@@ -23,6 +23,7 @@ import org.fusesource.jansi.Ansi;
 import org.slf4j.Logger;
 import org.sonatype.gossip.Level;
 import org.sonatype.gossip.Log;
+import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.io.StreamJack;
 import org.sonatype.gshell.io.StreamSet;
@@ -37,7 +38,9 @@ import org.sonatype.gshell.util.cli.handler.StopHandler;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
 import org.sonatype.gshell.util.pref.Preference;
+import org.sonatype.gshell.util.pref.Preferences;
 import org.sonatype.gshell.util.pref.PreferenceProcessor;
+import static org.sonatype.gshell.VariableNames.*;
 
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -49,8 +52,8 @@ import java.util.concurrent.atomic.AtomicReference;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
+@Preferences(path="cli")
 public abstract class MainSupport
-    implements VariableNames
 {
     static {
         // Register some different terminal flavors for added functionality
@@ -196,7 +199,9 @@ public abstract class MainSupport
         setTerminalType(TerminalFactory.Type.AUTO);
 
         // Process preferences
-        new PreferenceProcessor(this).process();
+        PreferenceProcessor pp = new PreferenceProcessor(this);
+        pp.setBasePath(getBranding().getPreferencesBasePath());
+        pp.process();
 
         // Process command line options & arguments
         CommandLineProcessor clp = new CommandLineProcessor(this);
@@ -231,7 +236,7 @@ public abstract class MainSupport
         
         // Setup a reference for our exit code so our callback thread can tell if we've shutdown normally or not
         final AtomicReference<Integer> codeRef = new AtomicReference<Integer>();
-        int code = ExitNotification.DEFAULT_CODE;
+        Object result = null;
 
         Runtime.getRuntime().addShutdownHook(new Thread()
         {
@@ -255,17 +260,37 @@ public abstract class MainSupport
             Shell shell = createShell();
 
             if (command != null) {
-                shell.execute(command);
+                result = shell.execute(command);
             }
             else {
                 shell.run(appArgs != null ? appArgs.toArray() : new Object[0]);
             }
         }
         catch (ExitNotification n) {
-            code = n.code;
+            result = n.code;
         }
         finally {
             io.flush();
+        }
+
+        if (result == null) {
+            result = vars.get(LAST_RESULT);
+        }
+
+        int code;
+
+        // TODO: Support parsing strings for exit code.  Move this to a helper class
+        if (result instanceof CommandAction.Result) {
+            code = ((CommandAction.Result)result).ordinal();
+        }
+        else if (result instanceof Number) {
+            code = ((Number)result).intValue();
+        }
+        else if (result == null) {
+            code = 0;
+        }
+        else {
+            code = 1;
         }
 
         codeRef.set(code);

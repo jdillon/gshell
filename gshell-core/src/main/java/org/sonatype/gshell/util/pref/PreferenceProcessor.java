@@ -18,7 +18,6 @@ package org.sonatype.gshell.util.pref;
 
 import org.slf4j.Logger;
 import org.sonatype.gossip.Log;
-import org.sonatype.gshell.util.setter.Setter;
 import org.sonatype.gshell.util.setter.SetterFactory;
 
 import java.lang.reflect.AnnotatedElement;
@@ -39,6 +38,8 @@ public class PreferenceProcessor
 
     private final List<PreferenceDescriptor> descriptors = new ArrayList<PreferenceDescriptor>();
 
+    private String basePath;
+
     public PreferenceProcessor() {
     }
 
@@ -54,6 +55,14 @@ public class PreferenceProcessor
         discoverDescriptors(bean);
     }
 
+    public String getBasePath() {
+        return basePath;
+    }
+
+    public void setBasePath(final String path) {
+        this.basePath = path;
+    }
+
     //
     // Discovery
     //
@@ -62,29 +71,29 @@ public class PreferenceProcessor
         assert bean != null;
 
         // Recursively process all the methods/fields (@Inherited won't work here)
-        for (Class type = bean.getClass(); type != null; type = type.getSuperclass()) {
+        for (Class<?> type = bean.getClass(); type != null; type = type.getSuperclass()) {
+            Preferences base = type.getAnnotation(Preferences.class);
+
             for (Method method : type.getDeclaredMethods()) {
-                discoverDescriptor(bean, method);
+                discoverDescriptor(base, bean, method);
             }
             for (Field field : type.getDeclaredFields()) {
-                discoverDescriptor(bean, field);
+                discoverDescriptor(base, bean, field);
             }
         }
     }
 
-    private void discoverDescriptor(final Object bean, final AnnotatedElement element) {
+    private void discoverDescriptor(final Preferences base, final Object bean, final AnnotatedElement element) {
+        // base could be null
         assert bean != null;
         assert element != null;
 
         Preference pref = element.getAnnotation(Preference.class);
         if (pref != null) {
             log.trace("Discovered preference configuration for: {}", element);
-            addPreference(pref, SetterFactory.create(element, bean));
+            PreferenceDescriptor desc = new PreferenceDescriptor(base, pref, SetterFactory.create(element, bean));
+            descriptors.add(desc);
         }
-    }
-
-    private void addPreference(final Preference preference, final Setter setter) {
-        descriptors.add(new PreferenceDescriptor(preference, setter));
     }
 
     //

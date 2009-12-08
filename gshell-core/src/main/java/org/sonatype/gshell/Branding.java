@@ -48,6 +48,8 @@ public interface Branding
 
     String getHistoryFileName();
 
+    String getPreferencesBasePath();
+
     File getShellHomeDir();
 
     File getShellContextDir();

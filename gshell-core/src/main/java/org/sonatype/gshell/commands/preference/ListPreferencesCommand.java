@@ -21,8 +21,7 @@ import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.util.cli.Option;
 import org.sonatype.gshell.util.pref.Preference;
-
-import java.util.prefs.Preferences;
+import org.sonatype.gshell.util.pref.Preferences;
 
 import static org.fusesource.jansi.Ansi.Attribute.INTENSITY_BOLD;
 import static org.fusesource.jansi.Ansi.Color.GREEN;
@@ -35,6 +34,7 @@ import static org.fusesource.jansi.Ansi.ansi;
  * @since 2.0
  */
 @Command(name="pref/list")
+@Preferences(path="commands/pref/list")
 public class ListPreferencesCommand
     extends PreferenceNodeCommandSupport
 {
@@ -53,7 +53,7 @@ public class ListPreferencesCommand
         return Result.SUCCESS;
     }
 
-    private void list(final IO io, final Preferences node) throws Exception {
+    private void list(final IO io, final java.util.prefs.Preferences node) throws Exception {
         io.info("{}", ansi().fg(GREEN).a(node.absolutePath()).reset());
 
         for (String key : node.keys()) {

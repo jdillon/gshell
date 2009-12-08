@@ -24,12 +24,12 @@ import org.sonatype.gshell.io.Flusher;
 import org.sonatype.gshell.util.cli.Argument;
 import org.sonatype.gshell.util.cli.Option;
 import org.sonatype.gshell.util.pref.Preference;
+import org.sonatype.gshell.util.pref.Preferences;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.util.prefs.Preferences;
 
 /**
  * Export preference nodes to a file.
@@ -38,6 +38,7 @@ import java.util.prefs.Preferences;
  * @since 2.0
  */
 @Command(name="pref/export")
+@Preferences(path="commands/pref/export")
 public class ExportPreferencesCommand
     extends PreferenceNodeCommandSupport
 {
@@ -51,7 +52,7 @@ public class ExportPreferencesCommand
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
         IO io = context.getIo();
-        Preferences prefs = node();
+        java.util.prefs.Preferences prefs = node();
 
         OutputStream out;
         if (file == null) {

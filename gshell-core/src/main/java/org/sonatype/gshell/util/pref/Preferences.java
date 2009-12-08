@@ -16,41 +16,20 @@
 
 package org.sonatype.gshell.util.pref;
 
-import org.junit.Test;
-
-import java.util.prefs.Preferences;
-
-import static org.junit.Assert.assertEquals;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * Some simple tests to validate basic functionality.
+ * Configures a class as containing preferences under a specific path.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ * @since 2.2
  */
-public class BaseTest
-    extends PreferenceProcessorTestSupport
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.TYPE})
+public @interface Preferences
 {
-    private Simple bean;
-
-    @Override
-    protected Object createBean() {
-        bean = new Simple();
-        return bean;
-    }
-
-    @Test
-    public void test1() throws Exception {
-        Preferences prefs = Preferences.userNodeForPackage(BaseTest.class);
-        prefs.put("name", "foo");
-
-        processor.process();
-
-        assertEquals("foo", bean.name);
-    }
-
-    private static class Simple
-    {
-        @Preference(type=BaseTest.class)
-        String name;
-    }
+    String path();
 }

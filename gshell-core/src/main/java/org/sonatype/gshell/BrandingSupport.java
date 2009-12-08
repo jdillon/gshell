@@ -117,6 +117,10 @@ public class BrandingSupport
         return String.format("%s.history", getProgramName());
     }
 
+    public String getPreferencesBasePath() {
+        return getProgramName();
+    }
+
     protected File resolveFile(final File file) {
         assert file != null;
         try {

@@ -28,6 +28,7 @@ import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.util.cli.Argument;
 import org.sonatype.gshell.util.cli.Option;
 import org.sonatype.gshell.util.pref.Preference;
+import org.sonatype.gshell.util.pref.Preferences;
 
 import java.lang.management.ClassLoadingMXBean;
 import java.lang.management.GarbageCollectorMXBean;
@@ -60,6 +61,7 @@ import static org.sonatype.gshell.commands.InfoCommand.Section.SHELL;
  * @since 2.0
  */
 @Command(name="info")
+@Preferences(path="commands/info")
 public class InfoCommand
     extends CommandActionSupport
 {

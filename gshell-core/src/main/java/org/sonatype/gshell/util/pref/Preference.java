@@ -33,7 +33,7 @@ public @interface Preference
 {
     String name() default "";
 
-    Class<?> base() default Void.class;
+    Class<?> type() default Void.class;
 
     String path() default "";
     

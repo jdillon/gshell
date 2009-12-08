@@ -21,8 +21,6 @@ import org.sonatype.gossip.Log;
 import org.sonatype.gshell.util.converter.Converters;
 import org.sonatype.gshell.util.setter.Setter;
 
-import java.util.prefs.Preferences;
-
 /**
  * Descriptor for {@link Preference} annotations.
  *
@@ -33,19 +31,25 @@ public class PreferenceDescriptor
 {
     private static final Logger log = Log.getLogger(PreferenceDescriptor.class);
 
+    private final Preferences base;
+
     private final Preference spec;
 
     private final Setter setter;
 
     private final String name;
 
-    private final Class<?> base;
-
-    private final String path;
+    private final Class<?> type;
 
     private final boolean system;
 
-    protected PreferenceDescriptor(final Preference pref, final Setter setter) {
+    private final String path;
+
+    private String basePath;
+
+    protected PreferenceDescriptor(final Preferences base, final Preference pref, final Setter setter) {
+        // base could be null
+        this.base = base;
         assert pref != null;
         this.spec = pref;
         assert setter != null;
@@ -62,8 +66,9 @@ public class PreferenceDescriptor
         this.system = pref.system();
 
         // On IBM JDK, the value passed is null instead of the default value, so fix it in case
-        this.base = pref.base() != null ? pref.base() : Void.class;
+        this.type = pref.type() != null ? pref.type() : Void.class;
 
+        // Handle "" = null, since default values in annotations cannot be set to null
         if (pref.path() != null && pref.path().length() == 0) {
             this.path = null;
         }
@@ -84,16 +89,20 @@ public class PreferenceDescriptor
         return name;
     }
 
-    public Class<?> getBase() {
-        return base;
+    public boolean isSystem() {
+        return system;
     }
 
     public String getPath() {
         return path;
     }
 
-    public boolean isSystem() {
-        return system;
+    public String getBasePath() {
+        return basePath;
+    }
+
+    public void setBasePath(final String path) {
+        this.basePath = path;
     }
 
     public String getId() {
@@ -104,38 +113,42 @@ public class PreferenceDescriptor
     }
 
     public Class getType() {
-        Class type = base;
+        Class type = this.type;
         if (type == Void.class) {
             type = getSetter().getBean().getClass();
         }
         return type;
     }
 
-    public Preferences getPreferences() {
+    public java.util.prefs.Preferences getPreferences() {
+        //
+        // FIXME: Need to figure out the generic way to handle branding basePath application...
+        //
+
         String path = getPath();
 
         if (path == null) {
             Class type = getType();
 
             if (system) {
-                return Preferences.systemNodeForPackage(type);
+                return java.util.prefs.Preferences.systemNodeForPackage(type);
             }
             else {
-                return Preferences.userNodeForPackage(type);
+                return java.util.prefs.Preferences.userNodeForPackage(type);
             }
         }
         else {
             if (system) {
-                return Preferences.systemRoot().node(path);
+                return java.util.prefs.Preferences.systemRoot().node(path);
             }
             else {
-                return Preferences.userRoot().node(path);
+                return java.util.prefs.Preferences.userRoot().node(path);
             }
         }
     }
 
     public void set() throws Exception {
-        Preferences prefs = getPreferences();
+        java.util.prefs.Preferences prefs = getPreferences();
         log.debug("Using preferences: {}", prefs);
 
         String key = getId();

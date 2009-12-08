@@ -19,6 +19,7 @@ package org.sonatype.gshell.command;
 import org.fusesource.jansi.AnsiRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.sonatype.gshell.Branding;
 import org.sonatype.gshell.ShellHolder;
 import org.sonatype.gshell.Variables;
 import org.sonatype.gshell.io.PrefixingStream;
@@ -123,7 +124,6 @@ public class CommandDocumenterImpl
         log.trace("Rendering command manual");
 
         PrintStream out = new PrintStream(new PrefixingStream("    ", io.streams.out));
-        AnsiRenderer renderer = new AnsiRenderer();
 
         io.out.format("@|bold %s|@", messages.getMessage("section.name")).println();
         io.out.println();
@@ -134,7 +134,7 @@ public class CommandDocumenterImpl
 
         io.out.format("@|bold %s|@", messages.getMessage("section.description")).println();
         text = getDescription(command);
-        text = renderer.render(text);
+        text = AnsiRenderer.render(text);
         out.println();
         out.println(text);
         io.out.println();
@@ -143,13 +143,16 @@ public class CommandDocumenterImpl
         if (manual != null && manual.trim().length() != 0) {
             io.out.format("@|bold %s|@", messages.getMessage("section.manual")).println();
             text = manual;
-            text = renderer.render(text);
+            text = AnsiRenderer.render(text);
             out.println();
             out.println(text);
             io.out.println();
         }
 
         PreferenceProcessor pp = new PreferenceProcessor(command);
+        Branding branding = ShellHolder.get().getBranding();
+        pp.setBasePath(branding.getPreferencesBasePath());
+
         if (!pp.getDescriptors().isEmpty()) {
             io.out.format("@|bold %s|@", messages.getMessage("section.preferences")).println();
             out.println();

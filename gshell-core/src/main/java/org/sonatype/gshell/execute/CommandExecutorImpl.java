@@ -20,6 +20,7 @@ import com.google.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
+import org.sonatype.gshell.Branding;
 import org.sonatype.gshell.Shell;
 import org.sonatype.gshell.ShellHolder;
 import org.sonatype.gshell.Variables;
@@ -40,6 +41,7 @@ import org.sonatype.gshell.util.cli.CommandLineProcessor;
 import org.sonatype.gshell.util.cli.OpaqueArguments;
 import org.sonatype.gshell.util.i18n.PrefixingMessageSource;
 import org.sonatype.gshell.util.pref.PreferenceProcessor;
+import static org.sonatype.gshell.VariableNames.*;
 
 /**
  * The default {@link org.sonatype.gshell.execute.CommandExecutor} component.
@@ -132,6 +134,8 @@ public class CommandExecutorImpl
             boolean execute = true;
 
             PreferenceProcessor pp = new PreferenceProcessor(command);
+            Branding branding = ShellHolder.get().getBranding();
+            pp.setBasePath(branding.getPreferencesBasePath());
             pp.process();
 
             if (!(command instanceof OpaqueArguments)) {
@@ -187,6 +191,8 @@ public class CommandExecutorImpl
 
             MDC.remove(CommandAction.class.getName());
         }
+
+        shell.getVariables().set(LAST_RESULT, result);
 
         log.debug("Result: {}", result);
 

@@ -216,7 +216,6 @@ public class ShellImpl
 
         // Setup 2 final refs to allow our executor to pass stuff back to us
         final AtomicReference<ExitNotification> exitNotifHolder = new AtomicReference<ExitNotification>();
-        final AtomicReference<Object> lastResultHolder = new AtomicReference<Object>();
 
         Callable<ConsoleTask> taskFactory = new Callable<ConsoleTask>() {
             public ConsoleTask call() throws Exception {
@@ -224,9 +223,8 @@ public class ShellImpl
                     @Override
                     public boolean doExecute(final String input) throws Exception {
                         try {
-                            Object result = ShellImpl.this.execute(input);
-                            lastResultHolder.set(result);
-                            setLastResult(result);
+                            // result is saved to LAST_RESULT via the CommandExecutor
+                            ShellImpl.this.execute(input);
                         }
                         catch (ExitNotification n) {
                             exitNotifHolder.set(n);
@@ -324,11 +322,6 @@ public class ShellImpl
         }
 
         return bindings;
-    }
-
-    protected void setLastResult(final Object result) {
-        // result may be null
-        getVariables().set(LAST_RESULT, result);
     }
 
     private void renderMessage(final IO io, final String msg) {
