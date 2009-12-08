@@ -149,9 +149,10 @@ public class CommandDocumenterImpl
             io.out.println();
         }
 
-        PreferenceProcessor pp = new PreferenceProcessor(command);
+        PreferenceProcessor pp = new PreferenceProcessor();
         Branding branding = ShellHolder.get().getBranding();
         pp.setBasePath(branding.getPreferencesBasePath());
+        pp.addBean(command);
 
         if (!pp.getDescriptors().isEmpty()) {
             io.out.format("@|bold %s|@", messages.getMessage("section.preferences")).println();

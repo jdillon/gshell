@@ -15,6 +15,13 @@
 # limitations under the License.
 #
 
+#QUOTED_ARGS=""
+#while [ "$1" != "" ] ; do
+#    echo "$1"
+#    QUOTED_ARGS="$QUOTED_ARGS \"$1\""
+#    shift
+#done
+
 # OS specific support (must be 'true' or 'false').
 cygwin=false;
 case "`uname`" in
@@ -65,5 +72,5 @@ if $cygwin ; then
 fi
 
 # Start the JVM
-exec "$JAVACMD" $JAVA_OPTS -jar "$BOOTJAR" "$@"
+exec "$JAVACMD" $JAVA_OPTS -jar "$BOOTJAR" $*
 

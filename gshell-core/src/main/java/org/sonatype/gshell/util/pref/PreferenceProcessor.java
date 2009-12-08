@@ -43,10 +43,6 @@ public class PreferenceProcessor
     public PreferenceProcessor() {
     }
 
-    public PreferenceProcessor(final Object bean) {
-        addBean(bean);
-    }
-
     public List<PreferenceDescriptor> getDescriptors() {
         return descriptors;
     }
@@ -92,6 +88,7 @@ public class PreferenceProcessor
         if (pref != null) {
             log.trace("Discovered preference configuration for: {}", element);
             PreferenceDescriptor desc = new PreferenceDescriptor(base, pref, SetterFactory.create(element, bean));
+            desc.setBasePath(getBasePath());
             descriptors.add(desc);
         }
     }

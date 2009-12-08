@@ -28,6 +28,7 @@ import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.io.StreamJack;
 import org.sonatype.gshell.io.StreamSet;
 import org.sonatype.gshell.notification.ExitNotification;
+import org.sonatype.gshell.util.Arguments;
 import org.sonatype.gshell.util.NameValue;
 import org.sonatype.gshell.util.ansi.AnsiIO;
 import org.sonatype.gshell.util.cli.Argument;
@@ -42,6 +43,7 @@ import org.sonatype.gshell.util.pref.Preferences;
 import org.sonatype.gshell.util.pref.PreferenceProcessor;
 import static org.sonatype.gshell.VariableNames.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicReference;
@@ -192,15 +194,21 @@ public abstract class MainSupport
     public void boot(final String... args) throws Exception {
         assert args != null;
 
-        log.debug("Booting w/args: {}", args);
+        log.debug("Booting w/args: {}", Arrays.asList(args));
+
+        // log.trace("Cleaned: {}", Arrays.asList(Arguments.clean(args)));
 
         // Setup environment defaults
         setConsoleLogLevel(Level.WARN);
         setTerminalType(TerminalFactory.Type.AUTO);
 
         // Process preferences
-        PreferenceProcessor pp = new PreferenceProcessor(this);
+        PreferenceProcessor pp = new PreferenceProcessor();
+
+        System.out.println("BASE PATH: " + getBranding().getPreferencesBasePath());
+
         pp.setBasePath(getBranding().getPreferencesBasePath());
+        pp.addBean(this);
         pp.process();
 
         // Process command line options & arguments
@@ -209,7 +217,7 @@ public abstract class MainSupport
         clp.setStopAtNonOption(true);
 
         try {
-            clp.process(args);
+            clp.process(args); // Arguments.clean(args));
         }
         catch (Exception e) {
             if (showErrorTraces) {

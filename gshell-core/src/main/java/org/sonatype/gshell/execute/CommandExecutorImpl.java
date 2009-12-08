@@ -133,9 +133,10 @@ public class CommandExecutorImpl
         try {
             boolean execute = true;
 
-            PreferenceProcessor pp = new PreferenceProcessor(command);
+            PreferenceProcessor pp = new PreferenceProcessor();
             Branding branding = ShellHolder.get().getBranding();
             pp.setBasePath(branding.getPreferencesBasePath());
+            pp.addBean(command);
             pp.process();
 
             if (!(command instanceof OpaqueArguments)) {

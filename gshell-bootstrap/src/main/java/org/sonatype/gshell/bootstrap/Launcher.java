@@ -21,6 +21,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -69,7 +70,7 @@ public final class Launcher
 
         Thread.currentThread().setContextClassLoader(cl);
 
-        Log.debug("Invoking: ", method);
+        Log.debug("Invoking: ", method, ", with args: ", Arrays.asList(args));
 
         try {
             method.invoke(null, new Object[] { args });

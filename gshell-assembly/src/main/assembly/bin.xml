@@ -47,6 +47,7 @@
             <outputDirectory>bin</outputDirectory>
             <includes>
                 <include>gsh</include>
+                <include>echo</include>
             </includes>
             <lineEnding>unix</lineEnding>
             <fileMode>0755</fileMode>

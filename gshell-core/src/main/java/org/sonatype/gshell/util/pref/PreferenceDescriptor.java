@@ -120,12 +120,37 @@ public class PreferenceDescriptor
         return type;
     }
 
-    public java.util.prefs.Preferences getPreferences() {
-        //
-        // FIXME: Need to figure out the generic way to handle branding basePath application...
-        //
+    public String buildPath() {
+        StringBuffer buff = new StringBuffer();
 
-        String path = getPath();
+        if (getBasePath() != null) {
+            buff.append(getBasePath());
+        }
+
+        if (base != null) {
+            if (buff.length() != 0) {
+                buff.append("/");
+            }
+            buff.append(base.path());
+        }
+
+        if (getPath() != null) {
+            if (buff.length() != 0) {
+                buff.append("/");
+            }
+            buff.append(getPath());
+        }
+
+        if (buff.length() == 0) {
+            return null;
+        }
+        else {
+            return buff.toString();
+        }
+    }
+
+    public java.util.prefs.Preferences getPreferences() {
+        String path = buildPath();
 
         if (path == null) {
             Class type = getType();

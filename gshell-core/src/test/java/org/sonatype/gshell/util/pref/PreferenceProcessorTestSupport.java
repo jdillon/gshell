@@ -30,7 +30,8 @@ public abstract class PreferenceProcessorTestSupport
 
     @Before
     public void setUp() {
-        processor = new PreferenceProcessor(createBean());
+        processor = new PreferenceProcessor();
+        processor.addBean(createBean());
     }
 
     @After
