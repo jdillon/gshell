@@ -59,10 +59,6 @@ public class CommandLineProcessor
     public CommandLineProcessor() {
     }
 
-    public CommandLineProcessor(final Object bean) {
-        addBean(bean);
-    }
-
     public void setMessages(final MessageSource messages) {
         this.messages = messages;
     }

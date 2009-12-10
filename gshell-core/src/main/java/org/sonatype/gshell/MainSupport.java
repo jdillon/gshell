@@ -191,12 +191,11 @@ public abstract class MainSupport
         return branding;
     }
 
-    public void boot(final String... args) throws Exception {
+    public void boot(String... args) throws Exception {
         assert args != null;
 
+        args = Arguments.clean(args);
         log.debug("Booting w/args: {}", Arrays.asList(args));
-
-        // log.trace("Cleaned: {}", Arrays.asList(Arguments.clean(args)));
 
         // Setup environment defaults
         setConsoleLogLevel(Level.WARN);
@@ -204,20 +203,18 @@ public abstract class MainSupport
 
         // Process preferences
         PreferenceProcessor pp = new PreferenceProcessor();
-
-        System.out.println("BASE PATH: " + getBranding().getPreferencesBasePath());
-
         pp.setBasePath(getBranding().getPreferencesBasePath());
         pp.addBean(this);
         pp.process();
 
         // Process command line options & arguments
-        CommandLineProcessor clp = new CommandLineProcessor(this);
+        CommandLineProcessor clp = new CommandLineProcessor();
+        clp.addBean(this);
         clp.setMessages(messages);
         clp.setStopAtNonOption(true);
 
         try {
-            clp.process(args); // Arguments.clean(args));
+            clp.process(args);
         }
         catch (Exception e) {
             if (showErrorTraces) {
@@ -270,8 +267,11 @@ public abstract class MainSupport
             if (command != null) {
                 result = shell.execute(command);
             }
+            else if (appArgs != null) {
+                result = shell.execute(appArgs.toArray());
+            }
             else {
-                shell.run(appArgs != null ? appArgs.toArray() : new Object[0]);
+                shell.run();
             }
         }
         catch (ExitNotification n) {

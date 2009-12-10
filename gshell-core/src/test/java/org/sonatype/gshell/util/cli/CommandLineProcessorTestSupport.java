@@ -32,7 +32,8 @@ public abstract class CommandLineProcessorTestSupport
 
     @Before
     public void setUp() {
-        clp = new CommandLineProcessor(createBean());
+        clp = new CommandLineProcessor();
+        clp.addBean(createBean());
     }
 
     @After

@@ -140,7 +140,8 @@ public class CommandExecutorImpl
             pp.process();
 
             if (!(command instanceof OpaqueArguments)) {
-                CommandLineProcessor clp = new CommandLineProcessor(command);
+                CommandLineProcessor clp = new CommandLineProcessor();
+                clp.addBean(command);
                 clp.setMessages(new PrefixingMessageSource(command.getMessages(), CommandDocumenter.COMMAND_DOT));
                 CommandHelpSupport help = new CommandHelpSupport();
                 clp.addBean(help);
@@ -150,7 +151,6 @@ public class CommandExecutorImpl
 
                 // Render command-line usage
                 if (help.displayHelp) {
-                    log.trace("Render command-line usage");
                     documenter.renderUsage(command, io);
                     result = CommandAction.Result.SUCCESS;
                     execute = false;

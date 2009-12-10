@@ -70,7 +70,7 @@ if $cygwin ; then
     BOOTJAR=`cygpath --windows "$BOOTJAR"`
 fi
 
-COMMAND=""
+COMMAND="echo --"
 
 exec "$JAVACMD" $JAVA_OPTS -jar "$BOOTJAR" $SHELL_OPTS $COMMAND $QUOTED_ARGS
 

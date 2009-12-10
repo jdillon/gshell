@@ -37,6 +37,7 @@
             <outputDirectory>bin</outputDirectory>
             <includes>
                 <include>gsh.bat</include>
+                <include>echo.bat</include>
                 <include>bootstrap.properties</include>
             </includes>
             <lineEnding>dos</lineEnding>
