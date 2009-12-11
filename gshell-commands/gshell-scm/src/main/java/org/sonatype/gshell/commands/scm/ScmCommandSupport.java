@@ -49,7 +49,7 @@ public abstract class ScmCommandSupport
 {
     protected final PlexusRuntime plexus;
 
-    @Option(name="-c", aliases={"--connection-url"})
+    @Option(name="-c", aliases={"--url"})
     protected String connectionUrl;
 
     @Option(name="-d", aliases={"--dir"})
