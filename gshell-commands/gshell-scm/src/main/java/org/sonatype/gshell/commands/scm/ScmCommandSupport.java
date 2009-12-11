@@ -39,10 +39,10 @@ import java.io.IOException;
 import java.util.Iterator;
 
 /**
- * Resolve repository artifacts.
+ * Support for SCM commands.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 3.0
+ * @since 2.3
  */
 public abstract class ScmCommandSupport
     extends CommandActionSupport

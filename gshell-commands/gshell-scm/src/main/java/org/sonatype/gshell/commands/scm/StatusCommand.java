@@ -33,7 +33,7 @@ import java.util.Iterator;
  * Display the modification status of the files.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 3.0
+ * @since 2.3
  */
 @Command(name="scm/status")
 public class StatusCommand

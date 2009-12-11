@@ -41,7 +41,7 @@ import java.util.Set;
  * Resolve repository artifacts.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 3.0
+ * @since 2.0
  */
 @Command(name = "artifact/resolve")
 public class ResolveCommand
