@@ -107,10 +107,6 @@ public class CommandLinePrinter
     private int getPrefixLen(final Handler handler) {
         assert handler != null;
 
-        if (handler.getHelpText(messages) == null) {
-            return 0;
-        }
-
         return getNameAndToken(handler).length();
     }
 
@@ -192,11 +188,7 @@ public class CommandLinePrinter
         int prefixSeparatorWidth = prefix.length() + separator.length();
         int descriptionWidth = terminalWidth - len - prefixSeparatorWidth;
 
-        // Only render if there is help-text, else its hidden
         String desc = handler.getHelpText(messages);
-        if (desc == null) {
-            return;
-        }
 
         // Render the prefix and syntax
         String nameAndToken = getNameAndToken(handler);
@@ -209,17 +201,20 @@ public class CommandLinePrinter
         }
         out.print(separator);
 
-        String[] words = desc.split("\\b");
         StringBuilder buff = new StringBuilder();
 
-        for (String word : words) {
-            if (word.length() + buff.length() > descriptionWidth) {
-                // spit out the current buffer and indent
-                out.println(buff);
-                indent(out, len + prefixSeparatorWidth);
-                buff.setLength(0);
+        if (desc != null) {
+            String[] words = desc.split("\\b");
+
+            for (String word : words) {
+                if (word.length() + buff.length() > descriptionWidth) {
+                    // spit out the current buffer and indent
+                    out.println(buff);
+                    indent(out, len + prefixSeparatorWidth);
+                    buff.setLength(0);
+                }
+                buff.append(word);
             }
-            buff.append(word);
         }
 
         out.println(buff);
