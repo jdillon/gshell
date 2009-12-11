@@ -140,10 +140,10 @@ public abstract class ScmCommandSupport
                 }
             }
 
-            throw new ScmException("Can't load the scm provider.", e);
+            throw new ScmException("Can't load the scm provider", e);
         }
         catch (Exception e) {
-            throw new ScmException("Can't load the scm provider.", e);
+            throw new ScmException("Can't load the scm provider", e);
         }
 
         return repository;
@@ -157,13 +157,13 @@ public abstract class ScmCommandSupport
             log.error("Command output:");
             log.error(result.getCommandOutput() == null ? "" : result.getCommandOutput());
 
-            throw new Exception("Command failed." + StringUtils.defaultString(result.getProviderMessage()));
+            throw new Exception("Command failed; " + StringUtils.defaultString(result.getProviderMessage()));
         }
     }
 
     protected ScmVersion getScmVersion(String versionType, String version) throws Exception {
         if (StringUtils.isEmpty(versionType) && StringUtils.isNotEmpty(version)) {
-            throw new Exception("You must specify the version type.");
+            throw new Exception("You must specify the version type");
         }
 
         if (StringUtils.isEmpty(version)) {
@@ -182,6 +182,6 @@ public abstract class ScmCommandSupport
             return new ScmRevision(version);
         }
 
-        throw new Exception("Unknown '" + versionType + "' version type.");
+        throw new Exception("Unknown version type: " + versionType);
     }
 }
