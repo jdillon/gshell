@@ -17,6 +17,6 @@
 /**
  * SCM commands.
  *
- * @since 2.0
+ * @since 2.3
  */
 package org.sonatype.gshell.commands.scm;
