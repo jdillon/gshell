@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!--
   ~ Copyright (C) 2009 the original author(s).
   ~
@@ -15,18 +16,17 @@
   ~ limitations under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<commands xmlns="http://sonatype.org/gshell-commands/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://sonatype.org/gshell-commands/1.0.0 http://sonatype.org/xsd/gshell-commands-1.0.0.xsd"
+          version="1.0.0">
 
-    <modelVersion>4.0.0</modelVersion>
+    <command-set id="scm">
+        <enabled>true</enabled>
+        <autoRegisterPriority>50</autoRegisterPriority>
+        <command>
+            <action>org.sonatype.gshell.commands.scm.StatusCommand</action>
+        </command>
+    </command-set>
 
-    <parent>
-        <groupId>org.sonatype.gshell.commands</groupId>
-        <artifactId>gshell-commands</artifactId>
-        <version>2.3-SNAPSHOT</version>
-    </parent>
-
-    <artifactId>gshell-admin</artifactId>
-    <name>GShell Commands :: Admin</name>
-    
-</project>
-
+</commands>
