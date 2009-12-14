@@ -44,4 +44,6 @@ public @interface Argument
     int index() default 0;
 
     boolean multiValued() default false;
+
+    // TODO: Add default value, so we can add it to the documentation
 }

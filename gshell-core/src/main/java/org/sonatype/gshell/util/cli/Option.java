@@ -50,4 +50,6 @@ public @interface Option
     boolean multiValued() default false;
 
     boolean requireOverride() default false;
+
+    // TODO: Add default value, so we can add it to the documentation
 }
