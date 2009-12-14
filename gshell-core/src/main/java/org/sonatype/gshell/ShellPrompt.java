@@ -19,9 +19,11 @@ package org.sonatype.gshell;
 import org.fusesource.jansi.AnsiRenderer;
 import org.sonatype.gshell.console.ConsolePrompt;
 import org.sonatype.gshell.util.ReplacementParser;
+import org.sonatype.gshell.vars.VariableNames;
+import org.sonatype.gshell.vars.Variables;
 
 /**
- * Shell {@link ConsolePrompt}, which determins the prompt from the {@link VariableNames#SHELL_PROMPT} expression.
+ * Shell {@link ConsolePrompt}, which determins the prompt from the {@link org.sonatype.gshell.vars.VariableNames#SHELL_PROMPT} expression.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0

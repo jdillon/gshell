@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell;
+package org.sonatype.gshell.vars;
 
 /**
  * Common shell variable names.

@@ -23,7 +23,7 @@ import org.slf4j.MDC;
 import org.sonatype.gshell.Branding;
 import org.sonatype.gshell.Shell;
 import org.sonatype.gshell.ShellHolder;
-import org.sonatype.gshell.Variables;
+import org.sonatype.gshell.vars.Variables;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.CommandDocumenter;
@@ -41,7 +41,7 @@ import org.sonatype.gshell.util.cli.CommandLineProcessor;
 import org.sonatype.gshell.util.cli.OpaqueArguments;
 import org.sonatype.gshell.util.i18n.PrefixingMessageSource;
 import org.sonatype.gshell.util.pref.PreferenceProcessor;
-import static org.sonatype.gshell.VariableNames.*;
+import static org.sonatype.gshell.vars.VariableNames.*;
 
 /**
  * The default {@link org.sonatype.gshell.execute.CommandExecutor} component.

@@ -19,7 +19,7 @@ package org.sonatype.gshell.console.completer;
 import jline.console.Completer;
 import jline.console.completers.StringsCompleter;
 import org.sonatype.gshell.ShellHolder;
-import org.sonatype.gshell.Variables;
+import org.sonatype.gshell.vars.Variables;
 
 import java.util.Collection;
 import java.util.Iterator;

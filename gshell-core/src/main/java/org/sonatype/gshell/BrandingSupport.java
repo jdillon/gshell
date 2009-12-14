@@ -20,6 +20,8 @@ import jline.TerminalFactory;
 import org.sonatype.gshell.util.Strings;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
+import org.sonatype.gshell.vars.VariableNames;
+import org.sonatype.gshell.vars.Variables;
 
 import java.io.File;
 import java.io.IOException;

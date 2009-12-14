@@ -19,6 +19,7 @@ package org.sonatype.gshell;
 import jline.console.history.FileHistory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.sonatype.gshell.vars.VariableNames;
 
 import java.io.File;
 import java.io.IOException;

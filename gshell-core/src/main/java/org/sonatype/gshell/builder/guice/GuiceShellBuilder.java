@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.Branding;
 import org.sonatype.gshell.Shell;
 import org.sonatype.gshell.ShellImpl;
-import org.sonatype.gshell.Variables;
+import org.sonatype.gshell.vars.Variables;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.console.ConsoleErrorHandler;
 import org.sonatype.gshell.console.ConsolePrompt;

@@ -41,7 +41,10 @@ import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
 import org.sonatype.gshell.util.pref.Preference;
 import org.sonatype.gshell.util.pref.Preferences;
 import org.sonatype.gshell.util.pref.PreferenceProcessor;
-import static org.sonatype.gshell.VariableNames.*;
+import org.sonatype.gshell.vars.Variables;
+import org.sonatype.gshell.vars.VariablesImpl;
+
+import static org.sonatype.gshell.vars.VariableNames.*;
 
 import java.util.Arrays;
 import java.util.List;

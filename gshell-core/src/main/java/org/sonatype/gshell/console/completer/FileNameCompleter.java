@@ -18,8 +18,8 @@ package org.sonatype.gshell.console.completer;
 
 import jline.console.Completer;
 import org.sonatype.gshell.ShellHolder;
-import org.sonatype.gshell.VariableNames;
-import org.sonatype.gshell.Variables;
+import org.sonatype.gshell.vars.VariableNames;
+import org.sonatype.gshell.vars.Variables;
 
 import java.io.File;
 

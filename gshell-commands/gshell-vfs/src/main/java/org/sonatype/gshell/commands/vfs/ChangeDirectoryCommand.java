@@ -17,7 +17,7 @@
 package org.sonatype.gshell.commands.vfs;
 
 import org.apache.commons.vfs.FileObject;
-import org.sonatype.gshell.VariableNames;
+import org.sonatype.gshell.vars.VariableNames;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;

@@ -17,6 +17,7 @@
 package org.sonatype.gshell;
 
 import org.sonatype.gshell.command.IO;
+import org.sonatype.gshell.vars.Variables;
 
 /**
  * Provides access to execute commands.

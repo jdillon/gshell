@@ -17,7 +17,7 @@
 package org.sonatype.gshell.parser.impl.eval;
 
 import org.sonatype.gshell.ShellHolder;
-import org.sonatype.gshell.Variables;
+import org.sonatype.gshell.vars.Variables;
 import org.sonatype.gshell.util.ReplacementParser;
 
 /**

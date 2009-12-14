@@ -23,6 +23,7 @@ import org.junit.Test;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.notification.ExitNotification;
 import org.sonatype.gshell.testsupport.TestUtil;
+import org.sonatype.gshell.vars.Variables;
 
 import static org.junit.Assert.assertEquals;
 

@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell;
+package org.sonatype.gshell.vars;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.sonatype.gshell.vars.Variables;
+import org.sonatype.gshell.vars.VariablesImpl;
 
 import java.util.Iterator;
 
@@ -31,7 +33,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
- * Unit tests for the {@link Variables} class.
+ * Unit tests for the {@link org.sonatype.gshell.vars.Variables} class.
  * 
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
