@@ -126,6 +126,10 @@ public class InfoCommand
                     println(io, "User Home Dir", branding.getUserHomeDir());
                     println(io, "User Context Dir", branding.getUserContextDir());
                     println(io, "Script Extension", branding.getScriptExtension());
+                    println(io, "Preference Path", branding.getPreferencesBasePath());
+                    println(io, "Profile Script", branding.getProfileScriptName());
+                    println(io, "Interactive Script", branding.getInteractiveScriptName());
+                    println(io, "History File", branding.getHistoryFileName());
                     println(io, "ANSI", Ansi.isEnabled());
                     break;
 
