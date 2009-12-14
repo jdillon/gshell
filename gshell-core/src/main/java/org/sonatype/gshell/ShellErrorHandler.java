@@ -80,7 +80,13 @@ public class ShellErrorHandler
         }
 
         if (showTrace || !io.isSilent()) {
-            io.err.print(ansi().a(INTENSITY_BOLD).fg(RED).a(cause.getClass().getName()).reset());
+            if (io.isVerbose()) {
+                io.err.print(ansi().a(INTENSITY_BOLD).fg(RED).a(cause.getClass().getName()).reset());
+            }
+            else {
+                io.err.print(ansi().a(INTENSITY_BOLD).fg(RED).a(cause.getClass().getSimpleName()).reset());
+            }
+
             if (cause.getMessage() != null) {
                 io.err.print(": ");
                 io.err.print(ansi().a(INTENSITY_BOLD).fg(RED).a(cause.getMessage()).reset());
