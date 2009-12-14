@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell;
+package org.sonatype.gshell.shell;
 
 import jline.console.Completer;
 import jline.console.ConsoleReader;
@@ -50,7 +50,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * The default {@link org.sonatype.gshell.Shell} component.
+ * The default {@link Shell} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0

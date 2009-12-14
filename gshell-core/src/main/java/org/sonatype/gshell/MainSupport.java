@@ -29,6 +29,7 @@ import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.io.StreamJack;
 import org.sonatype.gshell.io.StreamSet;
 import org.sonatype.gshell.notification.ExitNotification;
+import org.sonatype.gshell.shell.Shell;
 import org.sonatype.gshell.util.Arguments;
 import org.sonatype.gshell.util.NameValue;
 import org.sonatype.gshell.util.ansi.AnsiIO;

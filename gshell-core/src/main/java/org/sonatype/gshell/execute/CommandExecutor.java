@@ -16,7 +16,7 @@
 
 package org.sonatype.gshell.execute;
 
-import org.sonatype.gshell.Shell;
+import org.sonatype.gshell.shell.Shell;
 
 /**
  * Provides the ability to execute commands.

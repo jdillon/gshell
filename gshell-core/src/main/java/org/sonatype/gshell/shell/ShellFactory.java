@@ -14,39 +14,15 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell;
-
-import java.io.IOException;
-import java.util.List;
+package org.sonatype.gshell.shell;
 
 /**
- * Provides access to a shells history.
+ * Creates {@link Shell} instances.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public interface History
+public interface ShellFactory
 {
-    void add(String item);
-
-    /**
-     * Clear the history elements for the current shell's context.
-     */
-    void clear();
-
-    /**
-     * Clear the history elements for the current shell's context and purge any persistent storage.
-     *
-     * @throws IOException
-     */
-    void purge() throws IOException;
-
-    int size();
-
-    /**
-     * Returns a list of all history items.
-     *
-     * @return List of history elements; never null
-     */
-    List<String> items();
+    Shell create() throws Exception;
 }

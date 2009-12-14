@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell;
+package org.sonatype.gshell.shell;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -22,9 +22,10 @@ import com.google.inject.Stage;
 import org.sonatype.gshell.builder.guice.CoreModule;
 import org.sonatype.gshell.builder.guice.GuiceShellBuilder;
 import org.sonatype.gshell.registry.CommandRegistrar;
+import org.sonatype.gshell.shell.Shell;
 
 /**
- * Builds {@link org.sonatype.gshell.Shell} instances for testing.
+ * Builds {@link org.sonatype.gshell.shell.Shell} instances for testing.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */

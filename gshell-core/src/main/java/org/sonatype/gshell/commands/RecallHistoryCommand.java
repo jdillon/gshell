@@ -16,8 +16,8 @@
 
 package org.sonatype.gshell.commands;
 
-import org.sonatype.gshell.History;
-import org.sonatype.gshell.Shell;
+import org.sonatype.gshell.shell.History;
+import org.sonatype.gshell.shell.Shell;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;

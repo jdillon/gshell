@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell;
+package org.sonatype.gshell.shell;
 
 import org.fusesource.jansi.AnsiRenderer;
 import org.sonatype.gshell.branding.Branding;

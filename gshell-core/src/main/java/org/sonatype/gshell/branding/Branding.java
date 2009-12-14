@@ -16,7 +16,7 @@
 
 package org.sonatype.gshell.branding;
 
-import org.sonatype.gshell.Shell;
+import org.sonatype.gshell.shell.Shell;
 
 import java.io.File;
 

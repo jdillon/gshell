@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell;
+package org.sonatype.gshell.shell;
 
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.console.ConsoleErrorHandler;

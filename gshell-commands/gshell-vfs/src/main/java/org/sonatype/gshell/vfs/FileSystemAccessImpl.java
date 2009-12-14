@@ -23,7 +23,7 @@ import org.apache.commons.vfs.provider.DelegateFileObject;
 import org.apache.commons.vfs.provider.local.LocalFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonatype.gshell.ShellHolder;
+import org.sonatype.gshell.shell.ShellHolder;
 import org.sonatype.gshell.vars.Variables;
 
 import java.io.File;

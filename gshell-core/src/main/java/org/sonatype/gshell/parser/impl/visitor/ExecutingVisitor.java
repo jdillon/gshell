@@ -16,7 +16,7 @@
 
 package org.sonatype.gshell.parser.impl.visitor;
 
-import org.sonatype.gshell.Shell;
+import org.sonatype.gshell.shell.Shell;
 import org.sonatype.gshell.execute.CommandExecutor;
 import org.sonatype.gshell.notification.ErrorNotification;
 import org.sonatype.gshell.parser.impl.ASTCommandLine;

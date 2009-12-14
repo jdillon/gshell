@@ -24,8 +24,8 @@ import jline.console.completers.AggregateCompleter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.branding.Branding;
-import org.sonatype.gshell.Shell;
-import org.sonatype.gshell.ShellImpl;
+import org.sonatype.gshell.shell.Shell;
+import org.sonatype.gshell.shell.ShellImpl;
 import org.sonatype.gshell.vars.Variables;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.console.ConsoleErrorHandler;
@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Builds {@link Shell} instances using Guice to wire components.
+ * Builds {@link org.sonatype.gshell.shell.Shell} instances using Guice to wire components.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0

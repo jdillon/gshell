@@ -17,7 +17,7 @@
 package org.sonatype.gshell.console.completer;
 
 import jline.console.Completer;
-import org.sonatype.gshell.ShellHolder;
+import org.sonatype.gshell.shell.ShellHolder;
 import org.sonatype.gshell.vars.VariableNames;
 import org.sonatype.gshell.vars.Variables;
 

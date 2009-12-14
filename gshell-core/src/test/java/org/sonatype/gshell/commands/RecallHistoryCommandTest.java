@@ -17,7 +17,7 @@
 package org.sonatype.gshell.commands;
 
 import org.junit.Test;
-import org.sonatype.gshell.History;
+import org.sonatype.gshell.shell.History;
 import org.sonatype.gshell.util.converter.ConversionException;
 
 import static org.junit.Assert.assertEquals;
