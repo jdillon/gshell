@@ -23,7 +23,7 @@ import jline.console.Completer;
 import jline.console.completers.AggregateCompleter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonatype.gshell.Branding;
+import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.Shell;
 import org.sonatype.gshell.ShellImpl;
 import org.sonatype.gshell.vars.Variables;

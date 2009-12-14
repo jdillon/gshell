@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell;
+package org.sonatype.gshell.branding;
 
 import jline.TerminalFactory;
+import org.sonatype.gshell.Shell;
 import org.sonatype.gshell.util.Strings;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;

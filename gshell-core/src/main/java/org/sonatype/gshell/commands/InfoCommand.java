@@ -20,7 +20,7 @@ import jline.Terminal;
 import jline.WindowsTerminal;
 import jline.console.completers.EnumCompleter;
 import org.fusesource.jansi.Ansi;
-import org.sonatype.gshell.Branding;
+import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;

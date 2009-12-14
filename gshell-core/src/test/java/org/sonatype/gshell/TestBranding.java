@@ -16,10 +16,12 @@
 
 package org.sonatype.gshell;
 
+import org.sonatype.gshell.branding.BrandingSupport;
+
 import java.io.File;
 
 /**
- * Test {@link Branding}.
+ * Test {@link org.sonatype.gshell.branding.Branding}.
  * 
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */

@@ -23,6 +23,7 @@ import org.fusesource.jansi.Ansi;
 import org.slf4j.Logger;
 import org.sonatype.gossip.Level;
 import org.sonatype.gossip.Log;
+import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.io.StreamJack;

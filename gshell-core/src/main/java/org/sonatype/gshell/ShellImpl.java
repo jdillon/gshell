@@ -20,6 +20,7 @@ import jline.console.Completer;
 import jline.console.ConsoleReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.console.Console;
 import org.sonatype.gshell.console.ConsoleErrorHandler;

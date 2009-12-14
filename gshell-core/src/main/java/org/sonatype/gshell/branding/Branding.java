@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell;
+package org.sonatype.gshell.branding;
+
+import org.sonatype.gshell.Shell;
 
 import java.io.File;
 

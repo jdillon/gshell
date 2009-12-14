@@ -17,7 +17,7 @@
 package org.sonatype.gshell.maven;
 
 import org.fusesource.jansi.Ansi;
-import org.sonatype.gshell.BrandingSupport;
+import org.sonatype.gshell.branding.BrandingSupport;
 
 import java.io.File;
 import java.io.PrintWriter;

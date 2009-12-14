@@ -16,7 +16,7 @@
 
 package org.sonatype.gshell.maven;
 
-import org.sonatype.gshell.Branding;
+import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.MainSupport;
 import org.sonatype.gshell.Shell;
 import org.sonatype.gshell.ShellErrorHandler;

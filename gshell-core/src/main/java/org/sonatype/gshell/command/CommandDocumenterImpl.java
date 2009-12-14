@@ -19,7 +19,7 @@ package org.sonatype.gshell.command;
 import org.fusesource.jansi.AnsiRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonatype.gshell.Branding;
+import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.ShellHolder;
 import org.sonatype.gshell.vars.Variables;
 import org.sonatype.gshell.io.PrefixingStream;

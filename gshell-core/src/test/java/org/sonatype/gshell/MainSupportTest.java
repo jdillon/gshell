@@ -20,6 +20,7 @@ import org.fusesource.jansi.Ansi;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.notification.ExitNotification;
 import org.sonatype.gshell.testsupport.TestUtil;

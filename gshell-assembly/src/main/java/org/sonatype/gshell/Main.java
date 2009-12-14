@@ -16,9 +16,8 @@
 
 package org.sonatype.gshell;
 
+import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.builder.guice.GuiceShellBuilder;
-
-import java.util.Arrays;
 
 /**
  * Command-line bootstrap for GShell (<tt>gsh</tt>).

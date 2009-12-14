@@ -17,6 +17,7 @@
 package org.sonatype.gshell;
 
 import org.fusesource.jansi.AnsiRenderer;
+import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.console.ConsolePrompt;
 import org.sonatype.gshell.util.ReplacementParser;
 import org.sonatype.gshell.vars.VariableNames;

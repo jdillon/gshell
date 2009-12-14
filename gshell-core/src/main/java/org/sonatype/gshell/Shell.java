@@ -16,6 +16,7 @@
 
 package org.sonatype.gshell;
 
+import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.vars.Variables;
 
