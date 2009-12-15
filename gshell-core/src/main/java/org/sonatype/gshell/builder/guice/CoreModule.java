@@ -19,6 +19,7 @@ package org.sonatype.gshell.builder.guice;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provider;
 import com.google.inject.Provides;
+import org.fusesource.jansi.AnsiRenderer;
 import org.sonatype.gshell.command.CommandDocumenter;
 import org.sonatype.gshell.command.CommandDocumenterImpl;
 import org.sonatype.gshell.command.IO;
@@ -61,9 +62,29 @@ public class CoreModule
         bind(CommandRegistrar.class).to(GuiceCommandRegistrar.class);
     }
 
+    /**
+     * Provides ANSI-aware prompt readers based on the current shell's IO context.
+     */
     @Provides
     private PromptReader providePromptReader() throws IOException {
         IO io = ShellHolder.get().getIo();
-        return new PromptReader(io.streams, io.getTerminal());
+
+        return new PromptReader(io.streams, io.getTerminal())
+        {
+            @Override
+            public String readLine(String prompt, Validator validator) throws IOException {
+                return super.readLine(AnsiRenderer.render(prompt), validator);
+            }
+
+            @Override
+            public String readLine(String prompt, char mask, Validator validator) throws IOException {
+                return super.readLine(AnsiRenderer.render(prompt), mask, validator);
+            }
+
+            @Override
+            public String readPassword(String prompt, Validator validator) throws IOException {
+                return super.readPassword(AnsiRenderer.render(prompt), validator);
+            }
+        };
     }
 }

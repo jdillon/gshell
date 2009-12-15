@@ -18,12 +18,9 @@ package org.sonatype.gshell.commands.shell;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
-import jline.console.ConsoleReader;
-import org.fusesource.jansi.AnsiRenderer;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
-import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.io.PromptReader;
 import org.sonatype.gshell.util.cli.Argument;
 import org.sonatype.gshell.util.cli.Option;
@@ -56,8 +53,6 @@ public class AskCommand
         assert context != null;
         
         PromptReader prompter = promptProvider.get();
-
-        prompt = AnsiRenderer.render(prompt);
 
         String input;
         if (mask != null) {
