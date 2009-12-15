@@ -53,15 +53,7 @@ public class AskCommand
         assert context != null;
         
         PromptReader prompter = promptProvider.get();
-
-        String input;
-        if (mask != null) {
-            prompter.setMask(mask);
-            input = prompter.readPassword(prompt);
-        }
-        else {
-            input = prompter.readLine(prompt);
-        }
+        String input = prompter.readLine(prompt, mask);
 
         log.debug("Read input: {}", input);
 
