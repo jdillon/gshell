@@ -110,13 +110,13 @@ public class InputPipe
                             queue.put(c);
                             return;
 
-                        case 3:
+                        case 3: // CTRL-C
                             interrupt = interruptHandler.interrupt();
                             break;
 
-                        case 4:
-                            running = interruptHandler.stop();
-                            break;
+//                        case 4: // CTRL-D
+//                            running = interruptHandler.stop();
+//                            break;
                     }
 
                     queue.put(c);
