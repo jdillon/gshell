@@ -55,6 +55,10 @@ public class PromptReader
         this.mask = mask;
     }
 
+    //
+    // TODO: Need to provide some completer function here, as well as better expect/require interface
+    //
+    
     public String readLine(final String prompt, final Validator validator) throws IOException {
         assert prompt != null;
         // validator may be null

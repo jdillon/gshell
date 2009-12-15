@@ -16,11 +16,14 @@
 
 package org.sonatype.gshell.commands.shell;
 
+import com.google.inject.Inject;
+import com.google.inject.Provider;
 import jline.console.ConsoleReader;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
+import org.sonatype.gshell.io.PromptReader;
 import org.sonatype.gshell.util.cli.Argument;
 import org.sonatype.gshell.util.cli.Option;
 
@@ -34,19 +37,33 @@ import org.sonatype.gshell.util.cli.Option;
 public class AskCommand
     extends CommandActionSupport
 {
+    private final Provider<PromptReader> promptProvider;
+
     @Option(name="-m", aliases={"--mask"})
     private Character mask;
 
     @Argument
     private String prompt;
 
+    @Inject
+    public AskCommand(final Provider<PromptReader> promptProvider) {
+        assert promptProvider != null;
+        this.promptProvider = promptProvider;
+    }
+
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
-        IO io = context.getIo();
+        
+        PromptReader prompter = promptProvider.get();
 
-        ConsoleReader reader = new ConsoleReader(io.streams.in, io.out, io.getTerminal());
-
-        String input = reader.readLine(prompt, mask);
+        String input;
+        if (mask != null) {
+            prompter.setMask(mask);
+            input = prompter.readPassword(prompt);
+        }
+        else {
+            input = prompter.readLine(prompt);
+        }
 
         log.debug("Read input: {}", input);
 

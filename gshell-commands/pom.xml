@@ -37,12 +37,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.google.inject</groupId>
-            <artifactId>guice</artifactId>
-            <optional>true</optional>
-        </dependency>
-
-        <dependency>
             <groupId>org.sonatype.gshell</groupId>
             <artifactId>gshell-core</artifactId>
             <classifier>tests</classifier>

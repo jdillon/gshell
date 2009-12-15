@@ -17,12 +17,16 @@
 package org.sonatype.gshell.builder.guice;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Provider;
+import com.google.inject.Provides;
 import org.sonatype.gshell.command.CommandDocumenter;
 import org.sonatype.gshell.command.CommandDocumenterImpl;
+import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.event.EventManagerImpl;
 import org.sonatype.gshell.execute.CommandExecutor;
 import org.sonatype.gshell.execute.CommandExecutorImpl;
+import org.sonatype.gshell.io.PromptReader;
 import org.sonatype.gshell.parser.CommandLineParser;
 import org.sonatype.gshell.parser.CommandLineParserImpl;
 import org.sonatype.gshell.registry.AliasRegistry;
@@ -32,6 +36,9 @@ import org.sonatype.gshell.registry.CommandRegistry;
 import org.sonatype.gshell.registry.CommandRegistryImpl;
 import org.sonatype.gshell.registry.CommandResolver;
 import org.sonatype.gshell.registry.CommandResolverImpl;
+import org.sonatype.gshell.shell.ShellHolder;
+
+import java.io.IOException;
 
 /**
  * Guice module for <tt>gshell-core</tt> components.
@@ -52,5 +59,11 @@ public class CoreModule
         bind(CommandExecutor.class).to(CommandExecutorImpl.class);
         bind(CommandResolver.class).to(CommandResolverImpl.class);
         bind(CommandRegistrar.class).to(GuiceCommandRegistrar.class);
+    }
+
+    @Provides
+    private PromptReader providePromptReader() throws IOException {
+        IO io = ShellHolder.get().getIo();
+        return new PromptReader(io.streams, io.getTerminal());
     }
 }
