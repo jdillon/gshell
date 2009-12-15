@@ -17,12 +17,12 @@
 package org.sonatype.gshell.commands;
 
 import com.google.inject.Inject;
-import org.sonatype.gshell.shell.Shell;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.console.completer.FileNameCompleter;
 import org.sonatype.gshell.io.Closer;
+import org.sonatype.gshell.shell.Shell;
 import org.sonatype.gshell.util.FileAssert;
 import org.sonatype.gshell.util.cli.Argument;
 

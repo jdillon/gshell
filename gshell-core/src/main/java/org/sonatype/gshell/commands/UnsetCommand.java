@@ -17,7 +17,6 @@
 package org.sonatype.gshell.commands;
 
 import com.google.inject.Inject;
-import org.sonatype.gshell.vars.Variables;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
@@ -25,6 +24,7 @@ import org.sonatype.gshell.commands.SetCommand.Mode;
 import org.sonatype.gshell.console.completer.VariableNameCompleter;
 import org.sonatype.gshell.util.cli.Argument;
 import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.vars.Variables;
 
 import java.util.List;
 

@@ -16,7 +16,6 @@
 
 package org.sonatype.gshell.command;
 
-import org.sonatype.gshell.io.PromptReader;
 import org.sonatype.gshell.shell.Shell;
 import org.sonatype.gshell.vars.Variables;
 

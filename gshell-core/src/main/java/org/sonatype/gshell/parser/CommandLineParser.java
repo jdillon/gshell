@@ -16,8 +16,8 @@
 
 package org.sonatype.gshell.parser;
 
-import org.sonatype.gshell.shell.Shell;
 import org.sonatype.gshell.execute.CommandExecutor;
+import org.sonatype.gshell.shell.Shell;
 
 /**
  * Parse command lines for execution.

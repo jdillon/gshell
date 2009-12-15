@@ -21,8 +21,6 @@ import org.sonatype.gshell.command.descriptor.io.xpp3.CommandsXpp3Writer;
 
 import java.io.StringWriter;
 
-import static org.junit.Assert.fail;
-
 /**
  * Unit tests for the {@link CommandsDescriptor} class.
  *

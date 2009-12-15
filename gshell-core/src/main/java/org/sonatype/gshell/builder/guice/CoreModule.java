@@ -17,7 +17,6 @@
 package org.sonatype.gshell.builder.guice;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Provider;
 import com.google.inject.Provides;
 import org.fusesource.jansi.AnsiRenderer;
 import org.sonatype.gshell.command.CommandDocumenter;

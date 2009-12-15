@@ -20,9 +20,8 @@ import org.fusesource.jansi.AnsiRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.branding.Branding;
-import org.sonatype.gshell.shell.ShellHolder;
-import org.sonatype.gshell.vars.Variables;
 import org.sonatype.gshell.io.PrefixingStream;
+import org.sonatype.gshell.shell.ShellHolder;
 import org.sonatype.gshell.util.ReplacementParser;
 import org.sonatype.gshell.util.cli.CommandLinePrinter;
 import org.sonatype.gshell.util.cli.CommandLineProcessor;
@@ -32,6 +31,7 @@ import org.sonatype.gshell.util.i18n.PrefixingMessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
 import org.sonatype.gshell.util.pref.PreferenceDescriptor;
 import org.sonatype.gshell.util.pref.PreferenceProcessor;
+import org.sonatype.gshell.vars.Variables;
 
 import java.io.PrintStream;
 

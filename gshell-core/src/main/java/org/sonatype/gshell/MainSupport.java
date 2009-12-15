@@ -41,17 +41,19 @@ import org.sonatype.gshell.util.cli.handler.StopHandler;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
 import org.sonatype.gshell.util.pref.Preference;
-import org.sonatype.gshell.util.pref.Preferences;
 import org.sonatype.gshell.util.pref.PreferenceProcessor;
+import org.sonatype.gshell.util.pref.Preferences;
 import org.sonatype.gshell.vars.Variables;
 import org.sonatype.gshell.vars.VariablesImpl;
-
-import static org.sonatype.gshell.vars.VariableNames.*;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicReference;
+
+import static org.sonatype.gshell.vars.VariableNames.LAST_RESULT;
+import static org.sonatype.gshell.vars.VariableNames.SHELL_ERRORS;
+import static org.sonatype.gshell.vars.VariableNames.SHELL_LOGGING;
 
 /**
  * Support for booting shell applications.

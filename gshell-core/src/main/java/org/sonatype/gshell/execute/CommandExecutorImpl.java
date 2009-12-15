@@ -21,9 +21,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.sonatype.gshell.branding.Branding;
-import org.sonatype.gshell.shell.Shell;
-import org.sonatype.gshell.shell.ShellHolder;
-import org.sonatype.gshell.vars.Variables;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.CommandDocumenter;
@@ -35,13 +32,17 @@ import org.sonatype.gshell.notification.ResultNotification;
 import org.sonatype.gshell.parser.CommandLineParser;
 import org.sonatype.gshell.parser.CommandLineParser.CommandLine;
 import org.sonatype.gshell.registry.CommandResolver;
+import org.sonatype.gshell.shell.Shell;
+import org.sonatype.gshell.shell.ShellHolder;
 import org.sonatype.gshell.util.Arguments;
 import org.sonatype.gshell.util.Strings;
 import org.sonatype.gshell.util.cli.CommandLineProcessor;
 import org.sonatype.gshell.util.cli.OpaqueArguments;
 import org.sonatype.gshell.util.i18n.PrefixingMessageSource;
 import org.sonatype.gshell.util.pref.PreferenceProcessor;
-import static org.sonatype.gshell.vars.VariableNames.*;
+import org.sonatype.gshell.vars.Variables;
+
+import static org.sonatype.gshell.vars.VariableNames.LAST_RESULT;
 
 /**
  * The default {@link org.sonatype.gshell.execute.CommandExecutor} component.

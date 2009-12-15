@@ -17,8 +17,8 @@
 package org.sonatype.gshell.parser.impl.eval;
 
 import org.sonatype.gshell.shell.ShellHolder;
-import org.sonatype.gshell.vars.Variables;
 import org.sonatype.gshell.util.ReplacementParser;
+import org.sonatype.gshell.vars.Variables;
 
 /**
  * Evaluates expressions using regular expressions.

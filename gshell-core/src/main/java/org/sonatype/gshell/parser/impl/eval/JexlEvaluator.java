@@ -23,8 +23,8 @@ import org.apache.commons.jexl.resolver.FlatResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.shell.ShellHolder;
-import org.sonatype.gshell.vars.Variables;
 import org.sonatype.gshell.util.ReplacementParser;
+import org.sonatype.gshell.vars.Variables;
 
 import java.util.Collection;
 import java.util.Map;

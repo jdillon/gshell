@@ -22,7 +22,6 @@ import com.google.inject.Stage;
 import org.sonatype.gshell.builder.guice.CoreModule;
 import org.sonatype.gshell.builder.guice.GuiceShellBuilder;
 import org.sonatype.gshell.registry.CommandRegistrar;
-import org.sonatype.gshell.shell.Shell;
 
 /**
  * Builds {@link org.sonatype.gshell.shell.Shell} instances for testing.
