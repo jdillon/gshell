@@ -89,15 +89,29 @@
                     <models>
                         <model>src/main/mdo/commands.mdo</model>
                     </models>
-                    <version>1.0.0</version>
+                    <version>1.1.0</version>
                 </configuration>
                 <executions>
                     <execution>
+                        <id>generate-sources</id>
                         <goals>
                             <goal>java</goal>
                             <goal>xpp3-reader</goal>
                             <goal>xpp3-writer</goal>
                             <goal>xsd</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>generate-schema</id>
+                        <goals>
+                            <goal>xsd</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>generate-docs</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>xdoc</goal>
                         </goals>
                     </execution>
                 </executions>

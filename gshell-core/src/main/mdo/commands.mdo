@@ -18,12 +18,12 @@
 
 <model xmlns="http://modello.codehaus.org/MODELLO/1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://modello.codehaus.org/MODELLO/1.1.0 http://modello.codehaus.org/xsd/modello-1.1.0.xsd"
-       xml.namespace="http://sonatype.org/gshell-commands/1.0.0"
-       xml.schemaLocation="http://sonatype.org/xsd/gshell-commands-1.0.0.xsd">
+       xml.namespace="http://sonatype.org/gshell-commands/1.1.0"
+       xml.schemaLocation="http://sonatype.org/xsd/gshell-commands-1.1.0.xsd">
 
     <id>commands</id>
     <name>Commands</name>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 
     <description><![CDATA[
         Commands descriptor model.
@@ -63,7 +63,7 @@
                 <field>
                     <name>commandSets</name>
                     <version>1.0.0+</version>
-                    <association java.adder="false" java.bidi="false" xml.tagName="command-set" xml.itemsStyle="flat">
+                    <association xml.tagName="command-set" xml.itemsStyle="flat">
                         <type>CommandSetDescriptor</type>
                         <multiplicity>*</multiplicity>
                     </association>
@@ -88,6 +88,7 @@
                     <version>1.0.0+</version>
                     <required>true</required>
                     <type>String</type>
+                    <identifier>true</identifier>
                 </field>
 
                 <field>
@@ -104,13 +105,21 @@
                     <type>int</type>
                 </field>
 
-                <!-- TODO: Add modules, so we can have custom Guice bits included if needed. -->
-                
+                <field>
+                    <name>modules</name>
+                    <version>1.1.0+</version>
+                    <required>false</required>
+                    <association xml.itemsStyle="flat">
+                        <type>ModuleDescriptor</type>
+                        <multiplicity>*</multiplicity>
+                    </association>
+                </field>
+
                 <field>
                     <name>commands</name>
                     <version>1.0.0+</version>
                     <required>true</required>
-                    <association java.adder="false" java.bidi="false" xml.itemsStyle="flat">
+                    <association xml.itemsStyle="flat">
                         <type>CommandDescriptor</type>
                         <multiplicity>*</multiplicity>
                     </association>
@@ -131,6 +140,32 @@
             </codeSegments>
         </class>
 
+        <class xml.tagName="module">
+            <description><![CDATA[
+                Module descriptor.
+                @since 2.3
+            ]]></description>
+
+            <name>ModuleDescriptor</name>
+            <version>1.1.0+</version>
+            <fields>
+                <field>
+                    <name>type</name>
+                    <version>1.1.0+</version>
+                    <required>true</required>
+                    <type>String</type>
+                    <identifier>true</identifier>
+                </field>
+
+                <field>
+                    <name>enabled</name>
+                    <version>1.1.0+</version>
+                    <type>boolean</type>
+                    <defaultValue>true</defaultValue>
+                </field>
+            </fields>
+        </class>
+
         <class xml.tagName="command">
             <description><![CDATA[
                 Command descriptor.
@@ -145,6 +180,7 @@
                     <version>1.0.0+</version>
                     <required>true</required>
                     <type>String</type>
+                    <identifier>true</identifier>
                 </field>
 
                 <field>
@@ -158,6 +194,17 @@
                     <name>name</name>
                     <version>1.0.0+</version>
                     <type>String</type>
+                    <!--<identifier>true</identifier>-->
+                </field>
+
+                <field java.setter="false" xml.transient="true">
+                    <name>parent</name>
+                    <version>1.1.0+</version>
+                    <required>true</required>
+                    <association>
+                        <type>CommandSetDescriptor</type>
+                        <multiplicity>1</multiplicity>
+                    </association>
                 </field>
             </fields>
         </class>

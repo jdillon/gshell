@@ -78,30 +78,46 @@ public abstract class CommandRegistrarSupport
                     continue;
                 }
 
-                log.debug("Registering commands for: {}", config);
-
-                for (CommandDescriptor command : config.getCommands()) {
-                    if (command.isEnabled()) {
-                        String type = command.getAction();
-                        String name = command.getName();
-
-                        try {
-                            if (name == null) {
-                                registerCommand(type);
-                            }
-                            else {
-                                registerCommand(name, type);
-                            }
-                        }
-                        catch (Exception e) {
-                            log.error("Failed to register command: " + type, e);
-                        }
-                    }
-                    else {
-                        log.debug("Skipping disabled command: {}", command);
-                    }
-                }
+                registerCommandSet(config);
             }
+        }
+    }
+
+    protected void registerCommandSet(final CommandSetDescriptor config) {
+        assert config != null;
+
+        log.debug("Registering commands for: {}", config);
+
+        for (CommandDescriptor command : config.getCommands()) {
+            command.createCommandSetDescriptorAssociation(config);
+
+            if (command.isEnabled()) {
+                registerCommand(command);
+            }
+            else {
+                log.debug("Skipping disabled command: {}", command);
+            }
+        }
+    }
+
+    protected void registerCommand(final CommandDescriptor config) {
+        assert config != null;
+
+        log.debug("Registering command for: {}", config);
+
+        String type = config.getAction();
+        String name = config.getName();
+
+        try {
+            if (name == null) {
+                registerCommand(type);
+            }
+            else {
+                registerCommand(name, type);
+            }
+        }
+        catch (Exception e) {
+            log.error("Failed to register command: " + type, e);
         }
     }
 
