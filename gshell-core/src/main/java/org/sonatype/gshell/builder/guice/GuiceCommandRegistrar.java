@@ -78,6 +78,7 @@ public class GuiceCommandRegistrar
         }
     }
 
+    @SuppressWarnings({"unchecked"})
     private Injector buildInjector(final List<ModuleDescriptor> config) {
         assert config != null;
 
@@ -86,7 +87,7 @@ public class GuiceCommandRegistrar
             String className = desc.getType();
             try {
                 Class type = Thread.currentThread().getContextClassLoader().loadClass(className);
-                Module module = (Module) type.newInstance();
+                Module module = (Module) injector.getInstance(type);
                 log.debug("Loaded module: {}", module);
                 modules.add(module);
             }
