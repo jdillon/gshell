@@ -22,7 +22,6 @@ import com.google.inject.Module;
 import com.google.inject.Singleton;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandAction;
-import org.sonatype.gshell.command.descriptor.CommandDescriptor;
 import org.sonatype.gshell.command.descriptor.CommandSetDescriptor;
 import org.sonatype.gshell.command.descriptor.ModuleDescriptor;
 import org.sonatype.gshell.registry.CommandRegistrar;
