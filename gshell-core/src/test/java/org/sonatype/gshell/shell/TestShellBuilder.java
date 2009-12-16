@@ -36,11 +36,6 @@ public class TestShellBuilder
         return Guice.createInjector(Stage.DEVELOPMENT, new CoreModule());
     }
 
-    protected void registerCommand(final String name, final String type) throws Exception {
-        CommandRegistrar registrar = getInjector().getInstance(CommandRegistrar.class);
-        registrar.registerCommand(name, type);
-    }
-
     @Override
     public Shell create() throws Exception {
         setRegisterCommands(false);

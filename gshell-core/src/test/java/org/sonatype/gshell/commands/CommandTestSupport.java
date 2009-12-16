@@ -83,7 +83,7 @@ public abstract class CommandTestSupport
     public void setUp() throws Exception {
         io = new TestIO();
 
-        TestShellBuilder builder = new TestShellBuilder();
+        TestShellBuilder builder = createBuilder();
         Injector injector = builder.getInjector();
 
         shell = builder
@@ -104,6 +104,10 @@ public abstract class CommandTestSupport
 
         aliasRegistry = injector.getInstance(AliasRegistry.class);
         commandRegistry = injector.getInstance(CommandRegistry.class);
+    }
+
+    protected TestShellBuilder createBuilder() {
+        return new TestShellBuilder();
     }
 
     @After
