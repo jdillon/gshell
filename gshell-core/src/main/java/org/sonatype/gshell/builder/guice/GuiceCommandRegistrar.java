@@ -58,6 +58,8 @@ public class GuiceCommandRegistrar
         this.registry = registry;
         assert injector != null;
         this.injector = injector;
+
+        log.trace("Base injector: {}", injector);
     }
 
     @Override
@@ -96,7 +98,11 @@ public class GuiceCommandRegistrar
             }
         }
 
-        return injector.createChildInjector(modules);
+        Injector child = injector.createChildInjector(modules);
+
+        log.trace("Created child injector: {}", child);
+
+        return child;
     }
 
     public void registerCommand(final String name, final String className) throws Exception {
