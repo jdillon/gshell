@@ -28,7 +28,7 @@ import org.apache.sshd.server.SignalListener;
 /**
  * ???
  *
- * @since 2.1
+ * @since 2.3
  */
 public class SshTerminal
     extends Terminal

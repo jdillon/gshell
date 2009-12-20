@@ -31,7 +31,7 @@ import org.sonatype.gshell.io.Closer;
 /**
  * ???
  *
- * @since 2.1
+ * @since 2.3
  */
 public class ShellCommandFactory
     implements CommandFactory

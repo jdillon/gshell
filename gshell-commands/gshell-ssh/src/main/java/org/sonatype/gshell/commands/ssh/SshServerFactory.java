@@ -17,19 +17,24 @@
 package org.sonatype.gshell.commands.ssh;
 
 import org.apache.sshd.SshServer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * ???
  *
- * @since 2.1
+ * @since 2.3
  */
 public class SshServerFactory
 {
+    private final Logger log = LoggerFactory.getLogger(SshServerFactory.class);
+
     private SshServer server;
 
     private boolean start;
 
-    public SshServerFactory(SshServer server) {
+    public SshServerFactory(final SshServer server) {
+        assert server != null;
         this.server = server;
     }
 
@@ -37,7 +42,7 @@ public class SshServerFactory
         return start;
     }
 
-    public void setStart(boolean start) {
+    public void setStart(final  boolean start) {
         this.start = start;
     }
 
@@ -47,8 +52,7 @@ public class SshServerFactory
                 server.start();
             }
             catch (Exception e) {
-                // FIXME: This is bad!!!
-                e.printStackTrace();
+                log.error("Failed to start server", e);
                 throw e;
             }
         }

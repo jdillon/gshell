@@ -25,7 +25,7 @@ import org.sonatype.gshell.util.cli.Option;
 /**
  * Start a SSH server.
  *
- * @since 2.1
+ * @since 2.3
  */
 @Command(name="sshd")
 public class SshServerCommand

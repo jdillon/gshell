@@ -34,7 +34,7 @@ import org.sonatype.gshell.util.cli.Option;
 /**
  * Connect to a SSH server.
  *
- * @since 2.1
+ * @since 2.3
  */
 @Command(name="ssh")
 public class SshCommand

@@ -36,7 +36,7 @@ import org.sonatype.gshell.io.Closer;
 /**
  * SSHD {@link org.apache.sshd.server.Command} factory which provides access to Shell.
  *
- * @since 2.1
+ * @since 2.3
  */
 public class ShellFactoryImpl
     implements Factory<Command>
