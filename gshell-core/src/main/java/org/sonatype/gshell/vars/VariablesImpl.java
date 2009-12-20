@@ -158,10 +158,22 @@ public class VariablesImpl
         }
     }
 
+    public void unset(final Class<?> type) {
+        assert type != null;
+
+        unset(type.getName());
+    }
+
     public boolean contains(final String name) {
         assert name != null;
 
         return map.containsKey(name);
+    }
+
+    public boolean contains(final Class<?> type) {
+        assert type != null;
+
+        return contains(type.getName());
     }
 
     public boolean isMutable(final String name) {
@@ -179,6 +191,12 @@ public class VariablesImpl
         }
 
         return mutable;
+    }
+
+    public boolean isMutable(final Class<?> type) {
+        assert type != null;
+
+        return isMutable(type.getName());
     }
 
     private void ensureMutable(final String name) {
@@ -204,6 +222,12 @@ public class VariablesImpl
         }
 
         return count > 1;
+    }
+
+    public boolean isCloaked(final Class<?> type) {
+        assert type != null;
+
+        return isCloaked(type.getName());
     }
 
     public Iterator<String> names() {

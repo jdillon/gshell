@@ -46,11 +46,19 @@ public interface Variables
 
     void unset(String name);
 
+    void unset(Class<?> type);
+
     boolean contains(String name);
+
+    boolean contains(Class<?> type);
 
     boolean isMutable(String name);
 
+    boolean isMutable(Class<?> type);
+
     boolean isCloaked(String name);
+
+    boolean isCloaked(Class<?> type);
 
     Iterator<String> names();
 
