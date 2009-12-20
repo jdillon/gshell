@@ -21,11 +21,10 @@ import org.apache.commons.vfs.Selectors;
 import org.apache.commons.vfs.util.Os;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
-import org.sonatype.gshell.vfs.FileObjectAssert;
-import org.sonatype.gshell.vfs.FileObjects;
-import org.sonatype.gshell.commands.vfs.VfsCommandSupport;
 import org.sonatype.gshell.util.cli.Argument;
 import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.vfs.FileObjectAssert;
+import org.sonatype.gshell.vfs.FileObjects;
 
 import java.io.File;
 import java.util.Arrays;

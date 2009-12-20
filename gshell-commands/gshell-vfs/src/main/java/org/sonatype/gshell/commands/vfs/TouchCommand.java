@@ -18,7 +18,6 @@ package org.sonatype.gshell.commands.vfs;
 
 import org.apache.commons.vfs.FileObject;
 import org.sonatype.gshell.command.Command;
-import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.util.cli.Argument;
 import org.sonatype.gshell.vfs.FileObjects;

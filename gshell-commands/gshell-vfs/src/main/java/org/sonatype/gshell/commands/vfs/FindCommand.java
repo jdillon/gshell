@@ -16,8 +16,6 @@
 
 package org.sonatype.gshell.commands.vfs;
 
-import java.net.URI;
-
 import org.apache.commons.vfs.FileObject;
 import org.apache.commons.vfs.FileSelectInfo;
 import org.apache.commons.vfs.FileSelector;
@@ -32,12 +30,13 @@ import org.apache.oro.text.regex.Perl5Matcher;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.vfs.FileObjectAssert;
-import org.sonatype.gshell.vfs.FileObjects;
-import org.sonatype.gshell.commands.vfs.VfsCommandSupport;
 import org.sonatype.gshell.util.cli.Argument;
 import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.vfs.FileObjectAssert;
+import org.sonatype.gshell.vfs.FileObjects;
 import org.sonatype.gshell.vfs.selector.AggregateFileSelector;
+
+import java.net.URI;
 
 /**
  * Find files in a hierarchy.

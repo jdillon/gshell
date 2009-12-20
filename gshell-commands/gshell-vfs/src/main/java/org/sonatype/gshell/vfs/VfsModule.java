@@ -17,10 +17,12 @@
 package org.sonatype.gshell.vfs;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Provides;
-import org.apache.commons.vfs.FileSystemException;
+import org.apache.commons.vfs.FileContentInfoFactory;
 import org.apache.commons.vfs.FileSystemManager;
-import org.apache.commons.vfs.VFS;
+import org.apache.commons.vfs.FilesCache;
+import org.apache.commons.vfs.cache.SoftRefFilesCache;
+import org.apache.commons.vfs.impl.FileContentInfoFilenameFactory;
+import org.sonatype.gshell.vfs.builder.FileSystemManagerProvider;
 
 /**
  * VFS module.
@@ -34,11 +36,14 @@ public class VfsModule
     @Override
     protected void configure() {
         bind(FileSystemAccess.class).to(FileSystemAccessImpl.class);
-    }
+        bind(FileSystemManager.class).toProvider(FileSystemManagerProvider.class);
+        bind(FilesCache.class).to(SoftRefFilesCache.class);
+        bind(FileContentInfoFactory.class).to(FileContentInfoFilenameFactory.class);
+        
+        // TODO: Add more bindings to setup desired VFS components:
+        //      DefaultFileReplicator
+        //      PrivilegedFileReplicator
 
-    @Provides
-    private FileSystemManager provideFileSystemManager() throws FileSystemException {
-        // TODO: Expose more configuration
-        return VFS.getManager();
+        // TODO: Configure VFS providers
     }
 }
