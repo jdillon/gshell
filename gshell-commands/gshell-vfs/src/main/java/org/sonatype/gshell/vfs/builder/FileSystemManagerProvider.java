@@ -18,6 +18,7 @@ package org.sonatype.gshell.vfs.builder;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import com.google.inject.Singleton;
 import org.apache.commons.vfs.FileSystemManager;
 
 /**
@@ -26,6 +27,7 @@ import org.apache.commons.vfs.FileSystemManager;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.3
  */
+@Singleton
 public class FileSystemManagerProvider
     implements Provider<FileSystemManager>
 {

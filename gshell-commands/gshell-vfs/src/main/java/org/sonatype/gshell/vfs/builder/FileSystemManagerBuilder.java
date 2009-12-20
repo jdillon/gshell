@@ -120,29 +120,30 @@ public class FileSystemManagerBuilder
         installDefaults();
 
         ConfigurableFileSystemManager fsm = new ConfigurableFileSystemManager();
+        log.debug("Creating FSM: {}", fsm);
 
         assert fileReplicator != null;
-        log.debug("File replicator: {}", fileReplicator);
+        log.debug("  File replicator: {}", fileReplicator);
         fsm.setReplicator(fileReplicator);
 
         assert temporaryFileStore != null;
-        log.debug("Temporary file store: {}", temporaryFileStore);
+        log.debug("  Temporary file store: {}", temporaryFileStore);
         fsm.setTemporaryFileStore(temporaryFileStore);
 
         assert filesCache != null;
-        log.debug("Files cache: {}", filesCache);
+        log.debug("  Files cache: {}", filesCache);
         fsm.setFilesCache(filesCache);
 
         assert cacheStrategy != null;
-        log.debug("Cache strategy: {}", cacheStrategy);
+        log.debug("  Cache strategy: {}", cacheStrategy);
         fsm.setCacheStrategy(cacheStrategy);
 
         assert fileContentInfoFactory != null;
-        log.debug("File content info factory: {}", fileContentInfoFactory);
+        log.debug("  File content info factory: {}", fileContentInfoFactory);
         fsm.setFileContentInfoFactory(fileContentInfoFactory);
 
         assert defaultProvider != null;
-        log.debug("Default provider: {}", defaultProvider);
+        log.debug("  Default provider: {}", defaultProvider);
         fsm.setDefaultProvider(defaultProvider);
 
         // Finally init the manager
