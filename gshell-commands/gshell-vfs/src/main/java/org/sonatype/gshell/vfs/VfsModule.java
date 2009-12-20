@@ -17,6 +17,7 @@
 package org.sonatype.gshell.vfs;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Singleton;
 import org.apache.commons.vfs.FileContentInfoFactory;
 import org.apache.commons.vfs.FileSystemManager;
 import org.apache.commons.vfs.FilesCache;
@@ -36,10 +37,10 @@ public class VfsModule
     @Override
     protected void configure() {
         bind(FileSystemAccess.class).to(FileSystemAccessImpl.class);
-        bind(FileSystemManager.class).toProvider(FileSystemManagerProvider.class);
+        bind(FileSystemManager.class).toProvider(FileSystemManagerProvider.class).in(Singleton.class);
         bind(FilesCache.class).to(SoftRefFilesCache.class);
         bind(FileContentInfoFactory.class).to(FileContentInfoFilenameFactory.class);
-        
+
         // TODO: Add more bindings to setup desired VFS components:
         //      DefaultFileReplicator
         //      PrivilegedFileReplicator
