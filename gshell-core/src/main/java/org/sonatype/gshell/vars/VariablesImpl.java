@@ -87,6 +87,12 @@ public class VariablesImpl
         }
     }
 
+    public void set(final Class<?> type, final Object value) {
+        assert type != null;
+
+        set(type.getName(), value);
+    }
+
     public Object get(final String name) {
         assert name != null;
 

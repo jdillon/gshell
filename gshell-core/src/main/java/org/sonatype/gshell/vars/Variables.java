@@ -30,6 +30,8 @@ public interface Variables
 
     void set(String name, Object value, boolean mutable);
 
+    void set(Class<?> type, Object value);
+
     Object get(String name);
 
     Object get(String name, Object defaultValue);
