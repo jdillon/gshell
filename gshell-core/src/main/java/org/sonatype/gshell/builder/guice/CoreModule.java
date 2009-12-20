@@ -41,7 +41,7 @@ import org.sonatype.gshell.shell.ShellHolder;
 import java.io.IOException;
 
 /**
- * Guice module for <tt>gshell-core</tt> components.
+ * GShell core module.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0

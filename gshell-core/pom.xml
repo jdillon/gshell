@@ -89,7 +89,6 @@
                     <models>
                         <model>src/main/mdo/commands.mdo</model>
                     </models>
-                    <version>1.1.0</version>
                 </configuration>
                 <executions>
                     <execution>
@@ -98,14 +97,30 @@
                             <goal>java</goal>
                             <goal>xpp3-reader</goal>
                             <goal>xpp3-writer</goal>
-                            <goal>xsd</goal>
                         </goals>
+                        <configuration>
+                            <version>1.1.0</version>
+                        </configuration>
                     </execution>
                     <execution>
-                        <id>generate-schema</id>
+                        <id>generate-schema-1.1.0</id>
                         <goals>
                             <goal>xsd</goal>
                         </goals>
+                        <configuration>
+                            <version>1.1.0</version>
+                            <!--<outputDirectory>${project.build.directory}/generated-sources/xsd</outputDirectory>-->
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-schema-1.0.0</id>
+                        <goals>
+                            <goal>xsd</goal>
+                        </goals>
+                        <configuration>
+                            <version>1.0.0</version>
+                            <!--<outputDirectory>${project.build.directory}/generated-sources/xsd</outputDirectory>-->
+                        </configuration>
                     </execution>
                     <execution>
                         <id>generate-docs</id>
@@ -113,6 +128,9 @@
                         <goals>
                             <goal>xdoc</goal>
                         </goals>
+                        <configuration>
+                            <version>1.1.0</version>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
