@@ -16,10 +16,10 @@
 
 package org.sonatype.gshell.commands.file;
 
-import org.sonatype.gshell.vars.VariableNames;
-import org.sonatype.gshell.vars.Variables;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
+import org.sonatype.gshell.vars.VariableNames;
+import org.sonatype.gshell.vars.Variables;
 
 import java.io.File;
 import java.io.IOException;

@@ -16,27 +16,27 @@
 
 package org.sonatype.gshell.commands.text;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-import java.io.BufferedInputStream;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
 import org.apache.commons.vfs.FileObject;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
-import org.sonatype.gshell.vfs.FileObjectAssert;
-import org.sonatype.gshell.vfs.FileObjects;
 import org.sonatype.gshell.commands.vfs.VfsCommandSupport;
 import org.sonatype.gshell.io.Closer;
 import org.sonatype.gshell.util.cli.Argument;
 import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.vfs.FileObjectAssert;
+import org.sonatype.gshell.vfs.FileObjects;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Sort lines of text

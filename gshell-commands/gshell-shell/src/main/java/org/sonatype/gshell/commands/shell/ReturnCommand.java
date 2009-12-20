@@ -16,7 +16,6 @@
 
 package org.sonatype.gshell.commands.shell;
 
-import org.fusesource.jansi.Ansi;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;

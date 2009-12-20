@@ -16,8 +16,6 @@
 
 package org.sonatype.gshell.commands.ssh;
 
-import java.io.IOException;
-
 import org.apache.sshd.ClientChannel;
 import org.apache.sshd.ClientSession;
 import org.apache.sshd.SshClient;
@@ -30,6 +28,8 @@ import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.util.cli.Argument;
 import org.sonatype.gshell.util.cli.Option;
+
+import java.io.IOException;
 
 /**
  * Connect to a SSH server.

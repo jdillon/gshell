@@ -15,15 +15,15 @@
  */
 package org.sonatype.gshell.commands.ssh;
 
-import java.io.InputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 import jline.Terminal;
 import org.apache.sshd.common.PtyMode;
 import org.apache.sshd.server.Environment;
 import org.apache.sshd.server.Signal;
 import org.apache.sshd.server.SignalListener;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * ???
