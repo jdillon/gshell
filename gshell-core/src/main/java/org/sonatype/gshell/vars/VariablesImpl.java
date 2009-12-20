@@ -119,6 +119,18 @@ public class VariablesImpl
         return value;
     }
 
+    public <T> T get(final Class<T> type, final T defaultValue) {
+        assert type != null;
+
+        return get(type.getName(), type, defaultValue);
+    }
+
+    public <T> T get(final Class<T> type) {
+        assert type != null;
+
+        return get(type.getName(), type);
+    }
+
     public Object get(final String name, final Object defaultValue) {
         Object value = get(name);
         if (value == null) {

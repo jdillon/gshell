@@ -32,9 +32,15 @@ public interface Variables
 
     Object get(String name);
 
+    Object get(String name, Object defaultValue);
+
+    <T> T get(String name, Class<T> type, T defaultValue);
+
     <T> T get(String name, Class<T> type);
 
-    Object get(String name, Object defaultValue);
+    <T> T get(Class<T> type, T defaultValue);
+
+    <T> T get(Class<T> type);
 
     void unset(String name);
 
