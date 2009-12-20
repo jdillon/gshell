@@ -16,6 +16,7 @@
 
 package org.sonatype.gshell.vfs;
 
+import com.google.inject.Inject;
 import org.apache.commons.vfs.FileObject;
 import org.apache.commons.vfs.FileSystemException;
 import org.apache.commons.vfs.FileSystemManager;
@@ -42,6 +43,7 @@ public class FileSystemAccessImpl
 
     private final FileSystemManager fileSystemManager;
 
+    @Inject
     public FileSystemAccessImpl(final FileSystemManager fileSystemManager) {
         assert fileSystemManager != null;
         this.fileSystemManager = fileSystemManager;

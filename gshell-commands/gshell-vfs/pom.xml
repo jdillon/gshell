@@ -42,6 +42,16 @@
         </dependency>
 
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.inject.extensions</groupId>
+            <artifactId>guice-multibindings</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>de.schlichtherle.io</groupId>
             <artifactId>truezip</artifactId>
             <version>6.6</version>

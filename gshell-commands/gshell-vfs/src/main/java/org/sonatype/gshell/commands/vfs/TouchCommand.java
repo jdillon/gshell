@@ -29,7 +29,7 @@ import org.sonatype.gshell.vfs.FileObjects;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name="touch")
+@Command(name="vfs/touch")
 public class TouchCommand
     extends VfsCommandSupport
 {

@@ -37,7 +37,7 @@ import java.util.List;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name="edit")
+@Command(name="vfs/edit")
 public class EditCommand
     extends VfsCommandSupport
 {

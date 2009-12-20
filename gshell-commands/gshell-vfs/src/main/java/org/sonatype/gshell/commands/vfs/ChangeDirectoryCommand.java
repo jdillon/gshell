@@ -31,7 +31,7 @@ import org.sonatype.gshell.vfs.FileObjects;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name="cd")
+@Command(name="vfs/cd")
 public class ChangeDirectoryCommand
     extends VfsCommandSupport
     implements VariableNames

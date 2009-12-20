@@ -38,7 +38,7 @@ import java.util.Map;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name="fileinfo")
+@Command(name="vfs/fileinfo")
 public class FileInfoCommand
     extends VfsCommandSupport
 {

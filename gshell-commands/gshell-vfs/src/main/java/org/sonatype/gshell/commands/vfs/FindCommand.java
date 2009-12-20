@@ -45,7 +45,7 @@ import org.sonatype.gshell.vfs.selector.AggregateFileSelector;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name="find")
+@Command(name="vfs/find")
 public class FindCommand
     extends VfsCommandSupport
 {

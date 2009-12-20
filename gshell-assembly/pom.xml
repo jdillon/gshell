@@ -66,8 +66,13 @@
 
         <dependency>
             <groupId>org.sonatype.gshell.commands</groupId>
-            <artifactId>gshell-scm</artifactId>
+            <artifactId>gshell-vfs</artifactId>
         </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>org.sonatype.gshell.commands</groupId>-->
+            <!--<artifactId>gshell-scm</artifactId>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>org.sonatype.gossip</groupId>
