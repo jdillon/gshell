@@ -16,12 +16,16 @@
 
 package org.sonatype.gshell.commands;
 
+import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.Module;
+import com.google.inject.Stage;
 import org.fusesource.jansi.Ansi;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.sonatype.gshell.branding.TestBranding;
+import org.sonatype.gshell.builder.guice.CoreModule;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.registry.AliasRegistry;
@@ -35,7 +39,9 @@ import org.sonatype.gshell.util.Strings;
 import org.sonatype.gshell.vars.VariableNames;
 import org.sonatype.gshell.vars.Variables;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
@@ -107,7 +113,24 @@ public abstract class CommandTestSupport
     }
 
     protected TestShellBuilder createBuilder() {
-        return new TestShellBuilder();
+        return new TestShellBuilder()
+        {
+            @Override
+            protected Injector createInjector() {
+                return Guice.createInjector(Stage.DEVELOPMENT, createModules());
+            }
+        };
+    }
+
+    protected List<Module> createModules() {
+        List<Module> modules = new ArrayList<Module>();
+        configureModules(modules);
+        return modules;
+    }
+
+    protected void configureModules(final List<Module> modules) {
+        assert modules != null;
+        modules.add(new CoreModule());
     }
 
     @After
