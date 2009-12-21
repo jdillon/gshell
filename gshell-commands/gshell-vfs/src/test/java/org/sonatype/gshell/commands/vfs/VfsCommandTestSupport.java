@@ -18,11 +18,14 @@ package org.sonatype.gshell.commands.vfs;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.Module;
 import com.google.inject.Stage;
 import org.sonatype.gshell.builder.guice.CoreModule;
 import org.sonatype.gshell.commands.CommandTestSupport;
 import org.sonatype.gshell.shell.TestShellBuilder;
 import org.sonatype.gshell.vfs.VfsModule;
+
+import java.util.List;
 
 /**
  * Support for testing VFS commands.
@@ -37,13 +40,8 @@ public class VfsCommandTestSupport
     }
 
     @Override
-    protected TestShellBuilder createBuilder() {
-        return new TestShellBuilder()
-        {
-            @Override
-            protected Injector createInjector() {
-                return Guice.createInjector(Stage.DEVELOPMENT, new CoreModule(), new VfsModule());
-            }
-        };
+    protected void configureModules(final List<Module> modules) {
+        super.configureModules(modules);
+        modules.add(new VfsModule());
     }
 }

@@ -52,6 +52,8 @@ import static org.junit.Assert.assertTrue;
  * Support for testing {@link org.sonatype.gshell.command.CommandAction} instances.
  * 
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ *
+ * @since 0.8
  */
 public abstract class CommandTestSupport
     implements VariableNames
