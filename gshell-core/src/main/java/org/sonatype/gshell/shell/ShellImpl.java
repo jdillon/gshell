@@ -181,12 +181,11 @@ public class ShellImpl
         // Customize the shell
         branding.customize(this);
 
-        // Load profile scripts
-        loadProfileScripts();
-
         opened = true;
-
         log.debug("Opened");
+
+        // Do this after we are marked as opened
+        loadProfileScripts();
     }
 
     public boolean isInteractive() {
