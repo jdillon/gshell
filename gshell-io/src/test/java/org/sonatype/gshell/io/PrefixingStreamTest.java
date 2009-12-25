@@ -45,9 +45,10 @@ public class PrefixingStreamTest
         String tmp = new String(baos.toByteArray());
         System.out.println(tmp);
 
-        String expected = "TESTHI\n" +
-                "TESTthere\n" +
-                "TESTfoobarbaz\n";
+        String sep = System.getProperty("line.separator");
+        String expected = "TESTHI" + sep +
+                "TESTthere" + sep +
+                "TESTfoobarbaz" + sep;
 
         assertEquals(expected, tmp);
     }
