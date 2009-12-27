@@ -29,25 +29,27 @@ public class EchoCommandTest
     public EchoCommandTest() {
         super(EchoCommand.class);
     }
+    
+    private static final String NEWLINE = System.getProperty("line.separator");
 
     @Test
     public void testEcho_a_b_c() throws Exception {
         Object result = executeWithArgs("a b c");
         assertEqualsSuccess(result);
-        assertOutputEquals("a b c\n");
+        assertOutputEquals("a b c" + NEWLINE);
     }
 
     @Test
     public void testEcho_$shell_home() throws Exception {
         Object result = executeWithArgs("${shell.home}");
         assertEqualsSuccess(result);
-        assertOutputEquals(getShell().getVariables().get("shell.home") + "\n");
+        assertOutputEquals(getShell().getVariables().get("shell.home") + NEWLINE);
     }
 
     @Test
     public void testEchoWithStop() throws Exception {
         Object result = executeWithArgs("-- -D");
         assertEqualsSuccess(result);
-        assertOutputEquals("-D\n");
+        assertOutputEquals("-D" + NEWLINE);
     }
 }
