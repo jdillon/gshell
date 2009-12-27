@@ -52,12 +52,6 @@ public class FileNameCompleter
         return new File(String.valueOf(tmp));
     }
 
-    // HACK: Need to use "/" for now on all systems, as the parser doesn't yet handle "\"
-    @Override
-    protected String separator() {
-        return "/";
-    }
-    
     @Override
     protected CharSequence render(final File file, CharSequence name) {
         assert file != null;
