@@ -116,7 +116,7 @@ public abstract class CommandRegistrarSupport
                 registerCommand(name, type);
             }
         }
-        catch (Exception e) {
+        catch (Throwable e) {
             log.error("Failed to register command: " + type, e);
         }
     }
