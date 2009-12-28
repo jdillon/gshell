@@ -16,24 +16,32 @@
 
 package org.sonatype.gshell.commands.network;
 
+import org.codehaus.plexus.util.IOUtil;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
+import org.sonatype.gshell.io.Closer;
+import org.sonatype.gshell.io.Flusher;
 import org.sonatype.gshell.util.cli.Argument;
 import org.sonatype.gshell.util.cli.Option;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.URL;
+import java.net.URLConnection;
 
 /**
- * ???
+ * Fetch a file from a URL.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.3
  */
-@Command(name="hostname")
+@Command(name="wget")
 public class WgetCommand
     extends CommandActionSupport
 {
@@ -47,8 +55,32 @@ public class WgetCommand
         assert context != null;
         IO io = context.getIo();
 
-        // TODO:
+        log.debug("Fetching: {}", source);
+        URLConnection conn = source.openConnection();
+        InputStream in = conn.getInputStream();
 
+        String contentType = conn.getContentType();
+        log.debug("Content type: {}", contentType);
+
+        OutputStream out;
+        if (outputFile != null) {
+            log.debug("Writing to file: {}", outputFile);
+            out = new BufferedOutputStream(new FileOutputStream(outputFile));
+        }
+        else {
+            out = io.streams.out;
+        }
+
+        IOUtil.copy(in, out);
+
+        if (outputFile != null) {
+            Closer.close(out);
+            return outputFile;
+        }
+        else {
+            Flusher.flush(out);
+        }
+        
         return Result.SUCCESS;
     }
 }

@@ -59,10 +59,10 @@
             <!--<artifactId>gshell-text</artifactId>-->
         <!--</dependency>-->
         
-        <!--<dependency>-->
-            <!--<groupId>org.sonatype.gshell.commands</groupId>-->
-            <!--<artifactId>gshell-network</artifactId>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.sonatype.gshell.commands</groupId>
+            <artifactId>gshell-network</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.sonatype.gshell.commands</groupId>
