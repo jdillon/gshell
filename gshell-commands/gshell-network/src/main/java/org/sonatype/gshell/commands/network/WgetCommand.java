@@ -55,17 +55,17 @@ public class WgetCommand
         IO io = context.getIo();
 
         io.info("Downloading: {}", source); // TODO: i18n
-        io.info("Connecting to: {}:{}", source.getHost(), source.getPort()); // TODO: i18n
+        io.verbose("Connecting to: {}:{}", source.getHost(), source.getPort() != -1 ? source.getPort() : source.getDefaultPort()); // TODO: i18n
         
         URLConnection conn = source.openConnection();
 
-        io.info("Length: {} [{}]", conn.getContentLength(), conn.getContentType()); // TODO: i18n
+        io.verbose("Length: {} [{}]", conn.getContentLength(), conn.getContentType()); // TODO: i18n
 
         InputStream in = conn.getInputStream();
 
         OutputStream out;
         if (outputFile != null) {
-            io.info("Saving to file: {}", outputFile); // TODO: i18n
+            io.verbose("Saving to file: {}", outputFile); // TODO: i18n
             out = new BufferedOutputStream(new FileOutputStream(outputFile));
         }
         else {
