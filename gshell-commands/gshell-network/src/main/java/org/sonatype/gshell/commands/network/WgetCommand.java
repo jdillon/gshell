@@ -54,18 +54,18 @@ public class WgetCommand
         assert context != null;
         IO io = context.getIo();
 
-        io.info("Downloading: {}", source);
-        io.info("Connecting to: {}:{}", source.getHost(), source.getPort());
+        io.info("Downloading: {}", source); // TODO: i18n
+        io.info("Connecting to: {}:{}", source.getHost(), source.getPort()); // TODO: i18n
         
         URLConnection conn = source.openConnection();
 
-        io.info("Length: {} [{}]", conn.getContentLength(), conn.getContentType());
+        io.info("Length: {} [{}]", conn.getContentLength(), conn.getContentType()); // TODO: i18n
 
         InputStream in = conn.getInputStream();
 
         OutputStream out;
         if (outputFile != null) {
-            io.info("Saving to file: {}", outputFile);
+            io.info("Saving to file: {}", outputFile); // TODO: i18n
             out = new BufferedOutputStream(new FileOutputStream(outputFile));
         }
         else {
@@ -74,9 +74,10 @@ public class WgetCommand
 
         IOUtil.copy(in, out);
 
-        // if we write a file, close it then retun the file
+        // if we write a file, close it then return the file
         if (outputFile != null) {
             Closer.close(out);
+            io.info("Saved {} [{}]",outputFile, outputFile.length()); // TODO: i18n
             return outputFile;
         }
 
