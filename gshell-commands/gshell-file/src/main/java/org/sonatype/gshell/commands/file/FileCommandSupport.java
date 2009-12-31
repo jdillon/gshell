@@ -16,6 +16,7 @@
 
 package org.sonatype.gshell.commands.file;
 
+import org.codehaus.plexus.util.Os;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.vars.VariableNames;
@@ -34,6 +35,10 @@ public abstract class FileCommandSupport
     extends CommandActionSupport
     implements VariableNames
 {
+    //
+    // TODO: Should expose all of this as a component
+    //
+
     private File resolveDir(final CommandContext context, final String name) throws IOException {
         assert context != null;
         assert name != null;
@@ -77,6 +82,14 @@ public abstract class FileCommandSupport
         }
         else {
             file = new File(path);
+        }
+
+        // support paths like "<drive>:" on windows
+        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+            String tmp = file.getPath();
+            if (tmp.length() == 2 && tmp.charAt(1) == ':') {
+                return file.getCanonicalFile();
+            }
         }
 
         if (!file.isAbsolute()) {
