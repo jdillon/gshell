@@ -21,6 +21,12 @@ while [ -n "$1" ] ; do
     shift
 done
 
+BOOTSCRIPT="$HOME/.gshell/gsh.boot"
+if [ -f "$BOOTSCRIPT" ] ; then
+    . "$BOOTSCRIPT"
+fi
+
+
 # OS specific support (must be 'true' or 'false').
 cygwin=false;
 case "`uname`" in
