@@ -31,7 +31,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.InetAddress;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -55,16 +54,18 @@ public class WgetCommand
         assert context != null;
         IO io = context.getIo();
 
-        log.debug("Fetching: {}", source);
+        io.info("Downloading: {}", source);
+        io.info("Connecting to: {}:{}", source.getHost(), source.getPort());
+        
         URLConnection conn = source.openConnection();
-        InputStream in = conn.getInputStream();
 
-        String contentType = conn.getContentType();
-        log.debug("Content type: {}", contentType);
+        io.info("Length: {} [{}]", conn.getContentLength(), conn.getContentType());
+
+        InputStream in = conn.getInputStream();
 
         OutputStream out;
         if (outputFile != null) {
-            log.debug("Writing to file: {}", outputFile);
+            io.info("Saving to file: {}", outputFile);
             out = new BufferedOutputStream(new FileOutputStream(outputFile));
         }
         else {
@@ -73,14 +74,14 @@ public class WgetCommand
 
         IOUtil.copy(in, out);
 
+        // if we write a file, close it then retun the file
         if (outputFile != null) {
             Closer.close(out);
             return outputFile;
         }
-        else {
-            Flusher.flush(out);
-        }
-        
+
+        // else flush the stream and say we did good
+        Flusher.flush(out);
         return Result.SUCCESS;
     }
 }
