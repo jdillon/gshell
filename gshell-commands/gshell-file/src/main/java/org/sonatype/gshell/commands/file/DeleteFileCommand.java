@@ -60,7 +60,6 @@ public class DeleteFileCommand
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
         IO io = context.getIo();
-        Variables vars = context.getVariables();
 
         File file;
         if (path == null) {
