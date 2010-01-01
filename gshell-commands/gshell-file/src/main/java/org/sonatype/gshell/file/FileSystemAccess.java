@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.commands.file;
+package org.sonatype.gshell.file;
 
 import org.codehaus.plexus.util.Os;
 import org.sonatype.gshell.command.CommandActionSupport;
@@ -31,7 +31,7 @@ import java.io.IOException;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public abstract class FileCommandSupport
+public abstract class FileSystemAccess
     extends CommandActionSupport
     implements VariableNames
 {
