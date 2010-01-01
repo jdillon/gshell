@@ -18,12 +18,13 @@ package org.sonatype.gshell.commands.file;
 
 import com.google.inject.Inject;
 import org.sonatype.gshell.command.Command;
+import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.console.completer.FileNameCompleter;
+import org.sonatype.gshell.file.FileSystemAccess;
 import org.sonatype.gshell.util.FileAssert;
 import org.sonatype.gshell.util.cli.Argument;
-import org.sonatype.gshell.vars.Variables;
 
 import java.io.File;
 
@@ -35,10 +36,18 @@ import java.io.File;
  */
 @Command(name="mkdir")
 public class CreateDirectoryCommand
-    extends FileCommandSupport
+    extends CommandActionSupport
 {
+    private final FileSystemAccess fileSystem;
+
     @Argument
     private String path;
+
+    @Inject
+    public CreateDirectoryCommand(final FileSystemAccess fileSystem) {
+        assert fileSystem != null;
+        this.fileSystem = fileSystem;
+    }
 
     @Inject
     public CreateDirectoryCommand installCompleters(final FileNameCompleter c1) {
@@ -50,14 +59,13 @@ public class CreateDirectoryCommand
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
         IO io = context.getIo();
-        Variables vars = context.getVariables();
 
         File file;
         if (path == null) {
-            file = getUserHomeDir(context);
+            file = fileSystem.getUserHomeDir();
         }
         else {
-            file = resolveFile(context, path);
+            file = fileSystem.resolveFile(path);
         }
 
         new FileAssert(file).exists(false).isFile(false);

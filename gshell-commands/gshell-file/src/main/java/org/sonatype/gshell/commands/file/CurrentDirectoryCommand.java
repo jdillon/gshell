@@ -16,9 +16,12 @@
 
 package org.sonatype.gshell.commands.file;
 
+import com.google.inject.Inject;
 import org.sonatype.gshell.command.Command;
+import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
+import org.sonatype.gshell.file.FileSystemAccess;
 import org.sonatype.gshell.util.FileAssert;
 
 import java.io.File;
@@ -31,13 +34,21 @@ import java.io.File;
  */
 @Command(name="pwd")
 public class CurrentDirectoryCommand
-    extends FileCommandSupport
+    extends CommandActionSupport
 {
+    private final FileSystemAccess fileSystem;
+
+    @Inject
+    public CurrentDirectoryCommand(final FileSystemAccess fileSystem) {
+        assert fileSystem != null;
+        this.fileSystem = fileSystem;
+    }
+
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
         IO io = context.getIo();
 
-        File dir = getUserDir(context);
+        File dir = fileSystem.getUserDir();
         new FileAssert(dir).exists().isDirectory();
         
         io.info(dir.getPath());

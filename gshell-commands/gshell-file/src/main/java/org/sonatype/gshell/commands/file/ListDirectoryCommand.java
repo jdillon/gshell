@@ -20,9 +20,11 @@ import com.google.inject.Inject;
 import jline.console.ConsoleReader;
 import org.fusesource.jansi.AnsiString;
 import org.sonatype.gshell.command.Command;
+import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.console.completer.FileNameCompleter;
+import org.sonatype.gshell.file.FileSystemAccess;
 import org.sonatype.gshell.util.FileAssert;
 import org.sonatype.gshell.util.cli.Argument;
 import org.sonatype.gshell.util.cli.Option;
@@ -46,8 +48,10 @@ import static org.fusesource.jansi.Ansi.ansi;
  */
 @Command(name="ls")
 public class ListDirectoryCommand
-    extends FileCommandSupport
+    extends CommandActionSupport
 {
+    private final FileSystemAccess fileSystem;
+    
     @Argument
     private String path;
 
@@ -61,6 +65,12 @@ public class ListDirectoryCommand
     private boolean recursive;
 
     @Inject
+    public ListDirectoryCommand(final FileSystemAccess fileSystem) {
+        assert fileSystem != null;
+        this.fileSystem = fileSystem;
+    }
+
+    @Inject
     public ListDirectoryCommand installCompleters(final FileNameCompleter c1) {
         assert c1 != null;
         setCompleters(c1, null);
@@ -71,7 +81,7 @@ public class ListDirectoryCommand
         assert context != null;
         IO io = context.getIo();
 
-        File file = resolveFile(context, path);
+        File file = fileSystem.resolveFile(path);
 
         new FileAssert(file).exists();
 
@@ -111,7 +121,7 @@ public class ListDirectoryCommand
         List<File> dirs = new LinkedList<File>();
 
         for (File file : files) {
-            if (hasChildren(file)) {
+            if (fileSystem.hasChildren(file)) {
                 if (recursive) {
                     dirs.add(file);
                 }

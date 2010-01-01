@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009 the original author(s).
+ * Copyright (C) 2010 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,56 +17,51 @@
 package org.sonatype.gshell.file;
 
 import org.codehaus.plexus.util.Os;
-import org.sonatype.gshell.command.CommandActionSupport;
-import org.sonatype.gshell.command.CommandContext;
-import org.sonatype.gshell.vars.VariableNames;
+import org.sonatype.gshell.shell.ShellHolder;
 import org.sonatype.gshell.vars.Variables;
 
 import java.io.File;
 import java.io.IOException;
 
+import static org.sonatype.gshell.vars.VariableNames.SHELL_HOME;
+import static org.sonatype.gshell.vars.VariableNames.SHELL_USER_DIR;
+import static org.sonatype.gshell.vars.VariableNames.SHELL_USER_HOME;
+
 /**
- * Support for file-related commands.
+ * {@link FileSystemAccess} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 2.0
+ * @since 2.3
  */
-public abstract class FileSystemAccessImpl
-    extends CommandActionSupport
-    implements VariableNames
+public class FileSystemAccessImpl
+    implements FileSystemAccess
 {
-    //
-    // TODO: Should expose all of this as a component
-    //
-
-    private File resolveDir(final CommandContext context, final String name) throws IOException {
-        assert context != null;
+    public File resolveDir(final String name) throws IOException {
         assert name != null;
 
-        Variables vars = context.getVariables();
+        Variables vars = ShellHolder.get().getVariables();
         String path = vars.get(name, String.class);
 
         return new File(path).getCanonicalFile();
     }
 
-    protected File getShellHomeDir(final CommandContext context) throws IOException {
-        return resolveDir(context, SHELL_HOME);
+    public File getShellHomeDir() throws IOException {
+        return resolveDir(SHELL_HOME);
     }
 
-    protected File getUserDir(final CommandContext context) throws IOException {
-        return resolveDir(context, SHELL_USER_DIR);
+    public File getUserDir() throws IOException {
+        return resolveDir(SHELL_USER_DIR);
     }
 
-    protected File getUserHomeDir(final CommandContext context) throws IOException {
-        return resolveDir(context, SHELL_USER_HOME);
+    public File getUserHomeDir() throws IOException {
+        return resolveDir(SHELL_USER_HOME);
     }
 
-    protected File resolveFile(final CommandContext context, File baseDir, final String path) throws IOException {
-        assert context != null;
+    public File resolveFile(File baseDir, final String path) throws IOException {
         // baseDir may be null
         // path may be null
 
-        File userDir = getUserDir(context);
+        File userDir = getUserDir();
 
         if (baseDir == null) {
             baseDir = userDir;
@@ -77,7 +72,7 @@ public abstract class FileSystemAccessImpl
             file = baseDir;
         }
         else if (path.startsWith("~")) {
-            File userHome = getUserHomeDir(context);
+            File userHome = getUserHomeDir();
             file = new File(userHome.getPath() + path.substring(1));
         }
         else {
@@ -99,11 +94,11 @@ public abstract class FileSystemAccessImpl
         return file.getCanonicalFile();
     }
 
-    protected File resolveFile(final CommandContext context, final String path) throws IOException {
-        return resolveFile(context, null, path);
+    public File resolveFile(final String path) throws IOException {
+        return resolveFile(null, path);
     }
 
-    protected boolean hasChildren(final File file) {
+    public boolean hasChildren(final File file) {
         assert file != null;
 
         if (file.isDirectory()) {

@@ -18,14 +18,18 @@ package org.sonatype.gshell.commands.file;
 
 import com.google.inject.Inject;
 import org.sonatype.gshell.command.Command;
+import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.console.completer.FileNameCompleter;
+import org.sonatype.gshell.file.FileSystemAccess;
 import org.sonatype.gshell.util.FileAssert;
 import org.sonatype.gshell.util.cli.Argument;
 import org.sonatype.gshell.vars.Variables;
 
 import java.io.File;
+
+import static org.sonatype.gshell.vars.VariableNames.SHELL_USER_DIR;
 
 /**
  * Changes the current directory.
@@ -35,10 +39,18 @@ import java.io.File;
  */
 @Command(name="cd")
 public class ChangeDirectoryCommand
-    extends FileCommandSupport
+    extends CommandActionSupport
 {
+    private final FileSystemAccess fileSystem;
+    
     @Argument
     private String path;
+
+    @Inject
+    public ChangeDirectoryCommand(final FileSystemAccess fileSystem) {
+        assert fileSystem != null;
+        this.fileSystem = fileSystem;
+    }
 
     @Inject
     public ChangeDirectoryCommand installCompleters(final FileNameCompleter c1) {
@@ -54,10 +66,10 @@ public class ChangeDirectoryCommand
 
         File file;
         if (path == null) {
-            file = getUserHomeDir(context);
+            file = fileSystem.getUserHomeDir();
         }
         else {
-            file = resolveFile(context, path);
+            file = fileSystem.resolveFile(path);
         }
 
         new FileAssert(file).exists().isDirectory();
