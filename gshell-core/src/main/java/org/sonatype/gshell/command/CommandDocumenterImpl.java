@@ -134,18 +134,15 @@ public class CommandDocumenterImpl
 
         io.out.format("@|bold %s|@", messages.getMessage("section.description")).println();
         text = getDescription(command);
-        text = AnsiRenderer.render(text);
         out.println();
-        out.println(text);
+        out.println(AnsiRenderer.render(text));
         io.out.println();
 
-        String manual = getManual(command);
-        if (manual != null && manual.trim().length() != 0) {
+        text = getManual(command);
+        if (text != null && text.trim().length() != 0) {
             io.out.format("@|bold %s|@", messages.getMessage("section.manual")).println();
-            text = manual;
-            text = AnsiRenderer.render(text);
             out.println();
-            out.println(text);
+            out.println(AnsiRenderer.render(text));
             io.out.println();
         }
 
@@ -159,7 +156,8 @@ public class CommandDocumenterImpl
             out.println();
 
             for (PreferenceDescriptor pd : pp.getDescriptors()) {
-                out.format("%s: %s (%s)", pd.getPreferences().absolutePath(), pd.getId(), pd.getSetter().getType().getSimpleName()).println();
+                text = String.format("%s: @|bold %s|@ (%s)", pd.getPreferences().absolutePath(), pd.getId(), pd.getSetter().getType().getSimpleName());
+                out.println(AnsiRenderer.render(text));
             }
 
             io.out.println();
