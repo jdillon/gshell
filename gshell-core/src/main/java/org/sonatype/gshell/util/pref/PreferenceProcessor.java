@@ -86,7 +86,7 @@ public class PreferenceProcessor
 
         Preference pref = element.getAnnotation(Preference.class);
         if (pref != null) {
-            log.trace("Discovered preference configuration for: {}", element);
+            log.trace("Discovered preference for: {}", element);
             PreferenceDescriptor desc = new PreferenceDescriptor(base, pref, SetterFactory.create(element, bean));
             desc.setBasePath(getBasePath());
             descriptors.add(desc);
