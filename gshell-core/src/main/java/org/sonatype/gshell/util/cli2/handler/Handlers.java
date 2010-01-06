@@ -36,7 +36,7 @@ public class Handlers
             return type.getConstructor(CliDescriptor.class);
         }
         catch (NoSuchMethodException e) {
-            throw new IllegalArgumentException("Handler is missing required constructor: " + type.getName() + "(" + CliDescriptor.class.getName() + ")");
+            throw new IllegalArgumentException("Handler is missing required constructor: public " + type.getName() + "(" + CliDescriptor.class.getName() + ")");
         }
     }
 
