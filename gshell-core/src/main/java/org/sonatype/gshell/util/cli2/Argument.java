@@ -24,7 +24,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import static org.sonatype.gshell.util.cli2.CliDescriptor.*;
+import static org.sonatype.gshell.util.cli2.CliDescriptor.UNINITIALIZED_STRING;
 
 /**
  * Configures a field or method for processing as a command-line argument.

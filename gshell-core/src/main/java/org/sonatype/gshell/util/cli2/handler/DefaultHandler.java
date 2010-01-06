@@ -17,8 +17,6 @@
 package org.sonatype.gshell.util.cli2.handler;
 
 import org.sonatype.gshell.util.cli2.CliDescriptor;
-import org.sonatype.gshell.util.converter.Converters;
-import org.sonatype.gshell.util.setter.Setter;
 
 /**
  * Handler which uses a {@link org.sonatype.gshell.util.converter.Converter} to coerce types.

@@ -18,7 +18,6 @@ package org.sonatype.gshell.util.cli2.handler;
 
 import org.sonatype.gshell.util.IllegalAnnotationError;
 import org.sonatype.gshell.util.cli2.CliDescriptor;
-import org.sonatype.gshell.util.setter.Setter;
 
 import java.lang.reflect.Constructor;
 
@@ -54,7 +53,7 @@ public class Handlers
                 // Enum requires some special handling
                 return new EnumHandler(desc);
             }
-            else if (Boolean.class.isAssignableFrom(valueType) || boolean.class.isAssignableFrom(valueType)) {
+            else if (boolean.class.isAssignableFrom(valueType)) {
                 // Boolean requires some special handling
                 return new BooleanHandler(desc);
             }

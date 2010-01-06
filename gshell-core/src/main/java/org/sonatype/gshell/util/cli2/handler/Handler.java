@@ -32,8 +32,6 @@ public abstract class Handler
 {
     private final CliDescriptor descriptor;
 
-    private boolean kvp = false;
-
     protected Handler(final CliDescriptor descriptor) {
         assert descriptor != null;
         this.descriptor = descriptor;
@@ -55,18 +53,13 @@ public abstract class Handler
         getSetter().set(Converters.getValue(getSetter().getType(), value));
     }
 
-    public Boolean isKeyValuePair() {
-        return kvp;
-    }
-
-    public void setKeyValuePair(final boolean flag) {
-        this.kvp = flag;
-    }
-
-    public static interface Input
+    public abstract static class Input
     {
-        // TODO: Need a getAll() for options w/multi values
-        String get();
+        public abstract String[] getAll();
+
+        public String get() {
+            return getAll() == null ? null : getAll()[0];
+        }
     }
 
     public abstract void handle(Input input) throws Exception;

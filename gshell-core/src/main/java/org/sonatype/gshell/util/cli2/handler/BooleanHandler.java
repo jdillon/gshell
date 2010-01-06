@@ -18,7 +18,6 @@ package org.sonatype.gshell.util.cli2.handler;
 
 import org.sonatype.gshell.util.cli2.CliDescriptor;
 import org.sonatype.gshell.util.cli2.OptionDescriptor;
-import org.sonatype.gshell.util.setter.Setter;
 
 /**
  * Handler for boolean types.
@@ -53,6 +52,9 @@ public class BooleanHandler
 
     @Override
     public String getDefaultToken() {
+        if (getDescriptor().isArgument() || !((OptionDescriptor) getDescriptor()).isArgumentOptional()) {
+            return "BOOL";
+        }
         return null;
     }
 }

@@ -25,9 +25,7 @@ import org.sonatype.gossip.Log;
 import org.sonatype.gshell.util.IllegalAnnotationError;
 import org.sonatype.gshell.util.cli2.handler.Handler;
 import org.sonatype.gshell.util.cli2.handler.Handlers;
-import org.sonatype.gshell.util.converter.Converters;
 import org.sonatype.gshell.util.i18n.MessageSource;
-import org.sonatype.gshell.util.setter.Setter;
 import org.sonatype.gshell.util.setter.SetterFactory;
 import org.sonatype.gshell.util.yarn.Yarn;
 
@@ -179,11 +177,12 @@ public class CliProcessor
             final Opt opt = (Opt)tmp;
             log.trace("Processing option: {}", opt);
 
+            // Set the value
             Handler handler = Handlers.create(opt.getDescriptor());
             handler.handle(new Handler.Input()
             {
-                public String get() {
-                    return opt.getValue();
+                public String[] getAll() {
+                    return opt.getValues();
                 }
             });
         }
@@ -193,21 +192,24 @@ public class CliProcessor
         int i = 0;
         for (final String arg : cl.getArgs()) {
             log.trace("Processing argument: {}", arg);
-            
+
+            // Check if we allow an argument or we have overflowed
             if (i >= argumentDescriptors.size()) {
                 throw new IllegalArgumentException(argumentDescriptors.size() == 0 ? "No argument allowed" : "Too many arguments"); // TODO: i18n
             }
 
+            // For single-valued args, increment the argument index, else let the multi-valued handler consume it
             ArgumentDescriptor desc = argumentDescriptors.get(i);
             if (!desc.isMultiValued()) {
                 i++;
             }
 
+            // Set the value
             Handler handler = Handlers.create(desc);
             handler.handle(new Handler.Input()
             {
-                public String get() {
-                    return arg;
+                public String[] getAll() {
+                    return new String[] { arg };
                 }
             });
         }
