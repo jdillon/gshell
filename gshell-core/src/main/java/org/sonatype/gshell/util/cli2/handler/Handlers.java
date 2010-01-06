@@ -48,13 +48,13 @@ public class Handlers
         Class<? extends Handler> type = desc.getHandlerType();
 
         if (type == DefaultHandler.class) {
-            Setter setter = desc.getSetter();
+            Class valueType = desc.getSetter().getType();
             
-            if (Enum.class.isAssignableFrom(setter.getType())) {
+            if (Enum.class.isAssignableFrom(valueType)) {
                 // Enum requires some special handling
                 return new EnumHandler(desc);
             }
-            else if (Boolean.class.isAssignableFrom(setter.getType()) || boolean.class.isAssignableFrom(setter.getType())) {
+            else if (Boolean.class.isAssignableFrom(valueType) || boolean.class.isAssignableFrom(valueType)) {
                 // Boolean requires some special handling
                 return new BooleanHandler(desc);
             }

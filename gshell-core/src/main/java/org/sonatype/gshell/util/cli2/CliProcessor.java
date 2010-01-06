@@ -175,10 +175,17 @@ public class CliProcessor
 
         List opts = Arrays.asList(cl.getOptions());
 
-        for (Object opt : opts) {
+        for (Object tmp : opts) {
+            final Opt opt = (Opt)tmp;
             log.trace("Processing option: {}", opt);
 
-            // TODO: Set values
+            Handler handler = Handlers.create(opt.getDescriptor());
+            handler.handle(new Handler.Input()
+            {
+                public String get() {
+                    return opt.getValue();
+                }
+            });
         }
 
         log.trace("Remaining arguments: {}", cl.getArgList());
@@ -197,14 +204,12 @@ public class CliProcessor
             }
 
             Handler handler = Handlers.create(desc);
-            int consumed = handler.handle(new Handler.Input()
+            handler.handle(new Handler.Input()
             {
                 public String get() {
                     return arg;
                 }
             });
-
-            log.trace("Consumed input: {}", consumed);
         }
     }
 

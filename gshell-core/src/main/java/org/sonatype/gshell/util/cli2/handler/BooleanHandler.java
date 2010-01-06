@@ -34,16 +34,20 @@ public class BooleanHandler
     }
 
     @Override
-    public int handle(final Input input) throws Exception {
+    public void handle(final Input input) throws Exception {
         assert input != null;
 
-        if (getDescriptor().isArgument() || !((OptionDescriptor) getDescriptor()).isArgumentOptional()) {
+        if (getDescriptor().isArgument()) {
             set(input.get());
-            return 1;
         }
         else {
-            set(true);
-            return 0;
+            OptionDescriptor opt = (OptionDescriptor) getDescriptor();
+            if (!opt.isArgumentOptional() && input.get() != null) {
+                set(input.get());
+            }
+            else {
+                set(true);
+            }
         }
     }
 

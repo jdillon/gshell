@@ -34,12 +34,9 @@ public class DefaultHandler
     }
 
     @Override
-    public int handle(final Input input) throws Exception {
+    public void handle(final Input input) throws Exception {
         assert input != null;
-
         set(input.get());
-
-        return 1;
     }
 
     @Override

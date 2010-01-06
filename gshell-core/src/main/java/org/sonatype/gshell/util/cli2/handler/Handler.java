@@ -69,7 +69,7 @@ public abstract class Handler
         String get();
     }
 
-    public abstract int handle(Input input) throws Exception;
+    public abstract void handle(Input input) throws Exception;
 
     public abstract String getDefaultToken();
 
