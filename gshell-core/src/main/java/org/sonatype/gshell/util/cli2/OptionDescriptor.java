@@ -16,12 +16,10 @@
 
 package org.sonatype.gshell.util.cli2;
 
-import org.slf4j.Logger;
-import org.sonatype.gossip.Log;
 import org.sonatype.gshell.util.setter.Setter;
 
 /**
- * ???
+ * {@link Option} descriptor.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.3
@@ -29,11 +27,45 @@ import org.sonatype.gshell.util.setter.Setter;
 public class OptionDescriptor
     extends CliDescriptor
 {
+    public static final int UNINITIALIZED = org.apache.commons.cli.Option.UNINITIALIZED;
+
+    public static final int UNLIMITED = org.apache.commons.cli.Option.UNLIMITED_VALUES;
+
     private final Option spec;
 
+    private final String name;
+
+    private final String longName;
+
     public OptionDescriptor(final Option spec, final Setter setter) {
-        super(setter);
+        super(spec, setter);
         assert spec != null;
         this.spec = spec;
+        this.name = UNINITIALIZED_STRING.equals(spec.name()) ? null : spec.name();
+        this.longName = UNINITIALIZED_STRING.equals(spec.longName()) ? null : spec.longName();
+    }
+
+    public Option getSpec() {
+        return spec;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getLongName() {
+        return longName;
+    }
+
+    public char getSeparator() {
+        return spec.separator();
+    }
+
+    public int getArgs() {
+        return spec.args();
+    }
+
+    public boolean isArgumentOptional() {
+        return spec.optionalArg();
     }
 }

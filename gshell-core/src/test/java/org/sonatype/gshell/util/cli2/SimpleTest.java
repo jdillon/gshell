@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009 the original author(s).
+ * Copyright (C) 2010 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.util.cli;
+package org.sonatype.gshell.util.cli2;
 
 import org.junit.Test;
 
@@ -29,8 +29,20 @@ import static org.junit.Assert.fail;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class SimpleTest
-    extends CommandLineProcessorTestSupport
+    extends CliProcessorTestSupport
 {
+    private static class Simple
+    {
+        @Option(name = "h", longName = "help")
+        boolean help;
+
+        @Option(name = "v", longName = "verbose")
+        boolean verbose;
+
+        @Argument
+        String arg1;
+    }
+
     private Simple bean;
 
     @Override
@@ -40,72 +52,60 @@ public class SimpleTest
     }
 
     @Test
-    public void testOptionsArgumentsSize() {
-        assertOptionsArgumentsSize(2, 1);
-    }
-
-    @Test
-    public void testSimple0() throws Exception {
+    public void testName() throws Exception {
         clp.process("-v");
 
         assertFalse(bean.help);
+        assertTrue(bean.verbose);
     }
 
     @Test
-    public void testSimple1() throws Exception {
-        clp.process("--help");
-
-        assertTrue(bean.help);
-    }
-
-    @Test
-    public void testSimple2() throws Exception {
+    public void testName2() throws Exception {
         clp.process("-h");
 
         assertTrue(bean.help);
+        assertFalse(bean.verbose);
     }
 
     @Test
-    public void testSimple3() throws Exception {
+    public void testLongName() throws Exception {
+        clp.process("--help");
+
+        assertTrue(bean.help);
+        assertFalse(bean.verbose);
+    }
+
+    @Test
+    public void testInvalidOption() throws Exception {
         try {
             clp.process("-f");
             fail();
         }
-        catch (Exception ignore) {}
+        catch (Exception e) {
+            // ignore
+        }
 
         assertFalse(bean.help);
+        assertFalse(bean.verbose);
     }
 
     @Test
-    public void testSimple4() throws Exception {
-       clp.process("-h");
+    public void testArg() throws Exception {
+        clp.process("foo");
 
-       assertFalse(bean.verbose);
+        assertEquals(bean.arg1, "foo");
+        assertFalse(bean.help);
+        assertFalse(bean.verbose);
     }
 
     @Test
-    public void testSimple5() throws Exception {
-       clp.process("foo");
-
-       assertEquals(bean.arg1, "foo");
-    }
-
-    @Test
-    public void testSimple6() throws Exception {
-       clp.process("foo bar baz");
-
-       assertEquals(bean.arg1, "foo");
-    }
-
-    private static class Simple
-    {
-        @Option(name="-h", aliases={"--help"})
-        boolean help;
-
-        @Option(name="-v", aliases={"--verbose"})
-        boolean verbose;
-
-        @Argument
-        String arg1;
+    public void testTooManyArgs() throws Exception {
+        try {
+            clp.process("foo", "bar", "baz");
+            fail();
+        }
+        catch (Exception e) {
+            // ignore
+        }
     }
 }

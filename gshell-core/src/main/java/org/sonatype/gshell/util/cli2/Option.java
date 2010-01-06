@@ -16,10 +16,16 @@
 
 package org.sonatype.gshell.util.cli2;
 
+import org.sonatype.gshell.util.cli2.handler.DefaultHandler;
+import org.sonatype.gshell.util.cli2.handler.Handler;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import static org.sonatype.gshell.util.cli2.CliDescriptor.UNINITIALIZED_CHAR;
+import static org.sonatype.gshell.util.cli2.CliDescriptor.UNINITIALIZED_STRING;
 
 /**
  * Configures a field or method for processing as a command-line option.
@@ -31,21 +37,23 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD, ElementType.METHOD})
 public @interface Option
 {
-    String name() default "";
+    String name() default UNINITIALIZED_STRING;
 
-    String longName() default "";
+    String longName() default UNINITIALIZED_STRING;
 
-    String separator() default "";
+    char separator() default UNINITIALIZED_CHAR;
 
-    int args() default -1; // UNINIT (-1), UNLIMITED (-2), OPTIONAL (-3)
+    int args() default OptionDescriptor.UNINITIALIZED;
 
-    String token() default "";
+    boolean optionalArg() default false;
+    
+    String token() default UNINITIALIZED_STRING;
 
     boolean required() default false;
 
-    String description() default "";
+    String description() default UNINITIALIZED_STRING;
 
-    String defaultValue() default "";
+    String defaultValue() default UNINITIALIZED_STRING;
 
-    // Class<? extends Handler> handler() default Handler.class;
+    Class<? extends Handler> handler() default DefaultHandler.class;
 }

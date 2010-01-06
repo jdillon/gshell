@@ -14,36 +14,40 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.util.cli2;
+package org.sonatype.gshell.util.cli2.handler;
 
+import org.sonatype.gshell.util.cli2.CliDescriptor;
 import org.sonatype.gshell.util.setter.Setter;
 
 /**
- * {@link Argument} descriptor.
+ * Handler for enum types.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.3
  */
-public class ArgumentDescriptor
-    extends CliDescriptor
+public class EnumHandler
+    extends DefaultHandler
 {
-    private final Argument spec;
-
-    public ArgumentDescriptor(final Argument spec, final Setter setter) {
-        super(spec, setter);
-        assert spec != null;
-        this.spec = spec;
+    public EnumHandler(final CliDescriptor desc) {
+        super(desc);
     }
 
-    public Argument getSpec() {
-        return spec;
-    }
+    @Override
+    public String getDefaultToken() {
+        StringBuilder buff = new StringBuilder();
+        buff.append('[');
 
-    public int getIndex() {
-        return spec.index();
-    }
+        Enum[] constants = (Enum[]) getSetter().getType().getEnumConstants();
 
-    public boolean isMultiValued() {
-        return spec.multi();
+        for (int i = 0; i < constants.length; i++) {
+            buff.append(constants[i].name().toLowerCase());
+            if (i + 1 < constants.length) {
+                buff.append('|');
+            }
+        }
+
+        buff.append(']');
+
+        return buff.toString();
     }
 }

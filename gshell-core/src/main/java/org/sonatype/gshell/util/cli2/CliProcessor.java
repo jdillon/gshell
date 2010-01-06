@@ -16,18 +16,26 @@
 
 package org.sonatype.gshell.util.cli2;
 
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.PosixParser;
 import org.slf4j.Logger;
 import org.sonatype.gossip.Log;
 import org.sonatype.gshell.util.IllegalAnnotationError;
-import org.sonatype.gshell.util.pref.Preference;
-import org.sonatype.gshell.util.pref.PreferenceDescriptor;
-import org.sonatype.gshell.util.pref.Preferences;
+import org.sonatype.gshell.util.cli2.handler.Handler;
+import org.sonatype.gshell.util.cli2.handler.Handlers;
+import org.sonatype.gshell.util.converter.Converters;
+import org.sonatype.gshell.util.i18n.MessageSource;
+import org.sonatype.gshell.util.setter.Setter;
 import org.sonatype.gshell.util.setter.SetterFactory;
+import org.sonatype.gshell.util.yarn.Yarn;
 
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -44,7 +52,27 @@ public class CliProcessor
 
     private final List<ArgumentDescriptor> argumentDescriptors = new ArrayList<ArgumentDescriptor>();
 
+    private boolean stopAtNonOption;
+
+    private MessageSource messages;
+
     public CliProcessor() {
+    }
+
+    public boolean isStopAtNonOption() {
+        return stopAtNonOption;
+    }
+
+    public void setStopAtNonOption(boolean flag) {
+        this.stopAtNonOption = flag;
+    }
+
+    public MessageSource getMessages() {
+        return messages;
+    }
+
+    public void setMessages(final MessageSource messages) {
+        this.messages = messages;
     }
 
     public List<OptionDescriptor> getOptionDescriptors() {
@@ -57,6 +85,10 @@ public class CliProcessor
 
     public void addBean(final Object bean) {
         discoverDescriptors(bean);
+
+        if (bean instanceof CliProcessorAware) {
+            ((CliProcessorAware) bean).setProcessor(this);
+        }
     }
 
     //
@@ -75,6 +107,13 @@ public class CliProcessor
                 discoverDescriptor(bean, field);
             }
         }
+
+        // Sanity check the argument indexes
+        for (int i = 0; i < argumentDescriptors.size(); i++) {
+            if (argumentDescriptors.get(i) == null) {
+                throw new IllegalAnnotationError("No @Argument for index: " + i);
+            }
+        }
     }
 
     private void discoverDescriptor(final Object bean, final AnnotatedElement element) {
@@ -89,12 +128,38 @@ public class CliProcessor
         }
 
         if (opt != null) {
-            log.trace("Discovered option for: {}", element);
-            optionDescriptors.add(new OptionDescriptor(opt, SetterFactory.create(element, bean)));
+            log.trace("Discovered @Option for: {}", element);
+
+            OptionDescriptor desc = new OptionDescriptor(opt, SetterFactory.create(element, bean));
+
+            // Make sure we have unique names
+            for (OptionDescriptor tmp : optionDescriptors) {
+                if (desc.getName().equals(tmp.getName())) {
+                    throw new IllegalAnnotationError("Duplicate @Option name: " + desc.getName() + ", on: " + element);
+                }
+                if (desc.getLongName() != null && desc.getLongName().equals(tmp.getLongName())) {
+                    throw new IllegalAnnotationError("Duplicate @Option longName: " + desc.getLongName() + ", on: " + element);
+                }
+            }
+
+            optionDescriptors.add(desc);
         }
-        else {
-            log.trace("Discovered argument for: {}", element);
-            argumentDescriptors.add(new ArgumentDescriptor(arg, SetterFactory.create(element, bean)));
+        else if (arg != null) {
+            log.trace("Discovered @Argument for: {}", element);
+
+            ArgumentDescriptor desc = new ArgumentDescriptor(arg, SetterFactory.create(element, bean));
+            int index = arg.index();
+
+            // Make sure the argument will fit in the list
+            while (index >= argumentDescriptors.size()) {
+                argumentDescriptors.add(null);
+            }
+
+            if (argumentDescriptors.get(index) != null) {
+                throw new IllegalAnnotationError("Duplicate @Argument index: " + index + ", on: " + element);
+            }
+
+            argumentDescriptors.set(index, desc);
         }
     }
 
@@ -102,7 +167,80 @@ public class CliProcessor
     // Processing
     //
 
-    public void process() throws Exception {
-        // TODO:
+    public void process(final String... args) throws Exception {
+        assert args != null;
+        
+        CommandLineParser parser = new PosixParser();
+        CommandLine cl = parser.parse(createOptions(), args, stopAtNonOption);
+
+        List opts = Arrays.asList(cl.getOptions());
+
+        for (Object opt : opts) {
+            log.trace("Processing option: {}", opt);
+
+            // TODO: Set values
+        }
+
+        log.trace("Remaining arguments: {}", cl.getArgList());
+
+        int i = 0;
+        for (final String arg : cl.getArgs()) {
+            log.trace("Processing argument: {}", arg);
+            
+            if (i >= argumentDescriptors.size()) {
+                throw new IllegalArgumentException(argumentDescriptors.size() == 0 ? "No argument allowed" : "Too many arguments"); // TODO: i18n
+            }
+
+            ArgumentDescriptor desc = argumentDescriptors.get(i);
+            if (!desc.isMultiValued()) {
+                i++;
+            }
+
+            Handler handler = Handlers.create(desc);
+            int consumed = handler.handle(new Handler.Input()
+            {
+                public String get() {
+                    return arg;
+                }
+            });
+
+            log.trace("Consumed input: {}", consumed);
+        }
+    }
+
+    private Options createOptions() {
+        Options opts = new Options();
+
+        for (OptionDescriptor opt : optionDescriptors) {
+            opts.addOption(new Opt(opt));
+        }
+
+        return opts;
+    }
+
+    private static class Opt
+        extends org.apache.commons.cli.Option
+    {
+        private final OptionDescriptor desc;
+
+        private Opt(final OptionDescriptor opt) throws IllegalArgumentException {
+            super(opt.getName(), opt.getDescription());
+            this.desc = opt;
+
+            setLongOpt(opt.getLongName());
+            setArgName(opt.getToken());
+            setRequired(opt.isRequired());
+            setValueSeparator(opt.getSeparator());
+            setArgs(opt.getArgs());
+            setOptionalArg(opt.isArgumentOptional());
+        }
+
+        public OptionDescriptor getDescriptor() {
+            return desc;
+        }
+
+        public String toString() {
+            return Yarn.render(this);
+        }
     }
 }

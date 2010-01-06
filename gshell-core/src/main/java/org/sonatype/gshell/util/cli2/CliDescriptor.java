@@ -16,26 +16,113 @@
 
 package org.sonatype.gshell.util.cli2;
 
-import org.slf4j.Logger;
-import org.sonatype.gossip.Log;
+import org.sonatype.gshell.util.AnnotationDescriptor;
+import org.sonatype.gshell.util.cli2.handler.Handler;
 import org.sonatype.gshell.util.setter.Setter;
 
-import java.lang.reflect.AccessibleObject;
-
 /**
- * ???
+ * Base-class for CLI descriptors.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.3
  */
 public abstract class CliDescriptor
+    extends AnnotationDescriptor
 {
-    protected final Logger log = Log.getLogger(getClass());
-
     private final Setter setter;
 
-    public CliDescriptor(final Setter setter) {
+    private final String token;
+
+    private final boolean required;
+
+    private final String description;
+
+    private final String defaultValue;
+
+    private final Class handlerType;
+
+    public CliDescriptor(final Object spec, final Setter setter) {
+        assert spec != null;
         assert setter != null;
-        this.setter = null;
+        this.setter = setter;
+
+        if (spec instanceof Option) {
+            Option opt = (Option)spec;
+            token = UNINITIALIZED_STRING.equals(opt.token()) ? null : opt.token();
+            required = opt.required();
+            description = UNINITIALIZED_STRING.equals(opt.description()) ? null : opt.description();
+            defaultValue = UNINITIALIZED_STRING.equals(opt.defaultValue()) ? null : opt.defaultValue();
+            handlerType = Handler.class == opt.handler() ? null : opt.handler();
+        }
+        else if (spec instanceof Argument) {
+            Argument arg = (Argument)spec;
+            token = UNINITIALIZED_STRING.equals(arg.token()) ? null : arg.token();
+            required = arg.required();
+            description = UNINITIALIZED_STRING.equals(arg.description()) ? null : arg.description();
+            defaultValue = UNINITIALIZED_STRING.equals(arg.defaultValue()) ? null : arg.defaultValue();
+            handlerType = Handler.class == arg.handler() ? null : arg.handler();
+        }
+        else {
+            throw new IllegalArgumentException("Invalid spec: " + spec);
+        }
+    }
+
+    public String getId() {
+        return setter.getName();
+    }
+
+    public Setter getSetter() {
+        return setter;
+    }
+
+    public Class getType() {
+        return setter.getBean().getClass();
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public boolean isRequired() {
+        return required;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getDefaultValue() {
+        return defaultValue;
+    }
+
+    public Class getHandlerType() {
+        return handlerType;
+    }
+
+
+    public boolean isArgument() {
+        return this instanceof ArgumentDescriptor;
+    }
+
+    public boolean isOption() {
+        return this instanceof OptionDescriptor;
+    }
+
+    public String getMessageCode() {
+        if (isArgument()) {
+            return String.format("argument.%s", getId());
+        }
+        else {
+            return String.format("option.%s", getId());
+        }
+    }
+
+    public String getTokenCode() {
+        if (isArgument()) {
+            return String.format("argument.%s.token", getId());
+        }
+        else {
+            return String.format("option.%s.token", getId());
+        }
     }
 }

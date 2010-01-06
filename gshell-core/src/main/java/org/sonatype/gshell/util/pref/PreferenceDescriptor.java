@@ -16,9 +16,7 @@
 
 package org.sonatype.gshell.util.pref;
 
-import org.slf4j.Logger;
-import org.sonatype.gossip.Log;
-import org.sonatype.gshell.util.converter.Converters;
+import org.sonatype.gshell.util.AnnotationDescriptor;
 import org.sonatype.gshell.util.setter.Setter;
 
 /**
@@ -28,9 +26,8 @@ import org.sonatype.gshell.util.setter.Setter;
  * @since 2.0
  */
 public class PreferenceDescriptor
+    extends AnnotationDescriptor
 {
-    private static final Logger log = Log.getLogger(PreferenceDescriptor.class);
-
     private final Preferences base;
 
     private final Preference spec;
@@ -66,7 +63,7 @@ public class PreferenceDescriptor
         this.system = pref.system();
 
         // On IBM JDK, the value passed is null instead of the default value, so fix it in case
-        this.type = pref.type() != null ? pref.type() : Void.class;
+        this.type = pref.type() != null ? pref.type() : UNINITIALIZED_CLASS;
 
         // Handle "" = null, since default values in annotations cannot be set to null
         if (pref.path() != null && pref.path().length() == 0) {
@@ -114,7 +111,7 @@ public class PreferenceDescriptor
 
     public Class getType() {
         Class type = this.type;
-        if (type == Void.class) {
+        if (type == UNINITIALIZED_CLASS) {
             type = getSetter().getBean().getClass();
         }
         return type;
@@ -169,19 +166,6 @@ public class PreferenceDescriptor
             else {
                 return java.util.prefs.Preferences.userRoot().node(path);
             }
-        }
-    }
-
-    public void set() throws Exception {
-        java.util.prefs.Preferences prefs = getPreferences();
-        log.debug("Using preferences: {}", prefs);
-
-        String key = getId();
-        String value = prefs.get(key, null);
-        log.debug("  {}={}", key, value);
-        
-        if (value != null) {
-            setter.set(Converters.getValue(setter.getType(), value));
         }
     }
 }

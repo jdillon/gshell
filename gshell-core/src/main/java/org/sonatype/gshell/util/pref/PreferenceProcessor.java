@@ -18,6 +18,8 @@ package org.sonatype.gshell.util.pref;
 
 import org.slf4j.Logger;
 import org.sonatype.gossip.Log;
+import org.sonatype.gshell.util.converter.Converters;
+import org.sonatype.gshell.util.setter.Setter;
 import org.sonatype.gshell.util.setter.SetterFactory;
 
 import java.lang.reflect.AnnotatedElement;
@@ -99,9 +101,21 @@ public class PreferenceProcessor
     
     public void process() throws Exception {
         log.trace("Processing preference descriptors");
+        
         for (PreferenceDescriptor desc : descriptors) {
             log.trace("Descriptor: {}", desc);
-            desc.set();
+
+            java.util.prefs.Preferences prefs = desc.getPreferences();
+            log.trace("Using preferences: {}", prefs);
+
+            String key = desc.getId();
+            String value = prefs.get(key, null);
+            log.trace("  {}={}", key, value);
+
+            if (value != null) {
+                Setter setter = desc.getSetter();
+                setter.set(Converters.getValue(setter.getType(), value));
+            }
         }
     }
 }

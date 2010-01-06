@@ -15,8 +15,8 @@
  */
 
 /**
- * Command-line argument and option processing.
+ * Argument and option handlers.
  *
  * @since 2.3
  */
-package org.sonatype.gshell.util.cli2;
+package org.sonatype.gshell.util.cli2.handler;

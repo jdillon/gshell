@@ -14,36 +14,41 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.util.cli2;
+package org.sonatype.gshell.util.cli2.handler;
 
+import org.sonatype.gshell.util.cli2.CliDescriptor;
+import org.sonatype.gshell.util.cli2.OptionDescriptor;
 import org.sonatype.gshell.util.setter.Setter;
 
 /**
- * {@link Argument} descriptor.
+ * Handler for boolean types.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.3
  */
-public class ArgumentDescriptor
-    extends CliDescriptor
+public class BooleanHandler
+    extends Handler
 {
-    private final Argument spec;
-
-    public ArgumentDescriptor(final Argument spec, final Setter setter) {
-        super(spec, setter);
-        assert spec != null;
-        this.spec = spec;
+    public BooleanHandler(final CliDescriptor desc) {
+        super(desc);
     }
 
-    public Argument getSpec() {
-        return spec;
+    @Override
+    public int handle(final Input input) throws Exception {
+        assert input != null;
+
+        if (getDescriptor().isArgument() || !((OptionDescriptor) getDescriptor()).isArgumentOptional()) {
+            set(input.get());
+            return 1;
+        }
+        else {
+            set(true);
+            return 0;
+        }
     }
 
-    public int getIndex() {
-        return spec.index();
-    }
-
-    public boolean isMultiValued() {
-        return spec.multi();
+    @Override
+    public String getDefaultToken() {
+        return null;
     }
 }

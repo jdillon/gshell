@@ -14,36 +14,36 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.util.cli2;
+package org.sonatype.gshell.util.cli2.handler;
 
+import org.sonatype.gshell.util.cli2.CliDescriptor;
+import org.sonatype.gshell.util.converter.Converters;
 import org.sonatype.gshell.util.setter.Setter;
 
 /**
- * {@link Argument} descriptor.
+ * Handler which uses a {@link org.sonatype.gshell.util.converter.Converter} to coerce types.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.3
  */
-public class ArgumentDescriptor
-    extends CliDescriptor
+public class DefaultHandler
+    extends Handler
 {
-    private final Argument spec;
-
-    public ArgumentDescriptor(final Argument spec, final Setter setter) {
-        super(spec, setter);
-        assert spec != null;
-        this.spec = spec;
+    public DefaultHandler(final CliDescriptor desc) {
+        super(desc);
     }
 
-    public Argument getSpec() {
-        return spec;
+    @Override
+    public int handle(final Input input) throws Exception {
+        assert input != null;
+
+        set(input.get());
+
+        return 1;
     }
 
-    public int getIndex() {
-        return spec.index();
-    }
-
-    public boolean isMultiValued() {
-        return spec.multi();
+    @Override
+    public String getDefaultToken() {
+        return "VAL";
     }
 }

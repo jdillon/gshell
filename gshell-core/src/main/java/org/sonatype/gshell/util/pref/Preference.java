@@ -21,6 +21,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import static org.sonatype.gshell.util.AnnotationDescriptor.UNINITIALIZED_CLASS;
+
 /**
  * Configures a field or method for processing as a preference.
  *
@@ -33,7 +35,7 @@ public @interface Preference
 {
     String name() default "";
 
-    Class<?> type() default Void.class;
+    Class<?> type() default Void.class; // UNINITIALIZED_CLASS;
 
     String path() default "";
     

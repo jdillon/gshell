@@ -14,9 +14,32 @@
  * limitations under the License.
  */
 
-/**
- * Command-line argument and option processing.
- *
- * @since 2.3
- */
 package org.sonatype.gshell.util.cli2;
+
+import org.junit.After;
+import org.junit.Before;
+
+import static org.junit.Assert.assertEquals;
+
+/**
+ * Support for {@link CliProcessor} tests.
+ *
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ */
+public abstract class CliProcessorTestSupport
+{
+    protected CliProcessor clp;
+
+    @Before
+    public void setUp() {
+        clp = new CliProcessor();
+        clp.addBean(createBean());
+    }
+
+    @After
+    public void tearDown() {
+        clp = null;
+    }
+
+    protected abstract Object createBean();
+}

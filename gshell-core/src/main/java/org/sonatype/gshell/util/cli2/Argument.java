@@ -16,10 +16,15 @@
 
 package org.sonatype.gshell.util.cli2;
 
+import org.sonatype.gshell.util.cli2.handler.DefaultHandler;
+import org.sonatype.gshell.util.cli2.handler.Handler;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import static org.sonatype.gshell.util.cli2.CliDescriptor.*;
 
 /**
  * Configures a field or method for processing as a command-line argument.
@@ -35,13 +40,13 @@ public @interface Argument
 
     boolean multi() default false;
 
-    String token() default "";
+    String token() default UNINITIALIZED_STRING;
 
     boolean required() default false;
     
-    String description() default "";
+    String description() default UNINITIALIZED_STRING;
 
-    String defaultValue() default "";
+    String defaultValue() default UNINITIALIZED_STRING;
 
-    // Class<? extends Handler> handler() default Handler.class;
+    Class<? extends Handler> handler() default DefaultHandler.class;
 }
