@@ -53,7 +53,7 @@ public class Handlers
                 // Enum requires some special handling
                 return new EnumHandler(desc);
             }
-            else if (boolean.class.isAssignableFrom(valueType)) {
+            else if (boolean.class.isAssignableFrom(valueType) || Boolean.class.isAssignableFrom(valueType)) {
                 // Boolean requires some special handling
                 return new BooleanHandler(desc);
             }

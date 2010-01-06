@@ -171,20 +171,23 @@ public class CliProcessor
         CommandLineParser parser = new PosixParser();
         CommandLine cl = parser.parse(createOptions(), args, stopAtNonOption);
 
-        List opts = Arrays.asList(cl.getOptions());
-
-        for (Object tmp : opts) {
-            final Opt opt = (Opt)tmp;
+        for (Object tmp : cl.getOptions()) {
+            Opt opt = (Opt)tmp;
             log.trace("Processing option: {}", opt);
 
-            // Set the value
             Handler handler = Handlers.create(opt.getDescriptor());
-            handler.handle(new Handler.Input()
-            {
-                public String[] getAll() {
-                    return opt.getValues();
+            String[] values = opt.getValues();
+
+            if (values == null || values.length == 0) {
+                // Set the value
+                handler.handle(opt.getValue());
+            }
+            else {
+                // Set the values
+                for (String value : values) {
+                    handler.handle(value);
                 }
-            });
+            }
         }
 
         log.trace("Remaining arguments: {}", cl.getArgList());
@@ -198,7 +201,7 @@ public class CliProcessor
                 throw new IllegalArgumentException(argumentDescriptors.size() == 0 ? "No argument allowed" : "Too many arguments"); // TODO: i18n
             }
 
-            // For single-valued args, increment the argument index, else let the multi-valued handler consume it
+            // For single-valued args, increment the argument index, else let the multivalued handler consume it
             ArgumentDescriptor desc = argumentDescriptors.get(i);
             if (!desc.isMultiValued()) {
                 i++;
@@ -206,12 +209,7 @@ public class CliProcessor
 
             // Set the value
             Handler handler = Handlers.create(desc);
-            handler.handle(new Handler.Input()
-            {
-                public String[] getAll() {
-                    return new String[] { arg };
-                }
-            });
+            handler.handle(arg);
         }
     }
 

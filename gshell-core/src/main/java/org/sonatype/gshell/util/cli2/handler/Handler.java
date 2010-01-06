@@ -62,7 +62,7 @@ public abstract class Handler
         }
     }
 
-    public abstract void handle(Input input) throws Exception;
+    public abstract void handle(String arg) throws Exception;
 
     public abstract String getDefaultToken();
 
