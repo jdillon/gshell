@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.commands.preference;
+package org.sonatype.gshell.commands.pref;
 
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;

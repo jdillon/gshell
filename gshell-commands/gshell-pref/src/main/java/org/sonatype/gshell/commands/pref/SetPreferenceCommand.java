@@ -14,42 +14,35 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.commands.preference;
+package org.sonatype.gshell.commands.pref;
 
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
-import org.sonatype.gshell.util.cli.Option;
-
-import java.util.prefs.Preferences;
+import org.sonatype.gshell.command.IO;
+import org.sonatype.gshell.util.cli.Argument;
 
 /**
- * Remove a tree of preferences.
+ * Set a preference value.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name="pref/remove")
-public class RemovePreferencesCommand
+@Command(name="pref/set")
+public class SetPreferenceCommand
     extends PreferenceNodeCommandSupport
 {
-    @Option(name = "-r", aliases = {"--tree"})
-    private boolean tree;
+    @Argument(index = 1, required = true)
+    private String key;
+
+    @Argument(index = 2, required = true)
+    private String value;
 
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
+        IO io = context.getIo();
 
-        Preferences prefs = node();
-
-        log.debug("Removing preferences: {}", prefs);
-
-        if (tree) {
-            prefs.clear();
-        }
-        else {
-            prefs.removeNode();
-        }
-
-        prefs.sync();
+        node().put(key, value);
+        node().sync();
         
         return Result.SUCCESS;
     }

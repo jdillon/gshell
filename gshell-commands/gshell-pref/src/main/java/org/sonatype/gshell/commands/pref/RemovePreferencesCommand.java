@@ -14,48 +14,43 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.commands.preference;
+package org.sonatype.gshell.commands.pref;
 
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
-import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.io.Closer;
-import org.sonatype.gshell.util.cli.Argument;
+import org.sonatype.gshell.util.cli.Option;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.prefs.Preferences;
 
 /**
- * Import preference nodes from a file.
+ * Remove a tree of preferences.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name="pref/import")
-public class ImportPreferencesCommand
-    extends PreferenceCommandSupport
+@Command(name="pref/remove")
+public class RemovePreferencesCommand
+    extends PreferenceNodeCommandSupport
 {
-    @Argument(index = 0, required = true)
-    private File source;
+    @Option(name = "-r", aliases = {"--tree"})
+    private boolean tree;
 
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
-        IO io = context.getIo();
+
+        Preferences prefs = node();
+
+        log.debug("Removing preferences: {}", prefs);
+
+        if (tree) {
+            prefs.clear();
+        }
+        else {
+            prefs.removeNode();
+        }
+
+        prefs.sync();
         
-        io.info("Importing preferences from: {}", source); // TODO: i18n
-
-        InputStream in = new BufferedInputStream(new FileInputStream(source));
-
-        try {
-            Preferences.importPreferences(in);
-        }
-        finally {
-            Closer.close(in);
-        }
-
         return Result.SUCCESS;
     }
 }

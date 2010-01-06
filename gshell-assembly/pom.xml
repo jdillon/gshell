@@ -39,15 +39,15 @@
             <artifactId>gshell-core</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.sonatype.gshell.commands</groupId>
-            <artifactId>gshell-shell</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.sonatype.gshell.commands</groupId>-->
+            <!--<artifactId>gshell-shell</artifactId>-->
+        <!--</dependency>-->
 
-        <dependency>
-            <groupId>org.sonatype.gshell.commands</groupId>
-            <artifactId>gshell-file</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.sonatype.gshell.commands</groupId>-->
+            <!--<artifactId>gshell-file</artifactId>-->
+        <!--</dependency>-->
 
         <!--<dependency>-->
             <!--<groupId>org.sonatype.gshell.commands</groupId>-->
@@ -59,15 +59,15 @@
             <!--<artifactId>gshell-text</artifactId>-->
         <!--</dependency>-->
         
-        <dependency>
-            <groupId>org.sonatype.gshell.commands</groupId>
-            <artifactId>gshell-network</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.sonatype.gshell.commands</groupId>-->
+            <!--<artifactId>gshell-network</artifactId>-->
+        <!--</dependency>-->
 
-        <dependency>
-            <groupId>org.sonatype.gshell.commands</groupId>
-            <artifactId>gshell-vfs</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.sonatype.gshell.commands</groupId>-->
+            <!--<artifactId>gshell-vfs</artifactId>-->
+        <!--</dependency>-->
 
         <!--<dependency>-->
             <!--<groupId>org.sonatype.gshell.commands</groupId>-->

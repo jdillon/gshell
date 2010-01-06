@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  ~ Copyright (C) 2009 the original author(s).
+  ~ Copyright (C) 2010 the original author or authors.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -23,39 +23,27 @@
 
     <command-set id="core">
         <enabled>true</enabled>
-        <autoRegisterPriority>1</autoRegisterPriority>
+        <autoRegisterPriority>10</autoRegisterPriority>
         <command>
-            <action>org.sonatype.gshell.commands.HelpCommand</action>
+            <action>org.sonatype.gshell.commands.pref.ListPreferencesCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.InfoCommand</action>
+            <action>org.sonatype.gshell.commands.pref.SetPreferenceCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.ExitCommand</action>
+            <action>org.sonatype.gshell.commands.pref.GetPreferenceCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.SetCommand</action>
+            <action>org.sonatype.gshell.commands.pref.UnsetPreferenceCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.UnsetCommand</action>
+            <action>org.sonatype.gshell.commands.pref.RemovePreferencesCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.HistoryCommand</action>
+            <action>org.sonatype.gshell.commands.pref.ImportPreferencesCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.RecallHistoryCommand</action>
-        </command>
-        <command>
-            <action>org.sonatype.gshell.commands.AliasCommand</action>
-        </command>
-        <command>
-            <action>org.sonatype.gshell.commands.UnaliasCommand</action>
-        </command>
-        <command>
-            <action>org.sonatype.gshell.commands.SourceCommand</action>
-        </command>
-        <command>
-            <action>org.sonatype.gshell.commands.EchoCommand</action>
+            <action>org.sonatype.gshell.commands.pref.ExportPreferencesCommand</action>
         </command>
     </command-set>
 

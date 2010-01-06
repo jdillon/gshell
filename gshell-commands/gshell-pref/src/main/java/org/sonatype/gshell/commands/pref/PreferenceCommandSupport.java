@@ -14,31 +14,33 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.commands.preference;
+package org.sonatype.gshell.commands.pref;
 
-import org.sonatype.gshell.util.cli.Argument;
+import org.sonatype.gshell.command.CommandActionSupport;
+import org.sonatype.gshell.util.cli.Option;
 
 import java.util.prefs.Preferences;
 
 /**
- * Support for preference node commands.
+ * Support for preference commands.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public abstract class PreferenceNodeCommandSupport
-    extends PreferenceCommandSupport
+public abstract class PreferenceCommandSupport
+    extends CommandActionSupport
 {
-    @Argument(index = 0, required = true)
-    private String path;
+    @Option(name = "-s", aliases = {"--system"})
+    private boolean system;
 
-    protected Preferences node() throws Exception {
-        Preferences root = root();
-        log.debug("Root: {}", root);
-
-        Preferences node = root.node(path);
-        log.debug("Node: {}", node);
-
-        return node;
+    protected Preferences root() {
+        Preferences root;
+        if (system) {
+            root = Preferences.systemRoot();
+        }
+        else {
+            root = Preferences.userRoot();
+        }
+        return root;
     }
 }

@@ -14,33 +14,36 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.commands.preference;
+package org.sonatype.gshell.commands.pref;
 
-import org.sonatype.gshell.command.CommandActionSupport;
-import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.command.Command;
+import org.sonatype.gshell.command.CommandContext;
+import org.sonatype.gshell.util.cli.Argument;
 
 import java.util.prefs.Preferences;
 
 /**
- * Support for preference commands.
+ * Unset a preference value.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public abstract class PreferenceCommandSupport
-    extends CommandActionSupport
+@Command(name="pref/unset")
+public class UnsetPreferenceCommand
+    extends PreferenceNodeCommandSupport
 {
-    @Option(name = "-s", aliases = {"--system"})
-    private boolean system;
+    @Argument(index = 1, required = true)
+    private String key;
 
-    protected Preferences root() {
-        Preferences root;
-        if (system) {
-            root = Preferences.systemRoot();
-        }
-        else {
-            root = Preferences.userRoot();
-        }
-        return root;
+    public Object execute(final CommandContext context) throws Exception {
+        assert context != null;
+
+        log.debug("Unsetting preference: {}", key);
+
+        Preferences prefs = node();
+        prefs.remove(key);
+        prefs.sync();
+        
+        return Result.SUCCESS;
     }
 }

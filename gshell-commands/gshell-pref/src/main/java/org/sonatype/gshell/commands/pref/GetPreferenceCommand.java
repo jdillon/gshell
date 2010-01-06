@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.commands.preference;
+package org.sonatype.gshell.commands.pref;
 
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
@@ -22,28 +22,27 @@ import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.util.cli.Argument;
 
 /**
- * Set a preference value.
+ * Get a preference value.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name="pref/set")
-public class SetPreferenceCommand
+@Command(name="pref/get")
+public class GetPreferenceCommand
     extends PreferenceNodeCommandSupport
 {
     @Argument(index = 1, required = true)
     private String key;
 
-    @Argument(index = 2, required = true)
-    private String value;
-
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
         IO io = context.getIo();
 
-        node().put(key, value);
-        node().sync();
+        log.info("Getting preference: {}", key);
         
-        return Result.SUCCESS;
+        Object value = node().get(key, null);
+        io.info(value);
+
+        return value;
     }
 }

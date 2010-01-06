@@ -193,7 +193,13 @@
                 <artifactId>gshell-plexus</artifactId>
                 <version>2.3-SNAPSHOT</version>
             </dependency>
-            
+
+            <dependency>
+                <groupId>org.sonatype.gshell.commands</groupId>
+                <artifactId>gshell-pref</artifactId>
+                <version>2.3-SNAPSHOT</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.sonatype.gshell.commands</groupId>
                 <artifactId>gshell-network</artifactId>

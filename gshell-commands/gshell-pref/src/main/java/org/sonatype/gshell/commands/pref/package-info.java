@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009 the original author(s).
+ * Copyright (C) 2010 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,4 +19,4 @@
  *
  * @since 2.0
  */
-package org.sonatype.gshell.commands.preference;
+package org.sonatype.gshell.commands.pref;
