@@ -36,8 +36,8 @@ import org.sonatype.gshell.shell.Shell;
 import org.sonatype.gshell.shell.ShellHolder;
 import org.sonatype.gshell.util.Arguments;
 import org.sonatype.gshell.util.Strings;
-import org.sonatype.gshell.util.cli.CommandLineProcessor;
-import org.sonatype.gshell.util.cli.OpaqueArguments;
+import org.sonatype.gshell.util.cli2.CliProcessor;
+import org.sonatype.gshell.util.cli2.OpaqueArguments;
 import org.sonatype.gshell.util.i18n.PrefixingMessageSource;
 import org.sonatype.gshell.util.pref.PreferenceProcessor;
 import org.sonatype.gshell.vars.Variables;
@@ -125,7 +125,6 @@ public class CommandExecutorImpl
         MDC.put(CommandAction.class.getName(), name);
 
         final Shell lastShell = ShellHolder.set(shell);
-
         final IO io = shell.getIo();
 
         StreamJack.maybeInstall(io.streams);
@@ -141,7 +140,7 @@ public class CommandExecutorImpl
             pp.process();
 
             if (!(command instanceof OpaqueArguments)) {
-                CommandLineProcessor clp = new CommandLineProcessor();
+                CliProcessor clp = new CliProcessor();
                 clp.addBean(command);
                 clp.setMessages(new PrefixingMessageSource(command.getMessages(), CommandDocumenter.COMMAND_DOT));
                 CommandHelpSupport help = new CommandHelpSupport();

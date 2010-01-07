@@ -39,7 +39,7 @@ public class BooleanHandler
         }
         else {
             OptionDescriptor opt = (OptionDescriptor) getDescriptor();
-            if (!opt.isArgumentOptional() && arg != null) {
+            if (opt.isArgumentOptional() && arg != null) {
                 set(arg);
             }
             else {

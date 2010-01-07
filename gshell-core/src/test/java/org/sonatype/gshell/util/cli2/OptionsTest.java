@@ -39,7 +39,7 @@ public class OptionsTest
         @Option(name = "h", longName = "help")
         boolean help;
 
-        @Option(name = "v")
+        @Option(name = "v", args=1, optionalArg = true)
         Boolean verbose;
 
         @Option(name = "s", args=1)
@@ -72,6 +72,12 @@ public class OptionsTest
     public void testVerbose() throws Exception {
         clp.process("-v");
         assertTrue(bean.verbose);
+    }
+
+    @Test
+    public void testVerbose2() throws Exception {
+        clp.process("-v", "false");
+        assertFalse(bean.verbose);
     }
 
     @Test

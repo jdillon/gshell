@@ -21,8 +21,8 @@ import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.shell.History;
-import org.sonatype.gshell.util.cli.Argument;
-import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.util.cli2.Argument;
+import org.sonatype.gshell.util.cli2.Option;
 
 import java.util.List;
 
@@ -36,10 +36,10 @@ import java.util.List;
 public class HistoryCommand
     extends CommandActionSupport
 {
-    @Option(name = "-c", aliases = {"--clear"})
+    @Option(name = "c", longName = "clear")
     private boolean clear;
 
-    @Option(name = "-p", aliases = {"--purge"})
+    @Option(name = "p", longName = "purge")
     private boolean purge;
 
     @Argument()

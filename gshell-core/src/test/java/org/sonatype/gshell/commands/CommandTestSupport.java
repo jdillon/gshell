@@ -60,7 +60,7 @@ public abstract class CommandTestSupport
 {
     protected final String name;
 
-    protected final TestShellBuilder builder = new TestShellBuilder();;
+    protected final TestShellBuilder builder = new TestShellBuilder();
 
     private final TestUtil util = new TestUtil(this);
 

@@ -18,7 +18,9 @@ package org.sonatype.gshell.util.cli2;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.MissingOptionException;
 import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 import org.slf4j.Logger;
 import org.sonatype.gossip.Log;
@@ -34,7 +36,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Processes an object for cli annotations.
@@ -165,17 +169,49 @@ public class CliProcessor
     // Processing
     //
 
+    private static class Parser
+        extends PosixParser
+    {
+        @Override
+        protected void checkRequiredOptions() {
+            // delay, need to check for required options after processing to support override
+        }
+
+        public void ensureRequiredOptionsPresent() throws Exception {
+            // FIXME: Probably want to use a custom exception here
+            super.checkRequiredOptions();
+        }
+    }
+
     public void process(final String... args) throws Exception {
         assert args != null;
-        
-        CommandLineParser parser = new PosixParser();
-        CommandLine cl = parser.parse(createOptions(), args, stopAtNonOption);
+
+        Parser parser = new Parser();
+        CommandLine cl;
+
+        try {
+            cl = parser.parse(createOptions(), args, stopAtNonOption);
+        }
+        catch (ParseException e) {
+            throw new ProcessingException(e);    
+        }
+
+        Set<CliDescriptor> present = new HashSet<CliDescriptor>();
+        boolean override = false;
 
         for (Object tmp : cl.getOptions()) {
             Opt opt = (Opt)tmp;
             log.trace("Processing option: {}", opt);
 
-            Handler handler = Handlers.create(opt.getDescriptor());
+            OptionDescriptor desc = opt.getDescriptor();
+            present.add(desc);
+
+            // Track the override, this is used to handle when --help present, but a required arg/opt is missing
+            if (!override) {
+                override = desc.getOverride();
+            }
+
+            Handler handler = Handlers.create(desc);
             String[] values = opt.getValues();
 
             if (values == null || values.length == 0) {
@@ -198,11 +234,13 @@ public class CliProcessor
 
             // Check if we allow an argument or we have overflowed
             if (i >= argumentDescriptors.size()) {
-                throw new IllegalArgumentException(argumentDescriptors.size() == 0 ? "No argument allowed" : "Too many arguments"); // TODO: i18n
+                throw new ProcessingException(argumentDescriptors.size() == 0 ? "No argument allowed" : "Too many arguments"); // TODO: i18n
             }
 
-            // For single-valued args, increment the argument index, else let the multivalued handler consume it
             ArgumentDescriptor desc = argumentDescriptors.get(i);
+            present.add(desc);
+
+            // For single-valued args, increment the argument index, else let the multivalued handler consume it
             if (!desc.isMultiValued()) {
                 i++;
             }
@@ -211,6 +249,19 @@ public class CliProcessor
             Handler handler = Handlers.create(desc);
             handler.handle(arg);
         }
+
+        // Check for any required arguments which were not present
+        if (!override) {
+            parser.ensureRequiredOptionsPresent();
+
+            for (ArgumentDescriptor arg : argumentDescriptors) {
+                if (arg.isRequired() && !present.contains(arg)) {
+                    throw new ProcessingException("Argument is required: " + arg);
+                }
+            }
+        }
+
+        // TODO: Handle setting defaults
     }
 
     private Options createOptions() {

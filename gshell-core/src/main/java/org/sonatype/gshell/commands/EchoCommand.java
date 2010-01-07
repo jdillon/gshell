@@ -20,8 +20,8 @@ import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.util.cli.Argument;
-import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.util.cli2.Argument;
+import org.sonatype.gshell.util.cli2.Option;
 
 import java.util.Iterator;
 import java.util.List;
@@ -36,10 +36,10 @@ import java.util.List;
 public class EchoCommand
     extends CommandActionSupport
 {
-    @Option(name = "-n")
+    @Option(name = "n", optionalArg = true)
     private boolean trailingNewline = true;
 
-    @Argument
+    @Argument(multi=true)
     private List<String> args;
 
     public Object execute(final CommandContext context) throws Exception {

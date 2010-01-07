@@ -16,8 +16,7 @@
 
 package org.sonatype.gshell.command;
 
-import org.sonatype.gshell.util.cli.Option;
-import org.sonatype.gshell.util.cli.handler.StopHandler;
+import org.sonatype.gshell.util.cli2.Option;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
 
@@ -31,10 +30,11 @@ public class CommandHelpSupport
 {
     ///CLOVER:OFF
 
-    @Option(name = "-h", aliases = {"--help"}, requireOverride = true)
+    @Option(name = "h", longName = "help", override=true)
     public boolean displayHelp;
 
-    @Option(name = "--", handler = StopHandler.class)
+//    FIXME: Need to resolve how to deal with this
+//    @Option(name = "--", handler = StopHandler.class)
     public boolean stop;
 
     private MessageSource messages;

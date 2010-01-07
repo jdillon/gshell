@@ -23,7 +23,7 @@ import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.registry.AliasRegistry;
 import org.sonatype.gshell.util.Strings;
-import org.sonatype.gshell.util.cli.Argument;
+import org.sonatype.gshell.util.cli2.Argument;
 
 import java.util.Collection;
 import java.util.List;
@@ -43,7 +43,7 @@ public class AliasCommand
     @Argument(index = 0)
     private String name;
 
-    @Argument(index = 1, multiValued = true)
+    @Argument(index = 1, multi = true)
     private List<String> target;
 
     @Inject

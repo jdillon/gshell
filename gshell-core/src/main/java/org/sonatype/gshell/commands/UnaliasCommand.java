@@ -24,7 +24,7 @@ import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.console.completer.AliasNameCompleter;
 import org.sonatype.gshell.registry.AliasRegistry;
 import org.sonatype.gshell.registry.NoSuchAliasException;
-import org.sonatype.gshell.util.cli.Argument;
+import org.sonatype.gshell.util.cli2.Argument;
 
 /**
  * Undefine an alias.

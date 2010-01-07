@@ -55,5 +55,7 @@ public @interface Option
 
     String defaultValue() default UNINITIALIZED_STRING;
 
+    boolean override() default false;
+    
     Class<? extends Handler> handler() default DefaultHandler.class;
 }

@@ -22,8 +22,8 @@ import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.commands.SetCommand.Mode;
 import org.sonatype.gshell.console.completer.VariableNameCompleter;
-import org.sonatype.gshell.util.cli.Argument;
-import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.util.cli2.Argument;
+import org.sonatype.gshell.util.cli2.Option;
 import org.sonatype.gshell.vars.Variables;
 
 import java.util.List;
@@ -38,7 +38,7 @@ import java.util.List;
 public class UnsetCommand
     extends CommandActionSupport
 {
-    @Option(name = "-m", aliases = {"--mode"})
+    @Option(name = "m", longName = "mode")
     private Mode mode = Mode.VARIABLE;
 
     @Argument(required = true)

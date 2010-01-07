@@ -53,8 +53,7 @@ public class SimpleTest
         clp.process("-v");
 
         assertFalse(bean.help);
-        assertNull(bean.verbose);
-//        assertTrue(bean.verbose);
+        assertTrue(bean.verbose);
     }
 
     @Test

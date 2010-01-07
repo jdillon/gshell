@@ -23,8 +23,8 @@ import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.console.completer.VariableNameCompleter;
 import org.sonatype.gshell.util.Strings;
-import org.sonatype.gshell.util.cli.Argument;
-import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.util.cli2.Argument;
+import org.sonatype.gshell.util.cli2.Option;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.vars.Variables;
 
@@ -48,16 +48,16 @@ public class SetCommand
         PROPERTY
     }
 
-    @Option(name = "-m", aliases = {"--mode"})
+    @Option(name = "m", longName = "mode")
     private Mode mode = Mode.VARIABLE;
 
-    @Option(name = "-v", aliases = {"--verbose"})
+    @Option(name = "v", longName = "verbose")
     private boolean verbose;
 
     @Argument(index = 0)
     private String name;
 
-    @Argument(index = 1, multiValued = true)
+    @Argument(index = 1, multi = true)
     private List<String> values;
 
     @Inject

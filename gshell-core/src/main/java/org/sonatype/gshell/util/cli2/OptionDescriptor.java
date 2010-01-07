@@ -68,4 +68,8 @@ public class OptionDescriptor
     public boolean isArgumentOptional() {
         return spec.optionalArg();
     }
+
+    public boolean getOverride() {
+        return spec.override();
+    }
 }

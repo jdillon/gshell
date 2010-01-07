@@ -24,7 +24,7 @@ import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.CommandException;
 import org.sonatype.gshell.util.Strings;
-import org.sonatype.gshell.util.cli.OpaqueArguments;
+import org.sonatype.gshell.util.cli2.OpaqueArguments;
 
 /**
  * The default {@link org.sonatype.gshell.registry.CommandResolver} component.

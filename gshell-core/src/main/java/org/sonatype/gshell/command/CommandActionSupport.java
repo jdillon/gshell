@@ -23,6 +23,7 @@ import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
 
 import java.util.List;
+import java.util.MissingResourceException;
 
 /**
  * Provides support for {@link CommandAction} implementations.
@@ -58,7 +59,23 @@ public abstract class CommandActionSupport
 
     public MessageSource getMessages() {
         if (messages == null) {
-            messages = new ResourceBundleMessageSource(getClass());
+            try {
+                messages = new ResourceBundleMessageSource(getClass());
+            }
+            catch (MissingResourceException e) {
+                log.warn("Missing resources: " + e);
+
+                messages = new MessageSource()
+                {
+                    public String getMessage(final String code) {
+                        return code;
+                    }
+
+                    public String format(final String code, final Object... args) {
+                        return code;
+                    }
+                };
+            }
         }
 
         return messages;

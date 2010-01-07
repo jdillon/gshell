@@ -14,9 +14,13 @@
  * limitations under the License.
  */
 
+
 package org.sonatype.gshell.util.cli2;
 
+import org.apache.commons.cli.MissingOptionException;
 import org.junit.Test;
+
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -24,42 +28,43 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
- * Make sure that the processor ensures unique @Option names.
+ * Tests options.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class UniqueOptionNameTest
+public class RequiredOptionsTest
     extends CliProcessorTestSupport
 {
     private static class Simple
     {
-        @Option(name="h", longName="help")
+        @Option(name = "h", required=true)
         boolean help;
 
-        @Option(name="v", longName="verbose")
+        @Option(name = "v")
         boolean verbose;
-
-        @Option(name="x", longName="verbose")
-        boolean verbose2;
-
-        @Argument
-        String arg1;
     }
 
     private Simple bean;
 
     @Override
     protected Object createBean() {
-        bean = new Simple();
-        return bean;
+        return bean = new Simple();
     }
 
     @Test
-    public void testException() throws Exception {
+    public void testPresent() throws Exception {
+        clp.process("-h");
+        assertTrue(bean.help);
+    }
+
+    @Test
+    public void testMissing() throws Exception {
         try {
-            clp.process("-f");
+            clp.process("-v");
             fail();
         }
-        catch (Exception ignore) {}
+        catch (Exception e) {
+             // expected
+        }
     }
 }

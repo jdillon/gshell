@@ -22,7 +22,7 @@ import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.shell.History;
 import org.sonatype.gshell.shell.Shell;
-import org.sonatype.gshell.util.cli.Argument;
+import org.sonatype.gshell.util.cli2.Argument;
 
 import java.util.List;
 

@@ -25,8 +25,8 @@ import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.util.cli.Argument;
-import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.util.cli2.Argument;
+import org.sonatype.gshell.util.cli2.Option;
 import org.sonatype.gshell.util.pref.Preference;
 import org.sonatype.gshell.util.pref.Preferences;
 
@@ -81,10 +81,10 @@ public class InfoCommand
     }
 
     @Preference
-    @Argument(multiValued = true)
+    @Argument(multi = true)
     private List<Section> sections;
 
-    @Option(name = "-a", aliases = {"--all"})
+    @Option(name = "a", longName = "all")
     private boolean all;
 
     public InfoCommand() {
