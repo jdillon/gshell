@@ -21,8 +21,8 @@ import org.apache.commons.vfs.Selectors;
 import org.apache.commons.vfs.util.Os;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
-import org.sonatype.gshell.util.cli.Argument;
-import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.util.cli2.Argument;
+import org.sonatype.gshell.util.cli2.Option;
 import org.sonatype.gshell.vfs.FileObjectAssert;
 import org.sonatype.gshell.vfs.FileObjects;
 
@@ -40,7 +40,7 @@ import java.util.List;
 public class EditCommand
     extends VfsCommandSupport
 {
-    @Option(name="-e", aliases={"--editor"})
+    @Option(name="e", longName="editor")
     private String editor;
 
     @Argument(required=true)

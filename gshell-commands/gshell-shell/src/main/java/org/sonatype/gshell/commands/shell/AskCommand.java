@@ -22,8 +22,8 @@ import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.io.PromptReader;
-import org.sonatype.gshell.util.cli.Argument;
-import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.util.cli2.Argument;
+import org.sonatype.gshell.util.cli2.Option;
 
 /**
  * Ask for some input.
@@ -37,7 +37,7 @@ public class AskCommand
 {
     private final Provider<PromptReader> promptProvider;
 
-    @Option(name="-m", aliases={"--mask"})
+    @Option(name="m", longName="mask")
     private Character mask;
 
     @Argument

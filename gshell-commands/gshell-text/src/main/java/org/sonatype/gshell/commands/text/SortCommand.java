@@ -21,8 +21,8 @@ import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.commands.vfs.VfsCommandSupport;
 import org.sonatype.gshell.io.Closer;
-import org.sonatype.gshell.util.cli.Argument;
-import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.util.cli2.Argument;
+import org.sonatype.gshell.util.cli2.Option;
 import org.sonatype.gshell.vfs.FileObjectAssert;
 import org.sonatype.gshell.vfs.FileObjects;
 
@@ -47,30 +47,29 @@ import java.util.regex.Pattern;
 public class SortCommand
     extends VfsCommandSupport
 {
-    @Option(name = "-f")
+    @Option(name = "f")
     private boolean caseInsensitive;
 
-    @Option(name = "-r")
+    @Option(name = "r")
     private boolean reverse;
 
-    @Option(name = "-u")
+    @Option(name = "u")
     private boolean unique;
 
-    @Option(name = "-t")
+    @Option(name = "t")
     private String separator;
 
-    @Option(name = "-b")
+    @Option(name = "b")
     private boolean ignoreBlanks;
 
-    @Option(name = "-k", argumentRequired = true, multiValued = true)
+    @Option(name = "k", optionalArg=false)
     private List<String> sortFields;
 
-    @Option(name = "-n")
+    @Option(name = "n")
     private boolean numeric;
 
     @Argument(index = 0, required=false)
     private String path;
-
 
     public Object execute(CommandContext context) throws Exception {
         assert context != null;

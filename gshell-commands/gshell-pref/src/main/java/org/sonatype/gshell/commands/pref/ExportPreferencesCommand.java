@@ -21,8 +21,8 @@ import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.io.Closer;
 import org.sonatype.gshell.io.Flusher;
-import org.sonatype.gshell.util.cli.Argument;
-import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.util.cli2.Argument;
+import org.sonatype.gshell.util.cli2.Option;
 import org.sonatype.gshell.util.pref.Preference;
 import org.sonatype.gshell.util.pref.Preferences;
 
@@ -43,7 +43,7 @@ public class ExportPreferencesCommand
     extends PreferenceNodeCommandSupport
 {
     @Preference
-    @Option(name = "-t", aliases = {"--subtree"})
+    @Option(name = "t", longName="subtree")
     private boolean subTree;
 
     @Argument(index = 1)

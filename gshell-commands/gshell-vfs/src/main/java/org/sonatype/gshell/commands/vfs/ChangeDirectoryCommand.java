@@ -20,7 +20,7 @@ import org.apache.commons.vfs.FileObject;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.util.cli.Argument;
+import org.sonatype.gshell.util.cli2.Argument;
 import org.sonatype.gshell.vars.VariableNames;
 import org.sonatype.gshell.vfs.FileObjectAssert;
 import org.sonatype.gshell.vfs.FileObjects;

@@ -24,7 +24,7 @@ import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.console.completer.FileNameCompleter;
 import org.sonatype.gshell.file.FileSystemAccess;
 import org.sonatype.gshell.util.FileAssert;
-import org.sonatype.gshell.util.cli.Argument;
+import org.sonatype.gshell.util.cli2.Argument;
 import org.sonatype.gshell.vars.Variables;
 
 import java.io.File;

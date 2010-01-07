@@ -98,7 +98,7 @@ public abstract class MainSupport
     @Option(name = "h", longName = "help", override=true)
     protected boolean help;
 
-    @Option(name = "V", longName = "--version", override = true)
+    @Option(name = "V", longName = "version", override = true)
     protected boolean version;
 
     @Preference

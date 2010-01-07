@@ -23,7 +23,6 @@ import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.io.PrefixingStream;
 import org.sonatype.gshell.shell.ShellHolder;
 import org.sonatype.gshell.util.ReplacementParser;
-import org.sonatype.gshell.util.cli.CommandLinePrinter;
 import org.sonatype.gshell.util.cli2.CliProcessor;
 import org.sonatype.gshell.util.cli2.HelpPrinter;
 import org.sonatype.gshell.util.i18n.AggregateMessageSource;

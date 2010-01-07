@@ -42,10 +42,10 @@ public class OptionsTest
         @Option(name = "v", args=1, optionalArg = true)
         Boolean verbose;
 
-        @Option(name = "s", args=1)
+        @Option(name = "s", args=1, optionalArg = false)
         String string;
 
-        @Option(name = "S", args=2)
+        @Option(name = "S", args=2, optionalArg = false)
         List<String> strings;
     }
 

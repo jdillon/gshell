@@ -23,8 +23,8 @@ import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.commands.vfs.VfsCommandSupport;
 import org.sonatype.gshell.io.Closer;
-import org.sonatype.gshell.util.cli.Argument;
-import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.util.cli2.Argument;
+import org.sonatype.gshell.util.cli2.Option;
 import org.sonatype.gshell.vfs.FileObjectAssert;
 import org.sonatype.gshell.vfs.FileObjects;
 
@@ -41,7 +41,7 @@ import java.io.InputStreamReader;
 public class CatCommand
     extends VfsCommandSupport
 {
-    @Option(name="-n")
+    @Option(name="n")
     private boolean displayLineNumbers;
 
     @Argument(required=true)

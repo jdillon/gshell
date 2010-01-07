@@ -31,8 +31,8 @@ import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.plexus.PlexusRuntime;
-import org.sonatype.gshell.util.cli.Argument;
-import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.util.cli2.Argument;
+import org.sonatype.gshell.util.cli2.Option;
 
 import java.util.Collections;
 import java.util.Set;
@@ -49,19 +49,19 @@ public class ResolveCommand
 {
     private final PlexusRuntime plexus;
 
-    @Option(name = "-t", aliases = {"--type"}, argumentRequired = true)
+    @Option(name = "t", longName="type", optionalArg = false)
     private String type = "jar";
 
-    @Option(name = "-c", aliases = {"--classifier"}, argumentRequired = true)
+    @Option(name = "c", longName="classifier", optionalArg = false)
     private String classifier;
 
-    @Option(name = "-s", aliases = {"--scope"}, argumentRequired = true)
+    @Option(name = "s", longName="scope", optionalArg = false)
     private String scope;
 
-    @Option(name = "-T", aliases = {"--transitive"})
+    @Option(name = "T", longName="transitive")
     private boolean transitive;
 
-    @Option(name = "-o", aliases = {"--offline"})
+    @Option(name = "o", longName="offline")
     private boolean offline;
 
     @Argument(required = true)

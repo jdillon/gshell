@@ -20,7 +20,7 @@ import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.util.cli.Argument;
+import org.sonatype.gshell.util.cli2.Argument;
 
 /**
  * Set the return value.
@@ -37,8 +37,6 @@ public class ReturnCommand
 
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
-        IO io = context.getIo();
-
         return result;
     }
 }

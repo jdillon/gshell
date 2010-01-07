@@ -20,7 +20,7 @@ import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.util.cli.Argument;
+import org.sonatype.gshell.util.cli2.Argument;
 
 import java.util.Collection;
 
@@ -38,7 +38,7 @@ public class PrintfCommand
     @Argument(index=0, required=true)
     private String format;
 
-    @Argument(index=1, multiValued=true, required=true)
+    @Argument(index=1, multi=true, required=true)
     private Collection<String> arguments = null;
 
     public Object execute(final CommandContext context) throws Exception {

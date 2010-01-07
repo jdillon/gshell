@@ -19,7 +19,7 @@ package org.sonatype.gshell.commands.pref;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.util.cli.Argument;
+import org.sonatype.gshell.util.cli2.Argument;
 
 /**
  * Get a preference value.

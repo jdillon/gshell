@@ -18,7 +18,7 @@ package org.sonatype.gshell.commands.pref;
 
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
-import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.util.cli2.Option;
 
 import java.util.prefs.Preferences;
 
@@ -32,7 +32,7 @@ import java.util.prefs.Preferences;
 public class RemovePreferencesCommand
     extends PreferenceNodeCommandSupport
 {
-    @Option(name = "-r", aliases = {"--tree"})
+    @Option(name = "r", longName="tree")
     private boolean tree;
 
     public Object execute(final CommandContext context) throws Exception {

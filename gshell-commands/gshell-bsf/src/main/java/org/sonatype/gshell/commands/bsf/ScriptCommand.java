@@ -31,8 +31,8 @@ import org.sonatype.gshell.console.Console;
 import org.sonatype.gshell.console.ConsoleErrorHandler;
 import org.sonatype.gshell.console.ConsolePrompt;
 import org.sonatype.gshell.console.ConsoleTask;
-import org.sonatype.gshell.util.cli.Argument;
-import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.util.cli2.Argument;
+import org.sonatype.gshell.util.cli2.Option;
 import org.sonatype.gshell.vfs.FileSystemAccess;
 
 import java.util.concurrent.Callable;
@@ -53,7 +53,7 @@ public class ScriptCommand
 
     private String language;
 
-    @Option(name="-l", aliases={"--language"})
+    @Option(name="l", longName="language")
     private void setLanguage(final String language) {
         assert language != null;
 
@@ -64,7 +64,7 @@ public class ScriptCommand
         this.language = language;
     }
 
-    @Option(name="-e", aliases={"--expression"})
+    @Option(name="e", longName="expression")
     private String expression;
 
     @Argument

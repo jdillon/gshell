@@ -33,8 +33,8 @@ import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.commands.vfs.VfsCommandSupport;
 import org.sonatype.gshell.io.Closer;
-import org.sonatype.gshell.util.cli.Argument;
-import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.util.cli2.Argument;
+import org.sonatype.gshell.util.cli2.Option;
 import org.sonatype.gshell.vfs.FileObjectAssert;
 import org.sonatype.gshell.vfs.FileObjects;
 
@@ -65,16 +65,16 @@ public class GrepCommand
     @Argument(index=1, required=false)
     private String path;
 
-    @Option(name="-c", aliases={"--count"})
+    @Option(name="c", longName="count")
     private boolean count;
 
-    @Option(name="-i", aliases={"--ignore-case"})
+    @Option(name="i", longName="ignore-case")
     private boolean ignoreCase;
 
-    @Option(name="-n", aliases={"--line-number"})
+    @Option(name="n", longName="line-number")
     private boolean lineNumbers;
 
-    @Option(name="-v", aliases={"--invert-match"})
+    @Option(name="v", longName="invert-match")
     private boolean invertMatch;
 
     /** Tracks the number of matches. */

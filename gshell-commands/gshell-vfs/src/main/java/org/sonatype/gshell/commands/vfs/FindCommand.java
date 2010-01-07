@@ -30,8 +30,8 @@ import org.apache.oro.text.regex.Perl5Matcher;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.util.cli.Argument;
-import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.util.cli2.Argument;
+import org.sonatype.gshell.util.cli2.Option;
 import org.sonatype.gshell.vfs.FileObjectAssert;
 import org.sonatype.gshell.vfs.FileObjects;
 import org.sonatype.gshell.vfs.selector.AggregateFileSelector;
@@ -50,19 +50,19 @@ public class FindCommand
 {
     private final AggregateFileSelector selector = new AggregateFileSelector();
 
-    @Option(name="-name")
+    @Option(name="name")
     private void addNameFilter(final String name) throws MalformedPatternException {
         log.debug("Adding -name selector for: {}", name);
         selector.getSelectors().add(new NameSelector(name));
     }
 
-    @Option(name="-iname")
+    @Option(name="iname")
     private void addiNameFilter(final String name) throws MalformedPatternException {
         log.debug("Adding -iname selector for: {}", name);
         selector.getSelectors().add(new NameSelector(name, true));
     }
 
-    @Option(name="-type")
+    @Option(name="type")
     private void addTypeFilter(final Type type) {
         log.debug("Adding -type selector for: {}", type);
         selector.getSelectors().add(new TypeSelector(type));

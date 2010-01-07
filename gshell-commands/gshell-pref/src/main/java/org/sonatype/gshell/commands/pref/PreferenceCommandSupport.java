@@ -17,7 +17,7 @@
 package org.sonatype.gshell.commands.pref;
 
 import org.sonatype.gshell.command.CommandActionSupport;
-import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.util.cli2.Option;
 
 import java.util.prefs.Preferences;
 
@@ -30,7 +30,7 @@ import java.util.prefs.Preferences;
 public abstract class PreferenceCommandSupport
     extends CommandActionSupport
 {
-    @Option(name = "-s", aliases = {"--system"})
+    @Option(name = "s", longName="system")
     private boolean system;
 
     protected Preferences root() {

@@ -26,8 +26,8 @@ import org.apache.commons.vfs.FileSystemException;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.util.cli.Argument;
-import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.util.cli2.Argument;
+import org.sonatype.gshell.util.cli2.Option;
 import org.sonatype.gshell.vfs.FileObjects;
 
 import java.util.ArrayList;
@@ -47,13 +47,13 @@ public class ListDirectoryCommand
     @Argument
     private String path;
 
-    @Option(name="-l", aliases={"--long"})
+    @Option(name="l", longName="long")
     private boolean longList;
 
-    @Option(name="-a", aliases={"--all"})
+    @Option(name="a", longName="all")
     private boolean includeHidden;
 
-    @Option(name="-r", aliases={"--recursive"})
+    @Option(name="r", longName="recursive")
     private boolean recursive;
 
     public Object execute(final CommandContext context) throws Exception {

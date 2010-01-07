@@ -23,8 +23,8 @@ import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.io.Closer;
 import org.sonatype.gshell.io.Flusher;
-import org.sonatype.gshell.util.cli.Argument;
-import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.util.cli2.Argument;
+import org.sonatype.gshell.util.cli2.Option;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -47,7 +47,7 @@ public class WgetCommand
     @Argument(required=true)
     private URL source;
 
-    @Option(name="-o", aliases={"--output-file"}, argumentRequired=true)
+    @Option(name="o", longName="output-file", optionalArg=false)
     private File outputFile;
 
     public Object execute(final CommandContext context) throws Exception {

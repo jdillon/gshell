@@ -20,7 +20,7 @@ import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.util.cli.Argument;
+import org.sonatype.gshell.util.cli2.Argument;
 
 /**
  * Fail with an exception.
@@ -39,13 +39,13 @@ public class FailCommand
         assert context != null;
         IO io = context.getIo();
 
-        throw new FailException();
+        throw new FailException(message);
     }
 
-    private class FailException
+    private static class FailException
         extends Exception
     {
-        public FailException() {
+        public FailException(String message) {
             super(message);
         }
     }

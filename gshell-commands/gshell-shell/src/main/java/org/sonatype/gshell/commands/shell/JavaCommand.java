@@ -21,8 +21,8 @@ import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
-import org.sonatype.gshell.util.cli.Argument;
-import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.util.cli2.Argument;
+import org.sonatype.gshell.util.cli2.Option;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -43,7 +43,7 @@ public class JavaCommand
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Option(name="-m", aliases={"--method"})
+    @Option(name="m", longName="method")
     private String methodName = "main";
 
     @Argument(index=0, required=true)

@@ -20,7 +20,7 @@ import org.apache.sshd.SshServer;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
-import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.util.cli2.Option;
 
 /**
  * Start a SSH server.

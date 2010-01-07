@@ -32,7 +32,7 @@ import org.codehaus.plexus.component.repository.exception.ComponentLookupExcepti
 import org.codehaus.plexus.util.StringUtils;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.plexus.PlexusRuntime;
-import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.util.cli2.Option;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,28 +49,28 @@ public abstract class ScmCommandSupport
 {
     protected final PlexusRuntime plexus;
 
-    @Option(name="-c", aliases={"--url"})
+    @Option(name="c", longName="url")
     protected String connectionUrl;
 
-    @Option(name="-d", aliases={"--dir"})
+    @Option(name="d", longName="dir")
     protected File workingDirectory;
 
-    @Option(name="-u", aliases={"--username"})
+    @Option(name="u", longName="username")
     protected String username;
 
-    @Option(name="-p", aliases={"--password"})
+    @Option(name="p", longName="password")
     protected String password;
 
-    @Option(name="-k", aliases={"--private-key"})
+    @Option(name="k", longName="private-key")
     protected String privateKey;
 
-    @Option(name="-a", aliases={"--passphrase"})
+    @Option(name="a", longName="passphrase")
     protected String passphrase;
 
-    @Option(name="-i", aliases={"--includes"})
+    @Option(name="i", longName="includes")
     protected String includes;
 
-    @Option(name="-x", aliases={"--excludes"})
+    @Option(name="x", longName="excludes")
     protected String excludes;
 
     protected ScmCommandSupport(final PlexusRuntime plexus) {

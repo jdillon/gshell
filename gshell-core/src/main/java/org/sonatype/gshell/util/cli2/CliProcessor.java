@@ -18,10 +18,12 @@ package org.sonatype.gshell.util.cli2;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.MissingArgumentException;
 import org.apache.commons.cli.MissingOptionException;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
+import org.apache.commons.cli.UnrecognizedOptionException;
 import org.slf4j.Logger;
 import org.sonatype.gossip.Log;
 import org.sonatype.gshell.util.IllegalAnnotationError;
@@ -178,8 +180,7 @@ public class CliProcessor
             // delay, need to check for required options after processing to support override
         }
 
-        public void ensureRequiredOptionsPresent() throws Exception {
-            // FIXME: Probably want to use a custom exception here
+        public void ensureRequiredOptionsPresent() throws MissingOptionException {
             super.checkRequiredOptions();
         }
     }
@@ -192,6 +193,13 @@ public class CliProcessor
 
         try {
             cl = parser.parse(createOptions(), args, stopAtNonOption);
+        }
+        catch (UnrecognizedOptionException e) {
+            throw new ProcessingException(Messages.UNDEFINED_OPTION.format(e.getOption()));
+        }
+        catch (MissingArgumentException e) {
+            OptionDescriptor desc = ((Opt)e.getOption()).getDescriptor();
+            throw new ProcessingException(Messages.MISSING_OPERAND.format(desc.getSyntax(), desc.renderToken(messages)));
         }
         catch (ParseException e) {
             throw new ProcessingException(e);    
@@ -235,7 +243,7 @@ public class CliProcessor
 
             // Check if we allow an argument or we have overflowed
             if (i >= argumentDescriptors.size()) {
-                throw new ProcessingException(argumentDescriptors.size() == 0 ? "No argument allowed" : "Too many arguments"); // TODO: i18n
+                throw new ProcessingException(argumentDescriptors.size() == 0 ? Messages.NO_ARGUMENT_ALLOWED.format() : Messages.TOO_MANY_ARGUMENTS.format()); // TODO: i18n
             }
 
             ArgumentDescriptor desc = argumentDescriptors.get(i);
@@ -253,11 +261,16 @@ public class CliProcessor
 
         // Check for any required arguments which were not present
         if (!override) {
-            parser.ensureRequiredOptionsPresent();
+            try {
+                parser.ensureRequiredOptionsPresent();
+            }
+            catch (MissingOptionException e) {
+                throw new ProcessingException(Messages.REQUIRED_OPTION_MISSING.format(e.getMissingOptions()));
+            }
 
             for (ArgumentDescriptor arg : argumentDescriptors) {
                 if (arg.isRequired() && !present.contains(arg)) {
-                    throw new ProcessingException("Argument is required: " + arg);
+                    throw new ProcessingException(Messages.REQUIRED_ARGUMENT_MISSING.format(arg.renderToken(messages)));
                 }
             }
         }

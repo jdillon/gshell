@@ -26,8 +26,8 @@ import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.console.completer.FileNameCompleter;
 import org.sonatype.gshell.file.FileSystemAccess;
 import org.sonatype.gshell.util.FileAssert;
-import org.sonatype.gshell.util.cli.Argument;
-import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.util.cli2.Argument;
+import org.sonatype.gshell.util.cli2.Option;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -55,13 +55,13 @@ public class ListDirectoryCommand
     @Argument
     private String path;
 
-    @Option(name = "-l", aliases = {"--long"})
+    @Option(name = "l", longName="long")
     private boolean longList;
 
-    @Option(name = "-a", aliases = {"--all"})
+    @Option(name = "a", longName="all")
     private boolean includeHidden;
 
-    @Option(name = "-r", aliases = {"--recursive"})
+    @Option(name = "r", longName="recursive")
     private boolean recursive;
 
     @Inject

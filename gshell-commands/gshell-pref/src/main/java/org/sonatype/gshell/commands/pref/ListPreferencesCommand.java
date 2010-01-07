@@ -19,7 +19,7 @@ package org.sonatype.gshell.commands.pref;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.util.cli.Option;
+import org.sonatype.gshell.util.cli2.Option;
 import org.sonatype.gshell.util.pref.Preference;
 import org.sonatype.gshell.util.pref.Preferences;
 
@@ -39,7 +39,7 @@ public class ListPreferencesCommand
     extends PreferenceNodeCommandSupport
 {
     @Preference
-    @Option(name = "-r", aliases = {"--recursive"})
+    @Option(name = "r", longName="recursive")
     private boolean recursive;
 
     public Object execute(final CommandContext context) throws Exception {
