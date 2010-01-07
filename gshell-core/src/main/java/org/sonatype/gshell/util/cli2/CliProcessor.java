@@ -61,6 +61,14 @@ public class CliProcessor
 
     private MessageSource messages;
 
+    public static enum Flavor
+    {
+        POSIX,
+        GNU
+    }
+
+    private Flavor flavor = Flavor.POSIX;
+
     public CliProcessor() {
     }
 
@@ -78,6 +86,15 @@ public class CliProcessor
 
     public void setMessages(final MessageSource messages) {
         this.messages = messages;
+    }
+
+    public Flavor getFlavor() {
+        return flavor;
+    }
+
+    public void setFlavor(final Flavor flavor) {
+        assert flavor != null;
+        this.flavor = flavor;
     }
 
     public List<OptionDescriptor> getOptionDescriptors() {
@@ -172,8 +189,29 @@ public class CliProcessor
     // Processing
     //
 
-    private static class Parser
-        extends PosixParser
+    private static interface CliParser
+        extends CommandLineParser
+    {
+        void ensureRequiredOptionsPresent() throws MissingOptionException;
+    }
+
+    private static class GnuParser
+        extends org.apache.commons.cli.GnuParser
+        implements CliParser
+    {
+        @Override
+        protected void checkRequiredOptions() {
+            // delay, need to check for required options after processing to support override
+        }
+
+        public void ensureRequiredOptionsPresent() throws MissingOptionException {
+            super.checkRequiredOptions();
+        }
+    }
+
+    private static class PosixParser
+        extends org.apache.commons.cli.PosixParser
+        implements CliParser
     {
         @Override
         protected void checkRequiredOptions() {
@@ -188,7 +226,19 @@ public class CliProcessor
     public void process(final String... args) throws Exception {
         assert args != null;
 
-        Parser parser = new Parser();
+        CliParser parser = null;
+
+        switch (flavor) {
+            case POSIX:
+                parser = new PosixParser();
+                break;
+            case GNU:
+                parser = new GnuParser();
+                break;
+        }
+
+        assert parser != null;
+
         CommandLine cl;
 
         try {
