@@ -243,7 +243,8 @@ public class CliProcessor
 
             // Check if we allow an argument or we have overflowed
             if (i >= argumentDescriptors.size()) {
-                throw new ProcessingException(argumentDescriptors.size() == 0 ? Messages.NO_ARGUMENT_ALLOWED.format() : Messages.TOO_MANY_ARGUMENTS.format()); // TODO: i18n
+                throw new ProcessingException(argumentDescriptors.size() == 0 ?
+                    Messages.NO_ARGUMENT_ALLOWED.format(arg) : Messages.TOO_MANY_ARGUMENTS.format(arg));
             }
 
             ArgumentDescriptor desc = argumentDescriptors.get(i);

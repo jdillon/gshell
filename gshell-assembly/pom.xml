@@ -49,6 +49,11 @@
             <artifactId>gshell-file</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.sonatype.gshell.commands</groupId>
+            <artifactId>gshell-pref</artifactId>
+        </dependency>
+
         <!--<dependency>-->
             <!--<groupId>org.sonatype.gshell.commands</groupId>-->
             <!--<artifactId>gshell-artifact</artifactId>-->
