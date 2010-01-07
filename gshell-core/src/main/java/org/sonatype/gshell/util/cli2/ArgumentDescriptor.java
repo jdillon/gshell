@@ -46,4 +46,14 @@ public class ArgumentDescriptor
     public boolean isMultiValued() {
         return spec.multi();
     }
+
+    @Override
+    public String getSyntax() {
+        String tmp = getToken();
+        if (tmp != null && tmp.length() != 0) {
+            return tmp;
+        }
+
+        return "ARG";
+    }
 }

@@ -72,4 +72,18 @@ public class OptionDescriptor
     public boolean getOverride() {
         return spec.override();
     }
+
+    @Override
+    public String getSyntax() {
+        if (name != null && longName != null) {
+            return String.format("-%s (--%s)", name, longName);
+        }
+        else if (name != null) {
+            return String.format("-%s", name);
+        }
+        else if (longName != null) {
+            return String.format("--%s", longName);
+        }
+        throw new Error();
+    }
 }

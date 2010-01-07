@@ -28,6 +28,7 @@ import org.sonatype.gshell.util.IllegalAnnotationError;
 import org.sonatype.gshell.util.cli2.handler.Handler;
 import org.sonatype.gshell.util.cli2.handler.Handlers;
 import org.sonatype.gshell.util.i18n.MessageSource;
+import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
 import org.sonatype.gshell.util.setter.SetterFactory;
 import org.sonatype.gshell.util.yarn.Yarn;
 
@@ -297,6 +298,22 @@ public class CliProcessor
 
         public String toString() {
             return Yarn.render(this);
+        }
+    }
+
+    private static enum Messages
+    {
+        MISSING_OPERAND,
+        UNDEFINED_OPTION,
+        NO_ARGUMENT_ALLOWED,
+        REQUIRED_OPTION_MISSING,
+        TOO_MANY_ARGUMENTS,
+        REQUIRED_ARGUMENT_MISSING;
+
+        private final MessageSource messages = new ResourceBundleMessageSource(CliProcessor.class);
+
+        String format(final Object... args) {
+            return messages.format(name(), args);
         }
     }
 }

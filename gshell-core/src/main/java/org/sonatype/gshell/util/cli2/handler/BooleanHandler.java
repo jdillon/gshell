@@ -51,7 +51,7 @@ public class BooleanHandler
     @Override
     public String getDefaultToken() {
         if (getDescriptor().isArgument() || !((OptionDescriptor) getDescriptor()).isArgumentOptional()) {
-            return "true|false";
+            return "FLAG";
         }
         return null;
     }

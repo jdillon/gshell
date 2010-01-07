@@ -33,11 +33,10 @@ import org.sonatype.gshell.shell.Shell;
 import org.sonatype.gshell.util.Arguments;
 import org.sonatype.gshell.util.NameValue;
 import org.sonatype.gshell.util.ansi.AnsiIO;
-import org.sonatype.gshell.util.cli.Argument;
-import org.sonatype.gshell.util.cli.CommandLinePrinter;
-import org.sonatype.gshell.util.cli.CommandLineProcessor;
-import org.sonatype.gshell.util.cli.Option;
-import org.sonatype.gshell.util.cli.handler.StopHandler;
+import org.sonatype.gshell.util.cli2.Argument;
+import org.sonatype.gshell.util.cli2.CliProcessor;
+import org.sonatype.gshell.util.cli2.HelpPrinter;
+import org.sonatype.gshell.util.cli2.Option;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
 import org.sonatype.gshell.util.pref.Preference;
@@ -96,17 +95,14 @@ public abstract class MainSupport
 
     // TODO: Add --batch flag (for non-interactive)
     
-    @Option(name = "-h", aliases = {"--help"}, requireOverride = true)
+    @Option(name = "h", longName = "help", override=true)
     protected boolean help;
 
-    @Option(name = "--", handler = StopHandler.class)
-    private boolean stop;
-
-    @Option(name = "-V", aliases = {"--version"}, requireOverride = true)
+    @Option(name = "V", longName = "--version", override = true)
     protected boolean version;
 
     @Preference
-    @Option(name = "-e", aliases = {"--errors"})
+    @Option(name = "e", longName = "errors")
     protected boolean showErrorTraces = false;
 
     protected void setConsoleLogLevel(final Level level) {
@@ -115,7 +111,7 @@ public abstract class MainSupport
     }
 
     @Preference(name="debug")
-    @Option(name = "-d", aliases = {"--debug"})
+    @Option(name = "d", longName = "debug")
     protected void setDebug(final boolean flag) {
         if (flag) {
             setConsoleLogLevel(Level.DEBUG);
@@ -124,7 +120,7 @@ public abstract class MainSupport
     }
 
     @Preference(name="trace")
-    @Option(name = "-X", aliases = {"--trace"})
+    @Option(name = "X", longName = "trace")
     protected void setTrace(final boolean flag) {
         if (flag) {
             setConsoleLogLevel(Level.TRACE);
@@ -133,7 +129,7 @@ public abstract class MainSupport
     }
 
     @Preference(name="verbose")
-    @Option(name = "-v", aliases = {"--verbose"})
+    @Option(name = "v", longName = "verbose")
     protected void setVerbose(final boolean flag) {
         if (flag) {
             setConsoleLogLevel(Level.INFO);
@@ -142,7 +138,7 @@ public abstract class MainSupport
     }
 
     @Preference(name="quiet")
-    @Option(name = "-q", aliases = {"--quiet"})
+    @Option(name = "q", longName = "quiet")
     protected void setQuiet(final boolean flag) {
         if (flag) {
             setConsoleLogLevel(Level.ERROR);
@@ -150,29 +146,29 @@ public abstract class MainSupport
         }
     }
 
-    @Option(name = "-c", aliases = {"--command"}, argumentRequired = true)
+    @Option(name = "c", longName = "command", args=1, optionalArg=false)
     protected String command;
 
-    @Option(name = "-D", aliases = {"--define"}, argumentRequired = true)
+    @Option(name = "D", longName = "define", args=1, optionalArg=false)
     protected void setVariable(final String input) {
         NameValue nv = NameValue.parse(input);
         vars.set(nv.name, nv.value);
     }
 
-    @Option(name = "-P", aliases = {"--property"}, argumentRequired = true)
+    @Option(name = "P", longName = "property", args=1, optionalArg=false)
     protected void setSystemProperty(final String input) {
         NameValue nv = NameValue.parse(input);
         System.setProperty(nv.name, nv.value);
     }
 
     @Preference(name="color")
-    @Option(name = "-C", aliases = {"--color"}, argumentRequired = true)
+    @Option(name = "C", longName = "color", args=1, optionalArg=false)
     protected void enableAnsiColors(final boolean flag) {
         Ansi.setEnabled(flag);
     }
 
     @Preference(name="terminal")
-    @Option(name = "-T", aliases = {"--terminal"}, argumentRequired = true)
+    @Option(name = "T", longName = "terminal", args=1, optionalArg=false)
     protected void setTerminalType(final String type) {
         TerminalFactory.configure(type);
     }
@@ -183,7 +179,7 @@ public abstract class MainSupport
 
     // TODO: Add --norc && --noprofile
     
-    @Argument
+    @Argument(multi=true)
     protected List<String> appArgs = null;
 
     protected void exit(final int code) {
@@ -215,7 +211,7 @@ public abstract class MainSupport
         pp.process();
 
         // Process command line options & arguments
-        CommandLineProcessor clp = new CommandLineProcessor();
+        CliProcessor clp = new CliProcessor();
         clp.addBean(this);
         clp.setMessages(messages);
         clp.setStopAtNonOption(true);
@@ -234,7 +230,7 @@ public abstract class MainSupport
         }
 
         if (help) {
-            CommandLinePrinter printer = new CommandLinePrinter(clp);
+            HelpPrinter printer = new HelpPrinter(clp);
             printer.printUsage(io.out, getBranding().getProgramName());
             exit(ExitNotification.DEFAULT_CODE);
         }

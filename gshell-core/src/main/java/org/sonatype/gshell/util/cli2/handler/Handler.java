@@ -18,8 +18,6 @@ package org.sonatype.gshell.util.cli2.handler;
 
 import org.sonatype.gshell.util.cli2.CliDescriptor;
 import org.sonatype.gshell.util.converter.Converters;
-import org.sonatype.gshell.util.i18n.MessageSource;
-import org.sonatype.gshell.util.i18n.ResourceNotFoundException;
 import org.sonatype.gshell.util.setter.Setter;
 
 /**
@@ -65,60 +63,4 @@ public abstract class Handler
     public abstract void handle(String arg) throws Exception;
 
     public abstract String getDefaultToken();
-
-    public String getToken(final MessageSource messages) {
-        // messages may be null
-
-        String token = descriptor.getToken();
-
-        // If we have i18n messages for the command, then try to resolve the token further
-        if (messages != null) {
-            String code = token;
-
-            // If there is no coded, then generate one
-            if (code == null) {
-                code = descriptor.getTokenCode();
-            }
-
-            // Resolve the text in the message source
-            try {
-                token = messages.getMessage(code);
-            }
-            catch (ResourceNotFoundException e) {
-                // Just use the code as the message
-            }
-        }
-
-        if (token == null) {
-            token = getDefaultToken();
-        }
-
-        return token;
-    }
-
-    public String getHelpText(final MessageSource messages) {
-        // messages may be null
-
-        String message = descriptor.getDescription();
-
-        // If we have i18n messages for the command, then try to resolve the message further using the message as the code
-        if (messages != null) {
-            String code = message;
-
-            // If there is no code, then generate one
-            if (code == null) {
-                code = descriptor.getMessageCode();
-            }
-
-            // Resolve the text in the message source
-            try {
-                message = messages.getMessage(code);
-            }
-            catch (ResourceNotFoundException e) {
-                // Just use the code as the message
-            }
-        }
-
-        return message;
-    }
 }

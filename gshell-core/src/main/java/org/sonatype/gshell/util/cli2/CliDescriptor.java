@@ -18,6 +18,9 @@ package org.sonatype.gshell.util.cli2;
 
 import org.sonatype.gshell.util.AnnotationDescriptor;
 import org.sonatype.gshell.util.cli2.handler.Handler;
+import org.sonatype.gshell.util.cli2.handler.Handlers;
+import org.sonatype.gshell.util.i18n.MessageSource;
+import org.sonatype.gshell.util.i18n.ResourceNotFoundException;
 import org.sonatype.gshell.util.setter.Setter;
 
 /**
@@ -40,6 +43,8 @@ public abstract class CliDescriptor
     private final String defaultValue;
 
     private final Class handlerType;
+
+    private Handler handler;
 
     public CliDescriptor(final Object spec, final Setter setter) {
         assert spec != null;
@@ -99,6 +104,12 @@ public abstract class CliDescriptor
         return handlerType;
     }
 
+    public Handler getHandler() {
+        if (handler == null) {
+            handler = Handlers.create(this);
+        }
+        return handler;
+    }
 
     public boolean isArgument() {
         return this instanceof ArgumentDescriptor;
@@ -124,5 +135,77 @@ public abstract class CliDescriptor
         else {
             return String.format("option.%s.token", getId());
         }
+    }
+
+    public abstract String getSyntax();
+
+    public String renderSyntax(final MessageSource messages) {
+        String str = isArgument() ? "" : getSyntax();
+        String token = renderToken(messages);
+
+        if (token != null) {
+            if (str.length() > 0) {
+                str += " ";
+            }
+            str += token;
+        }
+
+        return str;
+    }
+
+    public String renderToken(final MessageSource messages) {
+        // messages may be null
+
+        String token = getToken();
+
+        // If we have i18n messages for the command, then try to resolve the token further
+        if (messages != null) {
+            String code = token;
+
+            // If there is no coded, then generate one
+            if (code == null) {
+                code = getTokenCode();
+            }
+
+            // Resolve the text in the message source
+            try {
+                token = messages.getMessage(code);
+            }
+            catch (ResourceNotFoundException e) {
+                // Just use the code as the message
+            }
+        }
+
+        if (token == null) {
+            token = getHandler().getDefaultToken();
+        }
+
+        return token;
+    }
+
+    public String renderHelpText(final MessageSource messages) {
+        // messages may be null
+
+        String message = getDescription();
+
+        // If we have i18n messages for the command, then try to resolve the message further using the message as the code
+        if (messages != null) {
+            String code = message;
+
+            // If there is no code, then generate one
+            if (code == null) {
+                code = getMessageCode();
+            }
+
+            // Resolve the text in the message source
+            try {
+                message = messages.getMessage(code);
+            }
+            catch (ResourceNotFoundException e) {
+                // Just use the code as the message
+            }
+        }
+
+        return message;
     }
 }
