@@ -44,12 +44,11 @@ public class RemovePreferencesCommand
 
         if (tree) {
             prefs.clear();
+            prefs.sync();
         }
         else {
             prefs.removeNode();
         }
-
-        prefs.sync();
         
         return Result.SUCCESS;
     }
