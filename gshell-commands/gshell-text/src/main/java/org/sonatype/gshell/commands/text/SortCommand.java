@@ -62,7 +62,7 @@ public class SortCommand
     @Option(name = "b")
     private boolean ignoreBlanks;
 
-    @Option(name = "k", optionalArg=false)
+    @Option(name = "k")
     private List<String> sortFields;
 
     @Option(name = "n")
