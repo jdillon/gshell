@@ -45,7 +45,7 @@ public @interface Option
 
     int args() default OptionDescriptor.UNINITIALIZED;
 
-    boolean optionalArg() default true;
+    boolean optionalArg() default false;
     
     String token() default UNINITIALIZED_STRING;
 
