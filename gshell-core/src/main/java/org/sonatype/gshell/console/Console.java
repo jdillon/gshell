@@ -143,6 +143,14 @@ public class Console
                 else {
                     t.printStackTrace();
                 }
+
+                // Need to reset the terminal in some cases after a failure
+                try {
+                    io.getTerminal().reset();
+                }
+                catch (Exception e) {
+                    log.error("Failed to reset terminal", e);
+                }
             }
         }
 
