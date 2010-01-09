@@ -16,13 +16,8 @@
 
 package org.sonatype.gshell.commands.vfs;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 import com.google.inject.Module;
-import com.google.inject.Stage;
-import org.sonatype.gshell.builder.guice.CoreModule;
 import org.sonatype.gshell.commands.CommandTestSupport;
-import org.sonatype.gshell.shell.TestShellBuilder;
 import org.sonatype.gshell.vfs.VfsModule;
 
 import java.util.List;

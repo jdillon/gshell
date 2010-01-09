@@ -19,9 +19,9 @@ package org.sonatype.gshell;
 import org.fusesource.jansi.Ansi;
 import org.sonatype.gshell.branding.BrandingSupport;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.io.File;
 
 /**
  * Branding for <tt>gsh</tt>.

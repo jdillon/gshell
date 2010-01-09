@@ -19,8 +19,6 @@ package org.sonatype.gshell.util.cli2;
 import org.junit.After;
 import org.junit.Before;
 
-import static org.junit.Assert.assertEquals;
-
 /**
  * Support for {@link CliProcessor} tests.
  *

@@ -16,9 +16,6 @@
 
 package org.sonatype.gshell.util;
 
-import org.sonatype.gshell.util.cli2.Argument;
-import org.sonatype.gshell.util.cli2.Option;
-import org.sonatype.gshell.util.setter.Setter;
 import org.sonatype.gshell.util.yarn.Yarn;
 
 /**

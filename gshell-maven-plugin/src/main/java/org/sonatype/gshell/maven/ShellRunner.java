@@ -16,12 +16,12 @@
 
 package org.sonatype.gshell.maven;
 
-import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.MainSupport;
+import org.sonatype.gshell.branding.Branding;
+import org.sonatype.gshell.builder.guice.GuiceShellBuilder;
 import org.sonatype.gshell.shell.Shell;
 import org.sonatype.gshell.shell.ShellErrorHandler;
 import org.sonatype.gshell.shell.ShellPrompt;
-import org.sonatype.gshell.builder.guice.GuiceShellBuilder;
 
 /**
  * ???

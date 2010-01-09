@@ -19,11 +19,11 @@
 
 package org.sonatype.gshell.io;
 
-import java.io.Flushable;
-import java.io.IOException;
-
 import org.slf4j.Logger;
 import org.sonatype.gossip.Log;
+
+import java.io.Flushable;
+import java.io.IOException;
 
 /**
  * Quietly flushes {@link Flushable} objects.
