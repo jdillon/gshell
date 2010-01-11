@@ -180,6 +180,10 @@ public abstract class CliDescriptor
             token = getHandler().getDefaultToken();
         }
 
+        if (isOption() && ((OptionDescriptor)this).isArgumentOptional()) {
+            return String.format("[%s]", token);
+        }
+
         return token;
     }
 

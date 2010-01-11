@@ -38,6 +38,6 @@ public class DefaultHandler
 
     @Override
     public String getDefaultToken() {
-        return "VAL";
+        return "VAL"; // TODO: i18n
     }
 }

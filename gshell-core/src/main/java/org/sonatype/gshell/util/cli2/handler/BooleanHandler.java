@@ -50,9 +50,10 @@ public class BooleanHandler
 
     @Override
     public String getDefaultToken() {
-        if (getDescriptor().isArgument() || !((OptionDescriptor) getDescriptor()).isArgumentOptional()) {
-            return "FLAG";
+        if (getDescriptor().isArgument() || ((OptionDescriptor)getDescriptor()).getArgs() > 0) {
+            return "FLAG"; // TODO: i18n
         }
+        
         return null;
     }
 }

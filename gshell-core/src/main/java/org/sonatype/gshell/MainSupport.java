@@ -60,7 +60,7 @@ import static org.sonatype.gshell.vars.VariableNames.SHELL_LOGGING;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Preferences(path="cli")
+@Preferences(path = "cli")
 public abstract class MainSupport
 {
     static {
@@ -69,15 +69,16 @@ public abstract class MainSupport
         TerminalFactory.registerFlavor(TerminalFactory.Flavor.WINDOWS, AnsiWindowsTerminal.class);
 
         // Register jline ansi detector
-        Ansi.setDetector(new Callable<Boolean>() {
+        Ansi.setDetector(new Callable<Boolean>()
+        {
             public Boolean call() throws Exception {
                 return TerminalFactory.get().isAnsiSupported();
             }
         });
     }
-    
+
     protected final Logger log = Log.getLogger(MainSupport.class);
-    
+
     protected final IO io = new AnsiIO(StreamSet.SYSTEM_FD, true);
 
     protected final Variables vars = new VariablesImpl();
@@ -94,8 +95,8 @@ public abstract class MainSupport
     //
 
     // TODO: Add --batch flag (for non-interactive)
-    
-    @Option(name = "h", longName = "help", override=true)
+
+    @Option(name = "h", longName = "help", override = true)
     protected boolean help;
 
     @Option(name = "V", longName = "version", override = true)
@@ -110,7 +111,7 @@ public abstract class MainSupport
         vars.set(SHELL_LOGGING, level);
     }
 
-    @Preference(name="debug")
+    @Preference(name = "debug")
     @Option(name = "d", longName = "debug")
     protected void setDebug(final boolean flag) {
         if (flag) {
@@ -119,7 +120,7 @@ public abstract class MainSupport
         }
     }
 
-    @Preference(name="trace")
+    @Preference(name = "trace")
     @Option(name = "X", longName = "trace")
     protected void setTrace(final boolean flag) {
         if (flag) {
@@ -128,7 +129,7 @@ public abstract class MainSupport
         }
     }
 
-    @Preference(name="verbose")
+    @Preference(name = "verbose")
     @Option(name = "v", longName = "verbose")
     protected void setVerbose(final boolean flag) {
         if (flag) {
@@ -137,7 +138,7 @@ public abstract class MainSupport
         }
     }
 
-    @Preference(name="quiet")
+    @Preference(name = "quiet")
     @Option(name = "q", longName = "quiet")
     protected void setQuiet(final boolean flag) {
         if (flag) {
@@ -146,29 +147,29 @@ public abstract class MainSupport
         }
     }
 
-    @Option(name = "c", longName = "command", args=1)
+    @Option(name = "c", longName = "command", args = 1)
     protected String command;
 
-    @Option(name = "D", longName = "define", args=1)
+    @Option(name = "D", longName = "define", args = 1)
     protected void setVariable(final String input) {
         NameValue nv = NameValue.parse(input);
         vars.set(nv.name, nv.value);
     }
 
-    @Option(name = "P", longName = "property", args=1)
+    @Option(name = "P", longName = "property", args = 1)
     protected void setSystemProperty(final String input) {
         NameValue nv = NameValue.parse(input);
         System.setProperty(nv.name, nv.value);
     }
 
-    @Preference(name="color")
-    @Option(name = "C", longName = "color", args=1)
+    @Preference(name = "color")
+    @Option(name = "C", longName = "color", args = 1, optionalArg=true)
     protected void enableAnsiColors(final boolean flag) {
         Ansi.setEnabled(flag);
     }
 
-    @Preference(name="terminal")
-    @Option(name = "T", longName = "terminal", args=1)
+    @Preference(name = "terminal")
+    @Option(name = "T", longName = "terminal", args = 1)
     protected void setTerminalType(final String type) {
         TerminalFactory.configure(type);
     }
@@ -178,8 +179,8 @@ public abstract class MainSupport
     }
 
     // TODO: Add --norc && --noprofile
-    
-    @Argument(multi=true)
+
+    @Argument(multi = true)
     protected List<String> appArgs = null;
 
     protected void exit(final int code) {
@@ -241,7 +242,7 @@ public abstract class MainSupport
         }
 
         StreamJack.maybeInstall(io.streams);
-        
+
         // Setup a reference for our exit code so our callback thread can tell if we've shutdown normally or not
         final AtomicReference<Integer> codeRef = new AtomicReference<Integer>();
         Object result = null;
@@ -292,10 +293,10 @@ public abstract class MainSupport
 
         // TODO: Support parsing strings for exit code.  Move this to a helper class
         if (result instanceof CommandAction.Result) {
-            code = ((CommandAction.Result)result).ordinal();
+            code = ((CommandAction.Result) result).ordinal();
         }
         else if (result instanceof Number) {
-            code = ((Number)result).intValue();
+            code = ((Number) result).intValue();
         }
         else if (result == null) {
             code = 0;
