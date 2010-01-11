@@ -8,11 +8,8 @@ Building
 
 ### Requirements
 
-* Maven 2.x
-* Java 5
-* JLine 2.x
-* Gossip 1.x
-* IOHijack 1.x
+* Maven 2+
+* Java 5+
 
 Check out and build:
 
