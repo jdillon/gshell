@@ -49,28 +49,28 @@ public abstract class ScmCommandSupport
 {
     protected final PlexusRuntime plexus;
 
-    @Option(name="c", longName="url")
+    @Option(name="c", longName="url", args=1)
     protected String connectionUrl;
 
-    @Option(name="d", longName="dir")
+    @Option(name="d", longName="dir", args=1)
     protected File workingDirectory;
 
-    @Option(name="u", longName="username")
+    @Option(name="u", longName="username", args=1)
     protected String username;
 
-    @Option(name="p", longName="password")
+    @Option(name="p", longName="password", args=1)
     protected String password;
 
-    @Option(name="k", longName="private-key")
+    @Option(name="k", longName="private-key", args=1)
     protected String privateKey;
 
-    @Option(name="a", longName="passphrase")
+    @Option(name="a", longName="passphrase", args=1)
     protected String passphrase;
 
-    @Option(name="i", longName="includes")
+    @Option(name="i", longName="includes", args=1)
     protected String includes;
 
-    @Option(name="x", longName="excludes")
+    @Option(name="x", longName="excludes", args=1)
     protected String excludes;
 
     protected ScmCommandSupport(final PlexusRuntime plexus) {

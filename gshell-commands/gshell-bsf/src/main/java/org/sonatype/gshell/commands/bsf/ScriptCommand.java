@@ -53,7 +53,7 @@ public class ScriptCommand
 
     private String language;
 
-    @Option(name="l", longName="language")
+    @Option(name="l", longName="language", args=1)
     private void setLanguage(final String language) {
         assert language != null;
 
@@ -64,7 +64,7 @@ public class ScriptCommand
         this.language = language;
     }
 
-    @Option(name="e", longName="expression")
+    @Option(name="e", longName="expression", args=1)
     private String expression;
 
     @Argument

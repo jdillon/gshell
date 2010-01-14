@@ -37,7 +37,7 @@ public class AskCommand
 {
     private final Provider<PromptReader> promptProvider;
 
-    @Option(name="m", longName="mask")
+    @Option(name="m", longName="mask", args=1)
     private Character mask;
 
     @Argument

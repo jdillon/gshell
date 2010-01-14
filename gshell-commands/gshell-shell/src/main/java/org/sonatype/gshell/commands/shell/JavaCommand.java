@@ -43,7 +43,7 @@ public class JavaCommand
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Option(name="m", longName="method")
+    @Option(name="m", longName="method", args=1)
     private String methodName = "main";
 
     @Argument(index=0, required=true)

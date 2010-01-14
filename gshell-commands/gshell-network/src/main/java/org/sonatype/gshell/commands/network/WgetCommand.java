@@ -44,11 +44,11 @@ import java.net.URLConnection;
 public class WgetCommand
     extends CommandActionSupport
 {
+    @Option(name="o", longName="output-file", args=1)
+    private File outputFile;
+
     @Argument(required=true)
     private URL source;
-
-    @Option(name="o", longName="output-file")
-    private File outputFile;
 
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;

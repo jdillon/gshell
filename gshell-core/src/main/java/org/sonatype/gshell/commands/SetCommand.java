@@ -48,7 +48,7 @@ public class SetCommand
         PROPERTY
     }
 
-    @Option(name = "m", longName = "mode")
+    @Option(name = "m", longName = "mode", args=1)
     private Mode mode = Mode.VARIABLE;
 
     @Option(name = "v", longName = "verbose")
