@@ -28,7 +28,7 @@
     <groupId>org.sonatype.gshell</groupId>
     <artifactId>gshell</artifactId>
     <name>GShell</name>
-    <version>2.4-SNAPSHOT</version>
+    <version>2.3.1</version>
     <packaging>pom</packaging>
 
     <organization>
@@ -166,62 +166,62 @@
             <dependency>
                 <groupId>org.sonatype.gshell</groupId>
                 <artifactId>gshell-bootstrap</artifactId>
-                <version>2.4-SNAPSHOT</version>
+                <version>2.3.1</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gshell</groupId>
                 <artifactId>gshell-io</artifactId>
-                <version>2.4-SNAPSHOT</version>
+                <version>2.3.1</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gshell</groupId>
                 <artifactId>gshell-core</artifactId>
-                <version>2.4-SNAPSHOT</version>
+                <version>2.3.1</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gshell</groupId>
                 <artifactId>gshell-core</artifactId>
                 <classifier>tests</classifier>
-                <version>2.4-SNAPSHOT</version>
+                <version>2.3.1</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gshell</groupId>
                 <artifactId>gshell-plexus</artifactId>
-                <version>2.4-SNAPSHOT</version>
+                <version>2.3.1</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gshell.commands</groupId>
                 <artifactId>gshell-pref</artifactId>
-                <version>2.4-SNAPSHOT</version>
+                <version>2.3.1</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gshell.commands</groupId>
                 <artifactId>gshell-network</artifactId>
-                <version>2.4-SNAPSHOT</version>
+                <version>2.3.1</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gshell.commands</groupId>
                 <artifactId>gshell-text</artifactId>
-                <version>2.4-SNAPSHOT</version>
+                <version>2.3.1</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gshell.commands</groupId>
                 <artifactId>gshell-shell</artifactId>
-                <version>2.4-SNAPSHOT</version>
+                <version>2.3.1</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gshell.commands</groupId>
                 <artifactId>gshell-file</artifactId>
-                <version>2.4-SNAPSHOT</version>
+                <version>2.3.1</version>
             </dependency>
 
             <!--<dependency>-->
@@ -233,7 +233,7 @@
             <dependency>
                 <groupId>org.sonatype.gshell.commands</groupId>
                 <artifactId>gshell-vfs</artifactId>
-                <version>2.4-SNAPSHOT</version>
+                <version>2.3.1</version>
             </dependency>
 
             <!--<dependency>-->
@@ -245,31 +245,31 @@
             <dependency>
                 <groupId>org.sonatype.gshell.commands</groupId>
                 <artifactId>gshell-bsf</artifactId>
-                <version>2.4-SNAPSHOT</version>
+                <version>2.3.1</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gshell.commands</groupId>
                 <artifactId>gshell-artifact</artifactId>
-                <version>2.4-SNAPSHOT</version>
+                <version>2.3.1</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gshell.commands</groupId>
                 <artifactId>gshell-scm</artifactId>
-                <version>2.4-SNAPSHOT</version>
+                <version>2.3.1</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gshell</groupId>
                 <artifactId>gshell-maven-plugin</artifactId>
-                <version>2.4-SNAPSHOT</version>
+                <version>2.3.1</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gshell</groupId>
                 <artifactId>gshell-assembly</artifactId>
-                <version>2.4-SNAPSHOT</version>
+                <version>2.3.1</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
