@@ -74,4 +74,8 @@ public class Duration
 
         return result;
     }
+
+    public String toString() {
+        return DurationFormatUtils.formatDurationHMS(value);
+    }
 }
