@@ -56,7 +56,8 @@ public class Duration
     public TimeUnit getUnit() {
         return unit;
     }
-    
+
+    @Override
     public boolean equals(final Object obj) {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
@@ -66,6 +67,7 @@ public class Duration
         return value == duration.value && unit == duration.unit;
     }
 
+    @Override
     public int hashCode() {
         int result;
 
@@ -75,6 +77,7 @@ public class Duration
         return result;
     }
 
+    @Override
     public String toString() {
         return DurationFormatUtils.formatDurationHMS(value);
     }
