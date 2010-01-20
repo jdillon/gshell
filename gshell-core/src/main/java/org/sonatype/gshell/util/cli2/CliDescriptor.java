@@ -81,7 +81,7 @@ public abstract class CliDescriptor
     }
 
     public boolean isMultiValued() {
-        return getSetter().isMultiValued();
+        return setter.isMultiValued();
     }
 
     public Class getType() {
