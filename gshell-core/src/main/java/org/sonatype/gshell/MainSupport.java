@@ -32,6 +32,7 @@ import org.sonatype.gshell.notification.ExitNotification;
 import org.sonatype.gshell.shell.Shell;
 import org.sonatype.gshell.util.Arguments;
 import org.sonatype.gshell.util.NameValue;
+import org.sonatype.gshell.util.PropertiesJack;
 import org.sonatype.gshell.util.ansi.AnsiIO;
 import org.sonatype.gshell.util.cli2.Argument;
 import org.sonatype.gshell.util.cli2.CliProcessor;
@@ -242,6 +243,7 @@ public abstract class MainSupport
         }
 
         StreamJack.maybeInstall(io.streams);
+//        PropertiesRegistration.maybeInstall(System.getProperties());
 
         // Setup a reference for our exit code so our callback thread can tell if we've shutdown normally or not
         final AtomicReference<Integer> codeRef = new AtomicReference<Integer>();
