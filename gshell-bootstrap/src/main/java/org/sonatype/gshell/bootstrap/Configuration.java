@@ -130,7 +130,7 @@ public class Configuration
         requireProperty(SHELL_VERSION);
 
         // Export some configuration
-        setSystemProperty(SHELL_HOME, getPropertyAsFile(SHELL_HOME).getPath());
+        setSystemProperty(SHELL_HOME, getPropertyAsFile(SHELL_HOME).getAbsolutePath());
         setSystemProperty(SHELL_PROGRAM, getProperty(SHELL_PROGRAM));
         setSystemProperty(SHELL_VERSION, getProperty(SHELL_VERSION));
     }
