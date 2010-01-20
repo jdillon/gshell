@@ -40,7 +40,7 @@ public abstract class CliDescriptor
 
     private final String description;
 
-    private final String defaultValue;
+//    private final String defaultValue;
 
     private final Class handlerType;
 
@@ -56,7 +56,7 @@ public abstract class CliDescriptor
             token = UNINITIALIZED_STRING.equals(opt.token()) ? null : opt.token();
             required = opt.required();
             description = UNINITIALIZED_STRING.equals(opt.description()) ? null : opt.description();
-            defaultValue = UNINITIALIZED_STRING.equals(opt.defaultValue()) ? null : opt.defaultValue();
+//            defaultValue = UNINITIALIZED_STRING.equals(opt.defaultValue()) ? null : opt.defaultValue();
             handlerType = Handler.class == opt.handler() ? null : opt.handler();
         }
         else if (spec instanceof Argument) {
@@ -64,7 +64,7 @@ public abstract class CliDescriptor
             token = UNINITIALIZED_STRING.equals(arg.token()) ? null : arg.token();
             required = arg.required();
             description = UNINITIALIZED_STRING.equals(arg.description()) ? null : arg.description();
-            defaultValue = UNINITIALIZED_STRING.equals(arg.defaultValue()) ? null : arg.defaultValue();
+//            defaultValue = UNINITIALIZED_STRING.equals(arg.defaultValue()) ? null : arg.defaultValue();
             handlerType = Handler.class == arg.handler() ? null : arg.handler();
         }
         else {
@@ -100,9 +100,9 @@ public abstract class CliDescriptor
         return description;
     }
 
-    public String getDefaultValue() {
-        return defaultValue;
-    }
+//    public String getDefaultValue() {
+//        return defaultValue;
+//    }
 
     public Class getHandlerType() {
         return handlerType;
