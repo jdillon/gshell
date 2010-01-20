@@ -60,7 +60,7 @@ public abstract class CommandActionSupport
     public MessageSource getMessages() {
         if (messages == null) {
             try {
-                messages = new ResourceBundleMessageSource(getClass());
+                messages = createMessages();
             }
             catch (MissingResourceException e) {
                 log.warn("Missing resources: " + e);
@@ -79,6 +79,13 @@ public abstract class CommandActionSupport
         }
 
         return messages;
+    }
+
+    /**
+     * @since 2.4
+     */
+    protected ResourceBundleMessageSource createMessages() {
+        return new ResourceBundleMessageSource(getClass());
     }
 
     public Completer[] getCompleters() {
