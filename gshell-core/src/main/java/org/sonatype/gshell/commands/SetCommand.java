@@ -57,7 +57,7 @@ public class SetCommand
     @Argument(index = 0)
     private String name;
 
-    @Argument(index = 1, multi = true)
+    @Argument(index = 1)
     private List<String> values;
 
     @Inject

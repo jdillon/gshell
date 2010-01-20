@@ -81,7 +81,7 @@ public class InfoCommand
     }
 
     @Preference
-    @Argument(multi = true)
+    @Argument()
     private List<Section> sections;
 
     @Option(name = "a", longName = "all")

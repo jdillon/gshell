@@ -38,7 +38,7 @@ public class PrintfCommand
     @Argument(index=0, required=true)
     private String format;
 
-    @Argument(index=1, multi=true, required=true)
+    @Argument(index=1, required=true)
     private Collection<String> arguments = null;
 
     public Object execute(final CommandContext context) throws Exception {

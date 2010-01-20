@@ -180,7 +180,7 @@ public abstract class MainSupport
 
     // TODO: Add --norc && --noprofile
 
-    @Argument(multi = true)
+    @Argument()
     protected List<String> appArgs = null;
 
     protected void exit(final int code) {

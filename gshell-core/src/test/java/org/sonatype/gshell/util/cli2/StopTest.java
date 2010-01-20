@@ -40,7 +40,7 @@ public class StopTest
         @Option(name = "v")
         boolean verbose;
 
-        @Argument(multi=true)
+        @Argument()
         List<String> remaining;
     }
 

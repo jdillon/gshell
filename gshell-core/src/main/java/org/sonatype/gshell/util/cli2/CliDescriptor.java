@@ -80,6 +80,10 @@ public abstract class CliDescriptor
         return setter;
     }
 
+    public boolean isMultiValued() {
+        return getSetter().isMultiValued();
+    }
+
     public Class getType() {
         return setter.getBean().getClass();
     }

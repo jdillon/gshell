@@ -39,7 +39,7 @@ public class EchoCommand
     @Option(name = "n", optionalArg = true)
     private boolean trailingNewline = true;
 
-    @Argument(multi=true)
+    @Argument()
     private List<String> args;
 
     public Object execute(final CommandContext context) throws Exception {

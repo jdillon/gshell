@@ -43,10 +43,6 @@ public class ArgumentDescriptor
         return spec.index();
     }
 
-    public boolean isMultiValued() {
-        return spec.multi();
-    }
-
     @Override
     public String getSyntax() {
         String tmp = getToken();

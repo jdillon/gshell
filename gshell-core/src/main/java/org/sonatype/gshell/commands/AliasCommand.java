@@ -43,7 +43,7 @@ public class AliasCommand
     @Argument(index = 0)
     private String name;
 
-    @Argument(index = 1, multi = true)
+    @Argument(index = 1)
     private List<String> target;
 
     @Inject

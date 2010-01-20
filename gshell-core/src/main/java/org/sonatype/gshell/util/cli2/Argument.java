@@ -38,8 +38,6 @@ public @interface Argument
 {
     int index() default 0;
 
-    boolean multi() default false;
-
     String token() default UNINITIALIZED_STRING;
 
     boolean required() default false;
