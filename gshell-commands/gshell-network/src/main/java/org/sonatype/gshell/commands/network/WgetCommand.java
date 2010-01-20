@@ -44,7 +44,7 @@ import java.net.URLConnection;
 public class WgetCommand
     extends CommandActionSupport
 {
-    @Option(name="o", longName="output-file", args=1)
+    @Option(name="o", longName="output-file")
     private File outputFile;
 
     @Argument(required=true)

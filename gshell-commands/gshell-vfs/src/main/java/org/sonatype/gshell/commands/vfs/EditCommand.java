@@ -40,7 +40,7 @@ import java.util.List;
 public class EditCommand
     extends VfsCommandSupport
 {
-    @Option(name="e", longName="editor", args=1)
+    @Option(name="e", longName="editor")
     private String editor;
 
     @Argument(required=true)

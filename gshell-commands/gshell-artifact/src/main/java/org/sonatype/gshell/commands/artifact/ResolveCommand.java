@@ -49,13 +49,13 @@ public class ResolveCommand
 {
     private final PlexusRuntime plexus;
 
-    @Option(name = "t", longName="type", args=1)
+    @Option(name = "t", longName="type")
     private String type = "jar";
 
-    @Option(name = "c", longName="classifier", args=1)
+    @Option(name = "c", longName="classifier")
     private String classifier;
 
-    @Option(name = "s", longName="scope", args=1)
+    @Option(name = "s", longName="scope")
     private String scope;
 
     @Option(name = "T", longName="transitive", optionalArg=true)

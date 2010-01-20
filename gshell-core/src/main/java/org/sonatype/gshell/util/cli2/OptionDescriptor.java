@@ -37,12 +37,42 @@ public class OptionDescriptor
 
     private final String longName;
 
+    private final int args;
+
+    private final boolean optionalArg;
+
     public OptionDescriptor(final Option spec, final Setter setter) {
         super(spec, setter);
         assert spec != null;
         this.spec = spec;
         this.name = UNINITIALIZED_STRING.equals(spec.name()) ? null : spec.name();
         this.longName = UNINITIALIZED_STRING.equals(spec.longName()) ? null : spec.longName();
+
+        Class type = setter.getType();
+
+        // FIXME: This is not quite right, only allows Boolean types to have optional argument
+        if (type == boolean.class) {
+            args = 0;
+            optionalArg = false;
+        }
+        else {
+            if (spec.args() != UNINITIALIZED) {
+                args = spec.args();
+            }
+            else {
+                if (type == Void.class) {
+                    args = 0;
+                }
+                else if (setter.isMultiValued()) {
+                    args = UNLIMITED;
+                }
+                else {
+                    args = 1;
+                }
+            }
+
+            optionalArg = spec.optionalArg() || type == Boolean.class;
+        }
     }
 
     public Option getSpec() {
@@ -62,11 +92,11 @@ public class OptionDescriptor
     }
 
     public int getArgs() {
-        return spec.args();
+        return args;
     }
 
     public boolean isArgumentOptional() {
-        return spec.optionalArg();
+        return optionalArg;
     }
 
     public boolean getOverride() {

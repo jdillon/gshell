@@ -38,7 +38,7 @@ import java.util.List;
 public class UnsetCommand
     extends CommandActionSupport
 {
-    @Option(name = "m", longName = "mode", args=1)
+    @Option(name = "m", longName = "mode")
     private Mode mode = Mode.VARIABLE;
 
     @Argument(required = true)

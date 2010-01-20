@@ -38,10 +38,10 @@ public class OptionsTest
         @Option(name = "h", longName = "help")
         boolean help;
 
-        @Option(name = "v", args=1, optionalArg = true)
+        @Option(name = "v", optionalArg = true)
         Boolean verbose;
 
-        @Option(name = "s", args=1, optionalArg = false)
+        @Option(name = "s", optionalArg = false)
         String string;
 
         @Option(name = "S", args=2, optionalArg = false)

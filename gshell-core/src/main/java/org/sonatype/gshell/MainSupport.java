@@ -147,29 +147,29 @@ public abstract class MainSupport
         }
     }
 
-    @Option(name = "c", longName = "command", args = 1)
+    @Option(name = "c", longName = "command")
     protected String command;
 
-    @Option(name = "D", longName = "define", args = 1)
+    @Option(name = "D", longName = "define")
     protected void setVariable(final String input) {
         NameValue nv = NameValue.parse(input);
         vars.set(nv.name, nv.value);
     }
 
-    @Option(name = "P", longName = "property", args = 1)
+    @Option(name = "P", longName = "property")
     protected void setSystemProperty(final String input) {
         NameValue nv = NameValue.parse(input);
         System.setProperty(nv.name, nv.value);
     }
 
     @Preference(name = "color")
-    @Option(name = "C", longName = "color", args = 1, optionalArg=true)
-    protected void enableAnsiColors(final boolean flag) {
+    @Option(name = "C", longName = "color")
+    protected void enableAnsiColors(final Boolean flag) {
         Ansi.setEnabled(flag);
     }
 
     @Preference(name = "terminal")
-    @Option(name = "T", longName = "terminal", args = 1)
+    @Option(name = "T", longName = "terminal")
     protected void setTerminalType(final String type) {
         TerminalFactory.configure(type);
     }

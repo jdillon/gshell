@@ -56,13 +56,13 @@ public class SortCommand
     @Option(name = "u")
     private boolean unique;
 
-    @Option(name = "t", args=1)
+    @Option(name = "t")
     private String separator;
 
     @Option(name = "b")
     private boolean ignoreBlanks;
 
-    @Option(name = "k", args=1)
+    @Option(name = "k")
     private List<String> sortFields;
 
     @Option(name = "n")
