@@ -50,6 +50,8 @@ public class OptionDescriptor
 
         Class type = setter.getType();
 
+        // FIXME: Clean up this [b|B]oolean handling...
+        
         if (type == boolean.class) {
             args = 0;
             optionalArg = false;
@@ -62,6 +64,14 @@ public class OptionDescriptor
                 if (type == Void.class) {
                     args = 0;
                 }
+                else if (type == Boolean.class) {
+                    if (spec.optionalArg()) {
+                        args = 1;
+                    }
+                    else {
+                        args = spec.args();
+                    }
+                }
                 else if (setter.isMultiValued()) {
                     args = UNLIMITED;
                 }
@@ -70,7 +80,7 @@ public class OptionDescriptor
                 }
             }
 
-            optionalArg = spec.optionalArg() || type == Boolean.class;
+            optionalArg = spec.optionalArg();
         }
     }
 

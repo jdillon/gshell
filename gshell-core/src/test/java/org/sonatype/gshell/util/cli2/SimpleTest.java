@@ -66,7 +66,6 @@ public class SimpleTest
 
         assertTrue(bean.help);
         assertNull(bean.verbose);
-//        assertFalse(bean.verbose);
     }
 
     @Test
@@ -75,7 +74,6 @@ public class SimpleTest
 
         assertTrue(bean.help);
         assertNull(bean.verbose);
-//        assertFalse(bean.verbose);
     }
 
     @Test
@@ -90,7 +88,6 @@ public class SimpleTest
 
         assertFalse(bean.help);
         assertNull(bean.verbose);
-//        assertFalse(bean.verbose);
     }
 
     @Test
@@ -100,7 +97,6 @@ public class SimpleTest
         assertEquals(bean.arg1, "foo");
         assertFalse(bean.help);
         assertNull(bean.verbose);
-//        assertFalse(bean.verbose);
     }
 
     @Test
