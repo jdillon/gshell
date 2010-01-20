@@ -50,7 +50,6 @@ public class OptionDescriptor
 
         Class type = setter.getType();
 
-        // FIXME: This is not quite right, only allows Boolean types to have optional argument
         if (type == boolean.class) {
             args = 0;
             optionalArg = false;

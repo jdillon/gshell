@@ -152,6 +152,13 @@ public class CliProcessor
 
             OptionDescriptor desc = new OptionDescriptor(opt, SetterFactory.create(element, bean));
 
+            // If the type is boolean, and its marked as optional or requires args, complain to use Boolean instead
+            if (desc.getSetter().getType() == boolean.class) {
+                if (desc.isArgumentOptional() || desc.getArgs() != 0) {
+                    throw new IllegalAnnotationError("Using Boolean for advanced processing of boolean types, on: " + element);
+                }
+            }
+
             // Make sure we have unique names
             for (OptionDescriptor tmp : optionDescriptors) {
                 if (desc.getName().equals(tmp.getName())) {
