@@ -53,7 +53,7 @@ public @interface Option
 
     String description() default UNINITIALIZED_STRING;
 
-    String defaultValue() default UNINITIALIZED_STRING;
+//    String defaultValue() default UNINITIALIZED_STRING;
 
     boolean override() default false;
     

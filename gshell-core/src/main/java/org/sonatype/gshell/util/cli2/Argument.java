@@ -44,7 +44,7 @@ public @interface Argument
     
     String description() default UNINITIALIZED_STRING;
 
-    String defaultValue() default UNINITIALIZED_STRING;
+//    String defaultValue() default UNINITIALIZED_STRING;
 
     Class<? extends Handler> handler() default DefaultHandler.class;
 }
