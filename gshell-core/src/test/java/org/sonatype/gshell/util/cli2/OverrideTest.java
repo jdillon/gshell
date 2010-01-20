@@ -34,7 +34,7 @@ public class OverrideTest
         @Option(name = "h", override=true)
         boolean help;
 
-        @Option(name = "v", required=true)
+        @Option(name = "v")
         boolean verbose;
     }
 

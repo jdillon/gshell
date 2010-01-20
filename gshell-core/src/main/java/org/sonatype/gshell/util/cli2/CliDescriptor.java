@@ -54,7 +54,7 @@ public abstract class CliDescriptor
         if (spec instanceof Option) {
             Option opt = (Option)spec;
             token = UNINITIALIZED_STRING.equals(opt.token()) ? null : opt.token();
-            required = opt.required();
+            required = false;
             description = UNINITIALIZED_STRING.equals(opt.description()) ? null : opt.description();
 //            defaultValue = UNINITIALIZED_STRING.equals(opt.defaultValue()) ? null : opt.defaultValue();
             handlerType = Handler.class == opt.handler() ? null : opt.handler();
