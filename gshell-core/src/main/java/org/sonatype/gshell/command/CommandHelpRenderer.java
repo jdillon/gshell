@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009 the original author(s).
+ * Copyright (C) 2010 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,25 +16,15 @@
 
 package org.sonatype.gshell.command;
 
+import java.io.PrintWriter;
+
 /**
- * Provides documentation support for commands.
+ * Renders command help pages.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 2.0
+ * @since 2.4
  */
-public interface CommandDocumenter
+public interface CommandHelpRenderer
 {
-    String COMMAND = "command";
-
-    String COMMAND_DOT = COMMAND + ".";
-
-    String COMMAND_NAME = COMMAND + ".name";
-
-    String COMMAND_DESCRIPTION = COMMAND + ".description";
-
-    String getDescription(CommandAction command);
-
-    void renderUsage(CommandAction command, IO io);
-
-    void renderManual(CommandAction command, IO io);
+    void render(CommandAction command, PrintWriter out);
 }

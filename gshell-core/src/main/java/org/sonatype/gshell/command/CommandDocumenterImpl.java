@@ -16,24 +16,16 @@
 
 package org.sonatype.gshell.command;
 
-import org.fusesource.jansi.AnsiRenderer;
+import com.google.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonatype.gshell.branding.Branding;
-import org.sonatype.gshell.io.PrefixingStream;
 import org.sonatype.gshell.shell.ShellHolder;
 import org.sonatype.gshell.util.ReplacementParser;
 import org.sonatype.gshell.util.cli2.CliProcessor;
 import org.sonatype.gshell.util.cli2.HelpPrinter;
 import org.sonatype.gshell.util.i18n.AggregateMessageSource;
-import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.PrefixingMessageSource;
-import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
-import org.sonatype.gshell.util.pref.PreferenceDescriptor;
-import org.sonatype.gshell.util.pref.PreferenceProcessor;
 import org.sonatype.gshell.vars.Variables;
-
-import java.io.PrintStream;
 
 /**
  * The default {@link CommandDocumenter} component.
@@ -46,7 +38,13 @@ public class CommandDocumenterImpl
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private final MessageSource messages = new ResourceBundleMessageSource(getClass());
+    private final CommandHelpRenderer helpRenderer;
+
+    @Inject
+    public CommandDocumenterImpl(final CommandHelpRenderer helpRenderer) {
+        assert helpRenderer != null;
+        this.helpRenderer = helpRenderer;
+    }
 
     private String evaluate(final CommandAction command, final String input) {
         if (input.contains("${")) {
@@ -55,7 +53,7 @@ public class CommandDocumenterImpl
                 @Override
                 protected Object replace(final String key) throws Exception {
                     Object rep = null;
-                    if (key.equals("command.name")) {
+                    if (key.equals(COMMAND_NAME)) {
                         rep = command.getName();
                     }
 
@@ -82,13 +80,6 @@ public class CommandDocumenterImpl
         assert command != null;
 
         String text = command.getMessages().getMessage(COMMAND_DESCRIPTION);
-        return evaluate(command, text);
-    }
-
-    public String getManual(final CommandAction command) {
-        assert command != null;
-
-        String text = command.getMessages().getMessage(COMMAND_MANUAL);
         return evaluate(command, text);
     }
 
@@ -121,46 +112,6 @@ public class CommandDocumenterImpl
         assert command != null;
         assert io != null;
 
-        log.trace("Rendering command manual");
-
-        PrintStream out = new PrintStream(new PrefixingStream("    ", io.streams.out));
-
-        io.out.format("@|bold %s|@", messages.getMessage("section.name")).println();
-        io.out.println();
-        out.println(command.getName());
-        io.out.println();
-
-        String text;
-
-        io.out.format("@|bold %s|@", messages.getMessage("section.description")).println();
-        text = getDescription(command);
-        out.println();
-        out.println(AnsiRenderer.render(text));
-        io.out.println();
-
-        text = getManual(command);
-        if (text != null && text.trim().length() != 0) {
-            io.out.format("@|bold %s|@", messages.getMessage("section.manual")).println();
-            out.println();
-            out.println(AnsiRenderer.render(text));
-            io.out.println();
-        }
-
-        PreferenceProcessor pp = new PreferenceProcessor();
-        Branding branding = ShellHolder.get().getBranding();
-        pp.setBasePath(branding.getPreferencesBasePath());
-        pp.addBean(command);
-
-        if (!pp.getDescriptors().isEmpty()) {
-            io.out.format("@|bold %s|@", messages.getMessage("section.preferences")).println();
-            out.println();
-
-            for (PreferenceDescriptor pd : pp.getDescriptors()) {
-                text = String.format("%s @|bold %s|@ (%s)", pd.getPreferences().absolutePath(), pd.getId(), pd.getSetter().getType().getSimpleName());
-                out.println(AnsiRenderer.render(text));
-            }
-
-            io.out.println();
-        }
+        helpRenderer.render(command, io.out);
     }
 }

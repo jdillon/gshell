@@ -14,7 +14,20 @@
 # limitations under the License.
 #
 
-section.name=NAME
-section.description=DESCRIPTION
-section.manual=MANUAL
-section.preferences=PREFERENCES
+@|bold NAME|@
+
+    ${command.name}
+
+@|bold DESCRIPTION|@
+
+    ${command.description}
+
+@|bold EXAMPLES|@
+
+    Exit with the default exit code:
+
+        exit
+
+    Exit with a specific exit code:
+
+        exit 1
