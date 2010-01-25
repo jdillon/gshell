@@ -162,21 +162,21 @@ public class FileAssert
         return isHidden(true);
     }
 
-    public FileAssert isExecutable(final boolean flag) {
-        if (getFile().canExecute() != flag) {
-            if (flag) {
-                throw new AssertionException(Messages.NOT_EXECUTABLE.format(getFile()));
-            }
-            else {
-                throw new AssertionException(Messages.IS_EXECUTABLE.format(getFile()));
-            }
-        }
-        return this;
-    }
-
-    public FileAssert isExecutable() {
-        return isExecutable(true);
-    }
+//    public FileAssert isExecutable(final boolean flag) {
+//        if (getFile().canExecute() != flag) {
+//            if (flag) {
+//                throw new AssertionException(Messages.NOT_EXECUTABLE.format(getFile()));
+//            }
+//            else {
+//                throw new AssertionException(Messages.IS_EXECUTABLE.format(getFile()));
+//            }
+//        }
+//        return this;
+//    }
+//
+//    public FileAssert isExecutable() {
+//        return isExecutable(true);
+//    }
 
     public FileAssert isAbsolute(final boolean flag) {
         if (getFile().isAbsolute() != flag) {
