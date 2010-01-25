@@ -15,8 +15,9 @@
  */
 
 
-package org.sonatype.gshell.command;
+package org.sonatype.gshell.command.help;
 
+import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.io.Closer;
 import org.sonatype.gshell.util.PrintBuffer;
 

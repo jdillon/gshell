@@ -19,6 +19,8 @@ package org.sonatype.gshell.command;
 import com.google.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.sonatype.gshell.command.help.CommandHelpRenderer;
+import org.sonatype.gshell.command.help.CommandHelpSupport;
 import org.sonatype.gshell.shell.ShellHolder;
 import org.sonatype.gshell.util.ReplacementParser;
 import org.sonatype.gshell.util.cli2.CliProcessor;

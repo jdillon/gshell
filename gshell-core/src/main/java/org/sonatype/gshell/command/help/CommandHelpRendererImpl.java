@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.command;
+package org.sonatype.gshell.command.help;
 
 import com.google.inject.Inject;
+import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.shell.ShellHolder;
 import org.sonatype.gshell.util.ReplacementParser;
 import org.sonatype.gshell.vars.Variables;
