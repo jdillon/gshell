@@ -157,9 +157,9 @@ public class ListDirectoryCommand
         if (file.isDirectory()) {
             name = ansi().fg(BLUE).a(name).a(File.separator).reset().toString();
         }
-        else if (file.canExecute()) {
-            name = ansi().fg(GREEN).a(name).a("*").reset().toString();
-        }
+//        else if (file.canExecute()) {
+//            name = ansi().fg(GREEN).a(name).a("*").reset().toString();
+//        }
 
         if (file.isHidden()) {
             name = ansi().a(INTENSITY_FAINT).a(name).reset().toString();
