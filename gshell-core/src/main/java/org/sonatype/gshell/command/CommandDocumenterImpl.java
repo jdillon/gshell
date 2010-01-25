@@ -156,7 +156,7 @@ public class CommandDocumenterImpl
             out.println();
 
             for (PreferenceDescriptor pd : pp.getDescriptors()) {
-                text = String.format("%s: @|bold %s|@ (%s)", pd.getPreferences().absolutePath(), pd.getId(), pd.getSetter().getType().getSimpleName());
+                text = String.format("%s @|bold %s|@ (%s)", pd.getPreferences().absolutePath(), pd.getId(), pd.getSetter().getType().getSimpleName());
                 out.println(AnsiRenderer.render(text));
             }
 
