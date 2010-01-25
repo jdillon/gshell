@@ -35,7 +35,6 @@ import org.sonatype.gshell.registry.CommandResolver;
 import org.sonatype.gshell.shell.Shell;
 import org.sonatype.gshell.shell.ShellHolder;
 import org.sonatype.gshell.util.Arguments;
-import org.sonatype.gshell.util.PropertiesJack;
 import org.sonatype.gshell.util.Strings;
 import org.sonatype.gshell.util.cli2.CliProcessor;
 import org.sonatype.gshell.util.cli2.OpaqueArguments;
@@ -129,7 +128,6 @@ public class CommandExecutorImpl
         final IO io = shell.getIo();
 
         StreamJack.maybeInstall(io.streams);
-//        PropertiesJack.maybeInstall(System.getProperties());
 
         Object result = null;
         try {
@@ -189,8 +187,6 @@ public class CommandExecutorImpl
             io.flush();
 
             StreamJack.deregister();
-
-//            PropertiesJack.deregister();
 
             ShellHolder.set(lastShell);
 
