@@ -16,7 +16,11 @@
 
 @|bold NAME|@
 
-    @{command.name}
+    @{command.name} - @{command.description}
+
+@|bold SYNOPSIS|@
+
+    @|bold @{command.name}|@ [options] PATH
 
 @|bold DESCRIPTION|@
 
@@ -26,6 +30,8 @@
 
     Creates a new directory if it does not already exist.
 
+@{command.options}
+@{command.arguments}
 @|bold EXAMPLES|@
 
     Create a new directory:

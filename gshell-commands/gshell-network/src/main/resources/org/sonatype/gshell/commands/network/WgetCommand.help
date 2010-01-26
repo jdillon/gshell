@@ -16,16 +16,18 @@
 
 @|bold NAME|@
 
-    @{command.name}
+    @{command.name} - @{command.description}
+
+@|bold SYNOPSIS|@
+
+    @|bold @{command.name}|@ [options] URL
 
 @|bold DESCRIPTION|@
 
-    @{command.description}
-
-@|bold MANUAL|@
-
     Downloads a file from a URL and optionally saves to a local file.
 
+@{command.options}
+@{command.arguments}
 @|bold EXAMPLES|@
 
     Display a file:

@@ -16,17 +16,19 @@
 
 @|bold NAME|@
 
-    @{command.name}
+    @{command.name} - @{command.description}
+
+@|bold SYNOPSIS|@
+
+    @|bold @{command.name}|@ [options] PATH KEY VALUE
 
 @|bold DESCRIPTION|@
-
-    @{command.description}
-
-@|bold MANUAL|@
 
     Set a preference value.  Preferences are used to persist configuration
     across shell invocations.
 
+@{command.options}
+@{command.arguments}
 @|bold EXAMPLES|@
 
     Set a preference value:

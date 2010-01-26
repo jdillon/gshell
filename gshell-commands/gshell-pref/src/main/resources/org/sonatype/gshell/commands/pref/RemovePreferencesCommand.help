@@ -16,16 +16,18 @@
 
 @|bold NAME|@
 
-    @{command.name}
+    @{command.name} - @{command.description}
+
+@|bold SYNOPSIS|@
+
+    @|bold @{command.name}|@ [options] PATH
 
 @|bold DESCRIPTION|@
 
-    @{command.description}
-
-@|bold MANUAL|@
-
     Remove a preferences node or an entire tree of preferences.
 
+@{command.options}
+@{command.arguments}
 @|bold EXAMPLES|@
 
     Remove a preferences node:

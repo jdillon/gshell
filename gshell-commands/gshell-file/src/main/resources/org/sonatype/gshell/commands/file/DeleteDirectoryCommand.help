@@ -16,17 +16,19 @@
 
 @|bold NAME|@
 
-    @{command.name}
+    @{command.name} - @{command.description}
+
+@|bold SYNOPSIS|@
+
+    @|bold @{command.name}|@ [options] PATH
 
 @|bold DESCRIPTION|@
-
-    @{command.description}
-
-@|bold MANUAL|@
 
     Remove a directory; this command will only work if they directory is
     empty.
 
+@{command.options}
+@{command.arguments}
 @|bold EXAMPLES|@
 
     rmdir /tmp/foo

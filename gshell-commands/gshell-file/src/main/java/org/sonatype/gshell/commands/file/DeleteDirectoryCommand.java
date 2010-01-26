@@ -40,7 +40,7 @@ public class DeleteDirectoryCommand
 {
     private final FileSystemAccess fileSystem;
 
-    @Argument
+    @Argument(required=true)
     private String path;
 
     @Inject

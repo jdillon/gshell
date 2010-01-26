@@ -16,16 +16,18 @@
 
 @|bold NAME|@
 
-    @{command.name}
+    @{command.name} - @{command.description}
+
+@|bold SYNOPSIS|@
+
+    @|bold @{command.name}|@ [options] PATH KEY
 
 @|bold DESCRIPTION|@
 
-    @{command.description}
-
-@|bold MANUAL|@
-
     Unset (delete) a preference.
 
+@{command.options}
+@{command.arguments}
 @|bold EXAMPLES|@
 
     Unset a preference:

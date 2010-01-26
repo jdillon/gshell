@@ -16,16 +16,18 @@
 
 @|bold NAME|@
 
-    @{command.name}
+    @{command.name} - @{command.description}
+
+@|bold SYNOPSIS|@
+
+    @|bold @{command.name}|@ [options] FILE
 
 @|bold DESCRIPTION|@
 
-    @{command.description}
-
-@|bold MANUAL|@
-
     Import preferences from XML.
 
+@{command.options}
+@{command.arguments}
 @|bold EXAMPLES|@
 
     Import as user preferences:
