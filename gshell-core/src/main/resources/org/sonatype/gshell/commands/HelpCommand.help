@@ -16,18 +16,20 @@
 
 @|bold NAME|@
 
-    @{command.name}
+    @{command.name} - @{command.description}
 
+@|bold SYNOPSIS|@
+
+    @|bold @{command.name}|@ [options] [command]
+    
 @|bold DESCRIPTION|@
-
-    @{command.description}
-
-@|bold MANUAL|@
 
     Displays a list of commands available in the current context, or when
     given a command as an argument, displays the help page for that
     command.
 
+@{command.options}
+@{command.arguments}
 @|bold EXAMPLES|@
 
     Display the list of commands:

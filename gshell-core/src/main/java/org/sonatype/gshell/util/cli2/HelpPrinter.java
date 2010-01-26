@@ -121,9 +121,7 @@ public class HelpPrinter
         if (!arguments.isEmpty()) {
             out.println(messages.getMessage("arguments.header"));
 
-            for (ArgumentDescriptor arg : arguments) {
-                printDescriptor(out, arg, len);
-            }
+            printArguments(out, arguments, len);
 
             out.println();
         }
@@ -131,14 +129,58 @@ public class HelpPrinter
         if (!options.isEmpty()) {
             out.println(messages.getMessage("options.header"));
 
-            for (OptionDescriptor opt : options) {
-                printDescriptor(out, opt, len);
-            }
+            printOptions(out, options, len);
 
             out.println();
         }
 
         out.flush();
+    }
+
+    /**
+     * @since 2.4
+     */
+    private void printArguments(final PrintWriter out, final List<ArgumentDescriptor> arguments, final int len) {
+        for (ArgumentDescriptor arg : arguments) {
+            printDescriptor(out, arg, len);
+        }
+    }
+
+    /**
+     * @since 2.4
+     */
+    public void printArguments(final PrintWriter out, final List<ArgumentDescriptor> arguments) {
+        // Compute the maximum length of the syntax column
+        int len = 0;
+
+        for (ArgumentDescriptor arg : arguments) {
+            len = Math.max(len, arg.renderSyntax(messages).length());
+        }
+
+        printArguments(out, arguments, len);
+    }
+
+    /**
+     * @since 2.4
+     */
+    private void printOptions(final PrintWriter out, final List<OptionDescriptor> options, final int len) {
+        for (OptionDescriptor opt : options) {
+            printDescriptor(out, opt, len);
+        }
+    }
+
+    /**
+     * @since 2.4
+     */
+    public void printOptions(final PrintWriter out, final List<OptionDescriptor> options) {
+        // Compute the maximum length of the syntax column
+        int len = 0;
+
+        for (OptionDescriptor opt : options) {
+            len = Math.max(len, opt.renderSyntax(messages).length());
+        }
+
+        printOptions(out, options, len);
     }
 
     public void printUsage(final PrintWriter writer) {

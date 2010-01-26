@@ -33,10 +33,6 @@ public class CommandHelpSupport
     @Option(name = "h", longName = "help", override=true)
     public boolean displayHelp;
 
-//    FIXME: Need to resolve how to deal with this
-//    @Option(name = "--", handler = StopHandler.class)
-    public boolean stop;
-
     private MessageSource messages;
 
     public MessageSource getMessages() {
