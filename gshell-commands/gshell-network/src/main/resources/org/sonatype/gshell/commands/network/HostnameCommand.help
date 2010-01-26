@@ -24,12 +24,8 @@
 
 @|bold MANUAL|@
 
-    ???
+    Displays the name of the current host.
 
 @|bold EXAMPLES|@
 
-    ???
-
-@|bold SEE ALSO|@
-
-    ???
+    hostname

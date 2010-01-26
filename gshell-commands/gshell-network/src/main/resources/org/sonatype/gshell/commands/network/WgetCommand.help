@@ -24,12 +24,14 @@
 
 @|bold MANUAL|@
 
-    ???
+    Downloads a file from a URL and optionally saves to a local file.
 
 @|bold EXAMPLES|@
 
-    ???
+    Display a file:
 
-@|bold SEE ALSO|@
+        wget http://google.com
 
-    ???
+    Save to a local file:
+
+        wget http://google.com -o /tmp/google.html
