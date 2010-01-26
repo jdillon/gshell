@@ -21,13 +21,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.command.help.CommandHelpRenderer;
 import org.sonatype.gshell.command.help.CommandHelpSupport;
-import org.sonatype.gshell.shell.ShellHolder;
-import org.sonatype.gshell.util.ReplacementParser;
 import org.sonatype.gshell.util.cli2.CliProcessor;
 import org.sonatype.gshell.util.cli2.HelpPrinter;
 import org.sonatype.gshell.util.i18n.AggregateMessageSource;
 import org.sonatype.gshell.util.i18n.PrefixingMessageSource;
-import org.sonatype.gshell.vars.Variables;
 
 /**
  * The default {@link CommandDocumenter} component.
@@ -48,48 +45,15 @@ public class CommandDocumenterImpl
         this.helpRenderer = helpRenderer;
     }
 
-    private String evaluate(final CommandAction command, final String input) {
-        if (input.contains("${")) {
-            ReplacementParser parser = new ReplacementParser()
-            {
-                @Override
-                protected Object replace(final String key) throws Exception {
-                    Object rep = null;
-                    if (key.equals(COMMAND_NAME)) {
-                        rep = command.getName();
-                    }
-
-                    if (rep == null) {
-                        Variables vars = ShellHolder.get().getVariables();
-                        rep = vars.get(key);
-                    }
-
-                    if (rep == null) {
-                        rep = System.getProperty(key);
-                    }
-                    return rep;
-                }
-            };
-
-            return parser.parse(input);
-
-        }
-
-        return input;
-    }
-
     public String getDescription(final CommandAction command) {
         assert command != null;
 
-        String text = command.getMessages().getMessage(COMMAND_DESCRIPTION);
-        return evaluate(command, text);
+        return command.getMessages().getMessage(COMMAND_DESCRIPTION);
     }
 
     public void renderUsage(final CommandAction command, final IO io) {
         assert command != null;
         assert io != null;
-
-        log.trace("Rendering command usage");
 
         CliProcessor clp = new CliProcessor();
 

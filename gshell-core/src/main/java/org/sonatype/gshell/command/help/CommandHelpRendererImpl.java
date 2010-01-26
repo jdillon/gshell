@@ -53,7 +53,29 @@ public class CommandHelpRendererImpl
             text = loader.load(command);
             text = evaluate(command, text);
 
+            // TODO: Ansi
+
             out.println(text);
+
+
+             // TODO: Add cli rendering and preferences rendering
+
+//        PreferenceProcessor pp = new PreferenceProcessor();
+//        Branding branding = ShellHolder.get().getBranding();
+//        pp.setBasePath(branding.getPreferencesBasePath());
+//        pp.addBean(command);
+//
+//        if (!pp.getDescriptors().isEmpty()) {
+//            io.out.format("@|bold %s|@", messages.getMessage("section.preferences")).println();
+//            out.println();
+//
+//            for (PreferenceDescriptor pd : pp.getDescriptors()) {
+//                text = String.format("%s @|bold %s|@ (%s)", pd.getPreferences().absolutePath(), pd.getId(), pd.getSetter().getType().getSimpleName());
+//                out.println(AnsiRenderer.render(text));
+//            }
+//
+//            io.out.println();
+//        }
         }
         catch (Exception e) {
             throw new RuntimeException(e);
@@ -61,8 +83,8 @@ public class CommandHelpRendererImpl
     }
 
     private String evaluate(final CommandAction command, final String input) {
-        if (input.contains("${")) {
-            ReplacementParser parser = new ReplacementParser()
+        if (input.contains("@{")) {
+            ReplacementParser parser = new ReplacementParser("\\@\\{([^}]+)\\}")
             {
                 @Override
                 protected Object replace(final String key) throws Exception {
@@ -86,25 +108,6 @@ public class CommandHelpRendererImpl
 
             return parser.parse(input);
         }
-
-        // TODO: Add cli rendering and preferences rendering
-
-//        PreferenceProcessor pp = new PreferenceProcessor();
-//        Branding branding = ShellHolder.get().getBranding();
-//        pp.setBasePath(branding.getPreferencesBasePath());
-//        pp.addBean(command);
-//
-//        if (!pp.getDescriptors().isEmpty()) {
-//            io.out.format("@|bold %s|@", messages.getMessage("section.preferences")).println();
-//            out.println();
-//
-//            for (PreferenceDescriptor pd : pp.getDescriptors()) {
-//                text = String.format("%s @|bold %s|@ (%s)", pd.getPreferences().absolutePath(), pd.getId(), pd.getSetter().getType().getSimpleName());
-//                out.println(AnsiRenderer.render(text));
-//            }
-//
-//            io.out.println();
-//        }
 
         return input;
     }
