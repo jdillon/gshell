@@ -16,13 +16,15 @@
 
 @|bold NAME|@
 
-    @{command.name}
+    @{command.name} - @{command.description}
 
+@|bold SYNOPSIS|@
+
+    @|bold @{command.name}|@ [options] NAME
+
+@{command.options}
+@{command.arguments}
 @|bold DESCRIPTION|@
-
-    @{command.description}
-
-@|bold MANUAL|@
 
     Removes a previously defined alias.
 

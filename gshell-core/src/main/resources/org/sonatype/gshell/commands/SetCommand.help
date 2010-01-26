@@ -16,16 +16,18 @@
 
 @|bold NAME|@
 
-    @{command.name}
+    @{command.name} - @{command.description}
+
+@|bold SYNOPSIS|@
+
+    @|bold @{command.name}|@ [options] [NAME [VALUE]]
 
 @|bold DESCRIPTION|@
 
-    @{command.description}
-
-@|bold MANUAL|@
-
     Set a shell variable or a system property.
 
+@{command.options}
+@{command.arguments}
 @|bold EXAMPLES|@
 
     List all defined variables:
@@ -48,7 +50,7 @@
 
         set -m property tmp.dir /tmp
 
-NOTE: Some variables are immutable and can not be removed or changed.
+    Some variables are @|bold immutable|@ and can not be changed.
 
 @|bold SEE ALSO|@
 

@@ -24,6 +24,8 @@ import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.registry.AliasRegistry;
 import org.sonatype.gshell.util.Strings;
 import org.sonatype.gshell.util.cli2.Argument;
+import org.sonatype.gshell.util.cli2.CliProcessor;
+import org.sonatype.gshell.util.cli2.CliProcessorAware;
 
 import java.util.Collection;
 import java.util.List;
@@ -37,6 +39,7 @@ import java.util.List;
 @Command(name="alias")
 public class AliasCommand
     extends CommandActionSupport
+    implements CliProcessorAware
 {
     private final AliasRegistry aliasRegistry;
 
@@ -50,6 +53,11 @@ public class AliasCommand
     public AliasCommand(final AliasRegistry aliasRegistry) {
         assert aliasRegistry != null;
         this.aliasRegistry = aliasRegistry;
+    }
+
+    public void setProcessor(final CliProcessor processor) {
+        assert processor != null;
+        processor.setStopAtNonOption(true);
     }
 
     public Object execute(final CommandContext context) throws Exception {

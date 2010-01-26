@@ -20,7 +20,7 @@
 
 @|bold SYNOPSIS|@
 
-    @|bold @{command.name}|@ [options] [command]
+    @|bold @{command.name}|@ [options] [COMMAND]
     
 @|bold DESCRIPTION|@
 

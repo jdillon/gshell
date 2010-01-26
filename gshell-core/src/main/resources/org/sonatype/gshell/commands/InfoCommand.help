@@ -16,13 +16,13 @@
 
 @|bold NAME|@
 
-    @{command.name}
+    @{command.name} - @{command.description}
+
+@|bold SYNOPSIS|@
+
+    @|bold @{command.name}|@ [options] [section]
 
 @|bold DESCRIPTION|@
-
-    @{command.description}
-
-@|bold MANUAL|@
 
     Displays various information about the shell.  Information is split up
     into sections.  The follow sections are available:
@@ -35,6 +35,9 @@
         CLASSES
         OS
 
+@{command.options}
+@{command.arguments}
+@{command.preferences}
 @|bold EXAMPLES|@
 
     Display the JVM section:
@@ -48,3 +51,7 @@
     Display all sections:
 
         info -a
+
+@|bold SEE ALSO|@
+
+    @|bold pref/set|@

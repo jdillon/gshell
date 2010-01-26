@@ -16,17 +16,19 @@
 
 @|bold NAME|@
 
-    @{command.name}
+    @{command.name} - @{command.description}
+
+@|bold SYNOPSIS|@
+
+    @|bold @{command.name}|@ [options] [RANGE]
 
 @|bold DESCRIPTION|@
-
-    @{command.description}
-
-@|bold MANUAL|@
 
     Displays the command history and optionally allows the history to be
     cleared.
 
+@{command.options}
+@{command.arguments}
 @|bold EXAMPLES|@
 
     Display the last 10 history items:

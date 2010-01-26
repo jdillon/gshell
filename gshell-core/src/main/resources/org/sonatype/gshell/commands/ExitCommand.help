@@ -16,16 +16,18 @@
 
 @|bold NAME|@
 
-    @{command.name}
+    @{command.name} - @{command.description}
+
+@|bold SYNOPSIS|@
+
+    @|bold @{command.name}|@ [CODE]
 
 @|bold DESCRIPTION|@
 
-    @{command.description}
-
-@|bold MANUAL|@
-
     Used to exit the shell normally.
 
+@{command.options}
+@{command.arguments}
 @|bold EXAMPLES|@
 
     Exit with the default exit code:

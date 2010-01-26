@@ -16,17 +16,19 @@
 
 @|bold NAME|@
 
-    @{command.name}
+    @{command.name} - @{command.description}
+
+@|bold SYNOPSIS|@
+
+    @|bold @{command.name}|@ [options] PATH
 
 @|bold DESCRIPTION|@
-
-    @{command.description}
-
-@|bold MANUAL|@
 
     Reads commands from a local file or URL and executes them in the current
     shell.
 
+@{command.options}
+@{command.arguments}
 @|bold EXAMPLES|@
 
     Execute commands from a local file:
