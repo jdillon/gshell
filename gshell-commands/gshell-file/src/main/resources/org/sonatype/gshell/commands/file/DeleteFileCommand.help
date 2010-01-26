@@ -24,12 +24,12 @@
 
 @|bold MANUAL|@
 
-    ???
+    Removes (deletes/unlinks) a file.
 
 @|bold EXAMPLES|@
 
-    ???
+    rm /tmp/file.txt
 
 @|bold SEE ALSO|@
 
-    ???
+    @|bold rmdir|@

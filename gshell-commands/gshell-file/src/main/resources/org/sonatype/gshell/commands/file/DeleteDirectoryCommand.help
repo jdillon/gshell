@@ -24,12 +24,13 @@
 
 @|bold MANUAL|@
 
-    ???
+    Remove a directory; this command will only work if they directory is
+    empty.
 
 @|bold EXAMPLES|@
 
-    ???
+    rmdir /tmp/foo
 
 @|bold SEE ALSO|@
 
-    ???
+    @|bold rm|@

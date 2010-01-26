@@ -24,12 +24,12 @@
 
 @|bold MANUAL|@
 
-    ???
+    Displays the current working directory (ie. ${shell.user.dir}).
 
 @|bold EXAMPLES|@
 
-    ???
+    pwd
 
 @|bold SEE ALSO|@
 
-    ???
+    @|bold cd|@

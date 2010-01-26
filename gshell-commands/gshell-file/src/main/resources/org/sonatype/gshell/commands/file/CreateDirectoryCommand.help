@@ -24,12 +24,14 @@
 
 @|bold MANUAL|@
 
-    ???
+    Creates a new directory if it does not already exist.
 
 @|bold EXAMPLES|@
 
-    ???
+    Create a new directory:
+
+        mkdir /tmp/foo
 
 @|bold SEE ALSO|@
 
-    ???
+    @|bold cd|@, @|bold rm|@, @|bold rmdir|@

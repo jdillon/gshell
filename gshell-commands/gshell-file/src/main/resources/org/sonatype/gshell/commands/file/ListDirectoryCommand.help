@@ -24,12 +24,26 @@
 
 @|bold MANUAL|@
 
-    ???
+    List information about files.
 
 @|bold EXAMPLES|@
 
-    ???
+    List the contents of a directory;
+
+        ls /tmp
+
+    List the contents of your home directory:
+
+        ls ~
+
+    List the current directory in long format:
+
+        ls -l
+
+    List hidden files:
+
+        ls -a
 
 @|bold SEE ALSO|@
 
-    ???
+    @|bold rm|@, @|bold rmdir|@

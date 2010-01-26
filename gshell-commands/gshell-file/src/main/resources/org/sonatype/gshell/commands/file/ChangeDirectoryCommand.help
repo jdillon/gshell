@@ -24,12 +24,22 @@
 
 @|bold MANUAL|@
 
-    ???
+    Change the current working directory to a specific directory.
 
 @|bold EXAMPLES|@
 
-    ???
+    Change to /tmp:
+
+        cd /tmp
+
+    Change to ${shell.user.home):
+
+        cd
+
+    Change to parent directory:
+
+        cd ..
 
 @|bold SEE ALSO|@
 
-    ???
+    @|bold pwd|@ 
