@@ -24,12 +24,18 @@
 
 @|bold MANUAL|@
 
-    ???
+    Remove a preferences node or an entire tree of preferences.
 
 @|bold EXAMPLES|@
 
-    ???
+    Remove a preferences node:
+
+        pref/remove /some/path
+
+    Remove a tree of preferences:
+
+        pref/remove -r /some/path
 
 @|bold SEE ALSO|@
 
-    ???
+    @|bold pref/list|@

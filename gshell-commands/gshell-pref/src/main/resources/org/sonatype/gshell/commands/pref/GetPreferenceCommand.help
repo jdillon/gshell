@@ -24,12 +24,14 @@
 
 @|bold MANUAL|@
 
-    ???
+    Get the value of a preference.
 
 @|bold EXAMPLES|@
 
-    ???
+    Get the value of a preference:
+
+        pref/get /some/path somekey
 
 @|bold SEE ALSO|@
 
-    ???
+    @|bold pref/set|@, @|bold pref/unset|@

@@ -24,12 +24,14 @@
 
 @|bold MANUAL|@
 
-    ???
+    Unset (delete) a preference.
 
 @|bold EXAMPLES|@
 
-    ???
+    Unset a preference:
+
+        pref/unset /some/path somekey
 
 @|bold SEE ALSO|@
 
-    ???
+    @|bold pref/set|@, @|bold pref/get|@, @|bold pref/remove|@

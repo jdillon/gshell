@@ -24,12 +24,18 @@
 
 @|bold MANUAL|@
 
-    ???
+    Import preferences from XML.
 
 @|bold EXAMPLES|@
 
-    ???
+    Import as user preferences:
+
+        pref/import prefs.xml
+
+    Import as system preferences:
+
+        pref/import -s prefs.xml
 
 @|bold SEE ALSO|@
 
-    ???
+    @|bold pref/export|@

@@ -24,12 +24,14 @@
 
 @|bold MANUAL|@
 
-    ???
+    List the contents of preferences.
 
 @|bold EXAMPLES|@
 
-    ???
+    List all user preferences:
+
+        pref/list -r /
 
 @|bold SEE ALSO|@
 
-    ???
+    @|bold pref/get|@, @|bold pref/set|@, @|bold pref/unset|@

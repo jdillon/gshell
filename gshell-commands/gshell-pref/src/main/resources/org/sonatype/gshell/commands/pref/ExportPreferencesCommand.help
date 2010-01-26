@@ -24,12 +24,18 @@
 
 @|bold MANUAL|@
 
-    ???
+    Export preferences as XML.  When no file is given the XML is displayed.
 
 @|bold EXAMPLES|@
 
-    ???
+    Export all preferences:
+
+        pref/export -t / prefs.xml
+
+    Export all system preferences:
+
+        pref/export -s -t / prefs.xml
 
 @|bold SEE ALSO|@
 
-    ???
+    @|bold pref/import|@

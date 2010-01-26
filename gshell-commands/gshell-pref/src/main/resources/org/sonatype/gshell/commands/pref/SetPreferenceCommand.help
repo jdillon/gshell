@@ -24,12 +24,15 @@
 
 @|bold MANUAL|@
 
-    ???
+    Set a preference value.  Preferences are used to persist configuration
+    across shell invocations.
 
 @|bold EXAMPLES|@
 
-    ???
+    Set a preference value:
+
+        pref/set /some/path somekey somevalue
 
 @|bold SEE ALSO|@
 
-    ???
+    @|bold pref/get|@, @|bold pref/unset|@
