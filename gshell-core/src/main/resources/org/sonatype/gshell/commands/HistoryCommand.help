@@ -16,8 +16,31 @@
 
 @|bold NAME|@
 
-    ${command.name}
+    @{command.name}
 
 @|bold DESCRIPTION|@
 
-    ${command.description}
+    @{command.description}
+
+@|bold MANUAL|@
+
+    Displays the command history and optionally allows the history to be
+    cleared.
+
+@|bold EXAMPLES|@
+
+    Display the last 10 history items:
+
+        history 10
+
+    Display the full history:
+
+        history
+
+    Clear the history:
+
+        history -c
+
+@|bold SEE ALSO|@
+
+    @|bold recall|@

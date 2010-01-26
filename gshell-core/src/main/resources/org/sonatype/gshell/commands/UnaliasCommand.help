@@ -16,8 +16,22 @@
 
 @|bold NAME|@
 
-    ${command.name}
+    @{command.name}
 
 @|bold DESCRIPTION|@
 
-    ${command.description}
+    @{command.description}
+
+@|bold MANUAL|@
+
+    Removes a previously defined alias.
+
+@|bold EXAMPLES|@
+
+    Remove an alias:
+
+        unalias foo
+
+@|bold SEE ALSO|@
+
+    @|bold alias|@

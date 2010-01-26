@@ -16,8 +16,34 @@
 
 @|bold NAME|@
 
-    ${command.name}
+    @{command.name}
 
 @|bold DESCRIPTION|@
 
-    ${command.description}
+    @{command.description}
+
+@|bold MANUAL|@
+
+    Aliases are like short-cuts.  Define an alias to replace common
+    commands and command arguments.
+
+@|bold EXAMPLES|@
+
+    List all defined aliases:
+
+        alias
+
+    Set a system property:
+
+        alias setprop -- set -m property
+
+    Invoke the alias:
+    
+        setprop foo bar
+
+NOTE: @|bold --|@ is requires here to prevent the @|bold -m|@ option from being
+      consumed by the @|bold alias|@ command.
+
+@|bold SEE ALSO|@
+
+    @|bold unalias|@

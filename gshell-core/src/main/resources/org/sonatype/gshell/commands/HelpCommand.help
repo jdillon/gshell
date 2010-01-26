@@ -16,8 +16,24 @@
 
 @|bold NAME|@
 
-    ${command.name}
+    @{command.name}
 
 @|bold DESCRIPTION|@
 
-    ${command.description}
+    @{command.description}
+
+@|bold MANUAL|@
+
+    Displays a list of commands available in the current context, or when
+    given a command as an argument, displays the help page for that
+    command.
+
+@|bold EXAMPLES|@
+
+    Display the list of commands:
+
+        help
+
+    Display the help page for the @|bold exit|@ command:
+
+        help exit

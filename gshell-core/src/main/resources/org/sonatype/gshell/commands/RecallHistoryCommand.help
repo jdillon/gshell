@@ -16,8 +16,22 @@
 
 @|bold NAME|@
 
-    ${command.name}
+    @{command.name}
 
 @|bold DESCRIPTION|@
 
-    ${command.description}
+    @{command.description}
+
+@|bold MANUAL|@
+
+    Recalls (and executes) a command from history.
+
+@|bold EXAMPLES|@
+
+    Recall the first item from history:
+
+        recall 1
+
+@|bold SEE ALSO|@
+
+    @|bold history|@

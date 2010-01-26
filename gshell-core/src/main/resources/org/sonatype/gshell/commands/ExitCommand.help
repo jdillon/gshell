@@ -16,11 +16,15 @@
 
 @|bold NAME|@
 
-    ${command.name}
+    @{command.name}
 
 @|bold DESCRIPTION|@
 
-    ${command.description}
+    @{command.description}
+
+@|bold MANUAL|@
+
+    Used to exit the shell normally.
 
 @|bold EXAMPLES|@
 

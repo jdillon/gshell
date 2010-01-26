@@ -16,8 +16,19 @@
 
 @|bold NAME|@
 
-    ${command.name}
+    @{command.name}
 
 @|bold DESCRIPTION|@
 
-    ${command.description}
+    @{command.description}
+
+@|bold MANUAL|@
+
+    Reads commands from a local file or URL and executes them in the current
+    shell.
+
+@|bold EXAMPLES|@
+
+    Execute commands from a local file:
+
+        source /tmp/myscript.txt

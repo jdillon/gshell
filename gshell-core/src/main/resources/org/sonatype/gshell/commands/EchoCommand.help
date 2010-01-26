@@ -16,8 +16,23 @@
 
 @|bold NAME|@
 
-    ${command.name}
+    @{command.name}
 
 @|bold DESCRIPTION|@
 
-    ${command.description}
+    @{command.description}
+
+@|bold MANUAL|@
+
+    Displays the given text to the console.  By default a new-line will be
+    sent at the end of the text, unless the @|bold -n|@ flag is specified.
+
+@|bold EXAMPLES|@
+
+    Display a raw string:
+
+        echo hello
+
+    Display a variable:
+
+        echo ${shell.version}

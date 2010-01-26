@@ -16,8 +16,35 @@
 
 @|bold NAME|@
 
-    ${command.name}
+    @{command.name}
 
 @|bold DESCRIPTION|@
 
-    ${command.description}
+    @{command.description}
+
+@|bold MANUAL|@
+
+    Displays various information about the shell.  Information is split up
+    into sections.  The follow sections are available:
+
+        SHELL
+        TERMINAL
+        JVM
+        THREADS
+        MEMORY
+        CLASSES
+        OS
+
+@|bold EXAMPLES|@
+
+    Display the JVM section:
+
+        info jvm
+
+    Display the JVM and OS sections:
+
+        info jvm os
+
+    Display all sections:
+
+        info -a

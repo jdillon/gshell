@@ -16,8 +16,40 @@
 
 @|bold NAME|@
 
-    ${command.name}
+    @{command.name}
 
 @|bold DESCRIPTION|@
 
-    ${command.description}
+    @{command.description}
+
+@|bold MANUAL|@
+
+    Set a shell variable or a system property.
+
+@|bold EXAMPLES|@
+
+    List all defined variables:
+
+        set
+    
+    Set a variable:
+
+        set FOO BAR
+
+    Set a variable with quotes:
+
+        set FOO "this is foo"
+
+    List all system properties:
+
+        set -m property
+
+    Set a system property:
+
+        set -m property tmp.dir /tmp
+
+NOTE: Some variables are immutable and can not be removed or changed.
+
+@|bold SEE ALSO|@
+
+    @|bold unset|@

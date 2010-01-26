@@ -16,8 +16,28 @@
 
 @|bold NAME|@
 
-    ${command.name}
+    @{command.name}
 
 @|bold DESCRIPTION|@
 
-    ${command.description}
+    @{command.description}
+
+@|bold MANUAL|@
+
+    Removes a previously set variable or system property.
+
+@|bold EXAMPLES|@
+
+    Remove a variable:
+
+        unset FOO
+
+    Remove a system property:
+
+        unset -m property tmp.dir
+
+NOTE: Some variables are immutable and can not be removed or changed.
+
+@|bold SEE ALSO|@
+
+    @|bold set|@
