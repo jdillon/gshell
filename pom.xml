@@ -107,7 +107,7 @@
             <dependency>
                 <groupId>org.sonatype.gossip</groupId>
                 <artifactId>gossip</artifactId>
-                <version>1.3</version>
+                <version>1.4-SNAPSHOT</version>
             </dependency>
             
             <dependency>
