@@ -16,11 +16,14 @@
 
 package org.sonatype.gshell.help;
 
+import org.codehaus.plexus.interpolation.AbstractValueSource;
+import org.codehaus.plexus.interpolation.Interpolator;
+import org.codehaus.plexus.interpolation.PrefixedObjectValueSource;
+import org.codehaus.plexus.interpolation.PropertiesBasedValueSource;
+import org.codehaus.plexus.interpolation.StringSearchInterpolator;
 import org.sonatype.gshell.command.CommandHelpSupport;
 import org.sonatype.gshell.command.descriptor.HelpPageDescriptor;
 import org.sonatype.gshell.shell.ShellHolder;
-import org.sonatype.gshell.util.ReplacementParser;
-import org.sonatype.gshell.vars.Variables;
 
 import java.io.PrintWriter;
 import java.util.ResourceBundle;
@@ -51,7 +54,7 @@ public class MetaHelpPage
 
     private ResourceBundle resources;
 
-    public String getBriefDescription() {
+    public String getDescription() {
         if (resources == null) {
             resources = ResourceBundle.getBundle(desc.getResource());
         }
@@ -62,50 +65,23 @@ public class MetaHelpPage
     public void render(final PrintWriter out) {
         assert out != null;
 
-        String text;
+        Interpolator interp = new StringSearchInterpolator("@{", "}");
+        interp.addValueSource(new PrefixedObjectValueSource("command.", this));
+        interp.addValueSource(new PrefixedObjectValueSource("branding.", ShellHolder.get().getBranding()));
+        interp.addValueSource(new AbstractValueSource(false)
+        {
+            public Object getValue(final String expression) {
+                return ShellHolder.get().getVariables().get(expression);
+            }
+        });
+        interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));
+        
         try {
-            text = loader.load(desc.getResource(), Thread.currentThread().getContextClassLoader());
-            text = evaluate(text);
-            out.println(text);
+            String text = loader.load(desc.getResource(), Thread.currentThread().getContextClassLoader());
+            out.println(interp.interpolate(text));
         }
         catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private String evaluate(final String input) {
-        if (input.contains("@{")) {
-            ReplacementParser parser = new ReplacementParser("\\@\\{([^}]+)\\}")
-            {
-                //
-                // TODO: Expose the branding here too
-                //
-                
-                @Override
-                protected Object replace(final String key) throws Exception {
-                    Object rep = null;
-                    if (key.equals(CommandHelpSupport.COMMAND_NAME)) {
-                        rep = getName();
-                    }
-                    else if (key.equals(CommandHelpSupport.COMMAND_DESCRIPTION)) {
-                        rep = getBriefDescription();
-                    }
-
-                    if (rep == null) {
-                        Variables vars = ShellHolder.get().getVariables();
-                        rep = vars.get(key);
-                    }
-                    if (rep == null) {
-                        rep = System.getProperty(key);
-                    }
-
-                    return rep;
-                }
-            };
-
-            return parser.parse(input);
-        }
-
-        return input;
     }
 }

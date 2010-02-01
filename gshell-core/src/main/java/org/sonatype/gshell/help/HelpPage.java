@@ -28,7 +28,7 @@ public interface HelpPage
 {
     String getName();
 
-    String getBriefDescription();
+    String getDescription();
 
     void render(PrintWriter out);
 }

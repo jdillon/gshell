@@ -104,7 +104,7 @@ public class HelpCommand
             String formattedName = String.format(nameFormat, page.getName());
             io.out.format("  @|bold %s|@", formattedName);
 
-            String description = page.getBriefDescription();
+            String description = page.getDescription();
             if (description != null) {
                 io.out.print("  ");
                 io.out.println(description);

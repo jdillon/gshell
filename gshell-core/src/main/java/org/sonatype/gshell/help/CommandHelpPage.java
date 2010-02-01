@@ -16,6 +16,11 @@
 
 package org.sonatype.gshell.help;
 
+import org.codehaus.plexus.interpolation.AbstractValueSource;
+import org.codehaus.plexus.interpolation.Interpolator;
+import org.codehaus.plexus.interpolation.PrefixedObjectValueSource;
+import org.codehaus.plexus.interpolation.PropertiesBasedValueSource;
+import org.codehaus.plexus.interpolation.StringSearchInterpolator;
 import org.fusesource.jansi.AnsiRenderer;
 import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.command.CommandAction;
@@ -55,107 +60,113 @@ public class CommandHelpPage
         return command.getName();
     }
 
-    public String getBriefDescription() {
+    public String getDescription() {
         return CommandHelpSupport.getDescription(command);
+    }
+
+    // Public so that ObjectBasedValueSource can access
+    public class Helper
+    {
+        private final CliProcessor clp;
+
+        private final HelpPrinter printer;
+
+        private final PreferenceProcessor pp;
+
+        public Helper() {
+            CommandHelpSupport help = new CommandHelpSupport();
+            clp = help.createProcessor(command);
+            printer = new HelpPrinter(clp);
+
+            pp = new PreferenceProcessor();
+            Branding branding = ShellHolder.get().getBranding();
+            pp.setBasePath(branding.getPreferencesBasePath());
+            pp.addBean(command);
+        }
+
+        public String getName() {
+            return command.getName();
+        }
+
+        @SuppressWarnings("unused")
+        public String getDescription() {
+            return CommandHelpSupport.getDescription(command);
+        }
+
+        @SuppressWarnings("unused")
+        public String getArguments() {
+            if (clp.getArgumentDescriptors().isEmpty()) {
+                return "";
+            }
+
+            PrintBuffer buff = new PrintBuffer();
+
+            buff.println("@|bold ARGUMENTS|@"); // TODO: i18n
+            buff.println();
+
+            printer.printArguments(buff, clp.getArgumentDescriptors());
+
+            return buff.toString();
+        }
+
+        @SuppressWarnings("unused")
+        public String getOptions() {
+            if (clp.getOptionDescriptors().isEmpty()) {
+                return "";
+            }
+
+            PrintBuffer buff = new PrintBuffer();
+
+            buff.println("@|bold OPTIONS|@"); // TODO: i18n
+            buff.println();
+
+            printer.printOptions(buff, clp.getOptionDescriptors());
+
+            return buff.toString();
+        }
+
+        @SuppressWarnings("unused")
+        public String getPreferences() {
+            if (pp.getDescriptors().isEmpty()) {
+                return "";
+            }
+
+            PrintBuffer buff = new PrintBuffer();
+
+            buff.println("@|bold PREFERENCES|@"); // TODO: i18n
+            buff.println();
+
+            for (PreferenceDescriptor pd : pp.getDescriptors()) {
+                String
+                    text =
+                    String.format("    %s @|bold %s|@ (%s)", pd.getPreferences().absolutePath(), pd.getId(), pd.getSetter().getType().getSimpleName());
+                buff.println(AnsiRenderer.render(text));
+            }
+
+            return buff.toString();
+        }
     }
 
     public void render(final PrintWriter out) {
         assert out != null;
 
-        String text;
+        Interpolator interp = new StringSearchInterpolator("@{", "}");
+        interp.addValueSource(new PrefixedObjectValueSource("command.", new Helper()));
+        interp.addValueSource(new PrefixedObjectValueSource("branding.", ShellHolder.get().getBranding()));
+        interp.addValueSource(new AbstractValueSource(false)
+        {
+            public Object getValue(final String expression) {
+                return ShellHolder.get().getVariables().get(expression);
+            }
+        });
+        interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));
+
         try {
-            text = loader.load(command.getClass().getName(), command.getClass().getClassLoader());
-            text = evaluate(command, text);
-            out.println(text);
+            String text = loader.load(command.getClass().getName(), command.getClass().getClassLoader());
+            out.println(interp.interpolate(text));
         }
         catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private String evaluate(final CommandAction command, final String input) {
-        if (input.contains("@{")) {
-            CommandHelpSupport help = new CommandHelpSupport();
-            final CliProcessor clp = help.createProcessor(command);
-            final HelpPrinter printer = new HelpPrinter(clp);
-
-            final PreferenceProcessor pp = new PreferenceProcessor();
-            Branding branding = ShellHolder.get().getBranding();
-            pp.setBasePath(branding.getPreferencesBasePath());
-            pp.addBean(command);
-
-            ReplacementParser parser = new ReplacementParser("\\@\\{([^}]+)\\}")
-            {
-                //
-                // TODO: Expose the branding here too
-                //
-
-                @Override
-                protected Object replace(final String key) throws Exception {
-                    Object rep = null;
-                    if (key.equals(CommandHelpSupport.COMMAND_NAME)) {
-                        rep = command.getName();
-                    }
-                    else if (key.equals(CommandHelpSupport.COMMAND_DESCRIPTION)) {
-                        rep = CommandHelpSupport.getDescription(command);
-                    }
-                    else if (key.equals("command.arguments")) {
-                        if (!clp.getArgumentDescriptors().isEmpty()) {
-                            PrintBuffer buff = new PrintBuffer();
-
-                            buff.println("@|bold ARGUMENTS|@"); // TODO: i18n
-                            buff.println();
-
-                            printer.printArguments(buff, clp.getArgumentDescriptors());
-
-                            rep = buff.toString();
-                        }
-                    }
-                    else if (key.equals("command.options")) {
-                        if (!clp.getOptionDescriptors().isEmpty()) {
-                            PrintBuffer buff = new PrintBuffer();
-
-                            buff.println("@|bold OPTIONS|@"); // TODO: i18n
-                            buff.println();
-
-                            printer.printOptions(buff, clp.getOptionDescriptors());
-
-                            rep = buff.toString();
-                        }
-                    }
-                    else if (key.equals("command.preferences")) {
-                        if (!pp.getDescriptors().isEmpty()) {
-                            PrintBuffer buff = new PrintBuffer();
-
-                            buff.println("@|bold PREFERENCES|@"); // TODO: i18n
-                            buff.println();
-
-                            for (PreferenceDescriptor pd : pp.getDescriptors()) {
-                                String
-                                    text =
-                                    String.format("    %s @|bold %s|@ (%s)", pd.getPreferences().absolutePath(), pd.getId(), pd.getSetter().getType().getSimpleName());
-                                buff.println(AnsiRenderer.render(text));
-                            }
-
-                            rep = buff.toString();
-                        }
-                    }
-
-                    if (rep == null) {
-                        Variables vars = ShellHolder.get().getVariables();
-                        rep = vars.get(key);
-                    }
-                    if (rep == null) {
-                        rep = System.getProperty(key);
-                    }
-
-                    return rep;
-                }
-            };
-
-            return parser.parse(input);
-        }
-
-        return input;
     }
 }

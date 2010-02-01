@@ -42,7 +42,7 @@ public class AliasHelpPage
         return name;
     }
 
-    public String getBriefDescription() {
+    public String getDescription() {
         return String.format("Alias to: @|bold %s|@", alias); // TODO: i18n
     }
 
