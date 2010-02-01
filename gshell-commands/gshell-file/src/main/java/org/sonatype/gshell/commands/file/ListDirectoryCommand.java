@@ -37,7 +37,6 @@ import java.util.List;
 
 import static org.fusesource.jansi.Ansi.Attribute.INTENSITY_FAINT;
 import static org.fusesource.jansi.Ansi.Color.BLUE;
-import static org.fusesource.jansi.Ansi.Color.GREEN;
 import static org.fusesource.jansi.Ansi.ansi;
 
 /**
