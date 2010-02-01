@@ -85,7 +85,11 @@ public class HelpContentLoaderImpl
         URL resource = null;
 
         for (Locale candidate : getCandidateLocales(locale)) {
-            String bundle = toBundleName(name, candidate);
+            String bundle = name;
+            
+            if (candidate != null) {
+                bundle = toBundleName(name, candidate);
+            }
 
             try {
                 resource = loader.getResource(toResourceName(bundle, "help"));
@@ -115,7 +119,7 @@ public class HelpContentLoaderImpl
         if (language.length() > 0) {
             locales.add((locales.size() == 0) ? locale : new Locale(language, "", ""));
         }
-        locales.add(Locale.ROOT);
+        locales.add(null);
 
         return locales;
     }
