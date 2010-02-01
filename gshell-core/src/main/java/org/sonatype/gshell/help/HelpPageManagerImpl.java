@@ -67,40 +67,45 @@ public class HelpPageManagerImpl
         this.helpLoader = helpLoader;
     }
 
-    public HelpPage getPage(final String path) {
-        assert path != null;
+    public HelpPage getPage(final String name) {
+        assert name != null;
 
-        if (aliasRegistry.containsAlias(path)) {
+        if (aliasRegistry.containsAlias(name)) {
             try {
-                return new AliasHelpPage(path, aliasRegistry.getAlias(path));
+                return new AliasHelpPage(name, aliasRegistry.getAlias(name));
             }
             catch (NoSuchAliasException e) {
                 throw new Error(e);
             }
         }
 
-        if (commandRegistry.containsCommand(path)) {
+        if (commandRegistry.containsCommand(name)) {
             try {
-                return new CommandHelpPage(commandRegistry.getCommand(path), helpLoader);
+                return new CommandHelpPage(commandRegistry.getCommand(name), helpLoader);
             }
             catch (NoSuchCommandException e) {
                 throw new Error(e);
             }
         }
 
-        if (metaPages.containsKey(path)) {
-            return metaPages.get(path);
+        if (metaPages.containsKey(name)) {
+            return metaPages.get(name);
         }
         
         return null;
     }
 
-    public Collection<HelpPage> getPages() {
+    public Collection<HelpPage> getPages(final HelpPageFilter filter) {
+        assert filter != null;
+
         List<HelpPage> pages = new ArrayList<HelpPage>();
 
         for (String name : commandRegistry.getCommandNames()) {
             try {
-                pages.add(new CommandHelpPage(commandRegistry.getCommand(name), helpLoader));
+                HelpPage page = new CommandHelpPage(commandRegistry.getCommand(name), helpLoader);
+                if (filter.accept(page)) {
+                    pages.add(page);
+                }
             }
             catch (NoSuchCommandException e) {
                 throw new Error(e);
@@ -108,6 +113,15 @@ public class HelpPageManagerImpl
         }
 
         return pages;
+    }
+
+    public Collection<HelpPage> getPages() {
+        return getPages(new HelpPageFilter() {
+            public boolean accept(final HelpPage page)
+            {
+                return true;
+            }
+        });
     }
 
     public void addMetaPage(final HelpPageDescriptor desc) {

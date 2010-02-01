@@ -23,12 +23,14 @@ import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.help.HelpPage;
+import org.sonatype.gshell.help.HelpPageFilter;
 import org.sonatype.gshell.help.HelpPageManager;
 import org.sonatype.gshell.help.MetaHelpPage;
 import org.sonatype.gshell.help.MetaHelpPageNameCompleter;
 import org.sonatype.gshell.registry.AliasNameCompleter;
 import org.sonatype.gshell.registry.CommandNameCompleter;
 import org.sonatype.gshell.util.cli2.Argument;
+import org.sonatype.gshell.util.cli2.Option;
 
 import java.util.Collection;
 
@@ -74,15 +76,25 @@ public class HelpCommand
             return Result.SUCCESS;
         }
         else {
-            HelpPage page = helpPages.getPage(name);
+            Collection<HelpPage> pages = helpPages.getPages(new HelpPageFilter()
+            {
+                public boolean accept(final HelpPage page) {
+                    assert page != null;
+                    return page.getName().contains(name) || page.getDescription().contains(name);
+                }
+            });
 
-            // TODO: Consider using an exception here, instead of returning a null
-            if (page == null) {
+            if (pages.isEmpty()) {
                 io.err.println(getMessages().format("error.help-not-found", name));
                 return Result.FAILURE;
             }
-
-            page.render(io.out);
+            else if (pages.size() == 1) {
+                pages.iterator().next().render(io.out);
+            }
+            else {
+                io.out.println(getMessages().format("info.matching-pages"));
+                renderPages(context, pages);
+            }
 
             return Result.SUCCESS;
         }

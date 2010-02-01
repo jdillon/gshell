@@ -16,25 +16,13 @@
 
 package org.sonatype.gshell.help;
 
-import org.sonatype.gshell.command.descriptor.HelpPageDescriptor;
-
-import java.util.Collection;
-
 /**
- * Manages {@link HelpPage}s.
+ * Allows for filtering of help pages.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-public interface HelpPageManager
+public interface HelpPageFilter
 {
-    HelpPage getPage(String name);
-
-    Collection<HelpPage> getPages();
-
-    Collection<HelpPage> getPages(HelpPageFilter filter);
-
-    void addMetaPage(HelpPageDescriptor descriptor);
-
-    Collection<MetaHelpPage> getMetaPages();
+    boolean accept(HelpPage page);
 }

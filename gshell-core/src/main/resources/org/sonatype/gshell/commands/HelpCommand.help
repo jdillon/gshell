@@ -24,9 +24,11 @@
     
 @|bold DESCRIPTION|@
 
-    Displays a list of available help pages in the current context, or when
-    given a name as an argument, displays a specific help page.
-
+    Displays help pages.  When no argument is given, displays all pages
+    available in the current context.  When an argument is given that matches
+    a page name, the help page is displayed, else a list of matching pages
+    is displayed.
+    
 @{command.options}
 @{command.arguments}
 @|bold EXAMPLES|@

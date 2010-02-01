@@ -30,5 +30,7 @@ public interface HelpPage
 
     String getDescription();
 
+    // TODO: Section?
+
     void render(PrintWriter out);
 }
