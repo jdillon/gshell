@@ -50,8 +50,8 @@
 
 @|bold COMPOUND COMMANDS|@
 
-    Multipule commands can be executed on the same line by separating them
-    with ';':
+    Multiple commands can be executed on the same line by separating each
+    command (and it's options and arguments) with ';':
 
         command; [command; ...]
 
@@ -62,4 +62,3 @@
     Result:
 
         hi there
-
