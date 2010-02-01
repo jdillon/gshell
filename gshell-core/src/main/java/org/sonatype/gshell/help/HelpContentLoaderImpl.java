@@ -81,7 +81,6 @@ public class HelpContentLoaderImpl
 
     private URL findResource(final String name, final Locale locale, final ClassLoader loader) {
         assert name != null;
-        assert locale != null;
         assert loader != null;
 
         URL resource = null;
@@ -99,28 +98,30 @@ public class HelpContentLoaderImpl
         return resource;
     }
 
-    private List<Locale> getCandidateLocales(Locale locale) {
+    private List<Locale> getCandidateLocales(final Locale locale) {
+        assert locale != null;
+
         String language = locale.getLanguage();
         String country = locale.getCountry();
         String variant = locale.getVariant();
 
         List<Locale> locales = new ArrayList<Locale>(4);
+
         if (variant.length() > 0) {
             locales.add(locale);
         }
         if (country.length() > 0) {
-            locales.add((locales.size() == 0) ?
-                locale : new Locale(language, country, ""));
+            locales.add((locales.size() == 0) ? locale : new Locale(language, country, ""));
         }
         if (language.length() > 0) {
-            locales.add((locales.size() == 0) ?
-                locale : new Locale(language, "", ""));
+            locales.add((locales.size() == 0) ? locale : new Locale(language, "", ""));
         }
         locales.add(Locale.ROOT);
+
         return locales;
     }
 
-    private String toBundleName(String baseName, Locale locale) {
+    private String toBundleName(final String baseName, final Locale locale) {
         if (locale == Locale.ROOT) {
             return baseName;
         }
@@ -133,24 +134,25 @@ public class HelpContentLoaderImpl
             return baseName;
         }
 
-        StringBuilder sb = new StringBuilder(baseName);
-        sb.append('_');
+        StringBuilder buff = new StringBuilder(baseName);
+        buff.append('_');
         if (variant != "") {
-            sb.append(language).append('_').append(country).append('_').append(variant);
+            buff.append(language).append('_').append(country).append('_').append(variant);
         }
         else if (country != "") {
-            sb.append(language).append('_').append(country);
+            buff.append(language).append('_').append(country);
         }
         else {
-            sb.append(language);
+            buff.append(language);
         }
-        return sb.toString();
+        
+        return buff.toString();
 
     }
 
-    private String toResourceName(String bundleName, String suffix) {
-        StringBuilder sb = new StringBuilder(bundleName.length() + 1 + suffix.length());
-        sb.append(bundleName.replace('.', '/')).append('.').append(suffix);
-        return sb.toString();
+    private String toResourceName(final String bundleName, final String suffix) {
+        StringBuilder buff = new StringBuilder(bundleName.length() + 1 + suffix.length());
+        buff.append(bundleName.replace('.', '/')).append('.').append(suffix);
+        return buff.toString();
     }
 }
