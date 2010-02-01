@@ -16,6 +16,9 @@
 
 package org.sonatype.gshell.help;
 
+import org.sonatype.gshell.util.i18n.MessageSource;
+import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
+
 import java.io.PrintWriter;
 
 /**
@@ -31,6 +34,8 @@ public class AliasHelpPage
 
     private final String alias;
 
+    private MessageSource messages;
+
     public AliasHelpPage(final String name, final String alias) {
         assert name != null;
         this.name = name;
@@ -38,18 +43,23 @@ public class AliasHelpPage
         this.alias = alias;
     }
 
+    private MessageSource getMessages() {
+        if (messages == null) {
+            messages = new ResourceBundleMessageSource(getClass());
+        }
+        return messages;
+    }
+    
     public String getName() {
         return name;
     }
 
     public String getDescription() {
-        return String.format("Alias to: @|bold %s|@", alias); // TODO: i18n
+        return getMessages().format("alias-to-description", alias);
     }
 
     public void render(final PrintWriter out) {
         assert out != null;
-
-        out.format("The @|bold %s|@ command is an alias to: @|bold %s|@", name, alias); // TODO: i18n
-        out.println();
+        out.println(getMessages().format("alias-to-content", name, alias));
     }
 }
