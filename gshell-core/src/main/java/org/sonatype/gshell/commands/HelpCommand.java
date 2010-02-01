@@ -69,13 +69,18 @@ public class HelpCommand
         assert context != null;
         IO io = context.getIo();
 
+        // If there is no argument given, display all help pages in context
         if (name == null) {
             displayCommands(context);
             displayMetaPages(context);
-            
             return Result.SUCCESS;
         }
-        else {
+
+        // First try a direct match
+        HelpPage page = helpPages.getPage(name);
+
+        // if not direct match, then look for similar pages
+        if (page == null) {
             Collection<HelpPage> pages = helpPages.getPages(new HelpPageFilter()
             {
                 public boolean accept(final HelpPage page) {
@@ -84,20 +89,27 @@ public class HelpCommand
                 }
             });
 
-            if (pages.isEmpty()) {
-                io.err.println(getMessages().format("error.help-not-found", name));
-                return Result.FAILURE;
+            if (pages.size() == 1) {
+                // if there is only one match, treat as a direct match
+                page = pages.iterator().next();
             }
-            else if (pages.size() == 1) {
-                pages.iterator().next().render(io.out);
-            }
-            else {
+            else if (pages.size() > 1) {
+                // else show matching pages
                 io.out.println(getMessages().format("info.matching-pages"));
                 renderPages(context, pages);
+                return Result.SUCCESS;
             }
-
-            return Result.SUCCESS;
         }
+
+        // if not page matched, complain
+        if (page == null) {
+            io.err.println(getMessages().format("error.help-not-found", name));
+            return Result.FAILURE;
+        }
+
+        // else render the matched page
+        page.render(io.out);
+        return Result.SUCCESS;
     }
 
     private void renderPages(final CommandContext context, final Collection<? extends HelpPage> pages) {

@@ -22,18 +22,17 @@ import org.codehaus.plexus.interpolation.PrefixedObjectValueSource;
 import org.codehaus.plexus.interpolation.PropertiesBasedValueSource;
 import org.codehaus.plexus.interpolation.StringSearchInterpolator;
 import org.fusesource.jansi.AnsiRenderer;
-import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.CommandHelpSupport;
 import org.sonatype.gshell.command.CommandPreferenceSupport;
 import org.sonatype.gshell.shell.ShellHolder;
 import org.sonatype.gshell.util.PrintBuffer;
-import org.sonatype.gshell.util.ReplacementParser;
 import org.sonatype.gshell.util.cli2.CliProcessor;
 import org.sonatype.gshell.util.cli2.HelpPrinter;
+import org.sonatype.gshell.util.i18n.MessageSource;
+import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
 import org.sonatype.gshell.util.pref.PreferenceDescriptor;
 import org.sonatype.gshell.util.pref.PreferenceProcessor;
-import org.sonatype.gshell.vars.Variables;
 
 import java.io.PrintWriter;
 
@@ -74,6 +73,8 @@ public class CommandHelpPage
 
         private final PreferenceProcessor pp;
 
+        private MessageSource messages;
+
         public Helper() {
             CommandHelpSupport help = new CommandHelpSupport();
             clp = help.createProcessor(command);
@@ -81,6 +82,15 @@ public class CommandHelpPage
             pp = CommandPreferenceSupport.createProcessor(command);
         }
 
+        private MessageSource getMessages() {
+            if (messages == null) {
+                messages = new ResourceBundleMessageSource(getClass());
+            }
+
+            return messages;
+        }
+
+        @SuppressWarnings("unused")
         public String getName() {
             return command.getName();
         }
@@ -98,7 +108,7 @@ public class CommandHelpPage
 
             PrintBuffer buff = new PrintBuffer();
 
-            buff.println("@|bold ARGUMENTS|@"); // TODO: i18n
+            buff.format("@|bold %s|@", getMessages().format("section.arguments")).println();
             buff.println();
 
             printer.printArguments(buff, clp.getArgumentDescriptors());
@@ -114,7 +124,7 @@ public class CommandHelpPage
 
             PrintBuffer buff = new PrintBuffer();
 
-            buff.println("@|bold OPTIONS|@"); // TODO: i18n
+            buff.format("@|bold %s|@", getMessages().format("section.options")).println();
             buff.println();
 
             printer.printOptions(buff, clp.getOptionDescriptors());
@@ -130,7 +140,7 @@ public class CommandHelpPage
 
             PrintBuffer buff = new PrintBuffer();
 
-            buff.println("@|bold PREFERENCES|@"); // TODO: i18n
+            buff.format("@|bold %s|@", getMessages().format("section.preferences")).println();
             buff.println();
 
             for (PreferenceDescriptor pd : pp.getDescriptors()) {

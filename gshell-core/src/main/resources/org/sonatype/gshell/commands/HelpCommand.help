@@ -40,3 +40,7 @@
     Display the help page for the @|bold exit|@ command:
 
         help exit
+
+    Display help pages matching 'pref':
+
+        help pref
