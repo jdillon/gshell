@@ -13,11 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+# FIXME: These should use branding variables...
+#
 
 @|bold CONFIGURATION FILES|@
-#
-#    FIXME: These should use branding variables...
-
     @|underline $HOME/.m2/mvnsh.boot|@ (and @|underline mvnsh.boot.bat|@)
 
         Platform specific (use mvnsh.boot on unix, mvnsh.boot.bat on windows)
@@ -42,6 +41,16 @@
 
         An installation-specific shell script loaded when the shell starts in
         interactive mode.
+
+@|bold OTHER FILES|@
+
+    @|underline $SHELL_HOME/log/shell.log|@
+
+        Logging output is captured to this file.
+
+    @|underline $HOME/.m2/mvnsh.history|@
+
+        Interactive shell history is stored in this file.
 
 @|bold SEE ALSO|@
 
