@@ -124,10 +124,6 @@ public class HelpContentLoaderImpl
         assert baseName != null;
         assert locale != null;
 
-        if (locale == Locale.ROOT) {
-            return baseName;
-        }
-
         String language = locale.getLanguage();
         String country = locale.getCountry();
         String variant = locale.getVariant();
