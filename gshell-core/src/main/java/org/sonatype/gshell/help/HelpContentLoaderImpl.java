@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.MissingResourceException;
-import java.util.ResourceBundle;
 
 /**
  * {@link HelpContentLoader} component.
@@ -122,6 +121,9 @@ public class HelpContentLoaderImpl
     }
 
     private String toBundleName(final String baseName, final Locale locale) {
+        assert baseName != null;
+        assert locale != null;
+
         if (locale == Locale.ROOT) {
             return baseName;
         }
@@ -130,16 +132,16 @@ public class HelpContentLoaderImpl
         String country = locale.getCountry();
         String variant = locale.getVariant();
 
-        if (language == "" && country == "" && variant == "") {
+        if ("".equals(language) && "".equals(country) && "".equals(variant)) {
             return baseName;
         }
 
         StringBuilder buff = new StringBuilder(baseName);
         buff.append('_');
-        if (variant != "") {
+        if (!"".equals(variant)) {
             buff.append(language).append('_').append(country).append('_').append(variant);
         }
-        else if (country != "") {
+        else if (!"".equals(country)) {
             buff.append(language).append('_').append(country);
         }
         else {
@@ -151,6 +153,9 @@ public class HelpContentLoaderImpl
     }
 
     private String toResourceName(final String bundleName, final String suffix) {
+        assert bundleName != null;
+        assert suffix != null;
+
         StringBuilder buff = new StringBuilder(bundleName.length() + 1 + suffix.length());
         buff.append(bundleName.replace('.', '/')).append('.').append(suffix);
         return buff.toString();
