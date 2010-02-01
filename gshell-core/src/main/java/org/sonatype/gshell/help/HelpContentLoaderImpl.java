@@ -25,13 +25,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 /**
  * {@link HelpContentLoader} component.
- * 
+ *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
@@ -44,7 +46,8 @@ public class HelpContentLoaderImpl
         return load(name, Locale.getDefault(), loader);
     }
 
-    private String load(final String name, final Locale locale, final ClassLoader loader) throws MissingContentException,
+    private String load(final String name, final Locale locale, final ClassLoader loader) throws
+        MissingContentException,
         IOException
     {
         log.debug("Loading help content for {} ({})", name, locale);
@@ -80,21 +83,74 @@ public class HelpContentLoaderImpl
         assert name != null;
         assert locale != null;
         assert loader != null;
-        
+
         URL resource = null;
 
-        ResourceBundle.Control control = ResourceBundle.Control.getControl(ResourceBundle.Control.FORMAT_DEFAULT);
-
-        for (Locale candidate : control.getCandidateLocales(name, locale)) {
-            String bundle = control.toBundleName(name, candidate);
+        for (Locale candidate : getCandidateLocales(locale)) {
+            String bundle = toBundleName(name, candidate);
 
             try {
-                resource = loader.getResource(control.toResourceName(bundle, "help"));
+                resource = loader.getResource(toResourceName(bundle, "help"));
             }
             catch (MissingResourceException e) {
                 // ignore
             }
         }
         return resource;
+    }
+
+    private List<Locale> getCandidateLocales(Locale locale) {
+        String language = locale.getLanguage();
+        String country = locale.getCountry();
+        String variant = locale.getVariant();
+
+        List<Locale> locales = new ArrayList<Locale>(4);
+        if (variant.length() > 0) {
+            locales.add(locale);
+        }
+        if (country.length() > 0) {
+            locales.add((locales.size() == 0) ?
+                locale : new Locale(language, country, ""));
+        }
+        if (language.length() > 0) {
+            locales.add((locales.size() == 0) ?
+                locale : new Locale(language, "", ""));
+        }
+        locales.add(Locale.ROOT);
+        return locales;
+    }
+
+    private String toBundleName(String baseName, Locale locale) {
+        if (locale == Locale.ROOT) {
+            return baseName;
+        }
+
+        String language = locale.getLanguage();
+        String country = locale.getCountry();
+        String variant = locale.getVariant();
+
+        if (language == "" && country == "" && variant == "") {
+            return baseName;
+        }
+
+        StringBuilder sb = new StringBuilder(baseName);
+        sb.append('_');
+        if (variant != "") {
+            sb.append(language).append('_').append(country).append('_').append(variant);
+        }
+        else if (country != "") {
+            sb.append(language).append('_').append(country);
+        }
+        else {
+            sb.append(language);
+        }
+        return sb.toString();
+
+    }
+
+    private String toResourceName(String bundleName, String suffix) {
+        StringBuilder sb = new StringBuilder(bundleName.length() + 1 + suffix.length());
+        sb.append(bundleName.replace('.', '/')).append('.').append(suffix);
+        return sb.toString();
     }
 }
