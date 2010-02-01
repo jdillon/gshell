@@ -37,7 +37,7 @@ public class EchoCommand
     extends CommandActionSupport
 {
     @Option(name = "n", optionalArg = true)
-    private boolean trailingNewline = true;
+    private boolean noTrailingNewline;
 
     @Argument()
     private List<String> args;
@@ -57,7 +57,7 @@ public class EchoCommand
             }
         }
 
-        if (trailingNewline) {
+        if (!noTrailingNewline) {
             io.out.println();
         }
 

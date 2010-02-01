@@ -43,7 +43,7 @@ public abstract class ConverterSupport
     }
 
     public final void setAsText(final String text) {
-        super.setValue(toObject(text.trim()));
+        super.setValue(toObject(text));
     }
 
     public final Object getValue() {
@@ -70,7 +70,7 @@ public abstract class ConverterSupport
         }
 
         try {
-            return convertToObject(text.trim());
+            return convertToObject(text);
         }
         catch (Exception e) {
             throw new ConversionException(e);

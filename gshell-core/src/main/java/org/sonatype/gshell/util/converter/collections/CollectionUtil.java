@@ -47,7 +47,7 @@ public class CollectionUtil
 
         // text may be surrounded with [ and ]
         if (text.startsWith("[") && text.endsWith("]")) {
-            text = text.substring(1, text.length() - 1).trim();
+            text = text.substring(1, text.length() - 1);
         }
 
         List list = new LinkedList();
@@ -164,7 +164,7 @@ public class CollectionUtil
 
         if (componentEditor instanceof Converter) {
             Converter converter = (Converter) componentEditor;
-            return converter.toObject(text.trim());
+            return converter.toObject(text);
         }
         else {
             componentEditor.setAsText(text);

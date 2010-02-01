@@ -52,4 +52,18 @@ public class EchoCommandTest
         assertEqualsSuccess(result);
         assertOutputEquals("-D" + NEWLINE);
     }
+
+    @Test
+    public void testEchoWithSpacePadding() throws Exception {
+        Object result = executeWithArgs("' foo '");
+        assertEqualsSuccess(result);
+        assertOutputEquals(" foo " + NEWLINE);
+    }
+
+    @Test
+    public void testEchoNoNewline() throws Exception {
+        Object result = executeWithArgs("-n foo");
+        assertEqualsSuccess(result);
+        assertOutputEquals("foo");
+    }
 }

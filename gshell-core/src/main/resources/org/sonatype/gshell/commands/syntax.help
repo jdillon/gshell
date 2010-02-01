@@ -47,3 +47,19 @@
         bar
 
     Single or double quotes may be escaped with a preceding '\' char.
+
+@|bold COMPOUND COMMANDS|@
+
+    Multipule commands can be executed on the same line by separating them
+    with ';':
+
+        command; [command; ...]
+
+    Example:
+
+        echo -n "hi"; echo " there"
+
+    Result:
+
+        hi there
+
