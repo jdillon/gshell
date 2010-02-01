@@ -33,14 +33,6 @@ import org.sonatype.gshell.util.i18n.PrefixingMessageSource;
 public class CommandDocumenterImpl
     implements CommandDocumenter
 {
-    private final Logger log = LoggerFactory.getLogger(getClass());
-
-    public String getDescription(final CommandAction command) {
-        assert command != null;
-
-        return command.getMessages().getMessage(COMMAND_DESCRIPTION);
-    }
-
     public void renderUsage(final CommandAction command, final IO io) {
         assert command != null;
         assert io != null;
@@ -55,7 +47,7 @@ public class CommandDocumenterImpl
         clp.addBean(command);
 
         // Render the help
-        io.out.println(getDescription(command));
+        io.out.println(command.getMessages().getMessage(COMMAND_DESCRIPTION));
         io.out.println();
 
         HelpPrinter printer = new HelpPrinter(clp);

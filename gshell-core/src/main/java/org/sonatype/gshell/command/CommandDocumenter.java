@@ -33,7 +33,5 @@ public interface CommandDocumenter
 
     String COMMAND_DESCRIPTION = COMMAND + ".description";
 
-    String getDescription(CommandAction command);
-
     void renderUsage(CommandAction command, IO io);
 }
