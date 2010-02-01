@@ -22,6 +22,7 @@ package org.sonatype.gshell.command;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
+@Deprecated
 public interface CommandDocumenter
 {
     String COMMAND = "command";
@@ -35,6 +36,4 @@ public interface CommandDocumenter
     String getDescription(CommandAction command);
 
     void renderUsage(CommandAction command, IO io);
-
-    void renderManual(CommandAction command, IO io);
 }

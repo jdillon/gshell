@@ -17,7 +17,6 @@
 package org.sonatype.gshell.help;
 
 import com.google.inject.Inject;
-import org.sonatype.gshell.command.help.CommandHelpRenderer;
 import org.sonatype.gshell.registry.AliasRegistry;
 import org.sonatype.gshell.registry.CommandRegistry;
 import org.sonatype.gshell.registry.NoSuchAliasException;
@@ -40,16 +39,16 @@ public class HelpPageManagerImpl
 
     private final CommandRegistry commandRegistry;
 
-    private final CommandHelpRenderer helpRenderer;
+    private final HelpContentLoader helpLoader;
 
     @Inject
-    public HelpPageManagerImpl(final AliasRegistry aliasRegistry, final CommandRegistry commandRegistry, CommandHelpRenderer helpRenderer) {
+    public HelpPageManagerImpl(final AliasRegistry aliasRegistry, final CommandRegistry commandRegistry, final HelpContentLoader helpLoader) {
         assert aliasRegistry != null;
         this.aliasRegistry = aliasRegistry;
         assert commandRegistry != null;
         this.commandRegistry = commandRegistry;
-        assert helpRenderer != null;
-        this.helpRenderer = helpRenderer;
+        assert helpLoader != null;
+        this.helpLoader = helpLoader;
     }
 
     public HelpPage getPage(final String path) {
@@ -66,7 +65,7 @@ public class HelpPageManagerImpl
 
         if (commandRegistry.containsCommand(path)) {
             try {
-                return new CommandHelpPage(commandRegistry.getCommand(path), helpRenderer);
+                return new CommandHelpPage(commandRegistry.getCommand(path), helpLoader);
             }
             catch (NoSuchCommandException e) {
                 throw new Error(e);
@@ -87,7 +86,7 @@ public class HelpPageManagerImpl
 
         for (String name : commandRegistry.getCommandNames()) {
             try {
-                pages.add(new CommandHelpPage(commandRegistry.getCommand(name), helpRenderer));
+                pages.add(new CommandHelpPage(commandRegistry.getCommand(name), helpLoader));
             }
             catch (NoSuchCommandException e) {
                 throw new Error(e);

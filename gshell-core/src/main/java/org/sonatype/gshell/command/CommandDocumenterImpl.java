@@ -16,11 +16,8 @@
 
 package org.sonatype.gshell.command;
 
-import com.google.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonatype.gshell.command.help.CommandHelpRenderer;
-import org.sonatype.gshell.command.help.CommandHelpSupport;
 import org.sonatype.gshell.util.cli2.CliProcessor;
 import org.sonatype.gshell.util.cli2.HelpPrinter;
 import org.sonatype.gshell.util.i18n.AggregateMessageSource;
@@ -32,18 +29,11 @@ import org.sonatype.gshell.util.i18n.PrefixingMessageSource;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
+@Deprecated
 public class CommandDocumenterImpl
     implements CommandDocumenter
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
-
-    private final CommandHelpRenderer helpRenderer;
-
-    @Inject
-    public CommandDocumenterImpl(final CommandHelpRenderer helpRenderer) {
-        assert helpRenderer != null;
-        this.helpRenderer = helpRenderer;
-    }
 
     public String getDescription(final CommandAction command) {
         assert command != null;
@@ -72,12 +62,5 @@ public class CommandDocumenterImpl
         AggregateMessageSource messages = new AggregateMessageSource(command.getMessages(), help.getMessages());
         printer.addMessages(new PrefixingMessageSource(messages, COMMAND_DOT));
         printer.printUsage(io.out, command.getName());
-    }
-
-    public void renderManual(final CommandAction command, final IO io) {
-        assert command != null;
-        assert io != null;
-
-        helpRenderer.render(command, io.out);
     }
 }

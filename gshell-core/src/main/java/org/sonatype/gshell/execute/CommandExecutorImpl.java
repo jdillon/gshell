@@ -24,7 +24,7 @@ import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.CommandDocumenter;
-import org.sonatype.gshell.command.help.CommandHelpSupport;
+import org.sonatype.gshell.command.CommandHelpSupport;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.io.StreamJack;
 import org.sonatype.gshell.notification.ErrorNotification;

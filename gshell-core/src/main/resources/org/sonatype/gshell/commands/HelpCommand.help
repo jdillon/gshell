@@ -20,19 +20,18 @@
 
 @|bold SYNOPSIS|@
 
-    @|bold @{command.name}|@ [options] [COMMAND]
+    @|bold @{command.name}|@ [options] [NAME]
     
 @|bold DESCRIPTION|@
 
-    Displays a list of commands available in the current context, or when
-    given a command as an argument, displays the help page for that
-    command.
+    Displays a list of available help pages in the current context, or when
+    given a name as an argument, displays a specific help page.
 
 @{command.options}
 @{command.arguments}
 @|bold EXAMPLES|@
 
-    Display the list of commands:
+    Display the list of help pages:
 
         help
 

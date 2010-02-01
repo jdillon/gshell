@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009 the original author(s).
+ * Copyright (C) 2010 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,32 +14,32 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.command.help;
+package org.sonatype.gshell.help;
 
-import org.sonatype.gshell.util.cli2.Option;
-import org.sonatype.gshell.util.i18n.MessageSource;
-import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
+import java.io.IOException;
 
 /**
- * Helper to inject <tt>--help<tt> support.
+ * Loads help page contents.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 2.0
+ * @since 2.5
  */
-public class CommandHelpSupport
+public interface HelpContentLoader
 {
-    ///CLOVER:OFF
+    String load(String name, ClassLoader loader) throws MissingContentException, IOException;
 
-    @Option(name = "h", longName = "help", override=true)
-    public boolean displayHelp;
+    class MissingContentException
+        extends Exception
+    {
+        private final String name;
 
-    private MessageSource messages;
-
-    public MessageSource getMessages() {
-        if (messages == null) {
-            messages = new ResourceBundleMessageSource(getClass());
+        public MissingContentException(final String name) {
+            super("Missing content for: " + name);
+            this.name = name;
         }
 
-        return messages;
+        public String getName() {
+            return name;
+        }
     }
 }
