@@ -16,10 +16,10 @@
   ~ limitations under the License.
   -->
 
-<commands xmlns="http://sonatype.org/gshell-commands/1.0.0"
+<commands xmlns="http://sonatype.org/gshell-commands/1.2.0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://sonatype.org/gshell-commands/1.0.0 http://sonatype.org/xsd/gshell-commands-1.0.0.xsd"
-          version="1.0.0">
+          xsi:schemaLocation="http://sonatype.org/gshell-commands/1.2.0 http://sonatype.org/xsd/gshell-commands-1.2.0.xsd"
+          version="1.2.0">
 
     <command-set id="core">
         <enabled>true</enabled>
@@ -57,6 +57,10 @@
         <command>
             <action>org.sonatype.gshell.commands.EchoCommand</action>
         </command>
+        <helpPage>
+            <name>syntax</name>
+            <resource>org.sonatype.gshell.commands.syntax</resource>
+        </helpPage>
     </command-set>
 
 </commands>

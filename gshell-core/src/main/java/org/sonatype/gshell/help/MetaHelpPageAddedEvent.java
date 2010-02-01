@@ -18,21 +18,29 @@ package org.sonatype.gshell.help;
 
 import org.sonatype.gshell.command.descriptor.HelpPageDescriptor;
 
-import java.util.Collection;
+import java.util.EventObject;
 
 /**
- * Manages {@link HelpPage}s.
+ * Event fired once a help meta page has been added.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-public interface HelpPageManager
+public class MetaHelpPageAddedEvent
+    extends EventObject
 {
-    HelpPage getPage(String path);
+    ///CLOVER:OFF
 
-    Collection<HelpPage> getPages(String path);
+    private final HelpPageDescriptor desc;
 
-    void addMetaPage(HelpPageDescriptor desc);
+    public MetaHelpPageAddedEvent(final HelpPageDescriptor desc) {
+        super(desc);
 
-    Collection<String> getMetaPageNames();
+        assert desc != null;
+        this.desc = desc;
+    }
+
+    public HelpPageDescriptor getDescriptor() {
+        return desc;
+    }
 }

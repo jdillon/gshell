@@ -104,7 +104,16 @@
                             <goal>xpp3-writer</goal>
                         </goals>
                         <configuration>
-                            <version>1.1.0</version>
+                            <version>1.2.0</version>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-schema-1.2.0</id>
+                        <goals>
+                            <goal>xsd</goal>
+                        </goals>
+                        <configuration>
+                            <version>1.2.0</version>
                         </configuration>
                     </execution>
                     <execution>
@@ -114,7 +123,6 @@
                         </goals>
                         <configuration>
                             <version>1.1.0</version>
-                            <!--<outputDirectory>${project.build.directory}/generated-sources/xsd</outputDirectory>-->
                         </configuration>
                     </execution>
                     <execution>
@@ -124,7 +132,6 @@
                         </goals>
                         <configuration>
                             <version>1.0.0</version>
-                            <!--<outputDirectory>${project.build.directory}/generated-sources/xsd</outputDirectory>-->
                         </configuration>
                     </execution>
                     <execution>
@@ -134,7 +141,7 @@
                             <goal>xdoc</goal>
                         </goals>
                         <configuration>
-                            <version>1.1.0</version>
+                            <version>1.2.0</version>
                         </configuration>
                     </execution>
                 </executions>

@@ -22,6 +22,7 @@ import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
+import org.sonatype.gshell.console.completer.MetaHelpPageNameCompleter;
 import org.sonatype.gshell.help.HelpPage;
 import org.sonatype.gshell.help.HelpPageManager;
 import org.sonatype.gshell.console.completer.AliasNameCompleter;
@@ -52,9 +53,9 @@ public class HelpCommand
     }
 
     @Inject
-    public HelpCommand installCompleters(final AliasNameCompleter c1, final CommandNameCompleter c2) {
+    public HelpCommand installCompleters(final AliasNameCompleter c1, final CommandNameCompleter c2, final MetaHelpPageNameCompleter c3) {
         assert c1 != null;
-        setCompleters(new AggregateCompleter(c1, c2), null);
+        setCompleters(new AggregateCompleter(c1, c2, c3), null);
         return this;
     }
 

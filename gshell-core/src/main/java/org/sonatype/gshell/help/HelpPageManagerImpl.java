@@ -17,6 +17,11 @@
 package org.sonatype.gshell.help;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.sonatype.gshell.command.descriptor.HelpPageDescriptor;
+import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.registry.AliasRegistry;
 import org.sonatype.gshell.registry.CommandRegistry;
 import org.sonatype.gshell.registry.NoSuchAliasException;
@@ -24,7 +29,9 @@ import org.sonatype.gshell.registry.NoSuchCommandException;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * {@link HelpPageManager} component.
@@ -32,17 +39,26 @@ import java.util.List;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
+@Singleton
 public class HelpPageManagerImpl
     implements HelpPageManager
 {
+    private static final Logger log = LoggerFactory.getLogger(HelpPageManagerImpl.class);
+
+    private final EventManager eventManager;
+
     private final AliasRegistry aliasRegistry;
 
     private final CommandRegistry commandRegistry;
 
     private final HelpContentLoader helpLoader;
 
+    private final Map<String,HelpPageDescriptor> metaPages = new HashMap<String,HelpPageDescriptor>();
+
     @Inject
-    public HelpPageManagerImpl(final AliasRegistry aliasRegistry, final CommandRegistry commandRegistry, final HelpContentLoader helpLoader) {
+    public HelpPageManagerImpl(final EventManager eventManager, final AliasRegistry aliasRegistry, final CommandRegistry commandRegistry, final HelpContentLoader helpLoader) {
+        assert eventManager != null;
+        this.eventManager = eventManager;
         assert aliasRegistry != null;
         this.aliasRegistry = aliasRegistry;
         assert commandRegistry != null;
@@ -72,8 +88,10 @@ public class HelpPageManagerImpl
             }
         }
 
-        // else check for meta pages
-
+        if (metaPages.containsKey(path)) {
+            return new MetaHelpPage(metaPages.get(path), helpLoader);
+        }
+        
         return null;
     }
 
@@ -94,5 +112,18 @@ public class HelpPageManagerImpl
         }
 
         return pages;
+    }
+
+    public void addMetaPage(final HelpPageDescriptor desc) {
+        assert desc != null;
+
+        log.debug("Adding meta-page: {} -> {}", desc.getName(), desc.getResource());
+        metaPages.put(desc.getName(), desc);
+
+        eventManager.publish(new MetaHelpPageAddedEvent(desc));
+    }
+
+    public Collection<String> getMetaPageNames() {
+        return metaPages.keySet();
     }
 }

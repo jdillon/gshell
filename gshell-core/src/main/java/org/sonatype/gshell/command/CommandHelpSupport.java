@@ -33,6 +33,8 @@ public class CommandHelpSupport
 {
     public static final String COMMAND_DOT = "command.";
 
+    public static final String COMMAND_NAME = "command.name";
+    
     public static final String COMMAND_DESCRIPTION = "command.description";
 
     @Option(name = "h", longName = "help", override=true)

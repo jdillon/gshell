@@ -23,7 +23,9 @@ import com.google.inject.Singleton;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.descriptor.CommandSetDescriptor;
+import org.sonatype.gshell.command.descriptor.HelpPageDescriptor;
 import org.sonatype.gshell.command.descriptor.ModuleDescriptor;
+import org.sonatype.gshell.help.HelpPageManager;
 import org.sonatype.gshell.registry.CommandRegistrar;
 import org.sonatype.gshell.registry.CommandRegistrarSupport;
 import org.sonatype.gshell.registry.CommandRegistry;
@@ -45,6 +47,8 @@ public class GuiceCommandRegistrar
 
     private final CommandRegistry registry;
 
+    private final HelpPageManager helpPages;
+
     private final ThreadLocal<Injector> injectorHolder = new ThreadLocal<Injector>() {
         @Override
         protected Injector initialValue() {
@@ -53,11 +57,13 @@ public class GuiceCommandRegistrar
     };
 
     @Inject
-    public GuiceCommandRegistrar(final CommandRegistry registry, final Injector injector) {
+    public GuiceCommandRegistrar(final CommandRegistry registry, final Injector injector, final HelpPageManager helpPages) {
         assert registry != null;
         this.registry = registry;
         assert injector != null;
         this.injector = injector;
+        assert helpPages != null;
+        this.helpPages = helpPages;
 
         log.trace("Base injector: {}", injector);
     }
@@ -74,6 +80,11 @@ public class GuiceCommandRegistrar
 
         try {
             super.registerCommandSet(config);
+
+            // HACK: This really doesn't belong here... not sure where to put it though
+            for (HelpPageDescriptor page : config.getHelpPages()) {
+                helpPages.addMetaPage(page);
+            }
         }
         finally {
             injectorHolder.set(injector);

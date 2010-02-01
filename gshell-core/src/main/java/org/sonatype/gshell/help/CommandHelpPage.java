@@ -89,7 +89,7 @@ public class CommandHelpPage
                 @Override
                 protected Object replace(final String key) throws Exception {
                     Object rep = null;
-                    if (key.equals("command.name")) {
+                    if (key.equals(CommandHelpSupport.COMMAND_NAME)) {
                         rep = command.getName();
                     }
                     else if (key.equals(CommandHelpSupport.COMMAND_DESCRIPTION)) {
