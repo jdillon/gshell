@@ -86,6 +86,10 @@ public class CommandHelpPage
 
             ReplacementParser parser = new ReplacementParser("\\@\\{([^}]+)\\}")
             {
+                //
+                // TODO: Expose the branding here too
+                //
+
                 @Override
                 protected Object replace(final String key) throws Exception {
                     Object rep = null;

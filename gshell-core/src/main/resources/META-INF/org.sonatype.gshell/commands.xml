@@ -61,6 +61,10 @@
             <name>syntax</name>
             <resource>org.sonatype.gshell.commands.syntax</resource>
         </helpPage>
+        <helpPage>
+            <name>configfiles</name>
+            <resource>org.sonatype.gshell.commands.configfiles</resource>
+        </helpPage>
     </command-set>
 
 </commands>

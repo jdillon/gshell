@@ -14,10 +14,6 @@
 # limitations under the License.
 #
 
-@|bold NAME|@
-
-    @{command.name} - @{command.description}
-
 @|bold VARIABLE REFERENCE|@
 
     Variables can be referenced using ${variable} syntax.
