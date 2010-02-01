@@ -58,12 +58,16 @@
             <action>org.sonatype.gshell.commands.EchoCommand</action>
         </command>
         <helpPage>
-            <name>syntax</name>
-            <resource>org.sonatype.gshell.commands.syntax</resource>
+            <name>shell-syntax</name>
+            <resource>org.sonatype.gshell.help.shell-syntax</resource>
         </helpPage>
         <helpPage>
-            <name>configfiles</name>
-            <resource>org.sonatype.gshell.commands.configfiles</resource>
+            <name>shell-files</name>
+            <resource>org.sonatype.gshell.help.shell-files</resource>
+        </helpPage>
+        <helpPage>
+            <name>shell-env</name>
+            <resource>org.sonatype.gshell.help.shell-env</resource>
         </helpPage>
     </command-set>
 

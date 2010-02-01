@@ -44,6 +44,11 @@
 
     Single or double quotes may be escaped with a preceding '\' char.
 
+@|bold COMMENTS|@
+
+    A line that begins with '#' is considered to be a comment; all
+    content until a new-line is ignored.
+
 @|bold COMPOUND COMMANDS|@
 
     Multiple commands can be executed on the same line by separating each

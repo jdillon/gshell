@@ -15,30 +15,34 @@
 #
 
 @|bold CONFIGURATION FILES|@
+#
+#    FIXME: These should use branding variables...
 
-    FIXME: These should use branding variables...
-
-    $HOME/.m2/mvnsh.boot (and mvnsh.boot.bat)
+    @|underline $HOME/.m2/mvnsh.boot|@ (and @|underline mvnsh.boot.bat|@)
 
         Platform specific (use mvnsh.boot on unix, mvnsh.boot.bat on windows)
         configuration of launcher scripts. Define environment variables or
         other platform specific configuration needed to launch the shell here.
 
-    $HOME/.m2/mvnsh.profile
+    @|underline $HOME/.m2/mvnsh.profile|@
 
         A user-specific shell script loaded when the shell starts up. Here is
         a good place to define variables needed to control command behavior.
 
-    $SHELL_HOME/etc/mvnsh.profile
+    @|underline $SHELL_HOME/etc/mvnsh.profile|@
 
         An installation-specific shell script loaded when the shell starts up.
 
-    $HOME/.m2/mvnsh.rc
+    @|underline $HOME/.m2/mvnsh.rc|@
 
         A user-specific shell script loaded when the shell starts in
         interactive mode. Here is a good place to define aliases.
 
-    $SHELL_HOME/etc/mvnsh.rc
+    @|underline $SHELL_HOME/etc/mvnsh.rc|@
 
         An installation-specific shell script loaded when the shell starts in
         interactive mode.
+
+@|bold SEE ALSO|@
+
+    @|bold shell-env|@
