@@ -60,5 +60,9 @@ public interface Branding
 
     File getUserContextDir();
 
+    //
+    // TODO: Add license (name and content)
+    //
+    
     void customize(Shell shell) throws Exception;
 }
