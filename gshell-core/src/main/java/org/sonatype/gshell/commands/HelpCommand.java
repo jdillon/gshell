@@ -19,19 +19,16 @@ package org.sonatype.gshell.commands;
 import com.google.inject.Inject;
 import jline.console.completers.AggregateCompleter;
 import org.sonatype.gshell.command.Command;
-import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
-import org.sonatype.gshell.command.CommandDocumenter;
 import org.sonatype.gshell.command.IO;
+import org.sonatype.gshell.help.HelpPage;
+import org.sonatype.gshell.help.HelpPageManager;
 import org.sonatype.gshell.console.completer.AliasNameCompleter;
 import org.sonatype.gshell.console.completer.CommandNameCompleter;
-import org.sonatype.gshell.registry.AliasRegistry;
-import org.sonatype.gshell.registry.CommandRegistry;
 import org.sonatype.gshell.util.cli2.Argument;
 
 import java.util.Collection;
-import java.util.LinkedList;
 
 /**
  * Display command help.
@@ -43,23 +40,15 @@ import java.util.LinkedList;
 public class HelpCommand
     extends CommandActionSupport
 {
-    private AliasRegistry aliasRegistry;
-
-    private CommandRegistry commandRegistry;
-
-    private CommandDocumenter commandDocumenter;
+    private final HelpPageManager helpPages;
 
     @Argument
-    private String commandName;
+    private String name;
 
     @Inject
-    public HelpCommand(final AliasRegistry aliasRegistry, final CommandRegistry commandRegistry, final CommandDocumenter commandDocumenter) {
-        assert aliasRegistry != null;
-        this.aliasRegistry = aliasRegistry;
-        assert commandDocumenter != null;
-        this.commandDocumenter = commandDocumenter;
-        assert commandRegistry != null;
-        this.commandRegistry = commandRegistry;
+    public HelpCommand(final HelpPageManager helpPages) {
+        assert helpPages != null;
+        this.helpPages = helpPages;
     }
 
     @Inject
@@ -73,57 +62,46 @@ public class HelpCommand
         assert context != null;
         IO io = context.getIo();
 
-        if (commandName == null) {
-            return displayAvailableCommands(context);
+        if (name == null) {
+            return displayAvailable(context);
         }
         else {
-            // TODO: Use the resolver
+            HelpPage page = helpPages.getPage(name);
 
-            if (commandRegistry.containsCommand(commandName)) {
-                CommandAction command = commandRegistry.getCommand(commandName);
-                commandDocumenter.renderManual(command, io);
-
-                return Result.SUCCESS;
-            }
-            else if (aliasRegistry.containsAlias(commandName)) {
-                io.out.println(getMessages().format("info.explain-alias", commandName, aliasRegistry.getAlias(commandName)));
-                return Result.SUCCESS;
-            }
-            else {
-                io.out.println(getMessages().format("info.command-not-found", commandName));
+            // TODO: Consider using an exception here, instead of returning a null
+            if (page == null) {
+                io.err.println(getMessages().format("error.help-not-found", name));
                 return Result.FAILURE;
             }
+
+            page.render(io.out);
+
+            return Result.SUCCESS;
         }
     }
 
-    private Object displayAvailableCommands(final CommandContext context) throws Exception {
+    private Object displayAvailable(final CommandContext context) throws Exception {
         assert context != null;
 
-        log.debug("Listing brief help for commands");
-
-        Collection<CommandAction> commands = new LinkedList<CommandAction>();
-        for (String name : commandRegistry.getCommandNames()) {
-            commands.add(commandRegistry.getCommand(name));
-        }
+        Collection<HelpPage> pages = helpPages.getPages(null);
 
         // Determine the maximum name length
-        int maxNameLen = 0;
-        for (CommandAction command : commands) {
-            int len = command.getName().length();
-            maxNameLen = Math.max(len, maxNameLen);
+        int max = 0;
+        for (HelpPage page : pages) {
+            int len = page.getName().length();
+            max = Math.max(len, max);
         }
-        String nameFormat = "%-" + maxNameLen + 's';
+        String nameFormat = "%-" + max + 's';
 
         IO io = context.getIo();
-        io.out.println(getMessages().format("info.available-commands"));
-        for (CommandAction command : commands) {
-            String formattedName = String.format(nameFormat, command.getName());
-            String desc = commandDocumenter.getDescription(command);
-
+        for (HelpPage page : pages) {
+            String formattedName = String.format(nameFormat, page.getName());
             io.out.format("  @|bold %s|@", formattedName);
-            if (desc != null) {
+
+            String description = page.getBriefDescription();
+            if (description != null) {
                 io.out.print("  ");
-                io.out.println(desc);
+                io.out.println(description);
             }
             else {
                 io.out.println();

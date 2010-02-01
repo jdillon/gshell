@@ -26,6 +26,8 @@ import org.sonatype.gshell.command.help.CommandHelpLoaderImpl;
 import org.sonatype.gshell.command.help.CommandHelpRenderer;
 import org.sonatype.gshell.command.help.CommandHelpRendererImpl;
 import org.sonatype.gshell.command.IO;
+import org.sonatype.gshell.help.HelpPageManager;
+import org.sonatype.gshell.help.HelpPageManagerImpl;
 import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.event.EventManagerImpl;
 import org.sonatype.gshell.execute.CommandExecutor;
@@ -58,6 +60,7 @@ public class CoreModule
         bind(EventManager.class).to(EventManagerImpl.class);
         bind(AliasRegistry.class).to(AliasRegistryImpl.class);
         bind(CommandRegistry.class).to(CommandRegistryImpl.class);
+        bind(HelpPageManager.class).to(HelpPageManagerImpl.class);
         bind(CommandHelpLoader.class).to(CommandHelpLoaderImpl.class);
         bind(CommandHelpRenderer.class).to(CommandHelpRendererImpl.class);
         bind(CommandDocumenter.class).to(CommandDocumenterImpl.class);
