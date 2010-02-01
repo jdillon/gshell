@@ -30,7 +30,8 @@ import java.util.ArrayList;
  */
 class DurationFormatUtils
 {
-    public DurationFormatUtils() {}
+    public DurationFormatUtils() {
+    }
 
     public static String formatDurationHMS(long durationMillis) {
         return formatDuration(durationMillis, "H:mm:ss.SSS", true);
@@ -39,29 +40,29 @@ class DurationFormatUtils
     private static String formatDuration(long durationMillis, String format, boolean padWithZeros) {
         Token[] tokens = lexx(format);
 
-        int days         = 0;
-        int hours        = 0;
-        int minutes      = 0;
-        int seconds      = 0;
+        int days = 0;
+        int hours = 0;
+        int minutes = 0;
+        int seconds = 0;
         int milliseconds = 0;
 
-        if (Token.containsTokenWithValue(tokens, d) ) {
+        if (Token.containsTokenWithValue(tokens, d)) {
             days = (int) (durationMillis / DateUtils_MILLIS_PER_DAY);
             durationMillis = durationMillis - (days * DateUtils_MILLIS_PER_DAY);
         }
-        if (Token.containsTokenWithValue(tokens, H) ) {
+        if (Token.containsTokenWithValue(tokens, H)) {
             hours = (int) (durationMillis / DateUtils_MILLIS_PER_HOUR);
             durationMillis = durationMillis - (hours * DateUtils_MILLIS_PER_HOUR);
         }
-        if (Token.containsTokenWithValue(tokens, m) ) {
+        if (Token.containsTokenWithValue(tokens, m)) {
             minutes = (int) (durationMillis / DateUtils_MILLIS_PER_MINUTE);
             durationMillis = durationMillis - (minutes * DateUtils_MILLIS_PER_MINUTE);
         }
-        if (Token.containsTokenWithValue(tokens, s) ) {
+        if (Token.containsTokenWithValue(tokens, s)) {
             seconds = (int) (durationMillis / DateUtils_MILLIS_PER_SECOND);
             durationMillis = durationMillis - (seconds * DateUtils_MILLIS_PER_SECOND);
         }
-        if (Token.containsTokenWithValue(tokens, S) ) {
+        if (Token.containsTokenWithValue(tokens, S)) {
             milliseconds = (int) durationMillis;
         }
 
@@ -108,14 +109,14 @@ class DurationFormatUtils
                     if (lastOutputSeconds) {
                         milliseconds += 1000;
                         String str = padWithZeros
-                                ? leftPad(Integer.toString(milliseconds), count, "0")
-                                : Integer.toString(milliseconds);
+                            ? leftPad(Integer.toString(milliseconds), count, "0")
+                            : Integer.toString(milliseconds);
                         buffer.append(str.substring(1));
                     }
                     else {
                         buffer.append(padWithZeros
-                                ? leftPad(Integer.toString(milliseconds), count, "0")
-                                : Integer.toString(milliseconds));
+                            ? leftPad(Integer.toString(milliseconds), count, "0")
+                            : Integer.toString(milliseconds));
                     }
                     lastOutputSeconds = false;
                 }
@@ -140,16 +141,16 @@ class DurationFormatUtils
         StringBuilder buffer = null;
         Token previous = null;
         int sz = array.length;
-        for(int i=0; i<sz; i++) {
+        for (int i = 0; i < sz; i++) {
             char ch = array[i];
-            if(inLiteral && ch != '\'') {
+            if (inLiteral && ch != '\'') {
                 buffer.append(ch);
                 continue;
             }
             Object value = null;
             switch (ch) {
                 // T O D O: Need to handle escaping of '
-                case '\'' :
+                case '\'':
                     if (inLiteral) {
                         buffer = null;
                         inLiteral = false;
@@ -160,14 +161,28 @@ class DurationFormatUtils
                         inLiteral = true;
                     }
                     break;
-                case 'y': value = y; break;
-                case 'M': value = M; break;
-                case 'd': value = d; break;
-                case 'H': value = H; break;
-                case 'm': value = m; break;
-                case 's': value = s; break;
-                case 'S': value = S; break;
-                default   :
+                case 'y':
+                    value = y;
+                    break;
+                case 'M':
+                    value = M;
+                    break;
+                case 'd':
+                    value = d;
+                    break;
+                case 'H':
+                    value = H;
+                    break;
+                case 'm':
+                    value = m;
+                    break;
+                case 's':
+                    value = s;
+                    break;
+                case 'S':
+                    value = S;
+                    break;
+                default:
                     if (buffer == null) {
                         buffer = new StringBuilder();
                         list.add(new Token(buffer));
@@ -187,7 +202,7 @@ class DurationFormatUtils
                 buffer = null;
             }
         }
-        return list.toArray( new Token[list.size()] );
+        return list.toArray(new Token[list.size()]);
     }
 
     private static class Token
