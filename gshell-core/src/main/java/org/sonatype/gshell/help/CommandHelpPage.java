@@ -25,6 +25,7 @@ import org.fusesource.jansi.AnsiRenderer;
 import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.CommandHelpSupport;
+import org.sonatype.gshell.command.CommandPreferenceSupport;
 import org.sonatype.gshell.shell.ShellHolder;
 import org.sonatype.gshell.util.PrintBuffer;
 import org.sonatype.gshell.util.ReplacementParser;
@@ -77,11 +78,7 @@ public class CommandHelpPage
             CommandHelpSupport help = new CommandHelpSupport();
             clp = help.createProcessor(command);
             printer = new HelpPrinter(clp);
-
-            pp = new PreferenceProcessor();
-            Branding branding = ShellHolder.get().getBranding();
-            pp.setBasePath(branding.getPreferencesBasePath());
-            pp.addBean(command);
+            pp = CommandPreferenceSupport.createProcessor(command);
         }
 
         public String getName() {

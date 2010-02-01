@@ -20,10 +20,10 @@ import com.google.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
-import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.CommandHelpSupport;
+import org.sonatype.gshell.command.CommandPreferenceSupport;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.io.StreamJack;
 import org.sonatype.gshell.notification.ErrorNotification;
@@ -128,10 +128,7 @@ public class CommandExecutorImpl
         try {
             boolean execute = true;
 
-            PreferenceProcessor pp = new PreferenceProcessor();
-            Branding branding = ShellHolder.get().getBranding();
-            pp.setBasePath(branding.getPreferencesBasePath());
-            pp.addBean(command);
+            PreferenceProcessor pp = CommandPreferenceSupport.createProcessor(command);
             pp.process();
 
             if (!(command instanceof OpaqueArguments)) {
