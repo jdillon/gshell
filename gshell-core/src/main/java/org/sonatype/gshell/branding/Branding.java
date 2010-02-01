@@ -36,8 +36,6 @@ public interface Branding
 
     String getVersion();
 
-    String getAboutMessage();
-
     String getWelcomeMessage();
 
     String getGoodbyeMessage();

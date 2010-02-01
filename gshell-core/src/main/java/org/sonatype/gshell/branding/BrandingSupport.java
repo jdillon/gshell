@@ -81,10 +81,6 @@ public class BrandingSupport
         return getProperties().getProperty(SHELL_VERSION);
     }
 
-    public String getAboutMessage() {
-        return String.format("%s (%s)", getDisplayName(), getVersion());
-    }
-
     protected String line() {
         return Strings.repeat("-", TerminalFactory.get().getWidth() - 1);
     }
