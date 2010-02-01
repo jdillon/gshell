@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.registry;
+package org.sonatype.gshell.alias;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.event.EventManager;
+import org.sonatype.gshell.alias.NoSuchAliasException;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -28,10 +29,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * The default {@link org.sonatype.gshell.registry.AliasRegistry} component.
+ * The default {@link AliasRegistry} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 2.0
+ * @since 2.5
  */
 @Singleton
 public class AliasRegistryImpl

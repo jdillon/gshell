@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.registry;
+package org.sonatype.gshell.command;
 
 import com.google.inject.Inject;
 import jline.console.Completer;
@@ -41,7 +41,7 @@ import java.util.Map;
  * Keeps up to date automatically by handling command-related events.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 2.0
+ * @since 2.5
  */
 public class CommandsCompleter
     implements Completer

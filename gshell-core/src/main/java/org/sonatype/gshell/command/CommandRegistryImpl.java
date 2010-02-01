@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.registry;
+package org.sonatype.gshell.command;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -30,10 +30,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * The default {@link org.sonatype.gshell.registry.CommandRegistry} component.
+ * The default {@link CommandRegistry} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 2.0
+ * @since 2.5
  */
 @Singleton
 public class CommandRegistryImpl

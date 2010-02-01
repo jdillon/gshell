@@ -14,27 +14,32 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.registry;
+package org.sonatype.gshell.alias;
 
-import org.sonatype.gshell.command.CommandAction;
-
-import java.util.Collection;
+import java.util.EventObject;
 
 /**
- * Registry for commands.
+ * Event fired once an alias has been removed.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 2.0
+ * @since 2.5
  */
-public interface CommandRegistry
+public class AliasRemovedEvent
+    extends EventObject
 {
-    void registerCommand(String name, CommandAction command) throws DuplicateCommandException;
+    ///CLOVER:OFF
 
-    void removeCommand(String name) throws NoSuchCommandException;
+    private final String name;
 
-    CommandAction getCommand(String name) throws NoSuchCommandException;
+    public AliasRemovedEvent(final String name) {
+        super(name);
 
-    boolean containsCommand(String name);
+        assert name != null;
 
-    Collection<String> getCommandNames();
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

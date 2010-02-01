@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009 the original author(s).
+ * Copyright (C) 2010 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,32 +14,9 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.registry;
-
-import java.util.EventObject;
-
 /**
- * Event fired once a command has been removed.
+ * Alias support.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 2.0
+ * @since 2.5
  */
-public class CommandRemovedEvent
-    extends EventObject
-{
-    ///CLOVER:OFF
-
-    private final String name;
-
-    public CommandRemovedEvent(final String name) {
-        super(name);
-
-        assert name != null;
-
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-}
+package org.sonatype.gshell.alias;

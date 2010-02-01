@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.registry;
+package org.sonatype.gshell.command;
 
 import org.sonatype.gshell.command.descriptor.CommandSetDescriptor;
 
@@ -24,7 +24,7 @@ import java.util.List;
  * Registers commands.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 2.0
+ * @since 2.5
  */
 public interface CommandRegistrar
 {

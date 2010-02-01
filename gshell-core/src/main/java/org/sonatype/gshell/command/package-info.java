@@ -15,7 +15,7 @@
  */
 
 /**
- * Command API.
+ * Command components.
  *
  * @since 2.0
  */

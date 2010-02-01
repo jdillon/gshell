@@ -14,24 +14,42 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.registry;
+package org.sonatype.gshell.command;
 
-import org.sonatype.gshell.command.CommandException;
+import org.sonatype.gshell.command.CommandAction;
+
+import java.util.EventObject;
 
 /**
- * Thrown to indicate that a requested named-command was not found.
+ * Event fired once a command has been registered.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 2.0
+ * @since 2.5
  */
-public class NoSuchCommandException
-    extends CommandException
+public class CommandRegisteredEvent
+    extends EventObject
 {
     ///CLOVER:OFF
 
-    private static final long serialVersionUID = 1;
+    private final String name;
 
-    public NoSuchCommandException(final String msg) {
-        super(msg);
+    private final CommandAction command;
+
+    public CommandRegisteredEvent(final String name, final CommandAction command) {
+        super(name);
+
+        assert name != null;
+        this.name = name;
+
+        assert command != null;
+        this.command = command;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public CommandAction getCommand() {
+        return command;
     }
 }

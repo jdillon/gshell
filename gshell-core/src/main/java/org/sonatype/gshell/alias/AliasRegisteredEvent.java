@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.registry;
+package org.sonatype.gshell.alias;
 
 import java.util.EventObject;
 
@@ -22,7 +22,7 @@ import java.util.EventObject;
  * Event fired once an alias has been registered.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 2.0
+ * @since 2.5
  */
 public class AliasRegisteredEvent
     extends EventObject

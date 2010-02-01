@@ -14,42 +14,24 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.registry;
+package org.sonatype.gshell.command;
 
-import org.sonatype.gshell.command.CommandAction;
-
-import java.util.EventObject;
+import org.sonatype.gshell.command.CommandException;
 
 /**
- * Event fired once a command has been registered.
+ * Thrown to indicate a duplicate command registration attempt has failed.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 2.0
+ * @since 2.5
  */
-public class CommandRegisteredEvent
-    extends EventObject
+public class DuplicateCommandException
+    extends CommandException
 {
     ///CLOVER:OFF
 
-    private final String name;
+    private static final long serialVersionUID = 1;
 
-    private final CommandAction command;
-
-    public CommandRegisteredEvent(final String name, final CommandAction command) {
-        super(name);
-
-        assert name != null;
-        this.name = name;
-
-        assert command != null;
-        this.command = command;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public CommandAction getCommand() {
-        return command;
+    public DuplicateCommandException(final String msg) {
+        super(msg);
     }
 }

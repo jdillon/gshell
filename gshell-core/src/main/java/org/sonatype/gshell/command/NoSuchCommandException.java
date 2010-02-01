@@ -14,32 +14,24 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.registry;
+package org.sonatype.gshell.command;
 
-import java.util.EventObject;
+import org.sonatype.gshell.command.CommandException;
 
 /**
- * Event fired once an alias has been removed.
+ * Thrown to indicate that a requested named-command was not found.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 2.0
+ * @since 2.5
  */
-public class AliasRemovedEvent
-    extends EventObject
+public class NoSuchCommandException
+    extends CommandException
 {
     ///CLOVER:OFF
 
-    private final String name;
+    private static final long serialVersionUID = 1;
 
-    public AliasRemovedEvent(final String name) {
-        super(name);
-
-        assert name != null;
-
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
+    public NoSuchCommandException(final String msg) {
+        super(msg);
     }
 }

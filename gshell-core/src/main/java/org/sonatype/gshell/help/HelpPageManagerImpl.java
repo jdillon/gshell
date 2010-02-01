@@ -20,12 +20,12 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.sonatype.gshell.alias.AliasRegistry;
+import org.sonatype.gshell.alias.NoSuchAliasException;
+import org.sonatype.gshell.command.CommandRegistry;
+import org.sonatype.gshell.command.NoSuchCommandException;
 import org.sonatype.gshell.command.descriptor.HelpPageDescriptor;
 import org.sonatype.gshell.event.EventManager;
-import org.sonatype.gshell.registry.AliasRegistry;
-import org.sonatype.gshell.registry.CommandRegistry;
-import org.sonatype.gshell.registry.NoSuchAliasException;
-import org.sonatype.gshell.registry.NoSuchCommandException;
 
 import java.util.ArrayList;
 import java.util.Collection;

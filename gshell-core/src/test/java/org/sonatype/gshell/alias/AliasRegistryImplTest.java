@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.registry;
+package org.sonatype.gshell.alias;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
@@ -23,6 +23,9 @@ import com.google.inject.Stage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.sonatype.gshell.alias.AliasRegistry;
+import org.sonatype.gshell.alias.AliasRegistryImpl;
+import org.sonatype.gshell.alias.NoSuchAliasException;
 import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.event.EventManagerImpl;
 
@@ -35,7 +38,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
- * Tests for the {@link org.sonatype.gshell.registry.AliasRegistryImpl}.
+ * Tests for the {@link org.sonatype.gshell.alias.AliasRegistryImpl}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */

@@ -30,7 +30,7 @@ import org.sonatype.gshell.notification.ErrorNotification;
 import org.sonatype.gshell.notification.ResultNotification;
 import org.sonatype.gshell.parser.CommandLineParser;
 import org.sonatype.gshell.parser.CommandLineParser.CommandLine;
-import org.sonatype.gshell.registry.CommandResolver;
+import org.sonatype.gshell.command.CommandResolver;
 import org.sonatype.gshell.shell.Shell;
 import org.sonatype.gshell.shell.ShellHolder;
 import org.sonatype.gshell.util.Arguments;

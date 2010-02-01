@@ -14,24 +14,27 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.registry;
+package org.sonatype.gshell.command;
 
-import org.sonatype.gshell.command.CommandException;
+import org.sonatype.gshell.command.CommandAction;
+
+import java.util.Collection;
 
 /**
- * Thrown to indicate that a requested named-alias was not found.
+ * Registry for commands.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 2.0
+ * @since 2.5
  */
-public class NoSuchAliasException
-    extends CommandException
+public interface CommandRegistry
 {
-    ///CLOVER:OFF
+    void registerCommand(String name, CommandAction command) throws DuplicateCommandException;
 
-    private static final long serialVersionUID = 1;
+    void removeCommand(String name) throws NoSuchCommandException;
 
-    public NoSuchAliasException(final String msg) {
-        super(msg);
-    }
+    CommandAction getCommand(String name) throws NoSuchCommandException;
+
+    boolean containsCommand(String name);
+
+    Collection<String> getCommandNames();
 }

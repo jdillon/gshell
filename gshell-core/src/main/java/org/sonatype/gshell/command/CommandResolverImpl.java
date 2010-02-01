@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.registry;
+package org.sonatype.gshell.command;
 
 import com.google.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.sonatype.gshell.alias.AliasRegistry;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
@@ -27,10 +28,10 @@ import org.sonatype.gshell.util.Strings;
 import org.sonatype.gshell.util.cli2.OpaqueArguments;
 
 /**
- * The default {@link org.sonatype.gshell.registry.CommandResolver} component.
+ * The default {@link CommandResolver} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 2.0
+ * @since 2.5
  */
 public class CommandResolverImpl
     implements CommandResolver

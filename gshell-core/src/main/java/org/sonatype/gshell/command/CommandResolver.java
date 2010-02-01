@@ -14,25 +14,21 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.registry;
+package org.sonatype.gshell.command;
 
-import java.util.Collection;
+import org.sonatype.gshell.command.CommandAction;
+import org.sonatype.gshell.command.CommandException;
 
 /**
- * Registry for command aliases.
+ * Resolves commands.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 2.0
+ * @since 2.5
  */
-public interface AliasRegistry
+public interface CommandResolver
 {
-    void registerAlias(String name, String alias);
+    CommandAction resolveCommand(String name) throws CommandException;
 
-    void removeAlias(String name) throws NoSuchAliasException;
-
-    String getAlias(String name) throws NoSuchAliasException;
-
-    boolean containsAlias(String name);
-
-    Collection<String> getAliasNames();
+    // TODO: Add resolution of a group of commands
+    // Collection<Command> resolveCommands(String name) throws CommandException;
 }

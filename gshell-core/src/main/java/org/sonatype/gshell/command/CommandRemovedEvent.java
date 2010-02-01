@@ -14,9 +14,32 @@
  * limitations under the License.
  */
 
+package org.sonatype.gshell.command;
+
+import java.util.EventObject;
+
 /**
- * Shell component registration.
+ * Event fired once a command has been removed.
  *
- * @since 2.0
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ * @since 2.5
  */
-package org.sonatype.gshell.registry;
+public class CommandRemovedEvent
+    extends EventObject
+{
+    ///CLOVER:OFF
+
+    private final String name;
+
+    public CommandRemovedEvent(final String name) {
+        super(name);
+
+        assert name != null;
+
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
