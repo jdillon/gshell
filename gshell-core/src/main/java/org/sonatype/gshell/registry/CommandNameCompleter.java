@@ -21,9 +21,6 @@ import jline.console.Completer;
 import jline.console.completers.StringsCompleter;
 import org.sonatype.gshell.event.EventListener;
 import org.sonatype.gshell.event.EventManager;
-import org.sonatype.gshell.registry.CommandRegisteredEvent;
-import org.sonatype.gshell.registry.CommandRegistry;
-import org.sonatype.gshell.registry.CommandRemovedEvent;
 
 import java.util.Collection;
 import java.util.EventObject;

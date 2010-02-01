@@ -22,12 +22,12 @@ import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.help.MetaHelpPageNameCompleter;
 import org.sonatype.gshell.help.HelpPage;
 import org.sonatype.gshell.help.HelpPageManager;
+import org.sonatype.gshell.help.MetaHelpPage;
+import org.sonatype.gshell.help.MetaHelpPageNameCompleter;
 import org.sonatype.gshell.registry.AliasNameCompleter;
 import org.sonatype.gshell.registry.CommandNameCompleter;
-import org.sonatype.gshell.help.MetaHelpPage;
 import org.sonatype.gshell.util.cli2.Argument;
 
 import java.util.Collection;

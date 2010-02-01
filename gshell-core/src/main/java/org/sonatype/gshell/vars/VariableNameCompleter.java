@@ -19,7 +19,6 @@ package org.sonatype.gshell.vars;
 import jline.console.Completer;
 import jline.console.completers.StringsCompleter;
 import org.sonatype.gshell.shell.ShellHolder;
-import org.sonatype.gshell.vars.Variables;
 
 import java.util.Collection;
 import java.util.Iterator;
