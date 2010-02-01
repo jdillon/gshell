@@ -19,8 +19,6 @@ package org.sonatype.gshell.builder.guice;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import org.fusesource.jansi.AnsiRenderer;
-import org.sonatype.gshell.command.CommandDocumenter;
-import org.sonatype.gshell.command.CommandDocumenterImpl;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.help.HelpContentLoader;
 import org.sonatype.gshell.help.HelpContentLoaderImpl;
@@ -60,7 +58,6 @@ public class CoreModule
         bind(CommandRegistry.class).to(CommandRegistryImpl.class);
         bind(HelpContentLoader.class).to(HelpContentLoaderImpl.class);
         bind(HelpPageManager.class).to(HelpPageManagerImpl.class);
-        bind(CommandDocumenter.class).to(CommandDocumenterImpl.class);
         bind(CommandLineParser.class).to(CommandLineParserImpl.class);
         bind(CommandExecutor.class).to(CommandExecutorImpl.class);
         bind(CommandResolver.class).to(CommandResolverImpl.class);

@@ -23,7 +23,6 @@ import org.slf4j.MDC;
 import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.CommandContext;
-import org.sonatype.gshell.command.CommandDocumenter;
 import org.sonatype.gshell.command.CommandHelpSupport;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.io.StreamJack;
@@ -37,7 +36,9 @@ import org.sonatype.gshell.shell.ShellHolder;
 import org.sonatype.gshell.util.Arguments;
 import org.sonatype.gshell.util.Strings;
 import org.sonatype.gshell.util.cli2.CliProcessor;
+import org.sonatype.gshell.util.cli2.HelpPrinter;
 import org.sonatype.gshell.util.cli2.OpaqueArguments;
+import org.sonatype.gshell.util.i18n.AggregateMessageSource;
 import org.sonatype.gshell.util.i18n.PrefixingMessageSource;
 import org.sonatype.gshell.util.pref.PreferenceProcessor;
 import org.sonatype.gshell.vars.Variables;
@@ -59,16 +60,12 @@ public class CommandExecutorImpl
 
     private final CommandLineParser parser;
 
-    private final CommandDocumenter documenter;
-
     @Inject
-    public CommandExecutorImpl(final CommandResolver resolver, final CommandLineParser parser, final CommandDocumenter documenter) {
+    public CommandExecutorImpl(final CommandResolver resolver, final CommandLineParser parser) {
         assert resolver != null;
         this.resolver = resolver;
         assert parser != null;
         this.parser = parser;
-        assert documenter != null;
-        this.documenter = documenter;
     }
 
     public Object execute(final Shell shell, final String line) throws Exception {
@@ -142,16 +139,24 @@ public class CommandExecutorImpl
             if (!(command instanceof OpaqueArguments)) {
                 CliProcessor clp = new CliProcessor();
                 clp.addBean(command);
-                clp.setMessages(new PrefixingMessageSource(command.getMessages(), CommandDocumenter.COMMAND_DOT));
+                
                 CommandHelpSupport help = new CommandHelpSupport();
                 clp.addBean(help);
+
+                AggregateMessageSource messages = new AggregateMessageSource(command.getMessages(), help.getMessages());
+                clp.setMessages(new PrefixingMessageSource(messages, "command."));
 
                 // Process the arguments
                 clp.process(Arguments.toStringArray(args));
 
                 // Render command-line usage
                 if (help.displayHelp) {
-                    documenter.renderUsage(command, io);
+                    io.out.println(command.getMessages().getMessage("command.description"));
+                    io.out.println();
+
+                    HelpPrinter printer = new HelpPrinter(clp);
+                    printer.printUsage(io.out, command.getName());
+
                     result = CommandAction.Result.SUCCESS;
                     execute = false;
                 }

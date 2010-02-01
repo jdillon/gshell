@@ -33,10 +33,6 @@ import org.sonatype.gshell.vars.Variables;
 
 import java.io.PrintWriter;
 
-import static org.sonatype.gshell.command.CommandDocumenter.COMMAND_DESCRIPTION;
-import static org.sonatype.gshell.command.CommandDocumenter.COMMAND_DOT;
-import static org.sonatype.gshell.command.CommandDocumenter.COMMAND_NAME;
-
 /**
  * {@link HelpPage} for a command.
  *
@@ -62,7 +58,7 @@ public class CommandHelpPage
     }
 
     public String getBriefDescription() {
-        return command.getMessages().getMessage(COMMAND_DESCRIPTION);
+        return command.getMessages().getMessage("command.description");
     }
 
     public void render(final PrintWriter out) {
@@ -87,7 +83,7 @@ public class CommandHelpPage
             clp.addBean(help);
             AggregateMessageSource messages = new AggregateMessageSource(command.getMessages(), help.getMessages());
             final HelpPrinter printer = new HelpPrinter(clp);
-            printer.addMessages(new PrefixingMessageSource(messages, COMMAND_DOT));
+            printer.addMessages(new PrefixingMessageSource(messages, "command."));
 
             final PreferenceProcessor pp = new PreferenceProcessor();
             Branding branding = ShellHolder.get().getBranding();
@@ -99,11 +95,11 @@ public class CommandHelpPage
                 @Override
                 protected Object replace(final String key) throws Exception {
                     Object rep = null;
-                    if (key.equals(COMMAND_NAME)) {
+                    if (key.equals("command.name")) {
                         rep = command.getName();
                     }
-                    else if (key.equals(COMMAND_DESCRIPTION)) {
-                        rep = command.getMessages().getMessage(COMMAND_DESCRIPTION);
+                    else if (key.equals("command.description")) {
+                        rep = command.getMessages().getMessage("command.description");
                     }
                     else if (key.equals("command.arguments")) {
                         if (!clp.getArgumentDescriptors().isEmpty()) {
