@@ -38,8 +38,6 @@ import org.sonatype.gshell.util.Strings;
 import org.sonatype.gshell.util.cli2.CliProcessor;
 import org.sonatype.gshell.util.cli2.HelpPrinter;
 import org.sonatype.gshell.util.cli2.OpaqueArguments;
-import org.sonatype.gshell.util.i18n.AggregateMessageSource;
-import org.sonatype.gshell.util.i18n.PrefixingMessageSource;
 import org.sonatype.gshell.util.pref.PreferenceProcessor;
 import org.sonatype.gshell.vars.Variables;
 
@@ -137,21 +135,15 @@ public class CommandExecutorImpl
             pp.process();
 
             if (!(command instanceof OpaqueArguments)) {
-                CliProcessor clp = new CliProcessor();
-                clp.addBean(command);
-                
                 CommandHelpSupport help = new CommandHelpSupport();
-                clp.addBean(help);
-
-                AggregateMessageSource messages = new AggregateMessageSource(command.getMessages(), help.getMessages());
-                clp.setMessages(new PrefixingMessageSource(messages, "command."));
+                CliProcessor clp = help.createProcessor(command);
 
                 // Process the arguments
                 clp.process(Arguments.toStringArray(args));
 
                 // Render command-line usage
                 if (help.displayHelp) {
-                    io.out.println(command.getMessages().getMessage("command.description"));
+                    io.out.println(CommandHelpSupport.getDescription(command));
                     io.out.println();
 
                     HelpPrinter printer = new HelpPrinter(clp);

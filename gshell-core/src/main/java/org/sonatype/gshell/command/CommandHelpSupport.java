@@ -16,8 +16,11 @@
 
 package org.sonatype.gshell.command;
 
+import org.sonatype.gshell.util.cli2.CliProcessor;
 import org.sonatype.gshell.util.cli2.Option;
+import org.sonatype.gshell.util.i18n.AggregateMessageSource;
 import org.sonatype.gshell.util.i18n.MessageSource;
+import org.sonatype.gshell.util.i18n.PrefixingMessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
 
 /**
@@ -28,18 +31,39 @@ import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
  */
 public class CommandHelpSupport
 {
-    ///CLOVER:OFF
+    public static final String COMMAND_DOT = "command.";
+
+    public static final String COMMAND_DESCRIPTION = "command.description";
 
     @Option(name = "h", longName = "help", override=true)
     public boolean displayHelp;
 
     private MessageSource messages;
 
-    public MessageSource getMessages() {
+    private MessageSource getMessages() {
         if (messages == null) {
             messages = new ResourceBundleMessageSource(getClass());
         }
 
         return messages;
+    }
+
+    public CliProcessor createProcessor(final CommandAction command) {
+        assert command != null;
+
+        CliProcessor clp = new CliProcessor();
+        clp.addBean(command);
+        clp.addBean(this);
+
+        AggregateMessageSource messages = new AggregateMessageSource(command.getMessages(), this.getMessages());
+        clp.setMessages(new PrefixingMessageSource(messages, COMMAND_DOT));
+
+        return clp;
+    }
+
+    public static String getDescription(final CommandAction command) {
+        assert command != null;
+        
+        return command.getMessages().getMessage(COMMAND_DESCRIPTION);
     }
 }

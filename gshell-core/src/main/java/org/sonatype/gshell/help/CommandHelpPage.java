@@ -25,8 +25,6 @@ import org.sonatype.gshell.util.PrintBuffer;
 import org.sonatype.gshell.util.ReplacementParser;
 import org.sonatype.gshell.util.cli2.CliProcessor;
 import org.sonatype.gshell.util.cli2.HelpPrinter;
-import org.sonatype.gshell.util.i18n.AggregateMessageSource;
-import org.sonatype.gshell.util.i18n.PrefixingMessageSource;
 import org.sonatype.gshell.util.pref.PreferenceDescriptor;
 import org.sonatype.gshell.util.pref.PreferenceProcessor;
 import org.sonatype.gshell.vars.Variables;
@@ -58,7 +56,7 @@ public class CommandHelpPage
     }
 
     public String getBriefDescription() {
-        return command.getMessages().getMessage("command.description");
+        return CommandHelpSupport.getDescription(command);
     }
 
     public void render(final PrintWriter out) {
@@ -77,13 +75,9 @@ public class CommandHelpPage
 
     private String evaluate(final CommandAction command, final String input) {
         if (input.contains("@{")) {
-            final CliProcessor clp = new CliProcessor();
-            clp.addBean(command);
             CommandHelpSupport help = new CommandHelpSupport();
-            clp.addBean(help);
-            AggregateMessageSource messages = new AggregateMessageSource(command.getMessages(), help.getMessages());
+            final CliProcessor clp = help.createProcessor(command);
             final HelpPrinter printer = new HelpPrinter(clp);
-            printer.addMessages(new PrefixingMessageSource(messages, "command."));
 
             final PreferenceProcessor pp = new PreferenceProcessor();
             Branding branding = ShellHolder.get().getBranding();
@@ -98,8 +92,8 @@ public class CommandHelpPage
                     if (key.equals("command.name")) {
                         rep = command.getName();
                     }
-                    else if (key.equals("command.description")) {
-                        rep = command.getMessages().getMessage("command.description");
+                    else if (key.equals(CommandHelpSupport.COMMAND_DESCRIPTION)) {
+                        rep = CommandHelpSupport.getDescription(command);
                     }
                     else if (key.equals("command.arguments")) {
                         if (!clp.getArgumentDescriptors().isEmpty()) {
