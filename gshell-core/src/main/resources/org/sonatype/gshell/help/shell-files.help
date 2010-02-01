@@ -17,6 +17,7 @@
 #
 
 @|bold CONFIGURATION FILES|@
+
     @|underline $HOME/.m2/mvnsh.boot|@ (and @|underline mvnsh.boot.bat|@)
 
         Platform specific (use mvnsh.boot on unix, mvnsh.boot.bat on windows)
