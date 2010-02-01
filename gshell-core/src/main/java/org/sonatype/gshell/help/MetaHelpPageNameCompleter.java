@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009 the original author(s).
+ * Copyright (C) 2010 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,16 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.console.completer;
+package org.sonatype.gshell.help;
 
 import com.google.inject.Inject;
 import jline.console.Completer;
 import jline.console.completers.StringsCompleter;
 import org.sonatype.gshell.event.EventListener;
 import org.sonatype.gshell.event.EventManager;
+import org.sonatype.gshell.help.HelpPageManager;
+import org.sonatype.gshell.help.MetaHelpPage;
+import org.sonatype.gshell.help.MetaHelpPageAddedEvent;
 import org.sonatype.gshell.registry.AliasRegisteredEvent;
 import org.sonatype.gshell.registry.AliasRegistry;
 import org.sonatype.gshell.registry.AliasRemovedEvent;
@@ -30,48 +33,44 @@ import java.util.EventObject;
 import java.util.List;
 
 /**
- * {@link Completer} for alias names.
+ * {@link jline.console.Completer} for meta help page names.
  * <p/>
- * Keeps up to date automatically by handling alias-related events.
+ * Keeps up to date automatically by handling meta-page-related events.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public class AliasNameCompleter
+public class MetaHelpPageNameCompleter
     implements Completer
 {
     private final EventManager eventManager;
 
-    private final AliasRegistry aliasRegistry;
+    private final HelpPageManager helpPages;
 
     private final StringsCompleter delegate = new StringsCompleter();
 
     private boolean initialized;
 
     @Inject
-    public AliasNameCompleter(final EventManager eventManager, final AliasRegistry aliasRegistry) {
+    public MetaHelpPageNameCompleter(final EventManager eventManager, final HelpPageManager helpPages) {
         assert eventManager != null;
         this.eventManager = eventManager;
-        assert aliasRegistry != null;
-        this.aliasRegistry = aliasRegistry;
+        assert helpPages != null;
+        this.helpPages = helpPages;
     }
 
     private void init() {
-        assert aliasRegistry != null;
-        Collection<String> names = aliasRegistry.getAliasNames();
-        delegate.getStrings().addAll(names);
+        for (MetaHelpPage page : helpPages.getMetaPages()) {
+            delegate.getStrings().add(page.getName());
+        }
 
         // Register for updates to alias registrations
         eventManager.addListener(new EventListener()
         {
             public void onEvent(final EventObject event) throws Exception {
-                if (event instanceof AliasRegisteredEvent) {
-                    AliasRegisteredEvent targetEvent = (AliasRegisteredEvent) event;
-                    delegate.getStrings().add(targetEvent.getName());
-                }
-                else if (event instanceof AliasRemovedEvent) {
-                    AliasRemovedEvent targetEvent = (AliasRemovedEvent) event;
-                    delegate.getStrings().remove(targetEvent.getName());
+                if (event instanceof MetaHelpPageAddedEvent) {
+                    MetaHelpPageAddedEvent targetEvent = (MetaHelpPageAddedEvent) event;
+                    delegate.getStrings().add(targetEvent.getDescriptor().getName());
                 }
             }
         });

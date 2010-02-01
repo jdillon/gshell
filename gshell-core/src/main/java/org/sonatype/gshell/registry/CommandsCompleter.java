@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.console.completer;
+package org.sonatype.gshell.registry;
 
 import com.google.inject.Inject;
 import jline.console.Completer;

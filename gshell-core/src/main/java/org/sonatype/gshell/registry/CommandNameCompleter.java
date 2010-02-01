@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 the original author or authors.
+ * Copyright (C) 2009 the original author(s).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,63 +14,64 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.console.completer;
+package org.sonatype.gshell.registry;
 
 import com.google.inject.Inject;
 import jline.console.Completer;
 import jline.console.completers.StringsCompleter;
 import org.sonatype.gshell.event.EventListener;
 import org.sonatype.gshell.event.EventManager;
-import org.sonatype.gshell.help.HelpPageManager;
-import org.sonatype.gshell.help.MetaHelpPage;
-import org.sonatype.gshell.help.MetaHelpPageAddedEvent;
-import org.sonatype.gshell.registry.AliasRegisteredEvent;
-import org.sonatype.gshell.registry.AliasRegistry;
-import org.sonatype.gshell.registry.AliasRemovedEvent;
+import org.sonatype.gshell.registry.CommandRegisteredEvent;
+import org.sonatype.gshell.registry.CommandRegistry;
+import org.sonatype.gshell.registry.CommandRemovedEvent;
 
 import java.util.Collection;
 import java.util.EventObject;
 import java.util.List;
 
 /**
- * {@link jline.console.Completer} for meta help page names.
+ * {@link Completer} for command names.
  * <p/>
- * Keeps up to date automatically by handling meta-page-related events.
+ * Keeps up to date automatically by handling command-related events.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public class MetaHelpPageNameCompleter
+public class CommandNameCompleter
     implements Completer
 {
     private final EventManager eventManager;
 
-    private final HelpPageManager helpPages;
+    private final CommandRegistry commandRegistry;
 
     private final StringsCompleter delegate = new StringsCompleter();
 
     private boolean initialized;
 
     @Inject
-    public MetaHelpPageNameCompleter(final EventManager eventManager, final HelpPageManager helpPages) {
+    public CommandNameCompleter(final EventManager eventManager, final CommandRegistry commandRegistry) {
         assert eventManager != null;
         this.eventManager = eventManager;
-        assert helpPages != null;
-        this.helpPages = helpPages;
+        assert commandRegistry != null;
+        this.commandRegistry = commandRegistry;
     }
 
     private void init() {
-        for (MetaHelpPage page : helpPages.getMetaPages()) {
-            delegate.getStrings().add(page.getName());
-        }
+        assert commandRegistry != null;
+        Collection<String> names = commandRegistry.getCommandNames();
+        delegate.getStrings().addAll(names);
 
-        // Register for updates to alias registrations
+        // Register for updates to command registrations
         eventManager.addListener(new EventListener()
         {
             public void onEvent(final EventObject event) throws Exception {
-                if (event instanceof MetaHelpPageAddedEvent) {
-                    MetaHelpPageAddedEvent targetEvent = (MetaHelpPageAddedEvent) event;
-                    delegate.getStrings().add(targetEvent.getDescriptor().getName());
+                if (event instanceof CommandRegisteredEvent) {
+                    CommandRegisteredEvent targetEvent = (CommandRegisteredEvent) event;
+                    delegate.getStrings().add(targetEvent.getName());
+                }
+                else if (event instanceof CommandRemovedEvent) {
+                    CommandRemovedEvent targetEvent = (CommandRemovedEvent) event;
+                    delegate.getStrings().remove(targetEvent.getName());
                 }
             }
         });

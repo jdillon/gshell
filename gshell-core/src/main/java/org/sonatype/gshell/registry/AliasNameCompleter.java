@@ -14,63 +14,63 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.console.completer;
+package org.sonatype.gshell.registry;
 
 import com.google.inject.Inject;
 import jline.console.Completer;
 import jline.console.completers.StringsCompleter;
 import org.sonatype.gshell.event.EventListener;
 import org.sonatype.gshell.event.EventManager;
-import org.sonatype.gshell.registry.CommandRegisteredEvent;
-import org.sonatype.gshell.registry.CommandRegistry;
-import org.sonatype.gshell.registry.CommandRemovedEvent;
+import org.sonatype.gshell.registry.AliasRegisteredEvent;
+import org.sonatype.gshell.registry.AliasRegistry;
+import org.sonatype.gshell.registry.AliasRemovedEvent;
 
 import java.util.Collection;
 import java.util.EventObject;
 import java.util.List;
 
 /**
- * {@link Completer} for command names.
+ * {@link Completer} for alias names.
  * <p/>
- * Keeps up to date automatically by handling command-related events.
+ * Keeps up to date automatically by handling alias-related events.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public class CommandNameCompleter
+public class AliasNameCompleter
     implements Completer
 {
     private final EventManager eventManager;
 
-    private final CommandRegistry commandRegistry;
+    private final AliasRegistry aliasRegistry;
 
     private final StringsCompleter delegate = new StringsCompleter();
 
     private boolean initialized;
 
     @Inject
-    public CommandNameCompleter(final EventManager eventManager, final CommandRegistry commandRegistry) {
+    public AliasNameCompleter(final EventManager eventManager, final AliasRegistry aliasRegistry) {
         assert eventManager != null;
         this.eventManager = eventManager;
-        assert commandRegistry != null;
-        this.commandRegistry = commandRegistry;
+        assert aliasRegistry != null;
+        this.aliasRegistry = aliasRegistry;
     }
 
     private void init() {
-        assert commandRegistry != null;
-        Collection<String> names = commandRegistry.getCommandNames();
+        assert aliasRegistry != null;
+        Collection<String> names = aliasRegistry.getAliasNames();
         delegate.getStrings().addAll(names);
 
-        // Register for updates to command registrations
+        // Register for updates to alias registrations
         eventManager.addListener(new EventListener()
         {
             public void onEvent(final EventObject event) throws Exception {
-                if (event instanceof CommandRegisteredEvent) {
-                    CommandRegisteredEvent targetEvent = (CommandRegisteredEvent) event;
+                if (event instanceof AliasRegisteredEvent) {
+                    AliasRegisteredEvent targetEvent = (AliasRegisteredEvent) event;
                     delegate.getStrings().add(targetEvent.getName());
                 }
-                else if (event instanceof CommandRemovedEvent) {
-                    CommandRemovedEvent targetEvent = (CommandRemovedEvent) event;
+                else if (event instanceof AliasRemovedEvent) {
+                    AliasRemovedEvent targetEvent = (AliasRemovedEvent) event;
                     delegate.getStrings().remove(targetEvent.getName());
                 }
             }
