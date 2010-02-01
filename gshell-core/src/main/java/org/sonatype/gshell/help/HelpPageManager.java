@@ -30,9 +30,9 @@ public interface HelpPageManager
 {
     HelpPage getPage(String path);
 
-    Collection<HelpPage> getPages(String path);
+    Collection<HelpPage> getPages();
 
     void addMetaPage(HelpPageDescriptor desc);
 
-    Collection<String> getMetaPageNames();
+    Collection<MetaHelpPage> getMetaPages();
 }

@@ -18,14 +18,32 @@
 
     @{command.name} - @{command.description}
 
-@|bold DESCRIPTION|@
+@|bold VARIABLE REFERENCE|@
 
-    ???
+    Variables can be referenced using ${variable} syntax.
 
-@|bold EXAMPLES|@
+@|bold QUOTING|@
 
-    ???
+    Single quotes are opaque.
 
-@|bold SEE ALSO|@
+    Example:
 
-    ???
+        set foo bar
+        echo '${foo}'
+
+    Result:
+
+        ${foo}
+
+    Double quotes are evaluated using variable expansion.
+
+    Example:
+
+        set foo bar
+        echo "${foo}"
+
+    Result:
+
+        bar
+
+    Single or double quotes may be escaped with a preceding '\' char.

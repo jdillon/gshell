@@ -27,12 +27,13 @@ import org.sonatype.gshell.help.HelpPage;
 import org.sonatype.gshell.help.HelpPageManager;
 import org.sonatype.gshell.console.completer.AliasNameCompleter;
 import org.sonatype.gshell.console.completer.CommandNameCompleter;
+import org.sonatype.gshell.help.MetaHelpPage;
 import org.sonatype.gshell.util.cli2.Argument;
 
 import java.util.Collection;
 
 /**
- * Display command help.
+ * Display help pages.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
@@ -53,6 +54,9 @@ public class HelpCommand
     }
 
     @Inject
+    /**
+     * @since 2.5
+     */
     public HelpCommand installCompleters(final AliasNameCompleter c1, final CommandNameCompleter c2, final MetaHelpPageNameCompleter c3) {
         assert c1 != null;
         setCompleters(new AggregateCompleter(c1, c2, c3), null);
@@ -64,7 +68,10 @@ public class HelpCommand
         IO io = context.getIo();
 
         if (name == null) {
-            return displayAvailable(context);
+            displayCommands(context);
+            displayMetaPages(context);
+            
+            return Result.SUCCESS;
         }
         else {
             HelpPage page = helpPages.getPage(name);
@@ -81,12 +88,10 @@ public class HelpCommand
         }
     }
 
-    private Object displayAvailable(final CommandContext context) throws Exception {
+    private void renderPages(final CommandContext context, final Collection<? extends HelpPage> pages) {
         assert context != null;
+        assert pages != null;
 
-        Collection<HelpPage> pages = helpPages.getPages(null);
-
-        // Determine the maximum name length
         int max = 0;
         for (HelpPage page : pages) {
             int len = page.getName().length();
@@ -108,7 +113,29 @@ public class HelpCommand
                 io.out.println();
             }
         }
+    }
 
-        return Result.SUCCESS;
+    private void displayCommands(final CommandContext context) {
+        assert context != null;
+
+        Collection<HelpPage> pages = helpPages.getPages();
+
+        IO io = context.getIo();
+        io.out.println(getMessages().format("info.available-commands"));
+
+        renderPages(context, pages);
+    }
+
+    private void displayMetaPages(final CommandContext context) {
+        assert context != null;
+
+        Collection<MetaHelpPage> pages = helpPages.getMetaPages();
+        if (!pages.isEmpty()) {
+            IO io = context.getIo();
+            io.out.println();
+            io.out.println(getMessages().format("info.additional-doc"));
+
+            renderPages(context, pages);
+        }
     }
 }

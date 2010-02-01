@@ -53,7 +53,7 @@ public class HelpPageManagerImpl
 
     private final HelpContentLoader helpLoader;
 
-    private final Map<String,HelpPageDescriptor> metaPages = new HashMap<String,HelpPageDescriptor>();
+    private final Map<String,MetaHelpPage> metaPages = new HashMap<String,MetaHelpPage>();
 
     @Inject
     public HelpPageManagerImpl(final EventManager eventManager, final AliasRegistry aliasRegistry, final CommandRegistry commandRegistry, final HelpContentLoader helpLoader) {
@@ -89,17 +89,13 @@ public class HelpPageManagerImpl
         }
 
         if (metaPages.containsKey(path)) {
-            return new MetaHelpPage(metaPages.get(path), helpLoader);
+            return metaPages.get(path);
         }
         
         return null;
     }
 
-    public Collection<HelpPage> getPages(final String path) {
-        // path may be null
-        
-        // HACK: For now just return commands, since that is how it used to work.
-
+    public Collection<HelpPage> getPages() {
         List<HelpPage> pages = new ArrayList<HelpPage>();
 
         for (String name : commandRegistry.getCommandNames()) {
@@ -118,12 +114,12 @@ public class HelpPageManagerImpl
         assert desc != null;
 
         log.debug("Adding meta-page: {} -> {}", desc.getName(), desc.getResource());
-        metaPages.put(desc.getName(), desc);
+        metaPages.put(desc.getName(), new MetaHelpPage(desc, helpLoader));
 
         eventManager.publish(new MetaHelpPageAddedEvent(desc));
     }
 
-    public Collection<String> getMetaPageNames() {
-        return metaPages.keySet();
+    public Collection<MetaHelpPage> getMetaPages() {
+        return metaPages.values();
     }
 }
