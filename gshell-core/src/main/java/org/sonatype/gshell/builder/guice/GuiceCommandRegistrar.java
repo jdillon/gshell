@@ -84,6 +84,11 @@ public class GuiceCommandRegistrar
         }
     }
 
+    private Class<?> loadClass(final String className) throws ClassNotFoundException {
+        assert className != null;
+        return Thread.currentThread().getContextClassLoader().loadClass(className);
+    }
+
     @SuppressWarnings({"unchecked"})
     private Injector buildInjector(final List<ModuleDescriptor> config) {
         assert config != null;
@@ -92,7 +97,7 @@ public class GuiceCommandRegistrar
         for (ModuleDescriptor desc : config) {
             String className = desc.getType();
             try {
-                Class type = Thread.currentThread().getContextClassLoader().loadClass(className);
+                Class type = loadClass(className);
                 Module module = (Module) injector.getInstance(type);
                 log.debug("Loaded module: {}", module);
                 modules.add(module);
@@ -135,7 +140,7 @@ public class GuiceCommandRegistrar
     @SuppressWarnings({"unchecked"})
     private CommandAction createAction(final String className) throws ClassNotFoundException {
         assert className != null;
-        Class type = Thread.currentThread().getContextClassLoader().loadClass(className);
+        Class type = loadClass(className);
         return (CommandAction) injectorHolder.get().getInstance(type);
     }
 }
