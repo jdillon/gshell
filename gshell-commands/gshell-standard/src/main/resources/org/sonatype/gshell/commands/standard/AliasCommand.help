@@ -27,8 +27,7 @@
     Aliases are like short-cuts.  Define an alias to replace common
     commands and command arguments.
 
-@{command.options}
-@{command.arguments}
+@{command.details}
 @|bold EXAMPLES|@
 
     List all defined aliases:

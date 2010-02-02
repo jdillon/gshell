@@ -28,9 +28,8 @@
     available in the current context.  When an argument is given that matches
     a page name, the help page is displayed, else a list of matching pages
     is displayed.
-    
-@{command.options}
-@{command.arguments}
+
+@{command.details}
 @|bold EXAMPLES|@
 
     Display the list of help pages:

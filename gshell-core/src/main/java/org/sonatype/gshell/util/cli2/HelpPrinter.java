@@ -150,9 +150,7 @@ public class HelpPrinter
      * @since 2.4
      */
     public void printArguments(final PrintWriter out, final List<ArgumentDescriptor> arguments) {
-        // Compute the maximum length of the syntax column
         int len = 0;
-
         for (ArgumentDescriptor arg : arguments) {
             len = Math.max(len, arg.renderSyntax(messages).length());
         }
@@ -173,9 +171,7 @@ public class HelpPrinter
      * @since 2.4
      */
     public void printOptions(final PrintWriter out, final List<OptionDescriptor> options) {
-        // Compute the maximum length of the syntax column
         int len = 0;
-
         for (OptionDescriptor opt : options) {
             len = Math.max(len, opt.renderSyntax(messages).length());
         }
@@ -223,7 +219,9 @@ public class HelpPrinter
             }
         }
 
-        out.println(buff);
+        if (buff.length() != 0) {
+            out.println(buff);
+        }
     }
 
     private void indent(final PrintWriter out, int i) {

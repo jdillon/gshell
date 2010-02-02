@@ -26,7 +26,7 @@
 
     Displays the name of the current host.
 
-@{command.options}
+@{command.details}
 @|bold EXAMPLES|@
 
     hostname

@@ -22,8 +22,7 @@
 
     @|bold @{command.name}|@ [options] NAME
 
-@{command.options}
-@{command.arguments}
+@{command.details}
 @|bold DESCRIPTION|@
 
     Removes a previously defined alias.

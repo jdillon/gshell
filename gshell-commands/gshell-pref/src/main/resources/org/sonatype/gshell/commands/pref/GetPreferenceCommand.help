@@ -26,8 +26,7 @@
 
     Get the value of a preference.
 
-@{command.options}
-@{command.arguments}
+@{command.details}
 @|bold EXAMPLES|@
 
     Get the value of a preference:

@@ -26,13 +26,12 @@
 
     Unset (delete) a preference.
 
-@{command.options}
-@{command.arguments}
+@{command.details}
 @|bold EXAMPLES|@
 
     Unset a preference:
 
-        pref/unset /some/path somekey
+        pref/unset /some/path some-key
 
 @|bold SEE ALSO|@
 

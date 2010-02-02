@@ -27,8 +27,7 @@
     Reads commands from a local file or URL and executes them in the current
     shell.
 
-@{command.options}
-@{command.arguments}
+@{command.details}
 @|bold EXAMPLES|@
 
     Execute commands from a local file:

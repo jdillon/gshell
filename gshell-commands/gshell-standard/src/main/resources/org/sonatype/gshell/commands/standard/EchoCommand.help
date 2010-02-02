@@ -27,8 +27,7 @@
     Displays the given text to the console.  By default a new-line will be
     sent at the end of the text, unless the @|bold -n|@ flag is specified.
 
-@{command.options}
-@{command.arguments}
+@{command.details}
 @|bold EXAMPLES|@
 
     Display a raw string:

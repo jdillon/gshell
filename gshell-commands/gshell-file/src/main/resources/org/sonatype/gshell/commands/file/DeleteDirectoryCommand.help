@@ -27,8 +27,7 @@
     Remove a directory; this command will only work if they directory is
     empty.
 
-@{command.options}
-@{command.arguments}
+@{command.details}
 @|bold EXAMPLES|@
 
     rmdir /tmp/foo

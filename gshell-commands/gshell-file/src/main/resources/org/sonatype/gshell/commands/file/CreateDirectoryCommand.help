@@ -24,14 +24,9 @@
 
 @|bold DESCRIPTION|@
 
-    @{command.description}
-
-@|bold MANUAL|@
-
     Creates a new directory if it does not already exist.
 
-@{command.options}
-@{command.arguments}
+@{command.details}
 @|bold EXAMPLES|@
 
     Create a new directory:

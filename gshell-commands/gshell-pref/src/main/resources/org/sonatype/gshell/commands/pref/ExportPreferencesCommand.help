@@ -26,8 +26,7 @@
 
     Export preferences as XML.  When no file is given the XML is displayed.
 
-@{command.options}
-@{command.arguments}
+@{command.details}
 @|bold EXAMPLES|@
 
     Export all preferences:

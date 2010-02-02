@@ -64,7 +64,7 @@ public class CommandHelpPage
         return CommandHelpSupport.getDescription(command);
     }
 
-    // Public so that ObjectBasedValueSource can access
+    // Public so that ObjectBasedValueSource can access (it really should set accessible so this is not needed)
     public class Helper
     {
         private final CliProcessor clp;
@@ -100,6 +100,15 @@ public class CommandHelpPage
             return CommandHelpSupport.getDescription(command);
         }
 
+        private void printHeader(final PrintBuffer buff, final String name) {
+            buff.format("@|bold %s|@", getMessages().format(name)).println();
+            buff.println();
+        }
+
+        //
+        // FIXME: The indent on the results for arguments+options is 2, not 4 (should be consistent)
+        //
+        
         @SuppressWarnings("unused")
         public String getArguments() {
             if (clp.getArgumentDescriptors().isEmpty()) {
@@ -107,9 +116,7 @@ public class CommandHelpPage
             }
 
             PrintBuffer buff = new PrintBuffer();
-
-            buff.format("@|bold %s|@", getMessages().format("section.arguments")).println();
-            buff.println();
+            printHeader(buff, "section.arguments");
 
             printer.printArguments(buff, clp.getArgumentDescriptors());
 
@@ -123,9 +130,7 @@ public class CommandHelpPage
             }
 
             PrintBuffer buff = new PrintBuffer();
-
-            buff.format("@|bold %s|@", getMessages().format("section.options")).println();
-            buff.println();
+            printHeader(buff, "section.options");
 
             printer.printOptions(buff, clp.getOptionDescriptors());
 
@@ -139,16 +144,45 @@ public class CommandHelpPage
             }
 
             PrintBuffer buff = new PrintBuffer();
-
-            buff.format("@|bold %s|@", getMessages().format("section.preferences")).println();
-            buff.println();
+            printHeader(buff, "section.preferences");
 
             for (PreferenceDescriptor pd : pp.getDescriptors()) {
-                String
-                    text =
-                    String.format("    %s @|bold %s|@ (%s)", pd.getPreferences().absolutePath(), pd.getId(), pd.getSetter().getType().getSimpleName());
+                String text = String.format("    %s @|bold %s|@ (%s)",
+                    pd.getPreferences().absolutePath(), pd.getId(), pd.getSetter().getType().getSimpleName());
                 buff.println(AnsiRenderer.render(text));
             }
+
+            return buff.toString();
+        }
+
+        @SuppressWarnings("unused")
+        public String getDetails() {
+            //
+            // HACK: This ugly muck adds a newline as needed if the last section was not empty
+            //       and the current section is not empty, so that the page looks correct.
+            //
+            
+            PrintBuffer buff = new PrintBuffer();
+            String content, last;
+
+            content = getOptions();
+            buff.append(content);
+            last = content;
+
+            content = getArguments();
+            if (content.length() !=0 && last.length() !=0) {
+                buff.println();
+            }
+            buff.append(content);
+            last = content;
+
+            content = getPreferences();
+            if (content.length() !=0 && last.length() !=0) {
+                buff.println();
+            }
+            buff.append(content);
+
+            // newline is already in the help stream
 
             return buff.toString();
         }
@@ -157,6 +191,10 @@ public class CommandHelpPage
     public void render(final PrintWriter out) {
         assert out != null;
 
+        //
+        // FIXME: Really need a little bit more of a help page language here to simplify the formatting of things
+        //
+        
         Interpolator interp = new StringSearchInterpolator("@{", "}");
         interp.addValueSource(new PrefixedObjectValueSource("command.", new Helper()));
         interp.addValueSource(new PrefixedObjectValueSource("branding.", ShellHolder.get().getBranding()));

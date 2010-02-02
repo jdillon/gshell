@@ -26,8 +26,7 @@
 
     Downloads a file from a URL and optionally saves to a local file.
 
-@{command.options}
-@{command.arguments}
+@{command.details}
 @|bold EXAMPLES|@
 
     Display a file:

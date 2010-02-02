@@ -26,8 +26,7 @@
 
     Change the current working directory to a specific directory.
 
-@{command.options}
-@{command.arguments}
+@{command.details}
 @|bold EXAMPLES|@
 
     Change to /tmp:

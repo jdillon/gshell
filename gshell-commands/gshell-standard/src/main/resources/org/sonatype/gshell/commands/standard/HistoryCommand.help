@@ -27,8 +27,7 @@
     Displays the command history and optionally allows the history to be
     cleared.
 
-@{command.options}
-@{command.arguments}
+@{command.details}
 @|bold EXAMPLES|@
 
     Display the last 10 history items:

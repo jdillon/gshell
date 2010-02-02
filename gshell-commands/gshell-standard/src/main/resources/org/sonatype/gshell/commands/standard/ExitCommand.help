@@ -26,8 +26,7 @@
 
     Used to exit the shell normally.
 
-@{command.options}
-@{command.arguments}
+@{command.details}
 @|bold EXAMPLES|@
 
     Exit with the default exit code:

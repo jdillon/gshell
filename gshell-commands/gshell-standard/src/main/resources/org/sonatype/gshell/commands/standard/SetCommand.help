@@ -26,8 +26,7 @@
 
     Set a shell variable or a system property.
 
-@{command.options}
-@{command.arguments}
+@{command.details}
 @|bold EXAMPLES|@
 
     List all defined variables:

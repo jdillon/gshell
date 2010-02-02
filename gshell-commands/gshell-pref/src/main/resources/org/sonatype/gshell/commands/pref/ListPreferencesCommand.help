@@ -26,8 +26,7 @@
 
     List the contents of preferences.
 
-@{command.options}
-@{command.arguments}
+@{command.details}
 @|bold EXAMPLES|@
 
     List all user preferences:

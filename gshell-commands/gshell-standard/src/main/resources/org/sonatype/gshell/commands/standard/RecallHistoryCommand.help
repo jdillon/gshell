@@ -26,8 +26,7 @@
 
     Recalls (and executes) a command from history.
 
-@{command.options}
-@{command.arguments}
+@{command.details}
 @|bold EXAMPLES|@
 
     Recall the first item from history:

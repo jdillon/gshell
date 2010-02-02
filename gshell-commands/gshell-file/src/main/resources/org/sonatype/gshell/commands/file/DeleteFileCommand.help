@@ -26,8 +26,7 @@
 
     Removes (deletes/unlinks) a file.
 
-@{command.options}
-@{command.arguments}
+@{command.details}
 @|bold EXAMPLES|@
 
     rm /tmp/file.txt

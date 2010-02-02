@@ -26,8 +26,7 @@
 
     Remove a preferences node or an entire tree of preferences.
 
-@{command.options}
-@{command.arguments}
+@{command.details}
 @|bold EXAMPLES|@
 
     Remove a preferences node:
