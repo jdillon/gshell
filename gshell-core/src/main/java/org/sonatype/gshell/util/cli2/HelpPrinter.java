@@ -219,9 +219,7 @@ public class HelpPrinter
             }
         }
 
-        if (buff.length() != 0) {
-            out.println(buff);
-        }
+        out.println(buff);
     }
 
     private void indent(final PrintWriter out, int i) {
