@@ -23,12 +23,15 @@ import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.alias.AliasRegistry;
 import org.sonatype.gshell.alias.NoSuchAliasException;
 import org.sonatype.gshell.command.CommandRegistry;
+import org.sonatype.gshell.command.descriptor.DiscoveredCommandSetDescriptorEvent;
 import org.sonatype.gshell.command.NoSuchCommandException;
 import org.sonatype.gshell.command.descriptor.HelpPageDescriptor;
+import org.sonatype.gshell.event.EventListener;
 import org.sonatype.gshell.event.EventManager;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.EventObject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +48,7 @@ public class HelpPageManagerImpl
 {
     private static final Logger log = LoggerFactory.getLogger(HelpPageManagerImpl.class);
 
-    private final EventManager eventManager;
+    private final EventManager events;
 
     private final AliasRegistry aliasRegistry;
 
@@ -56,15 +59,28 @@ public class HelpPageManagerImpl
     private final Map<String,MetaHelpPage> metaPages = new HashMap<String,MetaHelpPage>();
 
     @Inject
-    public HelpPageManagerImpl(final EventManager eventManager, final AliasRegistry aliasRegistry, final CommandRegistry commandRegistry, final HelpContentLoader helpLoader) {
-        assert eventManager != null;
-        this.eventManager = eventManager;
+    public HelpPageManagerImpl(final EventManager events, final AliasRegistry aliasRegistry, final CommandRegistry commandRegistry, final HelpContentLoader helpLoader) {
+        assert events != null;
+        this.events = events;
         assert aliasRegistry != null;
         this.aliasRegistry = aliasRegistry;
         assert commandRegistry != null;
         this.commandRegistry = commandRegistry;
         assert helpLoader != null;
         this.helpLoader = helpLoader;
+
+        events.addListener(new EventListener()
+        {
+            public void onEvent(final EventObject event) throws Exception {
+                assert event != null;
+                if (event instanceof DiscoveredCommandSetDescriptorEvent) {
+                    DiscoveredCommandSetDescriptorEvent target = (DiscoveredCommandSetDescriptorEvent)event;
+                    for (HelpPageDescriptor page : target.getDescriptor().getHelpPages()) {
+                        addMetaPage(page);
+                    }
+                }
+            }
+        });
     }
 
     public HelpPage getPage(final String name) {
@@ -129,8 +145,7 @@ public class HelpPageManagerImpl
 
         log.debug("Adding meta-page: {} -> {}", desc.getName(), desc.getResource());
         metaPages.put(desc.getName(), new MetaHelpPage(desc, helpLoader));
-
-        eventManager.publish(new MetaHelpPageAddedEvent(desc));
+        events.publish(new MetaHelpPageAddedEvent(desc));
     }
 
     public Collection<MetaHelpPage> getMetaPages() {

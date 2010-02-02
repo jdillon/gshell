@@ -21,7 +21,11 @@ import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.command.descriptor.CommandDescriptor;
 import org.sonatype.gshell.command.descriptor.CommandSetDescriptor;
 import org.sonatype.gshell.command.descriptor.CommandsDescriptor;
+import org.sonatype.gshell.command.descriptor.DiscoveredCommandDescriptorEvent;
+import org.sonatype.gshell.command.descriptor.DiscoveredCommandSetDescriptorEvent;
+import org.sonatype.gshell.command.descriptor.DiscoveredCommandsDescriptorEvent;
 import org.sonatype.gshell.command.descriptor.io.xpp3.CommandsXpp3Reader;
+import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.io.Closer;
 
 import java.io.InputStream;
@@ -43,9 +47,16 @@ public abstract class CommandRegistrarSupport
 {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
+    private final EventManager events;
+
     private String[] descriptorSearchPath = { DEFAULT_DESCRIPTOR_LOCATION };
 
     private final List<CommandSetDescriptor> descriptors = new LinkedList<CommandSetDescriptor>();
+
+    protected CommandRegistrarSupport(final EventManager events) {
+        assert events != null;
+        this.events = events;
+    }
 
     public String[] getDescriptorSearchPath() {
         return descriptorSearchPath;
@@ -63,14 +74,18 @@ public abstract class CommandRegistrarSupport
     public void registerCommands() throws Exception {
         List<CommandsDescriptor> descriptors = discoverDescriptors();
         List<CommandSetDescriptor> commandSets = new ArrayList<CommandSetDescriptor>();
-        for (CommandsDescriptor d : descriptors) {
-            commandSets.addAll(d.getCommandSets());
+        for (CommandsDescriptor config : descriptors) {
+            events.publish(new DiscoveredCommandsDescriptorEvent(config));
+
+            commandSets.addAll(config.getCommandSets());
         }
 
         if (!commandSets.isEmpty()) {
             Collections.sort(commandSets);
 
             for (CommandSetDescriptor config : commandSets) {
+                events.publish(new DiscoveredCommandSetDescriptorEvent(config));
+
                 this.descriptors.add(config);
 
                 if (!config.isEnabled()) {
@@ -90,6 +105,7 @@ public abstract class CommandRegistrarSupport
 
         for (CommandDescriptor command : config.getCommands()) {
             command.createCommandSetDescriptorAssociation(config);
+            events.publish(new DiscoveredCommandDescriptorEvent(command));
 
             if (command.isEnabled()) {
                 registerCommand(command);

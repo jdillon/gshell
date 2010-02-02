@@ -24,9 +24,8 @@ import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.CommandRegistry;
 import org.sonatype.gshell.command.descriptor.CommandSetDescriptor;
-import org.sonatype.gshell.command.descriptor.HelpPageDescriptor;
 import org.sonatype.gshell.command.descriptor.ModuleDescriptor;
-import org.sonatype.gshell.help.HelpPageManager;
+import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.command.CommandRegistrar;
 import org.sonatype.gshell.command.CommandRegistrarSupport;
 
@@ -47,8 +46,6 @@ public class GuiceCommandRegistrar
 
     private final CommandRegistry registry;
 
-    private final HelpPageManager helpPages;
-
     private final ThreadLocal<Injector> injectorHolder = new ThreadLocal<Injector>() {
         @Override
         protected Injector initialValue() {
@@ -57,16 +54,17 @@ public class GuiceCommandRegistrar
     };
 
     @Inject
-    public GuiceCommandRegistrar(final CommandRegistry registry, final Injector injector, final HelpPageManager helpPages) {
+    public GuiceCommandRegistrar(final EventManager events, final CommandRegistry registry, final Injector injector) {
+        super(events);
+
         assert registry != null;
         this.registry = registry;
         assert injector != null;
         this.injector = injector;
-        assert helpPages != null;
-        this.helpPages = helpPages;
 
         log.trace("Base injector: {}", injector);
     }
+
 
     @Override
     protected void registerCommandSet(final CommandSetDescriptor config) {
@@ -80,11 +78,6 @@ public class GuiceCommandRegistrar
 
         try {
             super.registerCommandSet(config);
-
-            // HACK: This really doesn't belong here... not sure where to put it though
-            for (HelpPageDescriptor page : config.getHelpPages()) {
-                helpPages.addMetaPage(page);
-            }
         }
         finally {
             injectorHolder.set(injector);
@@ -110,7 +103,6 @@ public class GuiceCommandRegistrar
         }
 
         Injector child = injector.createChildInjector(modules);
-
         log.trace("Created child injector: {}", child);
 
         return child;
