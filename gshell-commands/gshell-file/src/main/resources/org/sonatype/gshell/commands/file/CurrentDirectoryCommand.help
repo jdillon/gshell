@@ -27,10 +27,6 @@
     Displays the current working directory (ie. ${shell.user.dir}).
 
 @{command.details}
-@|bold EXAMPLES|@
-
-    pwd
-
 @|bold SEE ALSO|@
 
     @|bold cd|@
