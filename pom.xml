@@ -209,6 +209,12 @@
 
             <dependency>
                 <groupId>org.sonatype.gshell.commands</groupId>
+                <artifactId>gshell-standard</artifactId>
+                <version>2.5-SNAPSHOT</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>org.sonatype.gshell.commands</groupId>
                 <artifactId>gshell-pref</artifactId>
                 <version>2.5-SNAPSHOT</version>
             </dependency>

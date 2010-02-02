@@ -14,26 +14,39 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.commands.shell;
+package org.sonatype.gshell.commands.standard;
 
 import org.junit.Test;
 import org.sonatype.gshell.command.CommandTestSupport;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 /**
- * Tests for the {@link SleepCommand}.
+ * Tests for the {@link org.sonatype.gshell.commands.HelpCommand}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class SleepCommandTest
+public class HelpCommandTest
     extends CommandTestSupport
 {
-    public SleepCommandTest() {
-        super("sleep", SleepCommand.class);
+    public HelpCommandTest() {
+        super(HelpCommand.class);
     }
 
-    @Override
     @Test
-    public void testDefault() throws Exception {
-        executeWithArgs("1");
+    public void testHelpHelp() throws Exception {
+        assertTrue(commandRegistry.containsCommand("help"));
+        assertFalse(aliasRegistry.containsAlias("foo"));
+        Object result = executeWithArgs("help");
+        assertEqualsSuccess(result);
+    }
+
+    @Test
+    public void testHelpFoo() throws Exception {
+        assertFalse(commandRegistry.containsCommand("foo"));
+        assertFalse(aliasRegistry.containsAlias("foo"));
+        Object result = executeWithArgs("foo");
+        assertEqualsFailure(result);
     }
 }

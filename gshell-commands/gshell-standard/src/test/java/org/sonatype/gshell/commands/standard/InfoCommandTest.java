@@ -14,29 +14,19 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.commands.vfs;
+package org.sonatype.gshell.commands.standard;
 
-import com.google.inject.Module;
 import org.sonatype.gshell.command.CommandTestSupport;
-import org.sonatype.gshell.vfs.VfsModule;
-
-import java.util.List;
 
 /**
- * Support for testing VFS commands.
+ * Tests for the {@link org.sonatype.gshell.commands.InfoCommand}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class VfsCommandTestSupport
+public class InfoCommandTest
     extends CommandTestSupport
 {
-    public VfsCommandTestSupport(final Class<?> type) {
-        super(type);
-    }
-
-    @Override
-    protected void configureModules(final List<Module> modules) {
-        super.configureModules(modules);
-        modules.add(new VfsModule());
+    public InfoCommandTest() {
+        super(InfoCommand.class);
     }
 }

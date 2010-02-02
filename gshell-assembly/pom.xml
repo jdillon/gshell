@@ -39,6 +39,11 @@
             <artifactId>gshell-core</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.sonatype.gshell.commands</groupId>
+            <artifactId>gshell-standard</artifactId>
+        </dependency>
+        
         <!--<dependency>-->
             <!--<groupId>org.sonatype.gshell.commands</groupId>-->
             <!--<artifactId>gshell-shell</artifactId>-->
@@ -46,12 +51,12 @@
 
         <dependency>
             <groupId>org.sonatype.gshell.commands</groupId>
-            <artifactId>gshell-file</artifactId>
+            <artifactId>gshell-pref</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.sonatype.gshell.commands</groupId>
-            <artifactId>gshell-pref</artifactId>
+            <artifactId>gshell-file</artifactId>
         </dependency>
 
         <!--<dependency>-->

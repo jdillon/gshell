@@ -14,35 +14,56 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.commands.artifact;
+package org.sonatype.gshell.commands.standard;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.sonatype.gshell.command.CommandTestSupport;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.fail;
+
 /**
- * Tests for the {@link ResolveCommand}.
- *
+ * Tests for the {@link UnaliasCommand}.
+ * 
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class ResolveCommandTest
+public class UnaliasCommandTest
     extends CommandTestSupport
 {
-    public ResolveCommandTest() {
-        super(ResolveCommand.class);
+    public UnaliasCommandTest() {
+        super(UnaliasCommand.class);
     }
-
+    
     @Override
     @Test
-    @Ignore
     public void testDefault() throws Exception {
-        // nothing
+        try {
+            super.testDefault();
+            fail();
+        }
+        catch (Exception e) {
+            // expected
+        }
     }
 
-    @Ignore // FIXME:
     @Test
-    public void test1() throws Exception {
-        Object result = executeWithArgs("jline:line:0.9.94");
+    public void testTooManyArguments() throws Exception {
+        try {
+            executeWithArgs("1 2");
+            fail();
+        }
+        catch (Exception e) {
+            // expected
+        }
+    }
+
+    @Test
+    public void testUndefineAlias() throws Exception {
+        assertFalse(aliasRegistry.containsAlias("foo"));
+        aliasRegistry.registerAlias("foo", "bar");
+        
+        Object result = executeWithArgs("foo");
         assertEqualsSuccess(result);
+        assertFalse(aliasRegistry.containsAlias("foo"));
     }
 }

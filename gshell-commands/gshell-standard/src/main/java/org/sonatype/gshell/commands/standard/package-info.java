@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009 the original author(s).
+ * Copyright (C) 2010 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,26 +14,9 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.commands.shell;
-
-import org.junit.Test;
-import org.sonatype.gshell.command.CommandTestSupport;
-
 /**
- * Tests for the {@link SleepCommand}.
+ * Standard commands.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ * @since 2.5
  */
-public class SleepCommandTest
-    extends CommandTestSupport
-{
-    public SleepCommandTest() {
-        super("sleep", SleepCommand.class);
-    }
-
-    @Override
-    @Test
-    public void testDefault() throws Exception {
-        executeWithArgs("1");
-    }
-}
+package org.sonatype.gshell.commands.standard;
