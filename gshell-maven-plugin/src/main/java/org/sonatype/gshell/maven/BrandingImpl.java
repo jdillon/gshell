@@ -18,9 +18,13 @@ package org.sonatype.gshell.maven;
 
 import org.fusesource.jansi.Ansi;
 import org.sonatype.gshell.branding.BrandingSupport;
+import org.sonatype.gshell.branding.License;
+import org.sonatype.gshell.branding.LicenseSupport;
 import org.sonatype.gshell.util.PrintBuffer;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * Branding for Maven GShell plugin.
@@ -71,5 +75,24 @@ public class BrandingImpl
     @Override
     public File getUserContextDir() {
         return resolveFile(new File(getUserHomeDir(), ".gshell"));
+    }
+
+    @Override
+    public License getLicense() {
+        return new LicenseSupport()
+        {
+            public String getName() {
+                return "Apache License, Version 2.0";
+            }
+
+            public URL getUrl() {
+                try {
+                    return new URL("http://www.apache.org/licenses/LICENSE-2.0.txt");
+                }
+                catch (MalformedURLException e) {
+                    throw new Error(e);
+                }
+            }
+        };
     }
 }

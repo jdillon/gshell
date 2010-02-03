@@ -21,6 +21,7 @@ import jline.WindowsTerminal;
 import jline.console.completers.EnumCompleter;
 import org.fusesource.jansi.Ansi;
 import org.sonatype.gshell.branding.Branding;
+import org.sonatype.gshell.branding.License;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
@@ -78,6 +79,7 @@ public class InfoCommand
         MEMORY,
         CLASSES,
         OS,
+        LICENSE,
     }
 
     @Preference
@@ -120,6 +122,7 @@ public class InfoCommand
                     printlnHeader(io, "Shell");
                     println(io, "Display Name", branding.getDisplayName());
                     println(io, "Program Name", branding.getProgramName());
+                    println(io, "License", branding.getLicense());
                     println(io, "Version", branding.getVersion());
                     println(io, "Home Dir", branding.getShellHomeDir());
                     println(io, "Context Dir", branding.getShellContextDir());
@@ -203,6 +206,16 @@ public class InfoCommand
                     catch (Throwable t) {
                         // ignore
                     }
+                    break;
+
+                case LICENSE:
+                    License lic = branding.getLicense();
+                    printlnHeader(io, "License");
+                    println(io, "Name", lic.getName());
+                    println(io, "URL", lic.getUrl());
+                    io.out.println("----8<----");
+                    io.out.println(lic.getContent());
+                    io.out.println("---->8----");
                     break;
             }
         }

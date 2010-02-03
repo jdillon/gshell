@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.net.URL;
 import java.util.Properties;
 
 import static org.sonatype.gshell.vars.VariableNames.SHELL_HOME;
@@ -155,6 +156,18 @@ public class BrandingSupport
 
     public File getUserContextDir() {
         return resolveFile(new File(getUserHomeDir(), String.format(".%s", getProgramName())));
+    }
+
+    public License getLicense() {
+        return new LicenseSupport() {
+            public String getName() {
+                return null;
+            }
+
+            public URL getUrl() {
+                return null;
+            }
+        };
     }
 
     public void customize(final Shell shell) throws Exception {
