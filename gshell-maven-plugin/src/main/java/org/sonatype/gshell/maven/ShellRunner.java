@@ -16,12 +16,24 @@
 
 package org.sonatype.gshell.maven;
 
+import com.google.inject.AbstractModule;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Module;
+import com.google.inject.Stage;
+import com.google.inject.name.Names;
 import org.sonatype.gshell.MainSupport;
 import org.sonatype.gshell.branding.Branding;
-import org.sonatype.gshell.guice.GuiceShellBuilder;
+import org.sonatype.gshell.command.CommandRegistrar;
+import org.sonatype.gshell.command.IO;
+import org.sonatype.gshell.console.ConsoleErrorHandler;
+import org.sonatype.gshell.console.ConsolePrompt;
+import org.sonatype.gshell.guice.CoreModule;
 import org.sonatype.gshell.shell.Shell;
 import org.sonatype.gshell.shell.ShellErrorHandler;
+import org.sonatype.gshell.shell.ShellImpl;
 import org.sonatype.gshell.shell.ShellPrompt;
+import org.sonatype.gshell.vars.Variables;
 
 /**
  * ???
@@ -38,15 +50,21 @@ public class ShellRunner
 
     @Override
     protected Shell createShell() throws Exception {
-        GuiceShellBuilder builder = new GuiceShellBuilder();
+        Module module = new AbstractModule()
+        {
+            @Override
+            protected void configure() {
+                bind(ConsolePrompt.class).to(ShellPrompt.class);
+                bind(ConsoleErrorHandler.class).to(ShellErrorHandler.class);
+                bind(Branding.class).toInstance(getBranding());
+                bind(IO.class).annotatedWith(Names.named("main")).toInstance(io);
+                bind(Variables.class).annotatedWith(Names.named("main")).toInstance(vars);
+            }
+        };
 
-        Shell shell = builder
-                .setBranding(getBranding())
-                .setIo(io)
-                .setVariables(vars)
-                .setPrompt(new ShellPrompt(vars, getBranding()))
-                .setErrorHandler(new ShellErrorHandler(io))
-                .create();
+        Injector injector = Guice.createInjector(Stage.PRODUCTION, module, new CoreModule());
+        ShellImpl shell = injector.getInstance(ShellImpl.class);
+        injector.getInstance(CommandRegistrar.class).registerCommands();
 
         return shell;
     }

@@ -313,9 +313,7 @@
         <module>gshell-core</module>
         <module>gshell-commands</module>
         <module>gshell-plexus</module>
-        <!--
         <module>gshell-maven-plugin</module>
-        -->
         <module>gshell-assembly</module>
     </modules>
     

@@ -71,7 +71,7 @@ public class MainSupportTest
         public int exitCode;
 
         @Override
-        protected Branding createBranding() throws Exception {
+        protected Branding createBranding() {
             return new TestBranding(util.resolveFile("target/shell-home"));
         }
 
