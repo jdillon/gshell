@@ -16,6 +16,7 @@
 
 package org.sonatype.gshell.branding;
 
+import java.io.IOException;
 import java.net.URL;
 
 /**
@@ -30,5 +31,5 @@ public interface License
 
     URL getUrl();
 
-    String getContent();
+    String getContent() throws IOException;
 }

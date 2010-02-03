@@ -17,10 +17,12 @@
 package org.sonatype.gshell.branding;
 
 import org.codehaus.plexus.util.IOUtil;
+import org.sonatype.gshell.io.Closer;
 import org.sonatype.gshell.util.PrintBuffer;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
@@ -29,24 +31,51 @@ import java.net.URL;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-public abstract class LicenseSupport
+public class LicenseSupport
     implements License
 {
-    public String getContent() {
+    private final String name;
+
+    private final URL url;
+
+    public LicenseSupport(final String name, final URL url) {
+        this.name = name;
+        this.url = url;
+    }
+
+    public LicenseSupport(final String name, final String url) {
+        this.name = name;
+        try {
+            this.url = new URL(url);
+        }
+        catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public URL getUrl() {
+        return url;
+    }
+
+    public String getContent() throws IOException {
         URL url = getUrl();
         
         if (url == null) {
             return null;
         }
 
+        PrintBuffer buff = new PrintBuffer();
+        InputStream input = url.openStream();
         try {
-            PrintBuffer buff = new PrintBuffer();
-            InputStream input = url.openStream();
             IOUtil.copy(input, buff);
-            return buff.toString();
         }
-        catch (IOException e) {
-            throw new RuntimeException(e);
+        finally {
+            Closer.close(input);
         }
+        return buff.toString();
     }
 }

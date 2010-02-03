@@ -79,20 +79,6 @@ public class BrandingImpl
 
     @Override
     public License getLicense() {
-        return new LicenseSupport()
-        {
-            public String getName() {
-                return "Apache License, Version 2.0";
-            }
-
-            public URL getUrl() {
-                try {
-                    return new URL("http://www.apache.org/licenses/LICENSE-2.0.txt");
-                }
-                catch (MalformedURLException e) {
-                    throw new Error(e);
-                }
-            }
-        };
+        return new LicenseSupport("Apache License, Version 2.0", "http://www.apache.org/licenses/LICENSE-2.0.txt");
     }
 }
