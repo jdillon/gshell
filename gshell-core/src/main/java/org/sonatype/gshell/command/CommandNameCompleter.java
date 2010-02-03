@@ -37,7 +37,7 @@ import java.util.List;
 public class CommandNameCompleter
     implements Completer
 {
-    private final EventManager eventManager;
+    private final EventManager events;
 
     private final CommandRegistry commandRegistry;
 
@@ -46,9 +46,9 @@ public class CommandNameCompleter
     private boolean initialized;
 
     @Inject
-    public CommandNameCompleter(final EventManager eventManager, final CommandRegistry commandRegistry) {
-        assert eventManager != null;
-        this.eventManager = eventManager;
+    public CommandNameCompleter(final EventManager events, final CommandRegistry commandRegistry) {
+        assert events != null;
+        this.events = events;
         assert commandRegistry != null;
         this.commandRegistry = commandRegistry;
     }
@@ -59,7 +59,7 @@ public class CommandNameCompleter
         delegate.getStrings().addAll(names);
 
         // Register for updates to command registrations
-        eventManager.addListener(new EventListener()
+        events.addListener(new EventListener()
         {
             public void onEvent(final EventObject event) throws Exception {
                 if (event instanceof CommandRegisteredEvent) {

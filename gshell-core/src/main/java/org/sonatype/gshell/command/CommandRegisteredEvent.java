@@ -38,7 +38,6 @@ public class CommandRegisteredEvent
 
         assert name != null;
         this.name = name;
-
         assert command != null;
         this.command = command;
     }

@@ -35,7 +35,6 @@ public class CommandRemovedEvent
         super(name);
 
         assert name != null;
-
         this.name = name;
     }
 

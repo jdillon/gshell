@@ -37,7 +37,7 @@ import java.util.List;
 public class AliasNameCompleter
     implements Completer
 {
-    private final EventManager eventManager;
+    private final EventManager events;
 
     private final AliasRegistry aliasRegistry;
 
@@ -46,9 +46,9 @@ public class AliasNameCompleter
     private boolean initialized;
 
     @Inject
-    public AliasNameCompleter(final EventManager eventManager, final AliasRegistry aliasRegistry) {
-        assert eventManager != null;
-        this.eventManager = eventManager;
+    public AliasNameCompleter(final EventManager events, final AliasRegistry aliasRegistry) {
+        assert events != null;
+        this.events = events;
         assert aliasRegistry != null;
         this.aliasRegistry = aliasRegistry;
     }
@@ -59,7 +59,7 @@ public class AliasNameCompleter
         delegate.getStrings().addAll(names);
 
         // Register for updates to alias registrations
-        eventManager.addListener(new EventListener()
+        events.addListener(new EventListener()
         {
             public void onEvent(final EventObject event) throws Exception {
                 if (event instanceof AliasRegisteredEvent) {

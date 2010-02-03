@@ -47,7 +47,7 @@ public interface CommandRegistrar
     /**
      * @since 2.2
      */
-    void setDescriptorSearchPath(final String... path);
+    void setDescriptorSearchPath(String... path);
 
     /**
      * @since 2.1

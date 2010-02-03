@@ -28,7 +28,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * The default {@link AliasRegistry} component.
+ * {@link AliasRegistry} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
@@ -41,12 +41,12 @@ public class AliasRegistryImpl
 
     private final Map<String, String> aliases = new LinkedHashMap<String, String>();
 
-    private final EventManager eventManager;
+    private final EventManager events;
 
     @Inject
-    public AliasRegistryImpl(final EventManager eventManager) {
-        assert eventManager != null;
-        this.eventManager = eventManager;
+    public AliasRegistryImpl(final EventManager events) {
+        assert events != null;
+        this.events = events;
     }
 
     public void registerAlias(final String name, final String alias) {
@@ -63,7 +63,7 @@ public class AliasRegistryImpl
 
         aliases.put(name, alias);
 
-        eventManager.publish(new AliasRegisteredEvent(name, alias));
+        events.publish(new AliasRegisteredEvent(name, alias));
     }
 
     public void removeAlias(final String name) throws NoSuchAliasException {
@@ -77,7 +77,7 @@ public class AliasRegistryImpl
 
         aliases.remove(name);
 
-        eventManager.publish(new AliasRemovedEvent(name));
+        events.publish(new AliasRemovedEvent(name));
     }
 
     public String getAlias(final String name) throws NoSuchAliasException {

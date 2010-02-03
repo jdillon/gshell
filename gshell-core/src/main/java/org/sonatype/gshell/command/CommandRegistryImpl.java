@@ -28,7 +28,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * The default {@link CommandRegistry} component.
+ * {@link CommandRegistry} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
@@ -41,12 +41,12 @@ public class CommandRegistryImpl
 
     private final Map<String, CommandAction> commands = new LinkedHashMap<String, CommandAction>();
 
-    private final EventManager eventManager;
+    private final EventManager events;
 
     @Inject
-    public CommandRegistryImpl(final EventManager eventManager) {
-        assert eventManager != null;
-        this.eventManager = eventManager;
+    public CommandRegistryImpl(final EventManager events) {
+        assert events != null;
+        this.events = events;
     }
 
     public void registerCommand(final String name, final CommandAction command) throws DuplicateCommandException {
@@ -70,7 +70,7 @@ public class CommandRegistryImpl
 
         commands.put(name, command);
 
-        eventManager.publish(new CommandRegisteredEvent(name, command));
+        events.publish(new CommandRegisteredEvent(name, command));
     }
 
     public void removeCommand(final String name) throws NoSuchCommandException {
@@ -84,7 +84,7 @@ public class CommandRegistryImpl
 
         commands.remove(name);
 
-        eventManager.publish(new CommandRemovedEvent(name));
+        events.publish(new CommandRemovedEvent(name));
     }
 
     public CommandAction getCommand(final String name) throws NoSuchCommandException {

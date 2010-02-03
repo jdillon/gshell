@@ -24,7 +24,7 @@ import org.sonatype.gshell.util.Strings;
 import org.sonatype.gshell.util.cli2.OpaqueArguments;
 
 /**
- * The default {@link CommandResolver} component.
+ * {@link CommandResolver} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
@@ -74,7 +74,7 @@ public class CommandResolverImpl
         assert aliasRegistry != null;
 
         if (aliasRegistry.containsAlias(name)) {
-            return new Alias(name, aliasRegistry.getAlias(name));
+            return new AliasAction(name, aliasRegistry.getAlias(name));
         }
 
         return null;
@@ -91,29 +91,21 @@ public class CommandResolverImpl
         return null;
     }
 
-    //
-    // Alias
-    //
-
-    private static class Alias
+    private static class AliasAction
         extends CommandActionSupport
         implements OpaqueArguments
     {
-        private final String name;
-
         private final String target;
 
-        public Alias(final String name, final String target) {
-            assert name != null;
+        public AliasAction(final String name, final String target) {
+            super.setName(name);
             assert target != null;
-
-            this.name = name;
             this.target = target;
         }
 
         @Override
-        public String getName() {
-            return name;
+        public void setName(final String name) {
+            throw new IllegalStateException();
         }
 
         public Object execute(final CommandContext context) throws Exception {
@@ -127,7 +119,7 @@ public class CommandResolverImpl
                 alias = String.format("%s %s", target, Strings.join(args, " "));
             }
 
-            log.debug("Executing alias ({}) -> {}", name, alias);
+            log.debug("Executing alias ({}) -> {}", getName(), alias);
 
             return context.getShell().execute(alias);
         }
