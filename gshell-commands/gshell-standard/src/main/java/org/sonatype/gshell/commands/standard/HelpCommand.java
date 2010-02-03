@@ -18,6 +18,7 @@ package org.sonatype.gshell.commands.standard;
 
 import com.google.inject.Inject;
 import jline.console.completers.AggregateCompleter;
+import org.sonatype.gshell.alias.AliasNameCompleter;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
@@ -28,7 +29,6 @@ import org.sonatype.gshell.help.HelpPageFilter;
 import org.sonatype.gshell.help.HelpPageManager;
 import org.sonatype.gshell.help.MetaHelpPage;
 import org.sonatype.gshell.help.MetaHelpPageNameCompleter;
-import org.sonatype.gshell.alias.AliasNameCompleter;
 import org.sonatype.gshell.util.cli2.Argument;
 
 import java.util.Collection;

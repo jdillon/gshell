@@ -17,13 +17,13 @@
 package org.sonatype.gshell.commands.standard;
 
 import com.google.inject.Inject;
+import org.sonatype.gshell.alias.AliasNameCompleter;
 import org.sonatype.gshell.alias.AliasRegistry;
 import org.sonatype.gshell.alias.NoSuchAliasException;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.alias.AliasNameCompleter;
 import org.sonatype.gshell.util.cli2.Argument;
 
 /**
