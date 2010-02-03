@@ -16,8 +16,9 @@
 
 package org.sonatype.gshell.file;
 
+import com.google.inject.Inject;
+import com.google.inject.Provider;
 import org.codehaus.plexus.util.Os;
-import org.sonatype.gshell.shell.ShellHolder;
 import org.sonatype.gshell.vars.Variables;
 
 import java.io.File;
@@ -36,10 +37,18 @@ import static org.sonatype.gshell.vars.VariableNames.SHELL_USER_HOME;
 public class FileSystemAccessImpl
     implements FileSystemAccess
 {
+    private final Provider<Variables> variables;
+
+    @Inject
+    public FileSystemAccessImpl(final Provider<Variables> variables) {
+        assert variables != null;
+        this.variables = variables;
+    }
+
     public File resolveDir(final String name) throws IOException {
         assert name != null;
 
-        Variables vars = ShellHolder.get().getVariables();
+        Variables vars = variables.get();
         String path = vars.get(name, String.class);
 
         return new File(path).getCanonicalFile();

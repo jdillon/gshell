@@ -18,9 +18,11 @@ package org.sonatype.gshell.guice;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
+import jline.Terminal;
 import org.fusesource.jansi.AnsiRenderer;
 import org.sonatype.gshell.alias.AliasRegistry;
 import org.sonatype.gshell.alias.AliasRegistryImpl;
+import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.command.CommandRegistrar;
 import org.sonatype.gshell.command.CommandRegistry;
 import org.sonatype.gshell.command.CommandRegistryImpl;
@@ -38,7 +40,9 @@ import org.sonatype.gshell.help.HelpPageManagerImpl;
 import org.sonatype.gshell.io.PromptReader;
 import org.sonatype.gshell.parser.CommandLineParser;
 import org.sonatype.gshell.parser.CommandLineParserImpl;
+import org.sonatype.gshell.shell.Shell;
 import org.sonatype.gshell.shell.ShellHolder;
+import org.sonatype.gshell.vars.Variables;
 
 import java.io.IOException;
 
@@ -62,14 +66,38 @@ public class CoreModule
         bind(CommandExecutor.class).to(CommandExecutorImpl.class);
         bind(CommandResolver.class).to(CommandResolverImpl.class);
         bind(CommandRegistrar.class).to(GuiceCommandRegistrar.class);
+
+        // TODO: Consider using @Named to qualify completer implementations, so commands do not need to be bound to the impl types
     }
 
-    /**
-     * Provides ANSI-aware prompt readers based on the current shell's IO context.
-     */
+    @Provides
+    private Shell provideShell() {
+        return ShellHolder.get();
+    }
+
+    @Provides
+    private IO provideIo() {
+        return provideShell().getIo();
+    }
+
+    @Provides
+    private Variables provideVariables() {
+        return provideShell().getVariables();
+    }
+
+    @Provides
+    private Branding provideBranding() {
+        return provideShell().getBranding();
+    }
+
+    @Provides
+    private Terminal provideTerminal() {
+        return provideIo().getTerminal();
+    }
+
     @Provides
     private PromptReader providePromptReader() throws IOException {
-        IO io = ShellHolder.get().getIo();
+        IO io = provideIo();
 
         return new PromptReader(io.streams, io.getTerminal())
         {

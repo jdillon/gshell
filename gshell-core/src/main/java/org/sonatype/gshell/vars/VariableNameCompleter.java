@@ -16,9 +16,10 @@
 
 package org.sonatype.gshell.vars;
 
+import com.google.inject.Inject;
+import com.google.inject.Provider;
 import jline.console.Completer;
 import jline.console.completers.StringsCompleter;
-import org.sonatype.gshell.shell.ShellHolder;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -33,8 +34,16 @@ import java.util.List;
 public class VariableNameCompleter
     implements Completer
 {
+    private final Provider<Variables> variables;
+
+    @Inject
+    public VariableNameCompleter(final Provider<Variables> variables) {
+        assert variables != null;
+        this.variables = variables;
+    }
+
     public int complete(final String buffer, final int cursor, final List<CharSequence> candidates) {
-        Variables vars = ShellHolder.get().getVariables();
+        Variables vars = variables.get();
 
         // There are no events for variables muck, so each time we have to rebuild the list.
         StringsCompleter delegate = new StringsCompleter();

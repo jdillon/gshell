@@ -17,6 +17,7 @@
 package org.sonatype.gshell.vfs;
 
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 import org.apache.commons.vfs.FileObject;
 import org.apache.commons.vfs.FileSystemException;
 import org.apache.commons.vfs.FileSystemManager;
@@ -24,7 +25,6 @@ import org.apache.commons.vfs.provider.DelegateFileObject;
 import org.apache.commons.vfs.provider.local.LocalFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonatype.gshell.shell.ShellHolder;
 import org.sonatype.gshell.vars.Variables;
 
 import java.io.File;
@@ -43,10 +43,14 @@ public class FileSystemAccessImpl
 
     private final FileSystemManager fileSystemManager;
 
+    private final Provider<Variables> variables;
+
     @Inject
-    public FileSystemAccessImpl(final FileSystemManager fileSystemManager) {
+    public FileSystemAccessImpl(final FileSystemManager fileSystemManager, final Provider<Variables> variables) {
         assert fileSystemManager != null;
         this.fileSystemManager = fileSystemManager;
+        assert variables != null;
+        this.variables = variables;
     }
 
     public FileSystemManager getManager() {
@@ -85,7 +89,7 @@ public class FileSystemAccessImpl
     public FileObject getCurrentDirectory() throws FileSystemException {
         log.trace("Resolving CWD from application variables");
 
-        return getCurrentDirectory(ShellHolder.get().getVariables());
+        return getCurrentDirectory(variables.get());
     }
 
     public void setCurrentDirectory(final Variables vars, final FileObject dir) throws FileSystemException {
@@ -110,7 +114,7 @@ public class FileSystemAccessImpl
 
         log.trace("Setting CWD to application variables");
 
-        setCurrentDirectory(ShellHolder.get().getVariables(), dir);
+        setCurrentDirectory(variables.get(), dir);
     }
 
     public FileObject resolveFile(final FileObject baseFile, final String name) throws FileSystemException {

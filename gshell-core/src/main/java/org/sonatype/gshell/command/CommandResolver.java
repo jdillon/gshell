@@ -24,6 +24,14 @@ package org.sonatype.gshell.command;
  */
 public interface CommandResolver
 {
+    String ROOT = "/";
+
+    String PARENT = "..";
+
+    String CURRENT = ".";
+
+    String SEPARATOR = "/";
+
     CommandAction resolveCommand(String name) throws CommandException;
 
     // TODO: Add resolution of a group of commands

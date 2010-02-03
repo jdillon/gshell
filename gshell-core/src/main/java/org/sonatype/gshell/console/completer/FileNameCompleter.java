@@ -16,8 +16,9 @@
 
 package org.sonatype.gshell.console.completer;
 
+import com.google.inject.Inject;
+import com.google.inject.Provider;
 import jline.console.Completer;
-import org.sonatype.gshell.shell.ShellHolder;
 import org.sonatype.gshell.vars.VariableNames;
 import org.sonatype.gshell.vars.Variables;
 
@@ -33,15 +34,22 @@ public class FileNameCompleter
     extends jline.console.completers.FileNameCompleter
     implements Completer, VariableNames
 {
+    private final Provider<Variables> variables;
+
+    @Inject
+    public FileNameCompleter(final Provider<Variables> variables) {
+        assert variables != null;
+        this.variables = variables;
+    }
+
     @Override
     protected File getUserHome() {
-        Variables vars = ShellHolder.get().getVariables();
-        return vars.get(SHELL_USER_HOME, File.class);
+        return variables.get().get(SHELL_USER_HOME, File.class);
     }
 
     @Override
     protected File getUserDir() {
-        Variables vars = ShellHolder.get().getVariables();
+        Variables vars = variables.get();
         Object tmp = vars.get(SHELL_USER_DIR);
         assert tmp != null;
         
