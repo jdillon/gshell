@@ -16,6 +16,9 @@
 
 package org.sonatype.gshell.shell;
 
+import com.google.inject.Inject;
+import com.google.inject.Provider;
+import com.google.inject.name.Named;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.console.ConsoleErrorHandler;
 import org.sonatype.gshell.notification.ErrorNotification;
@@ -53,7 +56,8 @@ public class ShellErrorHandler
 
     private final IO io;
 
-    public ShellErrorHandler(final IO io) {
+    @Inject
+    public ShellErrorHandler(final @Named("main") IO io) {
         assert io != null;
         this.io = io;
     }
@@ -66,6 +70,8 @@ public class ShellErrorHandler
 
     private void displayError(final Throwable error) {
         assert error != null;
+
+        System.out.println("IO: " + io);
 
         Throwable cause = error;
         if (error instanceof ErrorNotification) {

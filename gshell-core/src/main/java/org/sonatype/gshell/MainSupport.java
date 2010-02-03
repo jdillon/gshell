@@ -188,7 +188,7 @@ public abstract class MainSupport
         System.exit(code);
     }
 
-    protected Branding getBranding() throws Exception {
+    protected Branding getBranding() {
         if (branding == null) {
             branding = createBranding();
         }
@@ -310,7 +310,7 @@ public abstract class MainSupport
         exit(code);
     }
 
-    protected abstract Branding createBranding() throws Exception;
+    protected abstract Branding createBranding();
 
     protected abstract Shell createShell() throws Exception;
 }

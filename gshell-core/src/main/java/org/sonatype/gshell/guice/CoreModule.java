@@ -99,11 +99,6 @@ public class CoreModule
     }
 
     @Provides
-    private Branding provideBranding() {
-        return provideShell().getBranding();
-    }
-
-    @Provides
     private Terminal provideTerminal() {
         return provideIo().getTerminal();
     }

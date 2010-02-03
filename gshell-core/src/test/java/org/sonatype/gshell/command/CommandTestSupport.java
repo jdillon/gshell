@@ -16,23 +16,31 @@
 
 package org.sonatype.gshell.command;
 
+import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.Stage;
+import com.google.inject.name.Names;
 import org.fusesource.jansi.Ansi;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.sonatype.gshell.alias.AliasRegistry;
+import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.branding.TestBranding;
+import org.sonatype.gshell.console.ConsoleErrorHandler;
+import org.sonatype.gshell.console.ConsolePrompt;
 import org.sonatype.gshell.guice.CoreModule;
 import org.sonatype.gshell.shell.Shell;
-import org.sonatype.gshell.shell.TestShellBuilder;
+import org.sonatype.gshell.shell.ShellErrorHandler;
+import org.sonatype.gshell.shell.ShellImpl;
+import org.sonatype.gshell.shell.ShellPrompt;
 import org.sonatype.gshell.testsupport.TestIO;
 import org.sonatype.gshell.testsupport.TestUtil;
 import org.sonatype.gshell.util.Strings;
 import org.sonatype.gshell.vars.Variables;
+import org.sonatype.gshell.vars.VariablesImpl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,8 +61,6 @@ import static org.junit.Assert.assertTrue;
 public abstract class CommandTestSupport
 {
     protected final String name;
-
-    protected final TestShellBuilder builder = new TestShellBuilder();
 
     private final TestUtil util = new TestUtil(this);
 
@@ -84,20 +90,31 @@ public abstract class CommandTestSupport
     @Before
     public void setUp() throws Exception {
         io = new TestIO();
+        vars = new VariablesImpl();
 
-        TestShellBuilder builder = createBuilder();
-        Injector injector = builder.getInjector();
+        Module module = new AbstractModule()
+        {
+            @Override
+            protected void configure() {
+                bind(ConsolePrompt.class).to(ShellPrompt.class);
+                bind(ConsoleErrorHandler.class).to(ShellErrorHandler.class);
+                bind(Branding.class).toInstance(new TestBranding(util.resolveFile("target/shell-home")));
+                bind(IO.class).annotatedWith(Names.named("main")).toInstance(io);
+                bind(Variables.class).annotatedWith(Names.named("main")).toInstance(vars);
+            }
+        };
 
-        shell = builder
-                .setBranding(new TestBranding(util.resolveFile("target/shell-home")))
-                .setIo(io)
-                .setRegisterCommands(false)
-                .create();
+        List<Module> modules = new ArrayList<Module>();
+        modules.add(module);
+        configureModules(modules);
+        Injector injector = Guice.createInjector(Stage.DEVELOPMENT, modules);
 
         CommandRegistrar registrar = injector.getInstance(CommandRegistrar.class);
         for (Map.Entry<String,Class> entry : requiredCommands.entrySet()) {
             registrar.registerCommand(entry.getKey(), entry.getValue().getName());
         }
+
+        shell = injector.getInstance(ShellImpl.class);
 
         // For simplicity of output verification disable ANSI
         Ansi.setEnabled(false);
@@ -106,22 +123,6 @@ public abstract class CommandTestSupport
 
         aliasRegistry = injector.getInstance(AliasRegistry.class);
         commandRegistry = injector.getInstance(CommandRegistry.class);
-    }
-
-    protected TestShellBuilder createBuilder() {
-        return new TestShellBuilder()
-        {
-            @Override
-            protected Injector createInjector() {
-                return Guice.createInjector(Stage.DEVELOPMENT, createModules());
-            }
-        };
-    }
-
-    protected List<Module> createModules() {
-        List<Module> modules = new ArrayList<Module>();
-        configureModules(modules);
-        return modules;
     }
 
     protected void configureModules(final List<Module> modules) {

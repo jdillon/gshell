@@ -16,6 +16,8 @@
 
 package org.sonatype.gshell.shell;
 
+import com.google.inject.Inject;
+import com.google.inject.Provider;
 import org.fusesource.jansi.AnsiRenderer;
 import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.console.ConsolePrompt;
@@ -25,7 +27,8 @@ import org.sonatype.gshell.vars.Variables;
 import static org.sonatype.gshell.vars.VariableNames.SHELL_PROMPT;
 
 /**
- * Shell {@link ConsolePrompt}, which determines the prompt from the {@link org.sonatype.gshell.vars.VariableNames#SHELL_PROMPT} expression.
+ * Shell {@link ConsolePrompt}, which determines the prompt from the
+ * {@link org.sonatype.gshell.vars.VariableNames#SHELL_PROMPT} expression.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
@@ -33,15 +36,16 @@ import static org.sonatype.gshell.vars.VariableNames.SHELL_PROMPT;
 public class ShellPrompt
     implements ConsolePrompt
 {
-    private final Variables vars;
+    private final Provider<Variables> variables;
 
     private final Branding branding;
 
     private final ReplacementParser parser;
 
-    public ShellPrompt(final Variables vars, final Branding branding) {
-        assert vars != null;
-        this.vars = vars;
+    @Inject
+    public ShellPrompt(final Provider<Variables> variables, final Branding branding) {
+        assert variables != null;
+        this.variables = variables;
         assert branding != null;
         this.branding = branding;
 
@@ -49,7 +53,7 @@ public class ShellPrompt
         {
             @Override
             protected Object replace(final String key) {
-                Object rep = vars.get(key);
+                Object rep = variables.get().get(key);
                 if (rep == null) {
                     rep = System.getProperty(key);
                 }
@@ -59,7 +63,7 @@ public class ShellPrompt
     }
 
     public String prompt() {
-        String pattern = vars.get(SHELL_PROMPT, String.class);
+        String pattern = variables.get().get(SHELL_PROMPT, String.class);
         String prompt = evaluate(pattern);
 
         // Use a default prompt if we don't have anything here

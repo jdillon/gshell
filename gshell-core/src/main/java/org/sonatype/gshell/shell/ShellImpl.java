@@ -16,8 +16,11 @@
 
 package org.sonatype.gshell.shell;
 
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import jline.console.Completer;
 import jline.console.ConsoleReader;
+import jline.console.completers.AggregateCompleter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.branding.Branding;
@@ -85,11 +88,15 @@ public class ShellImpl
 
     private boolean loadInteractiveScripts = true;
 
-
-    public ShellImpl(final EventManager eventManager, final CommandExecutor executor, final Branding branding,
-                     final IO io, final Variables variables) throws IOException
+    @Inject
+    public ShellImpl(final EventManager events,
+                     final CommandExecutor executor,
+                     final Branding branding,
+                     final @Named("main") IO io,
+                     final @Named("main") Variables variables)
+        throws IOException
     {
-        assert eventManager != null;
+        assert events != null;
         assert executor != null;
         assert branding != null;
         // io and variables may be null
@@ -99,7 +106,7 @@ public class ShellImpl
         this.io = io != null ? io : new IO();
         this.variables = variables != null ? variables : new VariablesImpl();
         if (variables instanceof EventAware) {
-            ((EventAware) variables).setEventManager(eventManager);
+            ((EventAware) variables).setEventManager(events);
         }
         this.history = new ShellHistory(new File(branding.getUserContextDir(), branding.getHistoryFileName()));
     }
@@ -120,10 +127,12 @@ public class ShellImpl
         return history;
     }
 
+    @Inject
     public void setPrompt(final ConsolePrompt prompt) {
         this.prompt = prompt;
     }
 
+    @Inject
     public void setErrorHandler(final ConsoleErrorHandler errorHandler) {
         this.errorHandler = errorHandler;
     }
@@ -135,6 +144,13 @@ public class ShellImpl
     public void setCompleters(final Completer... completers) {
         assert completers != null;
         setCompleters(Arrays.asList(completers));
+    }
+
+    @Inject
+    public void installCompleters(final @Named("alias-name") Completer c1, final @Named("commands") Completer c2) {
+        assert c1 != null;
+        assert c2 != null;
+        setCompleters(new AggregateCompleter(c1, c2));
     }
 
     public boolean isLoadProfileScripts() {
