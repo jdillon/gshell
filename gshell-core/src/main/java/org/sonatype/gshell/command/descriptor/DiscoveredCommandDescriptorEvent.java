@@ -16,9 +16,6 @@
 
 package org.sonatype.gshell.command.descriptor;
 
-import org.sonatype.gshell.command.descriptor.CommandDescriptor;
-import org.sonatype.gshell.command.descriptor.CommandsDescriptor;
-
 import java.util.EventObject;
 
 /**

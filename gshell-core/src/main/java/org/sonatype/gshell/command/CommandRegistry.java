@@ -16,8 +16,6 @@
 
 package org.sonatype.gshell.command;
 
-import org.sonatype.gshell.command.CommandAction;
-
 import java.util.Collection;
 
 /**

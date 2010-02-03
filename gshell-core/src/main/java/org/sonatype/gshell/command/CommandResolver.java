@@ -16,9 +16,6 @@
 
 package org.sonatype.gshell.command;
 
-import org.sonatype.gshell.command.CommandAction;
-import org.sonatype.gshell.command.CommandException;
-
 /**
  * Resolves commands.
  *

@@ -16,8 +16,6 @@
 
 package org.sonatype.gshell.alias;
 
-import org.sonatype.gshell.alias.NoSuchAliasException;
-
 import java.util.Collection;
 
 /**

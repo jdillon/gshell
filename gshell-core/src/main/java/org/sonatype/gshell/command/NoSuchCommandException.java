@@ -16,8 +16,6 @@
 
 package org.sonatype.gshell.command;
 
-import org.sonatype.gshell.command.CommandException;
-
 /**
  * Thrown to indicate that a requested named-command was not found.
  *

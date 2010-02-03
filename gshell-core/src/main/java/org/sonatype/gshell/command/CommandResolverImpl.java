@@ -20,10 +20,6 @@ import com.google.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.alias.AliasRegistry;
-import org.sonatype.gshell.command.CommandAction;
-import org.sonatype.gshell.command.CommandActionSupport;
-import org.sonatype.gshell.command.CommandContext;
-import org.sonatype.gshell.command.CommandException;
 import org.sonatype.gshell.util.Strings;
 import org.sonatype.gshell.util.cli2.OpaqueArguments;
 

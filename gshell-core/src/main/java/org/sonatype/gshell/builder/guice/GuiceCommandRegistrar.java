@@ -22,12 +22,12 @@ import com.google.inject.Module;
 import com.google.inject.Singleton;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandAction;
+import org.sonatype.gshell.command.CommandRegistrar;
+import org.sonatype.gshell.command.CommandRegistrarSupport;
 import org.sonatype.gshell.command.CommandRegistry;
 import org.sonatype.gshell.command.descriptor.CommandSetDescriptor;
 import org.sonatype.gshell.command.descriptor.ModuleDescriptor;
 import org.sonatype.gshell.event.EventManager;
-import org.sonatype.gshell.command.CommandRegistrar;
-import org.sonatype.gshell.command.CommandRegistrarSupport;
 
 import java.util.ArrayList;
 import java.util.List;

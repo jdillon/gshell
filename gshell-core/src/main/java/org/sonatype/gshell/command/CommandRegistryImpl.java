@@ -20,8 +20,6 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonatype.gshell.command.CommandAction;
-import org.sonatype.gshell.command.NameAware;
 import org.sonatype.gshell.event.EventManager;
 
 import java.util.Collection;

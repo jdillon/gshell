@@ -16,8 +16,6 @@
 
 package org.sonatype.gshell.command;
 
-import org.sonatype.gshell.command.CommandException;
-
 /**
  * Thrown to indicate a duplicate command registration attempt has failed.
  *
