@@ -18,15 +18,15 @@ package org.sonatype.gshell;
 
 import org.fusesource.jansi.Ansi;
 import org.sonatype.gshell.branding.BrandingSupport;
+import org.sonatype.gshell.util.PrintBuffer;
 
 import java.io.File;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 
 /**
  * Branding for <tt>gsh</tt>.
  * 
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ * @since 2.0
  */
 public class BrandingImpl
     extends BrandingSupport
@@ -56,21 +56,20 @@ public class BrandingImpl
 
     @Override
     public String getWelcomeMessage() {
-        StringWriter writer = new StringWriter();
-        PrintWriter out = new PrintWriter(writer);
+        PrintBuffer buff = new PrintBuffer();
 
         for (String line : BANNER) {
-            out.println(Ansi.ansi().fg(Ansi.Color.CYAN).a(line).reset());
+            buff.println(Ansi.ansi().fg(Ansi.Color.CYAN).a(line).reset());
         }
 
-        out.println();
-        out.format("%s (%s)", getDisplayName(), getVersion()).println();
-        out.println();
-        out.println("Type '@|bold help|@' for more information.");
-        out.print(line());
-        out.flush();
+        buff.println();
+        buff.format("%s (%s)", getDisplayName(), getVersion()).println();
+        buff.println();
+        buff.println("Type '@|bold help|@' for more information.");
+        buff.print(line());
+        buff.flush();
 
-        return writer.toString();
+        return buff.toString();
     }
 
     @Override
