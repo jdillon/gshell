@@ -20,20 +20,19 @@ import org.fusesource.jansi.AnsiRenderer;
 import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.console.ConsolePrompt;
 import org.sonatype.gshell.util.ReplacementParser;
-import org.sonatype.gshell.vars.VariableNames;
 import org.sonatype.gshell.vars.Variables;
 
+import static org.sonatype.gshell.vars.VariableNames.SHELL_PROMPT;
+
 /**
- * Shell {@link ConsolePrompt}, which determins the prompt from the {@link org.sonatype.gshell.vars.VariableNames#SHELL_PROMPT} expression.
+ * Shell {@link ConsolePrompt}, which determines the prompt from the {@link org.sonatype.gshell.vars.VariableNames#SHELL_PROMPT} expression.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 public class ShellPrompt
-    implements ConsolePrompt, VariableNames
+    implements ConsolePrompt
 {
-    private final AnsiRenderer renderer = new AnsiRenderer();
-
     private final Variables vars;
 
     private final Branding branding;
@@ -45,7 +44,8 @@ public class ShellPrompt
         this.vars = vars;
         assert branding != null;
         this.branding = branding;
-        this.parser = new ReplacementParser()
+
+        parser = new ReplacementParser()
         {
             @Override
             protected Object replace(final String key) {
@@ -73,7 +73,7 @@ public class ShellPrompt
 
         // Encode ANSI muck if it looks like there are codes encoded, need to render here as the console uses raw streams
         if (AnsiRenderer.test(prompt)) {
-            prompt = renderer.render(prompt);
+            prompt = AnsiRenderer.render(prompt);
         }
 
         return prompt;

@@ -21,9 +21,10 @@ import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.util.cli2.Argument;
-import org.sonatype.gshell.vars.VariableNames;
 import org.sonatype.gshell.vfs.FileObjectAssert;
 import org.sonatype.gshell.vfs.FileObjects;
+
+import static org.sonatype.gshell.vars.VariableNames.SHELL_USER_HOME;
 
 /**
  * Changes the current directory.
@@ -34,7 +35,6 @@ import org.sonatype.gshell.vfs.FileObjects;
 @Command(name="vfs/cd")
 public class ChangeDirectoryCommand
     extends VfsCommandSupport
-    implements VariableNames
 {
     @Argument
     private String path;

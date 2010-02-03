@@ -19,10 +19,12 @@ package org.sonatype.gshell.console.completer;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import jline.console.Completer;
-import org.sonatype.gshell.vars.VariableNames;
 import org.sonatype.gshell.vars.Variables;
 
 import java.io.File;
+
+import static org.sonatype.gshell.vars.VariableNames.SHELL_USER_DIR;
+import static org.sonatype.gshell.vars.VariableNames.SHELL_USER_HOME;
 
 /**
  * {@link Completer} for file names.
@@ -32,7 +34,7 @@ import java.io.File;
  */
 public class FileNameCompleter
     extends jline.console.completers.FileNameCompleter
-    implements Completer, VariableNames
+    implements Completer
 {
     private final Provider<Variables> variables;
 

@@ -21,7 +21,6 @@ import org.sonatype.gshell.shell.Shell;
 import org.sonatype.gshell.util.Strings;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
-import org.sonatype.gshell.vars.VariableNames;
 import org.sonatype.gshell.vars.Variables;
 
 import java.io.File;
@@ -30,6 +29,13 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Properties;
 
+import static org.sonatype.gshell.vars.VariableNames.SHELL_HOME;
+import static org.sonatype.gshell.vars.VariableNames.SHELL_PROGRAM;
+import static org.sonatype.gshell.vars.VariableNames.SHELL_PROMPT;
+import static org.sonatype.gshell.vars.VariableNames.SHELL_USER_DIR;
+import static org.sonatype.gshell.vars.VariableNames.SHELL_USER_HOME;
+import static org.sonatype.gshell.vars.VariableNames.SHELL_VERSION;
+
 /**
  * Support for {@link Branding} implementations.
  *
@@ -37,7 +43,7 @@ import java.util.Properties;
  * @since 2.0
  */
 public class BrandingSupport
-    implements Branding, VariableNames
+    implements Branding
 {
     private final MessageSource messages = new ResourceBundleMessageSource()
         .add(false, getClass());

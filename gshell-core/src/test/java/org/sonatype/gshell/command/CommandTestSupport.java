@@ -32,7 +32,6 @@ import org.sonatype.gshell.shell.TestShellBuilder;
 import org.sonatype.gshell.testsupport.TestIO;
 import org.sonatype.gshell.testsupport.TestUtil;
 import org.sonatype.gshell.util.Strings;
-import org.sonatype.gshell.vars.VariableNames;
 import org.sonatype.gshell.vars.Variables;
 
 import java.util.ArrayList;
@@ -52,7 +51,6 @@ import static org.junit.Assert.assertTrue;
  * @since 0.8
  */
 public abstract class CommandTestSupport
-    implements VariableNames
 {
     protected final String name;
 

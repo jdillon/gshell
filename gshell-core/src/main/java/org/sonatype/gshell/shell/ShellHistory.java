@@ -19,7 +19,6 @@ package org.sonatype.gshell.shell;
 import jline.console.history.FileHistory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonatype.gshell.vars.VariableNames;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,7 +31,7 @@ import java.io.IOException;
  */
 public class ShellHistory
     extends FileHistory
-    implements History, VariableNames
+    implements History
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 

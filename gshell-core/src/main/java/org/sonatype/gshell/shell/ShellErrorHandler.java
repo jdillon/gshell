@@ -21,12 +21,12 @@ import org.sonatype.gshell.console.ConsoleErrorHandler;
 import org.sonatype.gshell.notification.ErrorNotification;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
-import org.sonatype.gshell.vars.VariableNames;
 import org.sonatype.gshell.vars.Variables;
 
 import static org.fusesource.jansi.Ansi.Attribute.INTENSITY_BOLD;
 import static org.fusesource.jansi.Ansi.Color.RED;
 import static org.fusesource.jansi.Ansi.ansi;
+import static org.sonatype.gshell.vars.VariableNames.SHELL_ERRORS;
 
 /**
  * Shell {@link ConsoleErrorHandler} which renders errors with ANSI codes.
@@ -35,7 +35,7 @@ import static org.fusesource.jansi.Ansi.ansi;
  * @since 2.0
  */
 public class ShellErrorHandler
-    implements ConsoleErrorHandler, VariableNames
+    implements ConsoleErrorHandler
 {
     private static enum Messages
     {

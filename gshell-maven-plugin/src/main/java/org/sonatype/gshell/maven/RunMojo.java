@@ -19,7 +19,10 @@ package org.sonatype.gshell.maven;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.sonatype.gshell.vars.VariableNames;
+
+import static org.sonatype.gshell.vars.VariableNames.SHELL_HOME;
+import static org.sonatype.gshell.vars.VariableNames.SHELL_PROGRAM;
+import static org.sonatype.gshell.vars.VariableNames.SHELL_VERSION;
 
 /**
  * ???
@@ -30,7 +33,6 @@ import org.sonatype.gshell.vars.VariableNames;
  */
 public class RunMojo
     extends AbstractMojo
-    implements VariableNames
 {
     public void execute() throws MojoExecutionException, MojoFailureException {
         // HACK: Need to setup some bootstrap muck

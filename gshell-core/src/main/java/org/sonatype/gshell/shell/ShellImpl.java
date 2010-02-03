@@ -33,7 +33,6 @@ import org.sonatype.gshell.io.Closer;
 import org.sonatype.gshell.io.StreamJack;
 import org.sonatype.gshell.notification.ExitNotification;
 import org.sonatype.gshell.util.Arguments;
-import org.sonatype.gshell.vars.VariableNames;
 import org.sonatype.gshell.vars.Variables;
 import org.sonatype.gshell.vars.VariablesImpl;
 
@@ -56,7 +55,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * @since 2.0
  */
 public class ShellImpl
-    implements Shell, VariableNames
+    implements Shell
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
