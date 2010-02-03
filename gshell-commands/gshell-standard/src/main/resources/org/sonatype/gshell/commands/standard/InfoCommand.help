@@ -34,6 +34,7 @@
         MEMORY
         CLASSES
         OS
+        LICENSE
 
 @{command.details}
 @|bold EXAMPLES|@
