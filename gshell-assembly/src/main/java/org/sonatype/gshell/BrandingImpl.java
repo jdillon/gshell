@@ -40,20 +40,6 @@ public class BrandingImpl
         "  \\____|____/|_| |_|\\___|_|_|",
     };
    
-    /*
-    // Figlet font name: Georgia11
-    private static final String[] BANNER = {
-        "                          ,,                 ,,    ,,",
-        "   .g8\"\"\"bgd   .M\"\"\"bgd `7MM               `7MM  `7MM",
-        " .dP'     `M  ,MI    \"Y   MM                 MM    MM",
-        " dM'       `  `MMb.       MMpMMMb.  .gP\"Ya   MM    MM",
-        " MM             `YMMNq.   MM    MM ,M'   Yb  MM    MM",
-        " MM.    `7MMF'.     `MM   MM    MM 8M\"\"\"\"\"\"  MM    MM",
-        " `Mb.     MM  Mb     dM   MM    MM YM.    ,  MM    MM",
-        "   `\"bmmmdPY  P\"Ybmmd\"  .JMML  JMML.`Mbmmd'.JMML..JMML."
-    };
-    */
-
     @Override
     public String getWelcomeMessage() {
         PrintBuffer buff = new PrintBuffer();

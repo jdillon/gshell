@@ -23,9 +23,10 @@ import org.sonatype.gshell.util.PrintBuffer;
 import java.io.File;
 
 /**
- * ???
+ * Branding for Maven GShell plugin.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ * @since 2.5
  */
 public class BrandingImpl
     extends BrandingSupport
