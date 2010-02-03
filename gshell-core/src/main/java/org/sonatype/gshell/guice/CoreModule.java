@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.builder.guice;
+package org.sonatype.gshell.guice;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
@@ -46,7 +46,7 @@ import java.io.IOException;
  * GShell core module.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 2.0
+ * @since 2.5
  */
 public class CoreModule
     extends AbstractModule

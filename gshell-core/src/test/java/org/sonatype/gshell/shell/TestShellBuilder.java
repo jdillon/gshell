@@ -19,8 +19,8 @@ package org.sonatype.gshell.shell;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Stage;
-import org.sonatype.gshell.builder.guice.CoreModule;
-import org.sonatype.gshell.builder.guice.GuiceShellBuilder;
+import org.sonatype.gshell.guice.CoreModule;
+import org.sonatype.gshell.guice.GuiceShellBuilder;
 
 /**
  * Builds {@link org.sonatype.gshell.shell.Shell} instances for testing.

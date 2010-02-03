@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.builder.guice;
+package org.sonatype.gshell.guice;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -43,7 +43,7 @@ import java.util.List;
  * Builds {@link org.sonatype.gshell.shell.Shell} instances using Guice to wire components.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 2.0
+ * @since 2.5
  */
 public class GuiceShellBuilder
 {

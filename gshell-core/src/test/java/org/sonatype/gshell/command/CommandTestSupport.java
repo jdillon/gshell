@@ -26,7 +26,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.sonatype.gshell.alias.AliasRegistry;
 import org.sonatype.gshell.branding.TestBranding;
-import org.sonatype.gshell.builder.guice.CoreModule;
+import org.sonatype.gshell.guice.CoreModule;
 import org.sonatype.gshell.shell.Shell;
 import org.sonatype.gshell.shell.TestShellBuilder;
 import org.sonatype.gshell.testsupport.TestIO;

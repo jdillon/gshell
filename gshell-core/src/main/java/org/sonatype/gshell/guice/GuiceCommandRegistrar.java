@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.builder.guice;
+package org.sonatype.gshell.guice;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -36,7 +36,7 @@ import java.util.List;
  * Guice {@link CommandRegistrar}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 2.0
+ * @since 2.5
  */
 @Singleton
 public class GuiceCommandRegistrar
