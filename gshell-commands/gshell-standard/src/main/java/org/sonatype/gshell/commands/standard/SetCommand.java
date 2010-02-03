@@ -17,6 +17,8 @@
 package org.sonatype.gshell.commands.standard;
 
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
+import jline.console.Completer;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
@@ -25,7 +27,6 @@ import org.sonatype.gshell.util.Strings;
 import org.sonatype.gshell.util.cli2.Argument;
 import org.sonatype.gshell.util.cli2.Option;
 import org.sonatype.gshell.util.i18n.MessageSource;
-import org.sonatype.gshell.vars.VariableNameCompleter;
 import org.sonatype.gshell.vars.Variables;
 
 import java.util.Iterator;
@@ -61,7 +62,7 @@ public class SetCommand
     private List<String> values;
 
     @Inject
-    public SetCommand installCompleters(final VariableNameCompleter c1) {
+    public SetCommand installCompleters(@Named("variable-name") final Completer c1) {
         assert c1 != null;
         setCompleters(c1, null);
         return this;

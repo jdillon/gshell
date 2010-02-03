@@ -17,11 +17,12 @@
 package org.sonatype.gshell.commands.file;
 
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
+import jline.console.Completer;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.console.completer.FileNameCompleter;
 import org.sonatype.gshell.file.FileSystemAccess;
 import org.sonatype.gshell.util.FileAssert;
 import org.sonatype.gshell.util.cli2.Argument;
@@ -53,7 +54,7 @@ public class ChangeDirectoryCommand
     }
 
     @Inject
-    public ChangeDirectoryCommand installCompleters(final FileNameCompleter c1) {
+    public ChangeDirectoryCommand installCompleters(final @Named("file-name") Completer c1) {
         assert c1 != null;
         setCompleters(c1, null);
         return this;

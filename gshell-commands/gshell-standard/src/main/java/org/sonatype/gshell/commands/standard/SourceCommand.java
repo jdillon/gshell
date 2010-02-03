@@ -17,10 +17,11 @@
 package org.sonatype.gshell.commands.standard;
 
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
+import jline.console.Completer;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
-import org.sonatype.gshell.console.completer.FileNameCompleter;
 import org.sonatype.gshell.io.Closer;
 import org.sonatype.gshell.shell.Shell;
 import org.sonatype.gshell.util.FileAssert;
@@ -48,7 +49,7 @@ public class SourceCommand
     private String path;
 
     @Inject
-    public SourceCommand installCompleters(final FileNameCompleter c1) {
+    public SourceCommand installCompleters(final @Named("file-name") Completer c1) {
         assert c1 != null;
         setCompleters(c1, null);
         return this;

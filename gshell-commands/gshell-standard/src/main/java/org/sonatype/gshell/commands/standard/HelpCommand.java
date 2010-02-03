@@ -17,18 +17,17 @@
 package org.sonatype.gshell.commands.standard;
 
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
+import jline.console.Completer;
 import jline.console.completers.AggregateCompleter;
-import org.sonatype.gshell.alias.AliasNameCompleter;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
-import org.sonatype.gshell.command.CommandNameCompleter;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.help.HelpPage;
 import org.sonatype.gshell.help.HelpPageFilter;
 import org.sonatype.gshell.help.HelpPageManager;
 import org.sonatype.gshell.help.MetaHelpPage;
-import org.sonatype.gshell.help.MetaHelpPageNameCompleter;
 import org.sonatype.gshell.util.cli2.Argument;
 
 import java.util.Collection;
@@ -58,7 +57,7 @@ public class HelpCommand
     /**
      * @since 2.5
      */
-    public HelpCommand installCompleters(final AliasNameCompleter c1, final CommandNameCompleter c2, final MetaHelpPageNameCompleter c3) {
+    public HelpCommand installCompleters(final @Named("alias-name") Completer c1, final @Named("command-name") Completer c2, final @Named("meta-help-page-name") Completer c3) {
         assert c1 != null;
         setCompleters(new AggregateCompleter(c1, c2, c3), null);
         return this;

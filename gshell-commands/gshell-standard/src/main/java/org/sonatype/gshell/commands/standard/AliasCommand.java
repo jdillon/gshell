@@ -17,6 +17,8 @@
 package org.sonatype.gshell.commands.standard;
 
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
+import jline.console.Completer;
 import org.sonatype.gshell.alias.AliasRegistry;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandActionSupport;
@@ -53,6 +55,13 @@ public class AliasCommand
     public AliasCommand(final AliasRegistry aliasRegistry) {
         assert aliasRegistry != null;
         this.aliasRegistry = aliasRegistry;
+    }
+
+    @Inject
+    public AliasCommand installCompleters(@Named("alias-name") final Completer c1) {
+        assert c1 != null;
+        setCompleters(c1, null);
+        return this;
     }
 
     public void setProcessor(final CliProcessor processor) {

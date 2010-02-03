@@ -17,6 +17,8 @@
 package org.sonatype.gshell.commands.standard;
 
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
+import jline.console.Completer;
 import org.sonatype.gshell.alias.AliasNameCompleter;
 import org.sonatype.gshell.alias.AliasRegistry;
 import org.sonatype.gshell.alias.NoSuchAliasException;
@@ -48,7 +50,7 @@ public class UnaliasCommand
     }
 
     @Inject
-    public UnaliasCommand installCompleters(final AliasNameCompleter c1) {
+    public UnaliasCommand installCompleters(@Named("alias-name") final Completer c1) {
         assert c1 != null;
         setCompleters(c1, null);
         return this;

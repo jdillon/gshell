@@ -18,17 +18,23 @@ package org.sonatype.gshell.guice;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
+import com.google.inject.name.Names;
 import jline.Terminal;
+import jline.console.Completer;
 import org.fusesource.jansi.AnsiRenderer;
+import org.sonatype.gshell.alias.AliasNameCompleter;
 import org.sonatype.gshell.alias.AliasRegistry;
 import org.sonatype.gshell.alias.AliasRegistryImpl;
 import org.sonatype.gshell.branding.Branding;
+import org.sonatype.gshell.command.CommandNameCompleter;
 import org.sonatype.gshell.command.CommandRegistrar;
 import org.sonatype.gshell.command.CommandRegistry;
 import org.sonatype.gshell.command.CommandRegistryImpl;
 import org.sonatype.gshell.command.CommandResolver;
 import org.sonatype.gshell.command.CommandResolverImpl;
+import org.sonatype.gshell.command.CommandsCompleter;
 import org.sonatype.gshell.command.IO;
+import org.sonatype.gshell.console.completer.FileNameCompleter;
 import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.event.EventManagerImpl;
 import org.sonatype.gshell.execute.CommandExecutor;
@@ -37,11 +43,13 @@ import org.sonatype.gshell.help.HelpContentLoader;
 import org.sonatype.gshell.help.HelpContentLoaderImpl;
 import org.sonatype.gshell.help.HelpPageManager;
 import org.sonatype.gshell.help.HelpPageManagerImpl;
+import org.sonatype.gshell.help.MetaHelpPageNameCompleter;
 import org.sonatype.gshell.io.PromptReader;
 import org.sonatype.gshell.parser.CommandLineParser;
 import org.sonatype.gshell.parser.CommandLineParserImpl;
 import org.sonatype.gshell.shell.Shell;
 import org.sonatype.gshell.shell.ShellHolder;
+import org.sonatype.gshell.vars.VariableNameCompleter;
 import org.sonatype.gshell.vars.Variables;
 
 import java.io.IOException;
@@ -67,7 +75,12 @@ public class CoreModule
         bind(CommandResolver.class).to(CommandResolverImpl.class);
         bind(CommandRegistrar.class).to(GuiceCommandRegistrar.class);
 
-        // TODO: Consider using @Named to qualify completer implementations, so commands do not need to be bound to the impl types
+        bind(Completer.class).annotatedWith(Names.named("commands")).to(CommandsCompleter.class);
+        bind(Completer.class).annotatedWith(Names.named("command-name")).to(CommandNameCompleter.class);
+        bind(Completer.class).annotatedWith(Names.named("alias-name")).to(AliasNameCompleter.class);
+        bind(Completer.class).annotatedWith(Names.named("file-name")).to(FileNameCompleter.class);
+        bind(Completer.class).annotatedWith(Names.named("variable-name")).to(VariableNameCompleter.class);
+        bind(Completer.class).annotatedWith(Names.named("meta-help-page-name")).to(MetaHelpPageNameCompleter.class);
     }
 
     @Provides
