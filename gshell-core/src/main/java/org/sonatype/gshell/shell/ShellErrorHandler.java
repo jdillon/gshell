@@ -85,8 +85,7 @@ public class ShellErrorHandler
         // Determine if the stack trace flag is set
         boolean showTrace = false;
         if (vars.contains(SHELL_ERRORS)) {
-            String tmp = vars.get(SHELL_ERRORS, String.class);
-            showTrace = Boolean.parseBoolean(tmp.trim());
+            showTrace = vars.get(SHELL_ERRORS, Boolean.class);
         }
 
         if (showTrace || !io.isSilent()) {
