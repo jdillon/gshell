@@ -17,6 +17,7 @@
 package org.sonatype.gshell.shell;
 
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.google.inject.name.Named;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.console.ConsoleErrorHandler;
@@ -55,10 +56,14 @@ public class ShellErrorHandler
 
     private final IO io;
 
+    private final Provider<Variables> variables;
+
     @Inject
-    public ShellErrorHandler(final @Named("main") IO io) {
+    public ShellErrorHandler(final @Named("main") IO io, final Provider<Variables> variables) {
         assert io != null;
         this.io = io;
+        assert variables != null;
+        this.variables = variables;
     }
 
     public boolean handleError(final Throwable error) {
@@ -75,7 +80,7 @@ public class ShellErrorHandler
             cause = error.getCause();
         }
 
-        Variables vars = ShellHolder.get().getVariables();
+        Variables vars = variables.get();
 
         // Determine if the stack trace flag is set
         boolean showTrace = false;
