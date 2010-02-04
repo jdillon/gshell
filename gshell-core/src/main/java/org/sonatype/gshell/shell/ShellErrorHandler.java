@@ -70,8 +70,6 @@ public class ShellErrorHandler
     private void displayError(final Throwable error) {
         assert error != null;
 
-        System.out.println("IO: " + io);
-
         Throwable cause = error;
         if (error instanceof ErrorNotification) {
             cause = error.getCause();
