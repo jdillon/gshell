@@ -53,22 +53,22 @@ public class PathUtilTest
 
     @Test
     public void testNormalize5() {
-        assertNormalized("../foo/bar/../../baz", "baz");
+        assertNormalized("../foo/bar/../../baz", "../baz");
     }
 
     @Test
     public void testNormalize6() {
-        assertNormalized("/../foo/bar/../../baz", "/baz");
+        assertNormalized("/../foo/bar/../../baz", "/../baz");
     }
 
     @Test
     public void testNormalize7() {
-        assertNormalized("../../../../../../foo/bar/../../baz", "baz");
+        assertNormalized("../../../../../../foo/bar/../../baz", "../../../../../../baz");
     }
 
     @Test
     public void testNormalize8() {
-        assertNormalized("/../../../../../../foo/bar/../../baz", "/baz");
+        assertNormalized("/../../../../../../foo/bar/../../baz", "/../../../../../../baz");
     }
 
     @Test

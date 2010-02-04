@@ -51,7 +51,12 @@ public class Node
         this.name = name;
         this.action = action;
         assert action != null;
+        // parent can be null
         this.parent = parent;
+    }
+
+    public Node(final String name, final CommandAction action) {
+        this(name, action, null);
     }
 
     public String getName() {
@@ -97,7 +102,11 @@ public class Node
             return root();
         }
         if (name.equals(PARENT)) {
-            return parent;
+            if (parent != null) {
+                return parent;
+            }
+            // resolve '..' as '.' when there is no parent
+            return this;
         }
         if (name.equals(CURRENT)) {
             return this;

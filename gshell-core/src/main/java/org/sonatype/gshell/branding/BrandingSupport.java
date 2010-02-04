@@ -17,6 +17,7 @@
 package org.sonatype.gshell.branding;
 
 import jline.TerminalFactory;
+import org.sonatype.gshell.command.resolver.CommandResolver;
 import org.sonatype.gshell.shell.Shell;
 import org.sonatype.gshell.util.Strings;
 import org.sonatype.gshell.util.i18n.MessageSource;
@@ -30,7 +31,7 @@ import java.io.StringWriter;
 import java.net.URL;
 import java.util.Properties;
 
-import static org.sonatype.gshell.vars.VariableNames.SHELL_HOME;
+import static org.sonatype.gshell.vars.VariableNames.*;
 import static org.sonatype.gshell.vars.VariableNames.SHELL_PROGRAM;
 import static org.sonatype.gshell.vars.VariableNames.SHELL_PROMPT;
 import static org.sonatype.gshell.vars.VariableNames.SHELL_USER_DIR;
@@ -182,6 +183,9 @@ public class BrandingSupport
         }
         if (!vars.contains(SHELL_USER_DIR)) {
             vars.set(SHELL_USER_DIR, new File(".").getCanonicalFile());
+        }
+        if (!vars.contains(SHELL_GROUP)) {
+            vars.set(SHELL_GROUP, CommandResolver.ROOT);
         }
     }
 }

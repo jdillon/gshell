@@ -49,6 +49,7 @@ public class PathUtil
         // Iterate over each element
         int startElem = startFirstElem;
         int maxLen = path.length();
+        int regulars = 0;
 
         while (startElem < maxLen) {
             // Find the end of the element
@@ -73,23 +74,27 @@ public class PathUtil
             }
 
             if (elemLen == 2 && path.charAt(startElem) == CURRENT_CHAR && path.charAt(startElem + 1) == CURRENT_CHAR) {
-                // A '..' element - remove the previous element
-                if (startElem != startFirstElem) {
+                // A '..' element - remove the previous element if there is a regular element to remove
+                if (regulars > 0 && startElem != startFirstElem) {
                     // Find start of previous element
                     int pos = startElem - 2;
                     for (; pos >= 0 && path.charAt(pos) != SEPARATOR_CHAR; pos--) {
                         // empty
                     }
                     startElem = pos + 1;
+                    path.delete(startElem, endElem + 1);
+                    maxLen = path.length();
                 }
-
-                path.delete(startElem, endElem + 1);
-                maxLen = path.length();
+                else {
+                    // if there are no more regulars, then consume the .. and move on
+                    startElem = startElem + 3;
+                }
                 continue;
             }
 
             // A regular element
             startElem = endElem + 1;
+            regulars++;
         }
 
         return path;

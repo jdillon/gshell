@@ -42,5 +42,10 @@ public interface VariableNames
 
     String SHELL_LOGGING = "shell.logging";
 
+    /**
+     * @since 2.5
+     */
+    String SHELL_GROUP = "shell.group";
+
     String LAST_RESULT = "_";
 }

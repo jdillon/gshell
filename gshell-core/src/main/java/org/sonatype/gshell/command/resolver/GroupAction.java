@@ -18,8 +18,8 @@ package org.sonatype.gshell.command.resolver;
 
 import org.sonatype.gshell.command.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
-import org.sonatype.gshell.util.Strings;
-import org.sonatype.gshell.util.cli2.OpaqueArguments;
+
+import static org.sonatype.gshell.vars.VariableNames.SHELL_GROUP;
 
 /**
  * {@link org.sonatype.gshell.command.CommandAction} to switch groups.
@@ -30,6 +30,10 @@ import org.sonatype.gshell.util.cli2.OpaqueArguments;
 public class GroupAction
     extends CommandActionSupport
 {
+    //
+    // TODO: Need to handle --help for groups?  Or make it opaque and ignore any arguments?
+    //
+
     public GroupAction(final String name) {
         super.setName(name);
     }
@@ -42,6 +46,10 @@ public class GroupAction
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
 
-        throw new Exception("NOT IMPLEMENTED: Unable to change to group: " + getName());
+        // TODO: Consider trying to use the Node so it can cache?
+        log.debug("Changing group to: {}", getName());
+        context.getVariables().set(SHELL_GROUP, getName());
+
+        return Result.SUCCESS;
     }
 }

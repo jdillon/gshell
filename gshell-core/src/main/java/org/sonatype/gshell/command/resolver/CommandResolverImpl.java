@@ -17,6 +17,7 @@
 package org.sonatype.gshell.command.resolver;
 
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,8 @@ import org.sonatype.gshell.command.registry.CommandRemovedEvent;
 import org.sonatype.gshell.command.registry.NoSuchCommandException;
 import org.sonatype.gshell.event.EventListener;
 import org.sonatype.gshell.event.EventManager;
+import org.sonatype.gshell.vars.Variables;
+import static org.sonatype.gshell.vars.VariableNames .*;
 
 import java.util.EventObject;
 
@@ -46,12 +49,19 @@ public class CommandResolverImpl
 
     private final AliasRegistry aliasRegistry;
 
-    private final Node root = new Node(ROOT, new GroupAction(ROOT), null);
+    private final Provider<Variables> variables;
+
+    private final Node root;
 
     @Inject
-    public CommandResolverImpl(final EventManager events, final AliasRegistry aliasRegistry, final CommandRegistry commandRegistry) {
+    public CommandResolverImpl(final AliasRegistry aliasRegistry, final Provider<Variables> variables, final EventManager events, final CommandRegistry commandRegistry) {
         assert aliasRegistry != null;
         this.aliasRegistry = aliasRegistry;
+        assert variables != null;
+        this.variables = variables;
+
+        // Setup the tree
+        root = new Node(ROOT, new GroupAction(ROOT));
 
         // Add any pre-registered commands
         assert commandRegistry != null;
@@ -114,11 +124,31 @@ public class CommandResolverImpl
     private CommandAction resolveNode(final String name) throws CommandException {
         assert name != null;
         
-        Node node = root.find(name);
+        Node node = group().find(name);
         if (node != null) {
             return node.getAction();
         }
 
         return null;
+    }
+
+    private Node group() {
+        Node node = null;
+
+        Object tmp = variables.get().get(SHELL_GROUP);
+        if (tmp instanceof String) {
+            node = root.find((String)tmp);
+        }
+        else if (tmp instanceof Node) {
+            node = (Node)tmp;
+        }
+
+        if (node == null) {
+            node = root;
+        }
+
+        log.debug("Current group is: {}", node);
+
+        return node;
     }
 }

@@ -26,6 +26,8 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import static org.sonatype.gshell.vars.VariableNames.*;
+
 /**
  * Branding for <tt>gsh</tt>.
  * 
@@ -75,6 +77,11 @@ public class BrandingImpl
     @Override
     public File getUserContextDir() {
         return resolveFile(new File(getUserHomeDir(), ".gshell"));
+    }
+
+    @Override
+    public String getPrompt() {
+        return String.format("@|bold %s|@:${%s}> ", getProgramName(), SHELL_GROUP);
     }
 
     @Override
