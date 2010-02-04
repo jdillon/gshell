@@ -159,15 +159,7 @@ public class BrandingSupport
     }
 
     public License getLicense() {
-        return new LicenseSupport() {
-            public String getName() {
-                return null;
-            }
-
-            public URL getUrl() {
-                return null;
-            }
-        };
+        return new LicenseSupport(null, (URL)null);
     }
 
     public void customize(final Shell shell) throws Exception {
