@@ -22,10 +22,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.alias.AliasRegistry;
 import org.sonatype.gshell.alias.NoSuchAliasException;
-import org.sonatype.gshell.command.CommandRegistry;
-import org.sonatype.gshell.command.NoSuchCommandException;
 import org.sonatype.gshell.command.descriptor.DiscoveredCommandSetDescriptorEvent;
 import org.sonatype.gshell.command.descriptor.HelpPageDescriptor;
+import org.sonatype.gshell.command.registry.CommandRegistry;
+import org.sonatype.gshell.command.registry.NoSuchCommandException;
 import org.sonatype.gshell.event.EventListener;
 import org.sonatype.gshell.event.EventManager;
 

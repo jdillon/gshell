@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.command;
+package org.sonatype.gshell.command.registry;
+
+import org.sonatype.gshell.command.CommandException;
 
 /**
  * Thrown to indicate a duplicate command registration attempt has failed.

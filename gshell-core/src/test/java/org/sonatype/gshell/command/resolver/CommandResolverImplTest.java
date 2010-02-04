@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.command;
+package org.sonatype.gshell.command.resolver;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
@@ -23,9 +23,6 @@ import com.google.inject.Stage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link CommandResolverImpl}.

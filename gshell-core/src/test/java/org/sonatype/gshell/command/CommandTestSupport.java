@@ -29,6 +29,8 @@ import org.junit.Test;
 import org.sonatype.gshell.alias.AliasRegistry;
 import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.branding.TestBranding;
+import org.sonatype.gshell.command.registry.CommandRegistrar;
+import org.sonatype.gshell.command.registry.CommandRegistry;
 import org.sonatype.gshell.console.ConsoleErrorHandler;
 import org.sonatype.gshell.console.ConsolePrompt;
 import org.sonatype.gshell.guice.CoreModule;

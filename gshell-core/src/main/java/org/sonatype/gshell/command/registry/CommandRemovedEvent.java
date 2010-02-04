@@ -14,32 +14,31 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.command;
+package org.sonatype.gshell.command.registry;
+
+import java.util.EventObject;
 
 /**
- * Resolves commands.
+ * Event fired once a command has been removed.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-public interface CommandResolver
+public class CommandRemovedEvent
+    extends EventObject
 {
-    String ROOT = "/";
+    ///CLOVER:OFF
 
-    char ROOT_CHAR = '/';
-    
-    String PARENT = "..";
+    private final String name;
 
-    String CURRENT = ".";
+    public CommandRemovedEvent(final String name) {
+        super(name);
 
-    char CURRENT_CHAR = '.';
+        assert name != null;
+        this.name = name;
+    }
 
-    String SEPARATOR = "/";
-
-    char SEPARATOR_CHAR = '/';
-
-    CommandAction resolveCommand(String name) throws CommandException;
-
-    // TODO: Add resolution of a group of commands
-    // Collection<Command> resolveCommands(String name) throws CommandException;
+    public String getName() {
+        return name;
+    }
 }

@@ -19,6 +19,9 @@ package org.sonatype.gshell.command;
 import com.google.inject.Inject;
 import jline.console.Completer;
 import jline.console.completers.StringsCompleter;
+import org.sonatype.gshell.command.registry.CommandRegisteredEvent;
+import org.sonatype.gshell.command.registry.CommandRegistry;
+import org.sonatype.gshell.command.registry.CommandRemovedEvent;
 import org.sonatype.gshell.event.EventListener;
 import org.sonatype.gshell.event.EventManager;
 

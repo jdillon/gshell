@@ -14,27 +14,41 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.alias;
+package org.sonatype.gshell.command.registry;
 
-import java.util.Collection;
+import org.sonatype.gshell.command.CommandAction;
+
+import java.util.EventObject;
 
 /**
- * Registry for command aliases.
+ * Event fired once a command has been registered.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-public interface AliasRegistry
+public class CommandRegisteredEvent
+    extends EventObject
 {
-    void registerAlias(String name, String alias);
+    ///CLOVER:OFF
 
-    void removeAlias(String name) throws NoSuchAliasException;
+    private final String name;
 
-    String getAlias(String name) throws NoSuchAliasException;
+    private final CommandAction command;
 
-    boolean containsAlias(String name);
+    public CommandRegisteredEvent(final String name, final CommandAction command) {
+        super(name);
 
-    // TODO: Add Alias and getAliases()
+        assert name != null;
+        this.name = name;
+        assert command != null;
+        this.command = command;
+    }
 
-    Collection<String> getAliasNames();
+    public String getName() {
+        return name;
+    }
+
+    public CommandAction getCommand() {
+        return command;
+    }
 }

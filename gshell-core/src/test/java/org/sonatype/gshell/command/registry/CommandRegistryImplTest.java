@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.command;
+package org.sonatype.gshell.command.registry;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
@@ -23,13 +23,15 @@ import com.google.inject.Stage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.sonatype.gshell.command.CommandActionSupport;
+import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.event.EventManagerImpl;
 
 import static org.junit.Assert.fail;
 
 /**
- * Tests for the {@link org.sonatype.gshell.command.CommandRegistryImpl}.
+ * Tests for the {@link org.sonatype.gshell.command.registry.CommandRegistryImpl}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */

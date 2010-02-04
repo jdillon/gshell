@@ -24,8 +24,8 @@ import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.CommandHelpSupport;
 import org.sonatype.gshell.command.CommandPreferenceSupport;
-import org.sonatype.gshell.command.CommandResolver;
 import org.sonatype.gshell.command.IO;
+import org.sonatype.gshell.command.resolver.CommandResolver;
 import org.sonatype.gshell.io.StreamJack;
 import org.sonatype.gshell.notification.ErrorNotification;
 import org.sonatype.gshell.notification.ResultNotification;
@@ -115,7 +115,8 @@ public class CommandExecutorImpl
 
         log.debug("Executing ({}): [{}]", name, Strings.join(args, ", "));
 
-        CommandAction command = resolver.resolveCommand(name);
+        // Resolve the command and clone its prototype
+        CommandAction command = resolver.resolveCommand(name).clone();
 
         MDC.put(CommandAction.class.getName(), name);
 

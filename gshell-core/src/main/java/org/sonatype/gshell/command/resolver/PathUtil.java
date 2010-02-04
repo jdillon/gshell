@@ -14,12 +14,15 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.util;
+package org.sonatype.gshell.command.resolver;
 
-import static org.sonatype.gshell.command.CommandResolver.*;
+import static org.sonatype.gshell.command.resolver.CommandResolver.CURRENT_CHAR;
+import static org.sonatype.gshell.command.resolver.CommandResolver.ROOT;
+import static org.sonatype.gshell.command.resolver.CommandResolver.SEPARATOR;
+import static org.sonatype.gshell.command.resolver.CommandResolver.SEPARATOR_CHAR;
 
 /**
- * Path utilities.
+ * Node path utilities.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
@@ -95,5 +98,22 @@ public class PathUtil
     public static String normalize(final String path) {
         assert path != null;
         return normalize(new StringBuilder(path)).toString();
+    }
+
+    public static String[] split(String path) {
+        assert path != null;
+        String[] elements = normalize(path).split(SEPARATOR);
+        if (isAbsolute(path)) {
+            if (elements.length == 0) {
+                elements = new String[1];
+            }
+            elements[0] = ROOT;
+        }
+        return elements;
+    }
+
+    public static boolean isAbsolute(final String path) {
+        assert path != null;
+        return path.startsWith(ROOT);
     }
 }

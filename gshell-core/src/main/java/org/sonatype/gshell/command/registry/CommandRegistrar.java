@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.command;
+package org.sonatype.gshell.command.registry;
 
 import org.sonatype.gshell.command.descriptor.CommandSetDescriptor;
 

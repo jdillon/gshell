@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.command;
+package org.sonatype.gshell.command.registry;
+
+import org.sonatype.gshell.command.CommandAction;
 
 import java.util.Collection;
 
@@ -33,6 +35,8 @@ public interface CommandRegistry
     CommandAction getCommand(String name) throws NoSuchCommandException;
 
     boolean containsCommand(String name);
+
+    // TODO: Add getCommands()
 
     Collection<String> getCommandNames();
 }
