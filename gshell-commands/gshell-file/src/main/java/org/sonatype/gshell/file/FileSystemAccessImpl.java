@@ -47,11 +47,7 @@ public class FileSystemAccessImpl
 
     public File resolveDir(final String name) throws IOException {
         assert name != null;
-
-        Variables vars = variables.get();
-        String path = vars.get(name, String.class);
-
-        return new File(path).getCanonicalFile();
+        return variables.get().get(name, File.class).getCanonicalFile();
     }
 
     public File getShellHomeDir() throws IOException {
