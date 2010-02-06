@@ -18,9 +18,7 @@ package org.sonatype.gshell.command.resolver;
 
 import org.junit.Test;
 
-import static junit.framework.Assert.*;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 /**
  * Tests for {@link NodePath}.
