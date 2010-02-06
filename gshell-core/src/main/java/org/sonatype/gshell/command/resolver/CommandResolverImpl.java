@@ -22,7 +22,6 @@ import com.google.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.command.CommandAction;
-import org.sonatype.gshell.command.CommandException;
 import org.sonatype.gshell.command.GroupAction;
 import org.sonatype.gshell.command.registry.CommandRegisteredEvent;
 import org.sonatype.gshell.command.registry.CommandRegistry;
@@ -31,10 +30,15 @@ import org.sonatype.gshell.event.EventListener;
 import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.vars.Variables;
 
+import java.util.ArrayList;
 import java.util.EventObject;
+import java.util.List;
 
+import static org.sonatype.gshell.command.resolver.Node.CURRENT;
+import static org.sonatype.gshell.command.resolver.Node.PATH_SEPARATOR;
 import static org.sonatype.gshell.command.resolver.Node.ROOT;
 import static org.sonatype.gshell.vars.VariableNames.SHELL_GROUP;
+import static org.sonatype.gshell.vars.VariableNames.SHELL_GROUP_PATH;
 
 /**
  * {@link CommandResolver} component.
@@ -84,18 +88,21 @@ public class CommandResolverImpl
         });
     }
 
-    public Node resolve(final String name) throws CommandException {
+    public Node resolve(final String name) {
         assert name != null;
 
         log.trace("Resolving: {}", name);
 
-        // TODO: Implement a search path
+        for (Node base : searchPath()) {
+            Node node = base.find(name);
+            if (node != null) {
+                log.trace("Resolved: {} -> {}", name, node);
+                return node;
+            }
 
-        Node node = group().find(name);
+        }
 
-        log.trace("Resolved: {} -> {}", name, node);
-
-        return node;
+        return null;
     }
 
     public Node group() {
@@ -108,6 +115,9 @@ public class CommandResolverImpl
         else if (tmp instanceof Node) {
             node = (Node)tmp;
         }
+        else {
+            log.warn("Unexpected value for {}: {}", SHELL_GROUP, tmp);
+        }
 
         if (node == null) {
             node = root;
@@ -116,5 +126,28 @@ public class CommandResolverImpl
         log.trace("Current group is: {}", node);
 
         return node;
+    }
+
+    public List<Node> searchPath() {
+        List<Node> path = new ArrayList<Node>();
+
+        Object tmp = variables.get().get(SHELL_GROUP_PATH);
+        if (tmp == null) {
+            tmp = String.format("%s%s%s", CURRENT, PATH_SEPARATOR, ROOT);
+        }
+        else if (!(tmp instanceof String)) {
+            log.warn("Unexpected value for {}: {}", SHELL_GROUP_PATH, tmp);
+        }
+
+        Node base = group();
+        for (String element : ((String)tmp).split(PATH_SEPARATOR)) {
+            Node node = base.find(element);
+            if (node == null) {
+                log.warn("Invalid search path element: {}", element);
+            }
+            path.add(node);
+        }
+
+        return path;
     }
 }

@@ -30,6 +30,8 @@ import java.io.StringWriter;
 import java.net.URL;
 import java.util.Properties;
 
+import static org.sonatype.gshell.command.resolver.Node.CURRENT;
+import static org.sonatype.gshell.command.resolver.Node.PATH_SEPARATOR;
 import static org.sonatype.gshell.command.resolver.Node.ROOT;
 import static org.sonatype.gshell.vars.VariableNames.SHELL_GROUP;
 import static org.sonatype.gshell.vars.VariableNames.SHELL_GROUP_PATH;
@@ -190,7 +192,7 @@ public class BrandingSupport
             vars.set(SHELL_GROUP, ROOT);
         }
         if (!vars.contains(SHELL_GROUP_PATH)) {
-            vars.set(SHELL_GROUP_PATH, ROOT);
+            vars.set(SHELL_GROUP_PATH, String.format("%s%s%s", CURRENT, PATH_SEPARATOR, ROOT));
         }
     }
 }

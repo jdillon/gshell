@@ -42,6 +42,8 @@ public class Node
 
     public static final String SEPARATOR = "/";
 
+    public static final String PATH_SEPARATOR = ":";
+
     private static final Logger log = LoggerFactory.getLogger(Node.class);
 
     private final String name;

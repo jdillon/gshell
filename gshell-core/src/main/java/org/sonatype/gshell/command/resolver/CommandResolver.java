@@ -16,7 +16,7 @@
 
 package org.sonatype.gshell.command.resolver;
 
-import org.sonatype.gshell.command.CommandException;
+import java.util.List;
 
 /**
  * Resolves command nodes.
@@ -26,7 +26,9 @@ import org.sonatype.gshell.command.CommandException;
  */
 public interface CommandResolver
 {
-    Node resolve(String name) throws CommandException;
+    Node resolve(String name);
 
     Node group();
+
+    List<Node> searchPath();
 }
