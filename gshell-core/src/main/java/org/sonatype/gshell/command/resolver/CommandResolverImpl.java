@@ -106,8 +106,8 @@ public class CommandResolverImpl
     }
 
     public Node group() {
-        Node node = null;
-
+        Node node;
+        
         Object tmp = variables.get().get(SHELL_GROUP);
         if (tmp instanceof String) {
             node = root.find((String)tmp);
@@ -115,11 +115,11 @@ public class CommandResolverImpl
         else if (tmp instanceof Node) {
             node = (Node)tmp;
         }
+        else if (tmp == null) {
+            node = root;
+        }
         else {
             log.warn("Unexpected value for {}: {}", SHELL_GROUP, tmp);
-        }
-
-        if (node == null) {
             node = root;
         }
 
@@ -132,11 +132,12 @@ public class CommandResolverImpl
         List<Node> path = new ArrayList<Node>();
 
         Object tmp = variables.get().get(SHELL_GROUP_PATH);
+        if (tmp != null && !(tmp instanceof String)) {
+            log.warn("Unexpected value for {}: {}", SHELL_GROUP_PATH, tmp);
+            tmp = null;
+        }
         if (tmp == null) {
             tmp = String.format("%s%s%s", CURRENT, PATH_SEPARATOR, ROOT);
-        }
-        else if (!(tmp instanceof String)) {
-            log.warn("Unexpected value for {}: {}", SHELL_GROUP_PATH, tmp);
         }
 
         Node base = group();

@@ -38,23 +38,22 @@ public class AliasNameCompleter
 {
     private final EventManager events;
 
-    private final AliasRegistry aliasRegistry;
+    private final AliasRegistry aliases;
 
     private final StringsCompleter delegate = new StringsCompleter();
 
     private boolean initialized;
 
     @Inject
-    public AliasNameCompleter(final EventManager events, final AliasRegistry aliasRegistry) {
+    public AliasNameCompleter(final EventManager events, final AliasRegistry aliases) {
         assert events != null;
         this.events = events;
-        assert aliasRegistry != null;
-        this.aliasRegistry = aliasRegistry;
+        assert aliases != null;
+        this.aliases = aliases;
     }
 
     private void init() {
-        assert aliasRegistry != null;
-        Map<String,String> aliases = aliasRegistry.getAliases();
+        Map<String,String> aliases = this.aliases.getAliases();
         delegate.getStrings().addAll(aliases.keySet());
 
         // Register for updates to alias registrations

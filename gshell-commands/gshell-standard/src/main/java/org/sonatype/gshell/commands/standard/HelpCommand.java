@@ -52,12 +52,13 @@ public class HelpCommand
         this.helpPages = helpPages;
     }
 
-    @Inject
     /**
      * @since 2.5
      */
+    @Inject
     public HelpCommand installCompleters(final @Named("alias-name") Completer c1, final @Named("command-name") Completer c2, final @Named("meta-help-page-name") Completer c3) {
         assert c1 != null;
+        // TODO: Make a HelpCompleter component and do this there
         setCompleters(new AggregateCompleter(c1, c2, c3), null);
         return this;
     }

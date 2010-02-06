@@ -38,23 +38,22 @@ public class CommandNameCompleter
 {
     private final EventManager events;
 
-    private final CommandRegistry commandRegistry;
+    private final CommandRegistry commands;
 
     private final StringsCompleter delegate = new StringsCompleter();
 
     private boolean initialized;
 
     @Inject
-    public CommandNameCompleter(final EventManager events, final CommandRegistry commandRegistry) {
+    public CommandNameCompleter(final EventManager events, final CommandRegistry commands) {
         assert events != null;
         this.events = events;
-        assert commandRegistry != null;
-        this.commandRegistry = commandRegistry;
+        assert commands != null;
+        this.commands = commands;
     }
 
     private void init() {
-        assert commandRegistry != null;
-        Collection<String> names = commandRegistry.getCommandNames();
+        Collection<String> names = commands.getCommandNames();
         delegate.getStrings().addAll(names);
 
         // Register for updates to command registrations

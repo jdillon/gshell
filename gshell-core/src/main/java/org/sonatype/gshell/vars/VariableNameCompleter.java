@@ -20,13 +20,16 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import jline.console.Completer;
 import jline.console.completers.StringsCompleter;
+import org.sonatype.gshell.event.EventListener;
+import org.sonatype.gshell.event.EventManager;
 
-import java.util.Collection;
+import java.util.EventObject;
 import java.util.Iterator;
 import java.util.List;
 
 /**
  * {@link Completer} for variable names.
+ * Keeps up to date automatically by handling variable-related events.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
@@ -34,27 +37,52 @@ import java.util.List;
 public class VariableNameCompleter
     implements Completer
 {
+    private final EventManager events;
+
     private final Provider<Variables> variables;
 
+    private final StringsCompleter delegate = new StringsCompleter();
+
+    private boolean initialized;
+
     @Inject
-    public VariableNameCompleter(final Provider<Variables> variables) {
+    public VariableNameCompleter(final EventManager events, final Provider<Variables> variables) {
+        assert events != null;
+        this.events = events;
         assert variables != null;
         this.variables = variables;
     }
 
-    public int complete(final String buffer, final int cursor, final List<CharSequence> candidates) {
-        Variables vars = variables.get();
-
-        // There are no events for variables muck, so each time we have to rebuild the list.
-        StringsCompleter delegate = new StringsCompleter();
-        Collection<String> strings = delegate.getStrings();
-
-        Iterator<String> iter = vars.names();
+    private void init() {
+        // Prime the delegate with any existing variable names
+        Iterator<String> iter = variables.get().names();
         while (iter.hasNext()) {
-            String name = iter.next();
-            strings.add(name);
+            delegate.getStrings().add(iter.next());
         }
 
+        // Register for updates to variable changes
+        events.addListener(new EventListener()
+        {
+            public void onEvent(final EventObject event) throws Exception {
+                if (event instanceof VariableSetEvent) {
+                    VariableSetEvent target = (VariableSetEvent) event;
+                    delegate.getStrings().add(target.getName());
+                }
+                else if (event instanceof VariableUnsetEvent) {
+                    VariableUnsetEvent target = (VariableUnsetEvent) event;
+                    delegate.getStrings().remove(target.getName());
+                }
+            }
+        });
+
+        initialized = true;
+    }
+
+    public int complete(final String buffer, final int cursor, final List<CharSequence> candidates) {
+        if (!initialized) {
+            init();
+        }
+        
         return delegate.complete(buffer, cursor, candidates);
     }
 }

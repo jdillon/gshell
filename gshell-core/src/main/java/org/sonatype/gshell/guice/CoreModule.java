@@ -33,6 +33,7 @@ import org.sonatype.gshell.command.registry.CommandRegistryImpl;
 import org.sonatype.gshell.command.registry.CommandsCompleter;
 import org.sonatype.gshell.command.resolver.CommandResolver;
 import org.sonatype.gshell.command.resolver.CommandResolverImpl;
+import org.sonatype.gshell.command.resolver.ResolvedCommandNameCompleter;
 import org.sonatype.gshell.console.completer.FileNameCompleter;
 import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.event.EventManagerImpl;
@@ -76,6 +77,7 @@ public class CoreModule
 
         bind(Completer.class).annotatedWith(Names.named("commands")).to(CommandsCompleter.class);
         bind(Completer.class).annotatedWith(Names.named("command-name")).to(CommandNameCompleter.class);
+        bind(Completer.class).annotatedWith(Names.named("resolved-command-name")).to(ResolvedCommandNameCompleter.class);
         bind(Completer.class).annotatedWith(Names.named("alias-name")).to(AliasNameCompleter.class);
         bind(Completer.class).annotatedWith(Names.named("file-name")).to(FileNameCompleter.class);
         bind(Completer.class).annotatedWith(Names.named("variable-name")).to(VariableNameCompleter.class);

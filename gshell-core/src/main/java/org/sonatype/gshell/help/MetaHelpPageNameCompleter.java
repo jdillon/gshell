@@ -27,7 +27,6 @@ import java.util.List;
 
 /**
  * {@link jline.console.Completer} for meta help page names.
- * <p/>
  * Keeps up to date automatically by handling meta-page-related events.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
@@ -36,7 +35,7 @@ import java.util.List;
 public class MetaHelpPageNameCompleter
     implements Completer
 {
-    private final EventManager eventManager;
+    private final EventManager events;
 
     private final HelpPageManager helpPages;
 
@@ -45,9 +44,9 @@ public class MetaHelpPageNameCompleter
     private boolean initialized;
 
     @Inject
-    public MetaHelpPageNameCompleter(final EventManager eventManager, final HelpPageManager helpPages) {
-        assert eventManager != null;
-        this.eventManager = eventManager;
+    public MetaHelpPageNameCompleter(final EventManager events, final HelpPageManager helpPages) {
+        assert events != null;
+        this.events = events;
         assert helpPages != null;
         this.helpPages = helpPages;
     }
@@ -58,7 +57,7 @@ public class MetaHelpPageNameCompleter
         }
 
         // Register for updates to alias registrations
-        eventManager.addListener(new EventListener()
+        events.addListener(new EventListener()
         {
             public void onEvent(final EventObject event) throws Exception {
                 if (event instanceof MetaHelpPageAddedEvent) {

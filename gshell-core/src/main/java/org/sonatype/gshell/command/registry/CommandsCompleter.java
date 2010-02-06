@@ -49,7 +49,7 @@ public class CommandsCompleter
 
     private final EventManager events;
 
-    private final CommandRegistry commandRegistry;
+    private final CommandRegistry commands;
 
     private final Map<String, Completer> completers = new HashMap<String, Completer>();
 
@@ -58,17 +58,17 @@ public class CommandsCompleter
     private boolean initialized;
 
     @Inject
-    public CommandsCompleter(final EventManager events, final CommandRegistry commandRegistry) {
+    public CommandsCompleter(final EventManager events, final CommandRegistry commands) {
         assert events != null;
         this.events = events;
-        assert commandRegistry != null;
-        this.commandRegistry = commandRegistry;
+        assert commands != null;
+        this.commands = commands;
     }
 
     private void init() {
         try {
             // Populate the initial list of completers from the currently registered commands
-            Collection<String> names = commandRegistry.getCommandNames();
+            Collection<String> names = commands.getCommandNames();
             for (String name : names) {
                 addCompleter(name);
             }
@@ -106,7 +106,7 @@ public class CommandsCompleter
         children.add(new StringsCompleter(name));
 
         // Then attach any command specific completers
-        CommandAction command = commandRegistry.getCommand(name);
+        CommandAction command = commands.getCommand(name);
 
         Completer[] completers = command.getCompleters();
         if (completers == null) {
