@@ -26,7 +26,9 @@ import org.sonatype.gshell.vars.Variables;
 
 import java.io.File;
 
-import static org.sonatype.gshell.vars.VariableNames.*;
+import static org.sonatype.gshell.vars.VariableNames.SHELL_PROMPT;
+import static org.sonatype.gshell.vars.VariableNames.SHELL_USER_DIR;
+import static org.sonatype.gshell.vars.VariableNames.SHELL_USER_HOME;
 
 /**
  * Shell {@link ConsolePrompt}, which determines the prompt from the

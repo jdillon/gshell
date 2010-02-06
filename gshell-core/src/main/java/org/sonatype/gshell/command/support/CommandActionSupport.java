@@ -20,8 +20,8 @@ import jline.console.Completer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.command.CommandAction;
-import org.sonatype.gshell.util.NameAware;
 import org.sonatype.gshell.command.resolver.PathUtil;
+import org.sonatype.gshell.util.NameAware;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
 

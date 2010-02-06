@@ -20,12 +20,15 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.sonatype.gshell.command.CommandAction;
+import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.GroupAction;
 import org.sonatype.gshell.command.support.CommandActionSupport;
-import org.sonatype.gshell.command.CommandContext;
 
-import static org.sonatype.gshell.command.resolver.Node.*;
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
+import static org.sonatype.gshell.command.resolver.Node.CURRENT;
+import static org.sonatype.gshell.command.resolver.Node.ROOT;
 
 /**
  * Tests for {@link Node}.

@@ -26,11 +26,8 @@ import org.junit.Test;
 import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.event.EventManagerImpl;
 
-import java.util.Collection;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 

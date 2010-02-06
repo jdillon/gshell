@@ -25,9 +25,6 @@ import jline.console.completers.StringsCompleter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.command.CommandAction;
-import org.sonatype.gshell.command.registry.CommandRegisteredEvent;
-import org.sonatype.gshell.command.registry.CommandRegistry;
-import org.sonatype.gshell.command.registry.CommandRemovedEvent;
 import org.sonatype.gshell.event.EventListener;
 import org.sonatype.gshell.event.EventManager;
 
@@ -40,7 +37,6 @@ import java.util.Map;
 
 /**
  * {@link Completer} for commands, including support for command-specific sub-completion.
- * <p/>
  * Keeps up to date automatically by handling command-related events.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
@@ -82,12 +78,12 @@ public class CommandsCompleter
             {
                 public void onEvent(final EventObject event) throws Exception {
                     if (event instanceof CommandRegisteredEvent) {
-                        CommandRegisteredEvent targetEvent = (CommandRegisteredEvent) event;
-                        addCompleter(targetEvent.getName());
+                        CommandRegisteredEvent target = (CommandRegisteredEvent) event;
+                        addCompleter(target.getName());
                     }
                     else if (event instanceof CommandRemovedEvent) {
-                        CommandRemovedEvent targetEvent = (CommandRemovedEvent) event;
-                        removeCompleter(targetEvent.getName());
+                        CommandRemovedEvent target = (CommandRemovedEvent) event;
+                        removeCompleter(target.getName());
                     }
                 }
             });

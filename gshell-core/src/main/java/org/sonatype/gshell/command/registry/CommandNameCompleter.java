@@ -19,9 +19,6 @@ package org.sonatype.gshell.command.registry;
 import com.google.inject.Inject;
 import jline.console.Completer;
 import jline.console.completers.StringsCompleter;
-import org.sonatype.gshell.command.registry.CommandRegisteredEvent;
-import org.sonatype.gshell.command.registry.CommandRegistry;
-import org.sonatype.gshell.command.registry.CommandRemovedEvent;
 import org.sonatype.gshell.event.EventListener;
 import org.sonatype.gshell.event.EventManager;
 
@@ -31,7 +28,6 @@ import java.util.List;
 
 /**
  * {@link Completer} for command names.
- * <p/>
  * Keeps up to date automatically by handling command-related events.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
@@ -66,12 +62,12 @@ public class CommandNameCompleter
         {
             public void onEvent(final EventObject event) throws Exception {
                 if (event instanceof CommandRegisteredEvent) {
-                    CommandRegisteredEvent targetEvent = (CommandRegisteredEvent) event;
-                    delegate.getStrings().add(targetEvent.getName());
+                    CommandRegisteredEvent target = (CommandRegisteredEvent) event;
+                    delegate.getStrings().add(target.getName());
                 }
                 else if (event instanceof CommandRemovedEvent) {
-                    CommandRemovedEvent targetEvent = (CommandRemovedEvent) event;
-                    delegate.getStrings().remove(targetEvent.getName());
+                    CommandRemovedEvent target = (CommandRemovedEvent) event;
+                    delegate.getStrings().remove(target.getName());
                 }
             }
         });

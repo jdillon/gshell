@@ -28,7 +28,6 @@ import java.util.Map;
 
 /**
  * {@link Completer} for alias names.
- * <p/>
  * Keeps up to date automatically by handling alias-related events.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
@@ -63,12 +62,12 @@ public class AliasNameCompleter
         {
             public void onEvent(final EventObject event) throws Exception {
                 if (event instanceof AliasRegisteredEvent) {
-                    AliasRegisteredEvent targetEvent = (AliasRegisteredEvent) event;
-                    delegate.getStrings().add(targetEvent.getName());
+                    AliasRegisteredEvent target = (AliasRegisteredEvent) event;
+                    delegate.getStrings().add(target.getName());
                 }
                 else if (event instanceof AliasRemovedEvent) {
-                    AliasRemovedEvent targetEvent = (AliasRemovedEvent) event;
-                    delegate.getStrings().remove(targetEvent.getName());
+                    AliasRemovedEvent target = (AliasRemovedEvent) event;
+                    delegate.getStrings().remove(target.getName());
                 }
             }
         });

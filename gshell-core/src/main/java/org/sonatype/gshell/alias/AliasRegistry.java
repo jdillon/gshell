@@ -16,7 +16,6 @@
 
 package org.sonatype.gshell.alias;
 
-import java.util.Collection;
 import java.util.Map;
 
 /**

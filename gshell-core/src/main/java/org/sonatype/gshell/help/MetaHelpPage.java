@@ -21,8 +21,8 @@ import org.codehaus.plexus.interpolation.Interpolator;
 import org.codehaus.plexus.interpolation.PrefixedObjectValueSource;
 import org.codehaus.plexus.interpolation.PropertiesBasedValueSource;
 import org.codehaus.plexus.interpolation.StringSearchInterpolator;
-import org.sonatype.gshell.command.support.CommandHelpSupport;
 import org.sonatype.gshell.command.descriptor.HelpPageDescriptor;
+import org.sonatype.gshell.command.support.CommandHelpSupport;
 import org.sonatype.gshell.shell.ShellHolder;
 
 import java.io.PrintWriter;
