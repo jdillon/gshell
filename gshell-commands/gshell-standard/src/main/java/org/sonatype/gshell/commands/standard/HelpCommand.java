@@ -21,13 +21,12 @@ import com.google.inject.name.Named;
 import jline.console.Completer;
 import jline.console.completers.AggregateCompleter;
 import org.sonatype.gshell.command.Command;
-import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
+import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.help.HelpPage;
 import org.sonatype.gshell.help.HelpPageFilter;
 import org.sonatype.gshell.help.HelpPageManager;
-import org.sonatype.gshell.help.MetaHelpPage;
 import org.sonatype.gshell.util.cli2.Argument;
 
 import java.util.Collection;
@@ -69,8 +68,7 @@ public class HelpCommand
 
         // If there is no argument given, display all help pages in context
         if (name == null) {
-            displayCommands(context);
-            displayMetaPages(context);
+            displayAvailable(context);
             return Result.SUCCESS;
         }
 
@@ -137,27 +135,14 @@ public class HelpCommand
         }
     }
 
-    private void displayCommands(final CommandContext context) {
+    private void displayAvailable(final CommandContext context) {
         assert context != null;
 
         Collection<HelpPage> pages = helpPages.getPages();
 
         IO io = context.getIo();
-        io.out.println(getMessages().format("info.available-commands"));
+        io.out.println(getMessages().format("info.available-pages"));
 
         renderPages(context, pages);
-    }
-
-    private void displayMetaPages(final CommandContext context) {
-        assert context != null;
-
-        Collection<MetaHelpPage> pages = helpPages.getMetaPages();
-        if (!pages.isEmpty()) {
-            IO io = context.getIo();
-            io.out.println();
-            io.out.println(getMessages().format("info.additional-doc"));
-
-            renderPages(context, pages);
-        }
     }
 }
