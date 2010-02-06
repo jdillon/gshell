@@ -63,64 +63,63 @@ public class NodePath
 
     public NodePath normalize() {
         // Determine the start of the first element
-        int startFirstElem = 0;
+        int first = 0;
 
         if (path.charAt(0) == SEPARATOR_CHAR) {
             if (path.length() == 1) {
                 return this;
             }
-            startFirstElem = 1;
+            first = 1;
         }
 
         // Iterate over each element
-        int startElem = startFirstElem;
-        int maxLen = path.length();
+        int start = first;
+        int max = path.length();
         int regulars = 0;
 
-        while (startElem < maxLen) {
+        while (start < max) {
             // Find the end of the element
-            int endElem = startElem;
-            for (; endElem < maxLen && path.charAt(endElem) != SEPARATOR_CHAR; endElem++) {
+            int end = start;
+            for (; end < max && path.charAt(end) != SEPARATOR_CHAR; end++) {
                 // empty
             }
+            int len = end - start;
 
-            final int elemLen = endElem - startElem;
-
-            if (regulars > 0 && elemLen == 0) {
+            if (regulars > 0 && len == 0) {
                 // An empty element - axe it
-                path.delete(endElem, endElem + 1);
-                maxLen = path.length();
+                path.delete(end, end + 1);
+                max = path.length();
                 continue;
             }
 
-            if (regulars > 0 && elemLen == 1 && path.charAt(startElem) == CURRENT_CHAR) {
+            if (regulars > 0 && len == 1 && path.charAt(start) == CURRENT_CHAR) {
                 // A '.' element - axe it
-                path.delete(startElem, endElem + 1);
-                maxLen = path.length();
+                path.delete(start, end + 1);
+                max = path.length();
                 continue;
             }
 
-            if (elemLen == 2 && path.charAt(startElem) == CURRENT_CHAR && path.charAt(startElem + 1) == CURRENT_CHAR) {
+            if (len == 2 && path.charAt(start) == CURRENT_CHAR && path.charAt(start + 1) == CURRENT_CHAR) {
                 // A '..' element - remove the previous element if there is a regular element to remove
-                if (regulars > 0 && startElem != startFirstElem) {
+                if (regulars > 0 && start != first) {
                     // Find start of previous element
-                    int pos = startElem - 2;
+                    int pos = start - 2;
                     for (; pos >= 0 && path.charAt(pos) != SEPARATOR_CHAR; pos--) {
                         // empty
                     }
-                    startElem = pos + 1;
-                    path.delete(startElem, endElem + 1);
-                    maxLen = path.length();
+                    start = pos + 1;
+                    path.delete(start, end + 1);
+                    max = path.length();
                 }
                 else {
                     // if there are no more regulars, then consume the .. and move on
-                    startElem = startElem + 3;
+                    start = start + 3;
                 }
                 continue;
             }
 
             // A regular element
-            startElem = endElem + 1;
+            start = end + 1;
             regulars++;
         }
 
