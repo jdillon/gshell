@@ -175,7 +175,7 @@ public class CommandResolverImpl
             node = root;
         }
 
-        log.debug("Current group is: {}", node);
+        log.trace("Current group is: {}", node);
 
         return node;
     }
