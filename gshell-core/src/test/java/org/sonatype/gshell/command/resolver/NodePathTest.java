@@ -18,20 +18,39 @@ package org.sonatype.gshell.command.resolver;
 
 import org.junit.Test;
 
+import static junit.framework.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 /**
- * Tests for {@link PathUtil}.
+ * Tests for {@link NodePath}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-public class PathUtilTest
+public class NodePathTest
 {
-    private void assertNormalized(final String path, final String expected) {
-        assertEquals(expected, PathUtil.normalize(path));
+    @Test
+    public void testParent1() {
+        NodePath path = new NodePath("/foo/bar/baz");
+        assertEquals("/foo/bar", path.parent().toString());
     }
 
+    @Test
+    public void testParent2() {
+        NodePath path = new NodePath("foo/bar/baz");
+        assertEquals("foo/bar", path.parent().toString());
+    }
+
+//    @Test
+//    public void testParent3() {
+//        NodePath path = new NodePath("foo/bar/baz/");
+//        assertEquals("foo/bar", path.base().toString());
+//    }
+    
+    private void assertNormalized(final String path, final String expected) {
+        assertEquals(expected, new NodePath(path).normalize().toString());
+    }
+    
     @Test
     public void testNormalize1() {
         assertNormalized("foo/bar/baz", "foo/bar/baz");
@@ -99,7 +118,7 @@ public class PathUtilTest
 
     @Test
     public void testSplit1() {
-        String[] elements = PathUtil.split("/");
+        String[] elements = new NodePath("/").split();
         assertNotNull(elements);
         assertEquals(1, elements.length);
         assertEquals("/", elements[0]);
@@ -107,7 +126,7 @@ public class PathUtilTest
 
     @Test
     public void testSplit2() {
-        String[] elements = PathUtil.split("foo");
+        String[] elements = new NodePath("foo").split();
         assertNotNull(elements);
         assertEquals(1, elements.length);
         assertEquals("foo", elements[0]);
@@ -115,7 +134,7 @@ public class PathUtilTest
 
     @Test
     public void testSplit3() {
-        String[] elements = PathUtil.split("foo/bar");
+        String[] elements = new NodePath("foo/bar").split();
         assertNotNull(elements);
         assertEquals(2, elements.length);
         assertEquals("foo", elements[0]);
@@ -124,7 +143,7 @@ public class PathUtilTest
 
     @Test
     public void testSplit4() {
-        String[] elements = PathUtil.split("/foo/bar");
+        String[] elements = new NodePath("/foo/bar").split();
         assertNotNull(elements);
         assertEquals(3, elements.length);
         assertEquals("/", elements[0]);

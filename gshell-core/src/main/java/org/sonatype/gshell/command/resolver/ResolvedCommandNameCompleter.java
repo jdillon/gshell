@@ -54,7 +54,7 @@ public class ResolvedCommandNameCompleter
         }
 
         if (node.isGroup()) {
-            for (Node child : node.getChildren()) {
+            for (Node child : node.children()) {
                 delegate.getStrings().add(child.getName());
             }
         }

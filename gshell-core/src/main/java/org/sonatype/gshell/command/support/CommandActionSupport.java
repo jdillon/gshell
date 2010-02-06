@@ -20,7 +20,7 @@ import jline.console.Completer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.command.CommandAction;
-import org.sonatype.gshell.command.resolver.PathUtil;
+import org.sonatype.gshell.command.resolver.NodePath;
 import org.sonatype.gshell.util.NameAware;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
@@ -61,8 +61,7 @@ public abstract class CommandActionSupport
     }
 
     public String getSimpleName() {
-        String[] elements = PathUtil.split(getName());
-        return elements[elements.length - 1];
+        return new NodePath(getName()).last();
     }
 
     public MessageSource getMessages() {

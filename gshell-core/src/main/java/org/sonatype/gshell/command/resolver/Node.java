@@ -22,8 +22,11 @@ import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.GroupAction;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * A node for building a {@link CommandAction} tree.
@@ -90,10 +93,6 @@ public class Node
         return parent;
     }
 
-    public Collection<Node> getChildren() {
-        return children;
-    }
-
     public boolean isRoot() {
         return parent == null;
     }
@@ -140,11 +139,32 @@ public class Node
         return null;
     }
 
+    public Collection<Node> children() {
+        return children;
+    }
+
+    public Collection<Node> children(final String name) {
+        if (name == null) {
+            return children;
+        }
+
+        Collection<Node> nodes = new LinkedHashSet<Node>();
+
+        for (Node child : children) {
+            if (child.name.startsWith(name)) {
+                nodes.add(child);
+            }
+        }
+
+        return nodes;
+    }
+
     public Node find(final String name) {
         assert name != null;
 
+        NodePath path = new NodePath(name);
         Node node = this;
-        for (String element : PathUtil.split(name)) {
+        for (String element : path.split()) {
             node = node.get(element);
             if (node == null) {
                 break;
@@ -158,7 +178,9 @@ public class Node
         assert name != null;
         assert command != null;
 
-        String[] elements = PathUtil.split(name);
+        NodePath path = new NodePath(name);
+        String[] elements = path.split();
+
         Node current = this;
         for (int i=0; i<elements.length; i++) {
             Node node = current.get(elements[i]);

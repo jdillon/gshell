@@ -24,6 +24,9 @@ import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.GroupAction;
 import org.sonatype.gshell.command.support.CommandActionSupport;
 
+import java.util.Collection;
+import java.util.Iterator;
+
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
@@ -52,37 +55,37 @@ public class NodeTest
     @Test
     public void testAdd1() {
         root.add("test", new MockAction());
-        assertEquals(1, root.getChildren().size());
+        assertEquals(1, root.children().size());
     }
 
     @Test
     public void testAdd2() {
         root.add("/test", new MockAction());
-        assertEquals(1, root.getChildren().size());
+        assertEquals(1, root.children().size());
     }
 
     @Test
     public void testAdd3() {
         root.add("/foo", new MockAction());
         root.add("/bar", new MockAction());
-        assertEquals(2, root.getChildren().size());
+        assertEquals(2, root.children().size());
     }
 
     @Test
     public void testFind1() {
         CommandAction action = new MockAction();
         root.add("group/test", action);
-        assertEquals(1, root.getChildren().size());
+        assertEquals(1, root.children().size());
 
         Node node;
 
-        node = root.getChildren().iterator().next();
+        node = root.children().iterator().next();
         assertTrue(node.isGroup());
         assertFalse(node.isLeaf());
         assertEquals("group", node.getName());
-        assertEquals(1, node.getChildren().size());
+        assertEquals(1, node.children().size());
 
-        node = node.getChildren().iterator().next();
+        node = node.children().iterator().next();
         assertFalse(node.isGroup());
         assertTrue(node.isLeaf());
         assertEquals("test", node.getName());
@@ -110,10 +113,10 @@ public class NodeTest
 
         Node node;
 
-        node = root.getChildren().iterator().next();
+        node = root.children().iterator().next();
         assertEquals("/group", node.getPath());
 
-        node = node.getChildren().iterator().next();
+        node = node.children().iterator().next();
         assertEquals("/group/test", node.getPath());
     }
 
@@ -123,17 +126,41 @@ public class NodeTest
 
         Node node;
 
-        node = root.getChildren().iterator().next();
+        node = root.children().iterator().next();
         assertEquals("/group", node.getPath());
 
-        node = node.getChildren().iterator().next();
+        node = node.children().iterator().next();
         assertEquals("/group/sub", node.getPath());
 
-        node = node.getChildren().iterator().next();
+        node = node.children().iterator().next();
         assertEquals("/group/sub/sub", node.getPath());
 
-        node = node.getChildren().iterator().next();
+        node = node.children().iterator().next();
         assertEquals("/group/sub/sub/test", node.getPath());
+    }
+
+    @Test
+    public void testChildren1() {
+        root.add("/a1", new MockAction());
+        root.add("/a2", new MockAction());
+        root.add("/b1", new MockAction());
+
+        Collection<Node> children = root.children();
+        assertEquals(3, children.size());
+    }
+
+    @Test
+    public void testChildren2() {
+        root.add("/a1", new MockAction());
+        root.add("/a2", new MockAction());
+        root.add("/b1", new MockAction());
+
+        Collection<Node> children = root.children("a");
+        assertEquals(2, children.size());
+
+        Iterator<Node> iter = children.iterator();
+        assertEquals("a1", iter.next().getName());
+        assertEquals("a2", iter.next().getName());
     }
 
     private static class MockAction

@@ -19,7 +19,7 @@ package org.sonatype.gshell.command;
 import jline.console.Completer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonatype.gshell.command.resolver.PathUtil;
+import org.sonatype.gshell.command.resolver.NodePath;
 import org.sonatype.gshell.util.cli2.OpaqueArguments;
 import org.sonatype.gshell.util.i18n.MessageSource;
 
@@ -48,8 +48,7 @@ public class GroupAction
     }
 
     public String getSimpleName() {
-        String[] elements = PathUtil.split(getName());
-        return elements[elements.length - 1];
+        return new NodePath(getName()).last();
     }
 
     public Object execute(final CommandContext context) throws Exception {

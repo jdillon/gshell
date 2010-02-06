@@ -16,35 +16,58 @@
 
 package org.sonatype.gshell.command.resolver;
 
-import static org.sonatype.gshell.command.resolver.Node.CURRENT;
-import static org.sonatype.gshell.command.resolver.Node.ROOT;
-import static org.sonatype.gshell.command.resolver.Node.SEPARATOR;
+import static org.sonatype.gshell.command.resolver.Node.*;
 
 /**
- * Node path utilities.
+ * Representation of a {@link Node}'s path.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-public class PathUtil
+public class NodePath
 {
     private static final char SEPARATOR_CHAR = SEPARATOR.charAt(0);
 
     private static final char CURRENT_CHAR = CURRENT.charAt(0);
 
-    //
-    // NOTE: normalize() is adapted from Commons VFS's UriParser.normalisePath()
-    //
-    
-    public static StringBuilder normalize(final StringBuilder path) {
-        assert path != null;
+    private final StringBuilder path;
 
+    public NodePath(final String path) {
+        assert path != null;
+        this.path = new StringBuilder(path);
+    }
+
+    public boolean isAbsolute() {
+        return path.toString().startsWith(ROOT);
+    }
+
+    public String first() {
+        String[] elements = split();
+        return elements[0];
+    }
+
+    public String last() {
+        String[] elements = split();
+        return elements[elements.length - 1];
+    }
+
+    public NodePath parent() {
+        int i = path.lastIndexOf(SEPARATOR);
+        if (i == -1) {
+            return this;
+        }
+        else {
+            return new NodePath(path.substring(0, i));
+        }
+    }
+
+    public NodePath normalize() {
         // Determine the start of the first element
         int startFirstElem = 0;
 
         if (path.charAt(0) == SEPARATOR_CHAR) {
             if (path.length() == 1) {
-                return path;
+                return this;
             }
             startFirstElem = 1;
         }
@@ -62,7 +85,7 @@ public class PathUtil
             }
 
             final int elemLen = endElem - startElem;
-            
+
             if (regulars > 0 && elemLen == 0) {
                 // An empty element - axe it
                 path.delete(endElem, endElem + 1);
@@ -101,18 +124,12 @@ public class PathUtil
             regulars++;
         }
 
-        return path;
+        return this;
     }
 
-    public static String normalize(final String path) {
-        assert path != null;
-        return normalize(new StringBuilder(path)).toString();
-    }
-
-    public static String[] split(String path) {
-        assert path != null;
-        String[] elements = normalize(path).split(SEPARATOR);
-        if (isAbsolute(path)) {
+    public String[] split() {
+        String[] elements = toString().split(SEPARATOR);
+        if (isAbsolute()) {
             if (elements.length == 0) {
                 elements = new String[1];
             }
@@ -121,8 +138,13 @@ public class PathUtil
         return elements;
     }
 
-    public static boolean isAbsolute(final String path) {
-        assert path != null;
-        return path.startsWith(ROOT);
+    @Override
+    public int hashCode() {
+        return path.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return path.toString();
     }
 }

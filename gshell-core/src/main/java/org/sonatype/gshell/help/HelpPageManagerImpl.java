@@ -130,7 +130,7 @@ public class HelpPageManagerImpl
         Node node = resolver.group();
 
         if (node.isGroup()) {
-            for (Node child : node.getChildren()) {
+            for (Node child : node.children()) {
                 HelpPage page = pageForNode(child);
                 if (filter.accept(page)) {
                     pages.add(page);
