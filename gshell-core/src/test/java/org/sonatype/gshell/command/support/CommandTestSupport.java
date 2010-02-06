@@ -42,8 +42,6 @@ import org.sonatype.gshell.shell.Shell;
 import org.sonatype.gshell.shell.ShellErrorHandler;
 import org.sonatype.gshell.shell.ShellImpl;
 import org.sonatype.gshell.shell.ShellPrompt;
-import org.sonatype.gshell.testsupport.TestIO;
-import org.sonatype.gshell.testsupport.TestUtil;
 import org.sonatype.gshell.util.Strings;
 import org.sonatype.gshell.vars.Variables;
 import org.sonatype.gshell.vars.VariablesImpl;

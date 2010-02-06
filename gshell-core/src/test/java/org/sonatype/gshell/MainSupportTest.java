@@ -23,10 +23,10 @@ import org.junit.Test;
 import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.branding.TestBranding;
 import org.sonatype.gshell.command.IO;
+import org.sonatype.gshell.command.support.TestUtil;
 import org.sonatype.gshell.notification.ExitNotification;
 import org.sonatype.gshell.shell.History;
 import org.sonatype.gshell.shell.Shell;
-import org.sonatype.gshell.testsupport.TestUtil;
 import org.sonatype.gshell.vars.Variables;
 
 import static org.junit.Assert.assertEquals;

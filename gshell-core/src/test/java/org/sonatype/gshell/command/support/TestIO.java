@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.testsupport;
+package org.sonatype.gshell.command.support;
 
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.io.StreamSet;
