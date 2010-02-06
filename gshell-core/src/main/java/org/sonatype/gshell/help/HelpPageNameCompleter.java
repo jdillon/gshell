@@ -31,7 +31,10 @@ public class HelpPageNameCompleter
     extends AggregateCompleter
 {
     @Inject
-    public HelpPageNameCompleter(final @Named("alias-name") Completer c1, final @Named("command-name") Completer c2, final @Named("meta-help-page-name") Completer c3) {
+    public HelpPageNameCompleter(final @Named("alias-name") Completer c1,
+                                 final @Named("command-name") Completer c2,
+                                 final @Named("meta-help-page-name") Completer c3)
+    {
         super(c1, c2, c3);
     }
 }
