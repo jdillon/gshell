@@ -69,6 +69,7 @@ public class Node
     }
 
     public String getPath() {
+        // FIXME: This is sloppy/icky
         if (isRoot()) {
             return ROOT;
         }
@@ -166,11 +167,12 @@ public class Node
                 }
                 node = new Node(elements[i], command, current);
                 current.children.add(node);
-                log.debug("Added command node: {} in parent: {}", node.name, node.parent.name);
+                log.trace("Added command node: {} in parent: {}", node.name, node.parent.name);
             }
             else {
                 // in the middle of the path, add a new group if one does not exist already
                 if (node == null) {
+                    // FIXME: This is sloppy/icky, perhaps to simplify have group node return "/" suffix?
                     String group;
                     if (current.isRoot()) {
                         group = String.format("%s%s", ROOT, elements[i]);
@@ -180,7 +182,7 @@ public class Node
                     }
                     node = new Node(elements[i], new GroupAction(group), current);
                     current.children.add(node);
-                    log.debug("Added group node: {}", group);
+                    log.trace("Added group node: {}", group);
                 }
                 else if (!node.isGroup()) {
                     throw new RuntimeException("Invalid path; found non-group action: " + elements[i] + " in middle of: " + name);
@@ -194,7 +196,7 @@ public class Node
 
     public void remove(final String name) {
         assert name != null;
-
+        
         Node node = find(name);
         if (node != null) {
             node.children.remove(node);
