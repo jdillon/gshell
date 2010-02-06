@@ -16,10 +16,9 @@
 
 package org.sonatype.gshell.command.resolver;
 
-import static org.sonatype.gshell.command.resolver.CommandResolver.CURRENT_CHAR;
-import static org.sonatype.gshell.command.resolver.CommandResolver.ROOT;
-import static org.sonatype.gshell.command.resolver.CommandResolver.SEPARATOR;
-import static org.sonatype.gshell.command.resolver.CommandResolver.SEPARATOR_CHAR;
+import static org.sonatype.gshell.command.resolver.Node.CURRENT;
+import static org.sonatype.gshell.command.resolver.Node.ROOT;
+import static org.sonatype.gshell.command.resolver.Node.SEPARATOR;
 
 /**
  * Node path utilities.
@@ -29,6 +28,10 @@ import static org.sonatype.gshell.command.resolver.CommandResolver.SEPARATOR_CHA
  */
 public class PathUtil
 {
+    private static final char SEPARATOR_CHAR = SEPARATOR.charAt(0);
+
+    private static final char CURRENT_CHAR = CURRENT.charAt(0);
+
     //
     // NOTE: normalize() is adapted from Commons VFS's UriParser.normalisePath()
     //

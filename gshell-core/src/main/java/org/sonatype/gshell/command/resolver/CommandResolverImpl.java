@@ -36,6 +36,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.EventObject;
 
+import static org.sonatype.gshell.command.resolver.Node.ROOT;
 import static org.sonatype.gshell.vars.VariableNames.SHELL_GROUP;
 
 /**

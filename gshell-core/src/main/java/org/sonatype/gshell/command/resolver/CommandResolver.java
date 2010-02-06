@@ -29,20 +29,6 @@ import java.util.Collection;
  */
 public interface CommandResolver
 {
-    String ROOT = "/";
-
-    char ROOT_CHAR = '/';
-    
-    String PARENT = "..";
-
-    String CURRENT = ".";
-
-    char CURRENT_CHAR = '.';
-
-    String SEPARATOR = "/";
-
-    char SEPARATOR_CHAR = '/';
-
     CommandAction resolveCommand(String name) throws CommandException;
 
     Collection<CommandAction> resolveCommands(String name) throws CommandException;

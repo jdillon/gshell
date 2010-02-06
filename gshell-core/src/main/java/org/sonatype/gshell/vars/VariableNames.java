@@ -47,5 +47,10 @@ public interface VariableNames
      */
     String SHELL_GROUP = "shell.group";
 
+    /**
+     * @since 2.5
+     */
+    String SHELL_GROUP_PATH = "shell.group.path";
+
     String LAST_RESULT = "_";
 }

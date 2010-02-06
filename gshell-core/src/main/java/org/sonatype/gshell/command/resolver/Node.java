@@ -24,9 +24,6 @@ import org.sonatype.gshell.command.CommandAction;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 
-
-import static org.sonatype.gshell.command.resolver.CommandResolver.*;
-
 /**
  * A node for building a {@link CommandAction} tree.
  *
@@ -36,6 +33,14 @@ import static org.sonatype.gshell.command.resolver.CommandResolver.*;
 @Singleton
 public class Node
 {
+    public static final String ROOT = "/";
+
+    public static final String PARENT = "..";
+
+    public static final String CURRENT = ".";
+
+    public static final String SEPARATOR = "/";
+
     private static final Logger log = LoggerFactory.getLogger(Node.class);
 
     private final String name;
