@@ -17,7 +17,7 @@
 package org.sonatype.gshell.commands.vfs;
 
 import com.google.inject.Module;
-import org.sonatype.gshell.command.CommandTestSupport;
+import org.sonatype.gshell.command.support.CommandTestSupport;
 import org.sonatype.gshell.vfs.VfsModule;
 
 import java.util.List;

@@ -17,7 +17,7 @@
 package org.sonatype.gshell.commands.standard;
 
 import org.junit.Test;
-import org.sonatype.gshell.command.CommandTestSupport;
+import org.sonatype.gshell.command.support.CommandTestSupport;
 
 import java.io.FileNotFoundException;
 import java.net.URL;

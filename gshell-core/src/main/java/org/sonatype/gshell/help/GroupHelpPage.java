@@ -16,31 +16,33 @@
 
 package org.sonatype.gshell.help;
 
+import org.sonatype.gshell.command.CommandAction;
+import org.sonatype.gshell.command.resolver.GroupAction;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
 
 import java.io.PrintWriter;
 
 /**
- * {@link HelpPage} for an alias.
+ * {@link HelpPage} for a group.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-public class AliasHelpPage
+public class GroupHelpPage
     implements HelpPage
 {
-    private final String name;
+    private final CommandAction command;
 
-    private final String alias;
+    private final HelpContentLoader loader;
 
     private MessageSource messages;
 
-    public AliasHelpPage(final String name, final String alias) {
-        assert name != null;
-        this.name = name;
-        assert alias != null;
-        this.alias = alias;
+    public GroupHelpPage(final GroupAction command, final HelpContentLoader loader) {
+        assert command != null;
+        this.command = command;
+        assert loader != null;
+        this.loader = loader;
     }
 
     private MessageSource getMessages() {
@@ -49,17 +51,17 @@ public class AliasHelpPage
         }
         return messages;
     }
-    
+
     public String getName() {
-        return name;
+        return command.getSimpleName();
     }
 
     public String getDescription() {
-        return getMessages().format("alias-description", alias);
+        return getMessages().format("group-description", getName());
     }
 
     public void render(final PrintWriter out) {
         assert out != null;
-        out.println(getMessages().format("alias-content", name, alias));
+        out.println(getMessages().format("group-content", getName()));
     }
 }

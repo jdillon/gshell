@@ -18,7 +18,7 @@ package org.sonatype.gshell.commands.artifact;
 
 import org.junit.Ignore;
 import org.junit.Test;
-import org.sonatype.gshell.command.CommandTestSupport;
+import org.sonatype.gshell.command.support.CommandTestSupport;
 
 /**
  * Tests for the {@link ResolveCommand}.

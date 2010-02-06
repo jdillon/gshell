@@ -17,7 +17,7 @@
 package org.sonatype.gshell.commands.shell;
 
 import org.junit.Test;
-import org.sonatype.gshell.command.CommandTestSupport;
+import org.sonatype.gshell.command.support.CommandTestSupport;
 
 /**
  * Tests for the {@link SleepCommand}.

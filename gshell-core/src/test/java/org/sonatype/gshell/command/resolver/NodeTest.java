@@ -78,6 +78,38 @@ public class NodeTest
         assertEquals(1, root.getChildren().size());
     }
 
+    @Test
+    public void testPath1() {
+        root.add("group/test", new MockAction());
+
+        Node node;
+
+        node = root.getChildren().iterator().next();
+        assertEquals("/group", node.getPath());
+
+        node = node.getChildren().iterator().next();
+        assertEquals("/group/test", node.getPath());
+    }
+
+    @Test
+    public void testPath2() {
+        root.add("group/sub/sub/test", new MockAction());
+
+        Node node;
+
+        node = root.getChildren().iterator().next();
+        assertEquals("/group", node.getPath());
+
+        node = node.getChildren().iterator().next();
+        assertEquals("/group/sub", node.getPath());
+
+        node = node.getChildren().iterator().next();
+        assertEquals("/group/sub/sub", node.getPath());
+
+        node = node.getChildren().iterator().next();
+        assertEquals("/group/sub/sub/test", node.getPath());
+    }
+
     private static class MockAction
         extends CommandActionSupport
     {

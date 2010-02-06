@@ -68,6 +68,16 @@ public class Node
         return name;
     }
 
+    public String getPath() {
+        if (isRoot()) {
+            return ROOT;
+        }
+        if (getParent().isRoot()) {
+            return String.format("%s%s", ROOT, getName());
+        }
+        return String.format("%s%s%s", getParent().getPath(), SEPARATOR, getName());
+    }
+
     public CommandAction getAction() {
         return action;
     }
@@ -156,16 +166,21 @@ public class Node
                 }
                 node = new Node(elements[i], command, current);
                 current.children.add(node);
-
                 log.debug("Added command node: {} in parent: {}", node.name, node.parent.name);
             }
             else {
-                // in the middle of the path, add a new group if one does not exist already, if its not a group puke
+                // in the middle of the path, add a new group if one does not exist already
                 if (node == null) {
-                    node = new Node(elements[i], new GroupAction(elements[i]), current);
+                    String group;
+                    if (current.isRoot()) {
+                        group = String.format("%s%s", ROOT, elements[i]);
+                    }
+                    else {
+                        group = String.format("%s%s%s", current.getPath(), SEPARATOR, elements[i]);
+                    }
+                    node = new Node(elements[i], new GroupAction(group), current);
                     current.children.add(node);
-
-                    log.debug("Added group node: {} in parent: {}", node.name, node.parent.name);
+                    log.debug("Added group node: {}", group);
                 }
                 else if (!node.isGroup()) {
                     throw new RuntimeException("Invalid path; found non-group action: " + elements[i] + " in middle of: " + name);
@@ -195,9 +210,10 @@ public class Node
     public String toString() {
         return "Node{" +
             "name='" + name + '\'' +
+            ", path=" + getPath() +
+            ", root=" + isRoot() +
+            ", leaf=" + isLeaf() +
             ", action=" + action +
-            ", parent=" + parent +
-            ", children=" + children +
             '}';
     }
 }

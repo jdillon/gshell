@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.command;
+package org.sonatype.gshell.command.support;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
@@ -24,11 +24,15 @@ import com.google.inject.Stage;
 import com.google.inject.name.Names;
 import org.fusesource.jansi.Ansi;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.sonatype.gshell.alias.AliasRegistry;
 import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.branding.TestBranding;
+import org.sonatype.gshell.command.Command;
+import org.sonatype.gshell.command.CommandAction;
+import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.command.registry.CommandRegistrar;
 import org.sonatype.gshell.command.registry.CommandRegistry;
 import org.sonatype.gshell.console.ConsoleErrorHandler;
@@ -57,8 +61,7 @@ import static org.junit.Assert.assertTrue;
  * Support for testing {@link org.sonatype.gshell.command.CommandAction} instances.
  * 
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- *
- * @since 0.8
+ * @since 2.5
  */
 public abstract class CommandTestSupport
 {
@@ -181,7 +184,7 @@ public abstract class CommandTestSupport
     //
     
     protected void assertEqualsSuccess(final Object result) {
-        assertEquals(CommandAction.Result.SUCCESS, result);
+        Assert.assertEquals(CommandAction.Result.SUCCESS, result);
     }
 
     protected void assertEqualsFailure(final Object result) {

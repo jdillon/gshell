@@ -27,6 +27,7 @@ import org.sonatype.gshell.command.CommandException;
 import org.sonatype.gshell.command.descriptor.DiscoveredCommandSetDescriptorEvent;
 import org.sonatype.gshell.command.descriptor.HelpPageDescriptor;
 import org.sonatype.gshell.command.resolver.CommandResolver;
+import org.sonatype.gshell.command.resolver.GroupAction;
 import org.sonatype.gshell.event.EventListener;
 import org.sonatype.gshell.event.EventManager;
 
@@ -98,7 +99,10 @@ public class HelpPageManagerImpl
 
         try {
             CommandAction command = commandResolver.resolveCommand(name);
-            if (command != null) {
+            if (command instanceof GroupAction) {
+                return new GroupHelpPage((GroupAction)command, helpLoader);
+            }
+            else if (command != null) {
                 return new CommandHelpPage(command, helpLoader);
             }
         }
@@ -121,7 +125,14 @@ public class HelpPageManagerImpl
 
         try {
             for (CommandAction command : commandResolver.resolveCommands(null)) {
-                HelpPage page = new CommandHelpPage(command, helpLoader);
+                HelpPage page;
+                if (command instanceof GroupAction) {
+                    page = new GroupHelpPage((GroupAction)command, helpLoader);
+                }
+                else {
+                    page = new CommandHelpPage(command, helpLoader);
+                }
+
                 if (filter.accept(page)) {
                     pages.add(page);
                 }
