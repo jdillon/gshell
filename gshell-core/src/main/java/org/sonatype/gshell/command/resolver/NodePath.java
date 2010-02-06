@@ -42,8 +42,7 @@ public class NodePath
     }
 
     public String first() {
-        String[] elements = split();
-        return elements[0];
+        return split()[0];
     }
 
     public String last() {
@@ -53,7 +52,7 @@ public class NodePath
 
     public NodePath parent() {
         int i = path.lastIndexOf(SEPARATOR);
-        if (i == -1) {
+        if (i <= 0) {
             return this;
         }
         else {
@@ -75,7 +74,7 @@ public class NodePath
         // Iterate over each element
         int start = first;
         int max = path.length();
-        int regulars = 0;
+        int items = 0;
 
         while (start < max) {
             // Find the end of the element
@@ -85,14 +84,14 @@ public class NodePath
             }
             int len = end - start;
 
-            if (regulars > 0 && len == 0) {
+            if (items > 0 && len == 0) {
                 // An empty element - axe it
                 path.delete(end, end + 1);
                 max = path.length();
                 continue;
             }
 
-            if (regulars > 0 && len == 1 && path.charAt(start) == CURRENT_CHAR) {
+            if (items > 0 && len == 1 && path.charAt(start) == CURRENT_CHAR) {
                 // A '.' element - axe it
                 path.delete(start, end + 1);
                 max = path.length();
@@ -101,7 +100,7 @@ public class NodePath
 
             if (len == 2 && path.charAt(start) == CURRENT_CHAR && path.charAt(start + 1) == CURRENT_CHAR) {
                 // A '..' element - remove the previous element if there is a regular element to remove
-                if (regulars > 0 && start != first) {
+                if (items > 0 && start != first) {
                     // Find start of previous element
                     int pos = start - 2;
                     for (; pos >= 0 && path.charAt(pos) != SEPARATOR_CHAR; pos--) {
@@ -120,7 +119,7 @@ public class NodePath
 
             // A regular element
             start = end + 1;
-            regulars++;
+            items++;
         }
 
         return this;

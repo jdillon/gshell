@@ -29,24 +29,30 @@ import static org.junit.Assert.assertNotNull;
  */
 public class NodePathTest
 {
+    private void assertParent(final String path, final String expected) {
+        assertEquals(expected, new NodePath(path).parent().toString());
+    }
+
     @Test
     public void testParent1() {
-        NodePath path = new NodePath("/foo/bar/baz");
-        assertEquals("/foo/bar", path.parent().toString());
+        assertParent("/foo/bar/baz", "/foo/bar");
     }
 
     @Test
     public void testParent2() {
-        NodePath path = new NodePath("foo/bar/baz");
-        assertEquals("foo/bar", path.parent().toString());
+        assertParent("foo/bar/baz", "foo/bar");
     }
 
-//    @Test
-//    public void testParent3() {
-//        NodePath path = new NodePath("foo/bar/baz/");
-//        assertEquals("foo/bar", path.base().toString());
-//    }
-    
+    @Test
+    public void testParent3() {
+        assertParent("/", "/");
+    }
+
+    @Test
+    public void testParent4() {
+        assertParent("..", "..");
+    }
+
     private void assertNormalized(final String path, final String expected) {
         assertEquals(expected, new NodePath(path).normalize().toString());
     }
@@ -116,38 +122,33 @@ public class NodePathTest
         assertNormalized("./././././foo/././.", "./foo/");
     }
 
+    private void assertSplit(final String path, final String... expected) {
+        String[] elements = new NodePath(path).split();
+        assertEquals(expected.length, elements.length);
+
+        int i=0;
+        for (String expect : expected) {
+            assertEquals(expect, elements[i++]);
+        }
+    }
+
     @Test
     public void testSplit1() {
-        String[] elements = new NodePath("/").split();
-        assertNotNull(elements);
-        assertEquals(1, elements.length);
-        assertEquals("/", elements[0]);
+        assertSplit("/", "/");
     }
 
     @Test
     public void testSplit2() {
-        String[] elements = new NodePath("foo").split();
-        assertNotNull(elements);
-        assertEquals(1, elements.length);
-        assertEquals("foo", elements[0]);
+        assertSplit("foo", "foo");
     }
 
     @Test
     public void testSplit3() {
-        String[] elements = new NodePath("foo/bar").split();
-        assertNotNull(elements);
-        assertEquals(2, elements.length);
-        assertEquals("foo", elements[0]);
-        assertEquals("bar", elements[1]);
+        assertSplit("foo/bar", "foo", "bar");
     }
 
     @Test
     public void testSplit4() {
-        String[] elements = new NodePath("/foo/bar").split();
-        assertNotNull(elements);
-        assertEquals(3, elements.length);
-        assertEquals("/", elements[0]);
-        assertEquals("foo", elements[1]);
-        assertEquals("bar", elements[2]);
+        assertSplit("/foo/bar", "/", "foo", "bar");
     }
 }
