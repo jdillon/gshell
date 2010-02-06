@@ -27,18 +27,18 @@ import static org.junit.Assert.assertEquals;
  */
 public class NodePathTest
 {
-    private void assertParent(final String path, final String expected) {
+    private void assertParent(final String expected, final String path) {
         assertEquals(expected, new NodePath(path).parent().toString());
     }
 
     @Test
     public void testParent1() {
-        assertParent("/foo/bar/baz", "/foo/bar");
+        assertParent("/foo/bar", "/foo/bar/baz");
     }
 
     @Test
     public void testParent2() {
-        assertParent("foo/bar/baz", "foo/bar");
+        assertParent("foo/bar", "foo/bar/baz");
     }
 
     @Test
@@ -51,7 +51,7 @@ public class NodePathTest
         assertParent("..", "..");
     }
 
-    private void assertNormalized(final String path, final String expected) {
+    private void assertNormalized(final String expected, final String path) {
         assertEquals(expected, new NodePath(path).normalize().toString());
     }
     
@@ -62,42 +62,42 @@ public class NodePathTest
 
     @Test
     public void testNormalize2() {
-        assertNormalized("foo/bar/../baz", "foo/baz");
+        assertNormalized("foo/baz", "foo/bar/../baz");
     }
 
     @Test
     public void testNormalize3() {
-        assertNormalized("foo/bar/../../baz", "baz");
+        assertNormalized("baz", "foo/bar/../../baz");
     }
 
     @Test
     public void testNormalize4() {
-        assertNormalized("/foo/bar/../../baz", "/baz");
+        assertNormalized("/baz", "/foo/bar/../../baz");
     }
 
     @Test
     public void testNormalize5() {
-        assertNormalized("../foo/bar/../../baz", "../baz");
+        assertNormalized("../baz", "../foo/bar/../../baz");
     }
 
     @Test
     public void testNormalize6() {
-        assertNormalized("/../foo/bar/../../baz", "/../baz");
+        assertNormalized("/../baz", "/../foo/bar/../../baz");
     }
 
     @Test
     public void testNormalize7() {
-        assertNormalized("../../../../../../foo/bar/../../baz", "../../../../../../baz");
+        assertNormalized("../../../../../../baz", "../../../../../../foo/bar/../../baz");
     }
 
     @Test
     public void testNormalize8() {
-        assertNormalized("/../../../../../../foo/bar/../../baz", "/../../../../../../baz");
+        assertNormalized("/../../../../../../baz", "/../../../../../../foo/bar/../../baz");
     }
 
     @Test
     public void testNormalize9() {
-        assertNormalized("foo/////bar", "foo/bar");
+        assertNormalized("foo/bar", "foo/////bar");
     }
 
     @Test
@@ -112,12 +112,12 @@ public class NodePathTest
 
     @Test
     public void testNormalize12() {
-        assertNormalized("./foo/././.", "./foo/");
+        assertNormalized("./foo/", "./foo/././.");
     }
 
     @Test
     public void testNormalize13() {
-        assertNormalized("./././././foo/././.", "./foo/");
+        assertNormalized("./foo/", "./././././foo/././.");
     }
 
     private void assertSplit(final String path, final String... expected) {
