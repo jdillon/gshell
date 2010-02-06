@@ -22,8 +22,8 @@ import org.junit.Test;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
-import static org.sonatype.gshell.command.resolver.CommandResolver.*;
 
+import static org.sonatype.gshell.command.resolver.Node.ROOT;
 import static junit.framework.Assert.*;
 
 /**
