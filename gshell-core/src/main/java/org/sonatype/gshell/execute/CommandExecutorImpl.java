@@ -20,8 +20,12 @@ import com.google.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
+import org.sonatype.gshell.alias.AliasRegistry;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.CommandContext;
+import org.sonatype.gshell.command.registry.NoSuchCommandException;
+import org.sonatype.gshell.command.AliasAction;
+import org.sonatype.gshell.command.resolver.Node;
 import org.sonatype.gshell.command.support.CommandHelpSupport;
 import org.sonatype.gshell.command.support.CommandPreferenceSupport;
 import org.sonatype.gshell.command.IO;
@@ -54,12 +58,16 @@ public class CommandExecutorImpl
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
+    private final AliasRegistry aliases;
+
     private final CommandResolver resolver;
 
     private final CommandLineParser parser;
 
     @Inject
-    public CommandExecutorImpl(final CommandResolver resolver, final CommandLineParser parser) {
+    public CommandExecutorImpl(final AliasRegistry aliases, final CommandResolver resolver, final CommandLineParser parser) {
+        assert aliases != null;
+        this.aliases = aliases;
         assert resolver != null;
         this.resolver = resolver;
         assert parser != null;
@@ -115,8 +123,18 @@ public class CommandExecutorImpl
 
         log.debug("Executing ({}): [{}]", name, Strings.join(args, ", "));
 
-        // Resolve the command and clone its prototype
-        CommandAction command = resolver.resolveCommand(name).clone();
+        CommandAction action;
+        if (aliases.containsAlias(name)) {
+            action = new AliasAction(name, aliases.getAlias(name));
+        }
+        else {
+            Node node = resolver.resolve(name);
+            if (node == null) {
+                throw new NoSuchCommandException(name);
+            }
+            action = node.getAction();
+        }
+        action = action.clone();
 
         MDC.put(CommandAction.class.getName(), name);
 
@@ -129,23 +147,23 @@ public class CommandExecutorImpl
         try {
             boolean execute = true;
 
-            PreferenceProcessor pp = CommandPreferenceSupport.createProcessor(command);
+            PreferenceProcessor pp = CommandPreferenceSupport.createProcessor(action);
             pp.process();
 
-            if (!(command instanceof OpaqueArguments)) {
+            if (!(action instanceof OpaqueArguments)) {
                 CommandHelpSupport help = new CommandHelpSupport();
-                CliProcessor clp = help.createProcessor(command);
+                CliProcessor clp = help.createProcessor(action);
 
                 // Process the arguments
                 clp.process(Arguments.toStringArray(args));
 
                 // Render command-line usage
                 if (help.displayHelp) {
-                    io.out.println(CommandHelpSupport.getDescription(command));
+                    io.out.println(CommandHelpSupport.getDescription(action));
                     io.out.println();
 
                     HelpPrinter printer = new HelpPrinter(clp);
-                    printer.printUsage(io.out, command.getSimpleName());
+                    printer.printUsage(io.out, action.getSimpleName());
 
                     result = CommandAction.Result.SUCCESS;
                     execute = false;
@@ -154,7 +172,7 @@ public class CommandExecutorImpl
 
             if (execute) {
                 try {
-                    result = command.execute(new CommandContext()
+                    result = action.execute(new CommandContext()
                     {
                         public Shell getShell() {
                             return shell;
@@ -180,11 +198,8 @@ public class CommandExecutorImpl
         }
         finally {
             io.flush();
-
             StreamJack.deregister();
-
             ShellHolder.set(lastShell);
-
             MDC.remove(CommandAction.class.getName());
         }
 

@@ -16,20 +16,17 @@
 
 package org.sonatype.gshell.command.resolver;
 
-import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.CommandException;
 
-import java.util.Collection;
-
 /**
- * Resolves commands.
+ * Resolves command nodes.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
 public interface CommandResolver
 {
-    CommandAction resolveCommand(String name) throws CommandException;
+    Node resolve(String name) throws CommandException;
 
-    Collection<CommandAction> resolveCommands(String name) throws CommandException;
+    Node group();
 }

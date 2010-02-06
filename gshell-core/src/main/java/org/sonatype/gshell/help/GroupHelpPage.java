@@ -17,7 +17,7 @@
 package org.sonatype.gshell.help;
 
 import org.sonatype.gshell.command.CommandAction;
-import org.sonatype.gshell.command.resolver.GroupAction;
+import org.sonatype.gshell.command.GroupAction;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
 

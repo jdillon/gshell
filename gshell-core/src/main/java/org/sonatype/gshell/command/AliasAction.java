@@ -14,34 +14,43 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.command.resolver;
+package org.sonatype.gshell.command;
 
-import org.sonatype.gshell.command.support.CommandActionSupport;
-import org.sonatype.gshell.command.CommandContext;
+import jline.console.Completer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.util.Strings;
 import org.sonatype.gshell.util.cli2.OpaqueArguments;
+import org.sonatype.gshell.util.i18n.MessageSource;
 
 /**
- * {@link org.sonatype.gshell.command.CommandAction} to execute an alias.
+ * {@link CommandAction} to execute an alias.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
 public class AliasAction
-    extends CommandActionSupport
-    implements OpaqueArguments
+    implements CommandAction, OpaqueArguments
 {
+    private static final Logger log = LoggerFactory.getLogger(AliasAction.class);
+
+    private final String name;
+
     private final String target;
 
     public AliasAction(final String name, final String target) {
-        super.setName(name);
+        assert name != null;
+        this.name = name;
         assert target != null;
         this.target = target;
     }
 
-    @Override
-    public void setName(final String name) {
-        throw new IllegalStateException();
+    public String getName() {
+        return name;
+    }
+
+    public String getSimpleName() {
+        return name;
     }
 
     public Object execute(final CommandContext context) throws Exception {
@@ -58,5 +67,18 @@ public class AliasAction
         log.debug("Executing alias ({}) -> {}", getName(), alias);
 
         return context.getShell().execute(alias);
+    }
+
+    public MessageSource getMessages() {
+        return null;
+    }
+
+    public Completer[] getCompleters() {
+        return new Completer[0];
+    }
+
+    @SuppressWarnings({"CloneDoesntCallSuperClone"})
+    public CommandAction clone() {
+        return this;
     }
 }

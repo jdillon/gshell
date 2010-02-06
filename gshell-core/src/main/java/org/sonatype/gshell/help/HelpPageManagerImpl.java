@@ -24,10 +24,11 @@ import org.sonatype.gshell.alias.AliasRegistry;
 import org.sonatype.gshell.alias.NoSuchAliasException;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.CommandException;
+import org.sonatype.gshell.command.GroupAction;
 import org.sonatype.gshell.command.descriptor.DiscoveredCommandSetDescriptorEvent;
 import org.sonatype.gshell.command.descriptor.HelpPageDescriptor;
 import org.sonatype.gshell.command.resolver.CommandResolver;
-import org.sonatype.gshell.command.resolver.GroupAction;
+import org.sonatype.gshell.command.resolver.Node;
 import org.sonatype.gshell.event.EventListener;
 import org.sonatype.gshell.event.EventManager;
 
@@ -52,22 +53,22 @@ public class HelpPageManagerImpl
 
     private final EventManager events;
 
-    private final AliasRegistry aliasRegistry;
+    private final AliasRegistry aliases;
 
-    private final CommandResolver commandResolver;
+    private final CommandResolver resolver;
 
     private final HelpContentLoader helpLoader;
 
     private final Map<String,MetaHelpPage> metaPages = new HashMap<String,MetaHelpPage>();
 
     @Inject
-    public HelpPageManagerImpl(final EventManager events, final AliasRegistry aliasRegistry, final CommandResolver commandResolver, final HelpContentLoader helpLoader) {
+    public HelpPageManagerImpl(final EventManager events, final AliasRegistry aliases, final CommandResolver resolver, final HelpContentLoader helpLoader) {
         assert events != null;
         this.events = events;
-        assert aliasRegistry != null;
-        this.aliasRegistry = aliasRegistry;
-        assert commandResolver != null;
-        this.commandResolver = commandResolver;
+        assert aliases != null;
+        this.aliases = aliases;
+        assert resolver != null;
+        this.resolver = resolver;
         assert helpLoader != null;
         this.helpLoader = helpLoader;
 
@@ -88,9 +89,9 @@ public class HelpPageManagerImpl
     public HelpPage getPage(final String name) {
         assert name != null;
 
-        if (aliasRegistry.containsAlias(name)) {
+        if (aliases.containsAlias(name)) {
             try {
-                return new AliasHelpPage(name, aliasRegistry.getAlias(name));
+                return new AliasHelpPage(name, aliases.getAlias(name));
             }
             catch (NoSuchAliasException e) {
                 throw new Error(e);
@@ -98,12 +99,9 @@ public class HelpPageManagerImpl
         }
 
         try {
-            CommandAction command = commandResolver.resolveCommand(name);
-            if (command instanceof GroupAction) {
-                return new GroupHelpPage((GroupAction)command, helpLoader);
-            }
-            else if (command != null) {
-                return new CommandHelpPage(command, helpLoader);
+            Node node = resolver.resolve(name);
+            if (node != null) {
+                return pageForNode(node);
             }
         }
         catch (CommandException e) {
@@ -117,37 +115,44 @@ public class HelpPageManagerImpl
         return null;
     }
 
+    private HelpPage pageForNode(final Node node) {
+        assert node != null;
+
+        CommandAction action = node.getAction();
+        if (action instanceof GroupAction) {
+            return new GroupHelpPage((GroupAction)action, helpLoader);
+        }
+        else {
+            return new CommandHelpPage(action, helpLoader);
+        }
+    }
+
     public Collection<HelpPage> getPages(final HelpPageFilter filter) {
         // base could be null;
         assert filter != null;
 
         List<HelpPage> pages = new ArrayList<HelpPage>();
 
-        try {
-            for (CommandAction command : commandResolver.resolveCommands(null)) {
-                HelpPage page;
-                if (command instanceof GroupAction) {
-                    page = new GroupHelpPage((GroupAction)command, helpLoader);
-                }
-                else {
-                    page = new CommandHelpPage(command, helpLoader);
-                }
+        Node node = resolver.group();
 
-                if (filter.accept(page)) {
-                    pages.add(page);
-                }
-            }
-
-            for (MetaHelpPage page : metaPages.values()) {
+        if (node.isGroup()) {
+            for (Node child : node.getChildren()) {
+                HelpPage page = pageForNode(child);
                 if (filter.accept(page)) {
                     pages.add(page);
                 }
             }
         }
-        catch (CommandException e) {
-            throw new Error(e);
+        else {
+            pages.add(pageForNode(node));
         }
 
+        for (MetaHelpPage page : metaPages.values()) {
+            if (filter.accept(page)) {
+                pages.add(page);
+            }
+        }
+        
         return pages;
     }
 

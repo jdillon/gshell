@@ -14,42 +14,63 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.command.resolver;
+package org.sonatype.gshell.command;
 
-import org.sonatype.gshell.command.support.CommandActionSupport;
-import org.sonatype.gshell.command.CommandContext;
+import jline.console.Completer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.sonatype.gshell.command.resolver.PathUtil;
 import org.sonatype.gshell.util.cli2.OpaqueArguments;
+import org.sonatype.gshell.util.i18n.MessageSource;
 
 import static org.sonatype.gshell.vars.VariableNames.SHELL_GROUP;
 
 /**
- * {@link org.sonatype.gshell.command.CommandAction} to switch groups.
+ * {@link CommandAction} to switch groups.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
 public class GroupAction
-    extends CommandActionSupport
-    implements OpaqueArguments
+    implements CommandAction, OpaqueArguments
 {
-    // Maybe make --help run '/help <name>' ?
-    
+    private static final Logger log = LoggerFactory.getLogger(GroupAction.class);
+
+    private final String name;
+
     public GroupAction(final String name) {
-        super.setName(name);
+        assert name != null;
+        this.name = name;
     }
 
-    @Override
-    public void setName(final String name) {
-        throw new IllegalStateException();
+    public String getName() {
+        return name;
+    }
+
+    public String getSimpleName() {
+        String[] elements = PathUtil.split(getName());
+        return elements[elements.length - 1];
     }
 
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
 
-        // TODO: Consider trying to use the Node so it can cache?
-        log.debug("Changing group to: {}", getName());
-        context.getVariables().set(SHELL_GROUP, getName());
+        log.debug("Changing group to: {}", name);
+        context.getVariables().set(SHELL_GROUP, name);
 
         return Result.SUCCESS;
+    }
+
+    public MessageSource getMessages() {
+        return null;
+    }
+
+    public Completer[] getCompleters() {
+        return new Completer[0];
+    }
+
+    @SuppressWarnings({"CloneDoesntCallSuperClone"})
+    public CommandAction clone() {
+        return this;
     }
 }

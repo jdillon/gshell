@@ -21,9 +21,9 @@ import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonatype.gshell.alias.AliasRegistry;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.CommandException;
+import org.sonatype.gshell.command.GroupAction;
 import org.sonatype.gshell.command.registry.CommandRegisteredEvent;
 import org.sonatype.gshell.command.registry.CommandRegistry;
 import org.sonatype.gshell.command.registry.CommandRemovedEvent;
@@ -31,9 +31,6 @@ import org.sonatype.gshell.event.EventListener;
 import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.vars.Variables;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.EventObject;
 
 import static org.sonatype.gshell.command.resolver.Node.ROOT;
@@ -51,16 +48,12 @@ public class CommandResolverImpl
 {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private final AliasRegistry aliasRegistry;
-
     private final Provider<Variables> variables;
 
     private final Node root;
 
     @Inject
-    public CommandResolverImpl(final AliasRegistry aliasRegistry, final Provider<Variables> variables, final EventManager events, final CommandRegistry commandRegistry) {
-        assert aliasRegistry != null;
-        this.aliasRegistry = aliasRegistry;
+    public CommandResolverImpl(final Provider<Variables> variables, final EventManager events, final CommandRegistry commands) {
         assert variables != null;
         this.variables = variables;
 
@@ -68,8 +61,8 @@ public class CommandResolverImpl
         root = new Node(ROOT, new GroupAction(ROOT));
 
         // Add any pre-registered commands
-        assert commandRegistry != null;
-        for (CommandAction command : commandRegistry.getCommands()) {
+        assert commands != null;
+        for (CommandAction command : commands.getCommands()) {
             root.add(command.getName(), command);
         }
 
@@ -91,76 +84,21 @@ public class CommandResolverImpl
         });
     }
 
-    public CommandAction resolveCommand(final String name) throws CommandException {
+    public Node resolve(final String name) throws CommandException {
         assert name != null;
 
-        log.trace("Resolving command: {}", name);
-
-        CommandAction command = resolveAlias(name);
-        if (command == null) {
-            command = resolveNode(name);
-        }
-
-        if (command == null) {
-            throw new CommandException("Unable to resolve command: " + name);
-        }
-
-        log.trace("Resolved command: {}", command);
-
-        return command;
-    }
-
-    public Collection<CommandAction> resolveCommands(final String name) throws CommandException {
-        // name could be null
-
-        Node node = group();
-
-        if (name != null) {
-            node = node.find(name);
-        }
-        
-        if (node == null) {
-            return Collections.emptyList();
-        }
-
-        Collection<CommandAction> commands;
-        if (node.isGroup()) {
-            commands = new ArrayList<CommandAction>(node.getChildren().size());
-            for (Node child : node.getChildren()) {
-                commands.add(child.getAction());
-            }
-        }
-        else {
-            commands = Collections.singleton(node.getAction());
-        }
-
-        return commands;
-    }
-
-    private CommandAction resolveAlias(final String name) throws CommandException {
-        assert name != null;
-
-        if (aliasRegistry.containsAlias(name)) {
-            return new AliasAction(name, aliasRegistry.getAlias(name));
-        }
-
-        return null;
-    }
-
-    private CommandAction resolveNode(final String name) throws CommandException {
-        assert name != null;
+        log.trace("Resolving: {}", name);
 
         // TODO: Implement a search path
-        
-        Node node = group().find(name);
-        if (node != null) {
-            return node.getAction();
-        }
 
-        return null;
+        Node node = group().find(name);
+
+        log.trace("Resolved: {} -> {}", name, node);
+
+        return node;
     }
 
-    private Node group() {
+    public Node group() {
         Node node = null;
 
         Object tmp = variables.get().get(SHELL_GROUP);
