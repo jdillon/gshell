@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.alias.AliasRegistry;
 import org.sonatype.gshell.alias.NoSuchAliasException;
 import org.sonatype.gshell.command.CommandAction;
-import org.sonatype.gshell.command.CommandException;
 import org.sonatype.gshell.command.GroupAction;
 import org.sonatype.gshell.command.descriptor.DiscoveredCommandSetDescriptorEvent;
 import org.sonatype.gshell.command.descriptor.HelpPageDescriptor;
@@ -98,14 +97,9 @@ public class HelpPageManagerImpl
             }
         }
 
-        try {
-            Node node = resolver.resolve(name);
-            if (node != null) {
-                return pageForNode(node);
-            }
-        }
-        catch (CommandException e) {
-            // ignore
+        Node node = resolver.resolve(name);
+        if (node != null) {
+            return pageForNode(node);
         }
 
         if (metaPages.containsKey(name)) {

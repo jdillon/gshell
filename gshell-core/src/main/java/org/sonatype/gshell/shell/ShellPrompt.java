@@ -24,7 +24,9 @@ import org.sonatype.gshell.console.ConsolePrompt;
 import org.sonatype.gshell.util.ReplacementParser;
 import org.sonatype.gshell.vars.Variables;
 
-import static org.sonatype.gshell.vars.VariableNames.SHELL_PROMPT;
+import java.io.File;
+
+import static org.sonatype.gshell.vars.VariableNames.*;
 
 /**
  * Shell {@link ConsolePrompt}, which determines the prompt from the
@@ -53,7 +55,21 @@ public class ShellPrompt
         {
             @Override
             protected Object replace(final String key) {
-                Object rep = variables.get().get(key);
+                Variables vars = variables.get();
+
+                // HACK: Handled some magic with shell.user.dir~ (only if shell.user.dir exists)
+                if (key.equals(SHELL_USER_DIR + "~") && vars.contains(SHELL_USER_DIR)) {
+                    String home = vars.get(SHELL_USER_HOME, File.class).getAbsolutePath();
+                    String current = vars.get(SHELL_USER_DIR, File.class).getAbsolutePath();
+                    if (current.startsWith(home)) {
+                        return "~" + current.substring(home.length(), current.length());
+                    }
+                    else {
+                        return current;
+                    }
+                }
+
+                Object rep = vars.get(key);
                 if (rep == null) {
                     rep = System.getProperty(key);
                 }
@@ -70,10 +86,6 @@ public class ShellPrompt
         if (prompt == null) {
             prompt = evaluate(branding.getPrompt());
         }
-
-        //
-        // TODO: Support rendering ~ for home dir here somewhere
-        //
 
         // Encode ANSI muck if it looks like there are codes encoded, need to render here as the console uses raw streams
         if (AnsiRenderer.test(prompt)) {
