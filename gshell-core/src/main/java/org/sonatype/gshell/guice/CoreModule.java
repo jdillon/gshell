@@ -43,6 +43,7 @@ import org.sonatype.gshell.help.HelpContentLoader;
 import org.sonatype.gshell.help.HelpContentLoaderImpl;
 import org.sonatype.gshell.help.HelpPageManager;
 import org.sonatype.gshell.help.HelpPageManagerImpl;
+import org.sonatype.gshell.help.HelpPageNameCompleter;
 import org.sonatype.gshell.help.MetaHelpPageNameCompleter;
 import org.sonatype.gshell.io.PromptReader;
 import org.sonatype.gshell.parser.CommandLineParser;
@@ -68,12 +69,12 @@ public class CoreModule
         bind(EventManager.class).to(EventManagerImpl.class);
         bind(AliasRegistry.class).to(AliasRegistryImpl.class);
         bind(CommandRegistry.class).to(CommandRegistryImpl.class);
+        bind(CommandRegistrar.class).to(CommandRegistrarImpl.class);
         bind(HelpContentLoader.class).to(HelpContentLoaderImpl.class);
         bind(HelpPageManager.class).to(HelpPageManagerImpl.class);
         bind(CommandLineParser.class).to(CommandLineParserImpl.class);
         bind(CommandExecutor.class).to(CommandExecutorImpl.class);
         bind(CommandResolver.class).to(CommandResolverImpl.class);
-        bind(CommandRegistrar.class).to(CommandRegistrarImpl.class);
 
         bind(Completer.class).annotatedWith(Names.named("commands")).to(CommandsCompleter.class);
         bind(Completer.class).annotatedWith(Names.named("command-name")).to(CommandNameCompleter.class);
@@ -82,6 +83,7 @@ public class CoreModule
         bind(Completer.class).annotatedWith(Names.named("file-name")).to(FileNameCompleter.class);
         bind(Completer.class).annotatedWith(Names.named("variable-name")).to(VariableNameCompleter.class);
         bind(Completer.class).annotatedWith(Names.named("meta-help-page-name")).to(MetaHelpPageNameCompleter.class);
+        bind(Completer.class).annotatedWith(Names.named("help-page-name")).to(HelpPageNameCompleter.class);
     }
 
     @Provides
