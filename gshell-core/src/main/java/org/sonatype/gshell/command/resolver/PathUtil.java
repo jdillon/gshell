@@ -62,14 +62,15 @@ public class PathUtil
             }
 
             final int elemLen = endElem - startElem;
-            if (elemLen == 0) {
+            
+            if (regulars > 0 && elemLen == 0) {
                 // An empty element - axe it
                 path.delete(endElem, endElem + 1);
                 maxLen = path.length();
                 continue;
             }
 
-            if (elemLen == 1 && path.charAt(startElem) == CURRENT_CHAR) {
+            if (regulars > 0 && elemLen == 1 && path.charAt(startElem) == CURRENT_CHAR) {
                 // A '.' element - axe it
                 path.delete(startElem, endElem + 1);
                 maxLen = path.length();

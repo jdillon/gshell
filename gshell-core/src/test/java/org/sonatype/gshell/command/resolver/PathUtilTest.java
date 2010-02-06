@@ -77,6 +77,26 @@ public class PathUtilTest
     }
 
     @Test
+    public void testNormalize10() {
+        assertNormalized(".", ".");
+    }
+
+    @Test
+    public void testNormalize11() {
+        assertNormalized("./foo", "./foo");
+    }
+
+    @Test
+    public void testNormalize12() {
+        assertNormalized("./foo/././.", "./foo/");
+    }
+
+    @Test
+    public void testNormalize13() {
+        assertNormalized("./././././foo/././.", "./foo/");
+    }
+
+    @Test
     public void testSplit1() {
         String[] elements = PathUtil.split("/");
         assertNotNull(elements);

@@ -23,7 +23,7 @@ import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 
-import static org.sonatype.gshell.command.resolver.Node.ROOT;
+import static org.sonatype.gshell.command.resolver.Node.*;
 import static junit.framework.Assert.*;
 
 /**
@@ -36,8 +36,8 @@ public class NodeTest
     private Node root;
 
     @Before
-    public void setUp() throws Exception {
-        root = new Node(ROOT, new GroupAction(ROOT), null);
+    public void setUp() {
+        root = new Node(ROOT, new GroupAction(ROOT));
     }
 
     @After
@@ -46,13 +46,26 @@ public class NodeTest
     }
 
     @Test
-    public void testFind1() {
+    public void testAdd1() {
         root.add("test", new MockAction());
         assertEquals(1, root.getChildren().size());
     }
 
     @Test
-    public void testFind2() {
+    public void testAdd2() {
+        root.add("/test", new MockAction());
+        assertEquals(1, root.getChildren().size());
+    }
+
+    @Test
+    public void testAdd3() {
+        root.add("/foo", new MockAction());
+        root.add("/bar", new MockAction());
+        assertEquals(2, root.getChildren().size());
+    }
+
+    @Test
+    public void testFind1() {
         CommandAction action = new MockAction();
         root.add("group/test", action);
         assertEquals(1, root.getChildren().size());
@@ -73,9 +86,18 @@ public class NodeTest
     }
 
     @Test
+    public void testFind2() {
+        assertEquals(root, root.find(CURRENT));
+    }
+
+    @Test
     public void testFind3() {
-        root.add("/test", new MockAction());
-        assertEquals(1, root.getChildren().size());
+        assertEquals(root, root.find(ROOT));
+    }
+
+    @Test
+    public void testFind4() {
+        assertEquals(root, root.find("./"));
     }
 
     @Test

@@ -113,7 +113,7 @@ public class Node
 
     public Node get(final String name) {
         assert name != null;
-
+        
         if (name.equals(ROOT)) {
             return root();
         }
