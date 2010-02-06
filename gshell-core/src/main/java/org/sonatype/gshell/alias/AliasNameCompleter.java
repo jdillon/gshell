@@ -22,9 +22,9 @@ import jline.console.completers.StringsCompleter;
 import org.sonatype.gshell.event.EventListener;
 import org.sonatype.gshell.event.EventManager;
 
-import java.util.Collection;
 import java.util.EventObject;
 import java.util.List;
+import java.util.Map;
 
 /**
  * {@link Completer} for alias names.
@@ -55,8 +55,8 @@ public class AliasNameCompleter
 
     private void init() {
         assert aliasRegistry != null;
-        Collection<String> names = aliasRegistry.getAliasNames();
-        delegate.getStrings().addAll(names);
+        Map<String,String> aliases = aliasRegistry.getAliases();
+        delegate.getStrings().addAll(aliases.keySet());
 
         // Register for updates to alias registrations
         events.addListener(new EventListener()

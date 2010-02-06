@@ -19,6 +19,8 @@ package org.sonatype.gshell.command.resolver;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.CommandException;
 
+import java.util.Collection;
+
 /**
  * Resolves commands.
  *
@@ -43,6 +45,5 @@ public interface CommandResolver
 
     CommandAction resolveCommand(String name) throws CommandException;
 
-    // TODO: Add resolution of a group of commands
-    // Collection<Command> resolveCommands(String name) throws CommandException;
+    Collection<CommandAction> resolveCommands(String name) throws CommandException;
 }

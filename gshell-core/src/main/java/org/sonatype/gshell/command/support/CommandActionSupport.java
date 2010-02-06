@@ -14,11 +14,14 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.command;
+package org.sonatype.gshell.command.support;
 
 import jline.console.Completer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.sonatype.gshell.command.CommandAction;
+import org.sonatype.gshell.util.NameAware;
+import org.sonatype.gshell.command.resolver.PathUtil;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
 
@@ -26,7 +29,7 @@ import java.util.List;
 import java.util.MissingResourceException;
 
 /**
- * Provides support for {@link CommandAction} implementations.
+ * Provides support for {@link org.sonatype.gshell.command.CommandAction} implementations.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
@@ -55,6 +58,11 @@ public abstract class CommandActionSupport
             throw new IllegalStateException("Name was already configured");
         }
         this.name = name;
+    }
+
+    public String getSimpleName() {
+        String[] elements = PathUtil.split(getName());
+        return elements[elements.length - 1];
     }
 
     public MessageSource getMessages() {

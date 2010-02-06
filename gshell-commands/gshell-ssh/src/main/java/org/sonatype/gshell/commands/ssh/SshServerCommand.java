@@ -18,7 +18,7 @@ package org.sonatype.gshell.commands.ssh;
 
 import org.apache.sshd.SshServer;
 import org.sonatype.gshell.command.Command;
-import org.sonatype.gshell.command.CommandActionSupport;
+import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.util.cli2.Option;
 

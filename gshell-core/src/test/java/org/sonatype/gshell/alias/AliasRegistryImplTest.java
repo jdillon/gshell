@@ -173,19 +173,4 @@ public class AliasRegistryImplTest
             // expected
         }
     }
-
-    @Test
-    public void testGetAliasNames() throws Exception {
-        Collection<String> names;
-
-        names = registry.getAliasNames();
-        assertNotNull(names);
-        assertTrue(names.isEmpty());
-
-        registry.registerAlias("foo", "bar");
-        names = registry.getAliasNames();
-        assertNotNull(names);
-        assertEquals(1, names.size());
-        assertEquals("foo", names.iterator().next());
-    }
 }

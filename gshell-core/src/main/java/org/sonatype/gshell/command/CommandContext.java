@@ -42,9 +42,9 @@ public interface CommandContext
     Object[] getArguments();
 
     /**
-     * The Input/Output context for the command.
+     * The input/output for the command.
      *
-     * @return Command Input/Output context; never null.
+     * @return Command input/output; never null.
      */
     IO getIo();
 

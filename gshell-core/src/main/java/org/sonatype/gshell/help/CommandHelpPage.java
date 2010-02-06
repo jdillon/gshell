@@ -23,8 +23,8 @@ import org.codehaus.plexus.interpolation.PropertiesBasedValueSource;
 import org.codehaus.plexus.interpolation.StringSearchInterpolator;
 import org.fusesource.jansi.AnsiRenderer;
 import org.sonatype.gshell.command.CommandAction;
-import org.sonatype.gshell.command.CommandHelpSupport;
-import org.sonatype.gshell.command.CommandPreferenceSupport;
+import org.sonatype.gshell.command.support.CommandHelpSupport;
+import org.sonatype.gshell.command.support.CommandPreferenceSupport;
 import org.sonatype.gshell.shell.ShellHolder;
 import org.sonatype.gshell.util.PrintBuffer;
 import org.sonatype.gshell.util.cli2.CliProcessor;
@@ -57,7 +57,7 @@ public class CommandHelpPage
     }
 
     public String getName() {
-        return command.getName();
+        return command.getSimpleName();
     }
 
     public String getDescription() {
@@ -93,6 +93,11 @@ public class CommandHelpPage
         @SuppressWarnings("unused")
         public String getName() {
             return command.getName();
+        }
+
+        @SuppressWarnings("unused")
+        public String getSimpleName() {
+            return command.getSimpleName();
         }
 
         @SuppressWarnings("unused")

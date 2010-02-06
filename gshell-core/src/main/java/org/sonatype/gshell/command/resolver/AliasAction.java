@@ -16,7 +16,7 @@
 
 package org.sonatype.gshell.command.resolver;
 
-import org.sonatype.gshell.command.CommandActionSupport;
+import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.util.Strings;
 import org.sonatype.gshell.util.cli2.OpaqueArguments;

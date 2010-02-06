@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009 the original author(s).
+ * Copyright (C) 2010 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,26 +14,9 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.alias;
-
-import java.util.Collection;
-import java.util.Map;
-
 /**
- * Registry for command aliases.
+ * Command support components.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-public interface AliasRegistry
-{
-    void registerAlias(String name, String alias);
-
-    void removeAlias(String name) throws NoSuchAliasException;
-
-    String getAlias(String name) throws NoSuchAliasException;
-
-    boolean containsAlias(String name);
-
-    Map<String,String> getAliases();
-}
+package org.sonatype.gshell.command.support;

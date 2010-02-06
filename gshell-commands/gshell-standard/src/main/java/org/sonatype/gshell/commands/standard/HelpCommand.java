@@ -21,7 +21,7 @@ import com.google.inject.name.Named;
 import jline.console.Completer;
 import jline.console.completers.AggregateCompleter;
 import org.sonatype.gshell.command.Command;
-import org.sonatype.gshell.command.CommandActionSupport;
+import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.help.HelpPage;

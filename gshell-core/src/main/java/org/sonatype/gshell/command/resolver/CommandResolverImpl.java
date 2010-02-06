@@ -27,13 +27,16 @@ import org.sonatype.gshell.command.CommandException;
 import org.sonatype.gshell.command.registry.CommandRegisteredEvent;
 import org.sonatype.gshell.command.registry.CommandRegistry;
 import org.sonatype.gshell.command.registry.CommandRemovedEvent;
-import org.sonatype.gshell.command.registry.NoSuchCommandException;
 import org.sonatype.gshell.event.EventListener;
 import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.vars.Variables;
-import static org.sonatype.gshell.vars.VariableNames .*;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.EventObject;
+
+import static org.sonatype.gshell.vars.VariableNames.SHELL_GROUP;
 
 /**
  * {@link CommandResolver} component.
@@ -65,13 +68,8 @@ public class CommandResolverImpl
 
         // Add any pre-registered commands
         assert commandRegistry != null;
-        for (String name : commandRegistry.getCommandNames()) {
-            try {
-                root.add(name, commandRegistry.getCommand(name));
-            }
-            catch (NoSuchCommandException e) {
-                // ignore
-            }
+        for (CommandAction command : commandRegistry.getCommands()) {
+            root.add(command.getName(), command);
         }
 
         // Add a listener to mange the command tree
@@ -111,6 +109,33 @@ public class CommandResolverImpl
         return command;
     }
 
+    public Collection<CommandAction> resolveCommands(final String name) throws CommandException {
+        // name could be null
+
+        Node node = group();
+
+        if (name != null) {
+            node = node.find(name);
+        }
+        
+        if (node == null) {
+            return Collections.emptyList();
+        }
+
+        Collection<CommandAction> commands;
+        if (node.isGroup()) {
+            commands = new ArrayList<CommandAction>(node.getChildren().size());
+            for (Node child : node.getChildren()) {
+                commands.add(child.getAction());
+            }
+        }
+        else {
+            commands = Collections.singleton(node.getAction());
+        }
+
+        return commands;
+    }
+
     private CommandAction resolveAlias(final String name) throws CommandException {
         assert name != null;
 
@@ -123,6 +148,8 @@ public class CommandResolverImpl
 
     private CommandAction resolveNode(final String name) throws CommandException {
         assert name != null;
+
+        // TODO: Implement a search path
         
         Node node = group().find(name);
         if (node != null) {

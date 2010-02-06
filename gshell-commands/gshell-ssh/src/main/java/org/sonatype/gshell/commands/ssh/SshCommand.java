@@ -24,7 +24,7 @@ import org.apache.sshd.client.future.ConnectFuture;
 import org.apache.sshd.common.util.NoCloseInputStream;
 import org.apache.sshd.common.util.NoCloseOutputStream;
 import org.sonatype.gshell.command.Command;
-import org.sonatype.gshell.command.CommandActionSupport;
+import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.util.cli2.Argument;
 import org.sonatype.gshell.util.cli2.Option;

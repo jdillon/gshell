@@ -39,7 +39,7 @@ import java.util.List;
  * @since 2.5
  */
 @Singleton
-public class GuiceCommandRegistrar
+public class CommandRegistrarImpl
     extends CommandRegistrarSupport
 {
     private final Injector injector;
@@ -54,7 +54,7 @@ public class GuiceCommandRegistrar
     };
 
     @Inject
-    public GuiceCommandRegistrar(final EventManager events, final CommandRegistry registry, final Injector injector) {
+    public CommandRegistrarImpl(final EventManager events, final CommandRegistry registry, final Injector injector) {
         super(events);
 
         assert registry != null;

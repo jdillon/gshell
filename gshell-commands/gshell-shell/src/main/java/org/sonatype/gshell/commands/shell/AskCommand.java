@@ -19,7 +19,7 @@ package org.sonatype.gshell.commands.shell;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import org.sonatype.gshell.command.Command;
-import org.sonatype.gshell.command.CommandActionSupport;
+import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.io.PromptReader;
 import org.sonatype.gshell.util.cli2.Argument;

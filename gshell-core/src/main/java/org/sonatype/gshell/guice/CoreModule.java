@@ -25,8 +25,8 @@ import org.fusesource.jansi.AnsiRenderer;
 import org.sonatype.gshell.alias.AliasNameCompleter;
 import org.sonatype.gshell.alias.AliasRegistry;
 import org.sonatype.gshell.alias.AliasRegistryImpl;
-import org.sonatype.gshell.command.CommandNameCompleter;
-import org.sonatype.gshell.command.CommandsCompleter;
+import org.sonatype.gshell.command.registry.CommandNameCompleter;
+import org.sonatype.gshell.command.registry.CommandsCompleter;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.command.registry.CommandRegistrar;
 import org.sonatype.gshell.command.registry.CommandRegistry;
@@ -72,7 +72,7 @@ public class CoreModule
         bind(CommandLineParser.class).to(CommandLineParserImpl.class);
         bind(CommandExecutor.class).to(CommandExecutorImpl.class);
         bind(CommandResolver.class).to(CommandResolverImpl.class);
-        bind(CommandRegistrar.class).to(GuiceCommandRegistrar.class);
+        bind(CommandRegistrar.class).to(CommandRegistrarImpl.class);
 
         bind(Completer.class).annotatedWith(Names.named("commands")).to(CommandsCompleter.class);
         bind(Completer.class).annotatedWith(Names.named("command-name")).to(CommandNameCompleter.class);

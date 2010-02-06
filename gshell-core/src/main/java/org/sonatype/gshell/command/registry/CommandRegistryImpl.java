@@ -21,7 +21,7 @@ import com.google.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.command.CommandAction;
-import org.sonatype.gshell.command.NameAware;
+import org.sonatype.gshell.util.NameAware;
 import org.sonatype.gshell.event.EventManager;
 
 import java.util.Collection;
@@ -71,7 +71,6 @@ public class CommandRegistryImpl
         }
 
         commands.put(name, command);
-
         events.publish(new CommandRegisteredEvent(name, command));
     }
 
@@ -85,29 +84,27 @@ public class CommandRegistryImpl
         }
 
         commands.remove(name);
-
         events.publish(new CommandRemovedEvent(name));
     }
 
     public CommandAction getCommand(final String name) throws NoSuchCommandException {
         assert name != null;
-
-        log.trace("Getting command: {}", name);
-
         if (!containsCommand(name)) {
             throw new NoSuchCommandException(name);
         }
-
         return commands.get(name);
     }
 
     public boolean containsCommand(final String name) {
         assert name != null;
-
         return commands.containsKey(name);
     }
 
     public Collection<String> getCommandNames() {
         return Collections.unmodifiableSet(commands.keySet());
+    }
+
+    public Collection<CommandAction> getCommands() {
+        return Collections.unmodifiableCollection(commands.values());
     }
 }

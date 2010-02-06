@@ -21,7 +21,7 @@ import com.google.inject.name.Named;
 import jline.console.Completer;
 import org.sonatype.gshell.alias.AliasRegistry;
 import org.sonatype.gshell.command.Command;
-import org.sonatype.gshell.command.CommandActionSupport;
+import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.util.Strings;
@@ -29,8 +29,8 @@ import org.sonatype.gshell.util.cli2.Argument;
 import org.sonatype.gshell.util.cli2.CliProcessor;
 import org.sonatype.gshell.util.cli2.CliProcessorAware;
 
-import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Define an alias or list defined aliases.
@@ -75,9 +75,8 @@ public class AliasCommand
         if (name == null) {
             return listAliases(context);
         }
-        else {
-            return defineAlias(context);
-        }
+        
+        return defineAlias(context);
     }
 
     private Object listAliases(final CommandContext context) throws Exception {
@@ -86,15 +85,15 @@ public class AliasCommand
 
         log.debug("Listing defined aliases");
 
-        Collection<String> names = aliasRegistry.getAliasNames();
+        Map<String,String> aliases = aliasRegistry.getAliases();
 
-        if (names.isEmpty()) {
+        if (aliases.isEmpty()) {
             io.info(getMessages().format("info.no-aliases"));
         }
         else {
             // Determine the maximum name length
             int maxNameLen = 0;
-            for (String name : names) {
+            for (String name : aliases.keySet()) {
                 if (name.length() > maxNameLen) {
                     maxNameLen = name.length();
                 }
@@ -103,12 +102,10 @@ public class AliasCommand
             io.out.println(getMessages().format("info.defined-aliases"));
             String nameFormat = "%-" + maxNameLen + 's';
 
-            for (String name : names) {
-                String alias = aliasRegistry.getAlias(name);
-                String formattedName = String.format(nameFormat, name);
-
-                io.out.format("  @|bold %s|@  ", formattedName);
-                io.out.println(getMessages().format("info.alias-to", alias));
+            for (Map.Entry<String,String> entry : aliases.entrySet()) {
+                String formattedName = String.format(nameFormat, entry.getKey());
+                io.out.format("  @|bold %s|@ ", formattedName);
+                io.out.println(getMessages().format("info.alias-to", entry.getValue()));
             }
         }
 

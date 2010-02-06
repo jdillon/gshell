@@ -22,7 +22,7 @@ import jline.console.Completer;
 import jline.console.ConsoleReader;
 import org.fusesource.jansi.AnsiString;
 import org.sonatype.gshell.command.Command;
-import org.sonatype.gshell.command.CommandActionSupport;
+import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.file.FileSystemAccess;

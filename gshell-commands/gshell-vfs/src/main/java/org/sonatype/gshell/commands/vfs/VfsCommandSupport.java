@@ -19,7 +19,7 @@ package org.sonatype.gshell.commands.vfs;
 import com.google.inject.Inject;
 import org.apache.commons.vfs.FileObject;
 import org.apache.commons.vfs.FileSystemException;
-import org.sonatype.gshell.command.CommandActionSupport;
+import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.notification.ResultNotification;
 import org.sonatype.gshell.vfs.FileObjects;

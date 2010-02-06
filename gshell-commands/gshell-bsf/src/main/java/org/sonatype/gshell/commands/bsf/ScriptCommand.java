@@ -24,7 +24,7 @@ import org.apache.commons.vfs.FileObject;
 import org.apache.commons.vfs.FileUtil;
 import org.fusesource.jansi.Ansi;
 import org.sonatype.gshell.command.Command;
-import org.sonatype.gshell.command.CommandActionSupport;
+import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.console.Console;

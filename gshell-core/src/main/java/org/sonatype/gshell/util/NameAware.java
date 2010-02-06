@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.command;
+package org.sonatype.gshell.util;
 
 /**
- * Allow {@link CommandAction} implementations to discover their bound names.
+ * Allow {@link org.sonatype.gshell.command.CommandAction} implementations to discover their bound names.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0

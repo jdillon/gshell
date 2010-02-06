@@ -22,10 +22,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.alias.AliasRegistry;
 import org.sonatype.gshell.alias.NoSuchAliasException;
+import org.sonatype.gshell.command.CommandAction;
+import org.sonatype.gshell.command.CommandException;
 import org.sonatype.gshell.command.descriptor.DiscoveredCommandSetDescriptorEvent;
 import org.sonatype.gshell.command.descriptor.HelpPageDescriptor;
-import org.sonatype.gshell.command.registry.CommandRegistry;
-import org.sonatype.gshell.command.registry.NoSuchCommandException;
+import org.sonatype.gshell.command.resolver.CommandResolver;
 import org.sonatype.gshell.event.EventListener;
 import org.sonatype.gshell.event.EventManager;
 
@@ -52,20 +53,20 @@ public class HelpPageManagerImpl
 
     private final AliasRegistry aliasRegistry;
 
-    private final CommandRegistry commandRegistry;
+    private final CommandResolver commandResolver;
 
     private final HelpContentLoader helpLoader;
 
     private final Map<String,MetaHelpPage> metaPages = new HashMap<String,MetaHelpPage>();
 
     @Inject
-    public HelpPageManagerImpl(final EventManager events, final AliasRegistry aliasRegistry, final CommandRegistry commandRegistry, final HelpContentLoader helpLoader) {
+    public HelpPageManagerImpl(final EventManager events, final AliasRegistry aliasRegistry, final CommandResolver commandResolver, final HelpContentLoader helpLoader) {
         assert events != null;
         this.events = events;
         assert aliasRegistry != null;
         this.aliasRegistry = aliasRegistry;
-        assert commandRegistry != null;
-        this.commandRegistry = commandRegistry;
+        assert commandResolver != null;
+        this.commandResolver = commandResolver;
         assert helpLoader != null;
         this.helpLoader = helpLoader;
 
@@ -95,13 +96,14 @@ public class HelpPageManagerImpl
             }
         }
 
-        if (commandRegistry.containsCommand(name)) {
-            try {
-                return new CommandHelpPage(commandRegistry.getCommand(name), helpLoader);
+        try {
+            CommandAction command = commandResolver.resolveCommand(name);
+            if (command != null) {
+                return new CommandHelpPage(command, helpLoader);
             }
-            catch (NoSuchCommandException e) {
-                throw new Error(e);
-            }
+        }
+        catch (CommandException e) {
+            // ignore
         }
 
         if (metaPages.containsKey(name)) {
@@ -112,29 +114,36 @@ public class HelpPageManagerImpl
     }
 
     public Collection<HelpPage> getPages(final HelpPageFilter filter) {
+        // base could be null;
         assert filter != null;
 
         List<HelpPage> pages = new ArrayList<HelpPage>();
 
-        for (String name : commandRegistry.getCommandNames()) {
-            try {
-                HelpPage page = new CommandHelpPage(commandRegistry.getCommand(name), helpLoader);
+        try {
+            for (CommandAction command : commandResolver.resolveCommands(null)) {
+                HelpPage page = new CommandHelpPage(command, helpLoader);
                 if (filter.accept(page)) {
                     pages.add(page);
                 }
             }
-            catch (NoSuchCommandException e) {
-                throw new Error(e);
+
+            for (MetaHelpPage page : metaPages.values()) {
+                if (filter.accept(page)) {
+                    pages.add(page);
+                }
             }
+        }
+        catch (CommandException e) {
+            throw new Error(e);
         }
 
         return pages;
     }
 
     public Collection<HelpPage> getPages() {
-        return getPages(new HelpPageFilter() {
-            public boolean accept(final HelpPage page)
-            {
+        return getPages(new HelpPageFilter()
+        {
+            public boolean accept(final HelpPage page) {
                 return true;
             }
         });

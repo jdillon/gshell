@@ -99,4 +99,8 @@ public class AliasRegistryImpl
     public Collection<String> getAliasNames() {
         return Collections.unmodifiableSet(aliases.keySet());
     }
+
+    public Map<String,String> getAliases() {
+        return Collections.unmodifiableMap(aliases);
+    }
 }

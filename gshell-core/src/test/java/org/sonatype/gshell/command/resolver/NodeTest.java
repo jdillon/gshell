@@ -18,10 +18,9 @@ package org.sonatype.gshell.command.resolver;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.sonatype.gshell.command.CommandAction;
-import org.sonatype.gshell.command.CommandActionSupport;
+import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import static org.sonatype.gshell.command.resolver.CommandResolver.*;
 

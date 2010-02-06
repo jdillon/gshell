@@ -36,7 +36,7 @@ public interface CommandRegistry
 
     boolean containsCommand(String name);
 
-    // TODO: Add getCommands()
-
     Collection<String> getCommandNames();
+
+    Collection<CommandAction> getCommands();
 }

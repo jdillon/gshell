@@ -22,8 +22,8 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.CommandContext;
-import org.sonatype.gshell.command.CommandHelpSupport;
-import org.sonatype.gshell.command.CommandPreferenceSupport;
+import org.sonatype.gshell.command.support.CommandHelpSupport;
+import org.sonatype.gshell.command.support.CommandPreferenceSupport;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.command.resolver.CommandResolver;
 import org.sonatype.gshell.io.StreamJack;
@@ -145,7 +145,7 @@ public class CommandExecutorImpl
                     io.out.println();
 
                     HelpPrinter printer = new HelpPrinter(clp);
-                    printer.printUsage(io.out, command.getName());
+                    printer.printUsage(io.out, command.getSimpleName());
 
                     result = CommandAction.Result.SUCCESS;
                     execute = false;

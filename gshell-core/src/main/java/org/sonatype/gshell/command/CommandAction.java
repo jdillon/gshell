@@ -30,10 +30,13 @@ public interface CommandAction
 {
     String getName();
 
+    String getSimpleName();
+
     MessageSource getMessages();
 
     Completer[] getCompleters();
 
+    @SuppressWarnings({"CloneDoesntDeclareCloneNotSupportedException"})
     CommandAction clone();
 
     /**

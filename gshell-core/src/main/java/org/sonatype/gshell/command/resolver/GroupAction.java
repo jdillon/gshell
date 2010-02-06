@@ -16,8 +16,9 @@
 
 package org.sonatype.gshell.command.resolver;
 
-import org.sonatype.gshell.command.CommandActionSupport;
+import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
+import org.sonatype.gshell.util.cli2.OpaqueArguments;
 
 import static org.sonatype.gshell.vars.VariableNames.SHELL_GROUP;
 
@@ -29,11 +30,10 @@ import static org.sonatype.gshell.vars.VariableNames.SHELL_GROUP;
  */
 public class GroupAction
     extends CommandActionSupport
+    implements OpaqueArguments
 {
-    //
-    // TODO: Need to handle --help for groups?  Or make it opaque and ignore any arguments?
-    //
-
+    // Maybe make --help run '/help <name>' ?
+    
     public GroupAction(final String name) {
         super.setName(name);
     }

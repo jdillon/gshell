@@ -23,7 +23,7 @@ import com.google.inject.Stage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.sonatype.gshell.command.CommandActionSupport;
+import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.event.EventManagerImpl;

@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.command;
+package org.sonatype.gshell.command.support;
 
+import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.util.cli2.CliProcessor;
 import org.sonatype.gshell.util.cli2.Option;
 import org.sonatype.gshell.util.i18n.AggregateMessageSource;

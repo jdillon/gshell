@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.command;
+package org.sonatype.gshell.command.support;
 
 import org.sonatype.gshell.branding.Branding;
+import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.shell.ShellHolder;
 import org.sonatype.gshell.util.pref.PreferenceProcessor;
 

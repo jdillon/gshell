@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.command;
+package org.sonatype.gshell.command.registry;
 
 import com.google.inject.Inject;
 import jline.console.Completer;
@@ -24,6 +24,7 @@ import jline.console.completers.NullCompleter;
 import jline.console.completers.StringsCompleter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.registry.CommandRegisteredEvent;
 import org.sonatype.gshell.command.registry.CommandRegistry;
 import org.sonatype.gshell.command.registry.CommandRemovedEvent;

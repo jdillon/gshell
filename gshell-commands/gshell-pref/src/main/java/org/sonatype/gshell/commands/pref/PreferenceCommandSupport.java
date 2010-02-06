@@ -16,7 +16,7 @@
 
 package org.sonatype.gshell.commands.pref;
 
-import org.sonatype.gshell.command.CommandActionSupport;
+import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.util.cli2.Option;
 
 import java.util.prefs.Preferences;
