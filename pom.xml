@@ -113,7 +113,14 @@
             <dependency>
                 <groupId>org.sonatype.jline</groupId>
                 <artifactId>jline</artifactId>
-                <version>2.2.1</version>
+                <version>2.2.-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.sonatype.jline</groupId>
+                <artifactId>jline</artifactId>
+                <version>2.2.2-SNAPSHOT</version>
+                <classifier>tests</classifier>
             </dependency>
 
             <dependency>
