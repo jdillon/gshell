@@ -147,7 +147,7 @@ public class ShellImpl
     }
 
     @Inject
-    public void installCompleters(final @Named("alias-name") Completer c1, final @Named("commands") Completer c2) {
+    public void installCompleters(final @Named("alias-name") Completer c1, final @Named("node-path") Completer c2) {
         assert c1 != null;
         assert c2 != null;
         setCompleters(new AggregateCompleter(c1, c2));

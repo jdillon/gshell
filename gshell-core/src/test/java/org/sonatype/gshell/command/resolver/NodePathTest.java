@@ -18,7 +18,7 @@ package org.sonatype.gshell.command.resolver;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Tests for {@link NodePath}.
@@ -48,7 +48,12 @@ public class NodePathTest
 
     @Test
     public void testParent4() {
-        assertParent("..", "..");
+        assertNull(new NodePath("..").parent());
+    }
+
+    @Test
+    public void testParent5() {
+        assertNull(new NodePath("foo").parent());
     }
 
     private void assertNormalized(final String expected, final String path) {

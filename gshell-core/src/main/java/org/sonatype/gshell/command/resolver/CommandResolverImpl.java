@@ -31,6 +31,7 @@ import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.vars.Variables;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.EventObject;
 import java.util.List;
 
@@ -50,7 +51,7 @@ import static org.sonatype.gshell.vars.VariableNames.SHELL_GROUP_PATH;
 public class CommandResolverImpl
     implements CommandResolver
 {
-    private final Logger log = LoggerFactory.getLogger(getClass());
+    private static final Logger log = LoggerFactory.getLogger(CommandResolverImpl.class);
 
     private final Provider<Variables> variables;
 
@@ -88,26 +89,13 @@ public class CommandResolverImpl
         });
     }
 
-    public Node resolve(final String name) {
-        assert name != null;
-
-        log.trace("Resolving: {}", name);
-
-        for (Node base : searchPath()) {
-            Node node = base.find(name);
-            if (node != null) {
-                log.trace("Resolved: {} -> {}", name, node);
-                return node;
-            }
-
-        }
-
-        return null;
+    public Node root() {
+        return root;
     }
 
     public Node group() {
         Node node;
-        
+
         Object tmp = variables.get().get(SHELL_GROUP);
         if (tmp instanceof String) {
             node = root.find((String)tmp);
@@ -150,5 +138,27 @@ public class CommandResolverImpl
         }
 
         return path;
+    }
+
+    public Node resolve(final NodePath path) {
+        assert path != null;
+        return resolve(path.toString());
+    }
+
+    public Node resolve(final String name) {
+        assert name != null;
+
+        log.trace("Resolving: {}", name);
+
+        for (Node base : searchPath()) {
+            Node node = base.find(name);
+            if (node != null) {
+                log.trace("Resolved: {} -> {}", name, node);
+                return node;
+            }
+
+        }
+
+        return null;
     }
 }

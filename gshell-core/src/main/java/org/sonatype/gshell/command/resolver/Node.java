@@ -74,6 +74,7 @@ public class Node
         return name;
     }
 
+    // FIXME: This should return a NodePath
     public String getPath() {
         // FIXME: This is sloppy/icky
         if (isRoot()) {
@@ -164,11 +165,18 @@ public class Node
 
         NodePath path = new NodePath(name);
         Node node = this;
-        for (String element : path.split()) {
+        String[] elements = path.split();
+
+        for (String element : elements) {
             node = node.get(element);
             if (node == null) {
                 break;
             }
+        }
+
+        // If we are looking for a group node, but given name ends with / then return null
+        if (node != null && !node.isRoot() && !node.isGroup() && name.endsWith(SEPARATOR)) {
+            return null;
         }
 
         return node;

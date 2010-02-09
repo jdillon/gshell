@@ -50,14 +50,26 @@ public class NodePath
         return elements[elements.length - 1];
     }
 
+    // FIXME: Should be like base() or something
     public NodePath parent() {
         int i = path.lastIndexOf(SEPARATOR);
-        if (i <= 0) {
+        if (i == 0) {
             return this;
+        }
+        else if (i == -1) {
+            return null;
         }
         else {
             return new NodePath(path.substring(0, i));
         }
+    }
+
+    public NodePath child(final String name) {
+        String tmp = toString();
+        if (!tmp.endsWith(SEPARATOR)) {
+            tmp += SEPARATOR;
+        }
+        return new NodePath(tmp + name);
     }
 
     public NodePath normalize() {

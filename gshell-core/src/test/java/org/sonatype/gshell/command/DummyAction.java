@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009 the original author(s).
+ * Copyright (C) 2010 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,25 +14,25 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.command.resolver;
+package org.sonatype.gshell.command;
 
-import java.util.List;
+import org.sonatype.gshell.command.support.CommandActionSupport;
 
 /**
- * Resolves command nodes.
+ * Dummy {@link CommandAction}
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 2.5
  */
-public interface CommandResolver
+public class DummyAction
+    extends CommandActionSupport
 {
-    Node root();
+    public DummyAction(final String name) {
+        setName(name);
+    }
 
-    Node group();
+    public DummyAction() {}
 
-    List<Node> searchPath();
-
-    Node resolve(NodePath path);
-
-    Node resolve(String name);
+    public Object execute(final CommandContext context) throws Exception {
+        return null;
+    }
 }

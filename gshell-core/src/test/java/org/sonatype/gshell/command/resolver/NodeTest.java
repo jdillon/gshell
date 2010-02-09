@@ -20,16 +20,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.sonatype.gshell.command.CommandAction;
-import org.sonatype.gshell.command.CommandContext;
+import org.sonatype.gshell.command.DummyAction;
 import org.sonatype.gshell.command.GroupAction;
-import org.sonatype.gshell.command.support.CommandActionSupport;
 
 import java.util.Collection;
 import java.util.Iterator;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.*;
 import static org.sonatype.gshell.command.resolver.Node.CURRENT;
 import static org.sonatype.gshell.command.resolver.Node.ROOT;
 
@@ -54,26 +51,26 @@ public class NodeTest
 
     @Test
     public void testAdd1() {
-        root.add("test", new MockAction());
+        root.add("test", new DummyAction());
         assertEquals(1, root.children().size());
     }
 
     @Test
     public void testAdd2() {
-        root.add("/test", new MockAction());
+        root.add("/test", new DummyAction());
         assertEquals(1, root.children().size());
     }
 
     @Test
     public void testAdd3() {
-        root.add("/foo", new MockAction());
-        root.add("/bar", new MockAction());
+        root.add("/foo", new DummyAction());
+        root.add("/bar", new DummyAction());
         assertEquals(2, root.children().size());
     }
 
     @Test
     public void testFind1() {
-        CommandAction action = new MockAction();
+        CommandAction action = new DummyAction();
         root.add("group/test", action);
         assertEquals(1, root.children().size());
 
@@ -108,8 +105,19 @@ public class NodeTest
     }
 
     @Test
+    public void testFind5() {
+        root.add("/a1", new DummyAction());
+        root.add("/a2", new DummyAction());
+        root.add("/b1", new DummyAction());
+
+        System.out.println(".....");
+        assertNull(root.find("a1/"));
+        System.out.println(".....");
+    }
+
+    @Test
     public void testPath1() {
-        root.add("group/test", new MockAction());
+        root.add("group/test", new DummyAction());
 
         Node node;
 
@@ -122,7 +130,7 @@ public class NodeTest
 
     @Test
     public void testPath2() {
-        root.add("group/sub/sub/test", new MockAction());
+        root.add("group/sub/sub/test", new DummyAction());
 
         Node node;
 
@@ -141,9 +149,9 @@ public class NodeTest
 
     @Test
     public void testChildren1() {
-        root.add("/a1", new MockAction());
-        root.add("/a2", new MockAction());
-        root.add("/b1", new MockAction());
+        root.add("/a1", new DummyAction());
+        root.add("/a2", new DummyAction());
+        root.add("/b1", new DummyAction());
 
         Collection<Node> children = root.children();
         assertEquals(3, children.size());
@@ -151,9 +159,9 @@ public class NodeTest
 
     @Test
     public void testChildren2() {
-        root.add("/a1", new MockAction());
-        root.add("/a2", new MockAction());
-        root.add("/b1", new MockAction());
+        root.add("/a1", new DummyAction());
+        root.add("/a2", new DummyAction());
+        root.add("/b1", new DummyAction());
 
         Collection<Node> children = root.children("a");
         assertEquals(2, children.size());
@@ -161,13 +169,5 @@ public class NodeTest
         Iterator<Node> iter = children.iterator();
         assertEquals("a1", iter.next().getName());
         assertEquals("a2", iter.next().getName());
-    }
-
-    private static class MockAction
-        extends CommandActionSupport
-    {
-        public Object execute(CommandContext context) throws Exception {
-            return null;
-        }
     }
 }
