@@ -54,6 +54,10 @@ public class NodePathCompleter
             for (Node parent : resolver.searchPath()) {
                 matches.addAll(parent.children());
             }
+
+            if (!resolver.group().isRoot()) {
+                candidates.add(PARENT);
+            }
         }
         else if (buffer.startsWith(ROOT) || buffer.startsWith(CURRENT)) {
             NodePath path = new NodePath(buffer);
@@ -69,6 +73,13 @@ public class NodePathCompleter
                     prefix = buffer;
                     matches.addAll(node.children());
                 }
+                else if (node.isGroup() && buffer.endsWith(PARENT)) {
+                    candidates.add(buffer + SEPARATOR);
+                }
+                else if (node.isGroup() && buffer.endsWith(CURRENT)) {
+                    candidates.add(buffer + SEPARATOR);
+                    candidates.add(buffer + CURRENT + SEPARATOR);
+                }
                 else {
                     // else match the single node, if its a group, next match will append /
                     matches.add(node);
@@ -77,6 +88,7 @@ public class NodePathCompleter
             else {
                 path = path.parent();
                 node = resolver.resolve(path);
+
                 if (node != null && node.isGroup()) {
                     String suffix = getSuffix(buffer);
                     for (Node child : node.children()) {
@@ -105,11 +117,11 @@ public class NodePathCompleter
                     }
                 }
                 else {
+                    // no direct match, find the parent node and match its children by name
                     NodePath path = new NodePath(buffer);
                     path = path.parent();
-
                     if (path != null) {
-                        node = resolver.resolve(path);
+                        node = parent.find(path);
                     }
                     else {
                         node = parent;
@@ -120,7 +132,8 @@ public class NodePathCompleter
                         if (buffer.contains(SEPARATOR)) {
                             prefix = getPrefix(buffer);
                         }
-                        
+
+                        // look for all nodes matching the suffix
                         String suffix = getSuffix(buffer);
                         for (Node child : node.children()) {
                             if (child.getName().startsWith(suffix)) {
@@ -142,16 +155,13 @@ public class NodePathCompleter
 
         if (matches.size() == 1) {
             Node node = matches.iterator().next();
-            candidates.add(prefix + node.getName() + (node.isLeaf() ? " " : SEPARATOR));
+            candidates.add(prefix + node.getName() + (node.isLeaf() ? " " :
+                (node.getName().equals(ROOT) ? "" : SEPARATOR)));
         }
         else {
             for (Node node : matches) {
-                if (node.isLeaf()) {
-                    candidates.add(prefix + node.getName());
-                }
-                else {
-                    candidates.add(prefix + node.getName() + SEPARATOR);
-                }
+                candidates.add(prefix + node.getName() + (node.isLeaf() ? "" :
+                    (node.getName().equals(ROOT) ? "" : SEPARATOR)));
             }
         }
 

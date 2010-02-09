@@ -182,6 +182,11 @@ public class Node
         return node;
     }
 
+    public Node find(final NodePath path) {
+        assert path != null;
+        return find(path.toString());
+    }
+
     public void add(final String name, final CommandAction command) {
         assert name != null;
         assert command != null;

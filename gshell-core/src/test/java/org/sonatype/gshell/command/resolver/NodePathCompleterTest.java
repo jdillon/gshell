@@ -186,14 +186,14 @@ public class NodePathCompleterTest
     public void test4b() {
         variables.set(SHELL_GROUP, "/foo");
         variables.set(SHELL_GROUP_PATH, ".");
-        assertCompletes("", "a1", "a2", "b1");
+        assertCompletes("", "..", "a1", "a2", "b1");
     }
 
     @Test
     public void test4c() {
         variables.set(SHELL_GROUP, "/foo");
         variables.set(SHELL_GROUP_PATH, ".:/");
-        assertCompletes("", "a1", "a2", "b1", "foo/", "bar", "baz");
+        assertCompletes("", "..", "a1", "a2", "b1", "foo/", "bar", "baz");
     }
 
     @Test
@@ -208,5 +208,22 @@ public class NodePathCompleterTest
         variables.set(SHELL_GROUP, "/foo");
         variables.set(SHELL_GROUP_PATH, ".:/");
         assertCompletes("a", "a1", "a2");
+    }
+
+    @Test
+    public void test5a() {
+        assertCompletes(".", "./", "../");
+    }
+
+    @Test
+    public void test5b() {
+        assertCompletes("..", "../");
+    }
+
+    @Test
+    public void test5c() {
+        variables.set(SHELL_GROUP, "/foo");
+        variables.set(SHELL_GROUP_PATH, ".:/");
+        assertCompletes(".", "./", "../");
     }
 }
