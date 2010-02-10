@@ -43,7 +43,6 @@ import org.sonatype.gshell.help.HelpContentLoader;
 import org.sonatype.gshell.help.HelpContentLoaderImpl;
 import org.sonatype.gshell.help.HelpPageManager;
 import org.sonatype.gshell.help.HelpPageManagerImpl;
-import org.sonatype.gshell.help.HelpPageNameCompleter;
 import org.sonatype.gshell.help.MetaHelpPageNameCompleter;
 import org.sonatype.gshell.io.PromptReader;
 import org.sonatype.gshell.parser.CommandLineParser;
@@ -83,7 +82,6 @@ public class CoreModule
         bind(Completer.class).annotatedWith(Names.named("file-name")).to(FileNameCompleter.class);
         bind(Completer.class).annotatedWith(Names.named("variable-name")).to(VariableNameCompleter.class);
         bind(Completer.class).annotatedWith(Names.named("meta-help-page-name")).to(MetaHelpPageNameCompleter.class);
-        bind(Completer.class).annotatedWith(Names.named("help-page-name")).to(HelpPageNameCompleter.class);
     }
 
     @Provides

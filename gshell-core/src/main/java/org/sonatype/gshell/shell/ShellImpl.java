@@ -150,7 +150,7 @@ public class ShellImpl
     public void installCompleters(final @Named("alias-name") Completer c1, final @Named("node-path") Completer c2) {
         assert c1 != null;
         assert c2 != null;
-        setCompleters(new AggregateCompleter(c1, c2));
+        setCompleters(new AggregateCompleter(c1, c2), null);
     }
 
     public boolean isLoadProfileScripts() {

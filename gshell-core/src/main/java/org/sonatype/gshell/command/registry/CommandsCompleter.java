@@ -68,8 +68,7 @@ public class CommandsCompleter
     private void init() {
         try {
             // Populate the initial list of completers from the currently registered commands
-            Collection<String> names = commands.getCommandNames();
-            for (String name : names) {
+            for (String name : commands.getCommandNames()) {
                 addCompleter(name);
             }
 

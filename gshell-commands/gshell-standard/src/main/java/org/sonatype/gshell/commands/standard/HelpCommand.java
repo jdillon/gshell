@@ -19,6 +19,7 @@ package org.sonatype.gshell.commands.standard;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import jline.console.Completer;
+import jline.console.completers.AggregateCompleter;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
@@ -55,9 +56,14 @@ public class HelpCommand
      * @since 2.5
      */
     @Inject
-    public HelpCommand installCompleters(final @Named("help-page-name") Completer c1) {
+    public HelpCommand installCompleters(final @Named("alias-name") Completer c1,
+                                         final @Named("node-path") Completer c2,
+                                         final @Named("meta-help-page-name") Completer c3)
+    {
         assert c1 != null;
-        setCompleters(c1, null);
+        assert c2 != null;
+        assert c3 != null;
+        setCompleters(new AggregateCompleter(c1, c2, c3), null);
         return this;
     }
 
