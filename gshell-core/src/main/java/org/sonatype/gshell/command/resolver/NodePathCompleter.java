@@ -148,7 +148,7 @@ public class NodePathCompleter
         return buildCandidates(candidates, matches, prefix);
     }
 
-    private int buildCandidates(final List<CharSequence> candidates, final Collection<Node> matches, final String prefix) {
+    protected int buildCandidates(final List<CharSequence> candidates, final Collection<Node> matches, final String prefix) {
         assert candidates != null;
         assert matches != null;
         assert prefix != null;

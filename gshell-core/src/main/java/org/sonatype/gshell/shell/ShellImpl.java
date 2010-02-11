@@ -21,6 +21,7 @@ import com.google.inject.name.Named;
 import jline.console.Completer;
 import jline.console.ConsoleReader;
 import jline.console.completers.AggregateCompleter;
+import jline.console.completers.NullCompleter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.branding.Branding;
@@ -147,7 +148,7 @@ public class ShellImpl
     }
 
     @Inject
-    public void installCompleters(final @Named("alias-name") Completer c1, final @Named("node-path") Completer c2) {
+    public void installCompleters(final @Named("alias-name") Completer c1, final @Named("commands") Completer c2) {
         assert c1 != null;
         assert c2 != null;
         setCompleters(new AggregateCompleter(c1, c2));
@@ -269,7 +270,7 @@ public class ShellImpl
 
         if (completers != null && !completers.isEmpty()) {
             for (Completer completer : completers) {
-                console.addCompleter(completer);
+                console.addCompleter(completer != null ? completer : NullCompleter.INSTANCE);
             }
         }
 

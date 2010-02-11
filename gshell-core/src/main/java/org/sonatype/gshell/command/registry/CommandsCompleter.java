@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009 the original author(s).
+ * Copyright (C) 2010 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,126 +18,64 @@ package org.sonatype.gshell.command.registry;
 
 import com.google.inject.Inject;
 import jline.console.Completer;
-import jline.console.completers.AggregateCompleter;
 import jline.console.completers.ArgumentCompleter;
 import jline.console.completers.NullCompleter;
-import jline.console.completers.StringsCompleter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.sonatype.gshell.command.CommandAction;
-import org.sonatype.gshell.event.EventListener;
-import org.sonatype.gshell.event.EventManager;
+import org.sonatype.gshell.command.resolver.CommandResolver;
+import org.sonatype.gshell.command.resolver.Node;
+import org.sonatype.gshell.command.resolver.NodePathCompleter;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.EventObject;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
- * {@link Completer} for commands, including support for command-specific sub-completion.
- * Keeps up to date automatically by handling command-related events.
+ * Command path and argument completer.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
 public class CommandsCompleter
-    implements Completer
+    extends ArgumentCompleter
 {
-    private final Logger log = LoggerFactory.getLogger(getClass());
-
-    private final EventManager events;
-
-    private final CommandRegistry commands;
-
-    private final Map<String, Completer> completers = new HashMap<String, Completer>();
-
-    private final AggregateCompleter delegate = new AggregateCompleter();
-
-    private boolean initialized;
+    private final PathCompleter first;
 
     @Inject
-    public CommandsCompleter(final EventManager events, final CommandRegistry commands) {
-        assert events != null;
-        this.events = events;
-        assert commands != null;
-        this.commands = commands;
+    public CommandsCompleter(final CommandResolver resolver) {
+        first = new PathCompleter(resolver);
+        getCompleters().add(first);
     }
 
-    private void init() {
-        try {
-            // Populate the initial list of completers from the currently registered commands
-            for (String name : commands.getCommandNames()) {
-                addCompleter(name);
+    private class PathCompleter
+        extends NodePathCompleter
+    {
+        private PathCompleter(final CommandResolver resolver) {
+            super(resolver);
+        }
+
+        @Override
+        protected int buildCandidates(final List<CharSequence> candidates, final Collection<Node> matches, final String prefix) {
+            assert matches != null;
+
+            if (matches.size() == 1) {
+                updateCompleters(matches.iterator().next().getAction().getCompleters());
             }
 
-            // Register for updates to command registrations
-            events.addListener(new EventListener()
-            {
-                public void onEvent(final EventObject event) throws Exception {
-                    if (event instanceof CommandRegisteredEvent) {
-                        CommandRegisteredEvent target = (CommandRegisteredEvent) event;
-                        addCompleter(target.getName());
-                    }
-                    else if (event instanceof CommandRemovedEvent) {
-                        CommandRemovedEvent target = (CommandRemovedEvent) event;
-                        removeCompleter(target.getName());
-                    }
-                }
-            });
+            return super.buildCandidates(candidates, matches, prefix);
         }
-        catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        initialized = true;
     }
 
-    private void addCompleter(final String name) throws Exception {
-        assert name != null;
+    private void updateCompleters(final Completer[] completers) {
+        // completers may be null
 
-        log.trace("Adding completer for: {}", name);
+        // Reset the list
+        List<Completer> target = getCompleters();
+        target.clear();
+        target.add(first);
 
-        List<Completer> children = new ArrayList<Completer>();
-
-        // Attach completion for the command name
-        children.add(new StringsCompleter(name));
-
-        // Then attach any command specific completers
-        CommandAction command = commands.getCommand(name);
-
-        Completer[] completers = command.getCompleters();
-        if (completers == null) {
-            children.add(NullCompleter.INSTANCE);
-        }
-        else {
+        // Install new child completers
+        if (completers != null) {
             for (Completer completer : completers) {
-                log.trace("Adding completer: {}", completer);
-                children.add(completer != null ? completer : NullCompleter.INSTANCE);
+                target.add(completer != null ? completer : NullCompleter.INSTANCE);
             }
         }
-
-        // Setup the root completer for the command
-        Completer root = new ArgumentCompleter(children);
-
-        // Track and attach
-        this.completers.put(name, root);
-        delegate.getCompleters().add(root);
-    }
-
-    private void removeCompleter(final String name) {
-        assert name != null;
-
-        Completer completer = completers.remove(name);
-        delegate.getCompleters().remove(completer);
-    }
-
-    public int complete(final String buffer, final int cursor, final List<CharSequence> candidates) {
-        if (!initialized) {
-            init();
-        }
-
-        return delegate.complete(buffer, cursor, candidates);
     }
 }
