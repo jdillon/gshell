@@ -89,6 +89,10 @@ public class GossipLoggingSystem
         return level;
     }
 
+    private LevelImpl levelFor(final String name) {
+        return (LevelImpl)getLevel(name);
+    }
+
     public Collection<? extends Level> getLevels() {
         return levels.values();
     }
@@ -112,15 +116,19 @@ public class GossipLoggingSystem
         }
 
         public Level getLevel() {
-            return levels.get(target.getLevel().name());
+            Gossip.Level tmp = target.getLevel();
+            if (tmp != null) {
+                return levelFor(tmp.name());
+            }
+            return null;
         }
 
         public void setLevel(final Level level) {
-            target.setLevel(levels.get(level.getName()).getTarget());
+            target.setLevel(levelFor(level.getName()).getTarget());
         }
 
         public void setLevel(final String level) {
-            setLevel(GossipLoggingSystem.this.getLevel(level));
+            setLevel(levelFor(level));
         }
 
         public Logger parent() {

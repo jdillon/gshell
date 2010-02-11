@@ -32,7 +32,7 @@ import org.sonatype.gshell.util.cli2.Argument;
  * @since 2.5
  */
 @Command(name="logging/logger/set")
-public class SetLoggerLevelCommand
+public class LoggerSetLevelCommand
     extends CommandActionSupport
 {
     private final LoggingSystem logging;
@@ -44,7 +44,7 @@ public class SetLoggerLevelCommand
     private String levelName;
 
     @Inject
-    public SetLoggerLevelCommand(final LoggingSystem logging) {
+    public LoggerSetLevelCommand(final LoggingSystem logging) {
         assert logging != null;
         this.logging = logging;
     }
