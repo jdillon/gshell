@@ -73,6 +73,11 @@ public class GossipLoggingSystem
         public Gossip.Level getTarget() {
             return target;
         }
+
+        @Override
+        public String toString() {
+            return getName();
+        }
     }
 
     public Level getLevel(final String name) {
@@ -124,6 +129,11 @@ public class GossipLoggingSystem
 
         public boolean isRoot() {
             return getName().equals(org.slf4j.Logger.ROOT_LOGGER_NAME);
+        }
+
+        @Override
+        public String toString() {
+            return getName();
         }
     }
 

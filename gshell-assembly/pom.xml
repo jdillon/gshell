@@ -43,7 +43,12 @@
             <groupId>org.sonatype.gshell.commands</groupId>
             <artifactId>gshell-standard</artifactId>
         </dependency>
-        
+
+        <dependency>
+            <groupId>org.sonatype.gshell.commands</groupId>
+            <artifactId>gshell-logging</artifactId>
+        </dependency>
+
         <!--<dependency>-->
             <!--<groupId>org.sonatype.gshell.commands</groupId>-->
             <!--<artifactId>gshell-shell</artifactId>-->

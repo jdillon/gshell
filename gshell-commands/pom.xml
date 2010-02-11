@@ -46,6 +46,7 @@
     
     <modules>
         <module>gshell-standard</module>
+        <module>gshell-logging</module>
         <module>gshell-pref</module>
         <module>gshell-text</module>
         <module>gshell-network</module>
