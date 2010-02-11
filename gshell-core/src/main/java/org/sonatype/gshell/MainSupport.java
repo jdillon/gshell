@@ -21,7 +21,7 @@ import jline.NoInterruptUnixTerminal;
 import jline.TerminalFactory;
 import org.fusesource.jansi.Ansi;
 import org.slf4j.Logger;
-import org.sonatype.gossip.Level;
+import org.sonatype.gossip.Gossip;
 import org.sonatype.gossip.Log;
 import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.command.CommandAction;
@@ -104,7 +104,7 @@ public abstract class MainSupport
     @Option(name = "e", longName = "errors")
     protected boolean showErrorTraces = false;
 
-    protected void setConsoleLogLevel(final Level level) {
+    protected void setConsoleLogLevel(final Gossip.Level level) {
         System.setProperty(SHELL_LOGGING, level.name());
         vars.set(SHELL_LOGGING, level);
     }
@@ -113,7 +113,7 @@ public abstract class MainSupport
     @Option(name = "d", longName = "debug")
     protected void setDebug(final boolean flag) {
         if (flag) {
-            setConsoleLogLevel(Level.DEBUG);
+            setConsoleLogLevel(Gossip.Level.DEBUG);
             io.setVerbosity(IO.Verbosity.DEBUG);
         }
     }
@@ -122,7 +122,7 @@ public abstract class MainSupport
     @Option(name = "X", longName = "trace")
     protected void setTrace(final boolean flag) {
         if (flag) {
-            setConsoleLogLevel(Level.TRACE);
+            setConsoleLogLevel(Gossip.Level.TRACE);
             io.setVerbosity(IO.Verbosity.DEBUG);
         }
     }
@@ -131,7 +131,7 @@ public abstract class MainSupport
     @Option(name = "v", longName = "verbose")
     protected void setVerbose(final boolean flag) {
         if (flag) {
-            setConsoleLogLevel(Level.INFO);
+            setConsoleLogLevel(Gossip.Level.INFO);
             io.setVerbosity(IO.Verbosity.VERBOSE);
         }
     }
@@ -140,7 +140,7 @@ public abstract class MainSupport
     @Option(name = "q", longName = "quiet")
     protected void setQuiet(final boolean flag) {
         if (flag) {
-            setConsoleLogLevel(Level.ERROR);
+            setConsoleLogLevel(Gossip.Level.ERROR);
             io.setVerbosity(IO.Verbosity.QUIET);
         }
     }
@@ -200,7 +200,7 @@ public abstract class MainSupport
         log.debug("Booting w/args: {}", Arrays.asList(args));
 
         // Setup environment defaults
-        setConsoleLogLevel(Level.WARN);
+        setConsoleLogLevel(Gossip.Level.WARN);
         setTerminalType(TerminalFactory.Type.AUTO);
 
         // Process preferences
