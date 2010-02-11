@@ -25,10 +25,10 @@
         <enabled>true</enabled>
         <autoRegisterPriority>100</autoRegisterPriority>
         <command>
-            <action>org.sonatype.gshell.commands.logging.LoggerSetLevelCommand</action>
+            <action>org.sonatype.gshell.commands.logging.component.LoggerSetLevelCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.logging.LoggerListCommand</action>
+            <action>org.sonatype.gshell.commands.logging.component.LoggerListCommand</action>
         </command>
     </command-set>
 
