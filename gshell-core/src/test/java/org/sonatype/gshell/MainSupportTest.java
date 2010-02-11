@@ -29,7 +29,7 @@ import org.sonatype.gshell.shell.History;
 import org.sonatype.gshell.shell.Shell;
 import org.sonatype.gshell.vars.Variables;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Tests for {@link org.sonatype.gshell.MainSupport}.

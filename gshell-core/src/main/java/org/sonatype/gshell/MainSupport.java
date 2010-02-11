@@ -50,9 +50,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static org.sonatype.gshell.vars.VariableNames.LAST_RESULT;
-import static org.sonatype.gshell.vars.VariableNames.SHELL_ERRORS;
-import static org.sonatype.gshell.vars.VariableNames.SHELL_LOGGING;
+import static org.sonatype.gshell.vars.VariableNames.*;
 
 /**
  * Support for booting shell applications.

@@ -18,7 +18,7 @@ package org.sonatype.gshell.util;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link Arguments} class.

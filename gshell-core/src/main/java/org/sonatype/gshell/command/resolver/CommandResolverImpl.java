@@ -31,15 +31,11 @@ import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.vars.Variables;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.EventObject;
 import java.util.List;
 
-import static org.sonatype.gshell.command.resolver.Node.CURRENT;
-import static org.sonatype.gshell.command.resolver.Node.PATH_SEPARATOR;
-import static org.sonatype.gshell.command.resolver.Node.ROOT;
-import static org.sonatype.gshell.vars.VariableNames.SHELL_GROUP;
-import static org.sonatype.gshell.vars.VariableNames.SHELL_GROUP_PATH;
+import static org.sonatype.gshell.command.resolver.Node.*;
+import static org.sonatype.gshell.vars.VariableNames.*;
 
 /**
  * {@link CommandResolver} component.

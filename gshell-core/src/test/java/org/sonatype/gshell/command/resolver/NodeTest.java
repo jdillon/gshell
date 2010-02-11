@@ -27,8 +27,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import static junit.framework.Assert.*;
-import static org.sonatype.gshell.command.resolver.Node.CURRENT;
-import static org.sonatype.gshell.command.resolver.Node.ROOT;
+import static org.sonatype.gshell.command.resolver.Node.*;
 
 /**
  * Tests for {@link Node}.

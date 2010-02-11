@@ -23,8 +23,7 @@ import org.sonatype.gshell.vars.Variables;
 
 import java.io.File;
 
-import static org.sonatype.gshell.vars.VariableNames.SHELL_USER_DIR;
-import static org.sonatype.gshell.vars.VariableNames.SHELL_USER_HOME;
+import static org.sonatype.gshell.vars.VariableNames.*;
 
 /**
  * {@link Completer} for file names.

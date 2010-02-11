@@ -76,8 +76,7 @@ import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import static org.sonatype.gshell.util.converter.ConverterHelper.getTypeParameters;
-import static org.sonatype.gshell.util.converter.ConverterHelper.toClass;
+import static org.sonatype.gshell.util.converter.ConverterHelper.*;
 
 /**
  * Provides access to conversion.

@@ -32,10 +32,11 @@ import org.sonatype.gshell.event.EventManagerImpl;
 import org.sonatype.gshell.vars.Variables;
 import org.sonatype.gshell.vars.VariablesImpl;
 
-import static junit.framework.Assert.*;
-import static org.sonatype.gshell.vars.VariableNames.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static junit.framework.Assert.*;
+import static org.sonatype.gshell.vars.VariableNames.*;
 
 /**
  * Tests for {@link NodePathCompleter}.

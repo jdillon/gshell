@@ -45,7 +45,7 @@ import org.sonatype.gshell.util.cli2.OpaqueArguments;
 import org.sonatype.gshell.util.pref.PreferenceProcessor;
 import org.sonatype.gshell.vars.Variables;
 
-import static org.sonatype.gshell.vars.VariableNames.LAST_RESULT;
+import static org.sonatype.gshell.vars.VariableNames.*;
 
 /**
  * The default {@link org.sonatype.gshell.execute.CommandExecutor} component.

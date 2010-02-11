@@ -100,6 +100,7 @@ public abstract class CommandActionSupport
     }
 
     public void setCompleters(final Completer... completers) {
+        // completers can be null
         this.completers = completers;
     }
 

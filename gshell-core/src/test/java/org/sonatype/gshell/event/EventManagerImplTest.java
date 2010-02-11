@@ -26,8 +26,7 @@ import org.junit.Test;
 
 import java.util.EventObject;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link org.sonatype.gshell.event.EventManagerImpl}.

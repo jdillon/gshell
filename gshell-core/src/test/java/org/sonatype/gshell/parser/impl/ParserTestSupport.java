@@ -19,7 +19,7 @@ package org.sonatype.gshell.parser.impl;
 import java.io.Reader;
 import java.io.StringReader;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 /**
  * Support for parser testing.

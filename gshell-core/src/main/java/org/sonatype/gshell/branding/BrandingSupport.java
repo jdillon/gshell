@@ -30,17 +30,8 @@ import java.io.StringWriter;
 import java.net.URL;
 import java.util.Properties;
 
-import static org.sonatype.gshell.command.resolver.Node.CURRENT;
-import static org.sonatype.gshell.command.resolver.Node.PATH_SEPARATOR;
-import static org.sonatype.gshell.command.resolver.Node.ROOT;
-import static org.sonatype.gshell.vars.VariableNames.SHELL_GROUP;
-import static org.sonatype.gshell.vars.VariableNames.SHELL_GROUP_PATH;
-import static org.sonatype.gshell.vars.VariableNames.SHELL_HOME;
-import static org.sonatype.gshell.vars.VariableNames.SHELL_PROGRAM;
-import static org.sonatype.gshell.vars.VariableNames.SHELL_PROMPT;
-import static org.sonatype.gshell.vars.VariableNames.SHELL_USER_DIR;
-import static org.sonatype.gshell.vars.VariableNames.SHELL_USER_HOME;
-import static org.sonatype.gshell.vars.VariableNames.SHELL_VERSION;
+import static org.sonatype.gshell.command.resolver.Node.*;
+import static org.sonatype.gshell.vars.VariableNames.*;
 
 /**
  * Support for {@link Branding} implementations.

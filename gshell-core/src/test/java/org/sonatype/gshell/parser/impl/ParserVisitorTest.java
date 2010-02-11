@@ -18,8 +18,7 @@ package org.sonatype.gshell.parser.impl;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 /**
  * Unit tests for the {@link org.sonatype.gshell.parser.impl.ParserVisitor} usage.

@@ -22,11 +22,8 @@ import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.GroupAction;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * A node for building a {@link CommandAction} tree.
@@ -60,8 +57,8 @@ public class Node
     public Node(final String name, final CommandAction action, final Node parent) {
         assert name != null;
         this.name = name;
-        this.action = action;
         assert action != null;
+        this.action = action;
         // parent can be null
         this.parent = parent;
     }

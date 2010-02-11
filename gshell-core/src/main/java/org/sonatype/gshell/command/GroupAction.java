@@ -23,7 +23,7 @@ import org.sonatype.gshell.command.resolver.NodePath;
 import org.sonatype.gshell.util.cli2.OpaqueArguments;
 import org.sonatype.gshell.util.i18n.MessageSource;
 
-import static org.sonatype.gshell.vars.VariableNames.SHELL_GROUP;
+import static org.sonatype.gshell.vars.VariableNames.*;
 
 /**
  * {@link CommandAction} to switch groups.

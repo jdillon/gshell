@@ -28,7 +28,7 @@ import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.event.EventManagerImpl;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the {@link org.sonatype.gshell.command.registry.CommandRegistryImpl}.
