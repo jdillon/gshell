@@ -55,6 +55,7 @@ public class CommandsCompleter
         protected int buildCandidates(final List<CharSequence> candidates, final Collection<Node> matches, final String prefix) {
             assert matches != null;
 
+            // If there is only one match, then install that node's action completers
             if (matches.size() == 1) {
                 updateCompleters(matches.iterator().next().getAction().getCompleters());
             }
@@ -76,6 +77,9 @@ public class CommandsCompleter
             for (Completer completer : completers) {
                 target.add(completer != null ? completer : NullCompleter.INSTANCE);
             }
+        }
+        else {
+            target.add(NullCompleter.INSTANCE);
         }
     }
 }
