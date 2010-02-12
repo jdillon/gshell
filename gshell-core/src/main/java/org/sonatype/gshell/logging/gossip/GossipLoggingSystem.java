@@ -174,7 +174,7 @@ public class GossipLoggingSystem
         return new LoggerImpl(gossip.getLogger(name));
     }
 
-    public Collection<Component> getComponents() {
+    public Collection<? extends Component> getComponents() {
         synchronized (components) {
             if (components.isEmpty()) {
                 components.add(new EffectiveProfileComponent(gossip.getEffectiveProfile()));

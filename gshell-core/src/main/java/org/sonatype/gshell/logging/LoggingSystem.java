@@ -34,7 +34,7 @@ public interface LoggingSystem
 
     Collection<String> getLoggerNames();
 
-    Collection<Component> getComponents();
+    Collection<? extends Component> getComponents();
 
     // TODO: Add configure(URL/File)
 
