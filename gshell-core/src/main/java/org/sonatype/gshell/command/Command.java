@@ -34,4 +34,6 @@ import java.lang.annotation.Target;
 public @interface Command
 {
     String name();
+
+    // TODO: maybe add @Group to organize actions
 }
