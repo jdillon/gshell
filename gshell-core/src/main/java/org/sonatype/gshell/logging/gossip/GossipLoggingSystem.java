@@ -30,6 +30,8 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import static org.sonatype.gossip.Gossip.*;
+
 /**
  * <a href="http://github.com/jdillon/gossip">Gossip</a> {@link LoggingSystem} component.
  *
@@ -44,6 +46,8 @@ public class GossipLoggingSystem
 
     private final Map<String,LevelImpl> levels;
 
+    private final Set<Component> components;
+
     public GossipLoggingSystem() {
         gossip = Gossip.getInstance();
 
@@ -53,6 +57,10 @@ public class GossipLoggingSystem
             levels.put(level.name().toUpperCase(), new LevelImpl(level));
         }
         this.levels = Collections.unmodifiableMap(levels);
+
+        // setup components map
+        components = new LinkedHashSet<Component>();
+        // leave the rest to lazy init for now
     }
 
     //
@@ -75,6 +83,11 @@ public class GossipLoggingSystem
 
         public Gossip.Level getTarget() {
             return target;
+        }
+
+        @Override
+        public int hashCode() {
+            return getName().hashCode();
         }
 
         @Override
@@ -139,9 +152,14 @@ public class GossipLoggingSystem
         }
 
         public boolean isRoot() {
-            return getName().equals(org.slf4j.Logger.ROOT_LOGGER_NAME);
+            return getName().equals(ROOT_NAME);
         }
 
+        @Override
+        public int hashCode() {
+            return getName().hashCode();
+        }
+        
         @Override
         public String toString() {
             return getName();
@@ -157,15 +175,12 @@ public class GossipLoggingSystem
         return new LoggerImpl(gossip.getLogger(name));
     }
 
-    private Set<Component> components;
-
     public Collection<Component> getComponents() {
-        if (components == null) {
-            Set<Component> set = new LinkedHashSet<Component>();
-            set.add(new EffectiveProfileComponent(gossip.getEffectiveProfile()));
-            this.components = set;
-
-            // TODO: Add the rest of the components
+        synchronized (components) {
+            if (components.isEmpty()) {
+                components.add(new EffectiveProfileComponent(gossip.getEffectiveProfile()));
+                // TODO: Add the rest of the components
+            }
         }
         return Collections.unmodifiableSet(components);
     }

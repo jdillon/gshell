@@ -25,15 +25,19 @@ package org.sonatype.gshell.logging;
 public abstract class ComponentSupport
     implements Component
 {
-    private final String name;
-
     private final String type;
 
-    public ComponentSupport(final String name, final String type) {
-        assert name != null;
-        this.name = name;
+    private final String name;
+
+    public ComponentSupport(final String type, final String name) {
         assert type != null;
         this.type = type;
+        assert name != null;
+        this.name = name;
+    }
+
+    public ComponentSupport(final String type) {
+        this(type, DEFAULT_NAME);
     }
 
     public String getType() {
@@ -42,5 +46,15 @@ public abstract class ComponentSupport
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public int hashCode() {
+        return (type + name).hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return getType() + "{" + getName() + "}";
     }
 }

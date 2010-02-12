@@ -24,6 +24,8 @@ package org.sonatype.gshell.logging;
  */
 public interface Component
 {
+    String DEFAULT_NAME = "<DEFAULT>";
+    
     String getName();
 
     String getType();

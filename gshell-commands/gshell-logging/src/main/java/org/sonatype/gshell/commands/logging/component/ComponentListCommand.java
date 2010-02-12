@@ -54,13 +54,10 @@ public class ComponentListCommand
         IO io = context.getIo();
 
         for (Component component : logging.getComponents()) {
-            String name = component.getName();
-            String type = component.getType();
-
-            if ((nameQuery == null || name.contains(nameQuery)) &&
-                (typeQuery == null || type.contains(typeQuery)))
+            if ((typeQuery == null || component.getType().contains(typeQuery)) &&
+                (nameQuery == null || component.getName().contains(nameQuery)))
             {
-                io.info("{}[{}]", component.getType(), component.getName());
+                io.info("{}", component);
             }
         }
 

@@ -31,7 +31,7 @@ public class EffectiveProfileComponent
     private final EffectiveProfile profile;
 
     public EffectiveProfileComponent(final EffectiveProfile profile) {
-        super("main", EffectiveProfile.class.getName());
+        super(EffectiveProfile.class.getName());
         assert profile != null;
         this.profile = profile;
     }

@@ -23,7 +23,6 @@ import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.logging.Logger;
 import org.sonatype.gshell.logging.LoggingSystem;
-import org.sonatype.gshell.util.cli2.Argument;
 import org.sonatype.gshell.util.cli2.Option;
 
 import java.util.ArrayList;
