@@ -29,16 +29,10 @@ import org.sonatype.gshell.command.resolver.Node;
 import org.sonatype.gshell.event.EventListener;
 import org.sonatype.gshell.event.EventManager;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.EventObject;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 
 /**
@@ -118,7 +112,9 @@ public class HelpPageManagerImpl
 
         Map<String,HelpPage> pages = new TreeMap<String,HelpPage>();
 
-        // TODO: Maybe include aliases here too?
+        for (Map.Entry<String,String> entry : aliases.getAliases().entrySet()) {
+            pages.put(entry.getKey(), new AliasHelpPage(entry.getKey(), entry.getValue()));
+        }
 
         for (Node parent : resolver.searchPath()) {
             if (parent.isGroup()) {
