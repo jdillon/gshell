@@ -15,7 +15,7 @@
  */
 
 /**
- * Gossip logging components.
+ * Gossip logging integration.
  *
  * @since 2.5
  */

@@ -40,6 +40,11 @@
         </dependency>
 
         <dependency>
+            <groupId>org.sonatype.gshell</groupId>
+            <artifactId>gshell-gossip</artifactId>
+        </dependency>
+        
+        <dependency>
             <groupId>org.sonatype.gshell.commands</groupId>
             <artifactId>gshell-standard</artifactId>
         </dependency>
@@ -88,11 +93,6 @@
             <!--<groupId>org.sonatype.gshell.commands</groupId>-->
             <!--<artifactId>gshell-scm</artifactId>-->
         <!--</dependency>-->
-
-        <dependency>
-            <groupId>org.sonatype.gossip</groupId>
-            <artifactId>gossip</artifactId>
-        </dependency>
     </dependencies>
 
     <build>
