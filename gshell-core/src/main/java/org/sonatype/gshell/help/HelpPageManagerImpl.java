@@ -22,8 +22,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.alias.AliasRegistry;
 import org.sonatype.gshell.alias.NoSuchAliasException;
-import org.sonatype.gshell.command.CommandAction;
-import org.sonatype.gshell.command.GroupAction;
 import org.sonatype.gshell.command.descriptor.DiscoveredCommandSetDescriptorEvent;
 import org.sonatype.gshell.command.descriptor.HelpPageDescriptor;
 import org.sonatype.gshell.command.resolver.CommandResolver;
@@ -56,20 +54,20 @@ public class HelpPageManagerImpl
 
     private final CommandResolver resolver;
 
-    private final HelpContentLoader helpLoader;
+    private final HelpContentLoader loader;
 
     private final Map<String,MetaHelpPage> metaPages = new HashMap<String,MetaHelpPage>();
 
     @Inject
-    public HelpPageManagerImpl(final EventManager events, final AliasRegistry aliases, final CommandResolver resolver, final HelpContentLoader helpLoader) {
+    public HelpPageManagerImpl(final EventManager events, final AliasRegistry aliases, final CommandResolver resolver, final HelpContentLoader loader) {
         assert events != null;
         this.events = events;
         assert aliases != null;
         this.aliases = aliases;
         assert resolver != null;
         this.resolver = resolver;
-        assert helpLoader != null;
-        this.helpLoader = helpLoader;
+        assert loader != null;
+        this.loader = loader;
 
         events.addListener(new EventListener()
         {
@@ -99,7 +97,7 @@ public class HelpPageManagerImpl
 
         Node node = resolver.resolve(name);
         if (node != null) {
-            return pageForNode(node);
+            return HelpPageRenderUtil.pageForNode(node, loader);
         }
 
         if (metaPages.containsKey(name)) {
@@ -107,18 +105,6 @@ public class HelpPageManagerImpl
         }
         
         return null;
-    }
-
-    private HelpPage pageForNode(final Node node) {
-        assert node != null;
-
-        CommandAction action = node.getAction();
-        if (action instanceof GroupAction) {
-            return new GroupHelpPage((GroupAction)action, helpLoader);
-        }
-        else {
-            return new CommandHelpPage(action, helpLoader);
-        }
     }
 
     public Collection<HelpPage> getPages(final HelpPageFilter filter) {
@@ -131,14 +117,14 @@ public class HelpPageManagerImpl
 
         if (node.isGroup()) {
             for (Node child : node.children()) {
-                HelpPage page = pageForNode(child);
+                HelpPage page = HelpPageRenderUtil.pageForNode(child, loader);
                 if (filter.accept(page)) {
                     pages.add(page);
                 }
             }
         }
         else {
-            pages.add(pageForNode(node));
+            pages.add(HelpPageRenderUtil.pageForNode(node, loader));
         }
 
         for (MetaHelpPage page : metaPages.values()) {
@@ -163,7 +149,7 @@ public class HelpPageManagerImpl
         assert desc != null;
 
         log.debug("Adding meta-page: {} -> {}", desc.getName(), desc.getResource());
-        metaPages.put(desc.getName(), new MetaHelpPage(desc, helpLoader));
+        metaPages.put(desc.getName(), new MetaHelpPage(desc, loader));
         events.publish(new MetaHelpPageAddedEvent(desc));
     }
 

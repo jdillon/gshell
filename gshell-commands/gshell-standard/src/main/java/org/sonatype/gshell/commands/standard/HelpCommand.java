@@ -27,6 +27,7 @@ import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.help.HelpPage;
 import org.sonatype.gshell.help.HelpPageFilter;
 import org.sonatype.gshell.help.HelpPageManager;
+import org.sonatype.gshell.help.HelpPageRenderUtil;
 import org.sonatype.gshell.util.cli2.Argument;
 
 import java.util.Collection;
@@ -97,7 +98,7 @@ public class HelpCommand
             else if (pages.size() > 1) {
                 // else show matching pages
                 io.out.println(getMessages().format("info.matching-pages"));
-                renderPages(context, pages);
+                HelpPageRenderUtil.renderPages(io.out, pages);
                 return Result.SUCCESS;
             }
         }
@@ -113,33 +114,6 @@ public class HelpCommand
         return Result.SUCCESS;
     }
 
-    private void renderPages(final CommandContext context, final Collection<? extends HelpPage> pages) {
-        assert context != null;
-        assert pages != null;
-
-        int max = 0;
-        for (HelpPage page : pages) {
-            int len = page.getName().length();
-            max = Math.max(len, max);
-        }
-        String nameFormat = "%-" + max + 's';
-
-        IO io = context.getIo();
-        for (HelpPage page : pages) {
-            String formattedName = String.format(nameFormat, page.getName());
-            io.out.format("  @|bold %s|@", formattedName);
-
-            String description = page.getDescription();
-            if (description != null) {
-                io.out.print("  ");
-                io.out.println(description);
-            }
-            else {
-                io.out.println();
-            }
-        }
-    }
-
     private void displayAvailable(final CommandContext context) {
         assert context != null;
 
@@ -147,7 +121,6 @@ public class HelpCommand
 
         IO io = context.getIo();
         io.out.println(getMessages().format("info.available-pages"));
-
-        renderPages(context, pages);
+        HelpPageRenderUtil.renderPages(io.out, pages);
     }
 }

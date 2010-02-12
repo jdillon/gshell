@@ -18,10 +18,13 @@ package org.sonatype.gshell.help;
 
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.GroupAction;
+import org.sonatype.gshell.command.resolver.Node;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
 
 import java.io.PrintWriter;
+import java.util.Collection;
+import java.util.LinkedList;
 
 /**
  * {@link HelpPage} for a group.
@@ -34,13 +37,17 @@ public class GroupHelpPage
 {
     private final CommandAction command;
 
+    private final Collection<Node> children;
+
     private final HelpContentLoader loader;
 
     private MessageSource messages;
 
-    public GroupHelpPage(final GroupAction command, final HelpContentLoader loader) {
+    public GroupHelpPage(final GroupAction command, final Collection<Node> children, final HelpContentLoader loader) {
         assert command != null;
         this.command = command;
+        assert children != null;
+        this.children = children;
         assert loader != null;
         this.loader = loader;
     }
@@ -62,6 +69,14 @@ public class GroupHelpPage
 
     public void render(final PrintWriter out) {
         assert out != null;
-        out.println(getMessages().format("group-content", getName()));
+        out.println(getMessages().format("group-content-header", getName()));
+
+        Collection<HelpPage> pages = new LinkedList<HelpPage>();
+        for (Node node : children) {
+            HelpPage page = HelpPageRenderUtil.pageForNode(node, loader);
+            pages.add(page);
+        }
+
+        HelpPageRenderUtil.renderPages(out, pages);
     }
 }
