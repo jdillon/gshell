@@ -34,12 +34,12 @@
 
     Display the list of help pages:
 
-        help
+        @{command.name}
 
     Display the help page for the @|bold exit|@ command:
 
-        help exit
+        @{command.name} exit
 
-    Display help pages matching 'pref':
+    Display help pages for the 'pref' group:
 
-        help pref
+        @{command.name} pref

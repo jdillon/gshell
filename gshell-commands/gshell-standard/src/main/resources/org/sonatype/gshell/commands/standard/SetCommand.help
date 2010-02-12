@@ -31,23 +31,23 @@
 
     List all defined variables:
 
-        set
+        @{command.name}
     
     Set a variable:
 
-        set FOO BAR
+        @{command.name} FOO BAR
 
     Set a variable with quotes:
 
-        set FOO "this is foo"
+        @{command.name} FOO "this is foo"
 
     List all system properties:
 
-        set -m property
+        @{command.name} -m property
 
     Set a system property:
 
-        set -m property tmp.dir /tmp
+        @{command.name} -m property tmp.dir /tmp
 
     Some variables are @|bold immutable|@ and can not be changed.
 

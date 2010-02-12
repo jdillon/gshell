@@ -41,15 +41,15 @@
 
     Display the JVM section:
 
-        info jvm
+        @{command.name} jvm
 
     Display the JVM and OS sections:
 
-        info jvm os
+        @{command.name} jvm os
 
     Display all sections:
 
-        info -a
+        @{command.name} -a
 
 @|bold SEE ALSO|@
 

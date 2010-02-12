@@ -31,7 +31,7 @@
 
     Create a new directory:
 
-        mkdir /tmp/foo
+        @{command.name} /tmp/foo
 
 @|bold SEE ALSO|@
 

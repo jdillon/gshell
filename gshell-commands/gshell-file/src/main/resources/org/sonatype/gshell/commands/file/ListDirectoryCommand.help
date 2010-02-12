@@ -31,19 +31,19 @@
 
     List the contents of a directory;
 
-        ls /tmp
+        @{command.name} /tmp
 
     List the contents of your home directory:
 
-        ls ~
+        @{command.name} ~
 
     List the current directory in long format:
 
-        ls -l
+        @{command.name} -l
 
     List hidden files:
 
-        ls -a
+        @{command.name} -a
 
 @|bold SEE ALSO|@
 

@@ -32,8 +32,8 @@
 
     Display a raw string:
 
-        echo hello
+        @{command.name} hello
 
     Display a variable:
 
-        echo ${shell.version}
+        @{command.name} ${shell.version}

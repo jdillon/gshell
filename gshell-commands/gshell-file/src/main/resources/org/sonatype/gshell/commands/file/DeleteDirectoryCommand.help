@@ -30,7 +30,7 @@
 @{command.details}
 @|bold EXAMPLES|@
 
-    rmdir /tmp/foo
+    @{command.name} /tmp/foo
 
 @|bold SEE ALSO|@
 

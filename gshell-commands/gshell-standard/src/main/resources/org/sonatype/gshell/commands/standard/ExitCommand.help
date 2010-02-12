@@ -31,8 +31,8 @@
 
     Exit with the default exit code:
 
-        exit
+        @{command.name}
 
     Exit with a specific exit code:
 
-        exit 1
+        @{command.name} 1

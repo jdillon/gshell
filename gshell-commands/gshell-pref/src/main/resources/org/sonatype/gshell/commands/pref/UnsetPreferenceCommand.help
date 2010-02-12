@@ -31,7 +31,7 @@
 
     Unset a preference:
 
-        pref/unset /some/path some-key
+        @{command.name} /some/path some-key
 
 @|bold SEE ALSO|@
 

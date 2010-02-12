@@ -31,7 +31,7 @@
 
     Remove an alias:
 
-        unalias foo
+        @{command.name} foo
 
 @|bold SEE ALSO|@
 

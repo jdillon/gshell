@@ -31,11 +31,11 @@
 
     List all components:
 
-        logging/components/list
+        @{command.name}
 
     List all components matching name 'gossip':
 
-        logging/components/list -n gossip
+        @{command.name} -n gossip
 
 @|bold SEE ALSO|@
 

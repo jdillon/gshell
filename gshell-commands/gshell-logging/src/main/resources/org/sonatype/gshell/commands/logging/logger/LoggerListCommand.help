@@ -31,15 +31,15 @@
 
     List all loggers, which have a level set on them:
 
-        logging/logger/list
+        @{command.name}
 
     List all loggers, even those using an inherited level:
 
-        logging/logger/list -a
+        @{command.name} -a
 
     List all loggers with names matching 'gshell':
 
-        logging/logger/list -n gshell
+        @{command.name} -n gshell
 
 @|bold SEE ALSO|@
 

@@ -32,15 +32,15 @@
 
     Display the last 10 history items:
 
-        history 10
+        @{command.name} 10
 
     Display the full history:
 
-        history
+        @{command.name}
 
     Clear the history:
 
-        history -c
+        @{command.name} -c
 
 @|bold SEE ALSO|@
 

@@ -31,7 +31,7 @@
 
     Get the value of a preference:
 
-        pref/get /some/path somekey
+        @{command.name} /some/path somekey
 
 @|bold SEE ALSO|@
 

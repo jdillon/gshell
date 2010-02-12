@@ -29,7 +29,7 @@
 @{command.details}
 @|bold EXAMPLES|@
 
-    rm /tmp/file.txt
+    @{command.name} /tmp/file.txt
 
 @|bold SEE ALSO|@
 

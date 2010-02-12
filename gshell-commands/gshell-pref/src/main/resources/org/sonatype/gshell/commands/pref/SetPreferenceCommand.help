@@ -32,7 +32,7 @@
 
     Set a preference value:
 
-        pref/set /some/path some-key some-value
+        @{command.name} /some/path some-key some-value
 
 @|bold SEE ALSO|@
 

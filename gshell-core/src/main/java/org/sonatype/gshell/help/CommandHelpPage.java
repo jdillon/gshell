@@ -101,6 +101,11 @@ public class CommandHelpPage
         }
 
         @SuppressWarnings("unused")
+        public String getAbsoluteName() {
+            return Node.ROOT + command.getName();
+        }
+
+        @SuppressWarnings("unused")
         public String getSimpleName() {
             return command.getSimpleName();
         }
@@ -127,7 +132,6 @@ public class CommandHelpPage
 
             PrintBuffer buff = new PrintBuffer();
             printHeader(buff, "section.arguments");
-
             printer.printArguments(buff, clp.getArgumentDescriptors());
 
             return buff.toString();
@@ -141,7 +145,6 @@ public class CommandHelpPage
 
             PrintBuffer buff = new PrintBuffer();
             printHeader(buff, "section.options");
-
             printer.printOptions(buff, clp.getOptionDescriptors());
 
             return buff.toString();
@@ -167,10 +170,8 @@ public class CommandHelpPage
 
         @SuppressWarnings("unused")
         public String getDetails() {
-            //
-            // HACK: This ugly muck adds a newline as needed if the last section was not empty
-            //       and the current section is not empty, so that the page looks correct.
-            //
+            // This ugly muck adds a newline as needed if the last section was not empty
+            // and the current section is not empty, so that the page looks correct.
             
             PrintBuffer buff = new PrintBuffer();
             String content, last;

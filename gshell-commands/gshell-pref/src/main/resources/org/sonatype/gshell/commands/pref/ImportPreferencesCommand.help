@@ -31,11 +31,11 @@
 
     Import as user preferences:
 
-        pref/import prefs.xml
+        @{command.name} prefs.xml
 
     Import as system preferences:
 
-        pref/import -s prefs.xml
+        @{command.name} -s prefs.xml
 
 @|bold SEE ALSO|@
 

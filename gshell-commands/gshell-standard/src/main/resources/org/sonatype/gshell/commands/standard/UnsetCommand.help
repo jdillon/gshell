@@ -31,11 +31,11 @@
 
     Remove a variable:
 
-        unset FOO
+        @{command.name} FOO
 
     Remove a system property:
 
-        unset -m property tmp.dir
+        @{command.name} -m property tmp.dir
 
     Some variables are @|bold immutable|@ and can not be removed.
 

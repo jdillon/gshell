@@ -31,15 +31,15 @@
 
     Change to /tmp:
 
-        cd /tmp
+        @{command.name} /tmp
 
     Change to ${shell.user.home):
 
-        cd
+        @{command.name}
 
     Change to parent directory:
 
-        cd ..
+        @{command.name} ..
 
 @|bold SEE ALSO|@
 

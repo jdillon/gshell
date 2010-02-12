@@ -31,7 +31,7 @@
 
     Set the level of the 'org.sonatype' logger to DEBUG:
 
-        logging/logger/set org.sonatype DEBUG
+        @{command.name} org.sonatype DEBUG
 
 @|bold SEE ALSO|@
 

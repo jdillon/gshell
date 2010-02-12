@@ -31,8 +31,8 @@
 
     Display a file:
 
-        wget http://google.com
+        @{command.name} http://google.com
 
     Save to a local file:
 
-        wget http://google.com -o /tmp/google.html
+        @{command.name} http://google.com -o /tmp/google.html

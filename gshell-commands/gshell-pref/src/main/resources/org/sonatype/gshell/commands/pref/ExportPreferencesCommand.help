@@ -31,11 +31,11 @@
 
     Export all preferences:
 
-        pref/export -t / prefs.xml
+        @{command.name} -t / prefs.xml
 
     Export all system preferences:
 
-        pref/export -s -t / prefs.xml
+        @{command.name} -s -t / prefs.xml
 
 @|bold SEE ALSO|@
 

@@ -31,7 +31,7 @@
 
     Recall the first item from history:
 
-        recall 1
+        @{command.name} 1
 
 @|bold SEE ALSO|@
 

@@ -32,11 +32,11 @@
 
     List all defined aliases:
 
-        alias
+        @{command.name}
 
     Set a system property:
 
-        alias setprop set -m property
+        @{command.name} setprop set -m property
 
     Invoke the alias:
     

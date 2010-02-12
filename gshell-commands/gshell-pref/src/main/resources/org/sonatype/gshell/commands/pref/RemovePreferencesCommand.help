@@ -31,11 +31,11 @@
 
     Remove a preferences node:
 
-        pref/remove /some/path
+        @{command.name} /some/path
 
     Remove a tree of preferences:
 
-        pref/remove -r /some/path
+        @{command.name} -r /some/path
 
 @|bold SEE ALSO|@
 

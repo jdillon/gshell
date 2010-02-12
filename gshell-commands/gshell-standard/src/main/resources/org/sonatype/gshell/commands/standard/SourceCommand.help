@@ -32,4 +32,4 @@
 
     Execute commands from a local file:
 
-        source /tmp/myscript.txt
+        @{command.name} /tmp/myscript.txt
