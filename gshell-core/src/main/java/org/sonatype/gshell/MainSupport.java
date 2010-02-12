@@ -75,7 +75,7 @@ public abstract class MainSupport
         });
     }
 
-    protected final Logger log = Log.getLogger(MainSupport.class);
+    protected final Logger log = Log.getLogger(getClass());
 
     protected final IO io = new AnsiIO(StreamSet.SYSTEM_FD, true);
 
