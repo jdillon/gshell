@@ -41,16 +41,15 @@ public class LoggerListCommand
 {
     private final LoggingSystem logging;
 
-    //
-    // TODO: Include support for ^foo and foo^ for starts with/ends with?
-    //
-    
     @Option(name="n", longName="name")
     private String nameQuery;
 
 
     @Option(name="l", longName="level")
     private String levelQuery;
+
+    @Option(name="a", longName="all")
+    private boolean all;
 
     @Inject
     public LoggerListCommand(final LoggingSystem logging) {
@@ -69,7 +68,7 @@ public class LoggerListCommand
         for (String name : names) {
             if (nameQuery == null || name.contains(nameQuery)) {
                 Logger logger = logging.getLogger(name);
-                if (logger.getLevel() != null && (levelQuery == null || logger.getLevel().toString().contains(levelQuery.toUpperCase()))) {
+                if (all || logger.getLevel() != null && (levelQuery == null || logger.getLevel().toString().contains(levelQuery.toUpperCase()))) {
                     io.info("{}: {}", logger.getName(), logger.getLevel());
                 }
             }
