@@ -17,6 +17,8 @@
 package org.sonatype.gshell.commands.logging.logger;
 
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
+import jline.console.Completer;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.support.CommandActionSupport;
@@ -47,6 +49,13 @@ public class LoggerSetLevelCommand
     public LoggerSetLevelCommand(final LoggingSystem logging) {
         assert logging != null;
         this.logging = logging;
+    }
+
+    @Inject
+    public void installCompleters(final @Named("logger-name") Completer c1, final @Named("level-name") Completer c2) {
+        assert c1 != null;
+        assert c2 != null;
+        setCompleters(c1, c2, null);
     }
 
     public Object execute(final CommandContext context) throws Exception {
