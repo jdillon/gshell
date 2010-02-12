@@ -199,6 +199,14 @@ public abstract class MainSupport
         args = Arguments.clean(args);
         log.debug("Booting w/args: {}", Arrays.asList(args));
 
+        // Register default handler for uncaught exceptions
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler()
+        {
+            public void uncaughtException(final Thread thread, final Throwable cause) {
+                log.warn("Unhandled exception occurred on thread: " + thread, cause);
+            }
+        });
+        
         // Setup environment defaults
         setConsoleLogLevel(Gossip.Level.WARN);
         setTerminalType(TerminalFactory.Type.AUTO);
