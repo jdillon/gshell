@@ -38,6 +38,7 @@ import org.sonatype.gshell.command.registry.CommandRegistry;
 import org.sonatype.gshell.console.ConsoleErrorHandler;
 import org.sonatype.gshell.console.ConsolePrompt;
 import org.sonatype.gshell.guice.CoreModule;
+import org.sonatype.gshell.logging.LoggingSystem;
 import org.sonatype.gshell.shell.Shell;
 import org.sonatype.gshell.shell.ShellErrorHandler;
 import org.sonatype.gshell.shell.ShellImpl;
@@ -97,6 +98,7 @@ public abstract class CommandTestSupport
         {
             @Override
             protected void configure() {
+                bind(LoggingSystem.class).to(TestLoggingSystem.class);
                 bind(ConsolePrompt.class).to(ShellPrompt.class);
                 bind(ConsoleErrorHandler.class).to(ShellErrorHandler.class);
                 bind(Branding.class).toInstance(new TestBranding(util.resolveFile("target/shell-home")));
