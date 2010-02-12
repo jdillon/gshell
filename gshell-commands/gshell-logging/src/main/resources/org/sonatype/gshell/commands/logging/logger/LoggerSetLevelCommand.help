@@ -24,13 +24,15 @@
 
 @|bold DESCRIPTION|@
 
-    ...
+    Set the logging level of a specific logger.
 
 @{command.details}
 @|bold EXAMPLES|@
 
-    ...
+    Set the level of the 'org.sonatype' logger to DEBUG:
+
+        logging/logger/set org.sonatype DEBUG
 
 @|bold SEE ALSO|@
 
-    ...
+    @|bold logging|@, @|bold logging/logger|@

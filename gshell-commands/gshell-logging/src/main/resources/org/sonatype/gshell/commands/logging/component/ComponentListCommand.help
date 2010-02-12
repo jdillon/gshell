@@ -24,13 +24,19 @@
 
 @|bold DESCRIPTION|@
 
-    ...
+    Lists all registered components of the underlying logging system.
 
 @{command.details}
 @|bold EXAMPLES|@
 
-    ...
+    List all components:
+
+        logging/components/list
+
+    List all components matching name 'gossip':
+
+        logging/components/list -n gossip
 
 @|bold SEE ALSO|@
 
-    ...
+    @|bold logging|@
