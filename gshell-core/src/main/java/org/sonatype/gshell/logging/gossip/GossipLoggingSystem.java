@@ -30,8 +30,6 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static org.sonatype.gossip.Gossip.*;
-
 /**
  * <a href="http://github.com/jdillon/gossip">Gossip</a> {@link LoggingSystem} component.
  *
@@ -152,7 +150,7 @@ public class GossipLoggingSystem
         }
 
         public boolean isRoot() {
-            return getName().equals(ROOT_NAME);
+            return getName().equals(Gossip.Logger.ROOT_NAME);
         }
 
         @Override
