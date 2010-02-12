@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2010 the original author or authors.
+# Copyright (C) 2009 the original author(s).
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,10 +14,23 @@
 # limitations under the License.
 #
 
-command.description=List loggers.
+@|bold NAME|@
 
-command.option.nameQuery=Include loggers matching NAME
-command.option.nameQuery.token=NAME
+    @{command.name} - @{command.description}
 
-command.option.levelQuery=Include loggers matching LEVEL
-command.option.levelQuery.token=LEVEL
+@|bold SYNOPSIS|@
+
+    @|bold @{command.name}|@ [options] ...
+
+@|bold DESCRIPTION|@
+
+    ...
+
+@{command.details}
+@|bold EXAMPLES|@
+
+    ...
+
+@|bold SEE ALSO|@
+
+    ...

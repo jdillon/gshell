@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.commands.logging.component;
+package org.sonatype.gshell.commands.logging.logger;
 
 import com.google.inject.Inject;
 import org.sonatype.gshell.command.Command;

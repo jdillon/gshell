@@ -16,27 +16,19 @@
 
 package org.sonatype.gshell.logging;
 
-import java.util.Collection;
-
 /**
- * Provides generic access to the underlying logging system.
+ * Represents a logging system component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-public interface LoggingSystem
+public interface Component
 {
-    Level getLevel(String name);
+    String getName();
+
+    String getType();
+
+    // Parent, children?
     
-    Collection<? extends Level> getLevels();
-    
-    Logger getLogger(String name);
-
-    Collection<String> getLoggerNames();
-
-    Collection<Component> getComponents();
-
-    // TODO: Add configure(URL/File)
-
-    // TODO: Add flush()
+    // TODO: Properties && methods
 }

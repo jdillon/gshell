@@ -16,27 +16,31 @@
 
 package org.sonatype.gshell.logging;
 
-import java.util.Collection;
-
 /**
- * Provides generic access to the underlying logging system.
+ * Support for {@link Component} implementations.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-public interface LoggingSystem
+public abstract class ComponentSupport
+    implements Component
 {
-    Level getLevel(String name);
-    
-    Collection<? extends Level> getLevels();
-    
-    Logger getLogger(String name);
+    private final String name;
 
-    Collection<String> getLoggerNames();
+    private final String type;
 
-    Collection<Component> getComponents();
+    public ComponentSupport(final String name, final String type) {
+        assert name != null;
+        this.name = name;
+        assert type != null;
+        this.type = type;
+    }
 
-    // TODO: Add configure(URL/File)
+    public String getType() {
+        return type;
+    }
 
-    // TODO: Add flush()
+    public String getName() {
+        return name;
+    }
 }

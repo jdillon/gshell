@@ -21,35 +21,30 @@ import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.command.support.CommandActionSupport;
-import org.sonatype.gshell.logging.Logger;
+import org.sonatype.gshell.logging.Component;
 import org.sonatype.gshell.logging.LoggingSystem;
-import org.sonatype.gshell.util.cli2.Argument;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import org.sonatype.gshell.util.cli2.Option;
 
 /**
- * List loggers.
+ * List components.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Command(name="logging/logger/list")
-public class LoggerListCommand
+@Command(name="logging/component/list")
+public class ComponentListCommand
     extends CommandActionSupport
 {
     private final LoggingSystem logging;
 
-    //
-    // TODO: Add level and name query as options, not arguments.  Include support for ^foo and foo^ for starts with/ends with.
-    //
-    
-    @Argument
+    @Option(name="n", longName="name")
     private String nameQuery;
 
+    @Option(name="t", longName="type")
+    private String typeQuery;
+
     @Inject
-    public LoggerListCommand(final LoggingSystem logging) {
+    public ComponentListCommand(final LoggingSystem logging) {
         assert logging != null;
         this.logging = logging;
     }
@@ -58,16 +53,14 @@ public class LoggerListCommand
         assert context != null;
         IO io = context.getIo();
 
-        List<String> names = new ArrayList<String>();
-        names.addAll(logging.getLoggerNames());
-        Collections.sort(names);
-        
-        for (String name : names) {
-            if (nameQuery == null || name.contains(nameQuery)) {
-                Logger logger = logging.getLogger(name);
-                if (logger.getLevel() != null) {
-                    io.info("{}: {}", logger.getName(), logger.getLevel());
-                }
+        for (Component component : logging.getComponents()) {
+            String name = component.getName();
+            String type = component.getType();
+
+            if ((nameQuery == null || name.contains(nameQuery)) &&
+                (typeQuery == null || type.contains(typeQuery)))
+            {
+                io.info("{}[{}]", component.getType(), component.getName());
             }
         }
 

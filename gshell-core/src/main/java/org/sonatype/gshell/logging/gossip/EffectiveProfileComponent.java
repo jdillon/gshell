@@ -14,29 +14,29 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.logging;
+package org.sonatype.gshell.logging.gossip;
 
-import java.util.Collection;
+import org.sonatype.gossip.EffectiveProfile;
+import org.sonatype.gshell.logging.ComponentSupport;
 
 /**
- * Provides generic access to the underlying logging system.
+ * {@link org.sonatype.gshell.logging.Component} for {@link EffectiveProfile}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-public interface LoggingSystem
+public class EffectiveProfileComponent
+    extends ComponentSupport
 {
-    Level getLevel(String name);
-    
-    Collection<? extends Level> getLevels();
-    
-    Logger getLogger(String name);
+    private final EffectiveProfile profile;
 
-    Collection<String> getLoggerNames();
+    public EffectiveProfileComponent(final EffectiveProfile profile) {
+        super("main", EffectiveProfile.class.getName());
+        assert profile != null;
+        this.profile = profile;
+    }
 
-    Collection<Component> getComponents();
-
-    // TODO: Add configure(URL/File)
-
-    // TODO: Add flush()
+    public EffectiveProfile getProfile() {
+        return profile;
+    }
 }

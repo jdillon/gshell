@@ -18,6 +18,7 @@ package org.sonatype.gshell.logging.gossip;
 
 import com.google.inject.Singleton;
 import org.sonatype.gossip.Gossip;
+import org.sonatype.gshell.logging.Component;
 import org.sonatype.gshell.logging.Level;
 import org.sonatype.gshell.logging.Logger;
 import org.sonatype.gshell.logging.LoggingSystem;
@@ -25,7 +26,9 @@ import org.sonatype.gshell.logging.LoggingSystem;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * <a href="http://github.com/jdillon/gossip">Gossip</a> {@link LoggingSystem} component.
@@ -152,5 +155,18 @@ public class GossipLoggingSystem
     public Logger getLogger(final String name) {
         assert name != null;
         return new LoggerImpl(gossip.getLogger(name));
+    }
+
+    private Set<Component> components;
+
+    public Collection<Component> getComponents() {
+        if (components == null) {
+            Set<Component> set = new LinkedHashSet<Component>();
+            set.add(new EffectiveProfileComponent(gossip.getEffectiveProfile()));
+            this.components = set;
+
+            // TODO: Add the rest of the components
+        }
+        return Collections.unmodifiableSet(components);
     }
 }

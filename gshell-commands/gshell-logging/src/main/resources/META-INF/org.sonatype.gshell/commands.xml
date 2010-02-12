@@ -16,20 +16,26 @@
   ~ limitations under the License.
   -->
 
-<commands xmlns="http://sonatype.org/gshell-commands/1.1.0"
+<commands xmlns="http://sonatype.org/gshell-commands/1.2.0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://sonatype.org/gshell-commands/1.1.0 http://sonatype.org/xsd/gshell-commands-1.1.0.xsd"
-          version="1.1.0">
+          xsi:schemaLocation="http://sonatype.org/gshell-commands/1.2.0 http://sonatype.org/xsd/gshell-commands-1.2.0.xsd"
+          version="1.2.0">
 
     <command-set id="logging">
         <enabled>true</enabled>
         <autoRegisterPriority>100</autoRegisterPriority>
         <command>
-            <action>org.sonatype.gshell.commands.logging.component.LoggerSetLevelCommand</action>
+            <action>org.sonatype.gshell.commands.logging.logger.LoggerSetLevelCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.logging.component.LoggerListCommand</action>
+            <action>org.sonatype.gshell.commands.logging.logger.LoggerListCommand</action>
         </command>
+        <command>
+            <action>org.sonatype.gshell.commands.logging.component.ComponentListCommand</action>
+        </command>
+        <!--
+        TODO: Add meta-page to explain how to use logging.
+        -->
     </command-set>
 
 </commands>
