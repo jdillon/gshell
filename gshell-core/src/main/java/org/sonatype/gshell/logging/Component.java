@@ -30,6 +30,8 @@ public interface Component
 
     String getType();
 
+    Object getTarget();
+
     // Parent, children?
     
     // TODO: Properties && methods

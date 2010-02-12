@@ -16,31 +16,31 @@
 
 package org.sonatype.gshell.logging.gossip;
 
-import org.sonatype.gossip.EffectiveProfile;
+import org.sonatype.gossip.listener.Listener;
 import org.sonatype.gshell.logging.ComponentSupport;
 
 /**
- * {@link org.sonatype.gshell.logging.Component} for {@link EffectiveProfile}.
+ * {@link org.sonatype.gshell.logging.Component} for {@link Listener}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-public class EffectiveProfileComponent
+public class ListenerComponent
     extends ComponentSupport
 {
-    private final EffectiveProfile profile;
+    private final Listener listener;
 
-    public EffectiveProfileComponent(final EffectiveProfile profile) {
-        super(EffectiveProfile.class.getName());
-        assert profile != null;
-        this.profile = profile;
+    public ListenerComponent(final Listener listener) {
+        super(Listener.class.getName());
+        assert listener != null;
+        this.listener = listener;
     }
 
-    public EffectiveProfile getProfile() {
-        return profile;
+    public Listener getListener() {
+        return listener;
     }
 
     public Object getTarget() {
-        return getProfile();
+        return getListener();
     }
 }

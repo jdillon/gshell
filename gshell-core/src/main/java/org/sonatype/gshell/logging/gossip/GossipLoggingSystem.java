@@ -18,6 +18,7 @@ package org.sonatype.gshell.logging.gossip;
 
 import com.google.inject.Singleton;
 import org.sonatype.gossip.Gossip;
+import org.sonatype.gossip.listener.Listener;
 import org.sonatype.gshell.logging.Component;
 import org.sonatype.gshell.logging.Level;
 import org.sonatype.gshell.logging.Logger;
@@ -177,6 +178,11 @@ public class GossipLoggingSystem
         synchronized (components) {
             if (components.isEmpty()) {
                 components.add(new EffectiveProfileComponent(gossip.getEffectiveProfile()));
+
+                for (Listener listener : gossip.getEffectiveProfile().getListeners()) {
+                    components.add(new ListenerComponent(listener));
+                }
+                
                 // TODO: Add the rest of the components
             }
         }

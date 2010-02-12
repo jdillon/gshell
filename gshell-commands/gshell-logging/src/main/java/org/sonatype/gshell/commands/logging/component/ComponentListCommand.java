@@ -43,6 +43,9 @@ public class ComponentListCommand
     @Option(name="t", longName="type")
     private String typeQuery;
 
+    @Option(name="v", longName="verbose")
+    private boolean verbose;
+
     @Inject
     public ComponentListCommand(final LoggingSystem logging) {
         assert logging != null;
@@ -58,6 +61,9 @@ public class ComponentListCommand
                 (nameQuery == null || component.getName().contains(nameQuery)))
             {
                 io.info("{}", component);
+                if (verbose) {
+                    io.info("    {}", component.getTarget());
+                }
             }
         }
 
