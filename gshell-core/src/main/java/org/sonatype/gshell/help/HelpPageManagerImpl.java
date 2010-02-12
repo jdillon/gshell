@@ -31,10 +31,15 @@ import org.sonatype.gshell.event.EventManager;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.EventObject;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 /**
  * {@link HelpPageManager} component.
@@ -111,29 +116,35 @@ public class HelpPageManagerImpl
         // base could be null;
         assert filter != null;
 
-        List<HelpPage> pages = new ArrayList<HelpPage>();
+        Map<String,HelpPage> pages = new TreeMap<String,HelpPage>();
 
-        Node node = resolver.group();
+        // TODO: Maybe include aliases here too?
 
-        if (node.isGroup()) {
-            for (Node child : node.children()) {
-                HelpPage page = HelpPageUtil.pageFor(child, loader);
-                if (filter.accept(page)) {
-                    pages.add(page);
+        for (Node parent : resolver.searchPath()) {
+            if (parent.isGroup()) {
+                for (Node child : parent.children()) {
+                    if (!pages.containsKey(child.getName())) {
+                        HelpPage page = HelpPageUtil.pageFor(child, loader);
+                        if (filter.accept(page)) {
+                            pages.put(child.getName(), page);
+                        }
+                    }
+                }
+            }
+            else {
+                if (!pages.containsKey(parent.getName())) {
+                    pages.put(parent.getName(), HelpPageUtil.pageFor(parent, loader));
                 }
             }
         }
-        else {
-            pages.add(HelpPageUtil.pageFor(node, loader));
-        }
 
-        for (MetaHelpPage page : metaPages.values()) {
-            if (filter.accept(page)) {
-                pages.add(page);
+        for (MetaHelpPage page : getMetaPages()) {
+            if (!pages.containsKey(page.getName()) && filter.accept(page)) {
+                pages.put(page.getName(), page);
             }
         }
-        
-        return pages;
+
+        return pages.values();
     }
 
     public Collection<HelpPage> getPages() {

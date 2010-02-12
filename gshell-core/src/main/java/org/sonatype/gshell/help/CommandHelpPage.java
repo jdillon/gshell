@@ -69,6 +69,11 @@ public class CommandHelpPage
         return CommandHelpSupport.getDescription(node.getAction());
     }
 
+    @Override
+    public int hashCode() {
+        return getName().hashCode();
+    }
+
     // Public so that ObjectBasedValueSource can access (it really should set accessible so this is not needed)
     public class Helper
     {

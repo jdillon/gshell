@@ -65,4 +65,9 @@ public class GroupHelpPage
         out.println(getMessages().format("group-content-header", getName()));
         HelpPageUtil.render(out, HelpPageUtil.pagesFor(node, loader));
     }
+
+    @Override
+    public int hashCode() {
+        return getName().hashCode();
+    }
 }

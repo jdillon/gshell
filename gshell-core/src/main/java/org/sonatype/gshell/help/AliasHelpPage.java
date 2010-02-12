@@ -62,4 +62,9 @@ public class AliasHelpPage
         assert out != null;
         out.println(getMessages().format("alias-content", name, alias));
     }
+
+    @Override
+    public int hashCode() {
+        return getName().hashCode();
+    }
 }
