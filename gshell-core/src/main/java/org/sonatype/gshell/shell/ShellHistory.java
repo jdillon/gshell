@@ -17,8 +17,7 @@
 package org.sonatype.gshell.shell;
 
 import jline.console.history.FileHistory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.sonatype.gshell.io.Flusher;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,8 +32,6 @@ public class ShellHistory
     extends FileHistory
     implements History
 {
-    private final Logger log = LoggerFactory.getLogger(getClass());
-
     public ShellHistory(final File file) throws IOException {
         super(file);
 
@@ -42,12 +39,7 @@ public class ShellHistory
         {
             @Override
             public void run() {
-                try {
-                    flush();
-                }
-                catch (IOException e) {
-                    log.error("Failed to flush history", e);
-                }
+                Flusher.flush(ShellHistory.this);
             }
         });
     }
