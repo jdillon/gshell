@@ -98,7 +98,7 @@ public class HelpCommand
             else if (pages.size() > 1) {
                 // else show matching pages
                 io.out.println(getMessages().format("info.matching-pages"));
-                HelpPageUtil.renderPages(io.out, pages);
+                HelpPageUtil.render(io.out, pages);
                 return Result.SUCCESS;
             }
         }
@@ -121,6 +121,6 @@ public class HelpCommand
 
         IO io = context.getIo();
         io.out.println(getMessages().format("info.available-pages"));
-        HelpPageUtil.renderPages(io.out, pages);
+        HelpPageUtil.render(io.out, pages);
     }
 }

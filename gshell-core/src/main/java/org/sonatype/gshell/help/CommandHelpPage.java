@@ -23,6 +23,7 @@ import org.codehaus.plexus.interpolation.PropertiesBasedValueSource;
 import org.codehaus.plexus.interpolation.StringSearchInterpolator;
 import org.fusesource.jansi.AnsiRenderer;
 import org.sonatype.gshell.command.CommandAction;
+import org.sonatype.gshell.command.resolver.Node;
 import org.sonatype.gshell.command.support.CommandHelpSupport;
 import org.sonatype.gshell.command.support.CommandPreferenceSupport;
 import org.sonatype.gshell.shell.ShellHolder;
@@ -45,23 +46,27 @@ import java.io.PrintWriter;
 public class CommandHelpPage
     implements HelpPage
 {
-    private final CommandAction command;
+    private final Node node;
 
     private final HelpContentLoader loader;
 
-    public CommandHelpPage(final CommandAction command, final HelpContentLoader loader) {
-        assert command != null;
-        this.command = command;
+    private final CommandAction command;
+
+    public CommandHelpPage(final Node node, final HelpContentLoader loader) {
+        assert node != null;
+        assert !node.isGroup();
+        this.node = node;
         assert loader != null;
         this.loader = loader;
+        command = node.getAction();
     }
 
     public String getName() {
-        return command.getSimpleName();
+        return node.getAction().getSimpleName();
     }
 
     public String getDescription() {
-        return CommandHelpSupport.getDescription(command);
+        return CommandHelpSupport.getDescription(node.getAction());
     }
 
     // Public so that ObjectBasedValueSource can access (it really should set accessible so this is not needed)

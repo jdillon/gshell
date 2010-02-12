@@ -16,12 +16,11 @@
 
 package org.sonatype.gshell.help;
 
-import org.sonatype.gshell.command.CommandAction;
-import org.sonatype.gshell.command.GroupAction;
 import org.sonatype.gshell.command.resolver.Node;
 
 import java.io.PrintWriter;
 import java.util.Collection;
+import java.util.LinkedList;
 
 /**
  * {@link HelpPage} utilities.
@@ -31,7 +30,7 @@ import java.util.Collection;
  */
 public class HelpPageUtil
 {
-    public static void renderPages(final PrintWriter out, final Collection<? extends HelpPage> pages) {
+    public static void render(final PrintWriter out, final Collection<? extends HelpPage> pages) {
         assert out != null;
         assert pages != null;
 
@@ -57,16 +56,26 @@ public class HelpPageUtil
         }
     }
 
-    public static HelpPage pageForNode(final Node node, final HelpContentLoader loader) {
+    public static Collection<HelpPage> pagesFor(final Node node, final HelpContentLoader loader) {
         assert node != null;
         assert loader != null;
 
-        CommandAction action = node.getAction();
-        if (action instanceof GroupAction) {
-            return new GroupHelpPage((GroupAction)action, node.children(), loader);
+        Collection<HelpPage> pages = new LinkedList<HelpPage>();
+        for (Node child : node.children()) {
+            pages.add(pageFor(child, loader));
         }
-        else {
-            return new CommandHelpPage(action, loader);
+
+        return pages;
+    }
+
+    public static HelpPage pageFor(final Node node, final HelpContentLoader loader) {
+        assert node != null;
+        assert loader != null;
+
+        if (node.isGroup()) {
+            return new GroupHelpPage(node, loader);
         }
+
+        return new CommandHelpPage(node, loader);
     }
 }
