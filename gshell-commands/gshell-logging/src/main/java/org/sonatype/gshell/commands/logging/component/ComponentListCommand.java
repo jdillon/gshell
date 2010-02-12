@@ -62,7 +62,7 @@ public class ComponentListCommand
             {
                 io.info("{}", component);
                 if (verbose) {
-                    io.info("    {}", component.getTarget());
+                    io.info("  {}", component.getTarget());
                 }
             }
         }
