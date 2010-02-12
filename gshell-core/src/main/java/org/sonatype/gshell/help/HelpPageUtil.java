@@ -24,12 +24,12 @@ import java.io.PrintWriter;
 import java.util.Collection;
 
 /**
- * {@link HelpPage} rendering utilities.
+ * {@link HelpPage} utilities.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-public class HelpPageRenderUtil
+public class HelpPageUtil
 {
     public static void renderPages(final PrintWriter out, final Collection<? extends HelpPage> pages) {
         assert out != null;

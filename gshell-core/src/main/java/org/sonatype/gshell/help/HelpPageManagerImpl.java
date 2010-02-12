@@ -97,7 +97,7 @@ public class HelpPageManagerImpl
 
         Node node = resolver.resolve(name);
         if (node != null) {
-            return HelpPageRenderUtil.pageForNode(node, loader);
+            return HelpPageUtil.pageForNode(node, loader);
         }
 
         if (metaPages.containsKey(name)) {
@@ -117,14 +117,14 @@ public class HelpPageManagerImpl
 
         if (node.isGroup()) {
             for (Node child : node.children()) {
-                HelpPage page = HelpPageRenderUtil.pageForNode(child, loader);
+                HelpPage page = HelpPageUtil.pageForNode(child, loader);
                 if (filter.accept(page)) {
                     pages.add(page);
                 }
             }
         }
         else {
-            pages.add(HelpPageRenderUtil.pageForNode(node, loader));
+            pages.add(HelpPageUtil.pageForNode(node, loader));
         }
 
         for (MetaHelpPage page : metaPages.values()) {

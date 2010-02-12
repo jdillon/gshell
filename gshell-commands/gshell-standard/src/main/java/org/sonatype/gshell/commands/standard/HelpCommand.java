@@ -27,7 +27,7 @@ import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.help.HelpPage;
 import org.sonatype.gshell.help.HelpPageFilter;
 import org.sonatype.gshell.help.HelpPageManager;
-import org.sonatype.gshell.help.HelpPageRenderUtil;
+import org.sonatype.gshell.help.HelpPageUtil;
 import org.sonatype.gshell.util.cli2.Argument;
 
 import java.util.Collection;
@@ -98,7 +98,7 @@ public class HelpCommand
             else if (pages.size() > 1) {
                 // else show matching pages
                 io.out.println(getMessages().format("info.matching-pages"));
-                HelpPageRenderUtil.renderPages(io.out, pages);
+                HelpPageUtil.renderPages(io.out, pages);
                 return Result.SUCCESS;
             }
         }
@@ -121,6 +121,6 @@ public class HelpCommand
 
         IO io = context.getIo();
         io.out.println(getMessages().format("info.available-pages"));
-        HelpPageRenderUtil.renderPages(io.out, pages);
+        HelpPageUtil.renderPages(io.out, pages);
     }
 }

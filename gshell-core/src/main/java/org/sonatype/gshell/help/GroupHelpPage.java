@@ -73,10 +73,10 @@ public class GroupHelpPage
 
         Collection<HelpPage> pages = new LinkedList<HelpPage>();
         for (Node node : children) {
-            HelpPage page = HelpPageRenderUtil.pageForNode(node, loader);
+            HelpPage page = HelpPageUtil.pageForNode(node, loader);
             pages.add(page);
         }
 
-        HelpPageRenderUtil.renderPages(out, pages);
+        HelpPageUtil.renderPages(out, pages);
     }
 }
