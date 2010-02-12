@@ -20,7 +20,7 @@
 
 @|bold SYNOPSIS|@
 
-    @|bold @{command.name}|@ [options] ...
+    @|bold @{command.name}|@ [options] LOGGER LEVEL
 
 @|bold DESCRIPTION|@
 
