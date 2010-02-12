@@ -26,7 +26,7 @@ import org.sonatype.gshell.logging.LoggingSystem;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -51,7 +51,7 @@ public class GossipLoggingSystem
         gossip = Gossip.getInstance();
 
         // populate levels
-        Map<String,LevelImpl> levels = new HashMap<String,LevelImpl>();
+        Map<String,LevelImpl> levels = new LinkedHashMap<String,LevelImpl>();
         for (Gossip.Level level : Gossip.Level.values()) {
             levels.put(level.name().toUpperCase(), new LevelImpl(level));
         }

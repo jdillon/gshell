@@ -31,6 +31,9 @@
             <action>org.sonatype.gshell.commands.logging.logger.LoggerListCommand</action>
         </command>
         <command>
+            <action>org.sonatype.gshell.commands.logging.logger.LoggerLevelsCommand</action>
+        </command>
+        <command>
             <action>org.sonatype.gshell.commands.logging.component.ComponentListCommand</action>
         </command>
         <!--
