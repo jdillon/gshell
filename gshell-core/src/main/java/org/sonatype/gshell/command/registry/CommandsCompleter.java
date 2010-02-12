@@ -17,6 +17,7 @@
 package org.sonatype.gshell.command.registry;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import jline.console.Completer;
 import jline.console.completers.ArgumentCompleter;
 import jline.console.completers.NullCompleter;
@@ -33,6 +34,7 @@ import java.util.List;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
+@Singleton
 public class CommandsCompleter
     extends ArgumentCompleter
 {

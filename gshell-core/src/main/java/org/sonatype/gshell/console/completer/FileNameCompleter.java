@@ -18,6 +18,7 @@ package org.sonatype.gshell.console.completer;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import com.google.inject.Singleton;
 import jline.console.Completer;
 import org.sonatype.gshell.vars.Variables;
 
@@ -31,6 +32,7 @@ import static org.sonatype.gshell.vars.VariableNames.*;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
+@Singleton
 public class FileNameCompleter
     extends jline.console.completers.FileNameCompleter
     implements Completer

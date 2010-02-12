@@ -107,7 +107,6 @@ public class HelpPageManagerImpl
     }
 
     public Collection<HelpPage> getPages(final HelpPageFilter filter) {
-        // base could be null;
         assert filter != null;
 
         Map<String,HelpPage> pages = new TreeMap<String,HelpPage>();
@@ -127,10 +126,8 @@ public class HelpPageManagerImpl
                     }
                 }
             }
-            else {
-                if (!pages.containsKey(parent.getName())) {
-                    pages.put(parent.getName(), HelpPageUtil.pageFor(parent, loader));
-                }
+            else if (!pages.containsKey(parent.getName())) {
+                pages.put(parent.getName(), HelpPageUtil.pageFor(parent, loader));
             }
         }
 

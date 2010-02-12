@@ -17,6 +17,7 @@
 package org.sonatype.gshell.alias;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import jline.console.Completer;
 import jline.console.completers.StringsCompleter;
 import org.sonatype.gshell.event.EventListener;
@@ -33,6 +34,7 @@ import java.util.Map;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
+@Singleton
 public class AliasNameCompleter
     implements Completer
 {

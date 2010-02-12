@@ -17,6 +17,7 @@
 package org.sonatype.gshell.help;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import jline.console.Completer;
 import jline.console.completers.StringsCompleter;
 import org.sonatype.gshell.event.EventListener;
@@ -30,8 +31,9 @@ import java.util.List;
  * Keeps up to date automatically by handling meta-page-related events.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 2.0
+ * @since 2.5
  */
+@Singleton
 public class MetaHelpPageNameCompleter
     implements Completer
 {

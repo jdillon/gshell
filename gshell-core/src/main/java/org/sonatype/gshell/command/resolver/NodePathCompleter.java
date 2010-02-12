@@ -17,6 +17,7 @@
 package org.sonatype.gshell.command.resolver;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import jline.console.Completer;
 
 import java.util.Collection;
@@ -31,6 +32,7 @@ import static org.sonatype.gshell.command.resolver.Node.*;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
+@Singleton
 public class NodePathCompleter
     implements Completer
 {

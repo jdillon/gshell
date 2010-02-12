@@ -18,6 +18,7 @@ package org.sonatype.gshell.vars;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import com.google.inject.Singleton;
 import jline.console.Completer;
 import jline.console.completers.StringsCompleter;
 import org.sonatype.gshell.event.EventListener;
@@ -34,6 +35,7 @@ import java.util.List;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
+@Singleton
 public class VariableNameCompleter
     implements Completer
 {
