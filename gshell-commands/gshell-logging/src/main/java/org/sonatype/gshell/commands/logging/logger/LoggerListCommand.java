@@ -68,7 +68,9 @@ public class LoggerListCommand
         for (String name : names) {
             if (nameQuery == null || name.contains(nameQuery)) {
                 Logger logger = logging.getLogger(name);
-                if (all || logger.getLevel() != null && (levelQuery == null || logger.getLevel().toString().contains(levelQuery.toUpperCase()))) {
+                if (all || logger.getLevel() != null &&
+                    (levelQuery == null || logger.getLevel().toString().contains(levelQuery.toUpperCase())))
+                {
                     io.info("{}: {}", logger.getName(), logger.getLevel());
                 }
             }
