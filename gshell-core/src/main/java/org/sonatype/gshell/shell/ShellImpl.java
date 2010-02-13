@@ -18,10 +18,10 @@ package org.sonatype.gshell.shell;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
-import jline.console.Completer;
+import jline.console.completer.AggregateCompleter;
+import jline.console.completer.Completer;
 import jline.console.ConsoleReader;
-import jline.console.completers.AggregateCompleter;
-import jline.console.completers.NullCompleter;
+import jline.console.completer.NullCompleter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.branding.Branding;

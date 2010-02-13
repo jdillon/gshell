@@ -16,7 +16,7 @@
 
 package org.sonatype.gshell.command;
 
-import jline.console.Completer;
+import jline.console.completer.Completer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.command.resolver.NodePath;

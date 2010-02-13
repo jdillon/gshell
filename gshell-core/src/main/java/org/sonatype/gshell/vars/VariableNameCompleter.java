@@ -19,8 +19,8 @@ package org.sonatype.gshell.vars;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
-import jline.console.Completer;
-import jline.console.completers.StringsCompleter;
+import jline.console.completer.Completer;
+import jline.console.completer.StringsCompleter;
 import org.sonatype.gshell.event.EventListener;
 import org.sonatype.gshell.event.EventManager;
 
@@ -29,7 +29,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * {@link Completer} for variable names.
+ * {@link jline.console.completer.Completer} for variable names.
  * Keeps up to date automatically by handling variable-related events.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>

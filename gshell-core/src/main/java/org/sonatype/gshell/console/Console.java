@@ -16,10 +16,10 @@
 
 package org.sonatype.gshell.console;
 
-import jline.console.CandidateListCompletionHandler;
-import jline.console.Completer;
+import jline.console.completer.CandidateListCompletionHandler;
+import jline.console.completer.Completer;
 import jline.console.ConsoleReader;
-import jline.console.History;
+import jline.console.history.History;
 import jline.console.history.MemoryHistory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

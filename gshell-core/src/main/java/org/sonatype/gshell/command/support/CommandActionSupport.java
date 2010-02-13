@@ -16,7 +16,7 @@
 
 package org.sonatype.gshell.command.support;
 
-import jline.console.Completer;
+import jline.console.completer.Completer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.command.CommandAction;

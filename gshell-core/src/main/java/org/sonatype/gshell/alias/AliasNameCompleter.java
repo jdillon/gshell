@@ -18,8 +18,8 @@ package org.sonatype.gshell.alias;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import jline.console.Completer;
-import jline.console.completers.StringsCompleter;
+import jline.console.completer.Completer;
+import jline.console.completer.StringsCompleter;
 import org.sonatype.gshell.event.EventListener;
 import org.sonatype.gshell.event.EventManager;
 
@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * {@link Completer} for alias names.
+ * {@link jline.console.completer.Completer} for alias names.
  * Keeps up to date automatically by handling alias-related events.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>

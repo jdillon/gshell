@@ -18,7 +18,7 @@ package org.sonatype.gshell.command.resolver;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import jline.console.Completer;
+import jline.console.completer.Completer;
 
 import java.util.Collection;
 import java.util.LinkedHashSet;
@@ -27,7 +27,7 @@ import java.util.List;
 import static org.sonatype.gshell.command.resolver.Node.*;
 
 /**
- * {@link Completer} for node path names.
+ * {@link jline.console.completer.Completer} for node path names.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5

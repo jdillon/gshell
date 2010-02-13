@@ -18,7 +18,7 @@ package org.sonatype.gshell.commands.file;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
-import jline.console.Completer;
+import jline.console.completer.Completer;
 import jline.console.ConsoleReader;
 import org.fusesource.jansi.AnsiString;
 import org.sonatype.gshell.command.Command;

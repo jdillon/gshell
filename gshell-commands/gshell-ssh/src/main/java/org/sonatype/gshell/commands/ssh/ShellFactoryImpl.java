@@ -16,7 +16,7 @@
 
 package org.sonatype.gshell.commands.ssh;
 
-import jline.console.Completer;
+import jline.console.completer.Completer;
 import org.apache.sshd.common.Factory;
 import org.apache.sshd.server.Command;
 import org.apache.sshd.server.Environment;

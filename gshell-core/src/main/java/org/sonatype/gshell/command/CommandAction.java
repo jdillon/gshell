@@ -16,7 +16,7 @@
 
 package org.sonatype.gshell.command;
 
-import jline.console.Completer;
+import jline.console.completer.Completer;
 import org.sonatype.gshell.util.i18n.MessageSource;
 
 /**

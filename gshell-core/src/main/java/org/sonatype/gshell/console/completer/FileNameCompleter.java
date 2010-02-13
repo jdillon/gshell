@@ -19,7 +19,7 @@ package org.sonatype.gshell.console.completer;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
-import jline.console.Completer;
+import jline.console.completer.Completer;
 import org.sonatype.gshell.vars.Variables;
 
 import java.io.File;
@@ -27,14 +27,14 @@ import java.io.File;
 import static org.sonatype.gshell.vars.VariableNames.*;
 
 /**
- * {@link Completer} for file names.
+ * {@link jline.console.completer.Completer} for file names.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Singleton
 public class FileNameCompleter
-    extends jline.console.completers.FileNameCompleter
+    extends jline.console.completer.FileNameCompleter
     implements Completer
 {
     private final Provider<Variables> variables;

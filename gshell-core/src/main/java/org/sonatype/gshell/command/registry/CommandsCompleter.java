@@ -18,9 +18,9 @@ package org.sonatype.gshell.command.registry;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import jline.console.Completer;
-import jline.console.completers.ArgumentCompleter;
-import jline.console.completers.NullCompleter;
+import jline.console.completer.NullCompleter;
+import jline.console.completer.Completer;
+import jline.console.completer.ArgumentCompleter;
 import org.sonatype.gshell.command.resolver.CommandResolver;
 import org.sonatype.gshell.command.resolver.Node;
 import org.sonatype.gshell.command.resolver.NodePathCompleter;

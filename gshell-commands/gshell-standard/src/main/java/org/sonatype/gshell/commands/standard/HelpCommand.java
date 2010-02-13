@@ -18,8 +18,8 @@ package org.sonatype.gshell.commands.standard;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
-import jline.console.Completer;
-import jline.console.completers.AggregateCompleter;
+import jline.console.completer.AggregateCompleter;
+import jline.console.completer.Completer;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;

@@ -20,7 +20,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.name.Names;
 import jline.Terminal;
-import jline.console.Completer;
+import jline.console.completer.Completer;
 import org.fusesource.jansi.AnsiRenderer;
 import org.sonatype.gshell.alias.AliasNameCompleter;
 import org.sonatype.gshell.alias.AliasRegistry;

@@ -18,7 +18,7 @@ package org.sonatype.gshell.commands.standard;
 
 import jline.Terminal;
 import jline.WindowsTerminal;
-import jline.console.completers.EnumCompleter;
+import jline.console.completer.EnumCompleter;
 import org.fusesource.jansi.Ansi;
 import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.branding.License;

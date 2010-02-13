@@ -18,13 +18,13 @@ package org.sonatype.gshell.logging;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import jline.console.Completer;
-import jline.console.completers.StringsCompleter;
+import jline.console.completer.Completer;
+import jline.console.completer.StringsCompleter;
 
 import java.util.List;
 
 /**
- * {@link Completer} for {@link Level} names.
+ * {@link jline.console.completer.Completer} for {@link Level} names.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
