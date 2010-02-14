@@ -98,7 +98,7 @@ public class RecallHistoryCommandTest
         assertEquals(2, getShell().getHistory().size());
 
         // Recall the first, which sets foo to bar
-        Object result = executeWithArgs("0");
+        Object result = executeWithArgs("1");
         assertEqualsSuccess(result);
 
         // Make sure it executed
