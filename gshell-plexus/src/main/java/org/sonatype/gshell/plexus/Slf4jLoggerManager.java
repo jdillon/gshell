@@ -22,6 +22,7 @@ package org.sonatype.gshell.plexus;
 import org.codehaus.plexus.logging.AbstractLoggerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import static org.codehaus.plexus.logging.Logger.*;
 
 /**
  * Adapts the Plexus logging system to <a href="http://slf4j.org">SLF4J</a>.
@@ -48,7 +49,7 @@ public class Slf4jLoggerManager
     }
 
     public int getThreshold() {
-        return org.codehaus.plexus.logging.Logger.LEVEL_DEBUG;
+        return LEVEL_DEBUG;
     }
 
     public void setThresholds(final int threshold) {
@@ -58,7 +59,7 @@ public class Slf4jLoggerManager
     }
 
     public int getThreshold(final String role, final String roleHint) {
-        return org.codehaus.plexus.logging.Logger.LEVEL_DEBUG;
+        return LEVEL_DEBUG;
     }
 
     public int getActiveLoggerCount() {
@@ -143,7 +144,7 @@ public class Slf4jLoggerManager
         }
 
         public int getThreshold() {
-            return org.codehaus.plexus.logging.Logger.LEVEL_DEBUG;
+            return LEVEL_DEBUG;
         }
 
         public void setThreshold(int threshold) {
