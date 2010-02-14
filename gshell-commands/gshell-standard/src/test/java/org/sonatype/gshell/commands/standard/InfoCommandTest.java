@@ -19,7 +19,7 @@ package org.sonatype.gshell.commands.standard;
 import org.sonatype.gshell.command.support.CommandTestSupport;
 
 /**
- * Tests for the {@link org.sonatype.gshell.commands.InfoCommand}.
+ * Tests for the {@link InfoCommand}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */

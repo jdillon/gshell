@@ -20,7 +20,7 @@ import org.junit.Test;
 import org.sonatype.gshell.command.support.CommandTestSupport;
 
 /**
- * Tests for the {@link org.sonatype.gshell.commands.EchoCommand}.
+ * Tests for the {@link EchoCommand}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */

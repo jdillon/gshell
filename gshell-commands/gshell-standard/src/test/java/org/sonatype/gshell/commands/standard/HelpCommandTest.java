@@ -23,7 +23,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Tests for the {@link org.sonatype.gshell.commands.HelpCommand}.
+ * Tests for the {@link HelpCommand}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
