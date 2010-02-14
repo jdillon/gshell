@@ -41,12 +41,12 @@ public class RecallHistoryCommand
         IO io = context.getIo();
         History history = context.getShell().getHistory();
 
-        if (index < 0 || index >= history.size()) {
+        if (index < 1 || index > history.size()) {
             io.error(getMessages().format("error.no-such-index", index));
             return Result.FAILURE;
         }
 
-        CharSequence element = history.get(index);
+        CharSequence element = history.get(index - 1);
         log.debug("Recalling from history: {}", element);
 
         // Replace the last item (which was this command, with the recalled bits)
