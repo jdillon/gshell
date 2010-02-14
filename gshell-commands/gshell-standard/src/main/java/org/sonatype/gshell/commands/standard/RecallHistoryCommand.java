@@ -17,14 +17,11 @@
 package org.sonatype.gshell.commands.standard;
 
 import org.sonatype.gshell.command.Command;
-import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
+import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.shell.History;
-import org.sonatype.gshell.shell.Shell;
 import org.sonatype.gshell.util.cli2.Argument;
-
-import java.util.List;
 
 /**
  * Recall history.
@@ -44,16 +41,14 @@ public class RecallHistoryCommand
         IO io = context.getIo();
         History history = context.getShell().getHistory();
 
-        List<String> elements = history.items();
-        if (index < 0 || index >= elements.size()) {
+        if (index < 0 || index >= history.size()) {
             io.error(getMessages().format("error.no-such-index", index));
             return Result.FAILURE;
         }
 
-        String element = elements.get(index);
+        CharSequence element = history.get(index);
         log.debug("Recalling from history: {}", element);
 
-        Shell shell = context.getShell();
-        return shell.execute(element);
+        return context.getShell().execute(element);
     }
 }

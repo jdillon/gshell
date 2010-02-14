@@ -23,7 +23,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 /**
- * Tests for the {@link org.sonatype.gshell.commands.HistoryCommand}.
+ * Tests for the {@link HistoryCommand}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
@@ -47,16 +47,6 @@ public class HistoryCommandTest
             fail();
         }
         catch (Exception e) {
-            // expected
-        }
-    }
-
-    @Test
-    public void testInvalidIndex() throws Exception {
-        try {
-            executeWithArgs("foo");
-        }
-        catch (NumberFormatException e) {
             // expected
         }
     }

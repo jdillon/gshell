@@ -22,12 +22,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.branding.TestBranding;
-import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.command.support.TestUtil;
 import org.sonatype.gshell.notification.ExitNotification;
-import org.sonatype.gshell.shell.History;
 import org.sonatype.gshell.shell.Shell;
-import org.sonatype.gshell.vars.Variables;
 
 import static org.junit.Assert.*;
 
@@ -77,7 +74,7 @@ public class MainSupportTest
 
         @Override
         protected Shell createShell() throws Exception {
-            return new MockShell();
+            return new DummyShell();
         }
 
         @Override
@@ -86,49 +83,4 @@ public class MainSupportTest
         }
     }
 
-    private class MockShell
-        implements Shell
-    {
-        public Branding getBranding() {
-            return null;
-        }
-
-        public IO getIo() {
-            return null;
-        }
-
-        public Variables getVariables() {
-            return null;
-        }
-
-        public History getHistory() {
-            return null;
-        }
-
-        public boolean isOpened() {
-            return false;
-        }
-
-        public void close() {
-        }
-
-        public Object execute(String line) throws Exception {
-            return null;
-        }
-
-        public Object execute(String command, Object[] args) throws Exception {
-            return null;
-        }
-
-        public Object execute(Object... args) throws Exception {
-            return null;
-        }
-
-        public boolean isInteractive() {
-            return false;
-        }
-
-        public void run(Object... args) throws Exception {
-        }
-    }
 }

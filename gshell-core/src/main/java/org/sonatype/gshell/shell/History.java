@@ -16,9 +16,6 @@
 
 package org.sonatype.gshell.shell;
 
-import java.io.IOException;
-import java.util.List;
-
 /**
  * Provides access to a shells history.
  *
@@ -26,27 +23,9 @@ import java.util.List;
  * @since 2.0
  */
 public interface History
+    extends jline.console.history.PersistentHistory
 {
-    void add(String item);
-
-    /**
-     * Clear the history elements for the current shell's context.
-     */
-    void clear();
-
-    /**
-     * Clear the history elements for the current shell's context and purge any persistent storage.
-     *
-     * @throws IOException
-     */
-    void purge() throws IOException;
-
-    int size();
-
-    /**
-     * Returns a list of all history items.
-     *
-     * @return List of history elements; never null
-     */
-    List<String> items();
+    //
+    // HACK: For now just work off the JLine PersistentHistory intf
+    //
 }

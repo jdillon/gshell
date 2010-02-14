@@ -210,14 +210,14 @@ public class ShellImpl
 
     // FIXME: History should still be appended if not running inside of a JLineConsole
 
-    public Object execute(final String line) throws Exception {
+    public Object execute(final CharSequence line) throws Exception {
         ensureOpened();
-        return executor.execute(this, line);
+        return executor.execute(this, String.valueOf(line));
     }
 
-    public Object execute(final String command, final Object[] args) throws Exception {
+    public Object execute(final CharSequence command, final Object[] args) throws Exception {
         ensureOpened();
-        return executor.execute(this, command, args);
+        return executor.execute(this, String.valueOf(command), args);
     }
 
     public Object execute(final Object... args) throws Exception {

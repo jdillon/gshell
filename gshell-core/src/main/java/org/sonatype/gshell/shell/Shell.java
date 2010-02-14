@@ -40,9 +40,9 @@ public interface Shell
 
     void close();
 
-    Object execute(String line) throws Exception;
+    Object execute(CharSequence line) throws Exception;
 
-    Object execute(String command, Object[] args) throws Exception;
+    Object execute(CharSequence command, Object[] args) throws Exception;
 
     Object execute(Object... args) throws Exception;
 
