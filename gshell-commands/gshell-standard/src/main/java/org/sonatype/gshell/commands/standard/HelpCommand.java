@@ -24,16 +24,17 @@ import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.command.support.CommandActionSupport;
-import org.sonatype.gshell.help.AndHelpPageFilter;
 import org.sonatype.gshell.help.AliasHelpPage;
 import org.sonatype.gshell.help.HelpPage;
-import org.sonatype.gshell.help.HelpPageFilter;
 import org.sonatype.gshell.help.HelpPageManager;
 import org.sonatype.gshell.help.HelpPageUtil;
 import org.sonatype.gshell.help.MetaHelpPage;
-import org.sonatype.gshell.help.PageExcludeTypeFilter;
 import org.sonatype.gshell.util.cli2.Argument;
 import org.sonatype.gshell.util.cli2.Option;
+import org.sonatype.gshell.util.filter.AggregateFilter;
+import org.sonatype.gshell.util.filter.AndFilter;
+import org.sonatype.gshell.util.filter.Filter;
+import org.sonatype.gshell.util.filter.TypeFilter;
 import org.sonatype.gshell.util.pref.Preference;
 import org.sonatype.gshell.util.pref.Preferences;
 
@@ -101,7 +102,7 @@ public class HelpCommand
 
         // if not direct match, then look for similar pages
         if (page == null) {
-            Collection<HelpPage> pages = helpPages.getPages(filter().add(new HelpPageFilter()
+            Collection<HelpPage> pages = helpPages.getPages(filter().add(new Filter<HelpPage>()
             {
                 public boolean accept(final HelpPage page) {
                     assert page != null;
@@ -141,13 +142,13 @@ public class HelpCommand
         HelpPageUtil.render(io.out, pages);
     }
 
-    private AndHelpPageFilter filter() {
-        AndHelpPageFilter filter = new AndHelpPageFilter();
+    private AggregateFilter<HelpPage> filter() {
+        AndFilter<HelpPage> filter = new AndFilter<HelpPage>();
         if (includeAliases != null && !includeAliases) {
-            filter.getFilters().add(new PageExcludeTypeFilter(AliasHelpPage.class));
+            filter.not(new TypeFilter<HelpPage>(AliasHelpPage.class));
         }
         if (includeMeta != null && !includeMeta) {
-            filter.getFilters().add(new PageExcludeTypeFilter(MetaHelpPage.class));
+            filter.not(new TypeFilter<HelpPage>(MetaHelpPage.class));
         }
         return filter;
     }

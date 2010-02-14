@@ -14,39 +14,26 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.help;
-
-import java.util.ArrayList;
-import java.util.List;
+package org.sonatype.gshell.util.filter;
 
 /**
- * AND {@link HelpPage} filter aggregator.
+ * Filter to include objects assignable from a given type.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-public class AndHelpPageFilter
-    implements HelpPageFilter
+public class TypeFilter<T>
+    implements Filter<T>
 {
-    private final List<HelpPageFilter> filters = new ArrayList<HelpPageFilter>();
+    private Class<? extends T> type;
 
-    public List<HelpPageFilter> getFilters() {
-        return filters;
+    public TypeFilter(final Class<? extends T> type) {
+        assert type != null;
+        this.type = type;
     }
 
-    public AndHelpPageFilter add(final HelpPageFilter filter) {
-        assert filter != null;
-        getFilters().add(filter);
-        return this;
-    }
-
-    public boolean accept(final HelpPage page) {
+    public boolean accept(final T page) {
         assert page != null;
-        for (HelpPageFilter filter : getFilters()) {
-            if (!filter.accept(page)) {
-                return false;
-            }
-        }
-        return true;
+        return type.isAssignableFrom(page.getClass());
     }
 }

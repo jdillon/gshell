@@ -14,28 +14,31 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.help;
-
-import org.sonatype.gshell.command.descriptor.HelpPageDescriptor;
-import org.sonatype.gshell.util.filter.Filter;
-
-import java.util.Collection;
+package org.sonatype.gshell.util.filter;
 
 /**
- * Manages {@link HelpPage}s.
+ * Or filter.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-public interface HelpPageManager
+public class OrFilter<T>
+    extends AggregateFilter<T>
 {
-    HelpPage getPage(String name);
+    public OrFilter() {
+        // empty
+    }
 
-    Collection<HelpPage> getPages();
+    public OrFilter(final Filter<T>... filters) {
+        super(filters);
+    }
 
-    Collection<HelpPage> getPages(Filter<HelpPage> filter);
-
-    void addMetaPage(HelpPageDescriptor descriptor);
-
-    Collection<MetaHelpPage> getMetaPages();
+    public boolean accept(final T value) {
+        for (Filter<T> filter : getFilters()) {
+            if (filter.accept(value)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

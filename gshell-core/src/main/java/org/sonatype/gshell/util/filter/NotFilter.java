@@ -14,26 +14,29 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.help;
+package org.sonatype.gshell.util.filter;
 
 /**
- * Filter to include pages which are NOT of the given type.
+ * Not filter.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-public class PageExcludeTypeFilter
-    implements HelpPageFilter
+public class NotFilter<T>
+    implements Filter<T>
 {
-    private Class<? extends HelpPage> type;
+    private final Filter<T> filter;
 
-    public PageExcludeTypeFilter(final Class<? extends HelpPage> type) {
-        assert type != null;
-        this.type = type;
+    public NotFilter(final Filter<T> filter) {
+        assert filter != null;
+        this.filter = filter;
     }
 
-    public boolean accept(final HelpPage page) {
-        assert page != null;
-        return !type.isAssignableFrom(page.getClass());
+    public Filter<T> getFilter() {
+        return filter;
+    }
+
+    public boolean accept(final T value) {
+        return !filter.accept(value);
     }
 }

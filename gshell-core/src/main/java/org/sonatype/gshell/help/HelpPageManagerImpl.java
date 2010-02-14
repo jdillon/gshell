@@ -28,6 +28,7 @@ import org.sonatype.gshell.command.resolver.CommandResolver;
 import org.sonatype.gshell.command.resolver.Node;
 import org.sonatype.gshell.event.EventListener;
 import org.sonatype.gshell.event.EventManager;
+import org.sonatype.gshell.util.filter.Filter;
 
 import java.util.Collection;
 import java.util.EventObject;
@@ -108,7 +109,7 @@ public class HelpPageManagerImpl
         return null;
     }
 
-    public Collection<HelpPage> getPages(final HelpPageFilter filter) {
+    public Collection<HelpPage> getPages(final Filter<HelpPage> filter) {
         assert filter != null;
 
         List<HelpPage> pages = new LinkedList<HelpPage>();
