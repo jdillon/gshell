@@ -49,6 +49,9 @@ public class RecallHistoryCommand
         CharSequence element = history.get(index);
         log.debug("Recalling from history: {}", element);
 
+        // Replace the last item (which was this command, with the recalled bits)
+        history.replace(element);
+        
         return context.getShell().execute(element);
     }
 }
