@@ -32,7 +32,7 @@ import org.sonatype.gshell.util.filter.Filter;
 
 import java.util.Collection;
 import java.util.EventObject;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -58,7 +58,7 @@ public class HelpPageManagerImpl
 
     private final HelpContentLoader loader;
 
-    private final Map<String,MetaHelpPage> metaPages = new HashMap<String,MetaHelpPage>();
+    private final Map<String,MetaHelpPage> metaPages = new LinkedHashMap<String,MetaHelpPage>();
 
     @Inject
     public HelpPageManagerImpl(final EventManager events, final AliasRegistry aliases, final CommandResolver resolver, final HelpContentLoader loader) {
