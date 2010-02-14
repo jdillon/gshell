@@ -32,6 +32,8 @@ import org.sonatype.gshell.event.EventManager;
 import java.util.Collection;
 import java.util.EventObject;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -109,20 +111,30 @@ public class HelpPageManagerImpl
     public Collection<HelpPage> getPages(final HelpPageFilter filter) {
         assert filter != null;
 
+        List<HelpPage> pages = new LinkedList<HelpPage>();
+        for (HelpPage page : getPages()) {
+            if (filter.accept(page)) {
+                pages.add(page);
+            }
+        }
+
+        return pages;
+    }
+
+    public Collection<HelpPage> getPages() {
         Map<String,HelpPage> pages = new TreeMap<String,HelpPage>();
 
+        // Add aliases
         for (Map.Entry<String,String> entry : aliases.getAliases().entrySet()) {
             pages.put(entry.getKey(), new AliasHelpPage(entry.getKey(), entry.getValue()));
         }
 
+        // Add commands
         for (Node parent : resolver.searchPath()) {
             if (parent.isGroup()) {
                 for (Node child : parent.children()) {
                     if (!pages.containsKey(child.getName())) {
-                        HelpPage page = HelpPageUtil.pageFor(child, loader);
-                        if (filter.accept(page)) {
-                            pages.put(child.getName(), page);
-                        }
+                        pages.put(child.getName(), HelpPageUtil.pageFor(child, loader));
                     }
                 }
             }
@@ -131,22 +143,14 @@ public class HelpPageManagerImpl
             }
         }
 
+        // Add meta-pages
         for (MetaHelpPage page : getMetaPages()) {
-            if (!pages.containsKey(page.getName()) && filter.accept(page)) {
+            if (!pages.containsKey(page.getName())) {
                 pages.put(page.getName(), page);
             }
         }
 
         return pages.values();
-    }
-
-    public Collection<HelpPage> getPages() {
-        return getPages(new HelpPageFilter()
-        {
-            public boolean accept(final HelpPage page) {
-                return true;
-            }
-        });
     }
 
     public void addMetaPage(final HelpPageDescriptor desc) {

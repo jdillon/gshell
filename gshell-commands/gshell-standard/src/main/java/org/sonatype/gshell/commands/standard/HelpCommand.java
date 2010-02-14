@@ -24,11 +24,15 @@ import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.command.support.CommandActionSupport;
+import org.sonatype.gshell.help.AliasHelpPage;
 import org.sonatype.gshell.help.HelpPage;
 import org.sonatype.gshell.help.HelpPageFilter;
 import org.sonatype.gshell.help.HelpPageManager;
 import org.sonatype.gshell.help.HelpPageUtil;
 import org.sonatype.gshell.util.cli2.Argument;
+import org.sonatype.gshell.util.cli2.Option;
+import org.sonatype.gshell.util.pref.Preference;
+import org.sonatype.gshell.util.pref.Preferences;
 
 import java.util.Collection;
 
@@ -39,10 +43,15 @@ import java.util.Collection;
  * @since 2.5
  */
 @Command(name="help")
+@Preferences(path = "commands/help")
 public class HelpCommand
     extends CommandActionSupport
 {
     private final HelpPageManager helpPages;
+
+    @Preference
+    @Option(name="a", longName="include-aliases", optionalArg=true)
+    private boolean includeAliases;
 
     @Argument
     private String name;
@@ -87,7 +96,8 @@ public class HelpCommand
             {
                 public boolean accept(final HelpPage page) {
                     assert page != null;
-                    return page.getName().contains(name) || page.getDescription().contains(name);
+                    return !(!includeAliases && page instanceof AliasHelpPage) &&
+                        (page.getName().contains(name) || page.getDescription().contains(name));
                 }
             });
 
@@ -117,7 +127,13 @@ public class HelpCommand
     private void displayAvailable(final CommandContext context) {
         assert context != null;
 
-        Collection<HelpPage> pages = helpPages.getPages();
+        Collection<HelpPage> pages = helpPages.getPages(new HelpPageFilter()
+        {
+            public boolean accept(final HelpPage page) {
+                assert page != null;
+                return !(page instanceof AliasHelpPage && !includeAliases);
+            }
+        });
 
         IO io = context.getIo();
         io.out.println(getMessages().format("info.available-pages"));
