@@ -24,11 +24,14 @@ import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.command.support.CommandActionSupport;
+import org.sonatype.gshell.help.AndHelpPageFilter;
 import org.sonatype.gshell.help.AliasHelpPage;
 import org.sonatype.gshell.help.HelpPage;
 import org.sonatype.gshell.help.HelpPageFilter;
 import org.sonatype.gshell.help.HelpPageManager;
 import org.sonatype.gshell.help.HelpPageUtil;
+import org.sonatype.gshell.help.MetaHelpPage;
+import org.sonatype.gshell.help.PageExcludeTypeFilter;
 import org.sonatype.gshell.util.cli2.Argument;
 import org.sonatype.gshell.util.cli2.Option;
 import org.sonatype.gshell.util.pref.Preference;
@@ -49,9 +52,15 @@ public class HelpCommand
 {
     private final HelpPageManager helpPages;
 
+    // TODO: Add --all
+    
     @Preference
     @Option(name="a", longName="include-aliases", optionalArg=true)
-    private boolean includeAliases;
+    private Boolean includeAliases = false;
+
+    @Preference
+    @Option(name="m", longName="include-meta", optionalArg=true)
+    private Boolean includeMeta = true;
 
     @Argument
     private String name;
@@ -92,14 +101,13 @@ public class HelpCommand
 
         // if not direct match, then look for similar pages
         if (page == null) {
-            Collection<HelpPage> pages = helpPages.getPages(new HelpPageFilter()
+            Collection<HelpPage> pages = helpPages.getPages(filter().add(new HelpPageFilter()
             {
                 public boolean accept(final HelpPage page) {
                     assert page != null;
-                    return !(!includeAliases && page instanceof AliasHelpPage) &&
-                        (page.getName().contains(name) || page.getDescription().contains(name));
+                    return page.getName().contains(name) || page.getDescription().contains(name);
                 }
-            });
+            }));
 
             if (pages.size() == 1) {
                 // if there is only one match, treat as a direct match
@@ -127,16 +135,20 @@ public class HelpCommand
     private void displayAvailable(final CommandContext context) {
         assert context != null;
 
-        Collection<HelpPage> pages = helpPages.getPages(new HelpPageFilter()
-        {
-            public boolean accept(final HelpPage page) {
-                assert page != null;
-                return !(page instanceof AliasHelpPage && !includeAliases);
-            }
-        });
-
+        Collection<HelpPage> pages = helpPages.getPages(filter());
         IO io = context.getIo();
         io.out.println(getMessages().format("info.available-pages"));
         HelpPageUtil.render(io.out, pages);
+    }
+
+    private AndHelpPageFilter filter() {
+        AndHelpPageFilter filter = new AndHelpPageFilter();
+        if (includeAliases != null && !includeAliases) {
+            filter.getFilters().add(new PageExcludeTypeFilter(AliasHelpPage.class));
+        }
+        if (includeMeta != null && !includeMeta) {
+            filter.getFilters().add(new PageExcludeTypeFilter(MetaHelpPage.class));
+        }
+        return filter;
     }
 }
