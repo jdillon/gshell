@@ -24,5 +24,5 @@ package org.sonatype.gshell.ui;
  */
 public interface Renderer
 {
-
+    // void render(PrintStream out);
 }

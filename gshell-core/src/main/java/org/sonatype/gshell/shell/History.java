@@ -16,6 +16,8 @@
 
 package org.sonatype.gshell.shell;
 
+import jline.console.history.PersistentHistory;
+
 /**
  * Provides access to a shells history.
  *
@@ -23,7 +25,7 @@ package org.sonatype.gshell.shell;
  * @since 2.0
  */
 public interface History
-    extends jline.console.history.PersistentHistory
+    extends PersistentHistory
 {
     //
     // HACK: For now just work off the JLine PersistentHistory intf
