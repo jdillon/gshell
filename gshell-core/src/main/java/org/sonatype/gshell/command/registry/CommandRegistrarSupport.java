@@ -26,7 +26,7 @@ import org.sonatype.gshell.command.descriptor.DiscoveredCommandSetDescriptorEven
 import org.sonatype.gshell.command.descriptor.DiscoveredCommandsDescriptorEvent;
 import org.sonatype.gshell.command.descriptor.io.xpp3.CommandsXpp3Reader;
 import org.sonatype.gshell.event.EventManager;
-import org.sonatype.gshell.io.Closer;
+import org.sonatype.gshell.util.io.Closer;
 
 import java.io.InputStream;
 import java.net.URL;

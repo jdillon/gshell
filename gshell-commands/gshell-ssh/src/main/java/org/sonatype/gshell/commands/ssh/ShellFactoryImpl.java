@@ -21,7 +21,7 @@ import org.apache.sshd.common.Factory;
 import org.apache.sshd.server.Command;
 import org.apache.sshd.server.Environment;
 import org.apache.sshd.server.ExitCallback;
-import org.sonatype.gshell.io.Closer;
+import org.sonatype.gshell.util.io.Closer;
 
 import java.io.IOException;
 import java.io.InputStream;

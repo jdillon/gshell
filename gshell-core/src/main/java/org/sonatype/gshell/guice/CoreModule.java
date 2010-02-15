@@ -44,7 +44,7 @@ import org.sonatype.gshell.help.HelpContentLoaderImpl;
 import org.sonatype.gshell.help.HelpPageManager;
 import org.sonatype.gshell.help.HelpPageManagerImpl;
 import org.sonatype.gshell.help.MetaHelpPageNameCompleter;
-import org.sonatype.gshell.io.PromptReader;
+import org.sonatype.gshell.util.io.PromptReader;
 import org.sonatype.gshell.logging.LevelNameCompleter;
 import org.sonatype.gshell.logging.LoggerNameCompleter;
 import org.sonatype.gshell.parser.CommandLineParser;

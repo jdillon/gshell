@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.io;
+package org.sonatype.gshell.util.io;
 
 import java.io.InputStream;
 import java.io.OutputStream;

@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.sonatype.gshell.io;
+package org.sonatype.gshell.util.io;
 
 import org.slf4j.Logger;
 import org.sonatype.gossip.Log;

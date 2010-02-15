@@ -24,8 +24,8 @@ import jline.console.history.MemoryHistory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.io.InputPipe;
-import org.sonatype.gshell.io.StreamSet;
+import org.sonatype.gshell.util.io.InputPipe;
+import org.sonatype.gshell.util.io.StreamSet;
 
 import java.io.IOException;
 import java.io.InputStream;

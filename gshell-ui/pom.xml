@@ -36,7 +36,7 @@
 
         <dependency>
             <groupId>org.sonatype.gshell</groupId>
-            <artifactId>gshell-io</artifactId>
+            <artifactId>gshell-util</artifactId>
         </dependency>
 
         <dependency>

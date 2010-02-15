@@ -17,7 +17,7 @@
 package org.sonatype.gshell.branding;
 
 import org.codehaus.plexus.util.IOUtil;
-import org.sonatype.gshell.io.Closer;
+import org.sonatype.gshell.util.io.Closer;
 import org.sonatype.gshell.util.PrintBuffer;
 
 import java.io.IOException;

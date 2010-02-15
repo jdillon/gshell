@@ -18,7 +18,7 @@ package org.sonatype.gshell.help;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonatype.gshell.io.Closer;
+import org.sonatype.gshell.util.io.Closer;
 import org.sonatype.gshell.util.PrintBuffer;
 
 import java.io.BufferedReader;

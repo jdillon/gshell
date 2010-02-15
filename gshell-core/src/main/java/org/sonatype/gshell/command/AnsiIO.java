@@ -19,7 +19,7 @@ package org.sonatype.gshell.command;
 import org.fusesource.jansi.AnsiConsole;
 import org.fusesource.jansi.AnsiRenderWriter;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.io.StreamSet;
+import org.sonatype.gshell.util.io.StreamSet;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;

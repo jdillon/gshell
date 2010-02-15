@@ -22,7 +22,7 @@ import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.io.PumpStreamHandler;
+import org.sonatype.gshell.util.io.PumpStreamHandler;
 import org.sonatype.gshell.util.cli2.Argument;
 
 import java.util.List;

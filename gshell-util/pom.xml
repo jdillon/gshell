@@ -35,8 +35,8 @@
         </dependency>
 
         <dependency>
-            <groupId>org.sonatype.gshell</groupId>
-            <artifactId>gshell-io</artifactId>
+            <groupId>org.sonatype.jline</groupId>
+            <artifactId>jline</artifactId>
         </dependency>
 
         <dependency>
@@ -63,13 +63,6 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
-            <scope>test</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.sonatype.jline</groupId>
-            <artifactId>jline</artifactId>
-            <classifier>tests</classifier>
             <scope>test</scope>
         </dependency>
     </dependencies>

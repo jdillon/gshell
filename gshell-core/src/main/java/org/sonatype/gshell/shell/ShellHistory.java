@@ -17,7 +17,7 @@
 package org.sonatype.gshell.shell;
 
 import jline.console.history.FileHistory;
-import org.sonatype.gshell.io.Flusher;
+import org.sonatype.gshell.util.io.Flusher;
 
 import java.io.File;
 import java.io.IOException;

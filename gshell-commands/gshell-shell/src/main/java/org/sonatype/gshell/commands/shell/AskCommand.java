@@ -21,7 +21,7 @@ import com.google.inject.Provider;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
-import org.sonatype.gshell.io.PromptReader;
+import org.sonatype.gshell.util.io.PromptReader;
 import org.sonatype.gshell.util.cli2.Argument;
 import org.sonatype.gshell.util.cli2.Option;
 

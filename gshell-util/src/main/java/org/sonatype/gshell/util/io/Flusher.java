@@ -17,33 +17,33 @@
  * under the License.
  */
 
-package org.sonatype.gshell.io;
+package org.sonatype.gshell.util.io;
 
 import org.slf4j.Logger;
 import org.sonatype.gossip.Log;
 
-import java.io.Closeable;
+import java.io.Flushable;
 import java.io.IOException;
 
 /**
- * Quietly closes {@link Closeable} objects.
+ * Quietly flushes {@link Flushable} objects.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public class Closer
+public class Flusher
 {
-    private static final Logger log = Log.getLogger(Closer.class);
-    
-    public static void close(final Closeable... targets) {
+    private static final Logger log = Log.getLogger(Flusher.class);
+
+    public static void flush(final Flushable... targets) {
         if (targets != null) {
-            for (Closeable c : targets) {
-                if (c == null) {
+            for (Flushable f : targets) {
+                if (f == null) {
                     continue;
                 }
 
                 try {
-                    c.close();
+                    f.flush();
                 }
                 catch (IOException e) {
                     log.trace(e.getMessage(), e);

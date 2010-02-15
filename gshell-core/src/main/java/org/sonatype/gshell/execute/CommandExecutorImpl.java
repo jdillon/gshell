@@ -30,7 +30,7 @@ import org.sonatype.gshell.command.resolver.CommandResolver;
 import org.sonatype.gshell.command.resolver.Node;
 import org.sonatype.gshell.command.support.CommandHelpSupport;
 import org.sonatype.gshell.command.support.CommandPreferenceSupport;
-import org.sonatype.gshell.io.StreamJack;
+import org.sonatype.gshell.util.io.StreamJack;
 import org.sonatype.gshell.notification.ErrorNotification;
 import org.sonatype.gshell.notification.ResultNotification;
 import org.sonatype.gshell.parser.CommandLineParser;

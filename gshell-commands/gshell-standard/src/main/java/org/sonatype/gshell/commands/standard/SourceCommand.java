@@ -22,7 +22,7 @@ import jline.console.completer.Completer;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
-import org.sonatype.gshell.io.Closer;
+import org.sonatype.gshell.util.io.Closer;
 import org.sonatype.gshell.shell.Shell;
 import org.sonatype.gshell.util.FileAssert;
 import org.sonatype.gshell.util.cli2.Argument;
