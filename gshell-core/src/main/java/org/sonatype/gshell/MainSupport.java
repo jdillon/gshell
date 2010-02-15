@@ -32,7 +32,7 @@ import org.sonatype.gshell.notification.ExitNotification;
 import org.sonatype.gshell.shell.Shell;
 import org.sonatype.gshell.util.Arguments;
 import org.sonatype.gshell.util.NameValue;
-import org.sonatype.gshell.util.ansi.AnsiIO;
+import org.sonatype.gshell.command.AnsiIO;
 import org.sonatype.gshell.util.cli2.Argument;
 import org.sonatype.gshell.util.cli2.CliProcessor;
 import org.sonatype.gshell.util.cli2.HelpPrinter;

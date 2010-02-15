@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.util.ansi;
+package org.sonatype.gshell.command;
 
 import org.fusesource.jansi.AnsiConsole;
 import org.fusesource.jansi.AnsiRenderWriter;
