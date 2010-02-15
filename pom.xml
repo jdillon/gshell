@@ -197,6 +197,12 @@
 
             <dependency>
                 <groupId>org.sonatype.gshell</groupId>
+                <artifactId>gshell-util</artifactId>
+                <version>2.5-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.sonatype.gshell</groupId>
                 <artifactId>gshell-ui</artifactId>
                 <version>2.5-SNAPSHOT</version>
             </dependency>
@@ -335,6 +341,7 @@
     <modules>
         <module>gshell-bootstrap</module>
         <module>gshell-io</module>
+        <module>gshell-util</module>
         <module>gshell-ui</module>
         <module>gshell-gossip</module>
         <module>gshell-core</module>
