@@ -51,8 +51,8 @@ import org.sonatype.gshell.parser.CommandLineParser;
 import org.sonatype.gshell.parser.CommandLineParserImpl;
 import org.sonatype.gshell.shell.Shell;
 import org.sonatype.gshell.shell.ShellHolder;
-import org.sonatype.gshell.vars.VariableNameCompleter;
-import org.sonatype.gshell.vars.Variables;
+import org.sonatype.gshell.variables.VariableNameCompleter;
+import org.sonatype.gshell.variables.Variables;
 
 import java.io.IOException;
 

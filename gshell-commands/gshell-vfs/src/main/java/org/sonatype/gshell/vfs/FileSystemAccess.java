@@ -19,7 +19,7 @@ package org.sonatype.gshell.vfs;
 import org.apache.commons.vfs.FileObject;
 import org.apache.commons.vfs.FileSystemException;
 import org.apache.commons.vfs.FileSystemManager;
-import org.sonatype.gshell.vars.Variables;
+import org.sonatype.gshell.variables.Variables;
 
 import java.io.File;
 

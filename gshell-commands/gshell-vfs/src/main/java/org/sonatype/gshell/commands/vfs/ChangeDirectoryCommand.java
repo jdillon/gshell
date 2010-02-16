@@ -24,7 +24,7 @@ import org.sonatype.gshell.util.cli2.Argument;
 import org.sonatype.gshell.vfs.FileObjectAssert;
 import org.sonatype.gshell.vfs.FileObjects;
 
-import static org.sonatype.gshell.vars.VariableNames.SHELL_USER_HOME;
+import static org.sonatype.gshell.variables.VariableNames.SHELL_USER_HOME;
 
 /**
  * Changes the current directory.

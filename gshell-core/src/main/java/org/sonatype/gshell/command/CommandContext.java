@@ -17,7 +17,7 @@
 package org.sonatype.gshell.command;
 
 import org.sonatype.gshell.shell.Shell;
-import org.sonatype.gshell.vars.Variables;
+import org.sonatype.gshell.variables.Variables;
 
 /**
  * Provides commands with the context of it's execution.

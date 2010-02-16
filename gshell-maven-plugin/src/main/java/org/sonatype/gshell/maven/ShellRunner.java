@@ -33,7 +33,7 @@ import org.sonatype.gshell.shell.Shell;
 import org.sonatype.gshell.shell.ShellErrorHandler;
 import org.sonatype.gshell.shell.ShellImpl;
 import org.sonatype.gshell.shell.ShellPrompt;
-import org.sonatype.gshell.vars.Variables;
+import org.sonatype.gshell.variables.Variables;
 
 /**
  * ???

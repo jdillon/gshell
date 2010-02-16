@@ -24,12 +24,12 @@ import org.sonatype.gshell.console.ConsoleErrorHandler;
 import org.sonatype.gshell.notification.ErrorNotification;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
-import org.sonatype.gshell.vars.Variables;
+import org.sonatype.gshell.variables.Variables;
 
 import static org.fusesource.jansi.Ansi.Attribute.*;
 import static org.fusesource.jansi.Ansi.Color.*;
 import static org.fusesource.jansi.Ansi.*;
-import static org.sonatype.gshell.vars.VariableNames.*;
+import static org.sonatype.gshell.variables.VariableNames.*;
 
 /**
  * Shell {@link ConsoleErrorHandler} which renders errors with ANSI codes.

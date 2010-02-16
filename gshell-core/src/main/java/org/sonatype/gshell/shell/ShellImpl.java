@@ -37,8 +37,8 @@ import org.sonatype.gshell.util.io.Closer;
 import org.sonatype.gshell.util.io.StreamJack;
 import org.sonatype.gshell.notification.ExitNotification;
 import org.sonatype.gshell.util.Arguments;
-import org.sonatype.gshell.vars.Variables;
-import org.sonatype.gshell.vars.VariablesImpl;
+import org.sonatype.gshell.variables.Variables;
+import org.sonatype.gshell.variables.VariablesImpl;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;

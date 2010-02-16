@@ -24,7 +24,7 @@ import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.util.cli2.Argument;
 import org.sonatype.gshell.util.cli2.Option;
-import org.sonatype.gshell.vars.Variables;
+import org.sonatype.gshell.variables.Variables;
 
 import java.util.List;
 

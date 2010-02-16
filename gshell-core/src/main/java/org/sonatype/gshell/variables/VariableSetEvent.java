@@ -14,43 +14,40 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.vars;
+package org.sonatype.gshell.variables;
+
+import java.util.EventObject;
 
 /**
- * Common shell variable names.
+ * Event fired once a variable has been set.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public interface VariableNames
+public class VariableSetEvent
+    extends EventObject
 {
-    String SHELL_HOME = "shell.home";
+    ///CLOVER:OFF
 
-    String SHELL_PROGRAM = "shell.program";
+    private final String name;
 
-    String SHELL_VERSION = "shell.version";
+    private final Object previous;
 
-    String SHELL_USER_DIR = "shell.user.dir";
+    public VariableSetEvent(final String name, final Object previous) {
+        super(name);
 
-    String SHELL_USER_HOME = "shell.user.home";
+        assert name != null;
+        // previous could be null
 
-    String SHELL_PROMPT = "shell.prompt";
+        this.name = name;
+        this.previous = previous;
+    }
 
-    String SHELL_HISTORY = "shell.history";
+    public String getName() {
+        return name;
+    }
 
-    String SHELL_ERRORS = "shell.errors";
-
-    String SHELL_LOGGING = "shell.logging";
-
-    /**
-     * @since 2.5
-     */
-    String SHELL_GROUP = "shell.group";
-
-    /**
-     * @since 2.5
-     */
-    String SHELL_GROUP_PATH = "shell.group.path";
-
-    String LAST_RESULT = "_";
+    public Object getPrevious() {
+        return previous;
+    }
 }

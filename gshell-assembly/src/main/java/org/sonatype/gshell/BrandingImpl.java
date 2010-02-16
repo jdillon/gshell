@@ -23,10 +23,8 @@ import org.sonatype.gshell.branding.LicenseSupport;
 import org.sonatype.gshell.util.PrintBuffer;
 
 import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
 
-import static org.sonatype.gshell.vars.VariableNames.*;
+import static org.sonatype.gshell.variables.VariableNames.*;
 
 /**
  * Branding for <tt>gsh</tt>.

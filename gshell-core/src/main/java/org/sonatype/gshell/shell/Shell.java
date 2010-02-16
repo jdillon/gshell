@@ -18,7 +18,7 @@ package org.sonatype.gshell.shell;
 
 import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.vars.Variables;
+import org.sonatype.gshell.variables.Variables;
 
 /**
  * Provides access to execute commands.

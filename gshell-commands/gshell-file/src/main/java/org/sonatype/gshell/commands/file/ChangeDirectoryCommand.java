@@ -26,11 +26,11 @@ import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.file.FileSystemAccess;
 import org.sonatype.gshell.util.FileAssert;
 import org.sonatype.gshell.util.cli2.Argument;
-import org.sonatype.gshell.vars.Variables;
+import org.sonatype.gshell.variables.Variables;
 
 import java.io.File;
 
-import static org.sonatype.gshell.vars.VariableNames.SHELL_USER_DIR;
+import static org.sonatype.gshell.variables.VariableNames.SHELL_USER_DIR;
 
 /**
  * Changes the current directory.

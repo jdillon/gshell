@@ -20,9 +20,9 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
-import static org.sonatype.gshell.vars.VariableNames.SHELL_HOME;
-import static org.sonatype.gshell.vars.VariableNames.SHELL_PROGRAM;
-import static org.sonatype.gshell.vars.VariableNames.SHELL_VERSION;
+import static org.sonatype.gshell.variables.VariableNames.SHELL_HOME;
+import static org.sonatype.gshell.variables.VariableNames.SHELL_PROGRAM;
+import static org.sonatype.gshell.variables.VariableNames.SHELL_VERSION;
 
 /**
  * ???

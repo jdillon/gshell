@@ -25,7 +25,7 @@ import org.apache.commons.vfs.provider.DelegateFileObject;
 import org.apache.commons.vfs.provider.local.LocalFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonatype.gshell.vars.Variables;
+import org.sonatype.gshell.variables.Variables;
 
 import java.io.File;
 import java.lang.reflect.Field;

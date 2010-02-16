@@ -27,7 +27,7 @@ import org.sonatype.gshell.util.Strings;
 import org.sonatype.gshell.util.cli2.Argument;
 import org.sonatype.gshell.util.cli2.Option;
 import org.sonatype.gshell.util.i18n.MessageSource;
-import org.sonatype.gshell.vars.Variables;
+import org.sonatype.gshell.variables.Variables;
 
 import java.util.Iterator;
 import java.util.List;

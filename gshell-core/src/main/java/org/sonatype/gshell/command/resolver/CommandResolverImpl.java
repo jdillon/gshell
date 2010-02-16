@@ -28,14 +28,14 @@ import org.sonatype.gshell.command.registry.CommandRegistry;
 import org.sonatype.gshell.command.registry.CommandRemovedEvent;
 import org.sonatype.gshell.event.EventListener;
 import org.sonatype.gshell.event.EventManager;
-import org.sonatype.gshell.vars.Variables;
+import org.sonatype.gshell.variables.Variables;
 
 import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.List;
 
 import static org.sonatype.gshell.command.resolver.Node.*;
-import static org.sonatype.gshell.vars.VariableNames.*;
+import static org.sonatype.gshell.variables.VariableNames.*;
 
 /**
  * {@link CommandResolver} component.

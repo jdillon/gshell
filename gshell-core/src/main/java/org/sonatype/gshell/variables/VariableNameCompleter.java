@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.vars;
+package org.sonatype.gshell.variables;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;

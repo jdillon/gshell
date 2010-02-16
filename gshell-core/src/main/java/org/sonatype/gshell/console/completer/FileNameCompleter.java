@@ -20,11 +20,11 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import jline.console.completer.Completer;
-import org.sonatype.gshell.vars.Variables;
+import org.sonatype.gshell.variables.Variables;
 
 import java.io.File;
 
-import static org.sonatype.gshell.vars.VariableNames.*;
+import static org.sonatype.gshell.variables.VariableNames.*;
 
 /**
  * {@link jline.console.completer.Completer} for file names.

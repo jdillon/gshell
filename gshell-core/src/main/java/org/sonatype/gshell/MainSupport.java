@@ -42,15 +42,15 @@ import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
 import org.sonatype.gshell.util.pref.Preference;
 import org.sonatype.gshell.util.pref.PreferenceProcessor;
 import org.sonatype.gshell.util.pref.Preferences;
-import org.sonatype.gshell.vars.Variables;
-import org.sonatype.gshell.vars.VariablesImpl;
+import org.sonatype.gshell.variables.Variables;
+import org.sonatype.gshell.variables.VariablesImpl;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static org.sonatype.gshell.vars.VariableNames.*;
+import static org.sonatype.gshell.variables.VariableNames.*;
 
 /**
  * Support for booting shell applications.

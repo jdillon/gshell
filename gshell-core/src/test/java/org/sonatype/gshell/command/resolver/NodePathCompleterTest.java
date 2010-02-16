@@ -29,14 +29,14 @@ import org.sonatype.gshell.command.registry.CommandRegistry;
 import org.sonatype.gshell.command.registry.CommandRegistryImpl;
 import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.event.EventManagerImpl;
-import org.sonatype.gshell.vars.Variables;
-import org.sonatype.gshell.vars.VariablesImpl;
+import org.sonatype.gshell.variables.Variables;
+import org.sonatype.gshell.variables.VariablesImpl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static junit.framework.Assert.*;
-import static org.sonatype.gshell.vars.VariableNames.*;
+import static org.sonatype.gshell.variables.VariableNames.*;
 
 /**
  * Tests for {@link NodePathCompleter}.

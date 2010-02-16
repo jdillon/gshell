@@ -19,14 +19,14 @@ package org.sonatype.gshell.file;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import org.codehaus.plexus.util.Os;
-import org.sonatype.gshell.vars.Variables;
+import org.sonatype.gshell.variables.Variables;
 
 import java.io.File;
 import java.io.IOException;
 
-import static org.sonatype.gshell.vars.VariableNames.SHELL_HOME;
-import static org.sonatype.gshell.vars.VariableNames.SHELL_USER_DIR;
-import static org.sonatype.gshell.vars.VariableNames.SHELL_USER_HOME;
+import static org.sonatype.gshell.variables.VariableNames.SHELL_HOME;
+import static org.sonatype.gshell.variables.VariableNames.SHELL_USER_DIR;
+import static org.sonatype.gshell.variables.VariableNames.SHELL_USER_HOME;
 
 /**
  * {@link FileSystemAccess} component.

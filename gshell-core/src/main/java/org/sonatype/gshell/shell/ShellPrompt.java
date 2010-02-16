@@ -22,15 +22,15 @@ import org.fusesource.jansi.AnsiRenderer;
 import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.console.ConsolePrompt;
 import org.sonatype.gshell.util.ReplacementParser;
-import org.sonatype.gshell.vars.Variables;
+import org.sonatype.gshell.variables.Variables;
 
 import java.io.File;
 
-import static org.sonatype.gshell.vars.VariableNames.*;
+import static org.sonatype.gshell.variables.VariableNames.*;
 
 /**
  * Shell {@link ConsolePrompt}, which determines the prompt from the
- * {@link org.sonatype.gshell.vars.VariableNames#SHELL_PROMPT} expression.
+ * {@link org.sonatype.gshell.variables.VariableNames#SHELL_PROMPT} expression.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0

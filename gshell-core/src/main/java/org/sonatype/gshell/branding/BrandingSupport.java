@@ -21,7 +21,7 @@ import org.sonatype.gshell.shell.Shell;
 import org.sonatype.gshell.util.Strings;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
-import org.sonatype.gshell.vars.Variables;
+import org.sonatype.gshell.variables.Variables;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,7 +31,7 @@ import java.net.URL;
 import java.util.Properties;
 
 import static org.sonatype.gshell.command.resolver.Node.*;
-import static org.sonatype.gshell.vars.VariableNames.*;
+import static org.sonatype.gshell.variables.VariableNames.*;
 
 /**
  * Support for {@link Branding} implementations.

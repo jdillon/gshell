@@ -20,7 +20,7 @@ import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.shell.History;
 import org.sonatype.gshell.shell.Shell;
-import org.sonatype.gshell.vars.Variables;
+import org.sonatype.gshell.variables.Variables;
 
 /**
  * Dummy {@link Shell}.
