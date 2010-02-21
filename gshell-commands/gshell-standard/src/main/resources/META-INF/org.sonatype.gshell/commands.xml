@@ -69,6 +69,10 @@
             <name>shell-env</name>
             <resource>org.sonatype.gshell.commands.standard.help.shell-env</resource>
         </helpPage>
+        <helpPage>
+            <name>shell-navigation</name>
+            <resource>org.sonatype.gshell.commands.standard.help.shell-navigation</resource>
+        </helpPage>
     </command-set>
 
 </commands>
