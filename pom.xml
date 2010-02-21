@@ -416,6 +416,15 @@
                     <artifactId>modello-maven-plugin</artifactId>
                     <version>1.2</version>
                 </plugin>
+
+                <plugin>
+                    <groupId>org.codehaus.gmaven</groupId>
+                    <artifactId>gmaven-plugin</artifactId>
+                    <version>1.2</version>
+                    <configuration>
+                        <providerSelection>1.7</providerSelection>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
 

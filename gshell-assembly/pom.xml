@@ -28,6 +28,10 @@
     <artifactId>gshell-assembly</artifactId>
     <name>GShell :: Assembly</name>
 
+    <properties>
+        <maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
+    </properties>
+    
     <dependencies>
         <dependency>
             <groupId>org.sonatype.gshell</groupId>
@@ -92,6 +96,25 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.codehaus.gmaven</groupId>
+                <artifactId>gmaven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Force the maven.build.timestamp to be available to the m-assembly-p -->
+                            <source>
+                                pom.properties['maven.build.timestamp'] = "${maven.build.timestamp}"
+                            </source>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
