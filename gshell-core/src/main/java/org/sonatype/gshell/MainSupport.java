@@ -26,6 +26,7 @@ import org.sonatype.gossip.Log;
 import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.IO;
+import org.sonatype.gshell.shell.ShellHolder;
 import org.sonatype.gshell.util.io.StreamJack;
 import org.sonatype.gshell.util.io.StreamSet;
 import org.sonatype.gshell.notification.ExitNotification;
@@ -266,6 +267,7 @@ public abstract class MainSupport
             vars.set(SHELL_ERRORS, showErrorTraces);
 
             Shell shell = createShell();
+            ShellHolder.set(shell);
 
             if (command != null) {
                 result = shell.execute(command);
