@@ -29,11 +29,6 @@
     <name>GShell :: Assembly</name>
     <packaging>pom</packaging>
 
-    <properties>
-        <maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
-        <build.timestamp>${maven.build.timestamp}</build.timestamp>
-    </properties>
-    
     <dependencies>
         <dependency>
             <groupId>org.sonatype.gshell</groupId>
@@ -103,45 +98,29 @@
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
                     <execution>
-                        <phase>generate-resources</phase>
+                        <id>install-bootstrap</id>
+                        <phase>compile</phase>
                         <goals>
-                            <goal>unpack</goal>
+                            <goal>copy</goal>
                         </goals>
                         <configuration>
-                            <silent>true</silent>
                             <artifactItems>
                                 <artifactItem>
                                     <groupId>org.sonatype.gshell</groupId>
                                     <artifactId>gshell-bootstrap</artifactId>
+                                    <destFileName>bootstrap.jar</destFileName>
                                 </artifactItem>
                             </artifactItems>
-                            <outputDirectory>${project.build.directory}/bootstrap</outputDirectory>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-
+            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <executions>
-                    <execution>
-                        <id>bootstrap</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <configuration>
-                            <descriptors>
-                                <descriptor>src/main/assembly/bootstrap.xml</descriptor>
-                            </descriptors>
-                            <finalName>gshell</finalName>
-                            <archive>
-                                <manifestFile>${project.build.directory}/bootstrap/META-INF/MANIFEST.MF</manifestFile>
-                            </archive>
-                        </configuration>
-                    </execution>
-
                     <execution>
                         <id>bin</id>
                         <phase>package</phase>

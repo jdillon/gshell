@@ -172,12 +172,6 @@
 
             <dependency>
                 <groupId>org.sonatype.gshell</groupId>
-                <artifactId>gshell-personality</artifactId>
-                <version>2.5-SNAPSHOT</version>
-            </dependency>
-            
-            <dependency>
-                <groupId>org.sonatype.gshell</groupId>
                 <artifactId>gshell-util</artifactId>
                 <version>2.5-SNAPSHOT</version>
             </dependency>
@@ -299,6 +293,18 @@
 
             <dependency>
                 <groupId>org.sonatype.gshell</groupId>
+                <artifactId>gshell-bootstrap</artifactId>
+                <version>2.5-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.sonatype.gshell</groupId>
+                <artifactId>gshell-personality</artifactId>
+                <version>2.5-SNAPSHOT</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>org.sonatype.gshell</groupId>
                 <artifactId>gshell-assembly</artifactId>
                 <version>2.5-SNAPSHOT</version>
             </dependency>
@@ -325,10 +331,11 @@
         <module>gshell-ui</module>
         <module>gshell-gossip</module>
         <module>gshell-core</module>
-        <module>gshell-personality</module>
         <module>gshell-commands</module>
         <module>gshell-plexus</module>
         <module>gshell-maven-plugin</module>
+        <module>gshell-personality</module>
+        <module>gshell-bootstrap</module>
         <module>gshell-assembly</module>
     </modules>
     
