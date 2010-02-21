@@ -40,11 +40,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.fusesource.jansi</groupId>
-            <artifactId>jansi</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.sonatype.jline</groupId>
             <artifactId>jline</artifactId>
             <classifier>tests</classifier>

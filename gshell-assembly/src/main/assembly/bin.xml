@@ -38,7 +38,6 @@
             <includes>
                 <include>gsh.bat</include>
                 <include>echo.bat</include>
-                <include>bootstrap.properties</include>
             </includes>
             <lineEnding>dos</lineEnding>
         </fileSet>
@@ -74,6 +73,7 @@
             <useStrictFiltering>true</useStrictFiltering>
             <excludes>
                 <exclude>org.sonatype.gshell:gshell-bootstrap</exclude>
+                <exclude>org.sonatype.gshell:gshell-assembly</exclude>
             </excludes>
         </dependencySet>
     </dependencySets>

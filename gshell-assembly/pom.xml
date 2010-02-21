@@ -36,14 +36,9 @@
         
         <dependency>
             <groupId>org.sonatype.gshell</groupId>
-            <artifactId>gshell-core</artifactId>
+            <artifactId>gshell-personality</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.sonatype.gshell</groupId>
-            <artifactId>gshell-gossip</artifactId>
-        </dependency>
-        
         <dependency>
             <groupId>org.sonatype.gshell.commands</groupId>
             <artifactId>gshell-standard</artifactId>
