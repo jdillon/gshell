@@ -36,7 +36,7 @@
 
     <files>
         <file>
-            <source>src/main/underlay/bootstrap.properties</source>
+            <source>src/main/resources/bootstrap.properties</source>
             <outputDirectory>/</outputDirectory>
             <filtered>true</filtered>
         </file>

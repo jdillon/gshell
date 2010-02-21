@@ -27,6 +27,7 @@
 
     <artifactId>gshell-assembly</artifactId>
     <name>GShell :: Assembly</name>
+    <packaging>pom</packaging>
 
     <properties>
         <maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
