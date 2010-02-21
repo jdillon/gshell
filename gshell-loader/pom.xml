@@ -25,8 +25,8 @@
         <version>2.5-SNAPSHOT</version>
     </parent>
 
-    <artifactId>gshell-bootstrap</artifactId>
-    <name>GShell :: Bootstrap</name>
+    <artifactId>gshell-loader</artifactId>
+    <name>GShell :: Loader</name>
 
     <build>
         <plugins>
