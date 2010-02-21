@@ -72,7 +72,7 @@ public class ListDirectoryCommand
             listChildren(io, file);
         }
         else {
-            io.info(file.getName().getPath());
+            io.println(file.getName().getPath());
         }
 
         FileObjects.close(file);

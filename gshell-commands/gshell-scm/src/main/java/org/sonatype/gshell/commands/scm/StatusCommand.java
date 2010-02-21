@@ -66,7 +66,7 @@ public class StatusCommand
             ScmFile file = (ScmFile) iter.next();
 
             // right align all of the statuses
-            io.info("{} status for {}", StringUtils.leftPad(file.getStatus().toString(), maxLen), getRelativePath(baseDir, file.getPath()));
+            io.println("{} status for {}", StringUtils.leftPad(file.getStatus().toString(), maxLen), getRelativePath(baseDir, file.getPath()));
         }
 
         return Result.SUCCESS;

@@ -98,7 +98,7 @@ public class ResolveCommand
         else {
             artifact = rsys.createArtifact(groupId, artifactId, version, type);
         }
-        io.info("Resolving artifact: {}", artifact); // TODO: i18n
+        io.println("Resolving artifact: {}", artifact); // TODO: i18n
 
         //
         // TODO: Bring the ArtifactManager/ArtifactRepsitoryManager back to manage these components
@@ -120,9 +120,9 @@ public class ResolveCommand
         ArtifactResolutionResult result = rsys.resolve(request);
 
         Set<Artifact> artifacts = result.getArtifacts();
-        io.info("Resolved artifacts:"); // TODO: i18n
+        io.println("Resolved artifacts:"); // TODO: i18n
         for (Artifact a : artifacts) {
-            io.info("    {}", a);
+            io.println("    {}", a);
         }
 
         return Result.SUCCESS;

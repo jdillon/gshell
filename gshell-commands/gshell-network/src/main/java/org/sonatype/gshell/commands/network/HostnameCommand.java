@@ -20,6 +20,7 @@ import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
+import org.sonatype.gshell.util.cli2.Option;
 
 import java.net.InetAddress;
 
@@ -33,13 +34,18 @@ import java.net.InetAddress;
 public class HostnameCommand
     extends CommandActionSupport
 {
+    @Option(name="v", longName="verbose")
+    private boolean verbose;
+
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
         IO io = context.getIo();
 
         InetAddress localhost = InetAddress.getLocalHost();
-        io.info(localhost.getHostName());
-        io.verbose(localhost.getHostAddress());
+        io.println(localhost.getHostName());
+        if (verbose) {
+            io.println(localhost.getHostAddress());
+        }
 
         return Result.SUCCESS;
     }

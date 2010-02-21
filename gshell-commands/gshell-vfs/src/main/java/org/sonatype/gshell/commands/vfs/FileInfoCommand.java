@@ -51,73 +51,73 @@ public class FileInfoCommand
 
         FileObject file = resolveFile(context, path);
 
-        io.info("URL: {}", file.getURL());
-        io.info("Name: {}", file.getName());
-        io.info("BaseName: {}", file.getName().getBaseName());
-        io.info("Extension: {}", file.getName().getExtension());
-        io.info("Path: {}", file.getName().getPath());
-        io.info("Scheme: {}", file.getName().getScheme());
-        io.info("URI: {}", file.getName().getURI());
-        io.info("Root URI: {}", file.getName().getRootURI());
-        io.info("Parent: {}", file.getName().getParent());
-        io.info("Type: {}", file.getType());
-        io.info("Exists: {}", file.exists());
-        io.info("Readable: {}", file.isReadable());
-        io.info("Writeable: {}", file.isWriteable());
-        io.info("Root path: {}", file.getFileSystem().getRoot().getName().getPath());
+        io.println("URL: {}", file.getURL());
+        io.println("Name: {}", file.getName());
+        io.println("BaseName: {}", file.getName().getBaseName());
+        io.println("Extension: {}", file.getName().getExtension());
+        io.println("Path: {}", file.getName().getPath());
+        io.println("Scheme: {}", file.getName().getScheme());
+        io.println("URI: {}", file.getName().getURI());
+        io.println("Root URI: {}", file.getName().getRootURI());
+        io.println("Parent: {}", file.getName().getParent());
+        io.println("Type: {}", file.getType());
+        io.println("Exists: {}", file.exists());
+        io.println("Readable: {}", file.isReadable());
+        io.println("Writeable: {}", file.isWriteable());
+        io.println("Root path: {}", file.getFileSystem().getRoot().getName().getPath());
 
         if (file.exists()) {
             FileContent content = file.getContent();
             FileContentInfo contentInfo = content.getContentInfo();
-            io.info("Content type: {}", contentInfo.getContentType());
-            io.info("Content encoding: {}", contentInfo.getContentEncoding());
+            io.println("Content type: {}", contentInfo.getContentType());
+            io.println("Content encoding: {}", contentInfo.getContentEncoding());
 
             try {
                 // noinspection unchecked
                 Map<String,Object> attrs = content.getAttributes();
                 if (attrs != null && !attrs.isEmpty()) {
-                    io.info("Attributes:");
+                    io.println("Attributes:");
                     for (Map.Entry<String,Object> entry : attrs.entrySet()) {
-                        io.info("    {}='{}'", entry.getKey(), entry.getValue());
+                        io.println("    {}='{}'", entry.getKey(), entry.getValue());
                     }
                 }
             }
             catch (FileSystemException e) {
-                io.info("File attributes are NOT supported");
+                io.println("File attributes are NOT supported");
             }
 
             try {
                 Certificate[] certs = content.getCertificates();
                 if (certs != null && certs.length != 0) {
-                    io.info("Certificate:");
+                    io.println("Certificate:");
                     for (Certificate cert : certs) {
-                        io.info("    {}", cert);
+                        io.println("    {}", cert);
                     }
                 }
             }
             catch (FileSystemException e) {
-                io.info("File certificates are NOT supported");
+                io.println("File certificates are NOT supported");
             }
 
             if (file.getType().equals(FileType.FILE)) {
-                io.info("Size: {} bytes", content.getSize());
+                io.println("Size: {} bytes", content.getSize());
             }
             else if (file.getType().hasChildren() && file.isReadable()) {
                 FileObject[] children = file.getChildren();
-                io.info("Directory with {} files", children.length);
+                io.println("Directory with {} files", children.length);
 
                 for (int iterChildren = 0; iterChildren < children.length; iterChildren++) {
-                    io.info("#{}:{}", iterChildren, children[iterChildren].getName());
+                    io.println("#{}:{}", iterChildren, children[iterChildren].getName());
                     if (iterChildren > 5) {
                         break;
                     }
                 }
             }
 
-            io.info("Last modified: {}", DateFormat.getInstance().format(new Date(content.getLastModifiedTime())));
+            io.println("Last modified: {}", DateFormat.getInstance().format(new Date(content.getLastModifiedTime())));
         }
         else {
-            io.info("The file does not exist");
+            io.println("The file does not exist");
         }
 
         FileObjects.close(file);

@@ -38,7 +38,7 @@ public class DateCommand
         assert context != null;
         IO io = context.getIo();
 
-        io.info(DateFormat.getInstance().format(new Date()));
+        io.println(DateFormat.getInstance().format(new Date()));
 
         return Result.SUCCESS;
     }

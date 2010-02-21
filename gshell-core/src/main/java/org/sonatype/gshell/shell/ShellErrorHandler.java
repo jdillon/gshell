@@ -89,13 +89,7 @@ public class ShellErrorHandler
         }
 
         if (showTrace || !io.isSilent()) {
-            if (io.isVerbose()) {
-                io.err.print(ansi().a(INTENSITY_BOLD).fg(RED).a(cause.getClass().getName()).reset());
-            }
-            else {
-                io.err.print(ansi().a(INTENSITY_BOLD).fg(RED).a(cause.getClass().getSimpleName()).reset());
-            }
-
+            io.err.print(ansi().a(INTENSITY_BOLD).fg(RED).a(cause.getClass().getName()).reset());
             if (cause.getMessage() != null) {
                 io.err.print(": ");
                 io.err.print(ansi().a(INTENSITY_BOLD).fg(RED).a(cause.getMessage()).reset());
@@ -103,7 +97,7 @@ public class ShellErrorHandler
             io.err.println();
         }
 
-        if (showTrace || io.isVerbose()) {
+        if (showTrace) {
             while (cause != null) {
                 for (StackTraceElement e : cause.getStackTrace()) {
                     io.err.print("    ");

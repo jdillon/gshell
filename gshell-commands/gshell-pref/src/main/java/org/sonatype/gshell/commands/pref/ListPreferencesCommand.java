@@ -54,10 +54,10 @@ public class ListPreferencesCommand
     }
 
     private void list(final IO io, final java.util.prefs.Preferences node) throws Exception {
-        io.info("{}", ansi().fg(GREEN).a(node.absolutePath()).reset());
+        io.println("{}", ansi().fg(GREEN).a(node.absolutePath()).reset());
 
         for (String key : node.keys()) {
-            io.info("  {}: {}", ansi().a(INTENSITY_BOLD).a(key).reset(), node.get(key, null));
+            io.println("  {}: {}", ansi().a(INTENSITY_BOLD).a(key).reset(), node.get(key, null));
         }
         if (recursive) {
             for (String name : node.childrenNames()) {

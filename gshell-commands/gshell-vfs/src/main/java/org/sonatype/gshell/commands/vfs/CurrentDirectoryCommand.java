@@ -37,7 +37,7 @@ public class CurrentDirectoryCommand
         IO io = context.getIo();
 
         FileObject dir = getCurrentDirectory(context);
-        io.info(dir.getName().getURI());
+        io.println(dir.getName().getURI());
 
         FileObjects.close(dir);
 

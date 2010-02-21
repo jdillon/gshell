@@ -88,7 +88,7 @@ public class AliasCommand
         Map<String,String> aliases = aliasRegistry.getAliases();
 
         if (aliases.isEmpty()) {
-            io.info(getMessages().format("info.no-aliases"));
+            io.println(getMessages().format("info.no-aliases"));
         }
         else {
             // Determine the maximum name length

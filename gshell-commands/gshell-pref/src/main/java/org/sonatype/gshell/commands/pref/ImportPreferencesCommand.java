@@ -45,7 +45,7 @@ public class ImportPreferencesCommand
         assert context != null;
         IO io = context.getIo();
         
-        io.info("Importing preferences from: {}", source); // TODO: i18n
+        io.println("Importing preferences from: {}", source); // TODO: i18n
 
         InputStream in = new BufferedInputStream(new FileInputStream(source));
 

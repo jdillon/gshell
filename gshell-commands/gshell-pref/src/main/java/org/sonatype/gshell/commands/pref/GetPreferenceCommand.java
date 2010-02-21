@@ -41,7 +41,7 @@ public class GetPreferenceCommand
         log.info("Getting preference: {}", key);
         
         Object value = node().get(key, null);
-        io.info(value);
+        io.println(value);
 
         return value;
     }

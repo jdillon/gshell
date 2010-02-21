@@ -51,7 +51,7 @@ public class CurrentDirectoryCommand
         File dir = fileSystem.getUserDir();
         new FileAssert(dir).exists().isDirectory();
         
-        io.info(dir.getPath());
+        io.println(dir.getPath());
 
         return Result.SUCCESS;
     }

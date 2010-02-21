@@ -110,7 +110,7 @@ public class GrepCommand
 
                         buff.append(info.line);
 
-                        io.info(buff.toString());
+                        io.println(buff.toString());
                     }
                 }
             });
@@ -135,7 +135,7 @@ public class GrepCommand
         }
 
         if (count) {
-            io.info("{}", matches);
+            io.println("{}", matches);
         }
 
         return matches != 0 ? FOUND: NOT_FOUND;

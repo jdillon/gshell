@@ -56,10 +56,15 @@ public class IO
     public final PrintWriter err;
 
     /**
+     * Terminal.
+     */
+    public final Terminal term;
+
+    /**
      * The verbosity setting, which commands (and framework) should inspect and respect when
      * spitting up output to the user.
      */
-    private Verbosity verbosity = Verbosity.INFO;
+    private Verbosity verbosity = Verbosity.NORMAL;
 
     public IO(final StreamSet streams, final boolean autoFlush) {
         assert streams != null;
@@ -75,6 +80,8 @@ public class IO
         else {
             this.err = createWriter(streams.err, autoFlush);
         }
+
+        this.term = TerminalFactory.get();
     }
 
     public IO(final StreamSet streams, final Reader in, final PrintWriter out, final PrintWriter err, final boolean autoFlush) {
@@ -101,6 +108,8 @@ public class IO
         else {
             this.err = err;
         }
+
+        this.term = TerminalFactory.get();
     }
     
     /**
@@ -118,49 +127,6 @@ public class IO
     protected PrintWriter createWriter(final PrintStream out, final boolean autoFlush) {
         assert out != null;
         return new PrintWriter(out, autoFlush);
-    }
-
-    public Terminal getTerminal() {
-        return TerminalFactory.get();
-    }
-
-    //
-    // FIXME: The verbosity stuff here appears to be plain broken...
-    //
-    
-    /**
-     * Set the verbosity level.
-     */
-    public void setVerbosity(final Verbosity verbosity) {
-        assert verbosity != null;
-        this.verbosity = verbosity;
-    }
-
-    /**
-     * Returns the verbosity level.
-     */
-    public Verbosity getVerbosity() {
-        return verbosity;
-    }
-
-    public boolean isSilent() {
-        return verbosity == Verbosity.SILENT;
-    }
-
-    public boolean isQuiet() {
-        return verbosity == Verbosity.QUIET;
-    }
-
-    public boolean isInfo() {
-        return verbosity == Verbosity.INFO;
-    }
-
-    public boolean isVerbose() {
-        return verbosity == Verbosity.VERBOSE;
-    }
-
-    public boolean isDebug() {
-        return verbosity == Verbosity.DEBUG;
     }
 
     /**
@@ -196,49 +162,59 @@ public class IO
      */
     public static enum Verbosity
     {
-        DEBUG,   // 0
-        VERBOSE, // 1
-        INFO,    // 2
-        QUIET,   // 3
-        SILENT,  // 4
+        NORMAL,
+        QUIET,
+        SILENT
+    }
+
+    /**
+     * Set the verbosity level.
+     */
+    public void setVerbosity(final Verbosity verbosity) {
+        assert verbosity != null;
+        this.verbosity = verbosity;
+    }
+
+    /**
+     * Returns the verbosity level.
+     */
+    public Verbosity getVerbosity() {
+        return verbosity;
+    }
+
+    /**
+     * @since 2.5
+     */
+    public boolean isNormal() {
+        return verbosity == Verbosity.NORMAL;
+    }
+
+    public boolean isQuiet() {
+        return verbosity == Verbosity.QUIET || isSilent();
+    }
+
+    public boolean isSilent() {
+        return verbosity == Verbosity.SILENT;
     }
 
     //
     // Output Helpers
     //
 
-    public void debug(final Object msg) {
-        if (isDebug()) {
+    /**
+     * @since 2.5
+     */
+    public void println(final Object msg) {
+        if (isNormal()) {
             out.println(msg);
         }
     }
 
-    public void debug(final String format, final Object... args) {
-        if (isDebug()) {
-            out.println(MessageFormatter.arrayFormat(format, args));
-        }
-    }
-
-    public void verbose(final Object msg) {
-        if (isVerbose()) {
-            out.println(msg);
-        }
-    }
-
-    public void verbose(final String format, final Object... args) {
-        if (isVerbose()) {
-            out.println(MessageFormatter.arrayFormat(format, args));
-        }
-    }
-
-    public void info(final Object msg) {
-        if (isInfo()) {
-            out.println(msg);
-        }
-    }
-
-    public void info(final String format, final Object... args) {
-        if (isInfo()) {
+    /**
+     * @since 2.5
+     */
+    public void println(final String format, final Object... args) {
+        if (isNormal()) {
             out.println(MessageFormatter.arrayFormat(format, args));
         }
     }

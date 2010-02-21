@@ -111,7 +111,7 @@ public class FindCommand
             path = file.getName().getPath();
         }
         IO io = context.getIo();
-        io.info(path);
+        io.println(path);
     }
 
     //

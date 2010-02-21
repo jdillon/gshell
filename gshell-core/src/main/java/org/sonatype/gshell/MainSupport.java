@@ -114,7 +114,8 @@ public abstract class MainSupport
     protected void setDebug(final boolean flag) {
         if (flag) {
             setConsoleLogLevel(Gossip.Level.DEBUG);
-            io.setVerbosity(IO.Verbosity.DEBUG);
+            io.setVerbosity(IO.Verbosity.NORMAL);
+            showErrorTraces = true;
         }
     }
 
@@ -123,16 +124,8 @@ public abstract class MainSupport
     protected void setTrace(final boolean flag) {
         if (flag) {
             setConsoleLogLevel(Gossip.Level.TRACE);
-            io.setVerbosity(IO.Verbosity.DEBUG);
-        }
-    }
-
-    @Preference(name = "verbose")
-    @Option(name = "v", longName = "verbose")
-    protected void setVerbose(final boolean flag) {
-        if (flag) {
-            setConsoleLogLevel(Gossip.Level.INFO);
-            io.setVerbosity(IO.Verbosity.VERBOSE);
+            io.setVerbosity(IO.Verbosity.NORMAL);
+            showErrorTraces = true;
         }
     }
 

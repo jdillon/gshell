@@ -138,15 +138,14 @@ public class InfoCommand
 
                 case TERMINAL:
                     printlnHeader(io, "Terminal");
-                    Terminal term = io.getTerminal();
-                    println(io, "Type", term.getClass().getName());
-                    println(io, "Supported", term.isSupported());
-                    println(io, "Height", term.getHeight());
-                    println(io, "Width", term.getWidth());
-                    println(io, "ANSI", term.isAnsiSupported());
-                    println(io, "Echo", term.isEchoEnabled());
-                    if (term instanceof WindowsTerminal) {
-                        println(io, "Direct Console", ((WindowsTerminal) term).getDirectConsole());
+                    println(io, "Type", io.term.getClass().getName());
+                    println(io, "Supported", io.term.isSupported());
+                    println(io, "Height", io.term.getHeight());
+                    println(io, "Width", io.term.getWidth());
+                    println(io, "ANSI", io.term.isAnsiSupported());
+                    println(io, "Echo", io.term.isEchoEnabled());
+                    if (io.term instanceof WindowsTerminal) {
+                        println(io, "Direct Console", ((WindowsTerminal) io.term).getDirectConsole());
                     }
                     break;
 
@@ -224,7 +223,7 @@ public class InfoCommand
     }
 
     private void printlnHeader(final IO io, final String name) {
-        io.info(ansi().a(INTENSITY_BOLD).fg(GREEN).a(name).reset());
+        io.println(ansi().a(INTENSITY_BOLD).fg(GREEN).a(name).reset());
     }
 
     private long getSunOsValueAsLong(OperatingSystemMXBean os, String name) throws Exception {
@@ -276,6 +275,6 @@ public class InfoCommand
     }
 
     private void println(final IO io, final String name, final Object value) {
-        io.info(ansi().a("  ").a(INTENSITY_BOLD).a(name).reset().a(": ").a(value));
+        io.println(ansi().a("  ").a(INTENSITY_BOLD).a(name).reset().a(": ").a(value));
     }
 }

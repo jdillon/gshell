@@ -89,7 +89,7 @@ public class ListDirectoryCommand
             listChildren(io, file);
         }
         else {
-            io.info(file.getPath());
+            io.println(file.getPath());
         }
 
         return Result.SUCCESS;
@@ -114,7 +114,7 @@ public class ListDirectoryCommand
             });
         }
 
-        ConsoleReader reader = new ConsoleReader(io.streams.in, io.out, null, io.getTerminal());
+        ConsoleReader reader = new ConsoleReader(io.streams.in, io.out, null, io.term);
         reader.setPaginationEnabled(false);
 
         List<CharSequence> names = new ArrayList<CharSequence>(files.length);

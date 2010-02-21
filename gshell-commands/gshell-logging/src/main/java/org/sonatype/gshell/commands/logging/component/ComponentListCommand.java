@@ -60,9 +60,9 @@ public class ComponentListCommand
             if ((typeQuery == null || component.getType().contains(typeQuery)) &&
                 (nameQuery == null || component.getName().contains(nameQuery)))
             {
-                io.info("{}", component);
+                io.println("{}", component);
                 if (verbose) {
-                    io.info("  {}", component.getTarget());
+                    io.println("  {}", component.getTarget());
                 }
             }
         }

@@ -90,6 +90,6 @@ public class HistoryCommand
 
     private void renderElement(final IO io, final int i, final CharSequence element) {
         String index = String.format("%3d", i + 1);
-        io.info("  @|bold {}|@ {}", index, element);
+        io.println("  @|bold {}|@ {}", index, element);
     }
 }

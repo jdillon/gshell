@@ -47,7 +47,7 @@ public class LoggerLevelsCommand
         IO io = context.getIo();
 
         for (Level level : logging.getLevels()) {
-            io.info("{}", level);
+            io.println("{}", level);
         }
 
         return Result.SUCCESS;

@@ -26,6 +26,7 @@ import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.file.FileSystemAccess;
 import org.sonatype.gshell.util.FileAssert;
 import org.sonatype.gshell.util.cli2.Argument;
+import org.sonatype.gshell.util.cli2.Option;
 import org.sonatype.gshell.variables.Variables;
 
 import java.io.File;
@@ -43,7 +44,10 @@ public class ChangeDirectoryCommand
     extends CommandActionSupport
 {
     private final FileSystemAccess fileSystem;
-    
+
+    @Option(name="v", longName="verbose")
+    private boolean verbose;
+
     @Argument
     private String path;
 
@@ -76,7 +80,9 @@ public class ChangeDirectoryCommand
         new FileAssert(file).exists().isDirectory();
 
         vars.set(SHELL_USER_DIR, file.getPath());
-        io.verbose(file.getPath());
+        if (verbose) {
+            io.println(file.getPath());
+        }
 
         return Result.SUCCESS;
     }
