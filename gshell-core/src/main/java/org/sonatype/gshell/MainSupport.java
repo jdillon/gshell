@@ -163,7 +163,6 @@ public abstract class MainSupport
     @Preference(name = "terminal")
     @Option(name = "T", longName = "terminal")
     protected void setTerminalType(final String type) {
-        System.out.println("Setting terminal to type: " + type);
         TerminalFactory.configure(type);
     }
 
