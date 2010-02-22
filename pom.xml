@@ -166,7 +166,7 @@
 
             <dependency>
                 <groupId>org.sonatype.gshell</groupId>
-                <artifactId>gshell-loader</artifactId>
+                <artifactId>gshell-launcher</artifactId>
                 <version>2.5-SNAPSHOT</version>
             </dependency>
 
@@ -326,7 +326,7 @@
     </dependencies>
 
     <modules>
-        <module>gshell-loader</module>
+        <module>gshell-launcher</module>
         <module>gshell-util</module>
         <module>gshell-ui</module>
         <module>gshell-gossip</module>

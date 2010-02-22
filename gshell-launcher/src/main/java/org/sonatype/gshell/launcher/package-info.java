@@ -15,8 +15,8 @@
  */
 
 /**
- * Shell bootstrap.
+ * Shell launcher.
  *
  * @since 2.0
  */
-package org.sonatype.gshell.bootstrap;
+package org.sonatype.gshell.launcher;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sonatype.gshell.bootstrap;
+package org.sonatype.gshell.launcher;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
