@@ -36,6 +36,7 @@ import org.sonatype.gshell.util.yarn.Yarn;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -131,7 +132,7 @@ public class CliProcessor
         // Sanity check the argument indexes
         for (int i = 0; i < argumentDescriptors.size(); i++) {
             if (argumentDescriptors.get(i) == null) {
-                throw new IllegalAnnotationError("No @Argument for index: " + i);
+                throw new IllegalAnnotationError(String.format("No @Argument for index: %d", i));
             }
         }
     }
@@ -144,7 +145,7 @@ public class CliProcessor
         Argument arg = element.getAnnotation(Argument.class);
 
         if (opt != null && arg != null) {
-            throw new IllegalAnnotationError("Element can only implement @Option or @Argument, not both: " + element);
+            throw new IllegalAnnotationError(String.format("Element can only implement @Option or @Argument, not both: %s", element));
         }
 
         if (opt != null) {
@@ -155,17 +156,17 @@ public class CliProcessor
             // If the type is boolean, and its marked as optional or requires args, complain to use Boolean instead
             if (desc.getSetter().getType() == boolean.class) {
                 if (desc.isArgumentOptional() || desc.getArgs() != 0) {
-                    throw new IllegalAnnotationError("Using Boolean for advanced processing of boolean types, on: " + element);
+                    throw new IllegalAnnotationError(String.format("Using Boolean for advanced processing of boolean types, on: %s", element));
                 }
             }
 
             // Make sure we have unique names
             for (OptionDescriptor tmp : optionDescriptors) {
-                if (desc.getName().equals(tmp.getName())) {
-                    throw new IllegalAnnotationError("Duplicate @Option name: " + desc.getName() + ", on: " + element);
+                if (desc.getName() != null && desc.getName().equals(tmp.getName())) {
+                    throw new IllegalAnnotationError(String.format("Duplicate @Option name: %s, on: %s", desc.getName(), element));
                 }
                 if (desc.getLongName() != null && desc.getLongName().equals(tmp.getLongName())) {
-                    throw new IllegalAnnotationError("Duplicate @Option longName: " + desc.getLongName() + ", on: " + element);
+                    throw new IllegalAnnotationError(String.format("Duplicate @Option longName: %s, on: %s", desc.getLongName(), element));
                 }
             }
 
@@ -183,7 +184,7 @@ public class CliProcessor
             }
 
             if (argumentDescriptors.get(index) != null) {
-                throw new IllegalAnnotationError("Duplicate @Argument index: " + index + ", on: " + element);
+                throw new IllegalAnnotationError(String.format("Duplicate @Argument index: %s, on: %s", index, element));
             }
 
             argumentDescriptors.set(index, desc);
