@@ -63,7 +63,7 @@ public class Console
         // history could be null
         // bindings could be null
 
-        this.pipe = new InputPipe(io.streams, io.term, new InputPipe.InterruptHandler() {
+        this.pipe = new InputPipe(io.streams, io.getTerminal(), new InputPipe.InterruptHandler() {
             public boolean interrupt() throws Exception {
                 return interruptTask();
             }
@@ -82,7 +82,7 @@ public class Console
             this.io.streams.in,
             this.io.out,
             bindings,
-            io.term);
+            io.getTerminal());
 
         this.reader.setPaginationEnabled(true);
         this.reader.setCompletionHandler(new CandidateListCompletionHandler());
@@ -146,7 +146,7 @@ public class Console
 
                 // Need to reset the terminal in some cases after a failure
                 try {
-                    io.term.reset();
+                    io.getTerminal().reset();
                 }
                 catch (Exception e) {
                     log.error("Failed to reset terminal", e);

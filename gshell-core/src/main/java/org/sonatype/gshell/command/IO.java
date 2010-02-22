@@ -56,9 +56,11 @@ public class IO
     public final PrintWriter err;
 
     /**
-     * Terminal.
+     * The terminal associated with the given input/output.
+     *
+     * This must be initialized lazily to avoid prematurely selecting a terminal type.
      */
-    public final Terminal term;
+    private Terminal term;
 
     /**
      * The verbosity setting, which commands (and framework) should inspect and respect when
@@ -80,8 +82,6 @@ public class IO
         else {
             this.err = createWriter(streams.err, autoFlush);
         }
-
-        this.term = TerminalFactory.get();
     }
 
     public IO(final StreamSet streams, final Reader in, final PrintWriter out, final PrintWriter err, final boolean autoFlush) {
@@ -108,8 +108,6 @@ public class IO
         else {
             this.err = err;
         }
-
-        this.term = TerminalFactory.get();
     }
     
     /**
@@ -153,6 +151,12 @@ public class IO
         }
     }
 
+    public Terminal getTerminal() {
+        if (term == null) {
+            term = TerminalFactory.get();
+        }
+        return term;
+    }
     //
     // Verbosity
     //

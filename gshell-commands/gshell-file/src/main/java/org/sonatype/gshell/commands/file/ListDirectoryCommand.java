@@ -114,7 +114,7 @@ public class ListDirectoryCommand
             });
         }
 
-        ConsoleReader reader = new ConsoleReader(io.streams.in, io.out, null, io.term);
+        ConsoleReader reader = new ConsoleReader(io.streams.in, io.out, null, io.getTerminal());
         reader.setPaginationEnabled(false);
 
         List<CharSequence> names = new ArrayList<CharSequence>(files.length);

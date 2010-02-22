@@ -138,14 +138,14 @@ public class InfoCommand
 
                 case TERMINAL:
                     printlnHeader(io, "Terminal");
-                    println(io, "Type", io.term.getClass().getName());
-                    println(io, "Supported", io.term.isSupported());
-                    println(io, "Height", io.term.getHeight());
-                    println(io, "Width", io.term.getWidth());
-                    println(io, "ANSI", io.term.isAnsiSupported());
-                    println(io, "Echo", io.term.isEchoEnabled());
-                    if (io.term instanceof WindowsTerminal) {
-                        println(io, "Direct Console", ((WindowsTerminal) io.term).getDirectConsole());
+                    println(io, "Type", io.getTerminal().getClass().getName());
+                    println(io, "Supported", io.getTerminal().isSupported());
+                    println(io, "Height", io.getTerminal().getHeight());
+                    println(io, "Width", io.getTerminal().getWidth());
+                    println(io, "ANSI", io.getTerminal().isAnsiSupported());
+                    println(io, "Echo", io.getTerminal().isEchoEnabled());
+                    if (io.getTerminal() instanceof WindowsTerminal) {
+                        println(io, "Direct Console", ((WindowsTerminal) io.getTerminal()).getDirectConsole());
                     }
                     break;
 

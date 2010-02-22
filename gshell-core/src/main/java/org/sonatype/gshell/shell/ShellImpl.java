@@ -337,7 +337,7 @@ public class ShellImpl
         }
         else {
             log.trace("Using default bindings");
-            bindings = io.term.getDefaultBindings();
+            bindings = io.getTerminal().getDefaultBindings();
         }
 
         return bindings;

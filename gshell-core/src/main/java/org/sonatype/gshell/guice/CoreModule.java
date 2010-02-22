@@ -105,14 +105,14 @@ public class CoreModule
 
     @Provides
     private Terminal provideTerminal() {
-        return provideIo().term;
+        return provideIo().getTerminal();
     }
 
     @Provides
     private PromptReader providePromptReader() throws IOException {
         IO io = provideIo();
 
-        return new PromptReader(io.streams, io.term)
+        return new PromptReader(io.streams, io.getTerminal())
         {
             @Override
             public String readLine(String prompt, Validator validator) throws IOException {
