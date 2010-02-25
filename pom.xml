@@ -234,13 +234,13 @@
             <!--<dependency>-->
                 <!--<groupId>org.sonatype.gshell.commands</groupId>-->
                 <!--<artifactId>gshell-text</artifactId>-->
-                <!--<version>2.5-SNAPSHOT</version>-->
+                <!--<version>2.6-SNAPSHOT</version>-->
             <!--</dependency>-->
 
             <!--<dependency>-->
                 <!--<groupId>org.sonatype.gshell.commands</groupId>-->
                 <!--<artifactId>gshell-shell</artifactId>-->
-                <!--<version>2.5-SNAPSHOT</version>-->
+                <!--<version>2.6-SNAPSHOT</version>-->
             <!--</dependency>-->
 
             <dependency>
@@ -252,37 +252,37 @@
             <!--<dependency>-->
                 <!--<groupId>org.sonatype.gshell.commands</groupId>-->
                 <!--<artifactId>gshell-admin</artifactId>-->
-                <!--<version>2.5-SNAPSHOT</version>-->
+                <!--<version>2.6-SNAPSHOT</version>-->
             <!--</dependency>-->
 
             <!--<dependency>-->
                 <!--<groupId>org.sonatype.gshell.commands</groupId>-->
                 <!--<artifactId>gshell-vfs</artifactId>-->
-                <!--<version>2.5-SNAPSHOT</version>-->
+                <!--<version>2.6-SNAPSHOT</version>-->
             <!--</dependency>-->
 
             <!--<dependency>-->
                 <!--<groupId>org.sonatype.gshell.commands</groupId>-->
                 <!--<artifactId>gshell-ssh</artifactId>-->
-                <!--<version>2.5-SNAPSHOT</version>-->
+                <!--<version>2.6-SNAPSHOT</version>-->
             <!--</dependency>-->
 
             <!--<dependency>-->
                 <!--<groupId>org.sonatype.gshell.commands</groupId>-->
                 <!--<artifactId>gshell-bsf</artifactId>-->
-                <!--<version>2.5-SNAPSHOT</version>-->
+                <!--<version>2.6-SNAPSHOT</version>-->
             <!--</dependency>-->
 
             <!--<dependency>-->
                 <!--<groupId>org.sonatype.gshell.commands</groupId>-->
                 <!--<artifactId>gshell-artifact</artifactId>-->
-                <!--<version>2.5-SNAPSHOT</version>-->
+                <!--<version>2.6-SNAPSHOT</version>-->
             <!--</dependency>-->
 
             <!--<dependency>-->
                 <!--<groupId>org.sonatype.gshell.commands</groupId>-->
                 <!--<artifactId>gshell-scm</artifactId>-->
-                <!--<version>2.5-SNAPSHOT</version>-->
+                <!--<version>2.6-SNAPSHOT</version>-->
             <!--</dependency>-->
 
             <dependency>
