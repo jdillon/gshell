@@ -70,7 +70,21 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
+    
+    <repositories>
+        <repository>
+            <id>sonatype-public-grid</id>
+            <url>http://repository.sonatype.org/content/groups/sonatype-public-grid</url>
+        </repository>
+    </repositories>
+    
+    <pluginRepositories>
+        <pluginRepository>
+            <id>sonatype-public-grid</id>
+            <url>http://repository.sonatype.org/content/groups/sonatype-public-grid</url>
+        </pluginRepository>
+    </pluginRepositories>
+    
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -436,6 +450,30 @@
         </pluginManagement>
 
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>1.0-beta-1</version>
+                <executions>
+                    <execution>
+                        <id>enforce-versions</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <version>[3.0-alpha-7,)</version>
+                                </requireMavenVersion>
+                                <requireJavaVersion>
+                                    <version>[1.5,)</version>
+                                </requireJavaVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-remote-resources-plugin</artifactId>
