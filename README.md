@@ -8,6 +8,11 @@ License
 
 [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
+Support
+-------
+
+To submit an issue, please use the [Sonatype Issue Tracker](https://issues.sonatype.org/browse/MVNSH).
+
 Building
 --------
 
