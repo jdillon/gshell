@@ -214,12 +214,16 @@ public class IO
         }
     }
 
+    //
+    // HACK: Replacing SLF4J MessageFormatter.arrayFormat() with String.format() dynamically... need to update code to use new syntax
+    //
+
     /**
      * @since 2.5
      */
     public void println(final String format, final Object... args) {
         if (isNormal()) {
-            out.println(MessageFormatter.arrayFormat(format, args));
+            out.println(String.format(format.replaceAll("\\{\\}", "%s"), args));
         }
     }
 
@@ -231,7 +235,7 @@ public class IO
 
     public void warn(final String format, final Object... args) {
         if (!isQuiet()) {
-            err.println(MessageFormatter.arrayFormat(format, args));
+            err.println(String.format(format.replaceAll("\\{\\}", "%s"), args));
         }
     }
 
@@ -243,7 +247,7 @@ public class IO
 
     public void error(final String format, final Object... args) {
         if (!isSilent()) {
-            err.println(MessageFormatter.arrayFormat(format, args));
+            err.println(String.format(format.replaceAll("\\{\\}", "%s"), args));
         }
     }
 }
