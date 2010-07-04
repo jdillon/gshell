@@ -33,9 +33,9 @@
 
         @{command.name}
 
-    List all components matching name 'gossip':
+    List all components matching name 'foo':
 
-        @{command.name} -n gossip
+        @{command.name} -n foo
 
 @|bold SEE ALSO|@
 
