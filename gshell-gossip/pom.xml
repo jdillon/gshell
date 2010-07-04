@@ -36,8 +36,7 @@
 
         <dependency>
             <groupId>org.sonatype.gossip</groupId>
-            <artifactId>gossip</artifactId>
-            <scope>compile</scope>
+            <artifactId>gossip-core</artifactId>
         </dependency>
     </dependencies>
 

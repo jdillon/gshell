@@ -107,8 +107,14 @@
             
             <dependency>
                 <groupId>org.sonatype.gossip</groupId>
-                <artifactId>gossip</artifactId>
+                <artifactId>gossip-core</artifactId>
                 <version>1.5-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>0.9.24</version>
             </dependency>
             
             <dependency>
@@ -339,8 +345,8 @@
         </dependency>
 
         <dependency>
-            <groupId>org.sonatype.gossip</groupId>
-            <artifactId>gossip</artifactId>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

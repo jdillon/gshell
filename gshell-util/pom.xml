@@ -41,7 +41,7 @@
 
         <dependency>
             <groupId>org.sonatype.gossip</groupId>
-            <artifactId>gossip</artifactId>
+            <artifactId>gossip-core</artifactId>
         </dependency>
         
         <dependency>

@@ -54,10 +54,10 @@
             <artifactId>guice</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.sonatype.gossip</groupId>
-            <artifactId>gossip</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.sonatype.gossip</groupId>-->
+            <!--<artifactId>gossip-core</artifactId>-->
+        <!--</dependency>-->
         
         <dependency>
             <groupId>commons-jexl</groupId>
