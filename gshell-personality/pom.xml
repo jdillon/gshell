@@ -34,15 +34,15 @@
             <artifactId>gshell-core</artifactId>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>org.sonatype.gshell</groupId>-->
-            <!--<artifactId>gshell-gossip</artifactId>-->
-        <!--</dependency>-->
-
         <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
+            <groupId>org.sonatype.gshell</groupId>
+            <artifactId>gshell-gossip</artifactId>
         </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>ch.qos.logback</groupId>-->
+            <!--<artifactId>logback-classic</artifactId>-->
+        <!--</dependency>-->
     </dependencies>
 
 </project>

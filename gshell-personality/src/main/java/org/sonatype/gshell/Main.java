@@ -30,6 +30,7 @@ import org.sonatype.gshell.console.ConsolePrompt;
 import org.sonatype.gshell.guice.CoreModule;
 import org.sonatype.gshell.logging.LoggingSystem;
 import org.sonatype.gshell.logging.NopLoggingSystem;
+import org.sonatype.gshell.logging.gossip.GossipLoggingSystem;
 import org.sonatype.gshell.shell.Shell;
 import org.sonatype.gshell.shell.ShellErrorHandler;
 import org.sonatype.gshell.shell.ShellImpl;
@@ -56,7 +57,7 @@ public class Main
         {
             @Override
             protected void configure() {
-                bind(LoggingSystem.class).to(NopLoggingSystem.class);
+                bind(LoggingSystem.class).to(GossipLoggingSystem.class);
                 bind(ConsolePrompt.class).to(ShellPrompt.class);
                 bind(ConsoleErrorHandler.class).to(ShellErrorHandler.class);
                 bind(Branding.class).toInstance(getBranding());
