@@ -41,6 +41,14 @@ public class Slf4jLoggerManager
         return createLogger(toMapKey(role, roleHint));
     }
 
+    protected String toMapKey(final String role, final String roleHint) {
+         if ( roleHint == null ) {
+             return role;
+         } else {
+             return role + ":" + roleHint;
+         }
+    }
+
     public void returnComponentLogger(final String role, final String roleHint) {
         // Ignore
     }
