@@ -139,7 +139,9 @@ public abstract class CommandTestSupport
         aliasRegistry = null;
         vars = null;
         io = null;
-        shell.close();
+        if (shell != null) {
+            shell.close();
+        }
         shell = null;
         requiredCommands.clear();
     }
