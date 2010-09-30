@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!--
+  ~ Copyright (c) 2010 Sonatype, Inc. All rights reserved.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<prerequisites>
+		<maven>3.0</maven>
+	</prerequisites>
+
+	<parent>
+		<groupId>org.sonatype.gshell</groupId>
+		<artifactId>gshell</artifactId>
+		<version>2.5.2-SNAPSHOT</version>
+	</parent>
+
+	<groupId>org.sonatype.gshell.dist</groupId>
+	<artifactId>gshell-dist</artifactId>
+	<name>GShell :: Dist (Aggregator)</name>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>gshell-commands-basic</module>
+		<module>gshell-commands-addons</module>
+		<module>gshell-resources</module>
+		<module>gshell-advice</module>
+		<module>gshell-assembly</module>
+	</modules>
+
+	<properties>
+		<tycho.p2.version>0.1.2</tycho.p2.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.sonatype.gshell.dist</groupId>
+				<artifactId>gshell-resources</artifactId>
+				<version>2.5.2-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.sonatype.gshell.dist</groupId>
+				<artifactId>gshell-commands-basic</artifactId>
+				<version>2.5.2-SNAPSHOT</version>
+				<type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>org.sonatype.gshell.dist</groupId>
+				<artifactId>gshell-commands-addons</artifactId>
+				<version>2.5.2-SNAPSHOT</version>
+				<type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>org.sonatype.gshell.dist</groupId>
+				<artifactId>gshell-advice</artifactId>
+				<version>2.5.2-SNAPSHOT</version>
+				<type>advice</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.sonatype.maven.plugins</groupId>
+					<artifactId>maven-p2-publisher-plugin</artifactId>
+					<version>${tycho.p2.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+</project>

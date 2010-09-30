@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2010 Sonatype, Inc. All rights reserved.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.sonatype.gshell.dist</groupId>
+        <artifactId>gshell-dist</artifactId>
+        <version>2.5.2-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>gshell-commands-addons</artifactId>
+    <name>Gshell :: GShell :: Addon Commands</name>
+    <packaging>pom</packaging>
+
+    <description>
+        Additional (beside basic) GShell commands.
+    </description>
+
+<!--    <dependencies>-->
+<!--        <dependency>-->
+<!--            <groupId>org.sonatype.gshell.commands</groupId>-->
+<!--            <artifactId>gshell-shell</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.sonatype.gshell.commands</groupId>-->
+<!--            <artifactId>gshell-artifact</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.sonatype.gshell.commands</groupId>-->
+<!--            <artifactId>gshell-text</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.sonatype.gshell.commands</groupId>-->
+<!--            <artifactId>gshell-vfs</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.sonatype.gshell.commands</groupId>-->
+<!--            <artifactId>gshell-scm</artifactId>-->
+<!--        </dependency>    -->
+<!--    </dependencies>-->
+
+</project>

@@ -369,6 +369,7 @@
         <module>gshell-personality</module>
         <module>gshell-bootstrap</module>
         <module>gshell-assembly</module>
+        <module>gshell-dist</module>
     </modules>
     
     <build>

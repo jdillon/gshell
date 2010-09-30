@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2010 Sonatype, Inc. All rights reserved.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.sonatype.gshell.dist</groupId>
+        <artifactId>gshell-dist</artifactId>
+        <version>2.5.2-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>gshell-commands-basic</artifactId>
+    <name>Gshell :: Dist :: Basic Commands</name>
+    <packaging>pom</packaging>
+
+    <description>
+        GShell commands included in the standard distribution.
+    </description>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.sonatype.gshell.commands</groupId>
+            <artifactId>gshell-logging</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.sonatype.gshell.commands</groupId>
+            <artifactId>gshell-pref</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.sonatype.gshell.commands</groupId>
+            <artifactId>gshell-file</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.sonatype.gshell.commands</groupId>
+            <artifactId>gshell-network</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<assembly>
+
+	<advices>
+
+		<advice>
+			<appliesTo>
+				<includes>
+					<include>org.sonatype.gshell.dist:gshell-resources</include>
+				</includes>
+			</appliesTo>
+			<unit>
+				<touchpoint id='org.sonatype.tycho.p2.touchpoint' version='0.1.0' />
+				<touchpointData>
+					<instructions>
+						<instruction key='install'>
+							natives:unzip( source:${artifact.location}, target:${installFolder}/, exclude:META-INF/** );
+							generic:chmod( targetDir:${installFolder}, targetFile:bin/echo, permissions:755 );
+							generic:chmod( targetDir:${installFolder}, targetFile:bin/gsh, permissions:755 );
+                        </instruction>
+						<instruction key='uninstall'>
+							natives:cleanunzip( source:${artifact.location},target:${installFolder}/ );
+						</instruction>
+					</instructions>
+				</touchpointData>
+			</unit>
+		</advice>
+
+		<advice>
+			<appliesTo>
+				<includes>
+					<include>org.sonatype.gshell:gshell-bootstrap</include>
+				</includes>
+			</appliesTo>
+			<unit>
+				<touchpoint id='org.sonatype.tycho.p2.touchpoint' version='0.1.0' />
+				<touchpointData>
+					<instructions>
+						<instruction key='install'>
+							natives:copy( source:${artifact.location}, target:${installFolder}/boot/bootstrap.jar );                
+            			</instruction>
+						<instruction key='uninstall'>
+							natives:cleanupcopy( source:${artifact.location}, target:${installFolder}/boot/bootstrap.jar ); 
+						</instruction>
+					</instructions>
+				</touchpointData>
+			</unit>
+		</advice>
+
+		<advice>
+			<appliesTo>
+				<includes>
+					<include>org.sonatype.gshell:gshell-personality</include>
+					<include>org.sonatype.gshell.commands:gshell-standard</include>
+					<!-- TODO The following should not be listed as is an transitive dependency -->
+					<include>org.slf4j:slf4j-api</include>
+				</includes>
+			</appliesTo>
+			<appliesTransitively>true</appliesTransitively>
+			<unit>
+				<touchpoint id='org.sonatype.tycho.p2.touchpoint' version='0.1.0' />
+				<touchpointData>
+					<instructions>
+						<instruction key='install'>
+							natives:copy( source:${artifact.location}, target:${installFolder}/lib/${maven:fileName} );                
+    			        </instruction>
+						<instruction key='uninstall'>
+							natives:cleanupcopy( source:${artifact.location}, target:${installFolder}/lib/${maven:fileName} );
+            			</instruction>
+					</instructions>
+				</touchpointData>
+			</unit>
+		</advice>
+		
+		<advice>
+			<appliesTo>
+				<includes>
+					<include>org.sonatype.gshell.dist:gshell-commands-basic</include>
+				</includes>
+			</appliesTo>
+			<appliesTransitively>true</appliesTransitively>
+			<appliesToSelf>false</appliesToSelf>
+			<unit>
+				<touchpoint id='org.sonatype.tycho.p2.touchpoint' version='0.1.0' />
+				<touchpointData>
+					<instructions>
+						<instruction key='install'>
+							natives:copy( source:${artifact.location}, target:${installFolder}/lib/${maven:fileName} );                
+    			        </instruction>
+						<instruction key='uninstall'>
+							natives:cleanupcopy( source:${artifact.location}, target:${installFolder}/lib/${maven:fileName} );
+            			</instruction>
+					</instructions>
+				</touchpointData>
+			</unit>
+		</advice>		
+
+	</advices>
+
+</assembly>  
