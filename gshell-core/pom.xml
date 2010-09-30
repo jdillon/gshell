@@ -50,8 +50,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.google.inject</groupId>
-            <artifactId>guice</artifactId>
+            <groupId>org.sonatype.spice.inject</groupId>
+            <artifactId>guice-patches</artifactId>
+            <classifier>noaop</classifier>
         </dependency>
         
         <dependency>

@@ -158,11 +158,12 @@
                 <version>1.2</version>
             </dependency>
             
-            <dependency>
-                <groupId>com.google.inject</groupId>
-                <artifactId>guice</artifactId>
-                <version>2.0</version>
-            </dependency>
+	        <dependency>
+	            <groupId>org.sonatype.spice.inject</groupId>
+	            <artifactId>guice-patches</artifactId>
+	            <version>2.1.6</version>
+	            <classifier>noaop</classifier>
+	        </dependency>
 
             <dependency>
                 <groupId>com.google.inject.extensions</groupId>
