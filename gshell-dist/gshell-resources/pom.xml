@@ -14,7 +14,7 @@
     </parent>
 
     <artifactId>gshell-resources</artifactId>
-    <name>Gshell :: Dist :: Scripts</name>
+    <name>Gshell Dist :: Scripts</name>
 
     <description>
         Resources to be layered on assembly

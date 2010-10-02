@@ -15,7 +15,7 @@
     </parent>
 
     <artifactId>gshell-assembly</artifactId>
-    <name>GShell :: Dist :: Assembly</name>
+    <name>GShell Dist :: Assembly</name>
     <packaging>pom</packaging>
 
     <dependencies>

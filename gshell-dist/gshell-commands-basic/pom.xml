@@ -14,7 +14,7 @@
     </parent>
 
     <artifactId>gshell-commands-basic</artifactId>
-    <name>Gshell :: Dist :: Basic Commands</name>
+    <name>Gshell Dist :: Basic Commands</name>
     <packaging>pom</packaging>
 
     <description>
