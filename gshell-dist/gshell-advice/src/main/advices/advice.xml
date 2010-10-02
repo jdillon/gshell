@@ -19,7 +19,7 @@
                             generic:chmod( targetDir:${installFolder}, targetFile:bin/gsh, permissions:755 );
                         </instruction>
                         <instruction key='uninstall'>
-                            natives:cleanunzip( source:${artifact.location},target:${installFolder}/ );
+                            natives:cleanupzip( source:${artifact.location},target:${installFolder}/ );
                         </instruction>
                     </instructions>
                 </touchpointData>
