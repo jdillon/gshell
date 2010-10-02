@@ -50,9 +50,8 @@
         </dependency>
 
         <dependency>
-            <groupId>org.sonatype.spice.inject</groupId>
-            <artifactId>guice-patches</artifactId>
-            <classifier>noaop</classifier>
+            <groupId>org.sonatype.sisu</groupId>
+            <artifactId>sisu-inject-bean</artifactId>
         </dependency>
         
         <dependency>
