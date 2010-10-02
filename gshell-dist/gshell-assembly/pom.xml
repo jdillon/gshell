@@ -23,30 +23,36 @@
             <groupId>org.sonatype.gshell</groupId>
             <artifactId>gshell-bootstrap</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.sonatype.gshell</groupId>
             <artifactId>gshell-personality</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.sonatype.gshell.commands</groupId>
             <artifactId>gshell-standard</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.sonatype.gshell.dist</groupId>
             <artifactId>gshell-commands-basic</artifactId>
             <type>pom</type>
         </dependency>
+
         <dependency>
             <groupId>org.sonatype.gshell.dist</groupId>
             <artifactId>gshell-resources</artifactId>
         </dependency>
 
         <!-- Touchpoints -->
+
         <dependency>
             <groupId>org.sonatype.tycho.p2</groupId>
             <artifactId>p2-touchpoint-runtime</artifactId>
             <version>${tycho.p2.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.sonatype.tycho.p2</groupId>
             <artifactId>p2-touchpoint-mixin-generic</artifactId>
@@ -54,6 +60,7 @@
         </dependency>
 
         <!-- Advices -->
+
         <dependency>
             <groupId>org.sonatype.gshell.dist</groupId>
             <artifactId>gshell-advice</artifactId>

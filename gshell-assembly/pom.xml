@@ -29,6 +29,18 @@
     <name>GShell :: Assembly</name>
     <packaging>pom</packaging>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.sonatype.gshell.commands</groupId>
+                <artifactId>gshell-commands</artifactId>
+                <type>pom</type>
+                <version>${project.version}</version>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    
     <dependencies>
         <dependency>
             <groupId>org.sonatype.gshell</groupId>

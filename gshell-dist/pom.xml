@@ -8,10 +8,6 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <prerequisites>
-        <maven>3.0</maven>
-    </prerequisites>
-
     <parent>
         <groupId>org.sonatype.gshell</groupId>
         <artifactId>gshell</artifactId>
@@ -23,14 +19,6 @@
     <name>GShell :: Dist</name>
     <packaging>pom</packaging>
 
-    <modules>
-        <module>gshell-commands-basic</module>
-        <module>gshell-commands-addons</module>
-        <module>gshell-resources</module>
-        <module>gshell-advice</module>
-        <module>gshell-assembly</module>
-    </modules>
-
     <properties>
         <tycho.p2.version>0.1.2</tycho.p2.version>
     </properties>
@@ -38,22 +26,35 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>org.sonatype.gshell.commands</groupId>
+                <artifactId>gshell-commands</artifactId>
+                <type>pom</type>
+                <version>${project.version}</version>
+                <scope>import</scope>
+            </dependency>
+            
+            <!-- INTERNAL -->
+
+            <dependency>
                 <groupId>org.sonatype.gshell.dist</groupId>
                 <artifactId>gshell-resources</artifactId>
                 <version>2.5.2-SNAPSHOT</version>
             </dependency>
+
             <dependency>
                 <groupId>org.sonatype.gshell.dist</groupId>
                 <artifactId>gshell-commands-basic</artifactId>
                 <version>2.5.2-SNAPSHOT</version>
                 <type>pom</type>
             </dependency>
+
             <dependency>
                 <groupId>org.sonatype.gshell.dist</groupId>
                 <artifactId>gshell-commands-addons</artifactId>
                 <version>2.5.2-SNAPSHOT</version>
                 <type>pom</type>
             </dependency>
+
             <dependency>
                 <groupId>org.sonatype.gshell.dist</groupId>
                 <artifactId>gshell-advice</artifactId>
@@ -63,6 +64,14 @@
         </dependencies>
     </dependencyManagement>
 
+    <modules>
+        <module>gshell-commands-basic</module>
+        <module>gshell-commands-addons</module>
+        <module>gshell-resources</module>
+        <module>gshell-advice</module>
+        <module>gshell-assembly</module>
+    </modules>
+    
     <build>
         <pluginManagement>
             <plugins>
