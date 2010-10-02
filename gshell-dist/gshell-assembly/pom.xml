@@ -87,6 +87,9 @@
                             <goal>assemble</goal>
                             <goal>generate-assembly-xml</goal>
                         </goals>
+                        <configuration>
+                        	<outputDirectory>gshell-${project.version}</outputDirectory>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
