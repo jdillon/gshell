@@ -24,8 +24,8 @@ import com.google.inject.Stage;
 import com.google.inject.name.Names;
 import org.sonatype.gshell.MainSupport;
 import org.sonatype.gshell.branding.Branding;
-import org.sonatype.gshell.command.registry.CommandRegistrar;
 import org.sonatype.gshell.command.IO;
+import org.sonatype.gshell.command.registry.CommandRegistrar;
 import org.sonatype.gshell.console.ConsoleErrorHandler;
 import org.sonatype.gshell.console.ConsolePrompt;
 import org.sonatype.gshell.guice.CoreModule;
@@ -36,7 +36,7 @@ import org.sonatype.gshell.shell.ShellPrompt;
 import org.sonatype.gshell.variables.Variables;
 
 /**
- * ???
+ * Runs GShell for use in a maven-plugin.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
@@ -50,6 +50,8 @@ public class ShellRunner
 
     @Override
     protected Shell createShell() throws Exception {
+        // FIXME: Share more with Main ...
+        
         Module module = new AbstractModule()
         {
             @Override

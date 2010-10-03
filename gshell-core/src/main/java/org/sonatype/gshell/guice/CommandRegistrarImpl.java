@@ -28,6 +28,7 @@ import org.sonatype.gshell.command.registry.CommandRegistrar;
 import org.sonatype.gshell.command.registry.CommandRegistrarSupport;
 import org.sonatype.gshell.command.registry.CommandRegistry;
 import org.sonatype.gshell.event.EventManager;
+import org.sonatype.guice.bean.binders.WireModule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,7 +108,7 @@ public class CommandRegistrarImpl
             }
         }
 
-        Injector child = injector.createChildInjector(modules);
+        Injector child = injector.createChildInjector(new WireModule(modules));
         log.trace("Created child injector: {}", child);
 
         return child;
