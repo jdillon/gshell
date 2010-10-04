@@ -52,8 +52,6 @@
                 <includes>
                     <include>org.sonatype.gshell:gshell-personality</include>
                     <include>org.sonatype.gshell.commands:gshell-standard</include>
-                    <!-- TODO The following should not be listed as is an transitive dependency -->
-                    <include>org.slf4j:slf4j-api</include>
                 </includes>
             </appliesTo>
             <appliesTransitively>true</appliesTransitively>

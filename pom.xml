@@ -259,20 +259,6 @@
         </dependencies>
     </dependencyManagement>
 
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
     <modules>
         <module>gshell-launcher</module>
         <module>gshell-util</module>
