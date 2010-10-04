@@ -19,51 +19,6 @@
     <name>GShell Dist</name>
     <packaging>pom</packaging>
 
-    <properties>
-        <tycho.p2.version>0.1.3-SNAPSHOT</tycho.p2.version>
-    </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.sonatype.gshell.commands</groupId>
-                <artifactId>gshell-commands</artifactId>
-                <type>pom</type>
-                <version>${project.version}</version>
-                <scope>import</scope>
-            </dependency>
-            
-            <!-- INTERNAL -->
-
-            <dependency>
-                <groupId>org.sonatype.gshell.dist</groupId>
-                <artifactId>gshell-resources</artifactId>
-                <version>2.6-SNAPSHOT</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.sonatype.gshell.dist</groupId>
-                <artifactId>gshell-commands-basic</artifactId>
-                <version>2.6-SNAPSHOT</version>
-                <type>pom</type>
-            </dependency>
-
-            <dependency>
-                <groupId>org.sonatype.gshell.dist</groupId>
-                <artifactId>gshell-commands-addons</artifactId>
-                <version>2.6-SNAPSHOT</version>
-                <type>pom</type>
-            </dependency>
-
-            <dependency>
-                <groupId>org.sonatype.gshell.dist</groupId>
-                <artifactId>gshell-advice</artifactId>
-                <version>2.6-SNAPSHOT</version>
-                <type>advice</type>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <modules>
         <module>gshell-commands-basic</module>
         <module>gshell-commands-addons</module>
@@ -71,17 +26,5 @@
         <module>gshell-advice</module>
         <module>gshell-assembly</module>
     </modules>
-    
-    <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.sonatype.maven.plugins</groupId>
-                    <artifactId>maven-p2-publisher-plugin</artifactId>
-                    <version>${tycho.p2.version}</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
 
 </project>

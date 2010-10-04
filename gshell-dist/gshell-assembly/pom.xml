@@ -50,13 +50,11 @@
         <dependency>
             <groupId>org.sonatype.tycho.p2</groupId>
             <artifactId>p2-touchpoint-runtime</artifactId>
-            <version>${tycho.p2.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.sonatype.tycho.p2</groupId>
             <artifactId>p2-touchpoint-mixin-generic</artifactId>
-            <version>${tycho.p2.version}</version>
         </dependency>
 
         <!-- Advices -->
@@ -70,7 +68,6 @@
         <dependency>
             <groupId>org.sonatype.runtime.recipes.advices</groupId>
             <artifactId>advice-generic</artifactId>
-            <version>0.1.0</version>
             <classifier>maven-artifact</classifier>
             <type>advice</type>
         </dependency>

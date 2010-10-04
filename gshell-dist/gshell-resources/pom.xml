@@ -16,8 +16,4 @@
     <artifactId>gshell-resources</artifactId>
     <name>Gshell Dist :: Scripts</name>
 
-    <description>
-        Resources to be layered on assembly
-    </description>
-
 </project>
