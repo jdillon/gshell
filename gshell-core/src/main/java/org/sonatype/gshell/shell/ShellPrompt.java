@@ -68,6 +68,18 @@ public class ShellPrompt
                         return current;
                     }
                 }
+                
+                // HACK: Handled some magic with shell.user.dir~. (only if shell.user.dir exists). THis is similar to bash \w
+                if (key.equals(SHELL_USER_DIR + "~.") && vars.contains(SHELL_USER_DIR)) {
+                    String home = vars.get(SHELL_USER_HOME, File.class).getAbsolutePath();
+                    File current = vars.get(SHELL_USER_DIR, File.class).getAbsoluteFile();
+                    if (current.getAbsolutePath().equals(home)) {
+                        return "~";
+                    }
+                    else {
+                        return current.getName();
+                    }
+                }                
 
                 Object rep = vars.get(key);
                 if (rep == null) {
