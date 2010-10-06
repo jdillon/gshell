@@ -189,7 +189,7 @@
                 <version>3.0-beta-1</version>
             </dependency>
 
-			<!-- Tycho P2 -->
+            <!-- Tycho P2 -->
 
             <dependency>
                 <groupId>org.sonatype.tycho.p2</groupId>
@@ -211,7 +211,7 @@
                 <type>advice</type>
             </dependency>
 
-			<!-- INTERNAL -->
+            <!-- INTERNAL -->
 
             <dependency>
                 <groupId>org.sonatype.gshell</groupId>
@@ -273,69 +273,6 @@
                 <artifactId>gshell-personality</artifactId>
                 <version>2.6-SNAPSHOT</version>
             </dependency>
-
-            <dependency>
-                <groupId>org.sonatype.gshell</groupId>
-                <artifactId>gshell-assembly</artifactId>
-                <version>2.6-SNAPSHOT</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.sonatype.gshell.commands</groupId>
-                <artifactId>gshell-standard</artifactId>
-                <version>2.6-SNAPSHOT</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.sonatype.gshell.commands</groupId>
-                <artifactId>gshell-file</artifactId>
-                <version>2.6-SNAPSHOT</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.sonatype.gshell.commands</groupId>
-                <artifactId>gshell-logging</artifactId>
-                <version>2.6-SNAPSHOT</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.sonatype.gshell.commands</groupId>
-                <artifactId>gshell-network</artifactId>
-                <version>2.6-SNAPSHOT</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.sonatype.gshell.commands</groupId>
-                <artifactId>gshell-pref</artifactId>
-                <version>2.6-SNAPSHOT</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.sonatype.gshell.dist</groupId>
-                <artifactId>gshell-resources</artifactId>
-                <version>2.6-SNAPSHOT</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.sonatype.gshell.dist</groupId>
-                <artifactId>gshell-commands-basic</artifactId>
-                <version>2.6-SNAPSHOT</version>
-                <type>pom</type>
-            </dependency>
-
-            <dependency>
-                <groupId>org.sonatype.gshell.dist</groupId>
-                <artifactId>gshell-commands-addons</artifactId>
-                <version>2.6-SNAPSHOT</version>
-                <type>pom</type>
-            </dependency>
-
-            <dependency>
-                <groupId>org.sonatype.gshell.dist</groupId>
-                <artifactId>gshell-advice</artifactId>
-                <version>2.6-SNAPSHOT</version>
-                <type>advice</type>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -350,7 +287,6 @@
         <module>gshell-maven-plugin</module>
         <module>gshell-personality</module>
         <module>gshell-bootstrap</module>
-        <module>gshell-assembly</module>
         <module>gshell-dist</module>
     </modules>
 

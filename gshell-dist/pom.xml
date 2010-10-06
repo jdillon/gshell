@@ -38,4 +38,45 @@
         <module>gshell-assembly</module>
     </modules>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.sonatype.gshell.commands</groupId>
+                <artifactId>gshell-commands</artifactId>
+                <type>pom</type>
+                <version>${project.version}</version>
+                <scope>import</scope>
+            </dependency>
+            
+            <!-- INTERNAL -->
+            
+            <dependency>
+                <groupId>org.sonatype.gshell.dist</groupId>
+                <artifactId>gshell-resources</artifactId>
+                <version>2.6-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.sonatype.gshell.dist</groupId>
+                <artifactId>gshell-commands-basic</artifactId>
+                <version>2.6-SNAPSHOT</version>
+                <type>pom</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.sonatype.gshell.dist</groupId>
+                <artifactId>gshell-commands-addons</artifactId>
+                <version>2.6-SNAPSHOT</version>
+                <type>pom</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.sonatype.gshell.dist</groupId>
+                <artifactId>gshell-advice</artifactId>
+                <version>2.6-SNAPSHOT</version>
+                <type>advice</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 </project>
