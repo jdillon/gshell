@@ -69,7 +69,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <tycho.p2.version>0.1.3-SNAPSHOT</tycho.p2.version>
+        <tycho.p2.version>0.2.0</tycho.p2.version>
     </properties>
 
     <repositories>
