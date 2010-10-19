@@ -110,6 +110,11 @@
         <pluginManagement>
             <plugins>
                 <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>1.5</version>
+                </plugin>            
+                <plugin>
                     <groupId>org.sonatype.maven.plugins</groupId>
                     <artifactId>maven-p2-publisher-plugin</artifactId>
                     <version>${tycho.p2.version}</version>
