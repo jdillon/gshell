@@ -29,6 +29,11 @@
     <artifactId>gshell-dist</artifactId>
     <name>GShell Dist</name>
     <packaging>pom</packaging>
+    
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <tycho.p2.version>0.2.0</tycho.p2.version>
+    </properties>    
 
     <modules>
         <module>gshell-commands-basic</module>
@@ -47,6 +52,28 @@
                 <version>${project.version}</version>
                 <scope>import</scope>
             </dependency>
+            
+            <!-- Tycho P2 -->
+
+            <dependency>
+                <groupId>org.sonatype.tycho.p2</groupId>
+                <artifactId>p2-touchpoint-runtime</artifactId>
+                <version>${tycho.p2.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.sonatype.tycho.p2</groupId>
+                <artifactId>p2-touchpoint-mixin-generic</artifactId>
+                <version>${tycho.p2.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.sonatype.tycho.p2</groupId>
+                <artifactId>advices</artifactId>
+                <version>${tycho.p2.version}</version>
+                <classifier>maven</classifier>
+                <type>advice</type>
+            </dependency>            
             
             <!-- INTERNAL -->
             
@@ -78,5 +105,17 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.sonatype.maven.plugins</groupId>
+                    <artifactId>maven-p2-publisher-plugin</artifactId>
+                    <version>${tycho.p2.version}</version>
+                </plugin>            
+            </plugins>
+        </pluginManagement>
+    </build>
 
 </project>
