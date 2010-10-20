@@ -25,6 +25,6 @@
     </parent>
 
     <artifactId>gshell-resources</artifactId>
-    <name>Gshell Dist :: Scripts</name>
+    <name>GShell Dist :: Scripts</name>
 
 </project>

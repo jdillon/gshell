@@ -14,7 +14,7 @@
     </parent>
 
     <artifactId>gshell-advice</artifactId>
-    <name>Gshell Dist :: Advice</name>
+    <name>GShell Dist :: Advice</name>
     <packaging>pom</packaging>
 
     <build>

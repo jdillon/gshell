@@ -26,7 +26,7 @@
     </parent>
 
     <artifactId>gshell-commands-addons</artifactId>
-    <name>Gshell Dist :: Addon Commands</name>
+    <name>GShell Dist :: Addon Commands</name>
     <packaging>pom</packaging>
 
     <description>
