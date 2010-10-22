@@ -58,6 +58,12 @@
                 <version>2.6-SNAPSHOT</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.sonatype.gshell.commands</groupId>
+                <artifactId>gshell-file</artifactId>
+                <version>2.6-SNAPSHOT</version>
+            </dependency>
+            
             <!--<dependency>-->
                 <!--<groupId>org.sonatype.gshell.commands</groupId>-->
                 <!--<artifactId>gshell-text</artifactId>-->
@@ -69,12 +75,6 @@
                 <!--<artifactId>gshell-shell</artifactId>-->
                 <!--<version>2.6-SNAPSHOT</version>-->
             <!--</dependency>-->
-
-            <dependency>
-                <groupId>org.sonatype.gshell.commands</groupId>
-                <artifactId>gshell-file</artifactId>
-                <version>2.6-SNAPSHOT</version>
-            </dependency>
 
             <!--<dependency>-->
                 <!--<groupId>org.sonatype.gshell.commands</groupId>-->
