@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.sonatype.gshell</groupId>
         <artifactId>gshell</artifactId>
-        <version>2.6-SNAPSHOT</version>
+        <version>2.6</version>
     </parent>
 
     <groupId>org.sonatype.gshell.dist</groupId>
@@ -81,27 +81,27 @@
             <dependency>
                 <groupId>org.sonatype.gshell.dist</groupId>
                 <artifactId>gshell-resources</artifactId>
-                <version>2.6-SNAPSHOT</version>
+                <version>2.6</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gshell.dist</groupId>
                 <artifactId>gshell-commands-basic</artifactId>
-                <version>2.6-SNAPSHOT</version>
+                <version>2.6</version>
                 <type>pom</type>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gshell.dist</groupId>
                 <artifactId>gshell-commands-addons</artifactId>
-                <version>2.6-SNAPSHOT</version>
+                <version>2.6</version>
                 <type>pom</type>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gshell.dist</groupId>
                 <artifactId>gshell-advice</artifactId>
-                <version>2.6-SNAPSHOT</version>
+                <version>2.6</version>
                 <type>advice</type>
             </dependency>
         </dependencies>
