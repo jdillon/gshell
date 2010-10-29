@@ -65,6 +65,14 @@
                 <role>Developer</role>
             </roles>
         </developer>
+        <developer>
+            <id>adreghiciu</id>
+            <name>Alin Dreghiciu</name>
+            <email>adreghiciu@gmail.com</email>
+            <roles>
+                <role>Distribution Master</role>
+            </roles>
+        </developer>         
     </developers>
 
     <properties>
@@ -282,7 +290,7 @@
                 <artifactId>gshell-file</artifactId>
                 <version>2.6.1-SNAPSHOT</version>
             </dependency>
-                        
+
         </dependencies>
     </dependencyManagement>
 
@@ -297,7 +305,6 @@
         <module>gshell-maven-plugin</module>
         <module>gshell-personality</module>
         <module>gshell-bootstrap</module>
-        <module>gshell-dist</module>
     </modules>
 
     <build>
@@ -404,6 +411,12 @@
                     <configuration>
                         <providerSelection>1.7</providerSelection>
                     </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.sonatype.maven.plugins</groupId>
+                    <artifactId>maven-sisu-assembler-plugin</artifactId>
+                    <version>1.0.0-SNAPSHOT</version>
                 </plugin>
 
             </plugins>
@@ -521,6 +534,20 @@
             </plugin>
         </plugins>
     </build>
+    
+    <profiles>
+        <profile>
+            <id>assembly</id>
+            <activation>
+                <property>
+                    <name>!skipAssembly</name>
+                </property>
+            </activation>
+            <modules>
+                <module>gshell-dist</module>
+            </modules>
+        </profile>
+    </profiles>    
 
 </project>
 

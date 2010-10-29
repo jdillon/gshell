@@ -33,7 +33,7 @@
     <dependencyManagement>
         <dependencies>
             <!-- INTERNAL -->
-            
+
             <dependency>
                 <groupId>org.sonatype.gshell.commands</groupId>
                 <artifactId>gshell-standard</artifactId>
@@ -113,7 +113,7 @@
             <!--</dependency>-->
         </dependencies>
     </dependencyManagement>
-    
+
     <dependencies>
         <dependency>
             <groupId>org.sonatype.gshell</groupId>
@@ -127,7 +127,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    
+
     <modules>
         <module>gshell-standard</module>
         <module>gshell-logging</module>
