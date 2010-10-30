@@ -17,6 +17,8 @@ package org.sonatype.gshell.commands.file;
 
 import java.io.File;
 
+import jline.console.completer.Completer;
+
 import org.codehaus.plexus.util.FileUtils;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
@@ -26,6 +28,7 @@ import org.sonatype.gshell.util.cli2.Argument;
 import org.sonatype.gshell.util.cli2.Option;
 
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
 
 /**
  * Copy file or directory
@@ -55,6 +58,13 @@ public class CopyCommand
         this.fileSystem = fileSystem;
     }    
     
+    @Inject
+    public CopyCommand installCompleters(final @Named("file-name") Completer c1) {
+        assert c1 != null;
+        setCompleters(c1, null);
+        return this;
+    }    
+    
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
         
@@ -63,6 +73,12 @@ public class CopyCommand
      
         if (sourceFile.isDirectory())
         {
+            // for cp -r /tmp/foo /home : we must create first the directory /home/foo
+            targetFile = new File( targetFile, sourceFile.getName() );
+            if (!targetFile.exists())
+            {
+                targetFile.mkdirs();
+            }
             if (recursive)
             {
                 FileUtils.copyDirectoryStructure( sourceFile, targetFile );
