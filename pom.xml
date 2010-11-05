@@ -77,6 +77,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <sisu.assembler.tags>gshell</sisu.assembler.tags>
+        <sisu.assembler.tags.plugins>gshell,gshell-plugins</sisu.assembler.tags.plugins>
     </properties>
 
     <repositories>

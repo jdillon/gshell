@@ -29,6 +29,10 @@
     <artifactId>gshell-commands</artifactId>
     <name>GShell Commands</name>
     <packaging>pom</packaging>
+    
+    <properties>
+      <sisu.assembler.tags>${sisu.assembler.tags.plugins}</sisu.assembler.tags>
+    </properties>
 
     <dependencyManagement>
         <dependencies>
