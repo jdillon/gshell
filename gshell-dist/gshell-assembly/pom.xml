@@ -85,7 +85,7 @@
                                 </fragment>
                             </fragments>
                             <properties>
-                                <assembly:basedir>.</assembly:basedir>
+                                <assembly.basedir>.</assembly.basedir>
                             </properties>
                           <forceContextAffinity>true</forceContextAffinity>
                             <outputDirectory>gshell-${project.version}</outputDirectory>
