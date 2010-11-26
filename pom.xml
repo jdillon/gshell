@@ -418,7 +418,7 @@
                 <plugin>
                     <groupId>org.sonatype.maven.plugins</groupId>
                     <artifactId>maven-sisu-assembler-plugin</artifactId>
-                    <version>1.0.2</version>
+                    <version>1.0.4</version>
                 </plugin>
 
             </plugins>
