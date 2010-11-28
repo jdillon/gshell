@@ -171,7 +171,7 @@
             <dependency>
                 <groupId>org.sonatype.sisu</groupId>
                 <artifactId>sisu-inject-bean</artifactId>
-                <version>1.4.2</version>
+                <version>1.4.3.1</version>
             </dependency>
 
             <dependency>
