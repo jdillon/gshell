@@ -18,7 +18,7 @@ Building
 
 ### Requirements
 
-* Maven 3+ (3.0-beta-3+)
+* Maven 3+ (3.0+)
 * Java 5+
 
 Check out and build:
