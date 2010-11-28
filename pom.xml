@@ -292,7 +292,6 @@
                 <artifactId>gshell-file</artifactId>
                 <version>2.6.3-SNAPSHOT</version>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
 
