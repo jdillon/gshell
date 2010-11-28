@@ -45,6 +45,9 @@
         <command>
             <action>org.sonatype.gshell.commands.file.ListDirectoryCommand</action>
         </command>
+        <command>
+            <action>org.sonatype.gshell.commands.file.CopyCommand</action>
+        </command>        
     </command-set>
 
 </commands>
