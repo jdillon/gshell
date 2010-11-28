@@ -61,7 +61,8 @@ public class CopyCommand
     @Inject
     public CopyCommand installCompleters(final @Named("file-name") Completer c1) {
         assert c1 != null;
-        setCompleters(c1, null);
+        // Add completer for source and target
+        setCompleters(c1, c1, null);
         return this;
     }    
     
