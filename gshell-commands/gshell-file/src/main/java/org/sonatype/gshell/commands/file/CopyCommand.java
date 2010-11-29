@@ -34,13 +34,12 @@ import com.google.inject.name.Named;
  * Copy file or directory
  *
  * @author <a href="mailto:olamy@apache.org">Olivier Lamy</a>
- * @since 2.6.1
+ * @since 2.6.3
  */
 @Command(name="cp")
 public class CopyCommand
     extends CommandActionSupport
 {
-    
     private final FileSystemAccess fileSystem;
     
     @Argument(required=true,index=0)
@@ -49,7 +48,7 @@ public class CopyCommand
     @Argument(required=true,index=1)
     private String target;    
     
-    @Option(name = "r", longName="recursive")
+    @Option(name="r", longName="recursive")
     private boolean recursive;    
     
     @Inject
@@ -71,28 +70,26 @@ public class CopyCommand
         
         File sourceFile = fileSystem.resolveFile( source );
         File targetFile = fileSystem.resolveFile( target );
-     
-        if (sourceFile.isDirectory())
-        {
+
+        if (sourceFile.isDirectory()) {
             // for cp -r /tmp/foo /home : we must create first the directory /home/foo
-            targetFile = new File( targetFile, sourceFile.getName() );
-            if (!targetFile.exists())
-            {
+            targetFile = new File(targetFile, sourceFile.getName());
+            if (!targetFile.exists()) {
                 targetFile.mkdirs();
             }
-            if (recursive)
-            {
-                FileUtils.copyDirectoryStructure( sourceFile, targetFile );
+            if (recursive) {
+                FileUtils.copyDirectoryStructure(sourceFile, targetFile);
             }
             else {
-                FileUtils.copyDirectory( sourceFile, targetFile );
+                FileUtils.copyDirectory(sourceFile, targetFile);
             }
-        } else {
-            if (targetFile.isDirectory())
-            {
-                FileUtils.copyFileToDirectory( sourceFile, targetFile );
-            } else {
-                FileUtils.copyFile( sourceFile, targetFile );
+        }
+        else {
+            if (targetFile.isDirectory()) {
+                FileUtils.copyFileToDirectory(sourceFile, targetFile);
+            }
+            else {
+                FileUtils.copyFile(sourceFile, targetFile);
             }
         }
    
