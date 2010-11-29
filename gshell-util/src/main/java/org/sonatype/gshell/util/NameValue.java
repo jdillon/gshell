@@ -54,6 +54,6 @@ public class NameValue
     }
 
     public String toString() {
-        return name + SEPARATOR + "'" + value + "'";
+        return String.format("%s%s'%s'", name, SEPARATOR, value);
     }
 }
