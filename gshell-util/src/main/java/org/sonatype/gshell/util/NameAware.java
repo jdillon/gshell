@@ -17,7 +17,7 @@
 package org.sonatype.gshell.util;
 
 /**
- * Allow {@link org.sonatype.gshell.command.CommandAction} implementations to discover their bound names.
+ * Allow objects to discover their bound names.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
