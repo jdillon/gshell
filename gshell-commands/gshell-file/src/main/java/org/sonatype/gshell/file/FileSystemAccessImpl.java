@@ -16,8 +16,8 @@
 
 package org.sonatype.gshell.file;
 
-import com.google.inject.Inject;
-import com.google.inject.Provider;
+import javax.inject.Inject;
+import javax.inject.Provider;
 import org.codehaus.plexus.util.Os;
 import org.sonatype.gshell.variables.Variables;
 

@@ -17,7 +17,7 @@
 package org.sonatype.gshell.vfs;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Singleton;
+import javax.inject.Singleton;
 import org.apache.commons.vfs.FileContentInfoFactory;
 import org.apache.commons.vfs.FileSystemManager;
 import org.apache.commons.vfs.FilesCache;

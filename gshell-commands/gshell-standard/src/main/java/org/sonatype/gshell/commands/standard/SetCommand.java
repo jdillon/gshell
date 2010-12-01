@@ -16,7 +16,7 @@
 
 package org.sonatype.gshell.commands.standard;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 import com.google.inject.name.Named;
 import jline.console.completer.Completer;
 import org.sonatype.gshell.command.Command;

@@ -16,7 +16,7 @@
 
 package org.sonatype.gshell.logging.gossip;
 
-import com.google.inject.Singleton;
+import javax.inject.Singleton;
 import org.sonatype.gossip.Gossip;
 import org.sonatype.gossip.listener.Listener;
 import org.sonatype.gshell.logging.Component;

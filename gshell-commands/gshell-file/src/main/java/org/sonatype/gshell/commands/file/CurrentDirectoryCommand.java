@@ -16,7 +16,7 @@
 
 package org.sonatype.gshell.commands.file;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;

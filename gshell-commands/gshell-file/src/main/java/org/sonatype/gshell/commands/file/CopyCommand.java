@@ -27,7 +27,7 @@ import org.sonatype.gshell.file.FileSystemAccess;
 import org.sonatype.gshell.util.cli2.Argument;
 import org.sonatype.gshell.util.cli2.Option;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 import com.google.inject.name.Named;
 
 /**

@@ -16,8 +16,8 @@
 
 package org.sonatype.gshell.logging;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import jline.console.completer.Completer;
 import jline.console.completer.StringsCompleter;
 

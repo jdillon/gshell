@@ -16,8 +16,8 @@
 
 package org.sonatype.gshell.command.registry;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import jline.console.completer.NullCompleter;
 import jline.console.completer.Completer;
 import jline.console.completer.ArgumentCompleter;

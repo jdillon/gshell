@@ -16,9 +16,9 @@
 
 package org.sonatype.gshell.variables;
 
-import com.google.inject.Inject;
-import com.google.inject.Provider;
-import com.google.inject.Singleton;
+import javax.inject.Inject;
+import javax.inject.Provider;
+import javax.inject.Singleton;
 import jline.console.completer.Completer;
 import jline.console.completer.StringsCompleter;
 import org.sonatype.gshell.event.EventListener;

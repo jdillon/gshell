@@ -16,10 +16,11 @@
 
 package org.sonatype.gshell.guice;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
+
 import com.google.inject.Injector;
 import com.google.inject.Module;
-import com.google.inject.Singleton;
+import javax.inject.Singleton;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.descriptor.CommandSetDescriptor;
@@ -108,7 +109,8 @@ public class CommandRegistrarImpl
             }
         }
 
-        Injector child = injector.createChildInjector(new WireModule(modules));
+        // FIXME: Need to get rid of child injector
+        Injector child = injector.createChildInjector(modules);
         log.trace("Created child injector: {}", child);
 
         return child;

@@ -16,8 +16,8 @@
 
 package org.sonatype.gshell.shell;
 
-import com.google.inject.Inject;
-import com.google.inject.Provider;
+import javax.inject.Inject;
+import javax.inject.Provider;
 import org.fusesource.jansi.AnsiRenderer;
 import org.sonatype.gshell.branding.Branding;
 import org.sonatype.gshell.console.ConsolePrompt;

@@ -16,7 +16,7 @@
 
 package org.sonatype.gshell.commands.logging.logger;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;

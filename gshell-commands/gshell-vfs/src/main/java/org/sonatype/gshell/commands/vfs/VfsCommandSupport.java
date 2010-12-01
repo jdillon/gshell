@@ -16,7 +16,7 @@
 
 package org.sonatype.gshell.commands.vfs;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 import org.apache.commons.vfs.FileObject;
 import org.apache.commons.vfs.FileSystemException;
 import org.sonatype.gshell.command.support.CommandActionSupport;

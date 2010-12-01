@@ -19,7 +19,7 @@
 
 package org.sonatype.gshell.commands.artifact;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.resolver.ArtifactResolutionRequest;
 import org.apache.maven.artifact.resolver.ArtifactResolutionResult;

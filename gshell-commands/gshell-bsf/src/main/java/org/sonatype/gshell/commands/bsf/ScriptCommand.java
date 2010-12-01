@@ -16,7 +16,7 @@
 
 package org.sonatype.gshell.commands.bsf;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 import org.apache.bsf.BSFEngine;
 import org.apache.bsf.BSFException;
 import org.apache.bsf.BSFManager;

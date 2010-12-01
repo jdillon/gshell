@@ -16,7 +16,7 @@
 
 package org.sonatype.gshell.commands.scm;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 import org.apache.maven.scm.ScmFile;
 import org.apache.maven.scm.command.status.StatusScmResult;
 import org.apache.maven.scm.repository.ScmRepository;

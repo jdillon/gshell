@@ -16,7 +16,7 @@
 
 package org.sonatype.gshell.vfs.builder;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 import org.apache.commons.vfs.CacheStrategy;
 import org.apache.commons.vfs.FileContentInfoFactory;
 import org.apache.commons.vfs.FileSystemManager;
