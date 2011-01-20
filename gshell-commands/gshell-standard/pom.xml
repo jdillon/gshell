@@ -60,6 +60,14 @@
                                 <goals>
                                     <goal>generate</goal>
                                 </goals>
+                                <configuration>
+                                    <versionPolicy>
+                                        <artifactsPolicy>
+                                            <org.sonatype.sisu:sisu-inject-bean:jar>[=,+)</org.sonatype.sisu:sisu-inject-bean:jar>
+                                            <org.sonatype.sisu:sisu-guice:jar:noaop>[=,+)</org.sonatype.sisu:sisu-guice:jar:noaop>
+                                        </artifactsPolicy>
+                                    </versionPolicy>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
