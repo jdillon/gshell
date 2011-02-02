@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.sonatype.gshell</groupId>
         <artifactId>gshell</artifactId>
-        <version>2.6.3</version>
+        <version>2.6.4-SNAPSHOT</version>
     </parent>
 
     <groupId>org.sonatype.gshell.commands</groupId>
@@ -41,31 +41,31 @@
             <dependency>
                 <groupId>org.sonatype.gshell.commands</groupId>
                 <artifactId>gshell-standard</artifactId>
-                <version>2.6.3</version>
+                <version>2.6.4-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gshell.commands</groupId>
                 <artifactId>gshell-logging</artifactId>
-                <version>2.6.3</version>
+                <version>2.6.4-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gshell.commands</groupId>
                 <artifactId>gshell-pref</artifactId>
-                <version>2.6.3</version>
+                <version>2.6.4-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gshell.commands</groupId>
                 <artifactId>gshell-network</artifactId>
-                <version>2.6.3</version>
+                <version>2.6.4-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gshell.commands</groupId>
                 <artifactId>gshell-file</artifactId>
-                <version>2.6.3</version>
+                <version>2.6.4-SNAPSHOT</version>
             </dependency>
             
             <!--<dependency>-->
