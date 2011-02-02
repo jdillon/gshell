@@ -62,10 +62,16 @@
                                 </goals>
                                 <configuration>
                                     <versionPolicy>
-                                        <artifactsPolicy>
-                                            <org.sonatype.sisu:sisu-inject-bean:jar>[=,+)</org.sonatype.sisu:sisu-inject-bean:jar>
-                                            <org.sonatype.sisu:sisu-guice:jar:noaop>[=,+)</org.sonatype.sisu:sisu-guice:jar:noaop>
-                                        </artifactsPolicy>
+                                        <policies>
+                                            <policy>
+                                                <artifact>org.sonatype.sisu:sisu-inject-bean:jar</artifact>
+                                                <version>[=,+)</version>
+                                            </policy>
+                                            <policy>
+                                                <artifact>org.sonatype.sisu:sisu-guice:jar:noaop</artifact>
+                                                <version>[=,+)</version>
+                                            </policy>
+                                        </policies>
                                     </versionPolicy>
                                 </configuration>
                             </execution>
