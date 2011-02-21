@@ -88,12 +88,10 @@ public class StreamJack
         log.debug("Installed");
     }
 
-    // FIXME: Not sure that all of these need to/should be synchronized... specifically the register() bits
-
     /**
      * Install the hijacker and register streams for the current thread.
      */
-    public static synchronized void install(final InputStream in, final PrintStream out, final PrintStream err) {
+    public static void install(final InputStream in, final PrintStream out, final PrintStream err) {
         install();
         register(in, out, err);
     }
@@ -101,7 +99,7 @@ public class StreamJack
     /**
      * Install the hijacker and register combined streams for the current thread.
      */
-    public static synchronized void install(final InputStream in, final PrintStream out) {
+    public static void install(final InputStream in, final PrintStream out) {
         install();
         register(in, out);
     }
@@ -109,7 +107,7 @@ public class StreamJack
     /**
      * Install the hijacker and register streams for the current thread.
      */
-    public static synchronized void install(final StreamSet set) {
+    public static void install(final StreamSet set) {
         install();
         register(set);
     }
@@ -120,13 +118,9 @@ public class StreamJack
         }
     }
 
-    public static synchronized void maybeInstall(final StreamSet set) {
-        if (!isInstalled()) {
-            install(set);
-        }
-        else {
-            register(set);
-        }
+    public static void maybeInstall(final StreamSet set) {
+        maybeInstall();
+        register(set);
     }
 
     /**
