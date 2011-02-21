@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 /**
- * LOGBack logging integration.
+ * <a href="http://logback.qos.ch/">LOGBack</a> integration.
  *
- * @since 2.5
+ * @since 2.6.4
  */
-
 package org.sonatype.gshell.logging.logback;

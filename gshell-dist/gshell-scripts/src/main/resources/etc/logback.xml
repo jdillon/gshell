@@ -16,7 +16,7 @@
     limitations under the License.
 
 -->
-<configuration debug="false">
+<configuration debug="false" scan="true" scanPeriod="30 seconds">
 
     <contextName>default</contextName>
 
@@ -25,9 +25,6 @@
         <encoder>
             <pattern>[%level] %logger{1} - %msg%n</pattern>
         </encoder>
-        <!--<filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
-            <!--<level>INFO</level>-->
-        <!--</filter>-->
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
@@ -36,9 +33,6 @@
         <encoder>
             <pattern>%date %level [%thread%X{DC}] %logger - %msg%n</pattern>
         </encoder>
-        <!--<filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
-            <!--<level>DEBUG</level>-->
-        <!--</filter>-->
     </appender>
 
     <root level="${shell.logging:-INFO}">

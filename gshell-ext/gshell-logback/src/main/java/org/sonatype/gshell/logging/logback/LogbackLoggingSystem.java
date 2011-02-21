@@ -32,6 +32,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static org.slf4j.Logger.ROOT_LOGGER_NAME;
+
 /**
  * <a href="http://logback.qos.ch/">LOGBack</a> {@link LoggingSystem} component.
  *
@@ -42,11 +44,20 @@ import java.util.Set;
 public class LogbackLoggingSystem
     implements LoggingSystem
 {
+    private final LoggerContext loggerContext;
+
     private final Map<String,LevelImpl> levels;
 
     private final Set<Component> components;
 
     public LogbackLoggingSystem() {
+        // Make sure Logback is actually configured, attach to the context
+        Object tmp = LoggerFactory.getILoggerFactory();
+        if (!(tmp instanceof LoggerContext)) {
+            throw new RuntimeException("SLF4J logger factory does not appear to be LOGBack; found: " + tmp.getClass().getName());
+        }
+        this.loggerContext = (LoggerContext)tmp;
+
         // populate levels
         Map<String,LevelImpl> levels = new LinkedHashMap<String,LevelImpl>();
 
@@ -120,15 +131,6 @@ public class LogbackLoggingSystem
         return levels.values();
     }
 
-    private ch.qos.logback.classic.Logger getRootLogger() {
-        return (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(ch.qos.logback.classic.Logger.ROOT_LOGGER_NAME);
-    }
-
-    private LoggerContext getLoggerContext() {
-        ch.qos.logback.classic.Logger logger = getRootLogger();
-        return ch.qos.logback.classic.Logger.class.cast(logger).getLoggerContext();
-    }
-
     //
     // LoggerImpl
     //
@@ -164,7 +166,7 @@ public class LogbackLoggingSystem
         }
 
         public boolean isRoot() {
-            return getName().equals(ch.qos.logback.classic.Logger.ROOT_LOGGER_NAME);
+            return getName().equals(ROOT_LOGGER_NAME);
         }
 
         @Override
@@ -178,8 +180,10 @@ public class LogbackLoggingSystem
         }
     }
 
+    // NOTE: This doesn't seem to be returning all loggers that have been created, just those which have been configured/bound to a level :-(
+
     public Collection<String> getLoggerNames() {
-        Collection<ch.qos.logback.classic.Logger> loggers = getLoggerContext().getLoggerList();
+        Collection<ch.qos.logback.classic.Logger> loggers = loggerContext.getLoggerList();
         List<String> names = new ArrayList<String>(loggers.size());
         for (ch.qos.logback.classic.Logger logger : loggers) {
             names.add(logger.getName());
@@ -189,7 +193,7 @@ public class LogbackLoggingSystem
 
     public Logger getLogger(final String name) {
         assert name != null;
-        return new LoggerImpl(getLoggerContext().getLogger(name));
+        return new LoggerImpl(loggerContext.getLogger(name));
     }
 
     public Collection<? extends Component> getComponents() {

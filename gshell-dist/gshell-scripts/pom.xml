@@ -26,6 +26,8 @@
         <version>2.6.4-SNAPSHOT</version>
     </parent>
 
+    <!-- FIXME: This module is poorly named, contains scripts + other resources for the distribution. -->
+
     <artifactId>gshell-scripts</artifactId>
     <name>Gshell Dist :: Scripts</name>
     

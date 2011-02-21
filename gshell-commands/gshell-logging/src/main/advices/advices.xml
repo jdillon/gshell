@@ -21,11 +21,11 @@
     <advices>
 
         <advice>
-            <generateAsItIs />
+            <generateAsItIs/>
             <appliesTransitively>true</appliesTransitively>
             <unit>
                 <provides>
-                    <provided namespace='org.sonatype.sisu.assembler.type' name='lib' version='1.0.0' />
+                    <provided namespace='org.sonatype.sisu.assembler.type' name='lib' version='1.0.0'/>
                 </provides>
             </unit>
         </advice>
