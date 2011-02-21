@@ -19,9 +19,6 @@
 
 package org.sonatype.gshell.util.io;
 
-import org.slf4j.Logger;
-import org.sonatype.gossip.Log;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
