@@ -175,7 +175,7 @@
             </dependency>
 
             <!--
-            FIXME: Rip this out, its way too big to justify why its included.
+            FIXME: Rip this out, its way too big to justify why its included.  ATM used for gshell-core model bits, StringUtils in a few places and Os + FileUtils in gshell-file module.
             -->
             <dependency>
                 <groupId>org.codehaus.plexus</groupId>
