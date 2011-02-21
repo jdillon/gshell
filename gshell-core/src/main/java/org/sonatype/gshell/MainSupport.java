@@ -21,25 +21,24 @@ import jline.NoInterruptUnixTerminal;
 import jline.TerminalFactory;
 import org.fusesource.jansi.Ansi;
 import org.slf4j.Logger;
-import static org.sonatype.gossip.Gossip.Level;
 import org.sonatype.gossip.Log;
 import org.sonatype.gshell.branding.Branding;
+import org.sonatype.gshell.command.AnsiIO;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.IO;
-import org.sonatype.gshell.shell.ShellHolder;
-import org.sonatype.gshell.util.io.StreamJack;
-import org.sonatype.gshell.util.io.StreamSet;
 import org.sonatype.gshell.notification.ExitNotification;
 import org.sonatype.gshell.shell.Shell;
+import org.sonatype.gshell.shell.ShellHolder;
 import org.sonatype.gshell.util.Arguments;
 import org.sonatype.gshell.util.NameValue;
-import org.sonatype.gshell.command.AnsiIO;
 import org.sonatype.gshell.util.cli2.Argument;
 import org.sonatype.gshell.util.cli2.CliProcessor;
 import org.sonatype.gshell.util.cli2.HelpPrinter;
 import org.sonatype.gshell.util.cli2.Option;
 import org.sonatype.gshell.util.i18n.MessageSource;
 import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
+import org.sonatype.gshell.util.io.StreamJack;
+import org.sonatype.gshell.util.io.StreamSet;
 import org.sonatype.gshell.util.pref.Preference;
 import org.sonatype.gshell.util.pref.PreferenceProcessor;
 import org.sonatype.gshell.util.pref.Preferences;
@@ -51,7 +50,12 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static org.sonatype.gshell.variables.VariableNames.*;
+import static jline.TerminalFactory.Flavor.UNIX;
+import static jline.TerminalFactory.Flavor.WINDOWS;
+import static org.sonatype.gossip.Gossip.Level;
+import static org.sonatype.gshell.variables.VariableNames.LAST_RESULT;
+import static org.sonatype.gshell.variables.VariableNames.SHELL_ERRORS;
+import static org.sonatype.gshell.variables.VariableNames.SHELL_LOGGING;
 
 /**
  * Support for booting shell applications.
@@ -64,8 +68,8 @@ public abstract class MainSupport
 {
     static {
         // Register some different terminal flavors for added functionality
-        TerminalFactory.registerFlavor(TerminalFactory.Flavor.UNIX, NoInterruptUnixTerminal.class);
-        TerminalFactory.registerFlavor(TerminalFactory.Flavor.WINDOWS, AnsiWindowsTerminal.class);
+        TerminalFactory.registerFlavor(UNIX, NoInterruptUnixTerminal.class);
+        TerminalFactory.registerFlavor(WINDOWS, AnsiWindowsTerminal.class);
 
         // Register jline ansi detector
         Ansi.setDetector(new Callable<Boolean>()
@@ -76,6 +80,7 @@ public abstract class MainSupport
         });
     }
 
+    // Gossip Log used here for bootstrap
     protected final Logger log = Log.getLogger(getClass());
 
     protected final IO io = new AnsiIO(StreamSet.SYSTEM_FD, true);
