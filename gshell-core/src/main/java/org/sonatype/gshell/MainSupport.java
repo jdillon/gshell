@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.sonatype.gshell;
 
 import jline.AnsiWindowsTerminal;
@@ -51,7 +52,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static jline.TerminalFactory.Flavor.UNIX;
 import static jline.TerminalFactory.Flavor.WINDOWS;
-import static org.sonatype.gossip.Gossip.Level;
+
+import org.sonatype.gossip.Level;
+
 import static org.sonatype.gshell.variables.VariableNames.LAST_RESULT;
 import static org.sonatype.gshell.variables.VariableNames.SHELL_ERRORS;
 import static org.sonatype.gshell.variables.VariableNames.SHELL_LOGGING;
@@ -204,7 +207,7 @@ public abstract class MainSupport
                 log.warn("Unhandled exception occurred on thread: " + thread, cause);
             }
         });
-        
+
         // Setup environment defaults
         setConsoleLogLevel(Level.WARN);
         setTerminalType(TerminalFactory.Type.AUTO);

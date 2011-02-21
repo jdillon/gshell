@@ -42,7 +42,7 @@
 
         <dependency>
             <groupId>org.sonatype.gossip</groupId>
-            <artifactId>gossip-core</artifactId>
+            <artifactId>gossip-bootstrap</artifactId>
         </dependency>
         
         <dependency>

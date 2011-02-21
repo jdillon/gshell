@@ -118,7 +118,7 @@
 
             <dependency>
                 <groupId>org.sonatype.gossip</groupId>
-                <artifactId>gossip-core</artifactId>
+                <artifactId>gossip-bootstrap</artifactId>
                 <version>1.6-SNAPSHOT</version>
             </dependency>
 

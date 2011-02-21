@@ -32,6 +32,8 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import static org.sonatype.gossip.Gossip.Logger.ROOT_NAME;
+
 /**
  * <a href="http://github.com/jdillon/gossip">Gossip</a> {@link LoggingSystem} component.
  *
@@ -58,7 +60,7 @@ public class GossipLoggingSystem
 
         // populate levels
         Map<String,LevelImpl> levels = new LinkedHashMap<String,LevelImpl>();
-        for (Gossip.Level level : Gossip.Level.values()) {
+        for (org.sonatype.gossip.Level level : org.sonatype.gossip.Level.values()) {
             levels.put(level.name().toUpperCase(), new LevelImpl(level));
         }
         this.levels = Collections.unmodifiableMap(levels);
@@ -75,9 +77,9 @@ public class GossipLoggingSystem
     private class LevelImpl
         implements Level
     {
-        private final Gossip.Level target;
+        private final org.sonatype.gossip.Level target;
 
-        private LevelImpl(final Gossip.Level level) {
+        private LevelImpl(final org.sonatype.gossip.Level level) {
             assert level != null;
             this.target = level;
         }
@@ -86,7 +88,7 @@ public class GossipLoggingSystem
             return target.name();
         }
 
-        public Gossip.Level getTarget() {
+        public org.sonatype.gossip.Level getTarget() {
             return target;
         }
 
@@ -137,7 +139,7 @@ public class GossipLoggingSystem
         }
 
         public Level getLevel() {
-            Gossip.Level tmp = target.getLevel();
+            org.sonatype.gossip.Level tmp = target.getLevel();
             if (tmp != null) {
                 return levelFor(tmp.name());
             }
@@ -152,12 +154,8 @@ public class GossipLoggingSystem
             setLevel(levelFor(level));
         }
 
-        public Logger parent() {
-            return target.getParent() != null ? new LoggerImpl(target.getParent()) : null;
-        }
-
         public boolean isRoot() {
-            return getName().equals(Gossip.Logger.ROOT_NAME);
+            return getName().equals(ROOT_NAME);
         }
 
         @Override
