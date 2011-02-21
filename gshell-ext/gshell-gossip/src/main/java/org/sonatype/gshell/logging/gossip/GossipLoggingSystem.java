@@ -16,6 +16,8 @@
 package org.sonatype.gshell.logging.gossip;
 
 import javax.inject.Singleton;
+
+import org.slf4j.LoggerFactory;
 import org.sonatype.gossip.Gossip;
 import org.sonatype.gossip.listener.Listener;
 import org.sonatype.gshell.logging.Component;
@@ -47,6 +49,11 @@ public class GossipLoggingSystem
     private final Set<Component> components;
 
     public GossipLoggingSystem() {
+        // Make sure Gossip is actually configured, attach to the context
+        Object tmp = LoggerFactory.getILoggerFactory();
+        if (!(tmp instanceof Gossip)) {
+            throw new RuntimeException("SLF4J logger factory does not appear to be Gossip; found: " + tmp.getClass().getName());
+        }
         gossip = Gossip.getInstance();
 
         // populate levels
