@@ -246,12 +246,6 @@
                 <version>2.6.4-SNAPSHOT</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.sonatype.gshell</groupId>
-                <artifactId>gshell-personality</artifactId>
-                <version>2.6.4-SNAPSHOT</version>
-            </dependency>
-
             <!-- HACK: Duplicating for now, due to release plugin issue with scope=import -->
 
             <dependency>
@@ -312,7 +306,6 @@
         <module>gshell-core</module>
         <module>gshell-commands</module>
         <module>gshell-maven-plugin</module>
-        <module>gshell-personality</module>
         <module>gshell-bootstrap</module>
     </modules>
 
@@ -499,6 +492,46 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-scm-plugin</artifactId>
                 <version>1.4</version>
+            </plugin>
+
+            <!--
+            mvn license:format
+            If its a new year, update the year range in the header.txt file
+
+            FIXME: Should probably make this non-aggregate so custom module specific rules can be easier to manage, though have to put the header somewhere :-(
+            -->
+            <plugin>
+                <groupId>com.mycila.maven-license-plugin</groupId>
+                <artifactId>maven-license-plugin</artifactId>
+                <version>1.9.0</version>
+                <configuration>
+                    <aggregate>true</aggregate>
+                    <strictCheck>true</strictCheck>
+                    <header>${project.basedir}/header.txt</header>
+                    <useDefaultExcludes>false</useDefaultExcludes>
+                    <includes>
+                        <include>**/pom.xml</include>
+                        <include>**/*.xml</include>
+                        <include>**/*.xsd</include>
+                        <include>**/*.xjb</include>
+                        <include>**/*.mdo</include>
+                        <include>**/*.properties</include>
+                        <include>**/*.java</include>
+                        <include>**/*.groovy</include>
+                        <include>**/*.scala</include>
+                        <include>**/*.aj</include>
+                        <include>**/*.js</include>
+                        <include>**/*.css</include>
+                    </includes>
+                    <excludes>
+                        <exclude>**/target/**</exclude>
+                    </excludes>
+                    <mapping>
+                        <scala>JAVADOC_STYLE</scala>
+                        <xjb>XML_STYLE</xjb>
+                        <mdo>XML_STYLE</mdo>
+                    </mapping>
+                </configuration>
             </plugin>
         </plugins>
     </build>

@@ -43,11 +43,11 @@
         <advice>
             <appliesTo>
                 <includes>
-                    <include>org.sonatype.gshell:gshell-personality</include>
+                    <include>org.sonatype.gshell.dist:gshell-personality</include>
                 </includes>
             </appliesTo>
             <appliesTransitively>true</appliesTransitively>
-            <generateAsItIs />
+            <generateAsItIs/>
             <unit>
                 <provides>
                     <provided namespace='org.sonatype.sisu.assembler.type' name='lib' version='1.0.0' />

@@ -36,7 +36,7 @@
         </dependency>
 
         <dependency>
-            <groupId>org.sonatype.gshell</groupId>
+            <groupId>org.sonatype.gshell.dist</groupId>
             <artifactId>gshell-personality</artifactId>
         </dependency>
     </dependencies>
@@ -87,12 +87,13 @@
                             <properties>
                                 <assembly.basedir>.</assembly.basedir>
                             </properties>
-                          <forceContextAffinity>true</forceContextAffinity>
+                            <forceContextAffinity>true</forceContextAffinity>
                             <outputDirectory>gshell-${project.version}</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>

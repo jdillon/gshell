@@ -31,6 +31,7 @@
     <packaging>pom</packaging>
     
     <modules>
+        <module>gshell-personality</module>
         <module>gshell-scripts</module>
         <module>gshell-assembly</module>
     </modules>
@@ -48,12 +49,19 @@
             <!--</dependency>-->
             
             <!-- INTERNAL -->
-            
+
+            <dependency>
+                <groupId>org.sonatype.gshell.dist</groupId>
+                <artifactId>gshell-personality</artifactId>
+                <version>2.6.4-SNAPSHOT</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.sonatype.gshell.dist</groupId>
                 <artifactId>gshell-scripts</artifactId>
                 <version>2.6.4-SNAPSHOT</version>
             </dependency>
+
             <dependency>
                 <groupId>org.sonatype.gshell.dist</groupId>
                 <artifactId>gshell-assembly</artifactId>

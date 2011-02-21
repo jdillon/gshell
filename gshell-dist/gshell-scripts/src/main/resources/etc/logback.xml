@@ -17,15 +17,16 @@
 
 <configuration debug="false">
 
-    <!--
-    Fallback logging configuration.
-    -->
+    <contextName>default</contextName>
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <target>System.out</target>
         <encoder>
             <pattern>[%level] %logger{1} - %msg%n</pattern>
         </encoder>
+        <!--<filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
+            <!--<level>INFO</level>-->
+        <!--</filter>-->
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
@@ -35,7 +36,7 @@
             <pattern>%date %level [%thread%X{DC}] %logger - %msg%n</pattern>
         </encoder>
         <!--<filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
-            <!--<level>${matrix.eventspy.logging.file.threshold:-WARN}</level>-->
+            <!--<level>DEBUG</level>-->
         <!--</filter>-->
     </appender>
 

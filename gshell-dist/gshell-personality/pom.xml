@@ -20,15 +20,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.sonatype.gshell</groupId>
-        <artifactId>gshell</artifactId>
+        <groupId>org.sonatype.gshell.dist</groupId>
+        <artifactId>gshell-dist</artifactId>
         <version>2.6.4-SNAPSHOT</version>
     </parent>
 
-    <!-- FIXME: Move to gshell-dist, this is distribution configuration -->
-
     <artifactId>gshell-personality</artifactId>
-    <name>GShell :: Personality</name>
+    <name>GShell Dist :: Personality</name>
 
     <dependencies>
         <dependency>
