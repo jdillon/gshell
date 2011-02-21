@@ -16,9 +16,9 @@
 
 package org.sonatype.gshell.branding;
 
-import org.codehaus.plexus.util.IOUtil;
 import org.sonatype.gshell.util.io.Closer;
 import org.sonatype.gshell.util.PrintBuffer;
+import org.sonatype.gshell.util.io.Copier;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -71,7 +71,7 @@ public class LicenseSupport
         PrintBuffer buff = new PrintBuffer();
         InputStream input = url.openStream();
         try {
-            IOUtil.copy(input, buff);
+            Copier.copy(input, buff);
         }
         finally {
             Closer.close(input);

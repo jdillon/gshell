@@ -16,12 +16,12 @@
 
 package org.sonatype.gshell.commands.network;
 
-import org.codehaus.plexus.util.IOUtil;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.util.io.Closer;
+import org.sonatype.gshell.util.io.Copier;
 import org.sonatype.gshell.util.io.Flusher;
 import org.sonatype.gshell.util.cli2.Argument;
 import org.sonatype.gshell.util.cli2.Option;
@@ -81,7 +81,7 @@ public class WgetCommand
             out = io.streams.out;
         }
 
-        IOUtil.copy(in, out);
+        Copier.copy(in, out);
 
         // if we write a file, close it then return the file
         if (outputFile != null) {
