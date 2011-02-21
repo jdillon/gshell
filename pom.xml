@@ -118,13 +118,13 @@
             <dependency>
                 <groupId>org.sonatype.gossip</groupId>
                 <artifactId>gossip-core</artifactId>
-                <version>1.5</version>
+                <version>1.6-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gossip</groupId>
                 <artifactId>gossip-slf4j</artifactId>
-                <version>1.5</version>
+                <version>1.6-SNAPSHOT</version>
             </dependency>
 
             <dependency>
