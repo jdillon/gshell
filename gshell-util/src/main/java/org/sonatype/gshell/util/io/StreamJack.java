@@ -88,7 +88,7 @@ public class StreamJack
         log.debug("Installed");
     }
 
-    // FIXME: Not sure that all of these need to/should be synchronized
+    // FIXME: Not sure that all of these need to/should be synchronized... specifically the register() bits
 
     /**
      * Install the hijacker and register streams for the current thread.
