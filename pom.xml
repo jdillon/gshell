@@ -236,24 +236,6 @@
 
             <dependency>
                 <groupId>org.sonatype.gshell</groupId>
-                <artifactId>gshell-plexus</artifactId>
-                <version>2.6.4-SNAPSHOT</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.sonatype.gshell</groupId>
-                <artifactId>gshell-gossip</artifactId>
-                <version>2.6.4-SNAPSHOT</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.sonatype.gshell</groupId>
-                <artifactId>gshell-logback</artifactId>
-                <version>2.6.4-SNAPSHOT</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.sonatype.gshell</groupId>
                 <artifactId>gshell-maven-plugin</artifactId>
                 <version>2.6.4-SNAPSHOT</version>
             </dependency>
@@ -271,6 +253,24 @@
             </dependency>
 
             <!-- HACK: Duplicating for now, due to release plugin issue with scope=import -->
+
+            <dependency>
+                <groupId>org.sonatype.gshell.ext</groupId>
+                <artifactId>gshell-plexus</artifactId>
+                <version>2.6.4-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.sonatype.gshell.ext</groupId>
+                <artifactId>gshell-gossip</artifactId>
+                <version>2.6.4-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.sonatype.gshell.ext</groupId>
+                <artifactId>gshell-logback</artifactId>
+                <version>2.6.4-SNAPSHOT</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gshell.commands</groupId>
@@ -307,12 +307,10 @@
     <modules>
         <module>gshell-launcher</module>
         <module>gshell-util</module>
+        <module>gshell-ext</module>
         <module>gshell-ui</module>
-        <module>gshell-gossip</module>
-        <module>gshell-logback</module>
         <module>gshell-core</module>
         <module>gshell-commands</module>
-        <module>gshell-plexus</module>
         <module>gshell-maven-plugin</module>
         <module>gshell-personality</module>
         <module>gshell-bootstrap</module>

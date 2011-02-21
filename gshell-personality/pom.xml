@@ -35,14 +35,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.sonatype.gshell</groupId>
+            <groupId>org.sonatype.gshell.ext</groupId>
             <artifactId>gshell-gossip</artifactId>
         </dependency>
-
-        <!--<dependency>-->
-            <!--<groupId>ch.qos.logback</groupId>-->
-            <!--<artifactId>logback-classic</artifactId>-->
-        <!--</dependency>-->
     </dependencies>
 
 </project>
