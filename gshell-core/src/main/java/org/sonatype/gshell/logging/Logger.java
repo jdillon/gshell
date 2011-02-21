@@ -15,6 +15,8 @@
  */
 package org.sonatype.gshell.logging;
 
+// FIXME: Rename, LoggerComponent or something, Logger is likely to conflict with any logging system and forces use of FQCN
+
 /**
  * Represents a logger.
  *

@@ -23,7 +23,7 @@ import jline.console.completer.StringsCompleter;
 import java.util.List;
 
 /**
- * {@link jline.console.completer.Completer} for {@link Logger} names.
+ * {@link Completer} for {@link Logger} names.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5

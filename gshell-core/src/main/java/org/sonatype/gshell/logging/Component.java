@@ -15,6 +15,8 @@
  */
 package org.sonatype.gshell.logging;
 
+// FIXME: Rename, GenericComponent or something once Level,Logger are renamed.
+
 /**
  * Represents a logging system component.
  *
