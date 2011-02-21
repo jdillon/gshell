@@ -25,6 +25,8 @@
         <version>2.6.4-SNAPSHOT</version>
     </parent>
 
+    <!-- FIXME: Move to gshell-dist, this is distribution configuration -->
+
     <artifactId>gshell-personality</artifactId>
     <name>GShell :: Personality</name>
 
@@ -36,7 +38,7 @@
 
         <dependency>
             <groupId>org.sonatype.gshell.ext</groupId>
-            <artifactId>gshell-gossip</artifactId>
+            <artifactId>gshell-logback</artifactId>
         </dependency>
     </dependencies>
 
