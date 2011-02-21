@@ -32,7 +32,5 @@ public interface Logger
 
     void setLevel(String level);
 
-    Logger parent();
-
     boolean isRoot();
 }
