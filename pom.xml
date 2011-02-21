@@ -248,6 +248,12 @@
 
             <dependency>
                 <groupId>org.sonatype.gshell</groupId>
+                <artifactId>gshell-logback</artifactId>
+                <version>2.6.4-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.sonatype.gshell</groupId>
                 <artifactId>gshell-maven-plugin</artifactId>
                 <version>2.6.4-SNAPSHOT</version>
             </dependency>
@@ -303,6 +309,7 @@
         <module>gshell-util</module>
         <module>gshell-ui</module>
         <module>gshell-gossip</module>
+        <module>gshell-logback</module>
         <module>gshell-core</module>
         <module>gshell-commands</module>
         <module>gshell-plexus</module>
