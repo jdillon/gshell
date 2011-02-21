@@ -61,7 +61,7 @@ public class StreamJack
         return installed;
     }
 
-    private static synchronized void ensureInstalled() {
+    private static void ensureInstalled() {
         if (!isInstalled()) {
             throw new IllegalStateException("Not installed");
         }
@@ -87,6 +87,8 @@ public class StreamJack
 
         log.debug("Installed");
     }
+
+    // FIXME: Not sure that all of these need to/should be synchronized
 
     /**
      * Install the hijacker and register streams for the current thread.
@@ -143,10 +145,12 @@ public class StreamJack
         log.debug("Uninstalled");
     }
 
+    // Stream registration details are based on ThreadLocal operations and do not/should not need to be synchronized.
+
     /**
      * Get the current stream registration.
      */
-    private static synchronized StreamRegistration registration(final boolean required) {
+    private static StreamRegistration registration(final boolean required) {
         if (required) {
             ensureRegistered();
         }
@@ -157,11 +161,11 @@ public class StreamJack
     /**
      * Check if there are streams registered for the current thread.
      */
-    public static synchronized boolean isRegistered() {
+    public static boolean isRegistered() {
         return registration(false) != null;
     }
 
-    private static synchronized void ensureRegistered() {
+    private static void ensureRegistered() {
         ensureInstalled();
 
         if (!isRegistered()) {
@@ -172,10 +176,12 @@ public class StreamJack
     /**
      * Register streams for the current thread.
      */
-    public static synchronized void register(final InputStream in, final PrintStream out, final PrintStream err) {
+    public static void register(final InputStream in, final PrintStream out, final PrintStream err) {
         ensureInstalled();
 
-        log.trace("Registering: {} -> {}, {}, {}", new Object[] { Thread.currentThread(), in, out, err });
+        if (log.isTraceEnabled()) {
+            log.trace("Registering: {} -> {}, {}, {}", new Object[] { Thread.currentThread(), in, out, err });
+        }
 
         StreamRegistration prev = registration(false);
         StreamSet set = new StreamSet(in, out, err);
@@ -187,14 +193,14 @@ public class StreamJack
     /**
      * Register combined streams for the current thread.
      */
-    public static synchronized void register(final InputStream in, final PrintStream out) {
+    public static void register(final InputStream in, final PrintStream out) {
         register(in, out, out);
     }
 
     /**
      * Register streams for the current thread.
      */
-    public static synchronized void register(final StreamSet set) {
+    public static void register(final StreamSet set) {
         assert set != null;
 
         register(set.in, set.out, set.err);
@@ -203,12 +209,14 @@ public class StreamJack
     /**
      * Re-register streams for the current thread, and restore the previous if any.
      */
-    public static synchronized void deregister() {
+    public static void deregister() {
         StreamRegistration cur = registration(true);
 
         registrations.set(cur.previous);
 
-        log.trace("De-registered: {}, using streams: {}", Thread.currentThread(), cur.previous == null ? "null" : cur.previous.streams);
+        if (log.isTraceEnabled()) {
+            log.trace("De-registered: {}, using streams: {}", Thread.currentThread(), cur.previous == null ? "null" : cur.previous.streams);
+        }
     }
 
     /**
@@ -231,7 +239,7 @@ public class StreamJack
     /**
      * Returns the currently registered streams.
      */
-    public static synchronized StreamSet current() {
+    public static StreamSet current() {
         StreamRegistration reg = registration(false);
         if (reg == null) {
             return previous;
@@ -248,9 +256,7 @@ public class StreamJack
      */
     public static synchronized void restore(final StreamSet streams) {
         assert streams != null;
-
         StreamSet.system(streams);
-
         previous = null;
         installed = false;
     }
@@ -262,6 +268,8 @@ public class StreamJack
     public static synchronized void restore() {
         restore(StreamSet.system());
     }
+
+    // TODO: Do we need to perform any sync muck here?
 
     /**
      * Delegates write calls to the currently registered output stream.
@@ -275,9 +283,7 @@ public class StreamJack
 
         public DelegateOutputStream(final StreamSet.OutputType type) {
             super(NULL_OUTPUT);
-
             assert type != null;
-
             this.type = type;
         }
 
