@@ -491,10 +491,8 @@
             </plugin>
 
             <!--
-            mvn license:format
+            mvn license:format -N
             If its a new year, update the year range in the header.txt file
-
-            FIXME: Should probably make this non-aggregate so custom module specific rules can be easier to manage, though have to put the header somewhere :-(
             -->
             <plugin>
                 <groupId>com.mycila.maven-license-plugin</groupId>
