@@ -28,7 +28,7 @@
 
     <artifactId>gshell-file</artifactId>
     <name>GShell Commands :: File</name>
-    
+
     <profiles>
         <profile>
             <id>assembly</id>
