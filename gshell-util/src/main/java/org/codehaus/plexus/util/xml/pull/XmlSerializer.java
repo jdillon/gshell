@@ -34,7 +34,7 @@ import java.io.Writer;
  * to use an optional feature to signal that implementation is not
  * supporting this kind of output.
  */
-
+@Deprecated
 public interface XmlSerializer {
 
     /**

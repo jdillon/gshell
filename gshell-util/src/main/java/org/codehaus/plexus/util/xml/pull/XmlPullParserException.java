@@ -8,6 +8,7 @@ package org.codehaus.plexus.util.xml.pull;
  *
  * @author <a href="http://www.extreme.indiana.edu/~aslom/">Aleksander Slominski</a>
  */
+@Deprecated
 public class XmlPullParserException extends Exception {
     /**
      * @deprecated use generic getCause() method

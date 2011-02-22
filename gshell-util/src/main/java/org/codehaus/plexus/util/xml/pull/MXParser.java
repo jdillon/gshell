@@ -31,7 +31,7 @@ import org.codehaus.plexus.util.ReaderFactory;
  * @see org.codehaus.plexus.util.xml.XmlReader
  * @author <a href="http://www.extreme.indiana.edu/~aslom/">Aleksander Slominski</a>
  */
-
+@Deprecated
 public class MXParser
     implements XmlPullParser
 {

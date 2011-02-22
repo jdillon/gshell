@@ -56,6 +56,7 @@ import java.text.MessageFormat;
  * @deprecated use XmlStreamReader
  * @since 1.4.3
  */
+@Deprecated
 public class XmlReader extends Reader
 {
     private static final int BUFFER_SIZE = 4096;

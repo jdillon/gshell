@@ -24,6 +24,7 @@ import java.io.Writer;
  *  </ul>
  *
  */
+@Deprecated
 public class MXSerializer implements XmlSerializer {
     protected final static String XML_URI = "http://www.w3.org/XML/1998/namespace";
     protected final static String XMLNS_URI = "http://www.w3.org/2000/xmlns/";

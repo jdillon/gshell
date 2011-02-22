@@ -40,6 +40,7 @@ import org.codehaus.plexus.util.xml.XmlStreamReader;
  * @version $Id: ReaderFactory.java 8010 2009-01-07 12:59:50Z vsiveton $
  * @since 1.4.3
  */
+@Deprecated
 public class ReaderFactory
 {
     /**

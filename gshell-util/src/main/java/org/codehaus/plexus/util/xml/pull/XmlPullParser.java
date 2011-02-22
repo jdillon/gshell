@@ -136,7 +136,7 @@ import java.io.Reader;
  * @author <a href="http://www-ai.cs.uni-dortmund.de/PERSONAL/haustein.html">Stefan Haustein</a>
  * @author <a href="http://www.extreme.indiana.edu/~aslom/">Aleksander Slominski</a>
  */
-
+@Deprecated
 public interface XmlPullParser {
 
     /** This constant represents the default namespace (empty string "") */
