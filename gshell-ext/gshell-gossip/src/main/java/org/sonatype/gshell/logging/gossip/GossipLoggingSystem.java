@@ -32,7 +32,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static org.sonatype.gossip.Gossip.Logger.ROOT_NAME;
+import static org.sonatype.gossip.Gossip.LoggerImpl.ROOT_NAME;
 
 /**
  * <a href="http://github.com/jdillon/gossip">Gossip</a> {@link LoggingSystem} component.
@@ -127,9 +127,9 @@ public class GossipLoggingSystem
     private class LoggerImpl
         implements Logger
     {
-        private final Gossip.Logger target;
+        private final Gossip.LoggerImpl target;
 
-        public LoggerImpl(final Gossip.Logger logger) {
+        public LoggerImpl(final Gossip.LoggerImpl logger) {
             assert logger != null;
             this.target = logger;
         }
