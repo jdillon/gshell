@@ -1,5 +1,5 @@
-/*
- * Copyright (C) 2010 the original author or authors.
+/**
+ * Copyright (c) 2009-2011 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.sonatype.gshell.logging;
 
 import javax.inject.Inject;
@@ -24,7 +23,7 @@ import jline.console.completer.StringsCompleter;
 import java.util.List;
 
 /**
- * {@link jline.console.completer.Completer} for {@link Logger} names.
+ * {@link Completer} for {@link Logger} names.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5

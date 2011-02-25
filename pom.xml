@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (C) 2009 the original author(s).
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~ http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
-  ~ limitations under the License.
-  -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    Copyright (c) 2009-2011 the original author or authors.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -28,7 +29,7 @@
     <groupId>org.sonatype.gshell</groupId>
     <artifactId>gshell</artifactId>
     <name>GShell</name>
-    <version>2.6.3-SNAPSHOT</version>
+    <version>2.6.4-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <organization>
@@ -100,7 +101,7 @@
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
-                <version>4.8.1</version>
+                <version>4.8.2</version>
             </dependency>
 
             <dependency>
@@ -117,22 +118,26 @@
 
             <dependency>
                 <groupId>org.sonatype.gossip</groupId>
-                <artifactId>gossip-core</artifactId>
-                <version>1.5</version>
+                <artifactId>gossip-bootstrap</artifactId>
+                <version>1.6-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gossip</groupId>
                 <artifactId>gossip-slf4j</artifactId>
-                <version>1.5</version>
+                <version>1.6-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
-                <version>0.9.26</version>
+                <version>0.9.28</version>
             </dependency>
 
+            <!--
+            FIXME: Need to resolve differences in latest jline2 uses so we can pick up the latest version.
+                   some differences in how indexs work or something, I forget
+            -->
             <dependency>
                 <groupId>org.sonatype.jline</groupId>
                 <artifactId>jline</artifactId>
@@ -171,16 +176,7 @@
             <dependency>
                 <groupId>org.sonatype.sisu</groupId>
                 <artifactId>sisu-inject-bean</artifactId>
-                <version>1.4.3.1</version>
-            </dependency>
-
-            <!--
-            FIXME: Rip this out, its way too big to justify why its included.
-            -->
-            <dependency>
-                <groupId>org.codehaus.plexus</groupId>
-                <artifactId>plexus-utils</artifactId>
-                <version>2.0.5</version>
+                <version>2.1.1</version>
             </dependency>
 
             <dependency>
@@ -206,94 +202,94 @@
             <dependency>
                 <groupId>org.sonatype.gshell</groupId>
                 <artifactId>gshell-launcher</artifactId>
-                <version>2.6.3-SNAPSHOT</version>
+                <version>2.6.4-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gshell</groupId>
                 <artifactId>gshell-util</artifactId>
-                <version>2.6.3-SNAPSHOT</version>
+                <version>2.6.4-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gshell</groupId>
                 <artifactId>gshell-ui</artifactId>
-                <version>2.6.3-SNAPSHOT</version>
+                <version>2.6.4-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gshell</groupId>
                 <artifactId>gshell-core</artifactId>
-                <version>2.6.3-SNAPSHOT</version>
+                <version>2.6.4-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gshell</groupId>
                 <artifactId>gshell-core</artifactId>
                 <classifier>tests</classifier>
-                <version>2.6.3-SNAPSHOT</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.sonatype.gshell</groupId>
-                <artifactId>gshell-plexus</artifactId>
-                <version>2.6.3-SNAPSHOT</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.sonatype.gshell</groupId>
-                <artifactId>gshell-gossip</artifactId>
-                <version>2.6.3-SNAPSHOT</version>
+                <version>2.6.4-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gshell</groupId>
                 <artifactId>gshell-maven-plugin</artifactId>
-                <version>2.6.3-SNAPSHOT</version>
+                <version>2.6.4-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gshell</groupId>
                 <artifactId>gshell-bootstrap</artifactId>
-                <version>2.6.3-SNAPSHOT</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.sonatype.gshell</groupId>
-                <artifactId>gshell-personality</artifactId>
-                <version>2.6.3-SNAPSHOT</version>
+                <version>2.6.4-SNAPSHOT</version>
             </dependency>
 
             <!-- HACK: Duplicating for now, due to release plugin issue with scope=import -->
 
             <dependency>
+                <groupId>org.sonatype.gshell.ext</groupId>
+                <artifactId>gshell-plexus</artifactId>
+                <version>2.6.4-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.sonatype.gshell.ext</groupId>
+                <artifactId>gshell-gossip</artifactId>
+                <version>2.6.4-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.sonatype.gshell.ext</groupId>
+                <artifactId>gshell-logback</artifactId>
+                <version>2.6.4-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
                 <groupId>org.sonatype.gshell.commands</groupId>
                 <artifactId>gshell-standard</artifactId>
-                <version>2.6.3-SNAPSHOT</version>
+                <version>2.6.4-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gshell.commands</groupId>
                 <artifactId>gshell-logging</artifactId>
-                <version>2.6.3-SNAPSHOT</version>
+                <version>2.6.4-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gshell.commands</groupId>
                 <artifactId>gshell-pref</artifactId>
-                <version>2.6.3-SNAPSHOT</version>
+                <version>2.6.4-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gshell.commands</groupId>
                 <artifactId>gshell-network</artifactId>
-                <version>2.6.3-SNAPSHOT</version>
+                <version>2.6.4-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.gshell.commands</groupId>
                 <artifactId>gshell-file</artifactId>
-                <version>2.6.3-SNAPSHOT</version>
+                <version>2.6.4-SNAPSHOT</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -301,13 +297,11 @@
     <modules>
         <module>gshell-launcher</module>
         <module>gshell-util</module>
+        <module>gshell-ext</module>
         <module>gshell-ui</module>
-        <module>gshell-gossip</module>
         <module>gshell-core</module>
         <module>gshell-commands</module>
-        <module>gshell-plexus</module>
         <module>gshell-maven-plugin</module>
-        <module>gshell-personality</module>
         <module>gshell-bootstrap</module>
     </modules>
 
@@ -366,6 +360,16 @@
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.3.2</version>
+                    <configuration>
+                        <source>1.5</source>
+                        <target>1.5</target>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-clean-plugin</artifactId>
                     <version>2.4.1</version>
                 </plugin>
@@ -385,7 +389,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>2.6</version>
+                    <version>2.7.2</version>
                     <configuration>
                         <redirectTestOutputToFile>true</redirectTestOutputToFile>
                         <forkMode>once</forkMode>
@@ -467,56 +471,6 @@
                     </execution>
                 </executions>
             </plugin>
-            
-            <!--
-            <plugin>
-                <groupId>org.codehaus.gaven</groupId>
-                <artifactId>gmaven-plugin</artifactId>
-                <version>1.2</version>
-                <configuration>
-                    <providerSelection>1.7</providerSelection>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generateStubs</goal>
-                            <goal>compile</goal>
-                            <goal>generateTestStubs</goal>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-bundle-plugin</artifactId>
-                <version>2.0.1</version>
-                <executions>
-                    <execution>
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>manifest</goal>
-                        </goals>
-                        <configuration>
-                            <instructions>
-                                <Import-Package>!org.sonatype.gossip*,!org.slf4j.impl*,org.fusesource.jansi*;resolution:=optional,com.sun.jna;resolution:=optional,sun.reflect;resolution:=optional,*</Import-Package>
-                                <DynamicImport-Package>*</DynamicImport-Package>
-                            </instructions>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.2</version>
-                <configuration>
-                    <archive>
-                        <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
-                    </archive>
-                </configuration>
-            </plugin>
-            -->
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -534,6 +488,44 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-scm-plugin</artifactId>
                 <version>1.4</version>
+            </plugin>
+
+            <!--
+            mvn license:format -N
+            If its a new year, update the year range in the header.txt file
+            -->
+            <plugin>
+                <groupId>com.mycila.maven-license-plugin</groupId>
+                <artifactId>maven-license-plugin</artifactId>
+                <version>1.9.0</version>
+                <configuration>
+                    <aggregate>true</aggregate>
+                    <strictCheck>true</strictCheck>
+                    <header>${project.basedir}/header.txt</header>
+                    <useDefaultExcludes>false</useDefaultExcludes>
+                    <includes>
+                        <include>**/pom.xml</include>
+                        <include>**/*.xml</include>
+                        <include>**/*.xsd</include>
+                        <include>**/*.xjb</include>
+                        <include>**/*.mdo</include>
+                        <include>**/*.properties</include>
+                        <include>**/*.java</include>
+                        <include>**/*.groovy</include>
+                        <include>**/*.scala</include>
+                        <include>**/*.aj</include>
+                        <include>**/*.js</include>
+                        <include>**/*.css</include>
+                    </includes>
+                    <excludes>
+                        <exclude>**/target/**</exclude>
+                    </excludes>
+                    <mapping>
+                        <scala>JAVADOC_STYLE</scala>
+                        <xjb>XML_STYLE</xjb>
+                        <mdo>XML_STYLE</mdo>
+                    </mapping>
+                </configuration>
             </plugin>
         </plugins>
     </build>

@@ -1,5 +1,5 @@
-/*
- * Copyright (C) 2009 the original author or authors.
+/**
+ * Copyright (c) 2009-2011 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,15 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.sonatype.gshell.commands.network;
 
-import org.codehaus.plexus.util.IOUtil;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.util.io.Closer;
+import org.sonatype.gshell.util.io.Copier;
 import org.sonatype.gshell.util.io.Flusher;
 import org.sonatype.gshell.util.cli2.Argument;
 import org.sonatype.gshell.util.cli2.Option;
@@ -81,7 +80,7 @@ public class WgetCommand
             out = io.streams.out;
         }
 
-        IOUtil.copy(in, out);
+        Copier.copy(in, out);
 
         // if we write a file, close it then return the file
         if (outputFile != null) {

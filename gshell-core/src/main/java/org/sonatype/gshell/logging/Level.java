@@ -1,5 +1,5 @@
-/*
- * Copyright (C) 2010 the original author or authors.
+/**
+ * Copyright (c) 2009-2011 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.sonatype.gshell.logging;
+
+// FIXME: Rename, LevelComponent or something, Level is likely to conflict with any logging system and forces use of FQCN
 
 /**
  * Represents a logger level.
