@@ -49,7 +49,7 @@ import static com.google.inject.name.Names.named;
 public abstract class GuiceMainSupport
     extends MainSupport
 {
-    private static final DefaultBeanLocator container = new DefaultBeanLocator();
+    protected static final DefaultBeanLocator container = new DefaultBeanLocator();
 
     @Override
     protected Shell createShell() throws Exception {
