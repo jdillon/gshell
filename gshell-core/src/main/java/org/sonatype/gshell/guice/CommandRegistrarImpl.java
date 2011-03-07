@@ -15,23 +15,20 @@
  */
 package org.sonatype.gshell.guice;
 
-import javax.inject.Inject;
-
-import com.google.inject.Injector;
-import com.google.inject.Module;
-import javax.inject.Singleton;
+import com.google.inject.Key;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandAction;
-import org.sonatype.gshell.command.descriptor.CommandSetDescriptor;
-import org.sonatype.gshell.command.descriptor.ModuleDescriptor;
 import org.sonatype.gshell.command.registry.CommandRegistrar;
 import org.sonatype.gshell.command.registry.CommandRegistrarSupport;
 import org.sonatype.gshell.command.registry.CommandRegistry;
 import org.sonatype.gshell.event.EventManager;
-import org.sonatype.guice.bean.binders.WireModule;
+import org.sonatype.guice.bean.locators.MutableBeanLocator;
+import org.sonatype.inject.BeanEntry;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.lang.annotation.Annotation;
+import java.util.Iterator;
 
 /**
  * Guice {@link CommandRegistrar}.
@@ -43,76 +40,23 @@ import java.util.List;
 public class CommandRegistrarImpl
     extends CommandRegistrarSupport
 {
-    private final Injector injector;
+    private final MutableBeanLocator container;
 
     private final CommandRegistry registry;
 
-    private final ThreadLocal<Injector> injectorHolder = new ThreadLocal<Injector>() {
-        @Override
-        protected Injector initialValue() {
-            return injector;
-        }
-    };
-
     @Inject
-    public CommandRegistrarImpl(final EventManager events, final CommandRegistry registry, final Injector injector) {
+    public CommandRegistrarImpl(final MutableBeanLocator container, final EventManager events, final CommandRegistry registry) {
         super(events);
 
+        assert container != null;
+        this.container = container;
         assert registry != null;
         this.registry = registry;
-        assert injector != null;
-        this.injector = injector;
-
-        log.trace("Base injector: {}", injector);
-    }
-
-
-    @Override
-    protected void registerCommandSet(final CommandSetDescriptor config) {
-        assert config != null;
-
-        // If we have modules, then configure a new injector to be used for this set
-        if (!config.getModules().isEmpty()) {
-            log.debug("Building injector for command-set: {}", config);
-            injectorHolder.set(buildInjector(config.getModules()));
-        }
-
-        try {
-            super.registerCommandSet(config);
-        }
-        finally {
-            injectorHolder.set(injector);
-        }
     }
 
     private Class<?> loadClass(final String className) throws ClassNotFoundException {
         assert className != null;
         return Thread.currentThread().getContextClassLoader().loadClass(className);
-    }
-
-    @SuppressWarnings({"unchecked"})
-    private Injector buildInjector(final List<ModuleDescriptor> config) {
-        assert config != null;
-
-        List<Module> modules = new ArrayList<Module>(config.size());
-        for (ModuleDescriptor desc : config) {
-            String className = desc.getType();
-            try {
-                Class type = loadClass(className);
-                Module module = (Module) injector.getInstance(type);
-                log.debug("Loaded module: {}", module);
-                modules.add(module);
-            }
-            catch (Exception e) {
-                log.error("Failed to load module: " + className, e);
-            }
-        }
-
-        // FIXME: Need to get rid of child injector
-        Injector child = injector.createChildInjector(modules);
-        log.trace("Created child injector: {}", child);
-
-        return child;
     }
 
     public void registerCommand(final String name, final String className) throws Exception {
@@ -142,7 +86,12 @@ public class CommandRegistrarImpl
     @SuppressWarnings({"unchecked"})
     private CommandAction createAction(final String className) throws ClassNotFoundException {
         assert className != null;
-        Class type = loadClass(className);
-        return (CommandAction) injectorHolder.get().getInstance(type);
+        Class<?> type = loadClass(className);
+        Iterator<BeanEntry<Annotation, ?>> iter = container.locate(Key.get((Class)type)).iterator();
+        if (iter.hasNext()) {
+            return (CommandAction) iter.next().getValue();
+        }
+        // This should really never happen
+        throw new RuntimeException("Unable to load command action implementation: " + type);
     }
 }

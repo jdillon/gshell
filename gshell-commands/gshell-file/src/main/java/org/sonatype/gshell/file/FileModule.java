@@ -17,12 +17,15 @@ package org.sonatype.gshell.file;
 
 import com.google.inject.AbstractModule;
 
+import javax.inject.Named;
+
 /**
  * File module.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.3
  */
+@Named
 public class FileModule
     extends AbstractModule
 {

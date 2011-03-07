@@ -34,6 +34,11 @@ import org.sonatype.gshell.shell.ShellErrorHandler;
 import org.sonatype.gshell.shell.ShellImpl;
 import org.sonatype.gshell.shell.ShellPrompt;
 import org.sonatype.gshell.variables.Variables;
+import org.sonatype.guice.bean.binders.SpaceModule;
+import org.sonatype.guice.bean.binders.WireModule;
+import org.sonatype.guice.bean.locators.DefaultBeanLocator;
+import org.sonatype.guice.bean.locators.MutableBeanLocator;
+import org.sonatype.guice.bean.reflect.URLClassSpace;
 
 /**
  * Command-line bootstrap for GShell (<tt>gsh</tt>).
@@ -44,6 +49,8 @@ import org.sonatype.gshell.variables.Variables;
 public class Main
     extends MainSupport
 {
+    private static final DefaultBeanLocator container = new DefaultBeanLocator();
+
     @Override
     protected Branding createBranding() {
         return new BrandingImpl();
@@ -51,10 +58,11 @@ public class Main
 
     @Override
     protected Shell createShell() throws Exception {
-        Module module = new AbstractModule()
+        Module boot = new AbstractModule()
         {
             @Override
             protected void configure() {
+                bind(MutableBeanLocator.class).toInstance(container);
                 bind(LoggingSystem.class).to(LogbackLoggingSystem.class);
                 bind(ConsolePrompt.class).to(ShellPrompt.class);
                 bind(ConsoleErrorHandler.class).to(ShellErrorHandler.class);
@@ -64,7 +72,10 @@ public class Main
             }
         };
 
-        Injector injector = Guice.createInjector(Stage.PRODUCTION, module, new CoreModule());
+        URLClassSpace space = new URLClassSpace(getClass().getClassLoader());
+        Injector injector = Guice.createInjector(Stage.PRODUCTION, new WireModule(new SpaceModule(space), boot, new CoreModule()));
+        container.add(injector, 0);
+
         ShellImpl shell = injector.getInstance(ShellImpl.class);
         injector.getInstance(CommandRegistrar.class).registerCommands();
 

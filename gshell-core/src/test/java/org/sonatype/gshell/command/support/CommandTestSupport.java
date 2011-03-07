@@ -45,6 +45,11 @@ import org.sonatype.gshell.shell.ShellPrompt;
 import org.sonatype.gshell.util.Strings;
 import org.sonatype.gshell.variables.Variables;
 import org.sonatype.gshell.variables.VariablesImpl;
+import org.sonatype.guice.bean.binders.SpaceModule;
+import org.sonatype.guice.bean.binders.WireModule;
+import org.sonatype.guice.bean.locators.DefaultBeanLocator;
+import org.sonatype.guice.bean.locators.MutableBeanLocator;
+import org.sonatype.guice.bean.reflect.URLClassSpace;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,6 +69,8 @@ public abstract class CommandTestSupport
     protected final String name;
 
     private final TestUtil util = new TestUtil(this);
+
+    private DefaultBeanLocator container;
 
     private TestIO io;
 
@@ -90,13 +97,15 @@ public abstract class CommandTestSupport
 
     @Before
     public void setUp() throws Exception {
+        container = new DefaultBeanLocator();
         io = new TestIO();
         vars = new VariablesImpl();
 
-        Module module = new AbstractModule()
+        Module boot = new AbstractModule()
         {
             @Override
             protected void configure() {
+                bind(MutableBeanLocator.class).toInstance(container);
                 bind(LoggingSystem.class).to(TestLoggingSystem.class);
                 bind(ConsolePrompt.class).to(ShellPrompt.class);
                 bind(ConsoleErrorHandler.class).to(ShellErrorHandler.class);
@@ -107,9 +116,11 @@ public abstract class CommandTestSupport
         };
 
         List<Module> modules = new ArrayList<Module>();
-        modules.add(module);
+        modules.add(boot);
         configureModules(modules);
-        Injector injector = Guice.createInjector(Stage.DEVELOPMENT, modules);
+
+        Injector injector = Guice.createInjector(Stage.DEVELOPMENT, new WireModule(modules));
+        container.add(injector, 0);
 
         CommandRegistrar registrar = injector.getInstance(CommandRegistrar.class);
         for (Map.Entry<String,Class> entry : requiredCommands.entrySet()) {
@@ -129,7 +140,12 @@ public abstract class CommandTestSupport
 
     protected void configureModules(final List<Module> modules) {
         assert modules != null;
+        modules.add(new SpaceModule(createClassSpace()));
         modules.add(new CoreModule());
+    }
+
+    protected URLClassSpace createClassSpace() {
+        return new URLClassSpace(getClass().getClassLoader());
     }
 
     @After
@@ -143,6 +159,10 @@ public abstract class CommandTestSupport
         }
         shell = null;
         requiredCommands.clear();
+        if (container != null) {
+            container.clear();
+            container = null;
+        }
     }
 
     protected Shell getShell() {

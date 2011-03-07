@@ -17,6 +17,7 @@ package org.sonatype.gshell.vfs;
 
 import com.google.inject.AbstractModule;
 import javax.inject.Singleton;
+import javax.inject.Named;
 import org.apache.commons.vfs.FileContentInfoFactory;
 import org.apache.commons.vfs.FileSystemManager;
 import org.apache.commons.vfs.FilesCache;
@@ -30,6 +31,7 @@ import org.sonatype.gshell.vfs.builder.FileSystemManagerProvider;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.3
  */
+@Named
 public class VfsModule
     extends AbstractModule
 {
