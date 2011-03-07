@@ -20,7 +20,6 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.Stage;
-import com.google.inject.name.Names;
 import org.fusesource.jansi.Ansi;
 import org.junit.After;
 import org.junit.Assert;
@@ -50,12 +49,14 @@ import org.sonatype.guice.bean.binders.WireModule;
 import org.sonatype.guice.bean.locators.DefaultBeanLocator;
 import org.sonatype.guice.bean.locators.MutableBeanLocator;
 import org.sonatype.guice.bean.reflect.URLClassSpace;
+import org.sonatype.inject.BeanScanning;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.google.inject.name.Names.named;
 import static org.junit.Assert.*;
 
 /**
@@ -110,8 +111,8 @@ public abstract class CommandTestSupport
                 bind(ConsolePrompt.class).to(ShellPrompt.class);
                 bind(ConsoleErrorHandler.class).to(ShellErrorHandler.class);
                 bind(Branding.class).toInstance(new TestBranding(util.resolveFile("target/shell-home")));
-                bind(IO.class).annotatedWith(Names.named("main")).toInstance(io);
-                bind(Variables.class).annotatedWith(Names.named("main")).toInstance(vars);
+                bind(IO.class).annotatedWith(named("main")).toInstance(io);
+                bind(Variables.class).annotatedWith(named("main")).toInstance(vars);
             }
         };
 
@@ -140,12 +141,13 @@ public abstract class CommandTestSupport
 
     protected void configureModules(final List<Module> modules) {
         assert modules != null;
-        modules.add(new SpaceModule(createClassSpace()));
+        modules.add(createSpaceModule());
         modules.add(new CoreModule());
     }
 
-    protected URLClassSpace createClassSpace() {
-        return new URLClassSpace(getClass().getClassLoader());
+    protected SpaceModule createSpaceModule() {
+        URLClassSpace space = new URLClassSpace(getClass().getClassLoader());
+        return new SpaceModule(space, BeanScanning.INDEX);
     }
 
     @After
