@@ -55,6 +55,8 @@ import org.sonatype.gshell.variables.Variables;
 
 import java.io.IOException;
 
+import static com.google.inject.name.Names.named;
+
 /**
  * GShell core module.
  *
@@ -76,15 +78,15 @@ public class CoreModule
         bind(CommandExecutor.class).to(CommandExecutorImpl.class);
         bind(CommandResolver.class).to(CommandResolverImpl.class);
 
-        bind(Completer.class).annotatedWith(Names.named("commands")).to(CommandsCompleter.class);
-        bind(Completer.class).annotatedWith(Names.named("command-name")).to(CommandNameCompleter.class);
-        bind(Completer.class).annotatedWith(Names.named("node-path")).to(NodePathCompleter.class);
-        bind(Completer.class).annotatedWith(Names.named("alias-name")).to(AliasNameCompleter.class);
-        bind(Completer.class).annotatedWith(Names.named("file-name")).to(FileNameCompleter.class);
-        bind(Completer.class).annotatedWith(Names.named("variable-name")).to(VariableNameCompleter.class);
-        bind(Completer.class).annotatedWith(Names.named("meta-help-page-name")).to(MetaHelpPageNameCompleter.class);
-        bind(Completer.class).annotatedWith(Names.named("level-name")).to(LevelNameCompleter.class);
-        bind(Completer.class).annotatedWith(Names.named("logger-name")).to(LoggerNameCompleter.class);
+        bind(Completer.class).annotatedWith(named("commands")).to(CommandsCompleter.class);
+        bind(Completer.class).annotatedWith(named("command-name")).to(CommandNameCompleter.class);
+        bind(Completer.class).annotatedWith(named("node-path")).to(NodePathCompleter.class);
+        bind(Completer.class).annotatedWith(named("alias-name")).to(AliasNameCompleter.class);
+        bind(Completer.class).annotatedWith(named("file-name")).to(FileNameCompleter.class);
+        bind(Completer.class).annotatedWith(named("variable-name")).to(VariableNameCompleter.class);
+        bind(Completer.class).annotatedWith(named("meta-help-page-name")).to(MetaHelpPageNameCompleter.class);
+        bind(Completer.class).annotatedWith(named("level-name")).to(LevelNameCompleter.class);
+        bind(Completer.class).annotatedWith(named("logger-name")).to(LoggerNameCompleter.class);
     }
 
     @Provides
