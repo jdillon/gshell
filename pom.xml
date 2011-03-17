@@ -490,6 +490,20 @@
                 <version>1.4</version>
             </plugin>
 
+            <!--<plugin>-->
+                <!--<groupId>org.sonatype.plugins</groupId>-->
+                <!--<artifactId>sisu-maven-plugin</artifactId>-->
+                <!--<version>1.1-SNAPSHOT</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<goals>-->
+                            <!--<goal>main-index</goal>-->
+                            <!--<goal>test-index</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
+
             <!--
             mvn license:format -N
             If its a new year, update the year range in the header.txt file
