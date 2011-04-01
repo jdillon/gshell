@@ -51,10 +51,12 @@
         <url>https://github.com/sonatype/gshell</url>
     </scm>
 
-    <!--<ciManagement>-->
-        <!--<system>Hudson</system>-->
-        <!--<url>https://grid.sonatype.org/ci/job/GShell</url>-->
-    <!--</ciManagement>-->
+    <url>https://github.com/sonatype/gshell</url>
+
+    <ciManagement>
+        <system>Hudson</system>
+        <url>https://builds.sonatype.org/job/gshell</url>
+    </ciManagement>
 
     <developers>
         <developer>
