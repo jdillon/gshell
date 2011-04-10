@@ -27,6 +27,14 @@
                     <instructions>
                         <instruction key='install'>
                             natives:unzip( source:${artifact.location}, target:${installFolder}/${assembly.basedir}/, exclude:META-INF/** );
+
+                            generic:chmod( targetDir:${installFolder}/${assembly.basedir}, targetFile:bin/echo, permissions:755 );
+                            generic:convertLineEndings( format:dos,  target:${installFolder}/${assembly.basedir}/bin/echo.bat );
+                            generic:convertLineEndings( format:unix, target:${installFolder}/${assembly.basedir}/bin/echo );
+
+                            generic:chmod( targetDir:${installFolder}/${assembly.basedir}, targetFile:bin/gsh, permissions:755 );
+                            generic:convertLineEndings( format:dos,  target:${installFolder}/${assembly.basedir}/bin/gsh.bat );
+                            generic:convertLineEndings( format:unix, target:${installFolder}/${assembly.basedir}/bin/gsh );
                         </instruction>
                         <instruction key='uninstall'>
                             natives:cleanupzip( source:${artifact.location},target:${installFolder}/${assembly.basedir}/ );
