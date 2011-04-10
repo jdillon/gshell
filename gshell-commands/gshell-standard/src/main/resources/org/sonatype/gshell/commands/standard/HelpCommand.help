@@ -43,3 +43,8 @@
     Display help pages for the 'pref' group:
 
         @{command.name} pref
+
+    Display help pages for only the current group:
+
+        @{command.name} .
+
