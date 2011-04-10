@@ -137,6 +137,7 @@ public class CommandExecutorImpl
 
         MDC.put(CommandAction.class.getName(), name);
 
+        final ClassLoader cl = Thread.currentThread().getContextClassLoader();
         final Shell lastShell = ShellHolder.set(shell);
         final IO io = shell.getIo();
 
@@ -199,6 +200,7 @@ public class CommandExecutorImpl
             io.flush();
             StreamJack.deregister();
             ShellHolder.set(lastShell);
+            Thread.currentThread().setContextClassLoader(cl);
             MDC.remove(CommandAction.class.getName());
         }
 
