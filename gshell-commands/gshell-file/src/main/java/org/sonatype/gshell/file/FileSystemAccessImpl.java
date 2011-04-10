@@ -23,6 +23,7 @@ import org.sonatype.gshell.variables.Variables;
 import java.io.File;
 import java.io.IOException;
 
+import static org.codehaus.plexus.util.Os.FAMILY_WINDOWS;
 import static org.sonatype.gshell.variables.VariableNames.SHELL_HOME;
 import static org.sonatype.gshell.variables.VariableNames.SHELL_USER_DIR;
 import static org.sonatype.gshell.variables.VariableNames.SHELL_USER_HOME;
@@ -83,11 +84,18 @@ public class FileSystemAccessImpl
             file = new File(path);
         }
 
-        // support paths like "<drive>:" on windows
-        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        // support paths like "<drive>:" and "/" on windows
+        if (Os.isFamily(FAMILY_WINDOWS)) {
+            if (path != null && path.equals("/")) {
+                // Get the current canonical path to access drive root
+                String tmp = new File(".").getCanonicalPath().substring(0, 2);
+                return new File(tmp + "/").getCanonicalFile();
+            }
+
             String tmp = file.getPath();
             if (tmp.length() == 2 && tmp.charAt(1) == ':') {
-                return file.getCanonicalFile();
+                // Have to append "/" on windows it seems to get the right root
+                return new File(tmp + "/").getCanonicalFile();
             }
         }
 
