@@ -15,11 +15,11 @@
  */
 package org.sonatype.gshell.execute;
 
-import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.sonatype.gshell.alias.AliasRegistry;
+import org.sonatype.gshell.alias.NoSuchAliasException;
 import org.sonatype.gshell.command.AliasAction;
 import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.CommandContext;
@@ -29,7 +29,6 @@ import org.sonatype.gshell.command.resolver.CommandResolver;
 import org.sonatype.gshell.command.resolver.Node;
 import org.sonatype.gshell.command.support.CommandHelpSupport;
 import org.sonatype.gshell.command.support.CommandPreferenceSupport;
-import org.sonatype.gshell.util.io.StreamJack;
 import org.sonatype.gshell.notification.ErrorNotification;
 import org.sonatype.gshell.notification.ResultNotification;
 import org.sonatype.gshell.parser.CommandLineParser;
@@ -41,10 +40,13 @@ import org.sonatype.gshell.util.Strings;
 import org.sonatype.gshell.util.cli2.CliProcessor;
 import org.sonatype.gshell.util.cli2.HelpPrinter;
 import org.sonatype.gshell.util.cli2.OpaqueArguments;
+import org.sonatype.gshell.util.io.StreamJack;
 import org.sonatype.gshell.util.pref.PreferenceProcessor;
 import org.sonatype.gshell.variables.Variables;
 
-import static org.sonatype.gshell.variables.VariableNames.*;
+import javax.inject.Inject;
+
+import static org.sonatype.gshell.variables.VariableNames.LAST_RESULT;
 
 /**
  * The default {@link org.sonatype.gshell.execute.CommandExecutor} component.
@@ -115,13 +117,8 @@ public class CommandExecutorImpl
         return execute(shell, String.valueOf(args[0]), Arguments.shift(args));
     }
 
-    public Object execute(final Shell shell, final String name, final Object[] args) throws Exception {
-        assert shell != null;
+    private CommandAction createAction(final String name) throws NoSuchAliasException, NoSuchCommandException {
         assert name != null;
-        assert args != null;
-
-        log.debug("Executing ({}): [{}]", name, Strings.join(args, ", "));
-
         CommandAction action;
         if (aliases.containsAlias(name)) {
             action = new AliasAction(name, aliases.getAlias(name));
@@ -134,7 +131,17 @@ public class CommandExecutorImpl
             action = node.getAction();
         }
         action = action.clone();
+        return action;
+    }
 
+    public Object execute(final Shell shell, final String name, final Object[] args) throws Exception {
+        assert shell != null;
+        assert name != null;
+        assert args != null;
+
+        log.debug("Executing ({}): [{}]", name, Strings.join(args, ", "));
+
+        final CommandAction action = createAction(name);
         MDC.put(CommandAction.class.getName(), name);
 
         final ClassLoader cl = Thread.currentThread().getContextClassLoader();
