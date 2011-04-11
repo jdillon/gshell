@@ -154,14 +154,14 @@ public class CommandExecutorImpl
         try {
             boolean execute = true;
 
+            // Process command preferences
             PreferenceProcessor pp = CommandPreferenceSupport.createProcessor(action);
             pp.process();
 
+            // Process command arguments unless marked as opaque
             if (!(action instanceof OpaqueArguments)) {
                 CommandHelpSupport help = new CommandHelpSupport();
                 CliProcessor clp = help.createProcessor(action);
-
-                // Process the arguments
                 clp.process(Arguments.toStringArray(args));
 
                 // Render command-line usage
@@ -172,6 +172,7 @@ public class CommandExecutorImpl
                     HelpPrinter printer = new HelpPrinter(clp);
                     printer.printUsage(io.out, action.getSimpleName());
 
+                    // Skip execution
                     result = CommandAction.Result.SUCCESS;
                     execute = false;
                 }
