@@ -130,8 +130,8 @@ public class CommandExecutorImpl
             }
             action = node.getAction();
         }
-        action = action.clone();
-        return action;
+        // Always return a clone, original instance is a prototype
+        return action.clone();
     }
 
     public Object execute(final Shell shell, final String name, final Object[] args) throws Exception {
