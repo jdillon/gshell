@@ -40,7 +40,7 @@
 
         @{command.name} exit
 
-    Display help pages for the 'pref' group:
+    Display help pages for the @|bold pref|@ group:
 
         @{command.name} pref
 
