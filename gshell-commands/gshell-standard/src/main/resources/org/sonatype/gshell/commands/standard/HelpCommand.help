@@ -44,7 +44,7 @@
 
         @{command.name} pref
 
-    Display help pages for only the current group:
+    Display help pages for the current group:
 
         @{command.name} .
 
