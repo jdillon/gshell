@@ -91,7 +91,7 @@ public class SetCommand
         if (evaluate) {
             Object result = context.getShell().execute(value);
             if (result == null || result instanceof Result) {
-                io.error(getMessages().format("error.expression-did-not-return-a-value", value));
+                io.error(messages.format("error.expression-did-not-return-a-value", value));
                 return Result.FAILURE;
             }
             value = result.toString();
