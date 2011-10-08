@@ -54,6 +54,9 @@ public class SetCommand
     @Option(name = "v", longName = "verbose")
     private boolean verbose;
 
+    /**
+     * @since 2.5.6
+     */
     @Option(name = "e", longName = "evaluate")
     private boolean evaluate;
 
