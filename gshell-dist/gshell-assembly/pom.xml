@@ -80,6 +80,10 @@
                                     <groupId>org.sonatype.gshell.commands</groupId>
                                     <artifactId>gshell-pref</artifactId>
                                 </fragment>
+                                <fragment>
+                                    <groupId>org.sonatype.gshell.commands</groupId>
+                                    <artifactId>gshell-groovy</artifactId>
+                                </fragment>
                             </fragments>
                             <properties>
                                 <assembly.basedir>.</assembly.basedir>

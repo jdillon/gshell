@@ -33,15 +33,13 @@
     
     <dependencyManagement>
         <dependencies>
-            <!-- HACK: Disabling for now, due to release plugin issue with scope=import -->
-
-            <!--<dependency>-->
-                <!--<groupId>org.sonatype.gshell.commands</groupId>-->
-                <!--<artifactId>gshell-commands</artifactId>-->
-                <!--<type>pom</type>-->
-                <!--<version>${project.version}</version>-->
-                <!--<scope>import</scope>-->
-            <!--</dependency>-->
+            <dependency>
+                <groupId>org.sonatype.gshell.commands</groupId>
+                <artifactId>gshell-commands</artifactId>
+                <type>pom</type>
+                <version>${project.version}</version>
+                <scope>import</scope>
+            </dependency>
             
             <!-- INTERNAL -->
 
