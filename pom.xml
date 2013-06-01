@@ -532,6 +532,7 @@
                     </includes>
                     <excludes>
                         <exclude>**/target/**</exclude>
+                        <excludes>**/gshell-util/src/main/java/org/codehaus/plexus/util/**</excludes>
                     </excludes>
                     <mapping>
                         <scala>JAVADOC_STYLE</scala>
