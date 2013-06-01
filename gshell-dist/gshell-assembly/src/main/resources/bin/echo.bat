@@ -1,5 +1,5 @@
 @REM
-@REM Copyright (C) 2009 the original author(s).
+@REM Copyright (c) 2009-2013 the original author or authors.
 @REM
 @REM Licensed under the Apache License, Version 2.0 (the "License");
 @REM you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
 @REM See the License for the specific language governing permissions and
 @REM limitations under the License.
 @REM
-  
+
 @if "%SHELL_DEBUG%" == "" @echo off
 
 if "%OS%"=="Windows_NT" setlocal enableextensions

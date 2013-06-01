@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (c) 2009-2011 the original author or authors.
+    Copyright (c) 2009-2013 the original author or authors.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -512,33 +512,9 @@
                 <groupId>com.mycila.maven-license-plugin</groupId>
                 <artifactId>maven-license-plugin</artifactId>
                 <configuration>
-                    <aggregate>true</aggregate>
-                    <strictCheck>true</strictCheck>
-                    <header>${project.basedir}/header.txt</header>
-                    <useDefaultExcludes>false</useDefaultExcludes>
-                    <includes>
-                        <include>**/pom.xml</include>
-                        <include>**/*.xml</include>
-                        <include>**/*.xsd</include>
-                        <include>**/*.xjb</include>
-                        <include>**/*.mdo</include>
-                        <include>**/*.properties</include>
-                        <include>**/*.java</include>
-                        <include>**/*.groovy</include>
-                        <include>**/*.scala</include>
-                        <include>**/*.aj</include>
-                        <include>**/*.js</include>
-                        <include>**/*.css</include>
-                    </includes>
-                    <excludes>
-                        <exclude>**/target/**</exclude>
+                    <excludes combine.children="append">
                         <excludes>**/gshell-util/src/main/java/org/codehaus/plexus/util/**</excludes>
                     </excludes>
-                    <mapping>
-                        <scala>JAVADOC_STYLE</scala>
-                        <xjb>XML_STYLE</xjb>
-                        <mdo>XML_STYLE</mdo>
-                    </mapping>
                 </configuration>
             </plugin>
 
