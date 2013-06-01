@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2009-2011 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.sonatype.gshell.guice;
 
 import com.google.inject.AbstractModule;
