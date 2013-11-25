@@ -25,6 +25,7 @@ License
 
 [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
+
 Building
 --------
 
@@ -45,3 +46,8 @@ After this completes, you can unzip the assembly and launch the shell:
     ./gshell-*/bin/gsh
 
 Use the 'help' command for further assistance.
+
+Implementations
+---------------
+
+GShell is used by the [Maven Shell](https://github.com/jdillon/mvnsh)
