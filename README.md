@@ -25,17 +25,13 @@ License
 
 [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
-Support
--------
-
-To submit an issue, please use the [Sonatype Issue Tracker](https://issues.sonatype.org/browse/MVNSH).
 
 Building
 --------
 
 ### Requirements
 
-* Maven 3+ (3.0+)
+* Maven 3.0.x (3.1+ not supported)
 * Java 5+
 
 Check out and build:
@@ -46,5 +42,12 @@ Check out and build:
 
 After this completes, you can unzip the assembly and launch the shell:
 
-    unzip gshell-assembly/target/gshell-*-bin.zip
+    unzip gshell-dist/gshell-assembly/target/gshell-*-bin.zip
     ./gshell-*/bin/gsh
+
+Use the 'help' command for further assistance.
+
+Implementations
+---------------
+
+GShell is used by the [Maven Shell](https://github.com/jdillon/mvnsh)
