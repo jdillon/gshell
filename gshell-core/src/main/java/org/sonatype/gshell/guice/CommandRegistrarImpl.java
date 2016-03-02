@@ -22,8 +22,8 @@ import org.sonatype.gshell.command.registry.CommandRegistrar;
 import org.sonatype.gshell.command.registry.CommandRegistrarSupport;
 import org.sonatype.gshell.command.registry.CommandRegistry;
 import org.sonatype.gshell.event.EventManager;
-import org.sonatype.guice.bean.locators.MutableBeanLocator;
-import org.sonatype.inject.BeanEntry;
+import org.eclipse.sisu.inject.MutableBeanLocator;
+import org.eclipse.sisu.BeanEntry;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

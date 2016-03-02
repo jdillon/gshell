@@ -44,12 +44,12 @@ import org.sonatype.gshell.shell.ShellPrompt;
 import org.sonatype.gshell.util.Strings;
 import org.sonatype.gshell.variables.Variables;
 import org.sonatype.gshell.variables.VariablesImpl;
-import org.sonatype.guice.bean.binders.SpaceModule;
-import org.sonatype.guice.bean.binders.WireModule;
-import org.sonatype.guice.bean.locators.DefaultBeanLocator;
-import org.sonatype.guice.bean.locators.MutableBeanLocator;
-import org.sonatype.guice.bean.reflect.URLClassSpace;
-import org.sonatype.inject.BeanScanning;
+import org.eclipse.sisu.space.SpaceModule;
+import org.eclipse.sisu.wire.WireModule;
+import org.eclipse.sisu.inject.DefaultBeanLocator;
+import org.eclipse.sisu.inject.MutableBeanLocator;
+import org.eclipse.sisu.space.URLClassSpace;
+import org.eclipse.sisu.space.BeanScanning;
 
 import java.util.ArrayList;
 import java.util.HashMap;
