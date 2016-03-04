@@ -55,7 +55,7 @@ public abstract class GuiceMainSupport
         List<Module> modules = new ArrayList<Module>();
         configure(modules);
 
-        Injector injector = Guice.createInjector(Stage.PRODUCTION, new WireModule(modules));
+        Injector injector = Guice.createInjector(new WireModule(modules));
         container.add(injector, 0);
 
         ShellImpl shell = injector.getInstance(ShellImpl.class);
