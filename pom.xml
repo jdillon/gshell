@@ -338,23 +338,8 @@
             <plugins>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>versions-maven-plugin</artifactId>
-                    <version>1.2</version>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
                     <artifactId>javacc-maven-plugin</artifactId>
                     <version>2.6</version>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.codehaus.gmaven</groupId>
-                    <artifactId>gmaven-plugin</artifactId>
-                    <version>1.5</version>
-                    <configuration>
-                        <providerSelection>2.0</providerSelection>
-                    </configuration>
                 </plugin>
 
                 <plugin>
