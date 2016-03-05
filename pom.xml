@@ -54,11 +54,6 @@
 
     <url>https://github.com/sonatype/gshell</url>
 
-    <ciManagement>
-        <system>Hudson</system>
-        <url>https://builds.sonatype.org/job/gshell</url>
-    </ciManagement>
-
     <developers>
         <developer>
             <id>jdillon</id>
@@ -74,6 +69,11 @@
 
     <properties>
         <gshell.version>2.7.0-SNAPSHOT</gshell.version>
+
+        <maven.compiler.source>1.6</maven.compiler.source>
+        <maven.compiler.target>1.6</maven.compiler.target>
+
+        <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
     </properties>
 
     <repositories>
@@ -90,6 +90,18 @@
         </pluginRepository>
     </pluginRepositories>
 
+    <modules>
+        <module>gshell-launcher</module>
+        <module>gshell-util</module>
+        <module>gshell-ext</module>
+        <module>gshell-ui</module>
+        <module>gshell-core</module>
+        <module>gshell-commands</module>
+        <module>gshell-maven-plugin</module>
+        <module>gshell-bootstrap</module>
+        <module>gshell-dist</module>
+    </modules>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -101,13 +113,13 @@
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
-                <version>1.6.1</version>
+                <version>1.7.18</version>
             </dependency>
 
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>jcl-over-slf4j</artifactId>
-                <version>1.6.1</version>
+                <version>1.7.18</version>
             </dependency>
 
             <dependency>
@@ -131,7 +143,7 @@
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
-                <version>0.9.29</version>
+                <version>1.1.6</version>
             </dependency>
 
             <dependency>
@@ -321,21 +333,20 @@
                 <artifactId>gshell-file</artifactId>
                 <version>2.7.0-SNAPSHOT</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.sonatype.gshell.dist</groupId>
+                <artifactId>gshell-personality</artifactId>
+                <version>2.7.0-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.sonatype.gshell.dist</groupId>
+                <artifactId>gshell-assembly</artifactId>
+                <version>2.7.0-SNAPSHOT</version>
+            </dependency>
         </dependencies>
-
     </dependencyManagement>
-
-    <modules>
-        <module>gshell-launcher</module>
-        <module>gshell-util</module>
-        <module>gshell-ext</module>
-        <module>gshell-ui</module>
-        <module>gshell-core</module>
-        <module>gshell-commands</module>
-        <module>gshell-maven-plugin</module>
-        <module>gshell-bootstrap</module>
-        <module>gshell-dist</module>
-    </modules>
 
     <build>
         <pluginManagement>
@@ -344,15 +355,6 @@
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>versions-maven-plugin</artifactId>
                     <version>1.2</version>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <configuration>
-                        <source>1.5</source>
-                        <target>1.5</target>
-                    </configuration>
                 </plugin>
 
                 <plugin>
