@@ -27,7 +27,7 @@
     </parent>
 
     <artifactId>gshell-core</artifactId>
-    <name>GShell :: Core</name>
+    <name>${project.groupId}:${project.artifactId}</name>
 
     <dependencies>
         <dependency>

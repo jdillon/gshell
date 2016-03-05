@@ -27,7 +27,7 @@
     </parent>
 
     <artifactId>gshell-file</artifactId>
-    <name>GShell Commands :: File</name>
+    <name>${project.groupId}:${project.artifactId}</name>
 
     <dependencies>
         <dependency>
@@ -36,34 +36,6 @@
             <version>2.0.7</version>
         </dependency>
     </dependencies>
-
-    <profiles>
-        <profile>
-            <id>assembly</id>
-            <activation>
-                <property>
-                    <name>!skipAssembly</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-<!--
-                    <plugin>
-                        <groupId>org.sonatype.maven.plugins</groupId>
-                        <artifactId>maven-sisu-assembler-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>generate</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
--->
-                </plugins>
-            </build>
-        </profile>
-    </profiles>   
     
 </project>
 

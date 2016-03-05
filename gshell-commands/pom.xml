@@ -28,7 +28,7 @@
 
     <groupId>org.sonatype.gshell.commands</groupId>
     <artifactId>gshell-commands</artifactId>
-    <name>GShell Commands</name>
+    <name>${project.groupId}:${project.artifactId}</name>
     <packaging>pom</packaging>
     
     <properties>

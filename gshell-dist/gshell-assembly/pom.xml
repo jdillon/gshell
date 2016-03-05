@@ -27,7 +27,7 @@
     </parent>
 
     <artifactId>gshell-assembly</artifactId>
-    <name>GShell Dist :: Assembly</name>
+    <name>${project.groupId}:${project.artifactId}</name>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -44,59 +44,6 @@
 
     <build>
         <plugins>
-<!--
-            <plugin>
-                <groupId>org.sonatype.maven.plugins</groupId>
-                <artifactId>maven-sisu-assembler-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                            <goal>assemble</goal>
-                            <goal>generate-assembly-xml</goal>
-                        </goals>
-                        <configuration>
-                            <fragments>
-                                <fragment>
-                                    <groupId>org.sonatype.gshell.dist</groupId>
-                                    <artifactId>gshell-assembly</artifactId>
-                                </fragment>
-                                <fragment>
-                                    <groupId>org.sonatype.gshell.commands</groupId>
-                                    <artifactId>gshell-standard</artifactId>
-                                </fragment>
-                                <fragment>
-                                    <groupId>org.sonatype.gshell.commands</groupId>
-                                    <artifactId>gshell-file</artifactId>
-                                </fragment>
-                                <fragment>
-                                    <groupId>org.sonatype.gshell.commands</groupId>
-                                    <artifactId>gshell-logging</artifactId>
-                                </fragment>
-                                <fragment>
-                                    <groupId>org.sonatype.gshell.commands</groupId>
-                                    <artifactId>gshell-network</artifactId>
-                                </fragment>
-                                <fragment>
-                                    <groupId>org.sonatype.gshell.commands</groupId>
-                                    <artifactId>gshell-pref</artifactId>
-                                </fragment>
-                                <fragment>
-                                    <groupId>org.sonatype.gshell.commands</groupId>
-                                    <artifactId>gshell-groovy</artifactId>
-                                </fragment>
-                            </fragments>
-                            <properties>
-                                <assembly.basedir>.</assembly.basedir>
-                            </properties>
-                            <forceContextAffinity>true</forceContextAffinity>
-                            <outputDirectory>gshell-${project.version}</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
--->
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>

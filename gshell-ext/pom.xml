@@ -28,7 +28,7 @@
 
     <groupId>org.sonatype.gshell.ext</groupId>
     <artifactId>gshell-ext</artifactId>
-    <name>GShell Extensions</name>
+    <name>${project.groupId}:${project.artifactId}</name>
     <packaging>pom</packaging>
 
     <dependencyManagement>

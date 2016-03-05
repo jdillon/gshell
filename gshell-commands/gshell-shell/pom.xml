@@ -27,7 +27,7 @@
     </parent>
 
     <artifactId>gshell-shell</artifactId>
-    <name>GShell Commands :: Shell</name>
+    <name>${project.groupId}:${project.artifactId}</name>
 
 </project>
 

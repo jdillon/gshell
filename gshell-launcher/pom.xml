@@ -27,7 +27,7 @@
     </parent>
 
     <artifactId>gshell-launcher</artifactId>
-    <name>GShell :: Launcher</name>
+    <name>${project.groupId}:${project.artifactId}</name>
 
     <build>
         <plugins>

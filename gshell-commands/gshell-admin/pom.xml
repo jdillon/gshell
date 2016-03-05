@@ -27,7 +27,7 @@
     </parent>
 
     <artifactId>gshell-admin</artifactId>
-    <name>GShell Commands :: Admin</name>
+    <name>${project.groupId}:${project.artifactId}</name>
     
 </project>
 

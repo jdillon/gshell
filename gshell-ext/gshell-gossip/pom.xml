@@ -27,7 +27,7 @@
     </parent>
 
     <artifactId>gshell-gossip</artifactId>
-    <name>GShell Extensions :: Gossip</name>
+    <name>${project.groupId}:${project.artifactId}</name>
 
     <dependencies>
         <dependency>

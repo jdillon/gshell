@@ -27,7 +27,7 @@
     </parent>
 
     <artifactId>gshell-bootstrap</artifactId>
-    <name>GShell :: Bootstrap</name>
+    <name>${project.groupId}:${project.artifactId}</name>
     <packaging>jar</packaging>
 
     <properties>

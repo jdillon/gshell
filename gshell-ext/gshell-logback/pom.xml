@@ -27,7 +27,7 @@
     </parent>
 
     <artifactId>gshell-logback</artifactId>
-    <name>GShell Extensions :: LOGBack</name>
+    <name>${project.groupId}:${project.artifactId}</name>
 
     <dependencies>
         <dependency>

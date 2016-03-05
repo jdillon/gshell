@@ -27,35 +27,7 @@
     </parent>
 
     <artifactId>gshell-logging</artifactId>
-    <name>GShell Commands :: Logging</name>
-    
-    <profiles>
-        <profile>
-            <id>assembly</id>
-            <activation>
-                <property>
-                    <name>!skipAssembly</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-<!--
-                    <plugin>
-                        <groupId>org.sonatype.maven.plugins</groupId>
-                        <artifactId>maven-sisu-assembler-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>generate</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
--->
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
+    <name>${project.groupId}:${project.artifactId}</name>
 
 </project>
 

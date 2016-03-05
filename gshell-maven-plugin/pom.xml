@@ -27,7 +27,7 @@
     </parent>
 
     <artifactId>gshell-maven-plugin</artifactId>
-    <name>GShell :: Maven Plugin</name>
+    <name>GShell Maven Plugin</name>
     <packaging>maven-plugin</packaging>
 
     <dependencies>

@@ -27,7 +27,7 @@
     </parent>
 
     <artifactId>gshell-jetty</artifactId>
-    <name>GShell Commands :: Jetty</name>
+    <name>${project.groupId}:${project.artifactId}</name>
 
     <properties>
         <jettyVersion>7.5.3.v20111011</jettyVersion>
@@ -75,34 +75,6 @@
             <!--<version>${jettyVersion}</version>-->
         <!--</dependency>-->
     </dependencies>
-
-    <profiles>
-        <profile>
-            <id>assembly</id>
-            <activation>
-                <property>
-                    <name>!skipAssembly</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-<!--
-                    <plugin>
-                        <groupId>org.sonatype.maven.plugins</groupId>
-                        <artifactId>maven-sisu-assembler-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>generate</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
--->
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 
 </project>
 

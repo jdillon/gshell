@@ -27,7 +27,7 @@
     </parent>
 
     <artifactId>gshell-groovy</artifactId>
-    <name>GShell Commands :: Groovy</name>
+    <name>${project.groupId}:${project.artifactId}</name>
 
     <dependencies>
         <dependency>
@@ -41,34 +41,6 @@
             <version>1.8.2</version>
         </dependency>
     </dependencies>
-
-    <profiles>
-        <profile>
-            <id>assembly</id>
-            <activation>
-                <property>
-                    <name>!skipAssembly</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-<!--
-                    <plugin>
-                        <groupId>org.sonatype.maven.plugins</groupId>
-                        <artifactId>maven-sisu-assembler-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>generate</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
--->
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 
 </project>
 
