@@ -73,17 +73,18 @@
             <artifactId>jline</artifactId>
             <classifier>tests</classifier>
             <scope>test</scope>
-        </dependency>        
+        </dependency>
 
         <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.sonatype.sisu</groupId>
             <artifactId>sisu-guice</artifactId>
         </dependency>
-       </dependencies>
+    </dependencies>
 
     <build>
         <plugins>
