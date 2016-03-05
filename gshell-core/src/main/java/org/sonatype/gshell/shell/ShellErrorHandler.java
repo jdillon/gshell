@@ -17,7 +17,7 @@ package org.sonatype.gshell.shell;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
-import com.google.inject.name.Named;
+import javax.inject.Named;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.console.ConsoleErrorHandler;
 import org.sonatype.gshell.notification.ErrorNotification;

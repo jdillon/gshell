@@ -16,7 +16,7 @@
 package org.sonatype.gshell.shell;
 
 import javax.inject.Inject;
-import com.google.inject.name.Named;
+import javax.inject.Named;
 import jline.console.completer.AggregateCompleter;
 import jline.console.completer.Completer;
 import jline.console.ConsoleReader;

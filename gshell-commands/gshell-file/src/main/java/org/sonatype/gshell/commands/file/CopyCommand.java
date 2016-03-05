@@ -28,7 +28,7 @@ import org.sonatype.gshell.util.cli2.Argument;
 import org.sonatype.gshell.util.cli2.Option;
 
 import javax.inject.Inject;
-import com.google.inject.name.Named;
+import javax.inject.Named;
 
 /**
  * Copy file or directory
