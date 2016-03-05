@@ -94,7 +94,6 @@
         <module>gshell-launcher</module>
         <module>gshell-util</module>
         <module>gshell-ext</module>
-        <module>gshell-ui</module>
         <module>gshell-core</module>
         <module>gshell-commands</module>
         <module>gshell-maven-plugin</module>
@@ -232,12 +231,6 @@
             <dependency>
                 <groupId>org.sonatype.gshell</groupId>
                 <artifactId>gshell-util</artifactId>
-                <version>2.7.0-SNAPSHOT</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.sonatype.gshell</groupId>
-                <artifactId>gshell-ui</artifactId>
                 <version>2.7.0-SNAPSHOT</version>
             </dependency>
 
