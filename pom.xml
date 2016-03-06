@@ -54,6 +54,11 @@
 
     <url>https://github.com/sonatype/gshell</url>
 
+    <issueManagement>
+        <system>Github</system>
+        <url>https://github.com/sonatype/gshell/issues</url>
+    </issueManagement>
+
     <developers>
         <developer>
             <id>jdillon</id>
