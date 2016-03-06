@@ -37,7 +37,7 @@ public class ExitCommand
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
 
-        log.info("Exiting w/code: {}", exitCode);
+        log.debug("Exiting w/code: {}", exitCode);
 
         // Do not call System.exit(), ask the shell to exit instead.
         throw new ExitNotification(exitCode);

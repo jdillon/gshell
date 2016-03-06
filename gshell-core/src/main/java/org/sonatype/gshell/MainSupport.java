@@ -208,7 +208,7 @@ public abstract class MainSupport
         });
 
         // Setup environment defaults
-        setConsoleLogLevel(Level.WARN);
+        setConsoleLogLevel(Level.INFO);
         setTerminalType(TerminalFactory.Type.AUTO);
 
         // Process preferences
