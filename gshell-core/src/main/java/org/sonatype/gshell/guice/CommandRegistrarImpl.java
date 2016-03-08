@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013 the original author or authors.
+ * Copyright (c) 2009-present the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,8 +22,8 @@ import org.sonatype.gshell.command.registry.CommandRegistrar;
 import org.sonatype.gshell.command.registry.CommandRegistrarSupport;
 import org.sonatype.gshell.command.registry.CommandRegistry;
 import org.sonatype.gshell.event.EventManager;
-import org.sonatype.guice.bean.locators.MutableBeanLocator;
-import org.sonatype.inject.BeanEntry;
+import org.eclipse.sisu.inject.MutableBeanLocator;
+import org.eclipse.sisu.BeanEntry;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

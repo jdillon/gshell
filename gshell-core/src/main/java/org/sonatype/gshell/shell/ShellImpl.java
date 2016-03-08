@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013 the original author or authors.
+ * Copyright (c) 2009-present the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 package org.sonatype.gshell.shell;
 
 import javax.inject.Inject;
-import com.google.inject.name.Named;
+import javax.inject.Named;
 import jline.console.completer.AggregateCompleter;
 import jline.console.completer.Completer;
 import jline.console.ConsoleReader;

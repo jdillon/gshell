@@ -1,5 +1,5 @@
 @REM
-@REM Copyright (c) 2009-2013 the original author or authors.
+@REM Copyright (c) 2009-present the original author or authors.
 @REM
 @REM Licensed under the Apache License, Version 2.0 (the "License");
 @REM you may not use this file except in compliance with the License.

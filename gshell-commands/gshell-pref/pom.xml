@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (c) 2009-2013 the original author or authors.
+    Copyright (c) 2009-present the original author or authors.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -23,37 +23,11 @@
     <parent>
         <groupId>org.sonatype.gshell.commands</groupId>
         <artifactId>gshell-commands</artifactId>
-        <version>2.6.6-SNAPSHOT</version>
+        <version>2.7.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>gshell-pref</artifactId>
-    <name>GShell Commands :: Preferences</name>
-    
-    <profiles>
-        <profile>
-            <id>assembly</id>
-            <activation>
-                <property>
-                    <name>!skipAssembly</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.sonatype.maven.plugins</groupId>
-                        <artifactId>maven-sisu-assembler-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>generate</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
+    <name>${project.groupId}:${project.artifactId}</name>
 
 </project>
 

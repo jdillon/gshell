@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013 the original author or authors.
+ * Copyright (c) 2009-present the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ public class ExitCommand
     public Object execute(final CommandContext context) throws Exception {
         assert context != null;
 
-        log.info("Exiting w/code: {}", exitCode);
+        log.debug("Exiting w/code: {}", exitCode);
 
         // Do not call System.exit(), ask the shell to exit instead.
         throw new ExitNotification(exitCode);

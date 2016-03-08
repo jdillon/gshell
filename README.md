@@ -1,6 +1,6 @@
 <!--
 
-    Copyright (c) 2009-2013 the original author or authors.
+    Copyright (c) 2009-present the original author or authors.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ Building
 ### Requirements
 
 * Maven 3.0.x (3.1+ not supported)
-* Java 5+
+* Java 6+
 
 Check out and build:
 
