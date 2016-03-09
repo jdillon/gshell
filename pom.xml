@@ -174,21 +174,10 @@
                 <version>18.0</version>
             </dependency>
 
-            <!--
-            FIXME: Need to resolve differences in latest jline2 uses so we can pick up the latest version.
-                   some differences in how indexs work or something, I forget
-            -->
             <dependency>
                 <groupId>org.sonatype.jline</groupId>
                 <artifactId>jline</artifactId>
-                <version>2.3</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.sonatype.jline</groupId>
-                <artifactId>jline</artifactId>
-                <version>2.3</version>
-                <classifier>tests</classifier>
+                <version>2.5</version>
             </dependency>
 
             <dependency>
