@@ -36,7 +36,7 @@ Building
 
 Check out and build:
 
-    git clone git://github.com/sonatype/gshell.git
+    git clone git://github.com/jdillon/gshell.git
     cd gshell
     mvn install
 
