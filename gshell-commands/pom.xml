@@ -52,20 +52,20 @@
     </dependencies>
 
     <modules>
-        <!--<module>gshell-artifact</module>-->
-        <!--<module>gshell-bsf</module>-->
+        <module>gshell-artifact</module>
+        <module>gshell-bsf</module>
         <module>gshell-file</module>
         <module>gshell-groovy</module>
         <module>gshell-jetty</module>
         <module>gshell-logging</module>
         <module>gshell-network</module>
         <module>gshell-pref</module>
-        <!--<module>gshell-scm</module>-->
+        <module>gshell-scm</module>
         <module>gshell-shell</module>
-        <!--<module>gshell-ssh</module>-->
+        <module>gshell-ssh</module>
         <module>gshell-standard</module>
-        <!--<module>gshell-text</module>-->
-        <!--<module>gshell-vfs</module>-->
+        <module>gshell-text</module>
+        <module>gshell-vfs</module>
     </modules>
 
 </project>
