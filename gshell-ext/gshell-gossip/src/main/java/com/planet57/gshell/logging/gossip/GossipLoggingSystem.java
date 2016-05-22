@@ -24,16 +24,15 @@ import java.util.Set;
 
 import javax.inject.Singleton;
 
-import org.sonatype.gossip.Gossip;
-import org.sonatype.gossip.listener.Listener;
-
+import com.planet57.gossip.Gossip;
+import com.planet57.gossip.listener.Listener;
 import com.planet57.gshell.logging.Component;
 import com.planet57.gshell.logging.Level;
 import com.planet57.gshell.logging.Logger;
 import com.planet57.gshell.logging.LoggingSystem;
 import org.slf4j.LoggerFactory;
 
-import static org.sonatype.gossip.Gossip.LoggerImpl.ROOT_NAME;
+import static com.planet57.gossip.Gossip.LoggerImpl.ROOT_NAME;
 
 /**
  * <a href="http://github.com/jdillon/gossip">Gossip</a> {@link LoggingSystem} component.
@@ -61,7 +60,7 @@ public class GossipLoggingSystem
 
         // populate levels
         Map<String,LevelImpl> levels = new LinkedHashMap<String,LevelImpl>();
-        for (org.sonatype.gossip.Level level : org.sonatype.gossip.Level.values()) {
+        for (com.planet57.gossip.Level level : com.planet57.gossip.Level.values()) {
             levels.put(level.name().toUpperCase(), new LevelImpl(level));
         }
         this.levels = Collections.unmodifiableMap(levels);
@@ -78,9 +77,9 @@ public class GossipLoggingSystem
     private class LevelImpl
         implements Level
     {
-        private final org.sonatype.gossip.Level target;
+        private final com.planet57.gossip.Level target;
 
-        private LevelImpl(final org.sonatype.gossip.Level level) {
+        private LevelImpl(final com.planet57.gossip.Level level) {
             assert level != null;
             this.target = level;
         }
@@ -89,7 +88,7 @@ public class GossipLoggingSystem
             return target.name();
         }
 
-        public org.sonatype.gossip.Level getTarget() {
+        public com.planet57.gossip.Level getTarget() {
             return target;
         }
 
@@ -140,7 +139,7 @@ public class GossipLoggingSystem
         }
 
         public Level getLevel() {
-            org.sonatype.gossip.Level tmp = target.getLevel();
+            com.planet57.gossip.Level tmp = target.getLevel();
             if (tmp != null) {
                 return levelFor(tmp.name());
             }

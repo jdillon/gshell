@@ -18,8 +18,7 @@ package com.planet57.gshell.util.io;
 import java.io.Closeable;
 import java.io.IOException;
 
-import org.sonatype.gossip.Log;
-
+import com.planet57.gossip.Log;
 import org.slf4j.Logger;
 
 /**

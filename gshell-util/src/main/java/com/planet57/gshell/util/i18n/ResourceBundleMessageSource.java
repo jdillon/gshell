@@ -22,8 +22,7 @@ import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import org.sonatype.gossip.Log;
-
+import com.planet57.gossip.Log;
 import org.slf4j.Logger;
 
 /**

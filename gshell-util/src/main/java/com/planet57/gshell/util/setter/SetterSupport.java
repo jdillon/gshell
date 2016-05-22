@@ -17,8 +17,7 @@ package com.planet57.gshell.util.setter;
 
 import java.lang.reflect.AccessibleObject;
 
-import org.sonatype.gossip.Log;
-
+import com.planet57.gossip.Log;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 import org.slf4j.Logger;

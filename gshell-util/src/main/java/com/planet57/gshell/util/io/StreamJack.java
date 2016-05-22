@@ -21,8 +21,7 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.text.MessageFormat;
 
-import org.sonatype.gossip.Log;
-
+import com.planet57.gossip.Log;
 import org.slf4j.Logger;
 
 /**

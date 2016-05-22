@@ -21,8 +21,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.sonatype.gossip.Log;
-
+import com.planet57.gossip.Log;
 import com.planet57.gshell.util.converter.Converters;
 import com.planet57.gshell.util.setter.Setter;
 import com.planet57.gshell.util.setter.SetterFactory;

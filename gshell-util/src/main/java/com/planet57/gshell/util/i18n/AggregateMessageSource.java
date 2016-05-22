@@ -19,8 +19,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.sonatype.gossip.Log;
-
+import com.planet57.gossip.Log;
 import org.slf4j.Logger;
 
 /**

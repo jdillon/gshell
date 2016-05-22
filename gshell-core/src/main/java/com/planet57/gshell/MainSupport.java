@@ -20,9 +20,8 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.sonatype.gossip.Level;
-import org.sonatype.gossip.Log;
-
+import com.planet57.gossip.Level;
+import com.planet57.gossip.Log;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.command.AnsiIO;
 import com.planet57.gshell.command.CommandAction.Result;

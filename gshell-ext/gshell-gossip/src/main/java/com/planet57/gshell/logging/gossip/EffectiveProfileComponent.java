@@ -15,8 +15,7 @@
  */
 package com.planet57.gshell.logging.gossip;
 
-import org.sonatype.gossip.EffectiveProfile;
-
+import com.planet57.gossip.EffectiveProfile;
 import com.planet57.gshell.logging.Component;
 import com.planet57.gshell.logging.ComponentSupport;
 

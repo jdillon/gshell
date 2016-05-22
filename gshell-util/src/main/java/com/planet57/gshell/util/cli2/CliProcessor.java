@@ -23,8 +23,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.sonatype.gossip.Log;
-
+import com.planet57.gossip.Log;
 import com.planet57.gshell.util.IllegalAnnotationError;
 import com.planet57.gshell.util.cli2.handler.Handler;
 import com.planet57.gshell.util.cli2.handler.Handlers;
