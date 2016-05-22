@@ -18,8 +18,8 @@
 -->
 <model xmlns="http://modello.codehaus.org/MODELLO/1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://modello.codehaus.org/MODELLO/1.1.0 http://modello.codehaus.org/xsd/modello-1.1.0.xsd"
-       xml.namespace="http://sonatype.org/gshell-commands/${version}"
-       xml.schemaLocation="http://sonatype.org/xsd/gshell-commands-${version}.xsd">
+       xml.namespace="http://planet57.com/gshell-commands/${version}"
+       xml.schemaLocation="http://planet57.com/xsd/gshell-commands-${version}.xsd">
 
     <id>commands</id>
     <name>Commands</name>

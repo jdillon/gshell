@@ -29,9 +29,9 @@
 @{command.details}
 @|bold EXAMPLES|@
 
-    Set the level of the 'org.sonatype' logger to DEBUG:
+    Set the level of the 'com.planet57' logger to DEBUG:
 
-        @{command.name} org.sonatype DEBUG
+        @{command.name} com.planet57 DEBUG
 
 @|bold SEE ALSO|@
 
