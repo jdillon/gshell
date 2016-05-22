@@ -25,10 +25,10 @@
         <enabled>true</enabled>
         <autoRegisterPriority>100</autoRegisterPriority>
         <command>
-            <action>org.sonatype.gshell.commands.network.HostnameCommand</action>
+            <action>com.planet57.gshell.commands.network.HostnameCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.network.WgetCommand</action>
+            <action>com.planet57.gshell.commands.network.WgetCommand</action>
         </command>
     </command-set>
 

@@ -25,28 +25,28 @@
         <enabled>true</enabled>
         <autoRegisterPriority>20</autoRegisterPriority>
         <command>
-            <action>org.sonatype.gshell.commands.shell.AskCommand</action>
+            <action>com.planet57.gshell.commands.shell.AskCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.shell.SleepCommand</action>
+            <action>com.planet57.gshell.commands.shell.SleepCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.shell.ClearCommand</action>
+            <action>com.planet57.gshell.commands.shell.ClearCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.shell.DateCommand</action>
+            <action>com.planet57.gshell.commands.shell.DateCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.shell.ExecuteCommand</action>
+            <action>com.planet57.gshell.commands.shell.ExecuteCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.shell.JavaCommand</action>
+            <action>com.planet57.gshell.commands.shell.JavaCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.shell.ReturnCommand</action>
+            <action>com.planet57.gshell.commands.shell.ReturnCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.shell.FailCommand</action>
+            <action>com.planet57.gshell.commands.shell.FailCommand</action>
         </command>
     </command-set>
     

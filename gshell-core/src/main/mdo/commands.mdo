@@ -33,7 +33,7 @@
     <defaults>
         <default>
             <key>package</key>
-            <value>org.sonatype.gshell.command.descriptor</value>
+            <value>com.planet57.gshell.command.descriptor</value>
         </default>
     </defaults>
 

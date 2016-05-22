@@ -26,10 +26,10 @@
         <autoRegisterPriority>50</autoRegisterPriority>
 
         <command>
-            <action>org.sonatype.gshell.commands.jetty.JettyCommand</action>
+            <action>com.planet57.gshell.commands.jetty.JettyCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.jetty.JettyStopCommand</action>
+            <action>com.planet57.gshell.commands.jetty.JettyStopCommand</action>
         </command>
     </command-set>
 

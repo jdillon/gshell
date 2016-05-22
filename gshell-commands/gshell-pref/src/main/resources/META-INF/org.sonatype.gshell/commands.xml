@@ -25,25 +25,25 @@
         <enabled>true</enabled>
         <autoRegisterPriority>10</autoRegisterPriority>
         <command>
-            <action>org.sonatype.gshell.commands.pref.ListPreferencesCommand</action>
+            <action>com.planet57.gshell.commands.pref.ListPreferencesCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.pref.SetPreferenceCommand</action>
+            <action>com.planet57.gshell.commands.pref.SetPreferenceCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.pref.GetPreferenceCommand</action>
+            <action>com.planet57.gshell.commands.pref.GetPreferenceCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.pref.UnsetPreferenceCommand</action>
+            <action>com.planet57.gshell.commands.pref.UnsetPreferenceCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.pref.RemovePreferencesCommand</action>
+            <action>com.planet57.gshell.commands.pref.RemovePreferencesCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.pref.ImportPreferencesCommand</action>
+            <action>com.planet57.gshell.commands.pref.ImportPreferencesCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.pref.ExportPreferencesCommand</action>
+            <action>com.planet57.gshell.commands.pref.ExportPreferencesCommand</action>
         </command>
     </command-set>
 

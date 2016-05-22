@@ -25,25 +25,25 @@
         <enabled>true</enabled>
         <autoRegisterPriority>20</autoRegisterPriority>
         <command>
-            <action>org.sonatype.gshell.commands.file.ChangeDirectoryCommand</action>
+            <action>com.planet57.gshell.commands.file.ChangeDirectoryCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.file.CreateDirectoryCommand</action>
+            <action>com.planet57.gshell.commands.file.CreateDirectoryCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.file.CurrentDirectoryCommand</action>
+            <action>com.planet57.gshell.commands.file.CurrentDirectoryCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.file.DeleteDirectoryCommand</action>
+            <action>com.planet57.gshell.commands.file.DeleteDirectoryCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.file.DeleteFileCommand</action>
+            <action>com.planet57.gshell.commands.file.DeleteFileCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.file.ListDirectoryCommand</action>
+            <action>com.planet57.gshell.commands.file.ListDirectoryCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.file.CopyCommand</action>
+            <action>com.planet57.gshell.commands.file.CopyCommand</action>
         </command>        
     </command-set>
 

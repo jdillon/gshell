@@ -25,53 +25,53 @@
         <enabled>true</enabled>
         <autoRegisterPriority>0</autoRegisterPriority>
         <command>
-            <action>org.sonatype.gshell.commands.standard.HelpCommand</action>
+            <action>com.planet57.gshell.commands.standard.HelpCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.standard.InfoCommand</action>
+            <action>com.planet57.gshell.commands.standard.InfoCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.standard.ExitCommand</action>
+            <action>com.planet57.gshell.commands.standard.ExitCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.standard.SetCommand</action>
+            <action>com.planet57.gshell.commands.standard.SetCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.standard.UnsetCommand</action>
+            <action>com.planet57.gshell.commands.standard.UnsetCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.standard.HistoryCommand</action>
+            <action>com.planet57.gshell.commands.standard.HistoryCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.standard.RecallHistoryCommand</action>
+            <action>com.planet57.gshell.commands.standard.RecallHistoryCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.standard.AliasCommand</action>
+            <action>com.planet57.gshell.commands.standard.AliasCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.standard.UnaliasCommand</action>
+            <action>com.planet57.gshell.commands.standard.UnaliasCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.standard.SourceCommand</action>
+            <action>com.planet57.gshell.commands.standard.SourceCommand</action>
         </command>
         <command>
-            <action>org.sonatype.gshell.commands.standard.EchoCommand</action>
+            <action>com.planet57.gshell.commands.standard.EchoCommand</action>
         </command>
         <helpPage>
             <name>shell-syntax</name>
-            <resource>org.sonatype.gshell.commands.standard.help.shell-syntax</resource>
+            <resource>com.planet57.gshell.commands.standard.help.shell-syntax</resource>
         </helpPage>
         <helpPage>
             <name>shell-files</name>
-            <resource>org.sonatype.gshell.commands.standard.help.shell-files</resource>
+            <resource>com.planet57.gshell.commands.standard.help.shell-files</resource>
         </helpPage>
         <helpPage>
             <name>shell-env</name>
-            <resource>org.sonatype.gshell.commands.standard.help.shell-env</resource>
+            <resource>com.planet57.gshell.commands.standard.help.shell-env</resource>
         </helpPage>
         <helpPage>
             <name>shell-navigation</name>
-            <resource>org.sonatype.gshell.commands.standard.help.shell-navigation</resource>
+            <resource>com.planet57.gshell.commands.standard.help.shell-navigation</resource>
         </helpPage>
     </command-set>
 
