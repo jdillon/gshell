@@ -70,7 +70,7 @@
             <outputFileNameMapping>bootstrap.jar</outputFileNameMapping>
             <useProjectArtifact>false</useProjectArtifact>
             <includes>
-                <include>org.sonatype.gshell:gshell-bootstrap</include>
+                <include>com.planet57.gshell:gshell-bootstrap</include>
             </includes>
         </dependencySet>
 
@@ -79,7 +79,7 @@
             <useTransitiveDependencies>true</useTransitiveDependencies>
             <useProjectArtifact>false</useProjectArtifact>
             <excludes>
-                <exclude>org.sonatype.gshell:gshell-bootstrap</exclude>
+                <exclude>com.planet57.gshell:gshell-bootstrap</exclude>
             </excludes>
         </dependencySet>
     </dependencySets>
