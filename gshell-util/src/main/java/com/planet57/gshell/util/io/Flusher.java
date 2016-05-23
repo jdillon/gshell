@@ -1,0 +1,50 @@
+/*
+ * Copyright (c) 2009-present the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.planet57.gshell.util.io;
+
+import java.io.Flushable;
+import java.io.IOException;
+
+import com.planet57.gossip.Log;
+import org.slf4j.Logger;
+
+/**
+ * Quietly flushes {@link Flushable} objects.
+ *
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ * @since 2.0
+ */
+public class Flusher
+{
+    private static final Logger log = Log.getLogger(Flusher.class);
+
+    public static void flush(final Flushable... targets) {
+        if (targets != null) {
+            for (Flushable f : targets) {
+                if (f == null) {
+                    continue;
+                }
+
+                try {
+                    f.flush();
+                }
+                catch (IOException e) {
+                    log.trace(e.getMessage(), e);
+                }
+            }
+        }
+    }
+}

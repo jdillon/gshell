@@ -21,22 +21,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.sonatype.buildsupport</groupId>
+        <groupId>com.planet57.buildsupport</groupId>
         <artifactId>public-parent</artifactId>
-        <version>9</version>
+        <version>1-SNAPSHOT</version>
         <relativePath/>
     </parent>
 
-    <groupId>org.sonatype.gshell</groupId>
+    <groupId>com.planet57.gshell</groupId>
     <artifactId>gshell</artifactId>
     <name>${project.groupId}:${project.artifactId}</name>
-    <version>2.7.0-SNAPSHOT</version>
+    <version>3.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-
-    <organization>
-        <name>Sonatype</name>
-        <url>http://sonatype.org</url>
-    </organization>
 
     <licenses>
         <license>
@@ -47,16 +42,16 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:git://github.com/sonatype/gshell.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/sonatype/gshell.git</developerConnection>
-        <url>https://github.com/sonatype/gshell</url>
+        <connection>scm:git:git://github.com/jdillon/gshell.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/jdillon/gshell.git</developerConnection>
+        <url>https://github.com/jdillon/gshell</url>
     </scm>
 
-    <url>https://github.com/sonatype/gshell</url>
+    <url>https://github.com/jdillon/gshell</url>
 
     <issueManagement>
         <system>Github</system>
-        <url>https://github.com/sonatype/gshell/issues</url>
+        <url>https://github.com/jdillon/gshell/issues</url>
     </issueManagement>
 
     <developers>
@@ -74,26 +69,11 @@
     </developers>
 
     <properties>
-        <gshell.version>2.7.0-SNAPSHOT</gshell.version>
+        <gshell.version>3.0.0-SNAPSHOT</gshell.version>
 
         <maven.compiler.source>1.6</maven.compiler.source>
         <maven.compiler.target>1.6</maven.compiler.target>
-        <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
     </properties>
-
-    <!--<repositories>-->
-        <!--<repository>-->
-            <!--<id>sonatype-public-grid</id>-->
-            <!--<url>http://repository.sonatype.org/content/groups/sonatype-public-grid</url>-->
-        <!--</repository>-->
-    <!--</repositories>-->
-
-    <!--<pluginRepositories>-->
-        <!--<pluginRepository>-->
-            <!--<id>sonatype-public-grid</id>-->
-            <!--<url>http://repository.sonatype.org/content/groups/sonatype-public-grid</url>-->
-        <!--</pluginRepository>-->
-    <!--</pluginRepositories>-->
 
     <modules>
         <module>gshell-launcher</module>
@@ -127,21 +107,21 @@
             </dependency>
 
             <dependency>
-                <groupId>org.sonatype.gossip</groupId>
+                <groupId>com.planet57.gossip</groupId>
                 <artifactId>gossip-bootstrap</artifactId>
-                <version>1.8</version>
+                <version>2.0.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>org.sonatype.gossip</groupId>
+                <groupId>com.planet57.gossip</groupId>
                 <artifactId>gossip-slf4j</artifactId>
-                <version>1.8</version>
+                <version>2.0.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>org.sonatype.gossip</groupId>
+                <groupId>com.planet57.gossip</groupId>
                 <artifactId>gossip-support</artifactId>
-                <version>1.8</version>
+                <version>2.0.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
@@ -223,106 +203,106 @@
             <!-- INTERNAL -->
 
             <dependency>
-                <groupId>org.sonatype.gshell</groupId>
+                <groupId>com.planet57.gshell</groupId>
                 <artifactId>gshell-launcher</artifactId>
-                <version>2.7.0-SNAPSHOT</version>
+                <version>3.0.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>org.sonatype.gshell</groupId>
+                <groupId>com.planet57.gshell</groupId>
                 <artifactId>gshell-util</artifactId>
-                <version>2.7.0-SNAPSHOT</version>
+                <version>3.0.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>org.sonatype.gshell</groupId>
+                <groupId>com.planet57.gshell</groupId>
                 <artifactId>gshell-core</artifactId>
-                <version>2.7.0-SNAPSHOT</version>
+                <version>3.0.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>org.sonatype.gshell</groupId>
+                <groupId>com.planet57.gshell</groupId>
                 <artifactId>gshell-core</artifactId>
                 <classifier>tests</classifier>
-                <version>2.7.0-SNAPSHOT</version>
+                <version>3.0.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>org.sonatype.gshell</groupId>
+                <groupId>com.planet57.gshell</groupId>
                 <artifactId>gshell-maven-plugin</artifactId>
-                <version>2.7.0-SNAPSHOT</version>
+                <version>3.0.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>org.sonatype.gshell</groupId>
+                <groupId>com.planet57.gshell</groupId>
                 <artifactId>gshell-bootstrap</artifactId>
-                <version>2.7.0-SNAPSHOT</version>
+                <version>3.0.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>org.sonatype.gshell.ext</groupId>
+                <groupId>com.planet57.gshell.ext</groupId>
                 <artifactId>gshell-plexus</artifactId>
-                <version>2.7.0-SNAPSHOT</version>
+                <version>3.0.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>org.sonatype.gshell.ext</groupId>
+                <groupId>com.planet57.gshell.ext</groupId>
                 <artifactId>gshell-gossip</artifactId>
-                <version>2.7.0-SNAPSHOT</version>
+                <version>3.0.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>org.sonatype.gshell.ext</groupId>
+                <groupId>com.planet57.gshell.ext</groupId>
                 <artifactId>gshell-logback</artifactId>
-                <version>2.7.0-SNAPSHOT</version>
+                <version>3.0.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>org.sonatype.gshell.commands</groupId>
+                <groupId>com.planet57.gshell.commands</groupId>
                 <artifactId>gshell-shell</artifactId>
-                <version>2.7.0-SNAPSHOT</version>
+                <version>3.0.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>org.sonatype.gshell.commands</groupId>
+                <groupId>com.planet57.gshell.commands</groupId>
                 <artifactId>gshell-standard</artifactId>
-                <version>2.7.0-SNAPSHOT</version>
+                <version>3.0.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>org.sonatype.gshell.commands</groupId>
+                <groupId>com.planet57.gshell.commands</groupId>
                 <artifactId>gshell-logging</artifactId>
-                <version>2.7.0-SNAPSHOT</version>
+                <version>3.0.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>org.sonatype.gshell.commands</groupId>
+                <groupId>com.planet57.gshell.commands</groupId>
                 <artifactId>gshell-pref</artifactId>
-                <version>2.7.0-SNAPSHOT</version>
+                <version>3.0.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>org.sonatype.gshell.commands</groupId>
+                <groupId>com.planet57.gshell.commands</groupId>
                 <artifactId>gshell-network</artifactId>
-                <version>2.7.0-SNAPSHOT</version>
+                <version>3.0.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>org.sonatype.gshell.commands</groupId>
+                <groupId>com.planet57.gshell.commands</groupId>
                 <artifactId>gshell-file</artifactId>
-                <version>2.7.0-SNAPSHOT</version>
+                <version>3.0.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>org.sonatype.gshell.dist</groupId>
+                <groupId>com.planet57.gshell.dist</groupId>
                 <artifactId>gshell-personality</artifactId>
-                <version>2.7.0-SNAPSHOT</version>
+                <version>3.0.0-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>org.sonatype.gshell.dist</groupId>
+                <groupId>com.planet57.gshell.dist</groupId>
                 <artifactId>gshell-assembly</artifactId>
-                <version>2.7.0-SNAPSHOT</version>
+                <version>3.0.0-SNAPSHOT</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

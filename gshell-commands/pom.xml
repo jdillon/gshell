@@ -21,19 +21,19 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.sonatype.gshell</groupId>
+        <groupId>com.planet57.gshell</groupId>
         <artifactId>gshell</artifactId>
-        <version>2.7.0-SNAPSHOT</version>
+        <version>3.0.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.sonatype.gshell.commands</groupId>
+    <groupId>com.planet57.gshell.commands</groupId>
     <artifactId>gshell-commands</artifactId>
     <name>${project.groupId}:${project.artifactId}</name>
     <packaging>pom</packaging>
 
     <dependencies>
         <dependency>
-            <groupId>org.sonatype.gshell</groupId>
+            <groupId>com.planet57.gshell</groupId>
             <artifactId>gshell-core</artifactId>
         </dependency>
 
@@ -44,7 +44,7 @@
         </dependency>
 
         <dependency>
-            <groupId>org.sonatype.gshell</groupId>
+            <groupId>com.planet57.gshell</groupId>
             <artifactId>gshell-core</artifactId>
             <classifier>tests</classifier>
             <scope>test</scope>
@@ -52,20 +52,14 @@
     </dependencies>
 
     <modules>
-        <!--<module>gshell-artifact</module>-->
-        <!--<module>gshell-bsf</module>-->
         <module>gshell-file</module>
         <module>gshell-groovy</module>
         <module>gshell-jetty</module>
         <module>gshell-logging</module>
         <module>gshell-network</module>
         <module>gshell-pref</module>
-        <!--<module>gshell-scm</module>-->
         <module>gshell-shell</module>
-        <!--<module>gshell-ssh</module>-->
         <module>gshell-standard</module>
-        <!--<module>gshell-text</module>-->
-        <!--<module>gshell-vfs</module>-->
     </modules>
 
 </project>
