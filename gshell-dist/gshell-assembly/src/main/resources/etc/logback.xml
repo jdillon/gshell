@@ -18,26 +18,26 @@
 -->
 <configuration debug="false" scan="true" scanPeriod="30 seconds">
 
-    <contextName>default</contextName>
+  <contextName>default</contextName>
 
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <target>System.out</target>
-        <encoder>
-            <pattern>[%level] %logger{1} - %msg%n</pattern>
-        </encoder>
-    </appender>
+  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <target>System.out</target>
+    <encoder>
+      <pattern>[%level] %logger{1} - %msg%n</pattern>
+    </encoder>
+  </appender>
 
-    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>${shell.home}/log/shell.log</file>
-        <append>false</append>
-        <encoder>
-            <pattern>%date %level [%thread%X{DC}] %logger - %msg%n</pattern>
-        </encoder>
-    </appender>
+  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+    <file>${shell.home}/log/shell.log</file>
+    <append>false</append>
+    <encoder>
+      <pattern>%date %level [%thread%X{DC}] %logger - %msg%n</pattern>
+    </encoder>
+  </appender>
 
-    <root level="${shell.logging:-INFO}">
-        <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="FILE"/>
-    </root>
+  <root level="${shell.logging:-INFO}">
+    <appender-ref ref="CONSOLE"/>
+    <appender-ref ref="FILE"/>
+  </root>
 
 </configuration>

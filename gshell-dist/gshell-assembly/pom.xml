@@ -16,83 +16,84 @@
     limitations under the License.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <modelVersion>4.0.0</modelVersion>
+  <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.sonatype.gshell.dist</groupId>
-        <artifactId>gshell-dist</artifactId>
-        <version>2.7.0-SNAPSHOT</version>
-    </parent>
+  <parent>
+    <groupId>com.planet57.gshell.dist</groupId>
+    <artifactId>gshell-dist</artifactId>
+    <version>3.0.0-SNAPSHOT</version>
+  </parent>
 
-    <artifactId>gshell-assembly</artifactId>
-    <name>${project.groupId}:${project.artifactId}</name>
+  <artifactId>gshell-assembly</artifactId>
+  <name>${project.groupId}:${project.artifactId}</name>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.sonatype.gshell</groupId>
-            <artifactId>gshell-bootstrap</artifactId>
-        </dependency>
+  <dependencies>
+    <dependency>
+      <groupId>com.planet57.gshell</groupId>
+      <artifactId>gshell-bootstrap</artifactId>
+    </dependency>
 
-        <dependency>
-            <groupId>org.sonatype.gshell.dist</groupId>
-            <artifactId>gshell-personality</artifactId>
-        </dependency>
+    <dependency>
+      <groupId>com.planet57.gshell.dist</groupId>
+      <artifactId>gshell-personality</artifactId>
+    </dependency>
 
-        <dependency>
-            <groupId>org.sonatype.gshell.commands</groupId>
-            <artifactId>gshell-standard</artifactId>
-        </dependency>
+    <dependency>
+      <groupId>com.planet57.gshell.commands</groupId>
+      <artifactId>gshell-standard</artifactId>
+    </dependency>
 
-        <dependency>
-            <groupId>org.sonatype.gshell.commands</groupId>
-            <artifactId>gshell-file</artifactId>
-        </dependency>
+    <dependency>
+      <groupId>com.planet57.gshell.commands</groupId>
+      <artifactId>gshell-file</artifactId>
+    </dependency>
 
-        <dependency>
-            <groupId>org.sonatype.gshell.commands</groupId>
-            <artifactId>gshell-logging</artifactId>
-        </dependency>
+    <dependency>
+      <groupId>com.planet57.gshell.commands</groupId>
+      <artifactId>gshell-logging</artifactId>
+    </dependency>
 
-        <dependency>
-            <groupId>org.sonatype.gshell.commands</groupId>
-            <artifactId>gshell-network</artifactId>
-        </dependency>
+    <dependency>
+      <groupId>com.planet57.gshell.commands</groupId>
+      <artifactId>gshell-network</artifactId>
+    </dependency>
 
-        <dependency>
-            <groupId>org.sonatype.gshell.commands</groupId>
-            <artifactId>gshell-shell</artifactId>
-        </dependency>
+    <dependency>
+      <groupId>com.planet57.gshell.commands</groupId>
+      <artifactId>gshell-shell</artifactId>
+    </dependency>
 
-        <dependency>
-            <groupId>org.sonatype.gshell.commands</groupId>
-            <artifactId>gshell-pref</artifactId>
-        </dependency>
-    </dependencies>
+    <dependency>
+      <groupId>com.planet57.gshell.commands</groupId>
+      <artifactId>gshell-pref</artifactId>
+    </dependency>
+  </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <configuration>
-                            <finalName>gshell-${project.version}</finalName>
-                            <tarLongFileMode>gnu</tarLongFileMode>
-                            <descriptors>
-                                <descriptor>src/main/assembly/bin.xml</descriptor>
-                            </descriptors>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <finalName>gshell-${project.version}</finalName>
+              <tarLongFileMode>gnu</tarLongFileMode>
+              <descriptors>
+                <descriptor>src/main/assembly/bin.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>

@@ -16,35 +16,36 @@
     limitations under the License.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <modelVersion>4.0.0</modelVersion>
+  <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.sonatype.gshell</groupId>
-        <artifactId>gshell</artifactId>
-        <version>2.7.0-SNAPSHOT</version>
-    </parent>
+  <parent>
+    <groupId>com.planet57.gshell</groupId>
+    <artifactId>gshell</artifactId>
+    <version>3.0.0-SNAPSHOT</version>
+  </parent>
 
-    <artifactId>gshell-launcher</artifactId>
-    <name>${project.groupId}:${project.artifactId}</name>
+  <artifactId>gshell-launcher</artifactId>
+  <name>${project.groupId}:${project.artifactId}</name>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>org.sonatype.gshell.launcher.Launcher</mainClass>
-                            <addClasspath>true</addClasspath>
-                        </manifest>
-                  </archive>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>com.planet57.gshell.launcher.Launcher</mainClass>
+              <addClasspath>true</addClasspath>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>
 

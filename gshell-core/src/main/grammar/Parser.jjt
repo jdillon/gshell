@@ -45,7 +45,7 @@ PARSER_BEGIN(Parser)
  * limitations under the License.
  */
 
-package org.sonatype.gshell.parser.impl;
+package com.planet57.gshell.parser.impl;
 
 import java.io.Reader;
 import java.io.StringReader;

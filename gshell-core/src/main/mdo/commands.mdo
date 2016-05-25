@@ -18,233 +18,233 @@
 -->
 <model xmlns="http://modello.codehaus.org/MODELLO/1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://modello.codehaus.org/MODELLO/1.1.0 http://modello.codehaus.org/xsd/modello-1.1.0.xsd"
-       xml.namespace="http://sonatype.org/gshell-commands/${version}"
-       xml.schemaLocation="http://sonatype.org/xsd/gshell-commands-${version}.xsd">
+       xml.namespace="http://planet57.com/gshell-commands/${version}"
+       xml.schemaLocation="http://planet57.com/xsd/gshell-commands-${version}.xsd">
 
-    <id>commands</id>
-    <name>Commands</name>
-    <version>1.3.0</version>
+  <id>commands</id>
+  <name>Commands</name>
+  <version>1.3.0</version>
 
-    <description><![CDATA[
+  <description><![CDATA[
         Commands descriptor model.
         @since 2.1
     ]]></description>
-    
-    <defaults>
-        <default>
-            <key>package</key>
-            <value>org.sonatype.gshell.command.descriptor</value>
-        </default>
-    </defaults>
 
-    <versionDefinition>
-        <type>field</type>
-        <value>version</value>
-    </versionDefinition>
+  <defaults>
+    <default>
+      <key>package</key>
+      <value>com.planet57.gshell.command.descriptor</value>
+    </default>
+  </defaults>
 
-    <classes>
-        <class rootElement="true" xml.tagName="commands" xsd.compositor="sequence">
-            <description><![CDATA[
+  <versionDefinition>
+    <type>field</type>
+    <value>version</value>
+  </versionDefinition>
+
+  <classes>
+    <class rootElement="true" xml.tagName="commands" xsd.compositor="sequence">
+      <description><![CDATA[
                 Commands descriptor.
                 @since 2.1
             ]]></description>
 
-            <name>CommandsDescriptor</name>
-            <version>1.0.0+</version>
+      <name>CommandsDescriptor</name>
+      <version>1.0.0+</version>
 
-            <fields>
-                <field xml.attribute="true">
-                    <name>version</name>
-                    <version>1.0.0+</version>
-                    <required>true</required>
-                    <type>String</type>
-                </field>
+      <fields>
+        <field xml.attribute="true">
+          <name>version</name>
+          <version>1.0.0+</version>
+          <required>true</required>
+          <type>String</type>
+        </field>
 
-                <field>
-                    <name>commandSets</name>
-                    <version>1.0.0+</version>
-                    <association xml.tagName="command-set" xml.itemsStyle="flat">
-                        <type>CommandSetDescriptor</type>
-                        <multiplicity>*</multiplicity>
-                    </association>
-                </field>
-            </fields>
-        </class>
+        <field>
+          <name>commandSets</name>
+          <version>1.0.0+</version>
+          <association xml.tagName="command-set" xml.itemsStyle="flat">
+            <type>CommandSetDescriptor</type>
+            <multiplicity>*</multiplicity>
+          </association>
+        </field>
+      </fields>
+    </class>
 
-        <class xml.tagName="command-set" xsd.compositor="sequence">
-            <description><![CDATA[
+    <class xml.tagName="command-set" xsd.compositor="sequence">
+      <description><![CDATA[
                 Command set descriptor.
                 @since 2.1
             ]]></description>
 
-            <name>CommandSetDescriptor</name>
-            <version>1.0.0+</version>
-            <interfaces>
-                <interface><![CDATA[Comparable<CommandSetDescriptor>]]></interface>
-            </interfaces>
-            <fields>
-                <field xml.attribute="true">
-                    <name>id</name>
-                    <version>1.0.0+</version>
-                    <required>true</required>
-                    <type>String</type>
-                    <identifier>true</identifier>
-                </field>
+      <name>CommandSetDescriptor</name>
+      <version>1.0.0+</version>
+      <interfaces>
+        <interface><![CDATA[Comparable<CommandSetDescriptor>]]></interface>
+      </interfaces>
+      <fields>
+        <field xml.attribute="true">
+          <name>id</name>
+          <version>1.0.0+</version>
+          <required>true</required>
+          <type>String</type>
+          <identifier>true</identifier>
+        </field>
 
-                <field>
-                    <name>enabled</name>
-                    <version>1.0.0+</version>
-                    <type>boolean</type>
-                    <defaultValue>true</defaultValue>
-                </field>
+        <field>
+          <name>enabled</name>
+          <version>1.0.0+</version>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+        </field>
 
-                <field>
-                    <name>autoRegisterPriority</name>
-                    <version>1.0.0+</version>
-                    <required>true</required>
-                    <type>int</type>
-                </field>
+        <field>
+          <name>autoRegisterPriority</name>
+          <version>1.0.0+</version>
+          <required>true</required>
+          <type>int</type>
+        </field>
 
-                <!-- Deprecated -->
-                <field>
-                    <name>modules</name>
-                    <version>1.1.0</version>
-                    <required>false</required>
-                    <association xml.itemsStyle="flat">
-                        <type>ModuleDescriptor</type>
-                        <multiplicity>*</multiplicity>
-                    </association>
-                </field>
+        <!-- Deprecated -->
+        <field>
+          <name>modules</name>
+          <version>1.1.0</version>
+          <required>false</required>
+          <association xml.itemsStyle="flat">
+            <type>ModuleDescriptor</type>
+            <multiplicity>*</multiplicity>
+          </association>
+        </field>
 
-                <field>
-                    <name>commands</name>
-                    <version>1.0.0+</version>
-                    <required>true</required>
-                    <association xml.itemsStyle="flat">
-                        <type>CommandDescriptor</type>
-                        <multiplicity>*</multiplicity>
-                    </association>
-                </field>
+        <field>
+          <name>commands</name>
+          <version>1.0.0+</version>
+          <required>true</required>
+          <association xml.itemsStyle="flat">
+            <type>CommandDescriptor</type>
+            <multiplicity>*</multiplicity>
+          </association>
+        </field>
 
-                <field>
-                    <name>helpPages</name>
-                    <version>1.2.0+</version>
-                    <required>true</required>
-                    <association xml.itemsStyle="flat">
-                        <type>HelpPageDescriptor</type>
-                        <multiplicity>*</multiplicity>
-                    </association>
-                </field>
-            </fields>
+        <field>
+          <name>helpPages</name>
+          <version>1.2.0+</version>
+          <required>true</required>
+          <association xml.itemsStyle="flat">
+            <type>HelpPageDescriptor</type>
+            <multiplicity>*</multiplicity>
+          </association>
+        </field>
+      </fields>
 
-            <codeSegments>
-                <codeSegment>
-                    <version>1.0.0+</version>
-                    <code><![CDATA[
+      <codeSegments>
+        <codeSegment>
+          <version>1.0.0+</version>
+          <code><![CDATA[
                         public int compareTo(final CommandSetDescriptor target) {
                             int us = getAutoRegisterPriority();
                             int them = target.getAutoRegisterPriority();
                             return (us < them ? -1 : (us == them ? 0 : 1));
                         }
                     ]]></code>
-                </codeSegment>
-            </codeSegments>
-        </class>
+        </codeSegment>
+      </codeSegments>
+    </class>
 
-        <!-- Deprecated -->
-        <class xml.tagName="module">
-            <description><![CDATA[
+    <!-- Deprecated -->
+    <class xml.tagName="module">
+      <description><![CDATA[
                 Module descriptor.
                 @since 2.3
             ]]></description>
 
-            <name>ModuleDescriptor</name>
-            <version>1.1.0</version>
-            <fields>
-                <field>
-                    <name>type</name>
-                    <version>1.1.0</version>
-                    <required>true</required>
-                    <type>String</type>
-                    <identifier>true</identifier>
-                </field>
+      <name>ModuleDescriptor</name>
+      <version>1.1.0</version>
+      <fields>
+        <field>
+          <name>type</name>
+          <version>1.1.0</version>
+          <required>true</required>
+          <type>String</type>
+          <identifier>true</identifier>
+        </field>
 
-                <field>
-                    <name>enabled</name>
-                    <version>1.1.0</version>
-                    <type>boolean</type>
-                    <defaultValue>true</defaultValue>
-                </field>
-            </fields>
-        </class>
+        <field>
+          <name>enabled</name>
+          <version>1.1.0</version>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+        </field>
+      </fields>
+    </class>
 
-        <class xml.tagName="command">
-            <description><![CDATA[
+    <class xml.tagName="command">
+      <description><![CDATA[
                 Command descriptor.
                 @since 2.1
             ]]></description>
 
-            <name>CommandDescriptor</name>
-            <version>1.0.0+</version>
-            <fields>
-                <field>
-                    <name>action</name>
-                    <version>1.0.0+</version>
-                    <required>true</required>
-                    <type>String</type>
-                    <identifier>true</identifier>
-                </field>
+      <name>CommandDescriptor</name>
+      <version>1.0.0+</version>
+      <fields>
+        <field>
+          <name>action</name>
+          <version>1.0.0+</version>
+          <required>true</required>
+          <type>String</type>
+          <identifier>true</identifier>
+        </field>
 
-                <field>
-                    <name>enabled</name>
-                    <version>1.0.0+</version>
-                    <type>boolean</type>
-                    <defaultValue>true</defaultValue>
-                </field>
+        <field>
+          <name>enabled</name>
+          <version>1.0.0+</version>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+        </field>
 
-                <field>
-                    <name>name</name>
-                    <version>1.0.0+</version>
-                    <type>String</type>
-                </field>
+        <field>
+          <name>name</name>
+          <version>1.0.0+</version>
+          <type>String</type>
+        </field>
 
-                <field java.setter="false" xml.transient="true">
-                    <name>parent</name>
-                    <version>1.1.0+</version>
-                    <required>true</required>
-                    <association>
-                        <type>CommandSetDescriptor</type>
-                        <multiplicity>1</multiplicity>
-                    </association>
-                </field>
-            </fields>
-        </class>
+        <field java.setter="false" xml.transient="true">
+          <name>parent</name>
+          <version>1.1.0+</version>
+          <required>true</required>
+          <association>
+            <type>CommandSetDescriptor</type>
+            <multiplicity>1</multiplicity>
+          </association>
+        </field>
+      </fields>
+    </class>
 
-        <class xml.tagName="helpPage">
-            <description><![CDATA[
+    <class xml.tagName="helpPage">
+      <description><![CDATA[
                 Help page descriptor.
                 @since 2.5
             ]]></description>
 
-            <name>HelpPageDescriptor</name>
-            <version>1.2.0+</version>
-            <fields>
-                <field>
-                    <name>name</name>
-                    <version>1.2.0+</version>
-                    <required>true</required>
-                    <type>String</type>
-                    <identifier>true</identifier>
-                </field>
+      <name>HelpPageDescriptor</name>
+      <version>1.2.0+</version>
+      <fields>
+        <field>
+          <name>name</name>
+          <version>1.2.0+</version>
+          <required>true</required>
+          <type>String</type>
+          <identifier>true</identifier>
+        </field>
 
-                <field>
-                    <name>resource</name>
-                    <version>1.2.0+</version>
-                    <required>true</required>
-                    <type>String</type>
-                </field>
-            </fields>
-        </class>
-    </classes>
+        <field>
+          <name>resource</name>
+          <version>1.2.0+</version>
+          <required>true</required>
+          <type>String</type>
+        </field>
+      </fields>
+    </class>
+  </classes>
 
 </model>

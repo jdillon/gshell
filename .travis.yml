@@ -1,0 +1,16 @@
+language: java
+
+env:
+  global:
+    secure: mFUCLdRvMgBr7JAp6NStVrX2kuVH8WvnSP0qIF9KMNv4DEG3uHzS07eijOqDIWqjNRgEP9nYTiWueQ5lWrGZWK6O4zf8hY2pjWVzI5xQCwRa0UxTBVQOUxFFgcaeG4GIlvteKU07lvISwmx7X81AD/BnK3S0pGOWcUVPwekAasY=
+
+branches:
+  except:
+    - /^release-.*$/
+
+jdk:
+  - oraclejdk8
+
+install: ./build ci-prepare -V -B -s .travis/settings.xml
+
+script: ./build ci-deploy -V -B -s .travis/settings.xml

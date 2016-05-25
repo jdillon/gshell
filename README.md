@@ -42,8 +42,8 @@ Check out and build:
 
 After this completes, you can unzip the assembly and launch the shell:
 
-    unzip gshell-dist/gshell-assembly/target/gshell-*-bin.zip
-    ./gshell-*/bin/gsh
+    unzip -d target gshell-dist/gshell-assembly/target/gshell-*-bin.zip
+    ./target/gshell-*/bin/gsh
 
 Use the 'help' command for further assistance.
 
