@@ -20,7 +20,7 @@ Description
 
 GShell - A command-line shell framework.
 
-[![Build Status](https://travis-ci.org/jdillon/gshell.svg?branch=master)](https://travis-ci.org/jdillon/gshell)
+[![Build Status](https://travis-ci.org/olivierpaul/gshell.svg?branch=master)](https://travis-ci.org/olivierpaul/gshell)
 
 License
 -------
@@ -38,7 +38,7 @@ Building
 
 Check out and build:
 
-    git clone git://github.com/jdillon/gshell.git
+    git clone git://github.com/olivierpaul/gshell.git
     cd gshell
     mvn install
 
@@ -52,4 +52,4 @@ Use the 'help' command for further assistance.
 Implementations
 ---------------
 
-GShell is used by the [Maven Shell](https://github.com/jdillon/mvnsh)
+GShell is used by the [Maven Shell](https://github.com/olivierpaul/mvnsh)
