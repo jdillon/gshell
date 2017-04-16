@@ -33,8 +33,8 @@ Building
 
 ### Requirements
 
-* Maven 3.0.x (3.1+ not supported)
-* Java 6+
+* [Maven](http://maven.apache.org) 3.3+
+* [Java](http://java.oracle.com/) 7+
 
 Check out and build:
 
