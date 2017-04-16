@@ -2,7 +2,9 @@ language: java
 
 env:
   global:
-    secure: mFUCLdRvMgBr7JAp6NStVrX2kuVH8WvnSP0qIF9KMNv4DEG3uHzS07eijOqDIWqjNRgEP9nYTiWueQ5lWrGZWK6O4zf8hY2pjWVzI5xQCwRa0UxTBVQOUxFFgcaeG4GIlvteKU07lvISwmx7X81AD/BnK3S0pGOWcUVPwekAasY=
+    - secure: mFUCLdRvMgBr7JAp6NStVrX2kuVH8WvnSP0qIF9KMNv4DEG3uHzS07eijOqDIWqjNRgEP9nYTiWueQ5lWrGZWK6O4zf8hY2pjWVzI5xQCwRa0UxTBVQOUxFFgcaeG4GIlvteKU07lvISwmx7X81AD/BnK3S0pGOWcUVPwekAasY=
+    - MAVEN_SETTINGS: .travis/settings.xml
+    - MAVEN_OPTIONS: -V -B -s $MAVEN_SETTINGS
 
 branches:
   except:
@@ -11,8 +13,8 @@ branches:
 jdk:
   - oraclejdk8
 
-install: ./build ci-prepare -V -B -s .travis/settings.xml
+install: ./build ci-prepare ${MAVEN_OPTIONS}
 
 script:
-  - 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then ./build ci-pullrequest -V -B -s .travis/settings.xml; fi'
-  - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then ./build ci-deploy -V -B -s .travis/settings.xml; fi'
+  - 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then ./build ci-pullrequest $MAVEN_OPTIONS; fi'
+  - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then ./build ci-deploy $MAVEN_OPTIONS; fi'
