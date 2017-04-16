@@ -16,5 +16,5 @@ jdk:
 install: ./build ci-prepare $MAVEN_OPTIONS
 
 script:
-  - 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then ./build ci-pullrequest $MAVEN_OPTIONS; fi'
-  - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then ./build ci-deploy $MAVEN_OPTIONS; fi'
+  - "if [ '$TRAVIS_PULL_REQUEST' != 'false' ]; then ./build ci-pullrequest $MAVEN_OPTIONS; fi"
+  - "if [ '$TRAVIS_PULL_REQUEST' = 'false' ]; then ./build ci-deploy $MAVEN_OPTIONS; fi"
