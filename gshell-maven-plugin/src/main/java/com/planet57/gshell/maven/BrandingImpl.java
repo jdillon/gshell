@@ -53,9 +53,13 @@ public class BrandingImpl
     return getMessages().format("goodbye");
   }
 
+  @Override public File getShellContextDir() {
+    return resolveFile(new File(".")); // FIXME: this should be maven's project.basedir
+  }
+
   @Override
   public File getUserContextDir() {
-    return resolveFile(new File(getUserHomeDir(), ".gshell"));
+    return resolveFile(new File(getUserHomeDir(), ".m2/gshell/" + getProgramName()));
   }
 
   @Override

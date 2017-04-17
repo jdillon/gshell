@@ -34,7 +34,7 @@ import java.util.List;
 public class RunMojo
     extends AbstractMojo
 {
-  @Parameter(defaultValue = "${project.basedir}/.gshell")
+  @Parameter(defaultValue = "${project.basedir}")
   File shellHome;
 
   @Parameter(defaultValue = "gshell")

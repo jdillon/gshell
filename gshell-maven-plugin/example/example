@@ -3,7 +3,10 @@ basename=`basename $0`
 dirname=`dirname $0`
 dirname=`cd "$dirname" && pwd`
 
+# MVN_LAUNCHER_OPTIONS: additional operations to pass to the Maven Launcher
+
 exec ${dirname}/.maven-launcher \
+  ${MVN_LAUNCHER_OPTIONS} \
   -f config.xml \
   com.planet57.gshell:gshell-maven-plugin:run \
   -Dgshell.arguments="$@"
