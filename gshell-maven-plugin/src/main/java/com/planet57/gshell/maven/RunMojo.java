@@ -23,6 +23,7 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * Run shell.
@@ -42,6 +43,9 @@ public class RunMojo
   @Parameter(defaultValue = "${project.version}")
   String shellVersion;
 
+  @Parameter(defaultValue = "${gshell.arguments}")
+  String[] shellArgs;
+
   public void execute() throws MojoExecutionException, MojoFailureException {
     // HACK: Need to setup some bootstrap muck
     System.setProperty(VariableNames.SHELL_HOME, shellHome.getAbsolutePath());
@@ -50,7 +54,7 @@ public class RunMojo
 
     try {
       ShellRunner runner = new ShellRunner();
-      runner.boot();
+      runner.boot(shellArgs);
     }
     catch (Exception e) {
       throw new MojoExecutionException(e.getMessage(), e);
