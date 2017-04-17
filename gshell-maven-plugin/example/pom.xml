@@ -21,7 +21,7 @@
         <artifactId>gshell-maven-plugin</artifactId>
         <version>${gshell.version}</version>
         <configuration>
-          <shellProgram>example-shell</shellProgram>
+          <shellProgram>example</shellProgram>
         </configuration>
         <dependencies>
           <dependency>
