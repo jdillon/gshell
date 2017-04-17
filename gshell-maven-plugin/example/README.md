@@ -50,3 +50,9 @@ Run a command; 'set' to list all defined variables:
     shell.group='/'
     shell.group.path='.:/'
     example>
+
+## State
+
+GShell for Apache Maven will store state under:
+
+    $HOME/.m2/gshell/<program>
