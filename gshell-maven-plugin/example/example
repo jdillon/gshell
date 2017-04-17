@@ -3,4 +3,7 @@ basename=`basename $0`
 dirname=`dirname $0`
 dirname=`cd "$dirname" && pwd`
 
-exec ${dirname}/.maven-launcher com.planet57.gshell:gshell-maven-plugin:run -Dgshell.arguments="$@"
+exec ${dirname}/.maven-launcher \
+  -f config.xml \
+  com.planet57.gshell:gshell-maven-plugin:run \
+  -Dgshell.arguments="$@"
