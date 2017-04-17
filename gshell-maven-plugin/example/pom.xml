@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>local.gshell</groupId>
+  <artifactId>example</artifactId>
+  <packaging>pom</packaging>
+  <version>1</version>
+
+  <properties>
+    <gshell.version>3.0.0-SNAPSHOT</gshell.version>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.planet57.gshell</groupId>
+        <artifactId>gshell-maven-plugin</artifactId>
+        <version>${gshell.version}</version>
+        <configuration>
+          <shellProgram>example-shell</shellProgram>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>com.planet57.gshell.commands</groupId>
+            <artifactId>gshell-file</artifactId>
+            <version>${gshell.version}</version>
+          </dependency>
+
+          <dependency>
+            <groupId>com.planet57.gshell.commands</groupId>
+            <artifactId>gshell-groovy</artifactId>
+            <version>${gshell.version}</version>
+          </dependency>
+
+          <dependency>
+            <groupId>com.planet57.gshell.commands</groupId>
+            <artifactId>gshell-jetty</artifactId>
+            <version>${gshell.version}</version>
+          </dependency>
+
+          <dependency>
+            <groupId>com.planet57.gshell.commands</groupId>
+            <artifactId>gshell-logging</artifactId>
+            <version>${gshell.version}</version>
+          </dependency>
+
+          <dependency>
+            <groupId>com.planet57.gshell.commands</groupId>
+            <artifactId>gshell-network</artifactId>
+            <version>${gshell.version}</version>
+          </dependency>
+
+          <dependency>
+            <groupId>com.planet57.gshell.commands</groupId>
+            <artifactId>gshell-pref</artifactId>
+            <version>${gshell.version}</version>
+          </dependency>
+
+          <dependency>
+            <groupId>com.planet57.gshell.commands</groupId>
+            <artifactId>gshell-shell</artifactId>
+            <version>${gshell.version}</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
