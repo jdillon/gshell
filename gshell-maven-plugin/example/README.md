@@ -17,11 +17,11 @@
 -->
 # Example
 
-Shows how to use Maven `pom.xml` to configure the execution of GShell to include specific configuration and plugins.
+Shows how to use Apache Maven `pom.xml` to configure the execution of GShell to include specific configuration and plugins.
 
 ## Running
  
-    mvn gshell:run
+    ./example
 
 Output:
 
@@ -35,11 +35,11 @@ Output:
     
     Type 'help' for more information.
     --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    example-shell>
+    example>
     
 Run a command; 'set' to list all defined variables:
 
-    example-shell> set
+    example> set
     shell.logging='INFO'
     shell.errors='false'
     shell.home='/Users/jason/ws/planet57/gshell/gshell-maven-plugin/example/.gshell'
@@ -49,3 +49,4 @@ Run a command; 'set' to list all defined variables:
     shell.user.dir='/Users/jason/ws/planet57/gshell/gshell-maven-plugin/example'
     shell.group='/'
     shell.group.path='.:/'
+    example>
