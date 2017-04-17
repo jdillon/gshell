@@ -53,6 +53,11 @@
     </dependency>
 
     <dependency>
+      <groupId>org.apache.maven.plugin-tools</groupId>
+      <artifactId>maven-plugin-annotations</artifactId>
+    </dependency>
+
+    <dependency>
       <groupId>com.planet57.gshell.commands</groupId>
       <artifactId>gshell-standard</artifactId>
     </dependency>

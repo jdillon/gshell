@@ -19,13 +19,14 @@ import com.planet57.gshell.variables.VariableNames;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.Mojo;
 
 /**
- * ???
+ * Run shell.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @goal run
  */
+@Mojo(name="run", requiresProject=false)
 public class RunMojo
     extends AbstractMojo
 {
