@@ -1,3 +1,6 @@
-#!/bin/sh
+#!/bin/bash -e
+basename=`basename $0`
+dirname=`dirname $0`
+dirname=`cd "$dirname" && pwd`
 
-exec ./.maven-launcher gshell:run $*
+exec ${dirname}/.maven-launcher com.planet57.gshell:gshell-maven-plugin:run $*
