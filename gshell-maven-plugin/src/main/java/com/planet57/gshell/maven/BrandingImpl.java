@@ -32,27 +32,11 @@ import org.fusesource.jansi.Ansi;
 public class BrandingImpl
     extends BrandingSupport
 {
-  // Figlet font name: ???
-  private static final String[] BANNER = {
-      "   ____ ____  _          _ _ ",
-      "  / ___/ ___|| |__   ___| | |",
-      " | |  _\\___ \\| '_ \\ / _ \\ | |",
-      " | |_| |___) | | | |  __/ | |",
-      "  \\____|____/|_| |_|\\___|_|_|",
-      };
-
   @Override
   public String getWelcomeMessage() {
     PrintBuffer buff = new PrintBuffer();
 
-    for (String line : BANNER) {
-      buff.println(Ansi.ansi().fg(Ansi.Color.CYAN).a(line).reset());
-    }
-
-    buff.println();
-    buff.format("%s (%s)", getDisplayName(), getVersion()).println();
-    buff.println();
-    buff.println("Type '@|bold help|@' for more information.");
+    buff.println("\nType '@|bold help|@' for more information.");
     buff.print(line());
     buff.flush();
 

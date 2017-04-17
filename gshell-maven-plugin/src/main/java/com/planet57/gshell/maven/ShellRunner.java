@@ -24,7 +24,6 @@ import com.planet57.gshell.console.ConsoleErrorHandler;
 import com.planet57.gshell.console.ConsolePrompt;
 import com.planet57.gshell.guice.GuiceMainSupport;
 import com.planet57.gshell.logging.LoggingSystem;
-import com.planet57.gshell.logging.gossip.GossipLoggingSystem;
 import com.planet57.gshell.shell.ShellErrorHandler;
 import com.planet57.gshell.shell.ShellPrompt;
 
@@ -49,7 +48,7 @@ public class ShellRunner
     {
       @Override
       protected void configure() {
-        bind(LoggingSystem.class).to(GossipLoggingSystem.class);
+        bind(LoggingSystem.class).to(LoggingSystemImpl.class);
         bind(ConsolePrompt.class).to(ShellPrompt.class);
         bind(ConsoleErrorHandler.class).to(ShellErrorHandler.class);
       }

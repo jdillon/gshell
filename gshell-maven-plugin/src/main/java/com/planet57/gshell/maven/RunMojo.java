@@ -20,6 +20,9 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+
+import java.io.File;
 
 /**
  * Run shell.
@@ -30,11 +33,20 @@ import org.apache.maven.plugins.annotations.Mojo;
 public class RunMojo
     extends AbstractMojo
 {
+  @Parameter(defaultValue = "${project.basedir}/.gshell")
+  File shellHome;
+
+  @Parameter(defaultValue = "gshell")
+  String shellProgram;
+
+  @Parameter(defaultValue = "${project.version}")
+  String shellVersion;
+
   public void execute() throws MojoExecutionException, MojoFailureException {
     // HACK: Need to setup some bootstrap muck
-    System.setProperty(VariableNames.SHELL_HOME, System.getProperty("user.home") + "/.m2/gshell");
-    System.setProperty(VariableNames.SHELL_PROGRAM, "gshell");
-    System.setProperty(VariableNames.SHELL_VERSION, "???");
+    System.setProperty(VariableNames.SHELL_HOME, shellHome.getAbsolutePath());
+    System.setProperty(VariableNames.SHELL_PROGRAM, shellProgram);
+    System.setProperty(VariableNames.SHELL_VERSION, shellVersion);
 
     try {
       ShellRunner runner = new ShellRunner();
