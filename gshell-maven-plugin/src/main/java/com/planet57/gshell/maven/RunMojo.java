@@ -32,7 +32,7 @@ public class RunMojo
   public void execute() throws MojoExecutionException, MojoFailureException {
     // HACK: Need to setup some bootstrap muck
     System.setProperty(VariableNames.SHELL_HOME, System.getProperty("user.home") + "/.m2/gshell");
-    System.setProperty(VariableNames.SHELL_PROGRAM, "gshell-maven-plugin");
+    System.setProperty(VariableNames.SHELL_PROGRAM, "gshell");
     System.setProperty(VariableNames.SHELL_VERSION, "???");
 
     try {
