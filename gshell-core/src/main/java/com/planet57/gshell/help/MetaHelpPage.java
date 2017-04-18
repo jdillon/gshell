@@ -49,12 +49,14 @@ public class MetaHelpPage
     this.loader = checkNotNull(loader);
   }
 
+  @Override
   public String getName() {
     return name;
   }
 
   private ResourceBundle resources;
 
+  @Override
   public String getDescription() {
     if (resources == null) {
       resources = ResourceBundle.getBundle(resource);
@@ -63,6 +65,7 @@ public class MetaHelpPage
     return resources.getString(CommandHelpSupport.COMMAND_DESCRIPTION);
   }
 
+  @Override
   public void render(final PrintWriter out) {
     assert out != null;
 

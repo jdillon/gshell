@@ -49,14 +49,18 @@ public class AliasHelpPage
     return messages;
   }
 
+
+  @Override
   public String getName() {
     return name;
   }
 
+  @Override
   public String getDescription() {
     return getMessages().format("alias-description", alias);
   }
 
+  @Override
   public void render(final PrintWriter out) {
     assert out != null;
     out.println(getMessages().format("alias-content", name, alias));

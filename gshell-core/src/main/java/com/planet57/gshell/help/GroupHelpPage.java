@@ -51,14 +51,17 @@ public class GroupHelpPage
     return messages;
   }
 
+  @Override
   public String getName() {
     return node.getAction().getSimpleName();
   }
 
+  @Override
   public String getDescription() {
     return getMessages().format("group-description", getName());
   }
 
+  @Override
   public void render(final PrintWriter out) {
     assert out != null;
     out.println(getMessages().format("group-content-header", getName()));

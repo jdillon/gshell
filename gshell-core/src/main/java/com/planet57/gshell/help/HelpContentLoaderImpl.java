@@ -40,6 +40,7 @@ public class HelpContentLoaderImpl
 {
   private static final Logger log = LoggerFactory.getLogger(HelpContentLoaderImpl.class);
 
+  @Override
   public String load(final String name, final ClassLoader loader) throws MissingContentException, IOException {
     return load(name, Locale.getDefault(), loader);
   }

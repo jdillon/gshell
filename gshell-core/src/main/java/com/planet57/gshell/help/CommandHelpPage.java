@@ -60,10 +60,12 @@ public class CommandHelpPage
     command = node.getAction();
   }
 
+  @Override
   public String getName() {
     return node.getAction().getSimpleName();
   }
 
+  @Override
   public String getDescription() {
     return CommandHelpSupport.getDescription(node.getAction());
   }
@@ -203,6 +205,7 @@ public class CommandHelpPage
     }
   }
 
+  @Override
   public void render(final PrintWriter out) {
     assert out != null;
 
