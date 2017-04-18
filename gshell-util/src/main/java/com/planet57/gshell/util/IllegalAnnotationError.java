@@ -24,8 +24,6 @@ package com.planet57.gshell.util;
 public class IllegalAnnotationError
     extends Error
 {
-  ///CLOVER:OFF
-
   private static final long serialVersionUID = 1;
 
   public IllegalAnnotationError(String msg) {

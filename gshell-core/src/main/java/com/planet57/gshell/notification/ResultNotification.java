@@ -24,8 +24,6 @@ package com.planet57.gshell.notification;
 public class ResultNotification
     extends Notification
 {
-  ///CLOVER:OFF
-
   private static final long serialVersionUID = 1;
 
   private final Object result;

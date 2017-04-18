@@ -63,8 +63,6 @@ public interface Variables
 
   Variables parent();
 
-  ///CLOVER:OFF
-
   /**
    * Throw to indicate that a variable change was attempted but the variable was not muable.
    */

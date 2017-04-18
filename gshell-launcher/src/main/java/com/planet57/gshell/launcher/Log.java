@@ -23,8 +23,6 @@ package com.planet57.gshell.launcher;
  */
 public class Log
 {
-  ///CLOVER:OFF
-
   @SuppressWarnings({"StringConcatenation"})
   public static final boolean DEBUG = Boolean.getBoolean(Log.class.getName() + ".debug");
 

@@ -23,8 +23,6 @@ package com.planet57.gshell.util.converter;
 public class ConversionException
     extends RuntimeException
 {
-  ///CLOVER:OFF
-
   public ConversionException() {
   }
 

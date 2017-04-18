@@ -75,8 +75,6 @@ public abstract class SetterSupport
 
   protected static enum Messages
   {
-    ///CLOVER:OFF
-
     ILLEGAL_METHOD_SIGNATURE,
     ILLEGAL_FIELD_SIGNATURE,;
 
