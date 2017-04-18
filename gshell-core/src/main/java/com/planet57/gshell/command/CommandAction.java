@@ -38,8 +38,7 @@ public interface CommandAction
 
   Completer[] getCompleters();
 
-  @SuppressWarnings({"CloneDoesntDeclareCloneNotSupportedException"})
-  CommandAction clone();
+  CommandAction copy();
 
   /**
    * Execute the command action.

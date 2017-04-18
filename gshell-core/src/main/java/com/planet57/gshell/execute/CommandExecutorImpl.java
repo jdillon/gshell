@@ -133,8 +133,8 @@ public class CommandExecutorImpl
       }
       action = node.getAction();
     }
-    // Always return a clone, original instance is a prototype
-    return action.clone();
+    // Always return a copy, original instance is a prototype
+    return action.copy();
   }
 
   @Override

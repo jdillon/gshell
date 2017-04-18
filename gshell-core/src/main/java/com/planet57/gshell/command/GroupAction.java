@@ -75,8 +75,12 @@ public class GroupAction
   }
 
   @Override
-  @SuppressWarnings({"CloneDoesntCallSuperClone"})
-  public CommandAction clone() {
-    return this;
+  public CommandAction copy() {
+    try {
+      return (CommandAction) super.clone();
+    }
+    catch (CloneNotSupportedException e) {
+      throw new InternalError();
+    }
   }
 }

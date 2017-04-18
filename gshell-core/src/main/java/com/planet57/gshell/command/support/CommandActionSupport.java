@@ -116,7 +116,7 @@ public abstract class CommandActionSupport
   }
 
   @Override
-  public CommandAction clone() {
+  public CommandAction copy() {
     try {
       return (CommandAction) super.clone();
     }
