@@ -25,7 +25,7 @@ import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.support.CommandActionSupport;
 import com.planet57.gshell.file.FileSystemAccess;
-import com.planet57.gshell.util.FileAssert;
+import com.planet57.gshell.util.io.FileAssert;
 import com.planet57.gshell.util.cli2.Argument;
 import jline.console.completer.Completer;
 

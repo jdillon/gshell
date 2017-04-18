@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.MissingResourceException;
 
-import com.planet57.gshell.util.PrintBuffer;
+import com.planet57.gshell.util.io.PrintBuffer;
 import com.planet57.gshell.util.io.Closer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -22,7 +22,7 @@ import com.planet57.gshell.command.resolver.Node;
 import com.planet57.gshell.command.support.CommandHelpSupport;
 import com.planet57.gshell.command.support.CommandPreferenceSupport;
 import com.planet57.gshell.shell.ShellHolder;
-import com.planet57.gshell.util.PrintBuffer;
+import com.planet57.gshell.util.io.PrintBuffer;
 import com.planet57.gshell.util.cli2.CliProcessor;
 import com.planet57.gshell.util.cli2.HelpPrinter;
 import com.planet57.gshell.util.i18n.MessageSource;

@@ -15,6 +15,7 @@
  */
 package com.planet57.gshell.parser.impl.visitor;
 
+import com.google.common.base.Strings;
 import com.planet57.gshell.parser.impl.ASTCommandLine;
 import com.planet57.gshell.parser.impl.ASTExpression;
 import com.planet57.gshell.parser.impl.ASTOpaqueArgument;
@@ -23,7 +24,6 @@ import com.planet57.gshell.parser.impl.ASTQuotedArgument;
 import com.planet57.gshell.parser.impl.ASTWhitespace;
 import com.planet57.gshell.parser.impl.ParserVisitor;
 import com.planet57.gshell.parser.impl.SimpleNode;
-import com.planet57.gshell.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

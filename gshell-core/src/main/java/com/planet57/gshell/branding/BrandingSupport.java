@@ -22,8 +22,8 @@ import java.io.StringWriter;
 import java.net.URI;
 import java.util.Properties;
 
+import com.google.common.base.Strings;
 import com.planet57.gshell.shell.Shell;
-import com.planet57.gshell.util.Strings;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 import com.planet57.gshell.variables.VariableNames;

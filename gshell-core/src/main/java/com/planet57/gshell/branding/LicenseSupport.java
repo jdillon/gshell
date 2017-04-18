@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 
-import com.planet57.gshell.util.PrintBuffer;
+import com.planet57.gshell.util.io.PrintBuffer;
 import com.planet57.gshell.util.io.Closer;
 import com.planet57.gshell.util.io.Copier;
 
