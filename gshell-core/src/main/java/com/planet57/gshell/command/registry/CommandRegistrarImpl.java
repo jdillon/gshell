@@ -31,6 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
 /**
  * Guice {@link CommandRegistrar}.
@@ -57,11 +58,6 @@ public class CommandRegistrarImpl
     this.registry = checkNotNull(registry);
   }
 
-  private Class<?> loadClass(final String className) throws ClassNotFoundException {
-    assert className != null;
-    return Thread.currentThread().getContextClassLoader().loadClass(className);
-  }
-
   @Override
   public void discoverCommands() throws Exception {
     log.trace("Registering commands");
@@ -76,8 +72,8 @@ public class CommandRegistrarImpl
 
   @Override
   public void registerCommand(final String name, final String className) throws Exception {
-    assert name != null;
-    assert className != null;
+    checkNotNull(name);
+    checkNotNull(className);
 
     log.trace("Registering command: {} -> {}", name, className);
 
@@ -87,14 +83,14 @@ public class CommandRegistrarImpl
 
   @Override
   public void registerCommand(final String className) throws Exception {
-    assert className != null;
+    checkNotNull(className);
 
     log.trace("Registering command: {}", className);
 
     CommandAction command = createAction(className);
 
     Command meta = command.getClass().getAnnotation(Command.class);
-    assert meta != null;
+    checkState(meta != null, "Missing @Command: %s", className);
     String name = meta.name();
 
     registry.registerCommand(name, command);
@@ -103,7 +99,7 @@ public class CommandRegistrarImpl
   @SuppressWarnings({"unchecked"})
   private CommandAction createAction(final String className) throws ClassNotFoundException {
     assert className != null;
-    Class<?> type = loadClass(className);
+    Class<?> type = Thread.currentThread().getContextClassLoader().loadClass(className);
     Iterator<BeanEntry<Annotation, ?>> iter = container.locate(Key.get((Class) type)).iterator();
     if (iter.hasNext()) {
       return (CommandAction) iter.next().getValue();
