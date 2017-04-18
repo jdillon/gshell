@@ -62,7 +62,7 @@ public class RunMojo
       ShellRunner runner = new ShellRunner()
       {
         @Override
-        protected void configure(List<Module> modules) {
+        protected void configure(final List<Module> modules) {
           super.configure(modules);
 
           // FIXME: see if there is a more dynamic way to bridge components to nested Guice container
