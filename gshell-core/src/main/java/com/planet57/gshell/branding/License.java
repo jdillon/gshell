@@ -15,7 +15,9 @@
  */
 package com.planet57.gshell.branding;
 
+import javax.annotation.Nullable;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 
 /**
@@ -28,7 +30,9 @@ public interface License
 {
   String getName();
 
-  URL getUrl();
+  @Nullable
+  URI getUrl();
 
+  @Nullable
   String getContent() throws IOException;
 }
