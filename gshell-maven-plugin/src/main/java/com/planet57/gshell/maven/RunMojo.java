@@ -17,6 +17,13 @@ package com.planet57.gshell.maven;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Module;
+import com.planet57.gshell.branding.Branding;
+import com.planet57.gshell.console.ConsoleErrorHandler;
+import com.planet57.gshell.console.ConsolePrompt;
+import com.planet57.gshell.guice.GuiceMainSupport;
+import com.planet57.gshell.logging.LoggingSystem;
+import com.planet57.gshell.shell.ShellErrorHandler;
+import com.planet57.gshell.shell.ShellPrompt;
 import com.planet57.gshell.variables.VariableNames;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -59,24 +66,29 @@ public class RunMojo
     System.setProperty(VariableNames.SHELL_VERSION, shellVersion);
 
     try {
-      ShellRunner runner = new ShellRunner()
+      GuiceMainSupport main = new GuiceMainSupport()
       {
         @Override
         protected void configure(final List<Module> modules) {
           super.configure(modules);
 
-          // FIXME: see if there is a more dynamic way to bridge components to nested Guice container
           modules.add(new AbstractModule()
           {
             @Override
             protected void configure() {
+              bind(LoggingSystem.class).to(LoggingSystemImpl.class);
+              bind(ConsolePrompt.class).to(ShellPrompt.class);
+              bind(ConsoleErrorHandler.class).to(ShellErrorHandler.class);
+              bind(Branding.class).to(BrandingImpl.class);
+
+              // FIXME: see if there is a more dynamic way to bridge components to nested Guice container
               bind(MavenProject.class).toInstance(project);
             }
           });
         }
       };
 
-      runner.boot(shellArgs);
+      main.boot(shellArgs);
     }
     catch (Exception e) {
       throw new MojoExecutionException(e.getMessage(), e);
