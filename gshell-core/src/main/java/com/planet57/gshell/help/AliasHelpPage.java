@@ -20,6 +20,8 @@ import java.io.PrintWriter;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * {@link HelpPage} for an alias.
  *
@@ -36,10 +38,8 @@ public class AliasHelpPage
   private MessageSource messages;
 
   public AliasHelpPage(final String name, final String alias) {
-    assert name != null;
-    this.name = name;
-    assert alias != null;
-    this.alias = alias;
+    this.name = checkNotNull(name);
+    this.alias = checkNotNull(alias);
   }
 
   private MessageSource getMessages() {
@@ -62,7 +62,7 @@ public class AliasHelpPage
 
   @Override
   public void render(final PrintWriter out) {
-    assert out != null;
+    checkNotNull(out);
     out.println(getMessages().format("alias-content", name, alias));
   }
 

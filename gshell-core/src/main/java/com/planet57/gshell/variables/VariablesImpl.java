@@ -25,6 +25,10 @@ import com.planet57.gshell.event.EventAware;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.util.converter.Converters;
 
+import javax.annotation.Nullable;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Provides a nested-namespace for command variables.
  *
@@ -36,17 +40,15 @@ public class VariablesImpl
 {
   private final Map<String, Object> map;
 
+  @Nullable
   private final Variables parent;
 
   private final Set<String> immutables = new HashSet<String>();
 
   private EventManager eventManager;
 
-  public VariablesImpl(final Map<String, Object> map, final Variables parent) {
-    assert map != null;
-    // parent may be null
-
-    this.map = map;
+  public VariablesImpl(final Map<String, Object> map, @Nullable final Variables parent) {
+    this.map = checkNotNull(map);
     this.parent = parent;
   }
 
@@ -62,14 +64,17 @@ public class VariablesImpl
     this(new LinkedHashMap<String, Object>());
   }
 
+  @Override
   public void setEventManager(final EventManager eventManager) {
     this.eventManager = eventManager;
   }
 
+  @Override
   public void set(final String name, final Object value) {
     set(name, value, true);
   }
 
+  @Override
   public void set(final String name, final Object value, boolean mutable) {
     assert name != null;
 
@@ -86,12 +91,14 @@ public class VariablesImpl
     }
   }
 
+  @Override
   public void set(final Class<?> type, final Object value) {
     assert type != null;
 
     set(type.getName(), value);
   }
 
+  @Override
   public Object get(final String name) {
     assert name != null;
 
@@ -103,6 +110,7 @@ public class VariablesImpl
     return value;
   }
 
+  @Override
   @SuppressWarnings({"unchecked"})
   public <T> T get(final String name, final Class<T> type) {
     assert type != null;
@@ -116,6 +124,7 @@ public class VariablesImpl
     return (T) value;
   }
 
+  @Override
   public <T> T get(final String name, final Class<T> type, final T defaultValue) {
     T value = get(name, type);
     if (value == null) {
@@ -124,18 +133,21 @@ public class VariablesImpl
     return value;
   }
 
+  @Override
   public <T> T get(final Class<T> type, final T defaultValue) {
     assert type != null;
 
     return get(type.getName(), type, defaultValue);
   }
 
+  @Override
   public <T> T get(final Class<T> type) {
     assert type != null;
 
     return get(type.getName(), type);
   }
 
+  @Override
   public Object get(final String name, final Object defaultValue) {
     Object value = get(name);
     if (value == null) {
@@ -145,6 +157,7 @@ public class VariablesImpl
     return value;
   }
 
+  @Override
   public void unset(final String name) {
     assert name != null;
 
@@ -157,24 +170,28 @@ public class VariablesImpl
     }
   }
 
+  @Override
   public void unset(final Class<?> type) {
     assert type != null;
 
     unset(type.getName());
   }
 
+  @Override
   public boolean contains(final String name) {
     assert name != null;
 
     return map.containsKey(name);
   }
 
+  @Override
   public boolean contains(final Class<?> type) {
     assert type != null;
 
     return contains(type.getName());
   }
 
+  @Override
   public boolean isMutable(final String name) {
     assert name != null;
 
@@ -192,6 +209,7 @@ public class VariablesImpl
     return mutable;
   }
 
+  @Override
   public boolean isMutable(final Class<?> type) {
     assert type != null;
 
@@ -206,6 +224,7 @@ public class VariablesImpl
     }
   }
 
+  @Override
   public boolean isCloaked(final String name) {
     assert name != null;
 
@@ -223,12 +242,14 @@ public class VariablesImpl
     return count > 1;
   }
 
+  @Override
   public boolean isCloaked(final Class<?> type) {
     assert type != null;
 
     return isCloaked(type.getName());
   }
 
+  @Override
   public Iterator<String> names() {
     // Chain to parent iterator if we have a parent
     return new Iterator<String>()
@@ -258,6 +279,7 @@ public class VariablesImpl
     };
   }
 
+  @Override
   public Variables parent() {
     return parent;
   }

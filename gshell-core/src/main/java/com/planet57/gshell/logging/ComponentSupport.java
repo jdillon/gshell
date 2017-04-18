@@ -15,6 +15,8 @@
  */
 package com.planet57.gshell.logging;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Support for {@link Component} implementations.
  *
@@ -29,20 +31,20 @@ public abstract class ComponentSupport
   private final String name;
 
   public ComponentSupport(final String type, final String name) {
-    assert type != null;
-    this.type = type;
-    assert name != null;
-    this.name = name;
+    this.type = checkNotNull(type);
+    this.name = checkNotNull(name);
   }
 
   public ComponentSupport(final String type) {
     this(type, DEFAULT_NAME);
   }
 
+  @Override
   public String getType() {
     return type;
   }
 
+  @Override
   public String getName() {
     return name;
   }

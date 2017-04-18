@@ -36,6 +36,9 @@ import org.codehaus.plexus.interpolation.PropertiesBasedValueSource;
 import org.codehaus.plexus.interpolation.StringSearchInterpolator;
 import org.fusesource.jansi.AnsiRenderer;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * {@link HelpPage} for a command.
  *
@@ -52,12 +55,11 @@ public class CommandHelpPage
   private final CommandAction command;
 
   public CommandHelpPage(final Node node, final HelpContentLoader loader) {
-    assert node != null;
-    assert !node.isGroup();
+    checkNotNull(node);
+    checkArgument(!node.isGroup());
     this.node = node;
-    assert loader != null;
-    this.loader = loader;
-    command = node.getAction();
+    this.loader = checkNotNull(loader);
+    this.command = node.getAction();
   }
 
   @Override
@@ -207,7 +209,7 @@ public class CommandHelpPage
 
   @Override
   public void render(final PrintWriter out) {
-    assert out != null;
+    checkNotNull(out);
 
     //
     // FIXME: Really need a little bit more of a help page language here to simplify the formatting of things

@@ -51,6 +51,7 @@ import jline.TerminalFactory;
 import org.fusesource.jansi.Ansi;
 import org.slf4j.Logger;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static jline.TerminalFactory.Flavor.UNIX;
 import static jline.TerminalFactory.Flavor.WINDOWS;
 
@@ -190,7 +191,7 @@ public abstract class MainSupport
   }
 
   public void boot(String... args) throws Exception {
-    assert args != null;
+    checkNotNull(args);
 
     args = Arguments.clean(args);
     log.debug("Booting w/args: {}", Arrays.asList(args));

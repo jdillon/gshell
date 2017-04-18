@@ -27,6 +27,7 @@ import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
 import org.fusesource.jansi.AnsiRenderer;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.planet57.gshell.variables.VariableNames.SHELL_PROMPT;
 import static com.planet57.gshell.variables.VariableNames.SHELL_USER_DIR;
 import static com.planet57.gshell.variables.VariableNames.SHELL_USER_HOME;
@@ -49,10 +50,8 @@ public class ShellPrompt
 
   @Inject
   public ShellPrompt(final Provider<Variables> variables, final Branding branding) {
-    assert variables != null;
-    this.variables = variables;
-    assert branding != null;
-    this.branding = branding;
+    this.variables = checkNotNull(variables);
+    this.branding = checkNotNull(branding);
 
     parser = new ReplacementParser()
     {

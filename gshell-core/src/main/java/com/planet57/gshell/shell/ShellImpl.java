@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicReference;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -51,6 +52,8 @@ import jline.console.completer.Completer;
 import jline.console.completer.NullCompleter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * The default {@link Shell} component.
@@ -93,37 +96,41 @@ public class ShellImpl
   public ShellImpl(final EventManager events,
                    final CommandExecutor executor,
                    final Branding branding,
-                   final @Named("main") IO io,
-                   final @Named("main") Variables variables)
+                   @Nullable @Named("main") final IO io,
+                   @Nullable @Named("main") final Variables variables)
       throws IOException
   {
-    assert events != null;
-    assert executor != null;
-    assert branding != null;
-    // io and variables may be null
+    this.executor = checkNotNull(executor);
+    this.branding = checkNotNull(branding);
+    checkNotNull(events);
 
-    this.executor = executor;
-    this.branding = branding;
     this.io = io != null ? io : new IO();
     this.variables = variables != null ? variables : new VariablesImpl();
+
+    // FIXME: remove this
     if (variables instanceof EventAware) {
       ((EventAware) variables).setEventManager(events);
     }
+
     this.history = new ShellHistory(new File(branding.getUserContextDir(), branding.getHistoryFileName()));
   }
 
+  @Override
   public Branding getBranding() {
     return branding;
   }
 
+  @Override
   public IO getIo() {
     return io;
   }
 
+  @Override
   public Variables getVariables() {
     return variables;
   }
 
+  @Override
   public History getHistory() {
     return history;
   }
@@ -174,6 +181,7 @@ public class ShellImpl
     return opened;
   }
 
+  @Override
   public synchronized void close() {
     opened = false;
   }
@@ -204,27 +212,32 @@ public class ShellImpl
     loadProfileScripts();
   }
 
+  @Override
   public boolean isInteractive() {
     return true;
   }
 
   // FIXME: History should still be appended if not running inside of a JLineConsole
 
+  @Override
   public Object execute(final CharSequence line) throws Exception {
     ensureOpened();
     return executor.execute(this, String.valueOf(line));
   }
 
+  @Override
   public Object execute(final CharSequence command, final Object[] args) throws Exception {
     ensureOpened();
     return executor.execute(this, String.valueOf(command), args);
   }
 
+  @Override
   public Object execute(final Object... args) throws Exception {
     ensureOpened();
     return executor.execute(this, args);
   }
 
+  @Override
   public void run(final Object... args) throws Exception {
     assert args != null;
     ensureOpened();

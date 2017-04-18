@@ -27,6 +27,7 @@ import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static org.fusesource.jansi.Ansi.Attribute.INTENSITY_BOLD;
 import static org.fusesource.jansi.Ansi.Color.RED;
 import static org.fusesource.jansi.Ansi.ansi;
@@ -40,7 +41,7 @@ import static org.fusesource.jansi.Ansi.ansi;
 public class ShellErrorHandler
     implements ConsoleErrorHandler
 {
-  private static enum Messages
+  private enum Messages
   {
     ERROR_AT,
     ERROR_CAUSED_BY,
@@ -59,15 +60,14 @@ public class ShellErrorHandler
   private final Provider<Variables> variables;
 
   @Inject
-  public ShellErrorHandler(final @Named("main") IO io, final Provider<Variables> variables) {
-    assert io != null;
-    this.io = io;
-    assert variables != null;
-    this.variables = variables;
+  public ShellErrorHandler(@Named("main") final IO io, final Provider<Variables> variables) {
+    this.io = checkNotNull(io);
+    this.variables = checkNotNull(variables);
   }
 
+  @Override
   public boolean handleError(final Throwable error) {
-    assert error != null;
+    checkNotNull(error);
     displayError(error);
     return true;
   }

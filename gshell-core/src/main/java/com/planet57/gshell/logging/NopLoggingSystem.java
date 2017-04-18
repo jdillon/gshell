@@ -27,6 +27,7 @@ import java.util.Collections;
 public class NopLoggingSystem
     implements LoggingSystem
 {
+  @Override
   public Level getLevel(String name) {
     return new Level()
     {
@@ -36,10 +37,12 @@ public class NopLoggingSystem
     };
   }
 
+  @Override
   public Collection<? extends Level> getLevels() {
     return Collections.emptyList();
   }
 
+  @Override
   public Logger getLogger(String name) {
     return new Logger()
     {
@@ -67,10 +70,12 @@ public class NopLoggingSystem
     };
   }
 
+  @Override
   public Collection<String> getLoggerNames() {
     return Collections.emptyList();
   }
 
+  @Override
   public Collection<? extends Component> getComponents() {
     return Collections.emptyList();
   }

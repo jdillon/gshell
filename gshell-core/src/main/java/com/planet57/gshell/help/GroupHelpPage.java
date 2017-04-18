@@ -21,6 +21,9 @@ import com.planet57.gshell.command.resolver.Node;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * {@link HelpPage} for a group.
  *
@@ -37,11 +40,10 @@ public class GroupHelpPage
   private MessageSource messages;
 
   public GroupHelpPage(final Node node, final HelpContentLoader loader) {
-    assert node != null;
-    assert node.isGroup();
+    checkNotNull(node);
+    checkArgument(node.isGroup());
     this.node = node;
-    assert loader != null;
-    this.loader = loader;
+    this.loader = checkNotNull(loader);
   }
 
   private MessageSource getMessages() {
@@ -63,7 +65,8 @@ public class GroupHelpPage
 
   @Override
   public void render(final PrintWriter out) {
-    assert out != null;
+    checkNotNull(out);
+
     out.println(getMessages().format("group-content-header", getName()));
     HelpPageUtil.render(out, HelpPageUtil.pagesFor(node, loader));
   }

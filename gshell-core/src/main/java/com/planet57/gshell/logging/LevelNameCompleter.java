@@ -23,6 +23,8 @@ import javax.inject.Singleton;
 import jline.console.completer.Completer;
 import jline.console.completer.StringsCompleter;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * {@link jline.console.completer.Completer} for {@link Level} names.
  *
@@ -37,7 +39,8 @@ public class LevelNameCompleter
 
   @Inject
   public LevelNameCompleter(final LoggingSystem logging) {
-    assert logging != null;
+    checkNotNull(logging);
+
     // assume levels do not dynamically change
     delegate = new StringsCompleter();
     for (Level level : logging.getLevels()) {
