@@ -28,6 +28,8 @@ import com.planet57.gshell.util.io.Closer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * The default {@link CommandLineParser} component.
  *
@@ -43,7 +45,7 @@ public class CommandLineParserImpl
 
   @Override
   public CommandLine parse(final String line) throws Exception {
-    assert line != null;
+    checkNotNull(line);
 
     log.trace("Building command-line for: {}", line);
 

@@ -30,6 +30,10 @@ import jline.console.history.MemoryHistory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nullable;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Provides an abstraction of a console.
  *
@@ -57,12 +61,11 @@ public class Console
 
   private volatile boolean running;
 
-  public Console(final IO io, final Callable<ConsoleTask> taskFactory, final History history,
-                 final InputStream bindings) throws IOException
+  public Console(final IO io, final Callable<ConsoleTask> taskFactory, @Nullable final History history,
+                 @Nullable final InputStream bindings) throws IOException
   {
-    assert io != null;
-    // history could be null
-    // bindings could be null
+    checkNotNull(io);
+    this.taskFactory = checkNotNull(taskFactory);
 
     this.pipe = new InputPipe(io.streams, io.getTerminal(), new InputPipe.InterruptHandler()
     {
@@ -89,9 +92,6 @@ public class Console
     this.reader.setPaginationEnabled(true);
     this.reader.setCompletionHandler(new CandidateListCompletionHandler());
     this.reader.setHistory(history != null ? history : new MemoryHistory());
-
-    assert taskFactory != null;
-    this.taskFactory = taskFactory;
   }
 
   public IO getIo() {
@@ -99,7 +99,7 @@ public class Console
   }
 
   public void addCompleter(final Completer completer) {
-    assert completer != null;
+    checkNotNull(completer);
     reader.addCompleter(completer);
   }
 
@@ -204,7 +204,7 @@ public class Console
     }
   }
 
-  private void traceLine(final String line) {
+  private void traceLine(@Nullable final String line) {
     if (line == null) {
       return;
     }
@@ -223,8 +223,7 @@ public class Console
     log.trace("     {}", idx);
   }
 
-  private String readLine(final String prompt) throws IOException {
-    // prompt may be null
+  private String readLine(@Nullable final String prompt) throws IOException {
     return reader.readLine(prompt);
   }
 

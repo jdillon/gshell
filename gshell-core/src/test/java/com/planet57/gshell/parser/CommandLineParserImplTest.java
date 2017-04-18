@@ -57,7 +57,7 @@ public class CommandLineParserImplTest
       parser.parse(null);
       fail();
     }
-    catch (AssertionError expected) {
+    catch (NullPointerException expected) {
       // ignore
     }
   }
