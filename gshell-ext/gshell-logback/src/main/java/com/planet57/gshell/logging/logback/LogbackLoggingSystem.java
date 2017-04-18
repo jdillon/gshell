@@ -33,6 +33,7 @@ import com.planet57.gshell.logging.Logger;
 import com.planet57.gshell.logging.LoggingSystem;
 import org.slf4j.LoggerFactory;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static org.slf4j.Logger.ROOT_LOGGER_NAME;
 
 /**
@@ -93,10 +94,10 @@ public class LogbackLoggingSystem
     private final ch.qos.logback.classic.Level target;
 
     private LevelImpl(final ch.qos.logback.classic.Level level) {
-      assert level != null;
-      this.target = level;
+      this.target = checkNotNull(level);
     }
 
+    @Override
     public String getName() {
       return target.toString();
     }
@@ -116,8 +117,10 @@ public class LogbackLoggingSystem
     }
   }
 
+  @Override
   public Level getLevel(final String name) {
-    assert name != null;
+    checkNotNull(name);
+
     Level level = levels.get(name.toUpperCase());
     if (level == null) {
       throw new RuntimeException("Invalid level name: " + name);
@@ -129,6 +132,7 @@ public class LogbackLoggingSystem
     return (LevelImpl) getLevel(name);
   }
 
+  @Override
   public Collection<? extends Level> getLevels() {
     return levels.values();
   }
@@ -143,14 +147,15 @@ public class LogbackLoggingSystem
     private final ch.qos.logback.classic.Logger target;
 
     public LoggerImpl(final ch.qos.logback.classic.Logger logger) {
-      assert logger != null;
-      this.target = logger;
+      this.target = checkNotNull(logger);
     }
 
+    @Override
     public String getName() {
       return target.getName();
     }
 
+    @Override
     public Level getLevel() {
       ch.qos.logback.classic.Level tmp = target.getLevel();
       if (tmp != null) {
@@ -159,14 +164,17 @@ public class LogbackLoggingSystem
       return null;
     }
 
+    @Override
     public void setLevel(final Level level) {
       target.setLevel(levelFor(level.getName()).getTarget());
     }
 
+    @Override
     public void setLevel(final String level) {
       setLevel(levelFor(level));
     }
 
+    @Override
     public boolean isRoot() {
       return getName().equals(ROOT_LOGGER_NAME);
     }
@@ -184,6 +192,7 @@ public class LogbackLoggingSystem
 
   // NOTE: This doesn't seem to be returning all loggers that have been created, just those which have been configured/bound to a level :-(
 
+  @Override
   public Collection<String> getLoggerNames() {
     Collection<ch.qos.logback.classic.Logger> loggers = loggerContext.getLoggerList();
     List<String> names = new ArrayList<String>(loggers.size());
@@ -193,11 +202,13 @@ public class LogbackLoggingSystem
     return names;
   }
 
+  @Override
   public Logger getLogger(final String name) {
-    assert name != null;
+    checkNotNull(name);
     return new LoggerImpl(loggerContext.getLogger(name));
   }
 
+  @Override
   public Collection<? extends Component> getComponents() {
     // TODO: Expose appenders and whatever
     return Collections.emptySet();

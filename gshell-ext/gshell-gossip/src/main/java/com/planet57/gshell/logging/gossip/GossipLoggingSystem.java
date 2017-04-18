@@ -32,6 +32,7 @@ import com.planet57.gshell.logging.Logger;
 import com.planet57.gshell.logging.LoggingSystem;
 import org.slf4j.LoggerFactory;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.planet57.gossip.Gossip.LoggerImpl.ROOT_NAME;
 
 /**
@@ -81,10 +82,10 @@ public class GossipLoggingSystem
     private final com.planet57.gossip.Level target;
 
     private LevelImpl(final com.planet57.gossip.Level level) {
-      assert level != null;
-      this.target = level;
+      this.target = checkNotNull(level);
     }
 
+    @Override
     public String getName() {
       return target.name();
     }
@@ -104,8 +105,10 @@ public class GossipLoggingSystem
     }
   }
 
+  @Override
   public Level getLevel(final String name) {
-    assert name != null;
+    checkNotNull(name);
+
     Level level = levels.get(name.toUpperCase());
     if (level == null) {
       throw new RuntimeException("Invalid level name: " + name);
@@ -117,6 +120,7 @@ public class GossipLoggingSystem
     return (LevelImpl) getLevel(name);
   }
 
+  @Override
   public Collection<? extends Level> getLevels() {
     return levels.values();
   }
@@ -131,14 +135,15 @@ public class GossipLoggingSystem
     private final Gossip.LoggerImpl target;
 
     public LoggerImpl(final Gossip.LoggerImpl logger) {
-      assert logger != null;
-      this.target = logger;
+      this.target = checkNotNull(logger);
     }
 
+    @Override
     public String getName() {
       return target.getName();
     }
 
+    @Override
     public Level getLevel() {
       com.planet57.gossip.Level tmp = target.getLevel();
       if (tmp != null) {
@@ -147,14 +152,17 @@ public class GossipLoggingSystem
       return null;
     }
 
+    @Override
     public void setLevel(final Level level) {
       target.setLevel(levelFor(level.getName()).getTarget());
     }
 
+    @Override
     public void setLevel(final String level) {
       setLevel(levelFor(level));
     }
 
+    @Override
     public boolean isRoot() {
       return getName().equals(ROOT_NAME);
     }
@@ -170,15 +178,18 @@ public class GossipLoggingSystem
     }
   }
 
+  @Override
   public Collection<String> getLoggerNames() {
     return gossip.getLoggerNames();
   }
 
+  @Override
   public Logger getLogger(final String name) {
-    assert name != null;
+    checkNotNull(name);
     return new LoggerImpl(gossip.getLogger(name));
   }
 
+  @Override
   public Collection<? extends Component> getComponents() {
     synchronized (components) {
       if (components.isEmpty()) {

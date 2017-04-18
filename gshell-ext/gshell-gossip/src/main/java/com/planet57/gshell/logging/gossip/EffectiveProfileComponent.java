@@ -19,6 +19,8 @@ import com.planet57.gossip.EffectiveProfile;
 import com.planet57.gshell.logging.Component;
 import com.planet57.gshell.logging.ComponentSupport;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * {@link Component} for {@link EffectiveProfile}.
  *
@@ -32,14 +34,14 @@ public class EffectiveProfileComponent
 
   public EffectiveProfileComponent(final EffectiveProfile profile) {
     super(EffectiveProfile.class.getName());
-    assert profile != null;
-    this.profile = profile;
+    this.profile = checkNotNull(profile);
   }
 
   public EffectiveProfile getProfile() {
     return profile;
   }
 
+  @Override
   public Object getTarget() {
     return getProfile();
   }

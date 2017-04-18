@@ -19,6 +19,8 @@ import com.planet57.gossip.listener.Listener;
 import com.planet57.gshell.logging.Component;
 import com.planet57.gshell.logging.ComponentSupport;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * {@link Component} for {@link Listener}.
  *
@@ -32,14 +34,14 @@ public class ListenerComponent
 
   public ListenerComponent(final Listener listener) {
     super(Listener.class.getName());
-    assert listener != null;
-    this.listener = listener;
+    this.listener = checkNotNull(listener);
   }
 
   public Listener getListener() {
     return listener;
   }
 
+  @Override
   public Object getTarget() {
     return getListener();
   }

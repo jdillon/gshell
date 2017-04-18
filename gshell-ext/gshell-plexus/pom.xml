@@ -32,8 +32,8 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
+      <groupId>com.planet57.gshell</groupId>
+      <artifactId>gshell-util</artifactId>
     </dependency>
 
     <dependency>
