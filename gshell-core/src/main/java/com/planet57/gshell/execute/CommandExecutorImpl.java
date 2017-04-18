@@ -15,6 +15,7 @@
  */
 package com.planet57.gshell.execute;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import com.planet57.gshell.alias.AliasRegistry;
@@ -47,6 +48,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * The default {@link CommandExecutor} component.
  *
@@ -68,18 +71,16 @@ public class CommandExecutorImpl
   public CommandExecutorImpl(final AliasRegistry aliases, final CommandResolver resolver,
                              final CommandLineParser parser)
   {
-    assert aliases != null;
-    this.aliases = aliases;
-    assert resolver != null;
-    this.resolver = resolver;
-    assert parser != null;
-    this.parser = parser;
+    this.aliases = checkNotNull(aliases);
+    this.resolver = checkNotNull(resolver);
+    this.parser = checkNotNull(parser);
   }
 
   @Override
+  @Nullable
   public Object execute(final Shell shell, final String line) throws Exception {
-    assert shell != null;
-    assert line != null;
+    checkNotNull(shell);
+    checkNotNull(line);
 
     if (line.trim().length() == 0) {
       log.trace("Ignoring empty line");
@@ -113,9 +114,10 @@ public class CommandExecutorImpl
   }
 
   @Override
+  @Nullable
   public Object execute(final Shell shell, final Object... args) throws Exception {
-    assert shell != null;
-    assert args != null;
+    checkNotNull(shell);
+    checkNotNull(args);
 
     return execute(shell, String.valueOf(args[0]), Arguments.shift(args));
   }
@@ -138,10 +140,11 @@ public class CommandExecutorImpl
   }
 
   @Override
+  @Nullable
   public Object execute(final Shell shell, final String name, final Object[] args) throws Exception {
-    assert shell != null;
-    assert name != null;
-    assert args != null;
+    checkNotNull(shell);
+    checkNotNull(name);
+    checkNotNull(args);
 
     log.debug("Executing ({}): [{}]", name, Strings.join(args, ", "));
 
@@ -186,18 +189,22 @@ public class CommandExecutorImpl
         try {
           result = action.execute(new CommandContext()
           {
+            @Override
             public Shell getShell() {
               return shell;
             }
 
+            @Override
             public Object[] getArguments() {
               return args;
             }
 
+            @Override
             public IO getIo() {
               return io;
             }
 
+            @Override
             public Variables getVariables() {
               return shell.getVariables();
             }
