@@ -29,6 +29,8 @@ import com.planet57.gshell.util.NameAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * {@link CommandRegistry} component.
  *
@@ -47,13 +49,12 @@ public class CommandRegistryImpl
 
   @Inject
   public CommandRegistryImpl(final EventManager events) {
-    assert events != null;
-    this.events = events;
+    this.events = checkNotNull(events);
   }
 
   @Override
   public void registerCommand(final String name, final CommandAction command) throws DuplicateCommandException {
-    assert name != null;
+    checkNotNull(name);
 
     if (log.isTraceEnabled()) {
       log.trace("Registering command: {} -> {}", name, command);
@@ -77,7 +78,7 @@ public class CommandRegistryImpl
 
   @Override
   public void removeCommand(final String name) throws NoSuchCommandException {
-    assert name != null;
+    checkNotNull(name);
 
     log.trace("Removing command: {}", name);
 
@@ -91,7 +92,8 @@ public class CommandRegistryImpl
 
   @Override
   public CommandAction getCommand(final String name) throws NoSuchCommandException {
-    assert name != null;
+    checkNotNull(name);
+
     if (!containsCommand(name)) {
       throw new NoSuchCommandException(name);
     }
@@ -100,7 +102,8 @@ public class CommandRegistryImpl
 
   @Override
   public boolean containsCommand(final String name) {
-    assert name != null;
+    checkNotNull(name);
+
     return commands.containsKey(name);
   }
 

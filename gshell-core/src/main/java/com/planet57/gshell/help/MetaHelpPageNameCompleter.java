@@ -15,13 +15,12 @@
  */
 package com.planet57.gshell.help;
 
-import java.util.EventObject;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import com.planet57.gshell.event.EventListener;
+import com.google.common.eventbus.Subscribe;
 import com.planet57.gshell.event.EventManager;
 import jline.console.completer.Completer;
 import jline.console.completer.StringsCompleter;
@@ -59,9 +58,10 @@ public class MetaHelpPageNameCompleter
     }
 
     // Register for updates to alias registrations
-    events.addListener(new EventListener()
+    events.addListener(new Object()
     {
-      public void onEvent(final EventObject event) throws Exception {
+      @Subscribe
+      public void onEvent(final Object event) throws Exception {
         if (event instanceof MetaHelpPageAddedEvent) {
           MetaHelpPageAddedEvent targetEvent = (MetaHelpPageAddedEvent) event;
           delegate.getStrings().add(targetEvent.getPage().getName());

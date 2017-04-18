@@ -15,8 +15,6 @@
  */
 package com.planet57.gshell.help;
 
-import java.util.EventObject;
-
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -26,12 +24,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 2.5
  */
 public class MetaHelpPageAddedEvent
-    extends EventObject
 {
   private final MetaHelpPage page;
 
   public MetaHelpPageAddedEvent(final MetaHelpPage page) {
-    super(page);
     this.page = checkNotNull(page);
   }
 

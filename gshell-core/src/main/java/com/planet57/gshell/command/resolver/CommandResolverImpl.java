@@ -16,19 +16,18 @@
 package com.planet57.gshell.command.resolver;
 
 import java.util.ArrayList;
-import java.util.EventObject;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 
+import com.google.common.eventbus.Subscribe;
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.GroupAction;
 import com.planet57.gshell.command.registry.CommandRegisteredEvent;
 import com.planet57.gshell.command.registry.CommandRegistry;
 import com.planet57.gshell.command.registry.CommandRemovedEvent;
-import com.planet57.gshell.event.EventListener;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
@@ -69,9 +68,10 @@ public class CommandResolverImpl
 
     // Add a listener to mange the command tree
     assert events != null;
-    events.addListener(new EventListener()
+    events.addListener(new Object()
     {
-      public void onEvent(final EventObject event) throws Exception {
+      @Subscribe
+      public void onEvent(final Object event) throws Exception {
         assert event != null;
         if (event instanceof CommandRegisteredEvent) {
           CommandRegisteredEvent target = (CommandRegisteredEvent) event;

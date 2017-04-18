@@ -23,5 +23,7 @@ package com.planet57.gshell.event;
  */
 public interface EventAware
 {
+  // FIXME: remove, this seems to be only here to allow Variables to find the EventManager
+
   void setEventManager(EventManager manager);
 }

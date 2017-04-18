@@ -15,7 +15,6 @@
  */
 package com.planet57.gshell.variables;
 
-import java.util.EventObject;
 import java.util.Iterator;
 import java.util.List;
 
@@ -23,7 +22,7 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 
-import com.planet57.gshell.event.EventListener;
+import com.google.common.eventbus.Subscribe;
 import com.planet57.gshell.event.EventManager;
 import jline.console.completer.Completer;
 import jline.console.completer.StringsCompleter;
@@ -63,9 +62,10 @@ public class VariableNameCompleter
     }
 
     // Register for updates to variable changes
-    events.addListener(new EventListener()
+    events.addListener(new Object()
     {
-      public void onEvent(final EventObject event) throws Exception {
+      @Subscribe
+      public void onEvent(final Object event) throws Exception {
         if (event instanceof VariableSetEvent) {
           VariableSetEvent target = (VariableSetEvent) event;
           delegate.getStrings().add(target.getName());

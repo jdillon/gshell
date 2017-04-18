@@ -15,7 +15,7 @@
  */
 package com.planet57.gshell.variables;
 
-import java.util.EventObject;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Event fired once a variable has been unset.
@@ -24,18 +24,11 @@ import java.util.EventObject;
  * @since 2.0
  */
 public class VariableUnsetEvent
-    extends EventObject
 {
-  ///CLOVER:OFF
-
   private final String name;
 
   public VariableUnsetEvent(final String name) {
-    super(name);
-
-    assert name != null;
-
-    this.name = name;
+    this.name = checkNotNull(name);
   }
 
   public String getName() {

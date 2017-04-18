@@ -62,7 +62,7 @@ public class CommandRegistryImplTest
       registry.registerCommand(null, null);
       fail();
     }
-    catch (AssertionError e) {
+    catch (NullPointerException e) {
       // ignore
     }
 
@@ -70,7 +70,7 @@ public class CommandRegistryImplTest
       registry.registerCommand("foo", null);
       fail();
     }
-    catch (AssertionError e) {
+    catch (NullPointerException e) {
       // ignore
     }
 
@@ -84,7 +84,7 @@ public class CommandRegistryImplTest
       });
       fail();
     }
-    catch (AssertionError e) {
+    catch (NullPointerException e) {
       // ignore
     }
   }

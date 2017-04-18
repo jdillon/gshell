@@ -15,9 +15,9 @@
  */
 package com.planet57.gshell.command.registry;
 
-import java.util.EventObject;
-
 import com.planet57.gshell.command.CommandAction;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Event fired once a command has been registered.
@@ -26,21 +26,14 @@ import com.planet57.gshell.command.CommandAction;
  * @since 2.5
  */
 public class CommandRegisteredEvent
-    extends EventObject
 {
-  ///CLOVER:OFF
-
   private final String name;
 
   private final CommandAction command;
 
   public CommandRegisteredEvent(final String name, final CommandAction command) {
-    super(name);
-
-    assert name != null;
-    this.name = name;
-    assert command != null;
-    this.command = command;
+    this.name = checkNotNull(name);
+    this.command = checkNotNull(command);
   }
 
   public String getName() {

@@ -15,7 +15,9 @@
  */
 package com.planet57.gshell.variables;
 
-import java.util.EventObject;
+import javax.annotation.Nullable;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Event fired once a variable has been set.
@@ -24,21 +26,13 @@ import java.util.EventObject;
  * @since 2.0
  */
 public class VariableSetEvent
-    extends EventObject
 {
-  ///CLOVER:OFF
-
   private final String name;
 
   private final Object previous;
 
-  public VariableSetEvent(final String name, final Object previous) {
-    super(name);
-
-    assert name != null;
-    // previous could be null
-
-    this.name = name;
+  public VariableSetEvent(final String name, @Nullable final Object previous) {
+    this.name = checkNotNull(name);
     this.previous = previous;
   }
 
@@ -46,6 +40,7 @@ public class VariableSetEvent
     return name;
   }
 
+  @Nullable
   public Object getPrevious() {
     return previous;
   }

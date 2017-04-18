@@ -15,14 +15,14 @@
  */
 package com.planet57.gshell.event;
 
-import java.util.EventObject;
-import java.util.LinkedHashSet;
-import java.util.Set;
-
+import javax.inject.Named;
 import javax.inject.Singleton;
 
+import com.google.common.eventbus.EventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * The default {@link EventManager} components.
@@ -30,57 +30,47 @@ import org.slf4j.LoggerFactory;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
+@Named
 @Singleton
 public class EventManagerImpl
     implements EventManager
 {
-  private final Logger log = LoggerFactory.getLogger(getClass());
+  private static final Logger log = LoggerFactory.getLogger(EventManagerImpl.class);
 
-  private final Set<EventListener> listeners = new LinkedHashSet<EventListener>();
+  private final EventBus eventBus;
+
+  public EventManagerImpl() {
+    this.eventBus = new EventBus();
+  }
 
   @Override
-  public void addListener(final EventListener listener) {
-    assert listener != null;
+  public void addListener(final Object listener) {
+    checkArgument(listener != null);
 
     log.trace("Adding listener: {}", listener);
 
-    synchronized (listeners) {
-      listeners.add(listener);
-    }
+    eventBus.register(listener);
   }
 
   @Override
-  public void removeListener(final EventListener listener) {
-    assert listener != null;
+  public void removeListener(final Object listener) {
+    checkArgument(listener != null);
 
     log.trace("Removing listener: {}", listener);
 
-    synchronized (listeners) {
-      listeners.remove(listener);
+    try {
+      eventBus.unregister(listener);
     }
-  }
-
-  private EventListener[] getListeners() {
-    synchronized (listeners) {
-      return listeners.toArray(new EventListener[listeners.size()]);
+    catch (IllegalArgumentException e) {
+      // FIXME: this is to cope with previous impls semantics that ignored remove for unregistered, which guava eventbus does not allow
     }
   }
 
   @Override
-  public void publish(final EventObject event) {
-    assert event != null;
+  public void publish(final Object event) {
+    checkArgument(event != null);
 
     log.trace("Publishing event: {}", event);
-
-    for (EventListener listener : getListeners()) {
-      log.trace("Firing event ({}) to listener: {}", event, listener);
-
-      try {
-        listener.onEvent(event);
-      }
-      catch (Exception e) {
-        log.error("Listener raised an exception", e);
-      }
-    }
+    eventBus.post(event);
   }
 }

@@ -15,8 +15,7 @@
  */
 package com.planet57.gshell.event;
 
-import java.util.EventObject;
-
+import com.google.common.eventbus.Subscribe;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -64,7 +63,7 @@ public class EventManagerImplTest
       manager.addListener(null);
       fail();
     }
-    catch (AssertionError e) {
+    catch (IllegalArgumentException e) {
       // ignore
     }
 
@@ -77,7 +76,7 @@ public class EventManagerImplTest
       manager.removeListener(null);
       fail();
     }
-    catch (AssertionError e) {
+    catch (IllegalArgumentException e) {
       // ignore
     }
 
@@ -91,11 +90,11 @@ public class EventManagerImplTest
       manager.publish(null);
       fail();
     }
-    catch (AssertionError e) {
+    catch (IllegalArgumentException e) {
       // ignore
     }
 
-    EventObject event = new EventObject("test");
+    Object event = new Object();
     manager.publish(event);
   }
 
@@ -103,7 +102,7 @@ public class EventManagerImplTest
   public void testPublishWithListener() throws Exception {
     manager.addListener(listener);
 
-    EventObject event = new EventObject("test");
+    Object event = new Object();
 
     manager.publish(event);
 
@@ -117,7 +116,7 @@ public class EventManagerImplTest
     MockEventListener anotherListener = new MockEventListener();
     manager.addListener(anotherListener);
 
-    EventObject event = new EventObject("test");
+    Object event = new Object();
 
     manager.publish(event);
 
@@ -130,11 +129,11 @@ public class EventManagerImplTest
   //
 
   private static class MockEventListener
-      implements EventListener
   {
-    public EventObject event;
+    Object event;
 
-    public void onEvent(final EventObject event) throws Exception {
+    @Subscribe
+    public void onEvent(final Object event) throws Exception {
       this.event = event;
     }
   }
