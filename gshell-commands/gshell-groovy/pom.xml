@@ -36,6 +36,9 @@
       <artifactId>guava</artifactId>
     </dependency>
 
+    <!--
+    FIXME: update this to something modern.
+    -->
     <dependency>
       <groupId>org.codehaus.groovy</groupId>
       <artifactId>groovy</artifactId>
