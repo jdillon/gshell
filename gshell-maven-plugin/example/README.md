@@ -17,7 +17,7 @@
 -->
 # Example
 
-Shows how to use Apache Maven as an application-launcher to configure the execution of GShell to include specific configuration and plugins.
+Shows how to use Apache Maven as an application-launcher to configure the execution of GShell to include specific environment and plugins.
 
 ## Running
  
