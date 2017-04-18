@@ -7,6 +7,6 @@ dirname=`cd "$dirname" && pwd`
 
 exec ${dirname}/.maven-launcher \
   ${MVN_LAUNCHER_OPTIONS} \
-  -f config.xml \
+  -f ${dirname}/config.xml \
   com.planet57.gshell:gshell-maven-plugin:run \
   -Dgshell.arguments="$@"
