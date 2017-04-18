@@ -5,7 +5,11 @@ dirname=`cd "$dirname" && pwd`
 
 # MVN_LAUNCHER_OPTIONS: additional operations to pass to the Maven Launcher
 
+# HACK: for now, change directories
+cd ${dirname}
+
 exec ${dirname}/.maven-launcher \
+  -e \
   ${MVN_LAUNCHER_OPTIONS} \
   -f ${dirname}/config.xml \
   com.planet57.gshell:gshell-maven-plugin:run \

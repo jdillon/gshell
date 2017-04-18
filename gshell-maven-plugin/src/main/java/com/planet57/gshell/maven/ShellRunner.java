@@ -27,16 +27,11 @@ import com.planet57.gshell.logging.LoggingSystem;
 import com.planet57.gshell.shell.ShellErrorHandler;
 import com.planet57.gshell.shell.ShellPrompt;
 
-import javax.inject.Named;
-import javax.inject.Singleton;
-
 /**
  * Runs GShell for use in a maven-plugin.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-@Named
-@Singleton
 public class ShellRunner
     extends GuiceMainSupport
 {
@@ -44,7 +39,7 @@ public class ShellRunner
   protected void configure(final List<Module> modules) {
     super.configure(modules);
 
-    Module custom = new AbstractModule()
+    modules.add(new AbstractModule()
     {
       @Override
       protected void configure() {
@@ -53,8 +48,6 @@ public class ShellRunner
         bind(ConsoleErrorHandler.class).to(ShellErrorHandler.class);
         bind(Branding.class).to(BrandingImpl.class);
       }
-    };
-
-    modules.add(custom);
+    });
   }
 }

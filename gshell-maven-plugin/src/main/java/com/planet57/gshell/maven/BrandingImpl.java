@@ -44,7 +44,6 @@ public class BrandingImpl
   @Override
   public String getWelcomeMessage() {
     PrintBuffer buff = new PrintBuffer();
-
     buff.println("\nType '@|bold help|@' for more information.");
     buff.print(line());
     buff.flush();
@@ -64,9 +63,7 @@ public class BrandingImpl
 
   @Override
   public File getShellContextDir() {
-    // FIXME: this appears to be null?
-    // return project.getBasedir();
-    return resolveFile(new File(".")); // FIXME: this should be maven's project.basedir
+    return project.getBasedir();
   }
 
   @Override
