@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.guice;
+package com.planet57.gshell.command.registry;
 
 import java.lang.annotation.Annotation;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -26,8 +25,6 @@ import javax.inject.Singleton;
 import com.google.inject.Key;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandAction;
-import com.planet57.gshell.command.registry.CommandRegistrar;
-import com.planet57.gshell.command.registry.CommandRegistry;
 import org.eclipse.sisu.BeanEntry;
 import org.eclipse.sisu.inject.MutableBeanLocator;
 import org.slf4j.Logger;

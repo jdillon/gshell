@@ -35,7 +35,7 @@ import com.planet57.gshell.command.registry.CommandRegistrar;
 import com.planet57.gshell.command.registry.CommandRegistry;
 import com.planet57.gshell.console.ConsoleErrorHandler;
 import com.planet57.gshell.console.ConsolePrompt;
-import com.planet57.gshell.guice.CoreModule;
+import com.planet57.gshell.CoreModule;
 import com.planet57.gshell.logging.LoggingSystem;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.shell.ShellErrorHandler;

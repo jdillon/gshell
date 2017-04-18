@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.guice;
+package com.planet57.gshell;
 
 import java.io.IOException;
 
@@ -25,6 +25,7 @@ import com.planet57.gshell.alias.AliasRegistryImpl;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.registry.CommandNameCompleter;
 import com.planet57.gshell.command.registry.CommandRegistrar;
+import com.planet57.gshell.command.registry.CommandRegistrarImpl;
 import com.planet57.gshell.command.registry.CommandRegistry;
 import com.planet57.gshell.command.registry.CommandRegistryImpl;
 import com.planet57.gshell.command.registry.CommandsCompleter;
