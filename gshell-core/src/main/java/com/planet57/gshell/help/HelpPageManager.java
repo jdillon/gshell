@@ -33,7 +33,7 @@ public interface HelpPageManager
 
   Collection<HelpPage> getPages(Filter<HelpPage> filter);
 
-//  void addMetaPage(HelpPageDescriptor descriptor);
+  void addMetaPage(MetaHelpPage page);
 
   Collection<MetaHelpPage> getMetaPages();
 }

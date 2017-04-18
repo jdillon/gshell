@@ -26,6 +26,8 @@ import org.codehaus.plexus.interpolation.PrefixedObjectValueSource;
 import org.codehaus.plexus.interpolation.PropertiesBasedValueSource;
 import org.codehaus.plexus.interpolation.StringSearchInterpolator;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * {@link HelpPage} for meta-documentation.
  *
@@ -35,52 +37,52 @@ import org.codehaus.plexus.interpolation.StringSearchInterpolator;
 public class MetaHelpPage
     implements HelpPage
 {
-//  private final HelpPageDescriptor desc;
+  private final String name;
 
-//  private final HelpContentLoader loader;
+  private final String resource;
 
-//  public MetaHelpPage(final HelpPageDescriptor desc, final HelpContentLoader loader) {
-//    assert desc != null;
-//    this.desc = desc;
-//    assert loader != null;
-//    this.loader = loader;
-//  }
+  private final HelpContentLoader loader;
+
+  public MetaHelpPage(final String name, final String resource, final HelpContentLoader loader) {
+    this.name = checkNotNull(name);
+    this.resource = checkNotNull(resource);
+    this.loader = checkNotNull(loader);
+  }
 
   public String getName() {
-//    return desc.getName();
-    return null;
+    return name;
   }
 
   private ResourceBundle resources;
 
   public String getDescription() {
-//    if (resources == null) {
-//      resources = ResourceBundle.getBundle(desc.getResource());
-//    }
+    if (resources == null) {
+      resources = ResourceBundle.getBundle(resource);
+    }
 
     return resources.getString(CommandHelpSupport.COMMAND_DESCRIPTION);
   }
 
   public void render(final PrintWriter out) {
-//    assert out != null;
-//
-//    Interpolator interp = new StringSearchInterpolator("@{", "}");
-//    interp.addValueSource(new PrefixedObjectValueSource("command.", this));
-//    interp.addValueSource(new PrefixedObjectValueSource("branding.", ShellHolder.get().getBranding()));
-//    interp.addValueSource(new AbstractValueSource(false)
-//    {
-//      public Object getValue(final String expression) {
-//        return ShellHolder.get().getVariables().get(expression);
-//      }
-//    });
-//    interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));
-//
-//    try {
-//      String text = loader.load(desc.getResource(), Thread.currentThread().getContextClassLoader());
-//      out.println(interp.interpolate(text));
-//    }
-//    catch (Exception e) {
-//      throw new RuntimeException(e);
-//    }
+    assert out != null;
+
+    Interpolator interp = new StringSearchInterpolator("@{", "}");
+    interp.addValueSource(new PrefixedObjectValueSource("command.", this));
+    interp.addValueSource(new PrefixedObjectValueSource("branding.", ShellHolder.get().getBranding()));
+    interp.addValueSource(new AbstractValueSource(false)
+    {
+      public Object getValue(final String expression) {
+        return ShellHolder.get().getVariables().get(expression);
+      }
+    });
+    interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));
+
+    try {
+      String text = loader.load(resource, Thread.currentThread().getContextClassLoader());
+      out.println(interp.interpolate(text));
+    }
+    catch (Exception e) {
+      throw new RuntimeException(e);
+    }
   }
 }

@@ -28,7 +28,6 @@ import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.registry.CommandRegistrar;
 import com.planet57.gshell.command.registry.CommandRegistry;
-import com.planet57.gshell.event.EventManager;
 import org.eclipse.sisu.BeanEntry;
 import org.eclipse.sisu.inject.MutableBeanLocator;
 import org.slf4j.Logger;
@@ -51,17 +50,13 @@ public class CommandRegistrarImpl
 
   private final MutableBeanLocator container;
 
-  private final EventManager events;
-
   private final CommandRegistry registry;
 
   @Inject
   public CommandRegistrarImpl(final MutableBeanLocator container,
-                              final EventManager events,
                               final CommandRegistry registry)
   {
     this.container = checkNotNull(container);
-    this.events = checkNotNull(events);
     this.registry = checkNotNull(registry);
   }
 

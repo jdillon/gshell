@@ -25,14 +25,19 @@ import java.util.TreeMap;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import com.google.inject.Key;
 import com.planet57.gshell.alias.AliasRegistry;
 import com.planet57.gshell.alias.NoSuchAliasException;
 import com.planet57.gshell.command.resolver.CommandResolver;
 import com.planet57.gshell.command.resolver.Node;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.util.filter.Filter;
+import org.eclipse.sisu.BeanEntry;
+import org.eclipse.sisu.inject.BeanLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * {@link HelpPageManager} component.
@@ -46,6 +51,8 @@ public class HelpPageManagerImpl
 {
   private static final Logger log = LoggerFactory.getLogger(HelpPageManagerImpl.class);
 
+  private final BeanLocator container;
+
   private final EventManager events;
 
   private final AliasRegistry aliases;
@@ -57,32 +64,31 @@ public class HelpPageManagerImpl
   private final Map<String, MetaHelpPage> metaPages = new LinkedHashMap<String, MetaHelpPage>();
 
   @Inject
-  public HelpPageManagerImpl(final EventManager events, final AliasRegistry aliases, final CommandResolver resolver,
+  public HelpPageManagerImpl(final BeanLocator container,
+                             final EventManager events,
+                             final AliasRegistry aliases,
+                             final CommandResolver resolver,
                              final HelpContentLoader loader)
   {
-    assert events != null;
-    this.events = events;
-    assert aliases != null;
-    this.aliases = aliases;
-    assert resolver != null;
-    this.resolver = resolver;
-    assert loader != null;
-    this.loader = loader;
+    this.container = checkNotNull(container);
+    this.events = checkNotNull(events);
+    this.aliases = checkNotNull(aliases);
+    this.resolver = checkNotNull(resolver);
+    this.loader = checkNotNull(loader);
 
-//    events.addListener(new EventListener()
-//    {
-//      public void onEvent(final EventObject event) throws Exception {
-//        assert event != null;
-//        if (event instanceof DiscoveredCommandSetDescriptorEvent) {
-//          DiscoveredCommandSetDescriptorEvent target = (DiscoveredCommandSetDescriptorEvent) event;
-//          for (HelpPageDescriptor page : target.getDescriptor().getHelpPages()) {
-//            addMetaPage(page);
-//          }
-//        }
-//      }
-//    });
+    discoverMetaPages();
   }
 
+  private void discoverMetaPages() {
+    log.trace("Discovering meta-pages");
+
+    for (BeanEntry<?,MetaHelpPage> entry : container.locate(Key.get(MetaHelpPage.class))) {
+      MetaHelpPage page = entry.getValue();
+      addMetaPage(page);
+    }
+  }
+
+  @Override
   public HelpPage getPage(final String name) {
     assert name != null;
 
@@ -107,6 +113,7 @@ public class HelpPageManagerImpl
     return null;
   }
 
+  @Override
   public Collection<HelpPage> getPages(final Filter<HelpPage> filter) {
     assert filter != null;
 
@@ -120,6 +127,7 @@ public class HelpPageManagerImpl
     return pages;
   }
 
+  @Override
   public Collection<HelpPage> getPages() {
     Map<String, HelpPage> pages = new TreeMap<String, HelpPage>();
 
@@ -152,14 +160,16 @@ public class HelpPageManagerImpl
     return pages.values();
   }
 
-//  public void addMetaPage(final HelpPageDescriptor desc) {
-//    assert desc != null;
-//
-//    log.debug("Adding meta-page: {} -> {}", desc.getName(), desc.getResource());
-//    metaPages.put(desc.getName(), new MetaHelpPage(desc, loader));
-//    events.publish(new MetaHelpPageAddedEvent(desc));
-//  }
+  @Override
+  public void addMetaPage(final MetaHelpPage page) {
+    checkNotNull(page);
 
+    log.debug("Adding meta-page: {}", page);
+    metaPages.put(page.getName(), page);
+    events.publish(new MetaHelpPageAddedEvent(page));
+  }
+
+  @Override
   public Collection<MetaHelpPage> getMetaPages() {
     return metaPages.values();
   }

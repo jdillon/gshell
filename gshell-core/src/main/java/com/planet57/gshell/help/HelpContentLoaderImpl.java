@@ -44,9 +44,8 @@ public class HelpContentLoaderImpl
     return load(name, Locale.getDefault(), loader);
   }
 
-  private String load(final String name, final Locale locale, final ClassLoader loader) throws
-                                                                                        MissingContentException,
-                                                                                        IOException
+  private String load(final String name, final Locale locale, final ClassLoader loader)
+    throws MissingContentException, IOException
   {
     log.debug("Loading help content for {} ({})", name, locale);
 
