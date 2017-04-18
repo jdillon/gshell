@@ -18,11 +18,16 @@ package com.planet57.gshell.maven;
 import com.planet57.gshell.logging.LoggingSystem;
 import com.planet57.gshell.logging.NopLoggingSystem;
 
+import javax.inject.Named;
+import javax.inject.Singleton;
+
 /**
  * Maven {@link LoggingSystem}.
  *
  * @since 3.0
  */
+@Named
+@Singleton
 public class LoggingSystemImpl
   extends NopLoggingSystem
 {

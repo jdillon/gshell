@@ -27,11 +27,16 @@ import com.planet57.gshell.logging.LoggingSystem;
 import com.planet57.gshell.shell.ShellErrorHandler;
 import com.planet57.gshell.shell.ShellPrompt;
 
+import javax.inject.Named;
+import javax.inject.Singleton;
+
 /**
  * Runs GShell for use in a maven-plugin.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
+@Named
+@Singleton
 public class ShellRunner
     extends GuiceMainSupport
 {

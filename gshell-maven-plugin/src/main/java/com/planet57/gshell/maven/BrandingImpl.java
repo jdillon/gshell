@@ -21,7 +21,9 @@ import com.planet57.gshell.branding.BrandingSupport;
 import com.planet57.gshell.branding.License;
 import com.planet57.gshell.branding.LicenseSupport;
 import com.planet57.gshell.util.PrintBuffer;
+import org.apache.maven.project.MavenProject;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
@@ -36,6 +38,9 @@ import javax.inject.Singleton;
 public class BrandingImpl
     extends BrandingSupport
 {
+  @Inject
+  MavenProject project;
+
   @Override
   public String getWelcomeMessage() {
     PrintBuffer buff = new PrintBuffer();
@@ -57,7 +62,10 @@ public class BrandingImpl
     return getMessages().format("goodbye");
   }
 
-  @Override public File getShellContextDir() {
+  @Override
+  public File getShellContextDir() {
+    // FIXME: this appears to be null?
+    // return project.getBasedir();
     return resolveFile(new File(".")); // FIXME: this should be maven's project.basedir
   }
 
