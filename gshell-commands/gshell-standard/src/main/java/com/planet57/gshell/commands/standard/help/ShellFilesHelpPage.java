@@ -13,29 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.help;
+package com.planet57.gshell.commands.standard.help;
 
-import java.util.EventObject;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import com.planet57.gshell.help.HelpContentLoader;
+import com.planet57.gshell.help.MetaHelpPage;
 
 /**
- * Event fired once a help meta page has been added.
+ * ???
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 2.5
+ * @since 3.0
  */
-public class MetaHelpPageAddedEvent
-    extends EventObject
+@Named
+@Singleton
+public class ShellFilesHelpPage
+  extends MetaHelpPage
 {
-  private final MetaHelpPage page;
-
-  public MetaHelpPageAddedEvent(final MetaHelpPage page) {
-    super(page);
-    this.page = checkNotNull(page);
-  }
-
-  public MetaHelpPage getPage() {
-    return page;
+  @Inject
+  public ShellFilesHelpPage(final HelpContentLoader loader) {
+    super("shell-files", "com.planet57.gshell.commands.standard.help.shell-files", loader);
   }
 }
