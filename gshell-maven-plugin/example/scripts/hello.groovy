@@ -14,7 +14,12 @@
  * limitations under the License.
  */
 
-// This is a simple test script which is configured with an alias 'hello' and
-// setup to run automatically for interactive shells.
+/**
+ * This is a simple test script which is configured with an alias 'hello' and
+ * setup to run automatically for interactive shells.
+ *
+ * @see example.profile
+ * @see example.rc
+ */
 
 println "Hello!"
