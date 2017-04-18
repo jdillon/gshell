@@ -77,4 +77,12 @@ public class LicenseSupport
     }
     return buff.toString();
   }
+
+  @Override
+  public String toString() {
+    if (url != null) {
+      return String.format("%s - %s", name, url);
+    }
+    return name;
+  }
 }
