@@ -77,14 +77,14 @@ public class GroovyCommand
 
     GroovyShell shell = new GroovyShell(cl, binding, cc);
 
-    log.info("Parsing: {}", file);
+    log.debug("Parsing: {}", file);
     Script script = shell.parse(file);
     binding.setVariable("log", LoggerFactory.getLogger(script.getClass()));
     script.setBinding(binding);
 
     log.debug("Running");
     Object result = script.run();
-    log.info("Result: {}", result);
+    log.debug("Result: {}", result);
 
     return result;
   }
