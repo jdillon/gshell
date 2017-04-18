@@ -35,6 +35,8 @@ import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.io.Closer;
 import jline.console.completer.Completer;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Read and execute commands from a file in the current shell.
  *
@@ -50,13 +52,14 @@ public class SourceCommand
 
   @Inject
   public SourceCommand installCompleters(final @Named("file-name") Completer c1) {
-    assert c1 != null;
+    checkNotNull(c1);
     setCompleters(c1, null);
     return this;
   }
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
+
     Shell shell = context.getShell();
 
     URL url;

@@ -21,6 +21,8 @@ import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.support.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Fail with an exception.
  *
@@ -35,7 +37,8 @@ public class FailCommand
   private String message = "Failed";
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
+
     IO io = context.getIo();
 
     throw new FailException(message);

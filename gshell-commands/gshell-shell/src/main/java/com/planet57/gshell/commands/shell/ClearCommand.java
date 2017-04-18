@@ -21,6 +21,8 @@ import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.support.CommandActionSupport;
 import org.fusesource.jansi.Ansi;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Clear the screen.
  *
@@ -32,7 +34,8 @@ public class ClearCommand
     extends CommandActionSupport
 {
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
+
     IO io = context.getIo();
 
     io.out.print(Ansi.ansi().eraseScreen(Ansi.Erase.ALL));

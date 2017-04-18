@@ -20,6 +20,8 @@ import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.util.cli2.Argument;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Set a preference value.
  *
@@ -37,8 +39,7 @@ public class SetPreferenceCommand
   private String value;
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
-    IO io = context.getIo();
+    checkNotNull(context);
 
     node().put(key, value);
     node().sync();

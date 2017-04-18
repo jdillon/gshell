@@ -21,6 +21,8 @@ import com.planet57.gshell.command.support.CommandActionSupport;
 import com.planet57.gshell.notification.ExitNotification;
 import com.planet57.gshell.util.cli2.Argument;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Exit the current shell.
  *
@@ -35,7 +37,7 @@ public class ExitCommand
   private int exitCode = 0;
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
 
     log.debug("Exiting w/code: {}", exitCode);
 

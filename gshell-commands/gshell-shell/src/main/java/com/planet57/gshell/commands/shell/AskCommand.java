@@ -25,6 +25,8 @@ import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.io.PromptReader;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Ask for some input.
  *
@@ -45,12 +47,11 @@ public class AskCommand
 
   @Inject
   public AskCommand(final Provider<PromptReader> promptProvider) {
-    assert promptProvider != null;
-    this.promptProvider = promptProvider;
+    this.promptProvider = checkNotNull(promptProvider);
   }
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
 
     PromptReader prompter = promptProvider.get();
     String input;

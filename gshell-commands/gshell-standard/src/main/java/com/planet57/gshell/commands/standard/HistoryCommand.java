@@ -25,6 +25,8 @@ import com.planet57.gshell.shell.History;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Display history.
  *
@@ -45,7 +47,8 @@ public class HistoryCommand
   private Integer last;
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
+
     History history = context.getShell().getHistory();
 
     if (clear) {
@@ -62,7 +65,6 @@ public class HistoryCommand
   }
 
   private Object displayEntries(final CommandContext context) throws Exception {
-    assert context != null;
     IO io = context.getIo();
     History history = context.getShell().getHistory();
 

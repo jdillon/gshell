@@ -23,6 +23,8 @@ import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.support.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Option;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Displays the name of the current host.
  *
@@ -37,7 +39,7 @@ public class HostnameCommand
   private boolean verbose;
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
     IO io = context.getIo();
 
     InetAddress localhost = InetAddress.getLocalHost();

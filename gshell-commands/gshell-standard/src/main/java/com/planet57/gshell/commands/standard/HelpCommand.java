@@ -18,6 +18,7 @@ package com.planet57.gshell.commands.standard;
 import java.util.Collection;
 import java.util.Collections;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -42,6 +43,8 @@ import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.Preferences;
 import jline.console.completer.AggregateCompleter;
 import jline.console.completer.Completer;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Display help pages.
@@ -83,8 +86,7 @@ public class HelpCommand
 
   @Inject
   public HelpCommand(final HelpPageManager helpPages) {
-    assert helpPages != null;
-    this.helpPages = helpPages;
+    this.helpPages = checkNotNull(helpPages);
   }
 
   @Inject
@@ -97,7 +99,8 @@ public class HelpCommand
   }
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
+
     IO io = context.getIo();
 
     // If there is no argument given, display all help pages in context
@@ -143,17 +146,13 @@ public class HelpCommand
   }
 
   private void displayAvailable(final CommandContext context) {
-    assert context != null;
-
     Collection<HelpPage> pages = helpPages.getPages(filter());
     IO io = context.getIo();
     io.out.println(getMessages().format("info.available-pages"));
     HelpPageUtil.render(io.out, pages);
   }
 
-  private AggregateFilter<HelpPage> filter(final Filter<HelpPage>... filters) {
-    // filters may be null
-
+  private AggregateFilter<HelpPage> filter(@Nullable final Filter<HelpPage>... filters) {
     AndFilter<HelpPage> filter = new AndFilter<HelpPage>();
     if (includeAll == null || !includeAll) {
       if (includeAliases != null && !includeAliases) {

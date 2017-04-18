@@ -25,6 +25,8 @@ import com.planet57.gshell.logging.Component;
 import com.planet57.gshell.logging.LoggingSystem;
 import com.planet57.gshell.util.cli2.Option;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * List components.
  *
@@ -48,12 +50,11 @@ public class ComponentListCommand
 
   @Inject
   public ComponentListCommand(final LoggingSystem logging) {
-    assert logging != null;
-    this.logging = logging;
+    this.logging = checkNotNull(logging);
   }
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
     IO io = context.getIo();
 
     for (Component component : logging.getComponents()) {

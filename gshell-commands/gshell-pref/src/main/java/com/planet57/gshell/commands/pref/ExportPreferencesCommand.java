@@ -30,6 +30,8 @@ import com.planet57.gshell.util.io.Flusher;
 import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.Preferences;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Export preference nodes to a file.
  *
@@ -49,7 +51,8 @@ public class ExportPreferencesCommand
   private File file;
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
+
     IO io = context.getIo();
     java.util.prefs.Preferences prefs = node();
 

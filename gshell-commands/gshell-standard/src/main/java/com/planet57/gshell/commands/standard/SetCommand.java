@@ -33,6 +33,8 @@ import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.variables.Variables;
 import jline.console.completer.Completer;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Set a variable or property.
  *
@@ -69,13 +71,14 @@ public class SetCommand
 
   @Inject
   public SetCommand installCompleters(@Named("variable-name") final Completer c1) {
-    assert c1 != null;
+    checkNotNull(c1);
     setCompleters(c1, null);
     return this;
   }
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
+
     IO io = context.getIo();
     MessageSource messages = getMessages();
 
@@ -115,7 +118,6 @@ public class SetCommand
   }
 
   private Object displayList(final CommandContext context) throws Exception {
-    assert context != null;
     IO io = context.getIo();
 
     // NOTE: Using io.outputStream to display values to avoid any ANSI encoding or other translation.

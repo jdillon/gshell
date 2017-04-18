@@ -33,6 +33,8 @@ import com.planet57.gshell.util.io.Closer;
 import com.planet57.gshell.util.io.Copier;
 import com.planet57.gshell.util.io.Flusher;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Fetch a file from a URL.
  *
@@ -53,7 +55,7 @@ public class WgetCommand
   private URL source;
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
     IO io = context.getIo();
 
     io.println("Downloading: {}", source); // TODO: i18n

@@ -31,6 +31,7 @@ import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.variables.Variables;
 import jline.console.completer.Completer;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.planet57.gshell.variables.VariableNames.SHELL_USER_DIR;
 
 /**
@@ -53,19 +54,18 @@ public class ChangeDirectoryCommand
 
   @Inject
   public ChangeDirectoryCommand(final FileSystemAccess fileSystem) {
-    assert fileSystem != null;
-    this.fileSystem = fileSystem;
+    this.fileSystem = checkNotNull(fileSystem);
   }
 
   @Inject
   public ChangeDirectoryCommand installCompleters(final @Named("file-name") Completer c1) {
-    assert c1 != null;
+    checkNotNull(c1);
     setCompleters(c1, null);
     return this;
   }
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
     IO io = context.getIo();
     Variables vars = context.getVariables();
 

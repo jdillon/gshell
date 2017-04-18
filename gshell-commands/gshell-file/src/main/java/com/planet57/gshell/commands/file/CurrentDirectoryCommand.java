@@ -26,6 +26,8 @@ import com.planet57.gshell.command.support.CommandActionSupport;
 import com.planet57.gshell.file.FileSystemAccess;
 import com.planet57.gshell.util.io.FileAssert;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Displays the current directory.
  *
@@ -40,12 +42,11 @@ public class CurrentDirectoryCommand
 
   @Inject
   public CurrentDirectoryCommand(final FileSystemAccess fileSystem) {
-    assert fileSystem != null;
-    this.fileSystem = fileSystem;
+    this.fileSystem = checkNotNull(fileSystem);
   }
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
     IO io = context.getIo();
 
     File dir = fileSystem.getUserDir();

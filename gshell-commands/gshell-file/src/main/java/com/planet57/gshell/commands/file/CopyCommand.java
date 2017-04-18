@@ -29,6 +29,8 @@ import com.planet57.gshell.util.cli2.Option;
 import jline.console.completer.Completer;
 import org.codehaus.plexus.util.FileUtils;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Copy file or directory
  *
@@ -52,20 +54,19 @@ public class CopyCommand
 
   @Inject
   public CopyCommand(final FileSystemAccess fileSystem) {
-    assert fileSystem != null;
-    this.fileSystem = fileSystem;
+    this.fileSystem = checkNotNull(fileSystem);
   }
 
   @Inject
   public CopyCommand installCompleters(final @Named("file-name") Completer c1) {
-    assert c1 != null;
+    checkNotNull(c1);
     // Add completer for source and target
     setCompleters(c1, c1, null);
     return this;
   }
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
 
     File sourceFile = fileSystem.resolveFile(source);
     File targetFile = fileSystem.resolveFile(target);

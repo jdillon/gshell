@@ -26,6 +26,8 @@ import com.planet57.gshell.util.io.PumpStreamHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Execute system processes.
  *
@@ -44,7 +46,8 @@ public class ExecuteCommand
   // TODO: Support setting the process directory and environment muck
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
+
     IO io = context.getIo();
 
     ProcessBuilder builder = new ProcessBuilder(args);

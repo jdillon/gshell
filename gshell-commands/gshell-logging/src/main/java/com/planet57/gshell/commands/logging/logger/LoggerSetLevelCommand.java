@@ -27,6 +27,8 @@ import com.planet57.gshell.logging.LoggingSystem;
 import com.planet57.gshell.util.cli2.Argument;
 import jline.console.completer.Completer;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Set the level of a logger.
  *
@@ -47,19 +49,18 @@ public class LoggerSetLevelCommand
 
   @Inject
   public LoggerSetLevelCommand(final LoggingSystem logging) {
-    assert logging != null;
-    this.logging = logging;
+    this.logging = checkNotNull(logging);
   }
 
   @Inject
   public void installCompleters(final @Named("logger-name") Completer c1, final @Named("level-name") Completer c2) {
-    assert c1 != null;
-    assert c2 != null;
+    checkNotNull(c1);
+    checkNotNull(c2);
     setCompleters(c1, c2, null);
   }
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
 
     Logger logger = logging.getLogger(loggerName);
     Level level = logging.getLevel(levelName);

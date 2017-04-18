@@ -22,6 +22,7 @@ import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.Preferences;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static org.fusesource.jansi.Ansi.Attribute.INTENSITY_BOLD;
 import static org.fusesource.jansi.Ansi.Color.GREEN;
 import static org.fusesource.jansi.Ansi.ansi;
@@ -42,7 +43,8 @@ public class ListPreferencesCommand
   private boolean recursive;
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
+
     IO io = context.getIo();
 
     list(io, node());

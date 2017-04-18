@@ -21,6 +21,8 @@ import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.util.cli2.Argument;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Unset a preference value.
  *
@@ -35,7 +37,7 @@ public class UnsetPreferenceCommand
   private String key;
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
 
     log.debug("Unsetting preference: {}", key);
 

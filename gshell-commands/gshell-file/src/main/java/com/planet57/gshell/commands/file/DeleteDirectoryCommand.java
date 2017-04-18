@@ -29,6 +29,8 @@ import com.planet57.gshell.util.io.FileAssert;
 import com.planet57.gshell.util.cli2.Argument;
 import jline.console.completer.Completer;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Remove a directory.
  *
@@ -46,19 +48,18 @@ public class DeleteDirectoryCommand
 
   @Inject
   public DeleteDirectoryCommand(final FileSystemAccess fileSystem) {
-    assert fileSystem != null;
-    this.fileSystem = fileSystem;
+    this.fileSystem = checkNotNull(fileSystem);
   }
 
   @Inject
   public DeleteDirectoryCommand installCompleters(final @Named("file-name") Completer c1) {
-    assert c1 != null;
+    checkNotNull(c1);
     setCompleters(c1, null);
     return this;
   }
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
     IO io = context.getIo();
 
     File file;
