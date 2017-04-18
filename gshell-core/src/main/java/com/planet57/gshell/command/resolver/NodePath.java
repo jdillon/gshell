@@ -15,6 +15,7 @@
  */
 package com.planet57.gshell.command.resolver;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.planet57.gshell.command.resolver.Node.CURRENT;
 import static com.planet57.gshell.command.resolver.Node.ROOT;
 import static com.planet57.gshell.command.resolver.Node.SEPARATOR;
@@ -34,7 +35,7 @@ public class NodePath
   private final StringBuilder path;
 
   public NodePath(final String path) {
-    assert path != null;
+    checkNotNull(path);
     this.path = new StringBuilder(path);
   }
 

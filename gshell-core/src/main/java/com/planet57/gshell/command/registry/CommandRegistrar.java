@@ -15,10 +15,6 @@
  */
 package com.planet57.gshell.command.registry;
 
-import java.util.List;
-
-//import com.planet57.gshell.command.descriptor.CommandSetDescriptor;
-
 /**
  * Registers commands.
  *
@@ -27,29 +23,11 @@ import java.util.List;
  */
 public interface CommandRegistrar
 {
-  /**
-   * @since 2.1
-   */
-  String DEFAULT_DESCRIPTOR_LOCATION = "META-INF/com.planet57.gshell/commands.xml";
+  // TODO: rename to discoverCommands
 
   void registerCommands() throws Exception;
 
   void registerCommand(String name, String type) throws Exception;
 
   void registerCommand(String type) throws Exception;
-
-//  /**
-//   * @since 2.2
-//   */
-//  String[] getDescriptorSearchPath();
-//
-//  /**
-//   * @since 2.2
-//   */
-//  void setDescriptorSearchPath(String... path);
-//
-//  /**
-//   * @since 2.1
-//   */
-//  List<CommandSetDescriptor> getDescriptors();
 }

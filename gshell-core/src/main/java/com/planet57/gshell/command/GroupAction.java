@@ -23,6 +23,10 @@ import jline.console.completer.Completer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nullable;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * {@link CommandAction} to switch groups.
  *
@@ -37,20 +41,22 @@ public class GroupAction
   private final String name;
 
   public GroupAction(final String name) {
-    assert name != null;
-    this.name = name;
+    this.name = checkNotNull(name);
   }
 
+  @Override
   public String getName() {
     return name;
   }
 
+  @Override
   public String getSimpleName() {
     return new NodePath(getName()).last();
   }
 
+  @Override
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
 
     log.debug("Changing group to: {}", name);
     context.getVariables().set(VariableNames.SHELL_GROUP, name);
@@ -58,10 +64,12 @@ public class GroupAction
     return Result.SUCCESS;
   }
 
+  @Override
   public MessageSource getMessages() {
     return null;
   }
 
+  @Override
   public Completer[] getCompleters() {
     return new Completer[0];
   }

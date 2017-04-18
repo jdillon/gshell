@@ -52,14 +52,17 @@ public class LicenseSupport
     }
   }
 
+  @Override
   public String getName() {
     return name;
   }
 
+  @Override
   public URL getUrl() {
     return url;
   }
 
+  @Override
   public String getContent() throws IOException {
     URL url = getUrl();
 

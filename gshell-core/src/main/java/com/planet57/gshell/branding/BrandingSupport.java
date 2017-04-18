@@ -69,18 +69,22 @@ public class BrandingSupport
     return props;
   }
 
+  @Override
   public String getDisplayName() {
     return getProgramName();
   }
 
+  @Override
   public String getProgramName() {
     return getProperties().getProperty(VariableNames.SHELL_PROGRAM);
   }
 
+  @Override
   public String getScriptExtension() {
     return getProgramName();
   }
 
+  @Override
   public String getVersion() {
     return getProperties().getProperty(VariableNames.SHELL_VERSION);
   }
@@ -89,6 +93,7 @@ public class BrandingSupport
     return Strings.repeat("-", TerminalFactory.get().getWidth() - 1);
   }
 
+  @Override
   public String getWelcomeMessage() {
     StringWriter buff = new StringWriter();
     PrintWriter out = new PrintWriter(buff);
@@ -100,26 +105,32 @@ public class BrandingSupport
     return buff.toString();
   }
 
+  @Override
   public String getGoodbyeMessage() {
     return null;
   }
 
+  @Override
   public String getPrompt() {
     return String.format("@|bold %s|@> ", getProgramName());
   }
 
+  @Override
   public String getProfileScriptName() {
     return String.format("%s.profile", getProgramName());
   }
 
+  @Override
   public String getInteractiveScriptName() {
     return String.format("%s.rc", getProgramName());
   }
 
+  @Override
   public String getHistoryFileName() {
     return String.format("%s.history", getProgramName());
   }
 
+  @Override
   public String getPreferencesBasePath() {
     return getProgramName();
   }
@@ -139,26 +150,32 @@ public class BrandingSupport
     return resolveFile(new File(fileName));
   }
 
+  @Override
   public File getShellHomeDir() {
     return resolveFile(System.getProperty(VariableNames.SHELL_HOME));
   }
 
+  @Override
   public File getShellContextDir() {
     return resolveFile(new File(getShellHomeDir(), "etc"));
   }
 
+  @Override
   public File getUserHomeDir() {
     return resolveFile(getProperties().getProperty("user.home"));
   }
 
+  @Override
   public File getUserContextDir() {
     return resolveFile(new File(getUserHomeDir(), String.format(".%s", getProgramName())));
   }
 
+  @Override
   public License getLicense() {
     return new LicenseSupport(null, (URL) null);
   }
 
+  @Override
   public void customize(final Shell shell) throws Exception {
     assert shell != null;
 

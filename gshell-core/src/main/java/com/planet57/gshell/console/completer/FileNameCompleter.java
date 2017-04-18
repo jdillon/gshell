@@ -24,6 +24,7 @@ import javax.inject.Singleton;
 import com.planet57.gshell.variables.Variables;
 import jline.console.completer.Completer;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.planet57.gshell.variables.VariableNames.SHELL_USER_DIR;
 import static com.planet57.gshell.variables.VariableNames.SHELL_USER_HOME;
 
@@ -42,8 +43,7 @@ public class FileNameCompleter
 
   @Inject
   public FileNameCompleter(final Provider<Variables> variables) {
-    assert variables != null;
-    this.variables = variables;
+    this.variables = checkNotNull(variables);
   }
 
   @Override

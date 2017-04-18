@@ -44,6 +44,7 @@ public abstract class CommandActionSupport
 
   private Completer[] completers;
 
+  @Override
   public String getName() {
     if (name == null) {
       throw new IllegalStateException("Name was not configured");
@@ -51,6 +52,7 @@ public abstract class CommandActionSupport
     return name;
   }
 
+  @Override
   public void setName(final String name) {
     assert name != null;
     if (this.name != null) {
@@ -59,10 +61,12 @@ public abstract class CommandActionSupport
     this.name = name;
   }
 
+  @Override
   public String getSimpleName() {
     return new NodePath(getName()).last();
   }
 
+  @Override
   public MessageSource getMessages() {
     if (messages == null) {
       try {
@@ -94,6 +98,7 @@ public abstract class CommandActionSupport
     return new ResourceBundleMessageSource(getClass());
   }
 
+  @Override
   public Completer[] getCompleters() {
     return completers;
   }

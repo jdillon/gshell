@@ -26,6 +26,8 @@ import com.planet57.gshell.event.EventManager;
 import jline.console.completer.Completer;
 import jline.console.completer.StringsCompleter;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * {@link jline.console.completer.Completer} for command names.
  * Keeps up to date automatically by handling command-related events.
@@ -47,10 +49,8 @@ public class CommandNameCompleter
 
   @Inject
   public CommandNameCompleter(final EventManager events, final CommandRegistry commands) {
-    assert events != null;
-    this.events = events;
-    assert commands != null;
-    this.commands = commands;
+    this.events = checkNotNull(events);
+    this.commands = checkNotNull(commands);
   }
 
   private void init() {
@@ -58,21 +58,7 @@ public class CommandNameCompleter
     delegate.getStrings().addAll(names);
 
     // Register for updates to command registrations
-    events.addListener(new Object()
-    {
-      @Subscribe
-      public void onEvent(final Object event) throws Exception {
-        if (event instanceof CommandRegisteredEvent) {
-          CommandRegisteredEvent target = (CommandRegisteredEvent) event;
-          delegate.getStrings().add(target.getName());
-        }
-        else if (event instanceof CommandRemovedEvent) {
-          CommandRemovedEvent target = (CommandRemovedEvent) event;
-          delegate.getStrings().remove(target.getName());
-        }
-      }
-    });
-
+    events.addListener(this);
     initialized = true;
   }
 
@@ -82,5 +68,15 @@ public class CommandNameCompleter
     }
 
     return delegate.complete(buffer, cursor, candidates);
+  }
+
+  @Subscribe
+  void on(final CommandRegisteredEvent event) {
+    delegate.getStrings().add(event.getName());
+  }
+
+  @Subscribe
+  void on(final CommandRemovedEvent event) {
+    delegate.getStrings().remove(event.getName());
   }
 }

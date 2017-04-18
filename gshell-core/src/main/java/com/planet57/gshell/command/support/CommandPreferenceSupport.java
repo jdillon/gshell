@@ -20,6 +20,8 @@ import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.shell.ShellHolder;
 import com.planet57.gshell.util.pref.PreferenceProcessor;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Helper for command preferences.
  *
@@ -29,7 +31,7 @@ import com.planet57.gshell.util.pref.PreferenceProcessor;
 public class CommandPreferenceSupport
 {
   public static PreferenceProcessor createProcessor(final CommandAction command) {
-    assert command != null;
+    checkNotNull(command);
 
     PreferenceProcessor pp = new PreferenceProcessor();
     Branding branding = ShellHolder.get().getBranding();

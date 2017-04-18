@@ -15,7 +15,6 @@
  */
 package com.planet57.gshell.alias;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -26,6 +25,8 @@ import javax.inject.Singleton;
 import com.planet57.gshell.event.EventManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * {@link AliasRegistry} component.
@@ -45,13 +46,13 @@ public class AliasRegistryImpl
 
   @Inject
   public AliasRegistryImpl(final EventManager events) {
-    assert events != null;
-    this.events = events;
+    this.events = checkNotNull(events);
   }
 
+  @Override
   public void registerAlias(final String name, final String alias) {
-    assert name != null;
-    assert alias != null;
+    checkNotNull(name);
+    checkNotNull(alias);
 
     log.debug("Registering alias: {} -> {}", name, alias);
 
@@ -66,8 +67,9 @@ public class AliasRegistryImpl
     events.publish(new AliasRegisteredEvent(name, alias));
   }
 
+  @Override
   public void removeAlias(final String name) throws NoSuchAliasException {
-    assert name != null;
+    checkNotNull(name);
 
     log.debug("Removing alias: {}", name);
 
@@ -80,8 +82,9 @@ public class AliasRegistryImpl
     events.publish(new AliasRemovedEvent(name));
   }
 
+  @Override
   public String getAlias(final String name) throws NoSuchAliasException {
-    assert name != null;
+    checkNotNull(name);
 
     if (!containsAlias(name)) {
       throw new NoSuchAliasException(name);
@@ -90,16 +93,14 @@ public class AliasRegistryImpl
     return aliases.get(name);
   }
 
+  @Override
   public boolean containsAlias(final String name) {
-    assert name != null;
+    checkNotNull(name);
 
     return aliases.containsKey(name);
   }
 
-  public Collection<String> getAliasNames() {
-    return Collections.unmodifiableSet(aliases.keySet());
-  }
-
+  @Override
   public Map<String, String> getAliases() {
     return Collections.unmodifiableMap(aliases);
   }

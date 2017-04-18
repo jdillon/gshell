@@ -18,6 +18,8 @@ package com.planet57.gshell.command;
 import com.planet57.gshell.util.i18n.MessageSource;
 import jline.console.completer.Completer;
 
+import javax.annotation.Nullable;
+
 /**
  * Provides the user-action for a command.
  *
@@ -31,6 +33,7 @@ public interface CommandAction
 
   String getSimpleName();
 
+  @Nullable
   MessageSource getMessages();
 
   Completer[] getCompleters();

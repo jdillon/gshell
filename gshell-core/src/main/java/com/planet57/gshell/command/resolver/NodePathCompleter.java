@@ -19,11 +19,13 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import jline.console.completer.Completer;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.planet57.gshell.command.resolver.Node.CURRENT;
 import static com.planet57.gshell.command.resolver.Node.PARENT;
 import static com.planet57.gshell.command.resolver.Node.ROOT;
@@ -43,13 +45,12 @@ public class NodePathCompleter
 
   @Inject
   public NodePathCompleter(final CommandResolver resolver) {
-    assert resolver != null;
-    this.resolver = resolver;
+    this.resolver = checkNotNull(resolver);
   }
 
-  public int complete(final String buffer, final int cursor, final List<CharSequence> candidates) {
+  public int complete(@Nullable final String buffer, final int cursor, final List<CharSequence> candidates) {
     // buffer can be null
-    assert candidates != null;
+    checkNotNull(candidates);
 
     Collection<Node> matches = new LinkedHashSet<Node>();
     String prefix = "";

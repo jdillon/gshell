@@ -18,12 +18,15 @@ package com.planet57.gshell.command.resolver;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 
+import javax.annotation.Nullable;
 import javax.inject.Singleton;
 
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.GroupAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * A node for building a {@link CommandAction} tree.
@@ -54,12 +57,9 @@ public class Node
 
   private final Collection<Node> children = new LinkedHashSet<Node>();
 
-  public Node(final String name, final CommandAction action, final Node parent) {
-    assert name != null;
-    this.name = name;
-    assert action != null;
-    this.action = action;
-    // parent can be null
+  public Node(final String name, final CommandAction action, @Nullable final Node parent) {
+    this.name = checkNotNull(name);
+    this.action = checkNotNull(action);
     this.parent = parent;
   }
 
@@ -112,7 +112,7 @@ public class Node
   }
 
   public Node get(final String name) {
-    assert name != null;
+    checkNotNull(name);
 
     if (name.equals(ROOT)) {
       return root();
@@ -141,7 +141,7 @@ public class Node
     return children;
   }
 
-  public Collection<Node> children(final String name) {
+  public Collection<Node> children(@Nullable final String name) {
     if (name == null) {
       return children;
     }
@@ -158,7 +158,7 @@ public class Node
   }
 
   public Node find(final String name) {
-    assert name != null;
+    checkNotNull(name);
 
     NodePath path = new NodePath(name);
     Node node = this;
@@ -180,13 +180,14 @@ public class Node
   }
 
   public Node find(final NodePath path) {
-    assert path != null;
+    checkNotNull(path);
+
     return find(path.toString());
   }
 
   public void add(final String name, final CommandAction command) {
-    assert name != null;
-    assert command != null;
+    checkNotNull(name);
+    checkNotNull(command);
 
     NodePath path = new NodePath(name);
     String[] elements = path.split();
@@ -230,7 +231,7 @@ public class Node
   }
 
   public void remove(final String name) {
-    assert name != null;
+    checkNotNull(name);
 
     Node node = find(name);
     if (node != null) {

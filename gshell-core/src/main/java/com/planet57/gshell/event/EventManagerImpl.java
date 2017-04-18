@@ -22,7 +22,7 @@ import com.google.common.eventbus.EventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * The default {@link EventManager} components.
@@ -45,7 +45,7 @@ public class EventManagerImpl
 
   @Override
   public void addListener(final Object listener) {
-    checkArgument(listener != null);
+    checkNotNull(listener);
 
     log.trace("Adding listener: {}", listener);
 
@@ -54,7 +54,7 @@ public class EventManagerImpl
 
   @Override
   public void removeListener(final Object listener) {
-    checkArgument(listener != null);
+    checkNotNull(listener);
 
     log.trace("Removing listener: {}", listener);
 
@@ -68,7 +68,7 @@ public class EventManagerImpl
 
   @Override
   public void publish(final Object event) {
-    checkArgument(event != null);
+    checkNotNull(event);
 
     log.trace("Publishing event: {}", event);
     eventBus.post(event);

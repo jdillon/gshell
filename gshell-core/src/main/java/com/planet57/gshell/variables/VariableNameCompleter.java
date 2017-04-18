@@ -19,6 +19,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 
@@ -27,6 +28,8 @@ import com.planet57.gshell.event.EventManager;
 import jline.console.completer.Completer;
 import jline.console.completer.StringsCompleter;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * {@link jline.console.completer.Completer} for variable names.
  * Keeps up to date automatically by handling variable-related events.
@@ -34,6 +37,7 @@ import jline.console.completer.StringsCompleter;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
+@Named
 @Singleton
 public class VariableNameCompleter
     implements Completer
@@ -48,10 +52,8 @@ public class VariableNameCompleter
 
   @Inject
   public VariableNameCompleter(final EventManager events, final Provider<Variables> variables) {
-    assert events != null;
-    this.events = events;
-    assert variables != null;
-    this.variables = variables;
+    this.events = checkNotNull(events);
+    this.variables = checkNotNull(variables);
   }
 
   private void init() {
@@ -61,22 +63,7 @@ public class VariableNameCompleter
       delegate.getStrings().add(iter.next());
     }
 
-    // Register for updates to variable changes
-    events.addListener(new Object()
-    {
-      @Subscribe
-      public void onEvent(final Object event) throws Exception {
-        if (event instanceof VariableSetEvent) {
-          VariableSetEvent target = (VariableSetEvent) event;
-          delegate.getStrings().add(target.getName());
-        }
-        else if (event instanceof VariableUnsetEvent) {
-          VariableUnsetEvent target = (VariableUnsetEvent) event;
-          delegate.getStrings().remove(target.getName());
-        }
-      }
-    });
-
+    events.addListener(this);
     initialized = true;
   }
 
@@ -86,5 +73,15 @@ public class VariableNameCompleter
     }
 
     return delegate.complete(buffer, cursor, candidates);
+  }
+
+  @Subscribe
+  void on(final VariableSetEvent event) {
+    delegate.getStrings().add(event.getName());
+  }
+
+  @Subscribe
+  void on(final VariableUnsetEvent event) {
+    delegate.getStrings().remove(event.getName());
   }
 }

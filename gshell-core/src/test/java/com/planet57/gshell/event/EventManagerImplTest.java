@@ -63,7 +63,7 @@ public class EventManagerImplTest
       manager.addListener(null);
       fail();
     }
-    catch (IllegalArgumentException e) {
+    catch (NullPointerException e) {
       // ignore
     }
 
@@ -76,7 +76,7 @@ public class EventManagerImplTest
       manager.removeListener(null);
       fail();
     }
-    catch (IllegalArgumentException e) {
+    catch (NullPointerException e) {
       // ignore
     }
 
@@ -90,7 +90,7 @@ public class EventManagerImplTest
       manager.publish(null);
       fail();
     }
-    catch (IllegalArgumentException e) {
+    catch (NullPointerException e) {
       // ignore
     }
 
@@ -133,7 +133,7 @@ public class EventManagerImplTest
     Object event;
 
     @Subscribe
-    public void onEvent(final Object event) throws Exception {
+    public void on(final Object event) throws Exception {
       this.event = event;
     }
   }

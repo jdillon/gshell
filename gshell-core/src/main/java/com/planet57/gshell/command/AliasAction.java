@@ -22,6 +22,8 @@ import jline.console.completer.Completer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * {@link CommandAction} to execute an alias.
  *
@@ -38,20 +40,21 @@ public class AliasAction
   private final String target;
 
   public AliasAction(final String name, final String target) {
-    assert name != null;
-    this.name = name;
-    assert target != null;
-    this.target = target;
+    this.name = checkNotNull(name);
+    this.target = checkNotNull(target);
   }
 
+  @Override
   public String getName() {
     return name;
   }
 
+  @Override
   public String getSimpleName() {
     return name;
   }
 
+  @Override
   public Object execute(final CommandContext context) throws Exception {
     assert context != null;
 
@@ -68,10 +71,12 @@ public class AliasAction
     return context.getShell().execute(alias);
   }
 
+  @Override
   public MessageSource getMessages() {
     return null;
   }
 
+  @Override
   public Completer[] getCompleters() {
     return new Completer[0];
   }

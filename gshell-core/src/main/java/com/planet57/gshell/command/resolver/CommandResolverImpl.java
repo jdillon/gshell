@@ -34,6 +34,8 @@ import com.planet57.gshell.variables.Variables;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * {@link CommandResolver} component.
  *
@@ -54,35 +56,30 @@ public class CommandResolverImpl
   public CommandResolverImpl(final Provider<Variables> variables, final EventManager events,
                              final CommandRegistry commands)
   {
-    assert variables != null;
-    this.variables = variables;
+    this.variables = checkNotNull(variables);
+    checkNotNull(events);
+    checkNotNull(commands);
 
     // Setup the tree
     root = new Node(Node.ROOT, new GroupAction(Node.ROOT));
 
     // Add any pre-registered commands
-    assert commands != null;
     for (CommandAction command : commands.getCommands()) {
       root.add(command.getName(), command);
     }
 
     // Add a listener to mange the command tree
-    assert events != null;
-    events.addListener(new Object()
-    {
-      @Subscribe
-      public void onEvent(final Object event) throws Exception {
-        assert event != null;
-        if (event instanceof CommandRegisteredEvent) {
-          CommandRegisteredEvent target = (CommandRegisteredEvent) event;
-          root.add(target.getName(), target.getCommand());
-        }
-        if (event instanceof CommandRemovedEvent) {
-          CommandRemovedEvent target = (CommandRemovedEvent) event;
-          root.remove(target.getName());
-        }
-      }
-    });
+    events.addListener(this);
+  }
+
+  @Subscribe
+  void on(final CommandRegisteredEvent event) {
+    root.add(event.getName(), event.getCommand());
+  }
+
+  @Subscribe
+  void on(final CommandRemovedEvent event) {
+    root.remove(event.getName());
   }
 
   @Override
@@ -141,13 +138,14 @@ public class CommandResolverImpl
 
   @Override
   public Node resolve(final NodePath path) {
-    assert path != null;
+    checkNotNull(path);
+
     return resolve(path.toString());
   }
 
   @Override
   public Node resolve(final String name) {
-    assert name != null;
+    checkNotNull(name);
 
     log.trace("Resolving: {}", name);
 

@@ -26,6 +26,8 @@ import com.planet57.gshell.event.EventManager;
 import jline.console.completer.Completer;
 import jline.console.completer.StringsCompleter;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * {@link jline.console.completer.Completer} for alias names.
  * Keeps up to date automatically by handling alias-related events.
@@ -47,10 +49,8 @@ public class AliasNameCompleter
 
   @Inject
   public AliasNameCompleter(final EventManager events, final AliasRegistry aliases) {
-    assert events != null;
-    this.events = events;
-    assert aliases != null;
-    this.aliases = aliases;
+    this.events = checkNotNull(events);
+    this.aliases = checkNotNull(aliases);
   }
 
   private void init() {
@@ -58,21 +58,7 @@ public class AliasNameCompleter
     delegate.getStrings().addAll(aliases.keySet());
 
     // Register for updates to alias registrations
-    events.addListener(new Object()
-    {
-      @Subscribe
-      public void onEvent(final Object event) throws Exception {
-        if (event instanceof AliasRegisteredEvent) {
-          AliasRegisteredEvent target = (AliasRegisteredEvent) event;
-          delegate.getStrings().add(target.getName());
-        }
-        else if (event instanceof AliasRemovedEvent) {
-          AliasRemovedEvent target = (AliasRemovedEvent) event;
-          delegate.getStrings().remove(target.getName());
-        }
-      }
-    });
-
+    events.addListener(this);
     initialized = true;
   }
 
@@ -82,5 +68,15 @@ public class AliasNameCompleter
     }
 
     return delegate.complete(buffer, cursor, candidates);
+  }
+
+  @Subscribe
+  void on(final AliasRegisteredEvent event) {
+    delegate.getStrings().add(event.getName());
+  }
+
+  @Subscribe
+  void on(final AliasRemovedEvent event) {
+    delegate.getStrings().remove(event.getName());
   }
 }

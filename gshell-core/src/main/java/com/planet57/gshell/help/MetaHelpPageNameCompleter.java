@@ -18,12 +18,15 @@ package com.planet57.gshell.help;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import com.google.common.eventbus.Subscribe;
 import com.planet57.gshell.event.EventManager;
 import jline.console.completer.Completer;
 import jline.console.completer.StringsCompleter;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * {@link jline.console.completer.Completer} for meta help page names.
@@ -32,6 +35,7 @@ import jline.console.completer.StringsCompleter;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
+@Named
 @Singleton
 public class MetaHelpPageNameCompleter
     implements Completer
@@ -46,10 +50,8 @@ public class MetaHelpPageNameCompleter
 
   @Inject
   public MetaHelpPageNameCompleter(final EventManager events, final HelpPageManager helpPages) {
-    assert events != null;
-    this.events = events;
-    assert helpPages != null;
-    this.helpPages = helpPages;
+    this.events = checkNotNull(events);
+    this.helpPages = checkNotNull(helpPages);
   }
 
   private void init() {
@@ -57,18 +59,7 @@ public class MetaHelpPageNameCompleter
       delegate.getStrings().add(page.getName());
     }
 
-    // Register for updates to alias registrations
-    events.addListener(new Object()
-    {
-      @Subscribe
-      public void onEvent(final Object event) throws Exception {
-        if (event instanceof MetaHelpPageAddedEvent) {
-          MetaHelpPageAddedEvent targetEvent = (MetaHelpPageAddedEvent) event;
-          delegate.getStrings().add(targetEvent.getPage().getName());
-        }
-      }
-    });
-
+    events.addListener(this);
     initialized = true;
   }
 
@@ -78,5 +69,10 @@ public class MetaHelpPageNameCompleter
     }
 
     return delegate.complete(buffer, cursor, candidates);
+  }
+
+  @Subscribe
+  void on(final MetaHelpPageAddedEvent event) {
+    delegate.getStrings().add(event.getPage().getName());
   }
 }
