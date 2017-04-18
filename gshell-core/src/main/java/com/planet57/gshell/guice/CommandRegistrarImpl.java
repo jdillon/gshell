@@ -17,19 +17,24 @@ package com.planet57.gshell.guice;
 
 import java.lang.annotation.Annotation;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import com.google.inject.Key;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.registry.CommandRegistrar;
-import com.planet57.gshell.command.registry.CommandRegistrarSupport;
 import com.planet57.gshell.command.registry.CommandRegistry;
 import com.planet57.gshell.event.EventManager;
 import org.eclipse.sisu.BeanEntry;
 import org.eclipse.sisu.inject.MutableBeanLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Guice {@link CommandRegistrar}.
@@ -37,24 +42,27 @@ import org.eclipse.sisu.inject.MutableBeanLocator;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
+@Named
 @Singleton
 public class CommandRegistrarImpl
-    extends CommandRegistrarSupport
+    implements CommandRegistrar
 {
+  private static final Logger log = LoggerFactory.getLogger(CommandRegistrarImpl.class);
+
   private final MutableBeanLocator container;
+
+  private final EventManager events;
 
   private final CommandRegistry registry;
 
   @Inject
-  public CommandRegistrarImpl(final MutableBeanLocator container, final EventManager events,
+  public CommandRegistrarImpl(final MutableBeanLocator container,
+                              final EventManager events,
                               final CommandRegistry registry)
   {
-    super(events);
-
-    assert container != null;
-    this.container = container;
-    assert registry != null;
-    this.registry = registry;
+    this.container = checkNotNull(container);
+    this.events = checkNotNull(events);
+    this.registry = checkNotNull(registry);
   }
 
   private Class<?> loadClass(final String className) throws ClassNotFoundException {
@@ -62,6 +70,19 @@ public class CommandRegistrarImpl
     return Thread.currentThread().getContextClassLoader().loadClass(className);
   }
 
+  @Override
+  public void registerCommands() throws Exception {
+    log.trace("Registering commands");
+
+    for (BeanEntry<?,CommandAction> entry : container.locate(Key.get(CommandAction.class, Command.class))) {
+      log.trace("Registering command: {}", entry);
+      Command command = (Command) entry.getKey();
+      CommandAction action = entry.getValue();
+      registry.registerCommand(command.name(), action);
+    }
+  }
+
+  @Override
   public void registerCommand(final String name, final String className) throws Exception {
     assert name != null;
     assert className != null;
@@ -72,6 +93,7 @@ public class CommandRegistrarImpl
     registry.registerCommand(name, command);
   }
 
+  @Override
   public void registerCommand(final String className) throws Exception {
     assert className != null;
 

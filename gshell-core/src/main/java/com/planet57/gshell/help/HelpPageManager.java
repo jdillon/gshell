@@ -17,7 +17,6 @@ package com.planet57.gshell.help;
 
 import java.util.Collection;
 
-import com.planet57.gshell.command.descriptor.HelpPageDescriptor;
 import com.planet57.gshell.util.filter.Filter;
 
 /**
@@ -34,7 +33,7 @@ public interface HelpPageManager
 
   Collection<HelpPage> getPages(Filter<HelpPage> filter);
 
-  void addMetaPage(HelpPageDescriptor descriptor);
+//  void addMetaPage(HelpPageDescriptor descriptor);
 
   Collection<MetaHelpPage> getMetaPages();
 }

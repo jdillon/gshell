@@ -3,7 +3,7 @@ basename=`basename $0`
 dirname=`dirname $0`
 dirname=`cd "$dirname" && pwd`
 
-# FIXME: change directories; as the maven-launcher can get confused if another .mvn/ is found
+# FIXME: change directories; as the maven-launcher can get confused if another .mvn/ is found in $CWD
 cd ${dirname}
 
 exec ${dirname}/.maven-launcher \

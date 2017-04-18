@@ -17,7 +17,7 @@ package com.planet57.gshell.command.registry;
 
 import java.util.List;
 
-import com.planet57.gshell.command.descriptor.CommandSetDescriptor;
+//import com.planet57.gshell.command.descriptor.CommandSetDescriptor;
 
 /**
  * Registers commands.
@@ -38,18 +38,18 @@ public interface CommandRegistrar
 
   void registerCommand(String type) throws Exception;
 
-  /**
-   * @since 2.2
-   */
-  String[] getDescriptorSearchPath();
-
-  /**
-   * @since 2.2
-   */
-  void setDescriptorSearchPath(String... path);
-
-  /**
-   * @since 2.1
-   */
-  List<CommandSetDescriptor> getDescriptors();
+//  /**
+//   * @since 2.2
+//   */
+//  String[] getDescriptorSearchPath();
+//
+//  /**
+//   * @since 2.2
+//   */
+//  void setDescriptorSearchPath(String... path);
+//
+//  /**
+//   * @since 2.1
+//   */
+//  List<CommandSetDescriptor> getDescriptors();
 }

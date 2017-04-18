@@ -16,7 +16,6 @@
 package com.planet57.gshell.help;
 
 import java.util.Collection;
-import java.util.EventObject;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,11 +27,8 @@ import javax.inject.Singleton;
 
 import com.planet57.gshell.alias.AliasRegistry;
 import com.planet57.gshell.alias.NoSuchAliasException;
-import com.planet57.gshell.command.descriptor.DiscoveredCommandSetDescriptorEvent;
-import com.planet57.gshell.command.descriptor.HelpPageDescriptor;
 import com.planet57.gshell.command.resolver.CommandResolver;
 import com.planet57.gshell.command.resolver.Node;
-import com.planet57.gshell.event.EventListener;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.util.filter.Filter;
 import org.slf4j.Logger;
@@ -73,18 +69,18 @@ public class HelpPageManagerImpl
     assert loader != null;
     this.loader = loader;
 
-    events.addListener(new EventListener()
-    {
-      public void onEvent(final EventObject event) throws Exception {
-        assert event != null;
-        if (event instanceof DiscoveredCommandSetDescriptorEvent) {
-          DiscoveredCommandSetDescriptorEvent target = (DiscoveredCommandSetDescriptorEvent) event;
-          for (HelpPageDescriptor page : target.getDescriptor().getHelpPages()) {
-            addMetaPage(page);
-          }
-        }
-      }
-    });
+//    events.addListener(new EventListener()
+//    {
+//      public void onEvent(final EventObject event) throws Exception {
+//        assert event != null;
+//        if (event instanceof DiscoveredCommandSetDescriptorEvent) {
+//          DiscoveredCommandSetDescriptorEvent target = (DiscoveredCommandSetDescriptorEvent) event;
+//          for (HelpPageDescriptor page : target.getDescriptor().getHelpPages()) {
+//            addMetaPage(page);
+//          }
+//        }
+//      }
+//    });
   }
 
   public HelpPage getPage(final String name) {
@@ -156,13 +152,13 @@ public class HelpPageManagerImpl
     return pages.values();
   }
 
-  public void addMetaPage(final HelpPageDescriptor desc) {
-    assert desc != null;
-
-    log.debug("Adding meta-page: {} -> {}", desc.getName(), desc.getResource());
-    metaPages.put(desc.getName(), new MetaHelpPage(desc, loader));
-    events.publish(new MetaHelpPageAddedEvent(desc));
-  }
+//  public void addMetaPage(final HelpPageDescriptor desc) {
+//    assert desc != null;
+//
+//    log.debug("Adding meta-page: {} -> {}", desc.getName(), desc.getResource());
+//    metaPages.put(desc.getName(), new MetaHelpPage(desc, loader));
+//    events.publish(new MetaHelpPageAddedEvent(desc));
+//  }
 
   public Collection<MetaHelpPage> getMetaPages() {
     return metaPages.values();

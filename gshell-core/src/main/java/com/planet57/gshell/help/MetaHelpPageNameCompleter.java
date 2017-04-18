@@ -63,8 +63,8 @@ public class MetaHelpPageNameCompleter
     {
       public void onEvent(final EventObject event) throws Exception {
         if (event instanceof MetaHelpPageAddedEvent) {
-          MetaHelpPageAddedEvent targetEvent = (MetaHelpPageAddedEvent) event;
-          delegate.getStrings().add(targetEvent.getDescriptor().getName());
+//          MetaHelpPageAddedEvent targetEvent = (MetaHelpPageAddedEvent) event;
+//          delegate.getStrings().add(targetEvent.getDescriptor().getName());
         }
       }
     });

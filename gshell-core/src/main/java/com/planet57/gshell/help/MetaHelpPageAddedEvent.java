@@ -17,8 +17,6 @@ package com.planet57.gshell.help;
 
 import java.util.EventObject;
 
-import com.planet57.gshell.command.descriptor.HelpPageDescriptor;
-
 /**
  * Event fired once a help meta page has been added.
  *
@@ -30,16 +28,13 @@ public class MetaHelpPageAddedEvent
 {
   ///CLOVER:OFF
 
-  private final HelpPageDescriptor desc;
+//  private final HelpPageDescriptor desc;
 
-  public MetaHelpPageAddedEvent(final HelpPageDescriptor desc) {
-    super(desc);
-
-    assert desc != null;
-    this.desc = desc;
+  public MetaHelpPageAddedEvent(/*final HelpPageDescriptor desc*/) {
+    super(null);
   }
 
-  public HelpPageDescriptor getDescriptor() {
-    return desc;
-  }
+//  public HelpPageDescriptor getDescriptor() {
+//    return desc;
+//  }
 }

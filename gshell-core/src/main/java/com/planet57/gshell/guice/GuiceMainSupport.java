@@ -24,6 +24,7 @@ import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.planet57.gshell.MainSupport;
 import com.planet57.gshell.branding.Branding;
+import com.planet57.gshell.branding.BrandingSupport;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.registry.CommandRegistrar;
 import com.planet57.gshell.shell.Shell;
@@ -50,22 +51,20 @@ public abstract class GuiceMainSupport
 {
   protected final DefaultBeanLocator container = new DefaultBeanLocator();
 
-  protected final Injector injector;
-
-  public GuiceMainSupport() {
-    List<Module> modules = new ArrayList<>();
-    configure(modules);
-
-    injector = Guice.createInjector(new WireModule(modules));
-    container.add(injector, 0);
-  }
   @Override
   protected Branding createBranding() {
-    return injector.getInstance(Branding.class);
+    // HACK: back to non-injected branding, this is needed too early presently and mess up logging
+    return new BrandingSupport();
   }
 
   @Override
   protected Shell createShell() throws Exception {
+    List<Module> modules = new ArrayList<>();
+    configure(modules);
+
+    Injector injector = Guice.createInjector(new WireModule(modules));
+    container.add(injector, 0);
+
     ShellImpl shell = injector.getInstance(ShellImpl.class);
     injector.getInstance(CommandRegistrar.class).registerCommands();
 
