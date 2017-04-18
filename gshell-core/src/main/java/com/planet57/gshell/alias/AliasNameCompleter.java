@@ -23,6 +23,7 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import com.google.common.eventbus.Subscribe;
+import com.planet57.gshell.event.EventAware;
 import com.planet57.gshell.event.EventManager;
 import jline.console.completer.Completer;
 import jline.console.completer.StringsCompleter;
@@ -39,10 +40,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Named
 @Singleton
 public class AliasNameCompleter
-    implements Completer
+    implements Completer, EventAware
 {
-  private final EventManager events;
-
   private final AliasRegistry aliases;
 
   private final StringsCompleter delegate = new StringsCompleter();
@@ -50,17 +49,13 @@ public class AliasNameCompleter
   private boolean initialized;
 
   @Inject
-  public AliasNameCompleter(final EventManager events, final AliasRegistry aliases) {
-    this.events = checkNotNull(events);
+  public AliasNameCompleter(final AliasRegistry aliases) {
     this.aliases = checkNotNull(aliases);
   }
 
   private void init() {
     Map<String, String> aliases = this.aliases.getAliases();
     delegate.getStrings().addAll(aliases.keySet());
-
-    // Register for updates to alias registrations
-    events.addListener(this);
     initialized = true;
   }
 

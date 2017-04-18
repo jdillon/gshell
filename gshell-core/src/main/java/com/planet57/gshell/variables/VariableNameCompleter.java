@@ -24,6 +24,7 @@ import javax.inject.Provider;
 import javax.inject.Singleton;
 
 import com.google.common.eventbus.Subscribe;
+import com.planet57.gshell.event.EventAware;
 import com.planet57.gshell.event.EventManager;
 import jline.console.completer.Completer;
 import jline.console.completer.StringsCompleter;
@@ -40,10 +41,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Named
 @Singleton
 public class VariableNameCompleter
-    implements Completer
+    implements Completer, EventAware
 {
-  private final EventManager events;
-
   private final Provider<Variables> variables;
 
   private final StringsCompleter delegate = new StringsCompleter();
@@ -51,8 +50,7 @@ public class VariableNameCompleter
   private boolean initialized;
 
   @Inject
-  public VariableNameCompleter(final EventManager events, final Provider<Variables> variables) {
-    this.events = checkNotNull(events);
+  public VariableNameCompleter(final Provider<Variables> variables) {
     this.variables = checkNotNull(variables);
   }
 
@@ -62,8 +60,6 @@ public class VariableNameCompleter
     while (iter.hasNext()) {
       delegate.getStrings().add(iter.next());
     }
-
-    events.addListener(this);
     initialized = true;
   }
 

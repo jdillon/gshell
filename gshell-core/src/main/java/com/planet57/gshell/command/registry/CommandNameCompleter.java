@@ -23,6 +23,7 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import com.google.common.eventbus.Subscribe;
+import com.planet57.gshell.event.EventAware;
 import com.planet57.gshell.event.EventManager;
 import jline.console.completer.Completer;
 import jline.console.completer.StringsCompleter;
@@ -39,10 +40,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Named
 @Singleton
 public class CommandNameCompleter
-    implements Completer
+    implements Completer, EventAware
 {
-  private final EventManager events;
-
   private final CommandRegistry commands;
 
   private final StringsCompleter delegate = new StringsCompleter();
@@ -50,17 +49,13 @@ public class CommandNameCompleter
   private boolean initialized;
 
   @Inject
-  public CommandNameCompleter(final EventManager events, final CommandRegistry commands) {
-    this.events = checkNotNull(events);
+  public CommandNameCompleter(final CommandRegistry commands) {
     this.commands = checkNotNull(commands);
   }
 
   private void init() {
     Collection<String> names = commands.getCommandNames();
     delegate.getStrings().addAll(names);
-
-    // Register for updates to command registrations
-    events.addListener(this);
     initialized = true;
   }
 

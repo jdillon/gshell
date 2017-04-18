@@ -22,6 +22,7 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import com.google.common.eventbus.Subscribe;
+import com.planet57.gshell.event.EventAware;
 import com.planet57.gshell.event.EventManager;
 import jline.console.completer.Completer;
 import jline.console.completer.StringsCompleter;
@@ -38,10 +39,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Named
 @Singleton
 public class MetaHelpPageNameCompleter
-    implements Completer
+    implements Completer, EventAware
 {
-  private final EventManager events;
-
   private final HelpPageManager helpPages;
 
   private final StringsCompleter delegate = new StringsCompleter();
@@ -49,8 +48,7 @@ public class MetaHelpPageNameCompleter
   private boolean initialized;
 
   @Inject
-  public MetaHelpPageNameCompleter(final EventManager events, final HelpPageManager helpPages) {
-    this.events = checkNotNull(events);
+  public MetaHelpPageNameCompleter(final HelpPageManager helpPages) {
     this.helpPages = checkNotNull(helpPages);
   }
 
@@ -58,8 +56,6 @@ public class MetaHelpPageNameCompleter
     for (MetaHelpPage page : helpPages.getMetaPages()) {
       delegate.getStrings().add(page.getName());
     }
-
-    events.addListener(this);
     initialized = true;
   }
 
