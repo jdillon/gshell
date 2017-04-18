@@ -64,9 +64,8 @@ public class VariablesImpl
     this(new LinkedHashMap<String, Object>());
   }
 
-  @Override
   public void setEventManager(final EventManager eventManager) {
-    this.eventManager = eventManager;
+    this.eventManager = checkNotNull(eventManager);
   }
 
   @Override

@@ -107,9 +107,9 @@ public class ShellImpl
     this.io = io != null ? io : new IO();
     this.variables = variables != null ? variables : new VariablesImpl();
 
-    // FIXME: remove this
-    if (variables instanceof EventAware) {
-      ((EventAware) variables).setEventManager(events);
+    // HACK: adapt variables for events
+    if (variables instanceof VariablesImpl) {
+      ((VariablesImpl) variables).setEventManager(events);
     }
 
     this.history = new ShellHistory(new File(branding.getUserContextDir(), branding.getHistoryFileName()));

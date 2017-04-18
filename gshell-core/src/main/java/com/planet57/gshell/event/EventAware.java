@@ -16,14 +16,12 @@
 package com.planet57.gshell.event;
 
 /**
- * Allows objects to become event aware.
+ * Marker for components that are should managed for event consumption.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 public interface EventAware
 {
-  // FIXME: remove, this seems to be only here to allow Variables to find the EventManager
-
-  void setEventManager(EventManager manager);
+  // empty
 }

@@ -15,10 +15,15 @@
  */
 package com.planet57.gshell.event;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
 import com.google.common.eventbus.EventBus;
+import com.google.inject.Key;
+import org.eclipse.sisu.BeanEntry;
+import org.eclipse.sisu.Mediator;
+import org.eclipse.sisu.inject.BeanLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,8 +44,27 @@ public class EventManagerImpl
 
   private final EventBus eventBus;
 
-  public EventManagerImpl() {
+  @Inject
+  public EventManagerImpl(final BeanLocator container) {
+    checkNotNull(container);
     this.eventBus = new EventBus();
+
+    // automatically register/unregister event-aware components
+    container.watch(Key.get(EventAware.class, Named.class), new EventAwareMediator(), this);
+  }
+
+  private static class EventAwareMediator
+    implements Mediator<Named, EventAware, EventManagerImpl>
+  {
+    @Override
+    public void add(final BeanEntry<Named, EventAware> entry, final EventManagerImpl watcher) {
+      watcher.addListener(entry.getValue());
+    }
+
+    @Override
+    public void remove(final BeanEntry<Named, EventAware> entry, final EventManagerImpl watcher) {
+      watcher.removeListener(entry.getValue());
+    }
   }
 
   @Override
