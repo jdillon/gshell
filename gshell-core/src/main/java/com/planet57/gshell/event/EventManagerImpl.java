@@ -38,6 +38,7 @@ public class EventManagerImpl
 
   private final Set<EventListener> listeners = new LinkedHashSet<EventListener>();
 
+  @Override
   public void addListener(final EventListener listener) {
     assert listener != null;
 
@@ -48,6 +49,7 @@ public class EventManagerImpl
     }
   }
 
+  @Override
   public void removeListener(final EventListener listener) {
     assert listener != null;
 
@@ -64,6 +66,7 @@ public class EventManagerImpl
     }
   }
 
+  @Override
   public void publish(final EventObject event) {
     assert event != null;
 

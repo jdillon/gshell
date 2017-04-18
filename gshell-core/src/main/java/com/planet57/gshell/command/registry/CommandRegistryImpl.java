@@ -51,6 +51,7 @@ public class CommandRegistryImpl
     this.events = events;
   }
 
+  @Override
   public void registerCommand(final String name, final CommandAction command) throws DuplicateCommandException {
     assert name != null;
 
@@ -74,6 +75,7 @@ public class CommandRegistryImpl
     events.publish(new CommandRegisteredEvent(name, command));
   }
 
+  @Override
   public void removeCommand(final String name) throws NoSuchCommandException {
     assert name != null;
 
@@ -87,6 +89,7 @@ public class CommandRegistryImpl
     events.publish(new CommandRemovedEvent(name));
   }
 
+  @Override
   public CommandAction getCommand(final String name) throws NoSuchCommandException {
     assert name != null;
     if (!containsCommand(name)) {
@@ -95,15 +98,18 @@ public class CommandRegistryImpl
     return commands.get(name);
   }
 
+  @Override
   public boolean containsCommand(final String name) {
     assert name != null;
     return commands.containsKey(name);
   }
 
+  @Override
   public Collection<String> getCommandNames() {
     return Collections.unmodifiableSet(commands.keySet());
   }
 
+  @Override
   public Collection<CommandAction> getCommands() {
     return Collections.unmodifiableCollection(commands.values());
   }

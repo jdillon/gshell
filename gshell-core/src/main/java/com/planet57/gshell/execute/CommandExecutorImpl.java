@@ -76,6 +76,7 @@ public class CommandExecutorImpl
     this.parser = parser;
   }
 
+  @Override
   public Object execute(final Shell shell, final String line) throws Exception {
     assert shell != null;
     assert line != null;
@@ -111,6 +112,7 @@ public class CommandExecutorImpl
     }
   }
 
+  @Override
   public Object execute(final Shell shell, final Object... args) throws Exception {
     assert shell != null;
     assert args != null;
@@ -135,6 +137,7 @@ public class CommandExecutorImpl
     return action.clone();
   }
 
+  @Override
   public Object execute(final Shell shell, final String name, final Object[] args) throws Exception {
     assert shell != null;
     assert name != null;

@@ -41,6 +41,7 @@ public class CommandLineParserImpl
 
   private final Parser parser = new Parser();
 
+  @Override
   public CommandLine parse(final String line) throws Exception {
     assert line != null;
 

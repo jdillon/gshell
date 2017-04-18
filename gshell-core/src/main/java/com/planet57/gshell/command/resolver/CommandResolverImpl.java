@@ -85,10 +85,12 @@ public class CommandResolverImpl
     });
   }
 
+  @Override
   public Node root() {
     return root;
   }
 
+  @Override
   public Node group() {
     Node node;
 
@@ -112,6 +114,7 @@ public class CommandResolverImpl
     return node;
   }
 
+  @Override
   public List<Node> searchPath() {
     List<Node> path = new ArrayList<Node>();
 
@@ -136,11 +139,13 @@ public class CommandResolverImpl
     return path;
   }
 
+  @Override
   public Node resolve(final NodePath path) {
     assert path != null;
     return resolve(path.toString());
   }
 
+  @Override
   public Node resolve(final String name) {
     assert name != null;
 

@@ -93,6 +93,7 @@ public class ShellPrompt
     };
   }
 
+  @Override
   public String prompt() {
     String pattern = variables.get().get(SHELL_PROMPT, String.class);
     String prompt = evaluate(pattern);
