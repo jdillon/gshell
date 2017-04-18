@@ -29,6 +29,7 @@ import com.planet57.gshell.command.registry.CommandRegistrar;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.shell.ShellImpl;
 import com.planet57.gshell.variables.Variables;
+
 import org.eclipse.sisu.inject.DefaultBeanLocator;
 import org.eclipse.sisu.inject.MutableBeanLocator;
 import org.eclipse.sisu.space.BeanScanning;
@@ -49,14 +50,22 @@ public abstract class GuiceMainSupport
 {
   protected final DefaultBeanLocator container = new DefaultBeanLocator();
 
-  @Override
-  protected Shell createShell() throws Exception {
-    List<Module> modules = new ArrayList<Module>();
+  protected final Injector injector;
+
+  public GuiceMainSupport() {
+    List<Module> modules = new ArrayList<>();
     configure(modules);
 
-    Injector injector = Guice.createInjector(new WireModule(modules));
+    injector = Guice.createInjector(new WireModule(modules));
     container.add(injector, 0);
+  }
+  @Override
+  protected Branding createBranding() {
+    return injector.getInstance(Branding.class);
+  }
 
+  @Override
+  protected Shell createShell() throws Exception {
     ShellImpl shell = injector.getInstance(ShellImpl.class);
     injector.getInstance(CommandRegistrar.class).registerCommands();
 
@@ -81,7 +90,8 @@ public abstract class GuiceMainSupport
     @Override
     protected void configure() {
       bind(MutableBeanLocator.class).toInstance(container);
-      bind(Branding.class).toInstance(getBranding());
+      // TODO: remove: require specific impl to bind this
+      // bind(Branding.class).toInstance(getBranding());
       bind(IO.class).annotatedWith(named("main")).toInstance(io);
       bind(Variables.class).annotatedWith(named("main")).toInstance(vars);
     }

@@ -21,7 +21,9 @@ import com.planet57.gshell.branding.BrandingSupport;
 import com.planet57.gshell.branding.License;
 import com.planet57.gshell.branding.LicenseSupport;
 import com.planet57.gshell.util.PrintBuffer;
-import org.fusesource.jansi.Ansi;
+
+import javax.inject.Named;
+import javax.inject.Singleton;
 
 /**
  * Branding for Maven GShell plugin.
@@ -29,6 +31,8 @@ import org.fusesource.jansi.Ansi;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
+@Named
+@Singleton
 public class BrandingImpl
     extends BrandingSupport
 {
