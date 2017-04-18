@@ -63,7 +63,7 @@ public class CommandRegistrarImpl
   }
 
   @Override
-  public void registerCommands() throws Exception {
+  public void discoverCommands() throws Exception {
     log.trace("Registering commands");
 
     for (BeanEntry<?,CommandAction> entry : container.locate(Key.get(CommandAction.class, Command.class))) {

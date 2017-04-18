@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import com.google.common.eventbus.Subscribe;
@@ -35,6 +36,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
+@Named
 @Singleton
 public class AliasNameCompleter
     implements Completer

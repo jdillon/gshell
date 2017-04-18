@@ -21,6 +21,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import jline.console.completer.Completer;
@@ -37,6 +38,7 @@ import static com.planet57.gshell.command.resolver.Node.SEPARATOR;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
+@Named
 @Singleton
 public class NodePathCompleter
     implements Completer
@@ -48,6 +50,7 @@ public class NodePathCompleter
     this.resolver = checkNotNull(resolver);
   }
 
+  @Override
   public int complete(@Nullable final String buffer, final int cursor, final List<CharSequence> candidates) {
     // buffer can be null
     checkNotNull(candidates);

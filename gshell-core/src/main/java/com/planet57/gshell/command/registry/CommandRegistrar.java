@@ -23,9 +23,7 @@ package com.planet57.gshell.command.registry;
  */
 public interface CommandRegistrar
 {
-  // TODO: rename to discoverCommands
-
-  void registerCommands() throws Exception;
+  void discoverCommands() throws Exception;
 
   void registerCommand(String name, String type) throws Exception;
 

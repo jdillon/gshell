@@ -65,7 +65,7 @@ public abstract class GuiceMainSupport
     container.add(injector, 0);
 
     ShellImpl shell = injector.getInstance(ShellImpl.class);
-    injector.getInstance(CommandRegistrar.class).registerCommands();
+    injector.getInstance(CommandRegistrar.class).discoverCommands();
 
     return shell;
   }

@@ -74,6 +74,7 @@ public class GroupAction
     return new Completer[0];
   }
 
+  @Override
   @SuppressWarnings({"CloneDoesntCallSuperClone"})
   public CommandAction clone() {
     return this;

@@ -27,6 +27,11 @@ import jline.console.completer.Completer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nullable;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
+
 /**
  * Provides support for {@link CommandAction} implementations.
  *
@@ -46,19 +51,14 @@ public abstract class CommandActionSupport
 
   @Override
   public String getName() {
-    if (name == null) {
-      throw new IllegalStateException("Name was not configured");
-    }
+    checkState(name != null);
     return name;
   }
 
   @Override
   public void setName(final String name) {
-    assert name != null;
-    if (this.name != null) {
-      throw new IllegalStateException("Name was already configured");
-    }
-    this.name = name;
+    checkState(this.name == null);
+    this.name = checkNotNull(name);
   }
 
   @Override
@@ -77,10 +77,12 @@ public abstract class CommandActionSupport
 
         messages = new MessageSource()
         {
+          @Override
           public String getMessage(final String code) {
             return code;
           }
 
+          @Override
           public String format(final String code, final Object... args) {
             return code;
           }
@@ -103,16 +105,17 @@ public abstract class CommandActionSupport
     return completers;
   }
 
-  public void setCompleters(final Completer... completers) {
-    // completers can be null
+  public void setCompleters(@Nullable final Completer... completers) {
     this.completers = completers;
   }
 
-  public void setCompleters(final List<Completer> completers) {
-    assert completers != null;
-    setCompleters(completers.toArray(new Completer[completers.size()]));
+  public void setCompleters(@Nullable final List<Completer> completers) {
+    if (completers != null) {
+      setCompleters(completers.toArray(new Completer[completers.size()]));
+    }
   }
 
+  @Override
   public CommandAction clone() {
     try {
       return (CommandAction) super.clone();

@@ -18,7 +18,9 @@ package com.planet57.gshell.command.resolver;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 
@@ -42,6 +44,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
+@Named
 @Singleton
 public class CommandResolverImpl
     implements CommandResolver
@@ -137,6 +140,7 @@ public class CommandResolverImpl
   }
 
   @Override
+  @Nullable
   public Node resolve(final NodePath path) {
     checkNotNull(path);
 
@@ -144,6 +148,7 @@ public class CommandResolverImpl
   }
 
   @Override
+  @Nullable
   public Node resolve(final String name) {
     checkNotNull(name);
 

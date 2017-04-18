@@ -19,7 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.net.URL;
+import java.net.URI;
 import java.util.Properties;
 
 import com.planet57.gshell.shell.Shell;
@@ -172,7 +172,7 @@ public class BrandingSupport
 
   @Override
   public License getLicense() {
-    return new LicenseSupport(null, (URL) null);
+    return new LicenseSupport("unknown", (URI) null);
   }
 
   @Override

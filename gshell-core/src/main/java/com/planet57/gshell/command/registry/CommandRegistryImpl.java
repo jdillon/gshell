@@ -21,6 +21,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import com.planet57.gshell.command.CommandAction;
@@ -37,6 +38,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
+@Named
 @Singleton
 public class CommandRegistryImpl
     implements CommandRegistry

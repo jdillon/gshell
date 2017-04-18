@@ -23,6 +23,8 @@ import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.PrefixingMessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Helper to inject <tt>--help<tt> support.
  *
@@ -51,7 +53,7 @@ public class CommandHelpSupport
   }
 
   public CliProcessor createProcessor(final CommandAction command) {
-    assert command != null;
+    checkNotNull(command);
 
     CliProcessor clp = new CliProcessor();
     clp.addBean(command);
@@ -64,8 +66,7 @@ public class CommandHelpSupport
   }
 
   public static String getDescription(final CommandAction command) {
-    assert command != null;
-
+    checkNotNull(command);
     return command.getMessages().getMessage(COMMAND_DESCRIPTION);
   }
 }

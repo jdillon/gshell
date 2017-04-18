@@ -19,7 +19,6 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 
 import javax.annotation.Nullable;
-import javax.inject.Singleton;
 
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.GroupAction;
@@ -34,7 +33,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Singleton
 public class Node
 {
   public static final String ROOT = "/";
