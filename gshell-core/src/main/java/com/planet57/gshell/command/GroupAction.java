@@ -16,14 +16,11 @@
 package com.planet57.gshell.command;
 
 import com.planet57.gshell.command.resolver.NodePath;
+import com.planet57.gshell.util.ComponentSupport;
 import com.planet57.gshell.util.cli2.OpaqueArguments;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.variables.VariableNames;
 import jline.console.completer.Completer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nullable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -34,10 +31,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 2.5
  */
 public class GroupAction
-    implements CommandAction, OpaqueArguments
+  extends ComponentSupport
+  implements CommandAction, OpaqueArguments
 {
-  private static final Logger log = LoggerFactory.getLogger(GroupAction.class);
-
   private final String name;
 
   public GroupAction(final String name) {
@@ -72,15 +68,5 @@ public class GroupAction
   @Override
   public Completer[] getCompleters() {
     return new Completer[0];
-  }
-
-  @Override
-  public CommandAction copy() {
-    try {
-      return (CommandAction) super.clone();
-    }
-    catch (CloneNotSupportedException e) {
-      throw new InternalError();
-    }
   }
 }

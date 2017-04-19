@@ -38,7 +38,7 @@ import static com.google.common.base.Preconditions.checkState;
  */
 public abstract class CommandActionSupport
   extends ComponentSupport
-  implements CommandAction, CommandAction.NameAware
+  implements CommandAction, CommandAction.NameAware, CommandAction.Prototype
 {
   private String name;
 
@@ -113,7 +113,7 @@ public abstract class CommandActionSupport
   }
 
   @Override
-  public CommandAction copy() {
+  public CommandAction create() {
     try {
       return (CommandAction) super.clone();
     }

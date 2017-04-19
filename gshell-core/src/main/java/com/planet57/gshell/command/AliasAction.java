@@ -15,12 +15,11 @@
  */
 package com.planet57.gshell.command;
 
+import com.planet57.gshell.util.ComponentSupport;
 import com.planet57.gshell.util.Strings;
 import com.planet57.gshell.util.cli2.OpaqueArguments;
 import com.planet57.gshell.util.i18n.MessageSource;
 import jline.console.completer.Completer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -31,10 +30,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 2.5
  */
 public class AliasAction
-    implements CommandAction, OpaqueArguments
+  extends ComponentSupport
+  implements CommandAction, OpaqueArguments
 {
-  private static final Logger log = LoggerFactory.getLogger(AliasAction.class);
-
   private final String name;
 
   private final String target;
@@ -78,15 +76,5 @@ public class AliasAction
   @Override
   public Completer[] getCompleters() {
     return new Completer[0];
-  }
-
-  @Override
-  public CommandAction copy() {
-    try {
-      return (CommandAction) super.clone();
-    }
-    catch (CloneNotSupportedException e) {
-      throw new InternalError();
-    }
   }
 }

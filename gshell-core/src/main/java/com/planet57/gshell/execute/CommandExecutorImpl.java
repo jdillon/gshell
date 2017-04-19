@@ -137,8 +137,11 @@ public class CommandExecutorImpl
       }
       action = node.getAction();
     }
-    // Always return a copy, original instance is a prototype
-    return action.copy();
+
+    if (action instanceof CommandAction.Prototype) {
+      return ((CommandAction.Prototype)action).create();
+    }
+    return action;
   }
 
   @Override

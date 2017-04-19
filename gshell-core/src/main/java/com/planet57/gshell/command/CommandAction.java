@@ -38,8 +38,6 @@ public interface CommandAction
 
   Completer[] getCompleters();
 
-  CommandAction copy();
-
   /**
    * Execute the command action.
    *
@@ -65,8 +63,19 @@ public interface CommandAction
     FAILURE // 1
   }
 
+  /**
+   * Marker for commands that need to be aware of their names.
+   */
   interface NameAware
   {
     void setName(String name);
+  }
+
+  /**
+   * Commands which are modeled as prototypes.
+   */
+  interface Prototype
+  {
+    CommandAction create();
   }
 }
