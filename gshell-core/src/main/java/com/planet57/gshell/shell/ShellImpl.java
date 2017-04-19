@@ -37,7 +37,6 @@ import com.planet57.gshell.console.Console;
 import com.planet57.gshell.console.ConsoleErrorHandler;
 import com.planet57.gshell.console.ConsolePrompt;
 import com.planet57.gshell.console.ConsoleTask;
-import com.planet57.gshell.event.EventAware;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.execute.CommandExecutor;
 import com.planet57.gshell.notification.ExitNotification;
@@ -61,6 +60,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
+@Named
 public class ShellImpl
     implements Shell
 {

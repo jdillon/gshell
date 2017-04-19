@@ -31,6 +31,7 @@ import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.shell.ShellImpl;
 import com.planet57.gshell.variables.Variables;
 
+import org.eclipse.sisu.inject.BeanLocator;
 import org.eclipse.sisu.inject.DefaultBeanLocator;
 import org.eclipse.sisu.inject.MutableBeanLocator;
 import org.eclipse.sisu.space.BeanScanning;
@@ -49,7 +50,7 @@ import static com.google.inject.name.Names.named;
 public abstract class GuiceMainSupport
     extends MainSupport
 {
-  protected final DefaultBeanLocator container = new DefaultBeanLocator();
+  private final DefaultBeanLocator container = new DefaultBeanLocator();
 
   @Override
   protected Branding createBranding() {

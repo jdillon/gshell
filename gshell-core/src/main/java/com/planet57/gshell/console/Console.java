@@ -43,7 +43,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class Console
     implements Runnable
 {
-  protected final Logger log = LoggerFactory.getLogger(getClass());
+  private static final Logger log = LoggerFactory.getLogger(Console.class);
 
   private final InputPipe pipe;
 

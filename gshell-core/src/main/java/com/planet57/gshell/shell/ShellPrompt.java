@@ -18,7 +18,9 @@ package com.planet57.gshell.shell;
 import java.io.File;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Provider;
+import javax.inject.Singleton;
 
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.console.ConsolePrompt;
@@ -39,6 +41,8 @@ import static com.planet57.gshell.variables.VariableNames.SHELL_USER_HOME;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
+@Named
+@Singleton
 public class ShellPrompt
     implements ConsolePrompt
 {

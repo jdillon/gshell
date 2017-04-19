@@ -18,6 +18,7 @@ package com.planet57.gshell.console.completer;
 import java.io.File;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 
@@ -34,6 +35,7 @@ import static com.planet57.gshell.variables.VariableNames.SHELL_USER_HOME;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
+@Named
 @Singleton
 public class FileNameCompleter
     extends jline.console.completer.FileNameCompleter
