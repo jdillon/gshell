@@ -15,8 +15,6 @@
  */
 package com.planet57.gshell.logging;
 
-// FIXME: Rename, GenericComponent or something once Level,Logger are renamed.
-
 /**
  * Represents a logging system component.
  *
@@ -32,8 +30,4 @@ public interface LoggingComponent
   String getType();
 
   Object getTarget();
-
-  // Parent, children?
-
-  // TODO: Properties && methods
 }
