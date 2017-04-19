@@ -41,4 +41,12 @@ public class AliasRegisteredEvent
   public String getAlias() {
     return alias;
   }
+
+  @Override
+  public String toString() {
+    return "AliasRegisteredEvent{" +
+      "name='" + name + '\'' +
+      ", alias='" + alias + '\'' +
+      '}';
+  }
 }

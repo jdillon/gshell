@@ -34,4 +34,11 @@ public class CommandRemovedEvent
   public String getName() {
     return name;
   }
+
+  @Override
+  public String toString() {
+    return "CommandRemovedEvent{" +
+      "name='" + name + '\'' +
+      '}';
+  }
 }

@@ -43,4 +43,12 @@ public class CommandRegisteredEvent
   public CommandAction getCommand() {
     return command;
   }
+
+  @Override
+  public String toString() {
+    return "CommandRegisteredEvent{" +
+      "name='" + name + '\'' +
+      ", command=" + command +
+      '}';
+  }
 }

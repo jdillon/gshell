@@ -44,4 +44,12 @@ public class VariableSetEvent
   public Object getPrevious() {
     return previous;
   }
+
+  @Override
+  public String toString() {
+    return "VariableSetEvent{" +
+      "name='" + name + '\'' +
+      ", previous=" + previous +
+      '}';
+  }
 }

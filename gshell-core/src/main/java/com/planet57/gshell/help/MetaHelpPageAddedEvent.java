@@ -34,4 +34,11 @@ public class MetaHelpPageAddedEvent
   public MetaHelpPage getPage() {
     return page;
   }
+
+  @Override
+  public String toString() {
+    return "MetaHelpPageAddedEvent{" +
+      "page=" + page +
+      '}';
+  }
 }
