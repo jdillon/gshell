@@ -33,10 +33,9 @@ import com.planet57.gshell.command.resolver.CommandResolver;
 import com.planet57.gshell.command.resolver.Node;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.guice.BeanContainer;
+import com.planet57.gshell.util.ComponentSupport;
 import com.planet57.gshell.util.filter.Filter;
 import org.eclipse.sisu.BeanEntry;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -49,10 +48,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Named
 @Singleton
 public class HelpPageManagerImpl
-    implements HelpPageManager
+  extends ComponentSupport
+  implements HelpPageManager
 {
-  private static final Logger log = LoggerFactory.getLogger(HelpPageManagerImpl.class);
-
   private final BeanContainer container;
 
   private final EventManager events;

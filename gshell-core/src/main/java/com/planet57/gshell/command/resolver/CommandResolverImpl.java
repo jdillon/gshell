@@ -31,10 +31,9 @@ import com.planet57.gshell.command.registry.CommandRegisteredEvent;
 import com.planet57.gshell.command.registry.CommandRegistry;
 import com.planet57.gshell.command.registry.CommandRemovedEvent;
 import com.planet57.gshell.event.EventAware;
+import com.planet57.gshell.util.ComponentSupport;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -47,10 +46,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Named
 @Singleton
 public class CommandResolverImpl
-    implements CommandResolver, EventAware
+  extends ComponentSupport
+  implements CommandResolver, EventAware
 {
-  private static final Logger log = LoggerFactory.getLogger(CommandResolverImpl.class);
-
   private final Provider<Variables> variables;
 
   private final Node root;

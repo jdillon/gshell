@@ -20,11 +20,10 @@ import java.util.MissingResourceException;
 
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.resolver.NodePath;
+import com.planet57.gshell.util.ComponentSupport;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 import jline.console.completer.Completer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nullable;
 
@@ -38,10 +37,9 @@ import static com.google.common.base.Preconditions.checkState;
  * @since 2.0
  */
 public abstract class CommandActionSupport
-    implements CommandAction, CommandAction.NameAware
+  extends ComponentSupport
+  implements CommandAction, CommandAction.NameAware
 {
-  protected final Logger log = LoggerFactory.getLogger(getClass());
-
   private String name;
 
   private MessageSource messages;

@@ -24,10 +24,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.MissingResourceException;
 
+import com.planet57.gshell.util.ComponentSupport;
 import com.planet57.gshell.util.io.PrintBuffer;
 import com.planet57.gshell.util.io.Closer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -41,10 +40,9 @@ import javax.inject.Singleton;
 @Named
 @Singleton
 public class HelpContentLoaderImpl
-    implements HelpContentLoader
+  extends ComponentSupport
+  implements HelpContentLoader
 {
-  private static final Logger log = LoggerFactory.getLogger(HelpContentLoaderImpl.class);
-
   @Override
   public String load(final String name, final ClassLoader loader) throws MissingContentException, IOException {
     return load(name, Locale.getDefault(), loader);

@@ -24,8 +24,7 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import com.planet57.gshell.event.EventManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.planet57.gshell.util.ComponentSupport;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -38,10 +37,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Named
 @Singleton
 public class AliasRegistryImpl
-    implements AliasRegistry
+  extends ComponentSupport
+  implements AliasRegistry
 {
-  private final Logger log = LoggerFactory.getLogger(getClass());
-
   private final Map<String, String> aliases = new LinkedHashMap<String, String>();
 
   private final EventManager events;

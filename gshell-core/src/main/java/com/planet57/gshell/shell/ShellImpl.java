@@ -42,6 +42,7 @@ import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.execute.CommandExecutor;
 import com.planet57.gshell.notification.ExitNotification;
 import com.planet57.gshell.util.Arguments;
+import com.planet57.gshell.util.ComponentSupport;
 import com.planet57.gshell.util.io.Closer;
 import com.planet57.gshell.util.io.StreamJack;
 import com.planet57.gshell.variables.Variables;
@@ -50,8 +51,6 @@ import jline.console.ConsoleReader;
 import jline.console.completer.AggregateCompleter;
 import jline.console.completer.Completer;
 import jline.console.completer.NullCompleter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -63,10 +62,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 @Named
 public class ShellImpl
-    implements Shell
+  extends ComponentSupport
+  implements Shell
 {
-  private final Logger log = LoggerFactory.getLogger(getClass());
-
   private final EventManager events;
 
   private final Branding branding;

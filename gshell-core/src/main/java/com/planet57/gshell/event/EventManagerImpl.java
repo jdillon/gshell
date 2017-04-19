@@ -22,10 +22,9 @@ import javax.inject.Singleton;
 import com.google.common.eventbus.EventBus;
 import com.google.inject.Key;
 import com.planet57.gshell.guice.BeanContainer;
+import com.planet57.gshell.util.ComponentSupport;
 import org.eclipse.sisu.BeanEntry;
 import org.eclipse.sisu.Mediator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -38,10 +37,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Named
 @Singleton
 public class EventManagerImpl
-    implements EventManager
+  extends ComponentSupport
+  implements EventManager
 {
-  private static final Logger log = LoggerFactory.getLogger(EventManagerImpl.class);
-
   private final BeanContainer container;
 
   private final EventBus eventBus;

@@ -26,9 +26,8 @@ import com.google.inject.Key;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.guice.BeanContainer;
+import com.planet57.gshell.util.ComponentSupport;
 import org.eclipse.sisu.BeanEntry;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
@@ -42,10 +41,9 @@ import static com.google.common.base.Preconditions.checkState;
 @Named
 @Singleton
 public class CommandRegistrarImpl
-    implements CommandRegistrar
+  extends ComponentSupport
+  implements CommandRegistrar
 {
-  private static final Logger log = LoggerFactory.getLogger(CommandRegistrarImpl.class);
-
   private final BeanContainer container;
 
   private final CommandRegistry registry;

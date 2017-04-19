@@ -15,6 +15,7 @@
  */
 package com.planet57.gshell.plexus;
 
+import com.planet57.gshell.util.ComponentSupport;
 import org.codehaus.plexus.ContainerConfiguration;
 import org.codehaus.plexus.DefaultContainerConfiguration;
 import org.codehaus.plexus.DefaultPlexusContainer;
@@ -38,6 +39,7 @@ import javax.inject.Singleton;
 @Named
 @Singleton
 public class PlexusRuntime
+  extends ComponentSupport
 {
   @Nullable
   private ClassWorld classWorld;

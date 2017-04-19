@@ -38,6 +38,7 @@ import com.planet57.gshell.parser.CommandLineParser.CommandLine;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.shell.ShellHolder;
 import com.planet57.gshell.util.Arguments;
+import com.planet57.gshell.util.ComponentSupport;
 import com.planet57.gshell.util.Strings;
 import com.planet57.gshell.util.cli2.CliProcessor;
 import com.planet57.gshell.util.cli2.HelpPrinter;
@@ -46,8 +47,6 @@ import com.planet57.gshell.util.io.StreamJack;
 import com.planet57.gshell.util.pref.PreferenceProcessor;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -61,10 +60,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Named
 @Singleton
 public class CommandExecutorImpl
-    implements CommandExecutor
+  extends ComponentSupport
+  implements CommandExecutor
 {
-  private final Logger log = LoggerFactory.getLogger(getClass());
-
   private final AliasRegistry aliases;
 
   private final CommandResolver resolver;

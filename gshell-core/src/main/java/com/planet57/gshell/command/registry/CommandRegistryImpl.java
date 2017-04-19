@@ -26,8 +26,7 @@ import javax.inject.Singleton;
 
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.event.EventManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.planet57.gshell.util.ComponentSupport;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -40,10 +39,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Named
 @Singleton
 public class CommandRegistryImpl
-    implements CommandRegistry
+  extends ComponentSupport
+  implements CommandRegistry
 {
-  private final Logger log = LoggerFactory.getLogger(getClass());
-
   private final Map<String, CommandAction> commands = new LinkedHashMap<String, CommandAction>();
 
   private final EventManager events;
