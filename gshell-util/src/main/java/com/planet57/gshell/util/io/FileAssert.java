@@ -20,6 +20,8 @@ import java.io.File;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Helper to assert various file requirements.
  *
@@ -28,7 +30,7 @@ import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
  */
 public class FileAssert
 {
-  private static enum Messages
+  private enum Messages
   {
     NOT_FOUND,
     EXISTS,
@@ -57,8 +59,7 @@ public class FileAssert
   private final File file;
 
   public FileAssert(final File file) {
-    assert file != null;
-    this.file = file;
+    this.file = checkNotNull(file);
   }
 
   public File getFile() {
