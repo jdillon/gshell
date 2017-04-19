@@ -23,6 +23,8 @@ package com.planet57.gshell.event;
  */
 public interface EventManager
 {
+  void start();
+
   void addListener(Object listener);
 
   void removeListener(Object listener);

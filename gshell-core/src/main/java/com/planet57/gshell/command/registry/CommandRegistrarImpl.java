@@ -26,7 +26,7 @@ import com.google.inject.Key;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandAction;
 import org.eclipse.sisu.BeanEntry;
-import org.eclipse.sisu.inject.MutableBeanLocator;
+import org.eclipse.sisu.inject.BeanLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,12 +46,12 @@ public class CommandRegistrarImpl
 {
   private static final Logger log = LoggerFactory.getLogger(CommandRegistrarImpl.class);
 
-  private final MutableBeanLocator container;
+  private final BeanLocator container;
 
   private final CommandRegistry registry;
 
   @Inject
-  public CommandRegistrarImpl(final MutableBeanLocator container,
+  public CommandRegistrarImpl(final BeanLocator container,
                               final CommandRegistry registry)
   {
     this.container = checkNotNull(container);

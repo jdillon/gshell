@@ -36,6 +36,7 @@ import com.planet57.gshell.command.registry.CommandRegistry;
 import com.planet57.gshell.console.ConsoleErrorHandler;
 import com.planet57.gshell.console.ConsolePrompt;
 import com.planet57.gshell.CoreModule;
+import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.logging.LoggingSystem;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.shell.ShellErrorHandler;
@@ -124,6 +125,9 @@ public abstract class CommandTestSupport
 
     Injector injector = Guice.createInjector(Stage.DEVELOPMENT, new WireModule(modules));
     container.add(injector, 0);
+
+    // HACK: really need some component lifecycle
+    injector.getInstance(EventManager.class).start();
 
     CommandRegistrar registrar = injector.getInstance(CommandRegistrar.class);
     for (Map.Entry<String, Class> entry : requiredCommands.entrySet()) {

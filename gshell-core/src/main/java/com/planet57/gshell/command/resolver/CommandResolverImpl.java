@@ -30,7 +30,7 @@ import com.planet57.gshell.command.GroupAction;
 import com.planet57.gshell.command.registry.CommandRegisteredEvent;
 import com.planet57.gshell.command.registry.CommandRegistry;
 import com.planet57.gshell.command.registry.CommandRemovedEvent;
-import com.planet57.gshell.event.EventManager;
+import com.planet57.gshell.event.EventAware;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
 import org.slf4j.Logger;
@@ -47,7 +47,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Named
 @Singleton
 public class CommandResolverImpl
-    implements CommandResolver
+    implements CommandResolver, EventAware
 {
   private static final Logger log = LoggerFactory.getLogger(CommandResolverImpl.class);
 
@@ -56,11 +56,10 @@ public class CommandResolverImpl
   private final Node root;
 
   @Inject
-  public CommandResolverImpl(final Provider<Variables> variables, final EventManager events,
+  public CommandResolverImpl(final Provider<Variables> variables,
                              final CommandRegistry commands)
   {
     this.variables = checkNotNull(variables);
-    checkNotNull(events);
     checkNotNull(commands);
 
     // Setup the tree
@@ -70,9 +69,6 @@ public class CommandResolverImpl
     for (CommandAction command : commands.getCommands()) {
       root.add(command.getName(), command);
     }
-
-    // Add a listener to mange the command tree
-    events.addListener(this);
   }
 
   @Subscribe

@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * The default {@link EventManager} components.
+ * The default {@link EventManager} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
@@ -42,13 +42,20 @@ public class EventManagerImpl
 {
   private static final Logger log = LoggerFactory.getLogger(EventManagerImpl.class);
 
+  private final BeanLocator container;
+
   private final EventBus eventBus;
 
   @Inject
   public EventManagerImpl(final BeanLocator container) {
-    checkNotNull(container);
+    this.container = checkNotNull(container);
     this.eventBus = new EventBus();
+  }
 
+  // HACK: really need some component lifecycle
+
+  @Override
+  public void start() {
     // automatically register/unregister event-aware components
     container.watch(Key.get(EventAware.class, Named.class), new EventAwareMediator(), this);
   }
