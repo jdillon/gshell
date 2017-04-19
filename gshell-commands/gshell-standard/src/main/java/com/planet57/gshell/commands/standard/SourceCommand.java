@@ -32,7 +32,7 @@ import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.util.io.FileAssert;
 import com.planet57.gshell.util.cli2.Argument;
-import com.planet57.gshell.util.io.Closer;
+import com.planet57.gshell.util.io.Closeables;
 import jline.console.completer.Completer;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -78,7 +78,7 @@ public class SourceCommand
       }
     }
     finally {
-      Closer.close(reader);
+      Closeables.close(reader);
     }
 
     return Result.SUCCESS;

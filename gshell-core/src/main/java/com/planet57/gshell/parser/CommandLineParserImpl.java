@@ -25,7 +25,7 @@ import com.planet57.gshell.parser.impl.visitor.ExecutingVisitor;
 import com.planet57.gshell.parser.impl.visitor.LoggingVisitor;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.util.ComponentSupport;
-import com.planet57.gshell.util.io.Closer;
+import com.planet57.gshell.util.io.Closeables;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -58,7 +58,7 @@ public class CommandLineParserImpl
       root = parser.parse(reader);
     }
     finally {
-      Closer.close(reader);
+      Closeables.close(reader);
     }
 
     // If trace is enabled, the log the parse tree

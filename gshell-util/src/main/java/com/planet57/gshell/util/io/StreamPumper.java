@@ -122,7 +122,7 @@ public class StreamPumper
     }
     finally {
       if (closeWhenExhausted) {
-        Closer.close(out);
+        Closeables.close(out);
       }
       finished = true;
 

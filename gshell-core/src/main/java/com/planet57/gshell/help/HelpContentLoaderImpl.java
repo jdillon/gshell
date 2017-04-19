@@ -26,7 +26,7 @@ import java.util.MissingResourceException;
 
 import com.planet57.gshell.util.ComponentSupport;
 import com.planet57.gshell.util.io.PrintBuffer;
-import com.planet57.gshell.util.io.Closer;
+import com.planet57.gshell.util.io.Closeables;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -74,7 +74,7 @@ public class HelpContentLoaderImpl
       }
     }
     finally {
-      Closer.close(input);
+      Closeables.close(input);
     }
 
     return buff.toString();

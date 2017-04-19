@@ -43,7 +43,7 @@ import com.planet57.gshell.execute.CommandExecutor;
 import com.planet57.gshell.notification.ExitNotification;
 import com.planet57.gshell.util.Arguments;
 import com.planet57.gshell.util.ComponentSupport;
-import com.planet57.gshell.util.io.Closer;
+import com.planet57.gshell.util.io.Closeables;
 import com.planet57.gshell.util.io.StreamJack;
 import com.planet57.gshell.variables.Variables;
 import com.planet57.gshell.variables.VariablesImpl;
@@ -422,7 +422,7 @@ public class ShellImpl
       }
     }
     finally {
-      Closer.close(reader);
+      Closeables.close(reader);
     }
   }
 

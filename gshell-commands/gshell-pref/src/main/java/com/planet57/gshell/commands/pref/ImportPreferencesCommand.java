@@ -25,7 +25,7 @@ import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.util.cli2.Argument;
-import com.planet57.gshell.util.io.Closer;
+import com.planet57.gshell.util.io.Closeables;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -55,7 +55,7 @@ public class ImportPreferencesCommand
       Preferences.importPreferences(in);
     }
     finally {
-      Closer.close(in);
+      Closeables.close(in);
     }
 
     return Result.SUCCESS;

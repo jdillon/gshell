@@ -21,17 +21,19 @@ import java.io.IOException;
 import com.planet57.gossip.Log;
 import org.slf4j.Logger;
 
+import javax.annotation.Nullable;
+
 /**
  * Quietly closes {@link Closeable} objects.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public class Closer
+public class Closeables
 {
-  private static final Logger log = Log.getLogger(Closer.class);
+  private static final Logger log = Log.getLogger(Closeables.class);
 
-  public static void close(final Closeable... targets) {
+  public static void close(@Nullable final Closeable... targets) {
     if (targets != null) {
       for (Closeable c : targets) {
         if (c == null) {
@@ -42,7 +44,7 @@ public class Closer
           c.close();
         }
         catch (IOException e) {
-          log.trace(e.getMessage(), e);
+          log.trace(e.toString(), e);
         }
       }
     }

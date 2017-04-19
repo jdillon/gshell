@@ -23,7 +23,7 @@ import java.io.PrintWriter;
 import java.io.Reader;
 
 import com.google.common.io.Flushables;
-import com.planet57.gshell.util.io.Closer;
+import com.planet57.gshell.util.io.Closeables;
 import com.planet57.gshell.util.io.StreamSet;
 import jline.Terminal;
 import jline.TerminalFactory;
@@ -143,11 +143,11 @@ public class IO
    * Close all streams.
    */
   public void close() throws IOException {
-    Closer.close(in, out);
+    Closeables.close(in, out);
 
     // Only attempt to close the err stream if we aren't sharing it with out
     if (!streams.isOutputCombined()) {
-      Closer.close(err);
+      Closeables.close(err);
     }
   }
 

@@ -26,7 +26,7 @@ import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
-import com.planet57.gshell.util.io.Closer;
+import com.planet57.gshell.util.io.Closeables;
 import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.Preferences;
 
@@ -77,7 +77,7 @@ public class ExportPreferencesCommand
     }
     finally {
       if (file != null) {
-        Closer.close(out);
+        Closeables.close(out);
       }
     }
 

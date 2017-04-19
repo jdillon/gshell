@@ -31,7 +31,7 @@ import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
-import com.planet57.gshell.util.io.Closer;
+import com.planet57.gshell.util.io.Closeables;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -87,7 +87,7 @@ public class WgetCommand
 
     // if we write a file, close it then return the file
     if (outputFile != null) {
-      Closer.close(out);
+      Closeables.close(out);
       io.println("Saved {} [{}]", outputFile, outputFile.length()); // TODO: i18n
       return outputFile;
     }

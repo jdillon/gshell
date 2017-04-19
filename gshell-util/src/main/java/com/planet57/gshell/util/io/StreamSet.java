@@ -91,10 +91,10 @@ public class StreamSet
   }
 
   public void close() {
-    Closer.close(in, out);
+    Closeables.close(in, out);
 
     if (!isOutputCombined()) {
-      Closer.close(err);
+      Closeables.close(err);
     }
   }
 
