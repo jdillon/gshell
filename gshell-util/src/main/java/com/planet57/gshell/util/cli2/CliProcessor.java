@@ -30,7 +30,6 @@ import com.planet57.gshell.util.cli2.handler.Handlers;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 import com.planet57.gshell.util.setter.SetterFactory;
-import com.planet57.gshell.util.yarn.Yarn;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.MissingArgumentException;
@@ -366,10 +365,6 @@ public class CliProcessor
 
     public OptionDescriptor getDescriptor() {
       return desc;
-    }
-
-    public String toString() {
-      return Yarn.render(this);
     }
   }
 

@@ -15,31 +15,19 @@
  */
 package com.planet57.gshell.util;
 
+import com.google.common.base.Joiner;
+
 /**
- * Common <code>String</code> manipulation routines from <tt>org.codehaus.plexus:plexus-utils</tt>.
+ * Common string muck.
  *
  * @since 2.0
  */
 @Deprecated
 public class Strings
 {
-  // FIXME: replace with guava Joiner
+  // TODO: move joiner to specific location
 
-  public static String join(final Object[] array, String separator) {
-    if (separator == null) {
-      separator = "";
-    }
-    int arraySize = array.length;
-    int bufSize = (arraySize == 0 ? 0 : (array[0].toString().length() + separator.length()) * arraySize);
-    StringBuilder buff = new StringBuilder(bufSize);
-
-    for (int i = 0; i < arraySize; i++) {
-      if (i > 0) {
-        buff.append(separator);
-      }
-      buff.append(array[i]);
-    }
-
-    return buff.toString();
+  public static String join(final Object[] array, final String separator) {
+    return Joiner.on(separator).join(array);
   }
 }
