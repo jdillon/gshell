@@ -26,8 +26,6 @@ import com.planet57.gshell.MainSupport;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.branding.BrandingSupport;
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.command.registry.CommandRegistrar;
-import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.shell.ShellImpl;
 import com.planet57.gshell.variables.Variables;
@@ -65,10 +63,7 @@ public abstract class GuiceMainSupport
     container.add(injector, 0);
 
     ShellImpl shell = injector.getInstance(ShellImpl.class);
-
-    // HACK: really need some component lifecycle
-    injector.getInstance(EventManager.class).start();
-    injector.getInstance(CommandRegistrar.class).discoverCommands();
+    shell.start();
 
     return shell;
   }

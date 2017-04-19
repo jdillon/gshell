@@ -33,6 +33,7 @@ import javax.inject.Named;
 
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.command.IO;
+import com.planet57.gshell.command.registry.CommandRegistrar;
 import com.planet57.gshell.console.Console;
 import com.planet57.gshell.console.ConsoleErrorHandler;
 import com.planet57.gshell.console.ConsolePrompt;
@@ -66,9 +67,13 @@ public class ShellImpl
 {
   private final Logger log = LoggerFactory.getLogger(getClass());
 
+  private final EventManager events;
+
   private final Branding branding;
 
   private final CommandExecutor executor;
+
+  private final CommandRegistrar commandRegistrar;
 
   private IO io;
 
@@ -94,15 +99,17 @@ public class ShellImpl
 
   @Inject
   public ShellImpl(final EventManager events,
+                   final CommandRegistrar commandRegistrar,
                    final CommandExecutor executor,
                    final Branding branding,
                    @Nullable @Named("main") final IO io,
                    @Nullable @Named("main") final Variables variables)
       throws IOException
   {
+    this.events = checkNotNull(events);
     this.executor = checkNotNull(executor);
+    this.commandRegistrar = checkNotNull(commandRegistrar);
     this.branding = checkNotNull(branding);
-    checkNotNull(events);
 
     this.io = io != null ? io : new IO();
     this.variables = variables != null ? variables : new VariablesImpl();
@@ -113,6 +120,13 @@ public class ShellImpl
     }
 
     this.history = new ShellHistory(new File(branding.getUserContextDir(), branding.getHistoryFileName()));
+  }
+
+  // HACK: primative lifecycle
+
+  public void start() throws Exception {
+    events.start();
+    commandRegistrar.discoverCommands();
   }
 
   @Override
@@ -150,14 +164,15 @@ public class ShellImpl
   }
 
   public void setCompleters(final Completer... completers) {
-    assert completers != null;
-    setCompleters(Arrays.asList(completers));
+    if (completers != null) {
+      this.completers = Arrays.asList(completers);
+    }
   }
 
   @Inject
   public void installCompleters(final @Named("alias-name") Completer c1, final @Named("commands") Completer c2) {
-    assert c1 != null;
-    assert c2 != null;
+    checkNotNull(c1);
+    checkNotNull(c2);
     setCompleters(new AggregateCompleter(c1, c2));
   }
 
