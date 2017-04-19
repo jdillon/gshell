@@ -25,7 +25,6 @@ import javax.inject.Singleton;
 
 import com.google.common.eventbus.Subscribe;
 import com.planet57.gshell.event.EventAware;
-import com.planet57.gshell.event.EventManager;
 import jline.console.completer.Completer;
 import jline.console.completer.StringsCompleter;
 

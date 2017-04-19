@@ -88,8 +88,6 @@ public abstract class GuiceMainSupport
     @Override
     protected void configure() {
       bind(MutableBeanLocator.class).toInstance(container);
-      // TODO: remove: require specific impl to bind this
-      // bind(Branding.class).toInstance(getBranding());
       bind(IO.class).annotatedWith(named("main")).toInstance(io);
       bind(Variables.class).annotatedWith(named("main")).toInstance(vars);
     }
