@@ -18,7 +18,7 @@ package com.planet57.gshell.shell;
 import java.io.File;
 import java.io.IOException;
 
-import com.planet57.gshell.util.io.Flusher;
+import com.google.common.io.Flushables;
 import jline.console.history.FileHistory;
 
 /**
@@ -38,7 +38,7 @@ public class ShellHistory
     {
       @Override
       public void run() {
-        Flusher.flush(ShellHistory.this);
+        Flushables.flushQuietly(ShellHistory.this);
       }
     });
   }

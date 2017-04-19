@@ -20,13 +20,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
+import com.google.common.io.Flushables;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.io.Closer;
-import com.planet57.gshell.util.io.Flusher;
 import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.Preferences;
 
@@ -73,7 +73,7 @@ public class ExportPreferencesCommand
         prefs.exportNode(out);
       }
 
-      Flusher.flush(out);
+      Flushables.flushQuietly(out);
     }
     finally {
       if (file != null) {

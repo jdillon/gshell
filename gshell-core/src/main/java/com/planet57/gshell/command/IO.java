@@ -22,8 +22,8 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.Reader;
 
+import com.google.common.io.Flushables;
 import com.planet57.gshell.util.io.Closer;
-import com.planet57.gshell.util.io.Flusher;
 import com.planet57.gshell.util.io.StreamSet;
 import jline.Terminal;
 import jline.TerminalFactory;
@@ -131,11 +131,11 @@ public class IO
    * Flush both output streams.
    */
   public void flush() {
-    Flusher.flush(out);
+    Flushables.flushQuietly(out);
 
     // Only attempt to flush the err stream if we aren't sharing it with out
     if (!streams.isOutputCombined()) {
-      Flusher.flush(err);
+      Flushables.flushQuietly(err);
     }
   }
 
