@@ -45,7 +45,7 @@ public class InputPipe
 
   private final StreamSet streams;
 
-  public static interface InterruptHandler
+  public interface InterruptHandler
   {
     boolean interrupt() throws Exception;
 
