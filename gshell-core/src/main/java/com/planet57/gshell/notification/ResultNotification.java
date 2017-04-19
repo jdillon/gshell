@@ -15,6 +15,8 @@
  */
 package com.planet57.gshell.notification;
 
+import com.planet57.gshell.util.Notification;
+
 /**
  * Thrown to indicate a command result state.
  *
