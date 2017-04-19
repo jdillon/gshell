@@ -15,8 +15,6 @@
  */
 package com.planet57.gshell.command;
 
-import com.planet57.gshell.command.support.CommandActionSupport;
-
 /**
  * Dummy {@link CommandAction}
  *

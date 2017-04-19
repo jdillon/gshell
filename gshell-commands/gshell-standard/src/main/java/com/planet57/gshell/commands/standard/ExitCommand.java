@@ -17,7 +17,7 @@ package com.planet57.gshell.commands.standard;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.support.CommandActionSupport;
+import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.notification.ExitNotification;
 import com.planet57.gshell.util.cli2.Argument;
 

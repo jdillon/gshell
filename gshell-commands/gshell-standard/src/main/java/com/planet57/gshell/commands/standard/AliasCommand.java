@@ -25,7 +25,7 @@ import com.planet57.gshell.alias.AliasRegistry;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.command.support.CommandActionSupport;
+import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.Strings;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.CliProcessor;

@@ -23,7 +23,7 @@ import com.planet57.gshell.alias.NoSuchAliasException;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.command.support.CommandActionSupport;
+import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
 import jline.console.completer.Completer;
 

@@ -18,7 +18,7 @@ package com.planet57.gshell.commands.shell;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.command.support.CommandActionSupport;
+import com.planet57.gshell.command.CommandActionSupport;
 import org.fusesource.jansi.Ansi;
 
 import static com.google.common.base.Preconditions.checkNotNull;
