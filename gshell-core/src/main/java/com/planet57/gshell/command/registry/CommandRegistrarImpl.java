@@ -25,8 +25,8 @@ import javax.inject.Singleton;
 import com.google.inject.Key;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandAction;
+import com.planet57.gshell.guice.BeanContainer;
 import org.eclipse.sisu.BeanEntry;
-import org.eclipse.sisu.inject.BeanLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,19 +39,19 @@ import static com.google.common.base.Preconditions.checkState;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-//@Named
+@Named
 @Singleton
 public class CommandRegistrarImpl
     implements CommandRegistrar
 {
   private static final Logger log = LoggerFactory.getLogger(CommandRegistrarImpl.class);
 
-  private final BeanLocator container;
+  private final BeanContainer container;
 
   private final CommandRegistry registry;
 
   @Inject
-  public CommandRegistrarImpl(final BeanLocator container,
+  public CommandRegistrarImpl(final BeanContainer container,
                               final CommandRegistry registry)
   {
     this.container = checkNotNull(container);

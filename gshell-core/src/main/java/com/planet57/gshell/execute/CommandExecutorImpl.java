@@ -17,6 +17,8 @@ package com.planet57.gshell.execute;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
 
 import com.planet57.gshell.alias.AliasRegistry;
 import com.planet57.gshell.alias.NoSuchAliasException;
@@ -56,6 +58,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
+@Named
+@Singleton
 public class CommandExecutorImpl
     implements CommandExecutor
 {

@@ -38,7 +38,7 @@ import static com.planet57.gshell.command.resolver.Node.SEPARATOR;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Named
+@Named("node-path")
 @Singleton
 public class NodePathCompleter
     implements Completer

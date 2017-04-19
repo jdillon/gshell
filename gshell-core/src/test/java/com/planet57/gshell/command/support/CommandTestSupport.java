@@ -35,8 +35,9 @@ import com.planet57.gshell.command.registry.CommandRegistrar;
 import com.planet57.gshell.command.registry.CommandRegistry;
 import com.planet57.gshell.console.ConsoleErrorHandler;
 import com.planet57.gshell.console.ConsolePrompt;
-import com.planet57.gshell.CoreModule;
+import com.planet57.gshell.guice.CoreModule;
 import com.planet57.gshell.event.EventManager;
+import com.planet57.gshell.guice.BeanContainer;
 import com.planet57.gshell.logging.LoggingSystem;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.shell.ShellErrorHandler;
@@ -45,8 +46,6 @@ import com.planet57.gshell.shell.ShellPrompt;
 import com.planet57.gshell.util.Strings;
 import com.planet57.gshell.variables.Variables;
 import com.planet57.gshell.variables.VariablesImpl;
-import org.eclipse.sisu.inject.DefaultBeanLocator;
-import org.eclipse.sisu.inject.MutableBeanLocator;
 import org.eclipse.sisu.space.BeanScanning;
 import org.eclipse.sisu.space.SpaceModule;
 import org.eclipse.sisu.space.URLClassSpace;
@@ -74,7 +73,7 @@ public abstract class CommandTestSupport
 
   private final TestUtil util = new TestUtil(this);
 
-  private DefaultBeanLocator container;
+  private BeanContainer container;
 
   private TestIO io;
 
@@ -101,7 +100,7 @@ public abstract class CommandTestSupport
 
   @Before
   public void setUp() throws Exception {
-    container = new DefaultBeanLocator();
+    container = new BeanContainer();
     io = new TestIO();
     vars = new VariablesImpl();
 
@@ -109,7 +108,7 @@ public abstract class CommandTestSupport
     {
       @Override
       protected void configure() {
-        bind(MutableBeanLocator.class).toInstance(container);
+        bind(BeanContainer.class).toInstance(container);
         bind(LoggingSystem.class).to(TestLoggingSystem.class);
         bind(ConsolePrompt.class).to(ShellPrompt.class);
         bind(ConsoleErrorHandler.class).to(ShellErrorHandler.class);
@@ -123,7 +122,7 @@ public abstract class CommandTestSupport
     modules.add(boot);
     configureModules(modules);
 
-    Injector injector = Guice.createInjector(Stage.DEVELOPMENT, new WireModule(modules));
+    Injector injector = Guice.createInjector(Stage.PRODUCTION, new WireModule(modules));
     container.add(injector, 0);
 
     // HACK: really need some component lifecycle

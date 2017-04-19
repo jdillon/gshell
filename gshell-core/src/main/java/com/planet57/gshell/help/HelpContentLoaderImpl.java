@@ -29,12 +29,17 @@ import com.planet57.gshell.util.io.Closer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Named;
+import javax.inject.Singleton;
+
 /**
  * {@link HelpContentLoader} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
+@Named
+@Singleton
 public class HelpContentLoaderImpl
     implements HelpContentLoader
 {

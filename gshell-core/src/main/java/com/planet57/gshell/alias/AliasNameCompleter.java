@@ -36,7 +36,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Named
+@Named("alias-name")
 @Singleton
 public class AliasNameCompleter
     implements Completer, EventAware

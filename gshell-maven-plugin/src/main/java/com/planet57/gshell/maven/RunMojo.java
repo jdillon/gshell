@@ -20,7 +20,7 @@ import com.google.inject.Module;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.console.ConsoleErrorHandler;
 import com.planet57.gshell.console.ConsolePrompt;
-import com.planet57.gshell.GuiceMainSupport;
+import com.planet57.gshell.guice.GuiceMainSupport;
 import com.planet57.gshell.logging.LoggingSystem;
 import com.planet57.gshell.shell.ShellErrorHandler;
 import com.planet57.gshell.shell.ShellPrompt;

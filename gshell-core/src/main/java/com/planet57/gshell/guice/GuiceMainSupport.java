@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell;
+package com.planet57.gshell.guice;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +22,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
+import com.planet57.gshell.MainSupport;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.branding.BrandingSupport;
 import com.planet57.gshell.command.IO;
@@ -31,9 +32,6 @@ import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.shell.ShellImpl;
 import com.planet57.gshell.variables.Variables;
 
-import org.eclipse.sisu.inject.BeanLocator;
-import org.eclipse.sisu.inject.DefaultBeanLocator;
-import org.eclipse.sisu.inject.MutableBeanLocator;
 import org.eclipse.sisu.space.BeanScanning;
 import org.eclipse.sisu.space.SpaceModule;
 import org.eclipse.sisu.space.URLClassSpace;
@@ -50,7 +48,7 @@ import static com.google.inject.name.Names.named;
 public abstract class GuiceMainSupport
     extends MainSupport
 {
-  private final DefaultBeanLocator container = new DefaultBeanLocator();
+  private final BeanContainer container = new BeanContainer();
 
   @Override
   protected Branding createBranding() {
@@ -92,7 +90,7 @@ public abstract class GuiceMainSupport
   {
     @Override
     protected void configure() {
-      bind(MutableBeanLocator.class).toInstance(container);
+      bind(BeanContainer.class).toInstance(container);
       bind(IO.class).annotatedWith(named("main")).toInstance(io);
       bind(Variables.class).annotatedWith(named("main")).toInstance(vars);
     }

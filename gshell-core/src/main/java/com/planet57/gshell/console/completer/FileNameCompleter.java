@@ -35,7 +35,7 @@ import static com.planet57.gshell.variables.VariableNames.SHELL_USER_HOME;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Named
+@Named("file-name")
 @Singleton
 public class FileNameCompleter
     extends jline.console.completer.FileNameCompleter

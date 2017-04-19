@@ -36,7 +36,7 @@ import jline.console.completer.NullCompleter;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Named
+@Named("commands")
 @Singleton
 public class CommandsCompleter
     extends ArgumentCompleter

@@ -35,7 +35,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Named
+@Named("meta-help-page-name")
 @Singleton
 public class MetaHelpPageNameCompleter
     implements Completer, EventAware

@@ -21,9 +21,9 @@ import javax.inject.Singleton;
 
 import com.google.common.eventbus.EventBus;
 import com.google.inject.Key;
+import com.planet57.gshell.guice.BeanContainer;
 import org.eclipse.sisu.BeanEntry;
 import org.eclipse.sisu.Mediator;
-import org.eclipse.sisu.inject.BeanLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,19 +35,19 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-//@Named
+@Named
 @Singleton
 public class EventManagerImpl
     implements EventManager
 {
   private static final Logger log = LoggerFactory.getLogger(EventManagerImpl.class);
 
-  private final BeanLocator container;
+  private final BeanContainer container;
 
   private final EventBus eventBus;
 
   @Inject
-  public EventManagerImpl(final BeanLocator container) {
+  public EventManagerImpl(final BeanContainer container) {
     this.container = checkNotNull(container);
     this.eventBus = new EventBus();
   }

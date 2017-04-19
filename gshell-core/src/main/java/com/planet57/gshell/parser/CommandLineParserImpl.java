@@ -28,6 +28,9 @@ import com.planet57.gshell.util.io.Closer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Named;
+import javax.inject.Singleton;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -36,6 +39,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
+@Named
+@Singleton
 public class CommandLineParserImpl
     implements CommandLineParser
 {

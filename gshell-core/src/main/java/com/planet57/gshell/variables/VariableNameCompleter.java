@@ -37,7 +37,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Named
+@Named("variable-name")
 @Singleton
 public class VariableNameCompleter
     implements Completer, EventAware

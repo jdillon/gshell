@@ -32,9 +32,9 @@ import com.planet57.gshell.alias.NoSuchAliasException;
 import com.planet57.gshell.command.resolver.CommandResolver;
 import com.planet57.gshell.command.resolver.Node;
 import com.planet57.gshell.event.EventManager;
+import com.planet57.gshell.guice.BeanContainer;
 import com.planet57.gshell.util.filter.Filter;
 import org.eclipse.sisu.BeanEntry;
-import org.eclipse.sisu.inject.BeanLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,14 +46,14 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-//@Named
+@Named
 @Singleton
 public class HelpPageManagerImpl
     implements HelpPageManager
 {
   private static final Logger log = LoggerFactory.getLogger(HelpPageManagerImpl.class);
 
-  private final BeanLocator container;
+  private final BeanContainer container;
 
   private final EventManager events;
 
@@ -66,7 +66,7 @@ public class HelpPageManagerImpl
   private final Map<String, MetaHelpPage> metaPages = new LinkedHashMap<String, MetaHelpPage>();
 
   @Inject
-  public HelpPageManagerImpl(final BeanLocator container,
+  public HelpPageManagerImpl(final BeanContainer container,
                              final EventManager events,
                              final AliasRegistry aliases,
                              final CommandResolver resolver,
