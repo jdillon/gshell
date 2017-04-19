@@ -15,23 +15,25 @@
  */
 package com.planet57.gshell.command;
 
-import com.planet57.gshell.command.CommandAction;
+import com.planet57.gshell.branding.Branding;
+import com.planet57.gshell.shell.ShellHolder;
 import com.planet57.gshell.util.cli2.CliProcessor;
 import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.i18n.AggregateMessageSource;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.PrefixingMessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
+import com.planet57.gshell.util.pref.PreferenceProcessor;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Helper to inject <tt>--help<tt> support.
+ * Command helper.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public class CommandHelpSupport
+public class CommandHelper
 {
   public static final String COMMAND_DOT = "command.";
 
@@ -48,11 +50,10 @@ public class CommandHelpSupport
     if (messages == null) {
       messages = new ResourceBundleMessageSource(getClass());
     }
-
     return messages;
   }
 
-  public CliProcessor createProcessor(final CommandAction command) {
+  public CliProcessor createCliProcessor(final CommandAction command) {
     checkNotNull(command);
 
     CliProcessor clp = new CliProcessor();
@@ -68,5 +69,16 @@ public class CommandHelpSupport
   public static String getDescription(final CommandAction command) {
     checkNotNull(command);
     return command.getMessages().getMessage(COMMAND_DESCRIPTION);
+  }
+
+  public static PreferenceProcessor createPreferenceProcessor(final CommandAction command) {
+    checkNotNull(command);
+
+    PreferenceProcessor pp = new PreferenceProcessor();
+    Branding branding = ShellHolder.get().getBranding();
+    pp.setBasePath(branding.getPreferencesBasePath());
+    pp.addBean(command);
+
+    return pp;
   }
 }

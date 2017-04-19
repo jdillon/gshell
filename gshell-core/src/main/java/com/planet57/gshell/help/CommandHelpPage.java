@@ -19,8 +19,7 @@ import java.io.PrintWriter;
 
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.resolver.Node;
-import com.planet57.gshell.command.CommandHelpSupport;
-import com.planet57.gshell.command.CommandPreferenceSupport;
+import com.planet57.gshell.command.CommandHelper;
 import com.planet57.gshell.shell.ShellHolder;
 import com.planet57.gshell.util.io.PrintBuffer;
 import com.planet57.gshell.util.cli2.CliProcessor;
@@ -69,7 +68,7 @@ public class CommandHelpPage
 
   @Override
   public String getDescription() {
-    return CommandHelpSupport.getDescription(node.getAction());
+    return CommandHelper.getDescription(node.getAction());
   }
 
   @Override
@@ -89,10 +88,10 @@ public class CommandHelpPage
     private MessageSource messages;
 
     public Helper() {
-      CommandHelpSupport help = new CommandHelpSupport();
-      clp = help.createProcessor(command);
+      CommandHelper help = new CommandHelper();
+      clp = help.createCliProcessor(command);
       printer = new HelpPrinter(clp);
-      pp = CommandPreferenceSupport.createProcessor(command);
+      pp = CommandHelper.createPreferenceProcessor(command);
     }
 
     private MessageSource getMessages() {
@@ -120,7 +119,7 @@ public class CommandHelpPage
 
     @SuppressWarnings("unused")
     public String getDescription() {
-      return CommandHelpSupport.getDescription(command);
+      return CommandHelper.getDescription(command);
     }
 
     private void printHeader(final PrintBuffer buff, final String name) {

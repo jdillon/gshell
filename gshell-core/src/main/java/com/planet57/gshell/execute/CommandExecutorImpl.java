@@ -29,8 +29,7 @@ import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.registry.NoSuchCommandException;
 import com.planet57.gshell.command.resolver.CommandResolver;
 import com.planet57.gshell.command.resolver.Node;
-import com.planet57.gshell.command.CommandHelpSupport;
-import com.planet57.gshell.command.CommandPreferenceSupport;
+import com.planet57.gshell.command.CommandHelper;
 import com.planet57.gshell.notification.ErrorNotification;
 import com.planet57.gshell.notification.ResultNotification;
 import com.planet57.gshell.parser.CommandLineParser;
@@ -167,18 +166,18 @@ public class CommandExecutorImpl
       boolean execute = true;
 
       // Process command preferences
-      PreferenceProcessor pp = CommandPreferenceSupport.createProcessor(action);
+      PreferenceProcessor pp = CommandHelper.createPreferenceProcessor(action);
       pp.process();
 
       // Process command arguments unless marked as opaque
       if (!(action instanceof OpaqueArguments)) {
-        CommandHelpSupport help = new CommandHelpSupport();
-        CliProcessor clp = help.createProcessor(action);
+        CommandHelper help = new CommandHelper();
+        CliProcessor clp = help.createCliProcessor(action);
         clp.process(Arguments.toStringArray(args));
 
         // Render command-line usage
         if (help.displayHelp) {
-          io.out.println(CommandHelpSupport.getDescription(action));
+          io.out.println(CommandHelper.getDescription(action));
           io.out.println();
 
           HelpPrinter printer = new HelpPrinter(clp);
