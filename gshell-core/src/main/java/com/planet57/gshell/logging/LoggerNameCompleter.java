@@ -18,6 +18,7 @@ package com.planet57.gshell.logging;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import jline.console.completer.Completer;
@@ -31,6 +32,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
+@Named
 @Singleton
 public class LoggerNameCompleter
     implements Completer

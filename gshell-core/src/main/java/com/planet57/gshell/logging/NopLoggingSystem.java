@@ -15,6 +15,8 @@
  */
 package com.planet57.gshell.logging;
 
+import javax.inject.Named;
+import javax.inject.Singleton;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -24,6 +26,8 @@ import java.util.Collections;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
+@Named
+@Singleton
 public class NopLoggingSystem
     implements LoggingSystem
 {
@@ -46,24 +50,27 @@ public class NopLoggingSystem
   public Logger getLogger(String name) {
     return new Logger()
     {
+      @Override
       public String getName() {
         return null;
       }
 
+      @Override
       public Level getLevel() {
         return null;
       }
 
+      @Override
       public void setLevel(Level level) {
+        // empty
       }
 
+      @Override
       public void setLevel(String level) {
+        // empty
       }
 
-      public Logger parent() {
-        return null;
-      }
-
+      @Override
       public boolean isRoot() {
         return false;
       }
