@@ -13,36 +13,49 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.logging.gossip;
-
-import com.planet57.gossip.listener.Listener;
-import com.planet57.gshell.logging.Component;
-import com.planet57.gshell.logging.ComponentSupport;
+package com.planet57.gshell.logging;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * {@link Component} for {@link Listener}.
+ * Support for {@link LoggingComponent} implementations.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-public class ListenerComponent
-    extends ComponentSupport
+public abstract class LoggingComponentSupport
+    implements LoggingComponent
 {
-  private final Listener listener;
+  private final String type;
 
-  public ListenerComponent(final Listener listener) {
-    super(Listener.class.getName());
-    this.listener = checkNotNull(listener);
+  private final String name;
+
+  public LoggingComponentSupport(final String type, final String name) {
+    this.type = checkNotNull(type);
+    this.name = checkNotNull(name);
   }
 
-  public Listener getListener() {
-    return listener;
+  public LoggingComponentSupport(final String type) {
+    this(type, DEFAULT_NAME);
   }
 
   @Override
-  public Object getTarget() {
-    return getListener();
+  public String getType() {
+    return type;
+  }
+
+  @Override
+  public String getName() {
+    return name;
+  }
+
+  @Override
+  public int hashCode() {
+    return (type + name).hashCode();
+  }
+
+  @Override
+  public String toString() {
+    return getType() + "{" + getName() + "}";
   }
 }

@@ -27,7 +27,7 @@ import java.util.Set;
 import javax.inject.Singleton;
 
 import ch.qos.logback.classic.LoggerContext;
-import com.planet57.gshell.logging.Component;
+import com.planet57.gshell.logging.LoggingComponent;
 import com.planet57.gshell.logging.Level;
 import com.planet57.gshell.logging.Logger;
 import com.planet57.gshell.logging.LoggingSystem;
@@ -50,7 +50,7 @@ public class LogbackLoggingSystem
 
   private final Map<String, LevelImpl> levels;
 
-  private final Set<Component> components;
+  private final Set<LoggingComponent> components;
 
   public LogbackLoggingSystem() {
     // Make sure Logback is actually configured, attach to the context
@@ -81,7 +81,7 @@ public class LogbackLoggingSystem
     this.levels = Collections.unmodifiableMap(levels);
 
     // setup components map
-    components = new LinkedHashSet<Component>();
+    components = new LinkedHashSet<LoggingComponent>();
   }
 
   //
@@ -209,7 +209,7 @@ public class LogbackLoggingSystem
   }
 
   @Override
-  public Collection<? extends Component> getComponents() {
+  public Collection<? extends LoggingComponent> getComponents() {
     // TODO: Expose appenders and whatever
     return Collections.emptySet();
   }

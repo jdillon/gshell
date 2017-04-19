@@ -18,7 +18,7 @@ package com.planet57.gshell.command.support;
 import java.util.Collection;
 import java.util.Collections;
 
-import com.planet57.gshell.logging.Component;
+import com.planet57.gshell.logging.LoggingComponent;
 import com.planet57.gshell.logging.Level;
 import com.planet57.gshell.logging.Logger;
 import com.planet57.gshell.logging.LoggingSystem;
@@ -77,7 +77,7 @@ public class TestLoggingSystem
     return Collections.emptySet();
   }
 
-  public Collection<? extends Component> getComponents() {
+  public Collection<? extends LoggingComponent> getComponents() {
     return Collections.emptySet();
   }
 }

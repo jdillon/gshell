@@ -26,7 +26,7 @@ import javax.inject.Singleton;
 
 import com.planet57.gossip.Gossip;
 import com.planet57.gossip.listener.Listener;
-import com.planet57.gshell.logging.Component;
+import com.planet57.gshell.logging.LoggingComponent;
 import com.planet57.gshell.logging.Level;
 import com.planet57.gshell.logging.Logger;
 import com.planet57.gshell.logging.LoggingSystem;
@@ -49,7 +49,7 @@ public class GossipLoggingSystem
 
   private final Map<String, LevelImpl> levels;
 
-  private final Set<Component> components;
+  private final Set<LoggingComponent> components;
 
   public GossipLoggingSystem() {
     // Make sure Gossip is actually configured, attach to the context
@@ -68,7 +68,7 @@ public class GossipLoggingSystem
     this.levels = Collections.unmodifiableMap(levels);
 
     // setup components map
-    components = new LinkedHashSet<Component>();
+    components = new LinkedHashSet<LoggingComponent>();
     // leave the rest to lazy init for now
   }
 
@@ -190,13 +190,13 @@ public class GossipLoggingSystem
   }
 
   @Override
-  public Collection<? extends Component> getComponents() {
+  public Collection<? extends LoggingComponent> getComponents() {
     synchronized (components) {
       if (components.isEmpty()) {
-        components.add(new EffectiveProfileComponent(gossip.getEffectiveProfile()));
+        components.add(new EffectiveProfileLoggingComponent(gossip.getEffectiveProfile()));
 
         for (Listener listener : gossip.getEffectiveProfile().getListeners()) {
-          components.add(new ListenerComponent(listener));
+          components.add(new ListenerLoggingComponent(listener));
         }
 
         // TODO: Add the rest of the components

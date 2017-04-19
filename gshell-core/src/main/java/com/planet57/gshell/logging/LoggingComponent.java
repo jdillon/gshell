@@ -15,47 +15,25 @@
  */
 package com.planet57.gshell.logging;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+// FIXME: Rename, GenericComponent or something once Level,Logger are renamed.
 
 /**
- * Support for {@link Component} implementations.
+ * Represents a logging system component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-public abstract class ComponentSupport
-    implements Component
+public interface LoggingComponent
 {
-  private final String type;
+  String DEFAULT_NAME = "<DEFAULT>";
 
-  private final String name;
+  String getName();
 
-  public ComponentSupport(final String type, final String name) {
-    this.type = checkNotNull(type);
-    this.name = checkNotNull(name);
-  }
+  String getType();
 
-  public ComponentSupport(final String type) {
-    this(type, DEFAULT_NAME);
-  }
+  Object getTarget();
 
-  @Override
-  public String getType() {
-    return type;
-  }
+  // Parent, children?
 
-  @Override
-  public String getName() {
-    return name;
-  }
-
-  @Override
-  public int hashCode() {
-    return (type + name).hashCode();
-  }
-
-  @Override
-  public String toString() {
-    return getType() + "{" + getName() + "}";
-  }
+  // TODO: Properties && methods
 }

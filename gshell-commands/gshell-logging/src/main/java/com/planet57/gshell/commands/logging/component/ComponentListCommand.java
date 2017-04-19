@@ -21,7 +21,7 @@ import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.support.CommandActionSupport;
-import com.planet57.gshell.logging.Component;
+import com.planet57.gshell.logging.LoggingComponent;
 import com.planet57.gshell.logging.LoggingSystem;
 import com.planet57.gshell.util.cli2.Option;
 
@@ -57,7 +57,7 @@ public class ComponentListCommand
     checkNotNull(context);
     IO io = context.getIo();
 
-    for (Component component : logging.getComponents()) {
+    for (LoggingComponent component : logging.getComponents()) {
       if ((typeQuery == null || component.getType().contains(typeQuery)) &&
           (nameQuery == null || component.getName().contains(nameQuery))) {
         io.println("{}", component);

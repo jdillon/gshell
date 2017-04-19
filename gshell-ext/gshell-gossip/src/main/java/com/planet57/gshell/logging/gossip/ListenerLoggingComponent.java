@@ -13,27 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.logging;
+package com.planet57.gshell.logging.gossip;
 
-// FIXME: Rename, GenericComponent or something once Level,Logger are renamed.
+import com.planet57.gossip.listener.Listener;
+import com.planet57.gshell.logging.LoggingComponent;
+import com.planet57.gshell.logging.LoggingComponentSupport;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Represents a logging system component.
+ * {@link LoggingComponent} for {@link Listener}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-public interface Component
+public class ListenerLoggingComponent
+    extends LoggingComponentSupport
 {
-  String DEFAULT_NAME = "<DEFAULT>";
+  private final Listener listener;
 
-  String getName();
+  public ListenerLoggingComponent(final Listener listener) {
+    super(Listener.class.getName());
+    this.listener = checkNotNull(listener);
+  }
 
-  String getType();
+  public Listener getListener() {
+    return listener;
+  }
 
-  Object getTarget();
-
-  // Parent, children?
-
-  // TODO: Properties && methods
+  @Override
+  public Object getTarget() {
+    return getListener();
+  }
 }

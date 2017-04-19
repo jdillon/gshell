@@ -33,7 +33,7 @@ public interface LoggingSystem
 
   Collection<String> getLoggerNames();
 
-  Collection<? extends Component> getComponents();
+  Collection<? extends LoggingComponent> getComponents();
 
   // TODO: Add configure(URL/File)
 

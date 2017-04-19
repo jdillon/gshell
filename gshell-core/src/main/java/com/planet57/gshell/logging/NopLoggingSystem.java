@@ -83,7 +83,7 @@ public class NopLoggingSystem
   }
 
   @Override
-  public Collection<? extends Component> getComponents() {
+  public Collection<? extends LoggingComponent> getComponents() {
     return Collections.emptyList();
   }
 }

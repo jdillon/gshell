@@ -16,23 +16,23 @@
 package com.planet57.gshell.logging.gossip;
 
 import com.planet57.gossip.EffectiveProfile;
-import com.planet57.gshell.logging.Component;
-import com.planet57.gshell.logging.ComponentSupport;
+import com.planet57.gshell.logging.LoggingComponent;
+import com.planet57.gshell.logging.LoggingComponentSupport;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * {@link Component} for {@link EffectiveProfile}.
+ * {@link LoggingComponent} for {@link EffectiveProfile}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-public class EffectiveProfileComponent
-    extends ComponentSupport
+public class EffectiveProfileLoggingComponent
+    extends LoggingComponentSupport
 {
   private final EffectiveProfile profile;
 
-  public EffectiveProfileComponent(final EffectiveProfile profile) {
+  public EffectiveProfileLoggingComponent(final EffectiveProfile profile) {
     super(EffectiveProfile.class.getName());
     this.profile = checkNotNull(profile);
   }
