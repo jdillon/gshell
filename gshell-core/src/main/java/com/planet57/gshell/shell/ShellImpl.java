@@ -56,7 +56,7 @@ import org.slf4j.LoggerFactory;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * The default {@link Shell} component.
+ * Default {@link Shell} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0

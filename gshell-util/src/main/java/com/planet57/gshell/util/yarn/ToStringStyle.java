@@ -36,29 +36,29 @@ abstract class ToStringStyle
     implements Serializable
 {
   /**
-   * The default toString style.
+   * Default toString style.
    */
   public static final ToStringStyle DEFAULT_STYLE = new DefaultToStringStyle();
 
   /**
-   * The multi line toString style.
+   * Multi-line toString style.
    */
   public static final ToStringStyle MULTI_LINE_STYLE = new MultiLineToStringStyle();
 
   /**
-   * The no field names toString style.
+   * No field names toString style.
    */
   public static final ToStringStyle NO_FIELD_NAMES_STYLE = new NoFieldNameToStringStyle();
 
   /**
-   * The short prefix toString style.
+   * Short prefix toString style.
    *
    * @since 2.1
    */
   public static final ToStringStyle SHORT_PREFIX_STYLE = new ShortPrefixToStringStyle();
 
   /**
-   * The simple toString style.
+   * Simple toString style.
    */
   public static final ToStringStyle SIMPLE_STYLE = new SimpleToStringStyle();
 
