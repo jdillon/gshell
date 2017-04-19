@@ -35,9 +35,6 @@ public class TypePredicate<T>
 
   @Override
   public boolean apply(final T page) {
-    if (page != null) {
-      return type.isAssignableFrom(page.getClass());
-    }
-    return false;
+    return page != null && type.isAssignableFrom(page.getClass());
   }
 }
