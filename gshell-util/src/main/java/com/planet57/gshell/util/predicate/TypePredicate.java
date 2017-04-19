@@ -13,30 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.util.filter;
+package com.planet57.gshell.util.predicate;
+
+import com.google.common.base.Predicate;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Or filter.
+ * Predicate to include objects assignable from a given type.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 2.5
+ * @since 3.0
  */
-public class OrFilter<T>
-    extends AggregateFilter<T>
+public class TypePredicate<T>
+    implements Predicate<T>
 {
-  public OrFilter() {
-    // empty
+  private final Class<?> type;
+
+  public TypePredicate(final Class<?> type) {
+    this.type = checkNotNull(type);
   }
 
-  public OrFilter(final Filter<T>... filters) {
-    super(filters);
-  }
-
-  public boolean accept(final T value) {
-    for (Filter<T> filter : getFilters()) {
-      if (filter.accept(value)) {
-        return true;
-      }
+  @Override
+  public boolean apply(final T page) {
+    if (page != null) {
+      return type.isAssignableFrom(page.getClass());
     }
     return false;
   }

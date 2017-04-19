@@ -26,6 +26,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import com.google.common.base.Predicate;
 import com.google.inject.Key;
 import com.planet57.gshell.alias.AliasRegistry;
 import com.planet57.gshell.alias.NoSuchAliasException;
@@ -34,7 +35,6 @@ import com.planet57.gshell.command.resolver.Node;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.guice.BeanContainer;
 import com.planet57.gshell.util.ComponentSupport;
-import com.planet57.gshell.util.filter.Filter;
 import org.eclipse.sisu.BeanEntry;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -114,12 +114,12 @@ public class HelpPageManagerImpl
   }
 
   @Override
-  public Collection<HelpPage> getPages(final Filter<HelpPage> filter) {
-    assert filter != null;
+  public Collection<HelpPage> getPages(final Predicate<HelpPage> query) {
+    assert query != null;
 
     List<HelpPage> pages = new LinkedList<HelpPage>();
     for (HelpPage page : getPages()) {
-      if (filter.accept(page)) {
+      if (query.apply(page)) {
         pages.add(page);
       }
     }

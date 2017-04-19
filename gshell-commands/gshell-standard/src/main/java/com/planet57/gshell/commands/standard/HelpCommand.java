@@ -16,12 +16,12 @@
 package com.planet57.gshell.commands.standard;
 
 import java.util.Collection;
-import java.util.Collections;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import com.google.common.base.Predicate;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
@@ -35,10 +35,8 @@ import com.planet57.gshell.help.HelpPageUtil;
 import com.planet57.gshell.help.MetaHelpPage;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
-import com.planet57.gshell.util.filter.AggregateFilter;
-import com.planet57.gshell.util.filter.AndFilter;
-import com.planet57.gshell.util.filter.Filter;
-import com.planet57.gshell.util.filter.TypeFilter;
+import com.planet57.gshell.util.predicate.PredicateBuilder;
+import com.planet57.gshell.util.predicate.TypePredicate;
 import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.Preferences;
 import jline.console.completer.AggregateCompleter;
@@ -114,10 +112,10 @@ public class HelpCommand
 
     // if not direct match, then look for similar pages
     if (page == null) {
-      Collection<HelpPage> pages = helpPages.getPages(filter(new Filter<HelpPage>()
+      Collection<HelpPage> pages = helpPages.getPages(query(new Predicate<HelpPage>()
       {
-        public boolean accept(final HelpPage page) {
-          assert page != null;
+        @Override
+        public boolean apply(final HelpPage page) {
           return page.getName().contains(name) || page.getDescription().contains(name);
         }
       }));
@@ -146,33 +144,34 @@ public class HelpCommand
   }
 
   private void displayAvailable(final CommandContext context) {
-    Collection<HelpPage> pages = helpPages.getPages(filter());
+    Collection<HelpPage> pages = helpPages.getPages(query());
     IO io = context.getIo();
     io.out.println(getMessages().format("info.available-pages"));
     HelpPageUtil.render(io.out, pages);
   }
 
-  private AggregateFilter<HelpPage> filter(@Nullable final Filter<HelpPage>... filters) {
-    AndFilter<HelpPage> filter = new AndFilter<HelpPage>();
+  private Predicate<HelpPage> query(@Nullable final Predicate<HelpPage>... predicates) {
+    PredicateBuilder<HelpPage> query = new PredicateBuilder<>();
+
     if (includeAll == null || !includeAll) {
       if (includeAliases != null && !includeAliases) {
-        filter.not(new TypeFilter<HelpPage>(AliasHelpPage.class));
+        query.not(new TypePredicate<HelpPage>(AliasHelpPage.class));
       }
       if (includeMeta != null && !includeMeta) {
-        filter.not(new TypeFilter<HelpPage>(MetaHelpPage.class));
+        query.not(new TypePredicate<HelpPage>(MetaHelpPage.class));
       }
       if (includeCommands != null && !includeCommands) {
-        filter.not(new TypeFilter<HelpPage>(CommandHelpPage.class));
+        query.not(new TypePredicate<HelpPage>(CommandHelpPage.class));
       }
       if (includeGroups != null && !includeGroups) {
-        filter.not(new TypeFilter<HelpPage>(GroupHelpPage.class));
+        query.not(new TypePredicate<HelpPage>(GroupHelpPage.class));
       }
     }
 
-    if (filters != null) {
-      Collections.addAll(filter.getFilters(), filters);
+    if (predicates != null) {
+      query.include(predicates);
     }
 
-    return filter;
+    return query.build();
   }
 }
