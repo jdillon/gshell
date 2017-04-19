@@ -56,8 +56,7 @@ public class AliasAction
 
   @Override
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
-
+    checkNotNull(context);
     String alias = target;
 
     // Need to append any more arguments in the context
