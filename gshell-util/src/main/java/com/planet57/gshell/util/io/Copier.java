@@ -15,6 +15,9 @@
  */
 package com.planet57.gshell.util.io;
 
+import com.google.common.io.ByteStreams;
+import com.google.common.io.CharStreams;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -30,96 +33,14 @@ import java.io.Writer;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.6.4
  */
+@Deprecated
 public class Copier
 {
-  private static final int DEFAULT_BUFFER_SIZE = 1024 * 4;
-
-  /**
-   * Copy bytes from an <code>InputStream</code> to an <code>OutputStream</code>.
-   */
   public static void copy(final InputStream input, final OutputStream output) throws IOException {
-    copy(input, output, DEFAULT_BUFFER_SIZE);
+    ByteStreams.copy(input, output);
   }
 
-  /**
-   * Copy bytes from an <code>InputStream</code> to an <code>OutputStream</code>.
-   *
-   * @param bufferSize Size of internal buffer to use.
-   */
-  public static void copy(final InputStream input, final OutputStream output, final int bufferSize) throws IOException {
-    final byte[] buffer = new byte[bufferSize];
-    int n;
-    while (-1 != (n = input.read(buffer))) {
-      output.write(buffer, 0, n);
-    }
-  }
-
-  /**
-   * Copy chars from a <code>Reader</code> to a <code>Writer</code>.
-   */
-  public static void copy(final Reader input, final Writer output) throws IOException {
-    copy(input, output, DEFAULT_BUFFER_SIZE);
-  }
-
-  /**
-   * Copy chars from a <code>Reader</code> to a <code>Writer</code>.
-   *
-   * @param bufferSize Size of internal buffer to use.
-   */
-  public static void copy(final Reader input, final Writer output, final int bufferSize) throws IOException {
-    final char[] buffer = new char[bufferSize];
-    int n;
-    while (-1 != (n = input.read(buffer))) {
-      output.write(buffer, 0, n);
-    }
-    output.flush();
-  }
-
-  /**
-   * Copy and convert bytes from an <code>InputStream</code> to chars on a <code>Writer</code>.
-   * The platform's default encoding is used for the byte-to-char conversion.
-   */
-  public static void copy(final InputStream input, final Writer output) throws IOException {
-    copy(input, output, DEFAULT_BUFFER_SIZE);
-  }
-
-  /**
-   * Copy and convert bytes from an <code>InputStream</code> to chars on a <code>Writer</code>.
-   * The platform's default encoding is used for the byte-to-char conversion.
-   *
-   * @param bufferSize Size of internal buffer to use.
-   */
-  public static void copy(final InputStream input, final Writer output, final int bufferSize) throws IOException {
-    final InputStreamReader in = new InputStreamReader(input);
-    copy(in, output, bufferSize);
-  }
-
-  /**
-   * Copy and convert bytes from an <code>InputStream</code> to chars on a <code>Writer</code>, using the specified
-   * encoding.
-   *
-   * @param encoding The name of a supported character encoding. See the <a href="http://www.iana.org/assignments/character-sets">IANA
-   *                 Charset
-   *                 Registry</a> for a list of valid encoding types.
-   */
-  public static void copy(final InputStream input, final Writer output, final String encoding) throws IOException {
-    final InputStreamReader in = new InputStreamReader(input, encoding);
-    copy(in, output);
-  }
-
-  /**
-   * Copy and convert bytes from an <code>InputStream</code> to chars on a <code>Writer</code>, using the specified
-   * encoding.
-   *
-   * @param encoding   The name of a supported character encoding. See the <a href="http://www.iana.org/assignments/character-sets">IANA
-   *                   Charset
-   *                   Registry</a> for a list of valid encoding types.
-   * @param bufferSize Size of internal buffer to use.
-   */
-  public static void copy(final InputStream input, final Writer output, final String encoding, final int bufferSize)
-      throws IOException
-  {
-    final InputStreamReader in = new InputStreamReader(input, encoding);
-    copy(in, output, bufferSize);
+  public static void copy(final Reader input, final Appendable output) throws IOException {
+    CharStreams.copy(input, output);
   }
 }

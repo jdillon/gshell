@@ -17,6 +17,7 @@ package com.planet57.gshell.branding;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URI;
 
 import com.planet57.gshell.util.io.PrintBuffer;
@@ -71,7 +72,7 @@ public class LicenseSupport
     PrintBuffer buff = new PrintBuffer();
     InputStream input = uri.toURL().openStream();
     try {
-      Copier.copy(input, buff);
+      Copier.copy(new InputStreamReader(input), buff);
     }
     finally {
       Closer.close(input);
