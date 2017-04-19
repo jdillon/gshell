@@ -108,7 +108,6 @@ public abstract class CommandTestSupport
       protected void configure() {
         bind(BeanContainer.class).toInstance(container);
         bind(LoggingSystem.class).to(TestLoggingSystem.class);
-        bind(ConsoleErrorHandler.class).to(ShellErrorHandler.class);
         bind(Branding.class).toInstance(new TestBranding(util.resolveFile("target/shell-home")));
         bind(IO.class).annotatedWith(named("main")).toInstance(io);
         bind(Variables.class).annotatedWith(named("main")).toInstance(vars);
@@ -119,7 +118,7 @@ public abstract class CommandTestSupport
     modules.add(boot);
     configureModules(modules);
 
-    Injector injector = Guice.createInjector(Stage.PRODUCTION, new WireModule(modules));
+    Injector injector = Guice.createInjector(Stage.DEVELOPMENT, new WireModule(modules));
     container.add(injector, 0);
 
     // HACK: really need some component lifecycle
