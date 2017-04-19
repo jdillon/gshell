@@ -18,7 +18,7 @@ package com.planet57.gshell.help;
 import java.io.PrintWriter;
 import java.util.ResourceBundle;
 
-import com.planet57.gshell.command.support.CommandHelpSupport;
+import com.planet57.gshell.command.CommandHelpSupport;
 import com.planet57.gshell.shell.ShellHolder;
 import org.codehaus.plexus.interpolation.AbstractValueSource;
 import org.codehaus.plexus.interpolation.Interpolator;

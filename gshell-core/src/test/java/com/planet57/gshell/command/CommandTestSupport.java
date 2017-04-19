@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.command.support;
+package com.planet57.gshell.command;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,18 +28,13 @@ import com.google.inject.Stage;
 import com.planet57.gshell.alias.AliasRegistry;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.branding.TestBranding;
-import com.planet57.gshell.command.Command;
-import com.planet57.gshell.command.CommandAction;
-import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.registry.CommandRegistrar;
 import com.planet57.gshell.command.registry.CommandRegistry;
-import com.planet57.gshell.console.ConsoleErrorHandler;
 import com.planet57.gshell.guice.CoreModule;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.guice.BeanContainer;
 import com.planet57.gshell.logging.LoggingSystem;
 import com.planet57.gshell.shell.Shell;
-import com.planet57.gshell.shell.ShellErrorHandler;
 import com.planet57.gshell.shell.ShellImpl;
 import com.planet57.gshell.util.Strings;
 import com.planet57.gshell.variables.Variables;

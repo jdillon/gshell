@@ -19,8 +19,8 @@ import java.io.PrintWriter;
 
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.resolver.Node;
-import com.planet57.gshell.command.support.CommandHelpSupport;
-import com.planet57.gshell.command.support.CommandPreferenceSupport;
+import com.planet57.gshell.command.CommandHelpSupport;
+import com.planet57.gshell.command.CommandPreferenceSupport;
 import com.planet57.gshell.shell.ShellHolder;
 import com.planet57.gshell.util.io.PrintBuffer;
 import com.planet57.gshell.util.cli2.CliProcessor;
