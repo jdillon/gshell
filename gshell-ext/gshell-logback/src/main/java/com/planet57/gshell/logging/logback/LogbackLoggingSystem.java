@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import ch.qos.logback.classic.LoggerContext;
@@ -42,6 +43,7 @@ import static org.slf4j.Logger.ROOT_LOGGER_NAME;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.6.4
  */
+@Named
 @Singleton
 public class LogbackLoggingSystem
     implements LoggingSystem

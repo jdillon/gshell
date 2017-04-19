@@ -22,6 +22,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import com.planet57.gossip.Gossip;
@@ -41,6 +42,7 @@ import static com.planet57.gossip.Gossip.LoggerImpl.ROOT_NAME;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
+@Named
 @Singleton
 public class GossipLoggingSystem
     implements LoggingSystem
