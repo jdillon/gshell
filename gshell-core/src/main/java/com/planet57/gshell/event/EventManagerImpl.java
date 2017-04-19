@@ -54,9 +54,11 @@ public class EventManagerImpl
 
   // HACK: really need some component lifecycle
 
+  /**
+   * Automatically register/unregister event-aware components.
+   */
   @Override
   public void start() {
-    // automatically register/unregister event-aware components
     container.watch(Key.get(EventAware.class, Named.class), new EventAwareMediator(), this);
   }
 
@@ -65,17 +67,17 @@ public class EventManagerImpl
   {
     @Override
     public void add(final BeanEntry<Named, EventAware> entry, final EventManagerImpl watcher) {
-      watcher.addListener(entry.getValue());
+      watcher.register(entry.getValue());
     }
 
     @Override
     public void remove(final BeanEntry<Named, EventAware> entry, final EventManagerImpl watcher) {
-      watcher.removeListener(entry.getValue());
+      watcher.unregister(entry.getValue());
     }
   }
 
   @Override
-  public void addListener(final Object listener) {
+  public void register(final Object listener) {
     checkNotNull(listener);
 
     log.trace("Adding listener: {}", listener);
@@ -84,17 +86,12 @@ public class EventManagerImpl
   }
 
   @Override
-  public void removeListener(final Object listener) {
+  public void unregister(final Object listener) {
     checkNotNull(listener);
 
     log.trace("Removing listener: {}", listener);
 
-    try {
-      eventBus.unregister(listener);
-    }
-    catch (IllegalArgumentException e) {
-      // FIXME: this is to cope with previous impls semantics that ignored remove for unregistered, which guava eventbus does not allow
-    }
+    eventBus.unregister(listener);
   }
 
   @Override

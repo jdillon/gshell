@@ -25,9 +25,9 @@ public interface EventManager
 {
   void start();
 
-  void addListener(Object listener);
+  void register(Object listener);
 
-  void removeListener(Object listener);
+  void unregister(Object listener);
 
   void publish(Object event);
 }

@@ -60,28 +60,32 @@ public class EventManagerImplTest
   @Test
   public void testAddListener() throws Exception {
     try {
-      manager.addListener(null);
+      manager.register(null);
       fail();
     }
     catch (NullPointerException e) {
       // ignore
     }
 
-    manager.addListener(listener);
+    manager.register(listener);
   }
 
   @Test
   public void testRemoveListener() throws Exception {
     try {
-      manager.removeListener(null);
+      manager.unregister(null);
       fail();
     }
     catch (NullPointerException e) {
       // ignore
     }
 
-    // Can remove a listener which was never added, just ignored
-    manager.removeListener(listener);
+    try {
+      manager.unregister(listener);
+    }
+    catch (IllegalArgumentException e) {
+      // ignore
+    }
   }
 
   @Test
@@ -100,7 +104,7 @@ public class EventManagerImplTest
 
   @Test
   public void testPublishWithListener() throws Exception {
-    manager.addListener(listener);
+    manager.register(listener);
 
     Object event = new Object();
 
@@ -111,10 +115,10 @@ public class EventManagerImplTest
 
   @Test
   public void testPublishWithManyListener() throws Exception {
-    manager.addListener(listener);
+    manager.register(listener);
 
     MockEventListener anotherListener = new MockEventListener();
-    manager.addListener(anotherListener);
+    manager.register(anotherListener);
 
     Object event = new Object();
 
