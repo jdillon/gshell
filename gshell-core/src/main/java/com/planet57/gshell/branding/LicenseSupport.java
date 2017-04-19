@@ -20,9 +20,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
 
+import com.google.common.io.CharStreams;
 import com.planet57.gshell.util.io.PrintBuffer;
 import com.planet57.gshell.util.io.Closer;
-import com.planet57.gshell.util.io.Copier;
 
 import javax.annotation.Nullable;
 
@@ -72,7 +72,7 @@ public class LicenseSupport
     PrintBuffer buff = new PrintBuffer();
     InputStream input = uri.toURL().openStream();
     try {
-      Copier.copy(new InputStreamReader(input), buff);
+      CharStreams.copy(new InputStreamReader(input), buff);
     }
     finally {
       Closer.close(input);

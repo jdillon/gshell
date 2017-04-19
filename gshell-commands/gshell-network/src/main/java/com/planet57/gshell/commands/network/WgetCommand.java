@@ -23,6 +23,7 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
+import com.google.common.io.ByteStreams;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
@@ -30,7 +31,6 @@ import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.io.Closer;
-import com.planet57.gshell.util.io.Copier;
 import com.planet57.gshell.util.io.Flusher;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -83,7 +83,7 @@ public class WgetCommand
       out = io.streams.out;
     }
 
-    Copier.copy(in, out);
+    ByteStreams.copy(in, out);
 
     // if we write a file, close it then return the file
     if (outputFile != null) {
