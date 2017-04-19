@@ -42,7 +42,7 @@ public class CoreModule
 {
   @Override
   protected void configure() {
-    // for some reason, this is required, @Named is not working :-(
+    // FIXME: for some reason, this is required, @Named is not working for this one component
     bind(CommandRegistrar.class).to(CommandRegistrarImpl.class);
   }
 

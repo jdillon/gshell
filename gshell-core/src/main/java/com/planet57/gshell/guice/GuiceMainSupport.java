@@ -69,25 +69,21 @@ public abstract class GuiceMainSupport
   }
 
   protected void configure(final List<Module> modules) {
-    assert modules != null;
     modules.add(createSpaceModule());
-    modules.add(new BootModule());
+    modules.add(new AbstractModule()
+    {
+      @Override
+      protected void configure() {
+        bind(BeanContainer.class).toInstance(container);
+        bind(IO.class).annotatedWith(named("main")).toInstance(io);
+        bind(Variables.class).annotatedWith(named("main")).toInstance(vars);
+      }
+    });
     modules.add(new CoreModule());
   }
 
   protected SpaceModule createSpaceModule() {
     URLClassSpace space = new URLClassSpace(getClass().getClassLoader());
     return new SpaceModule(space, BeanScanning.INDEX);
-  }
-
-  protected class BootModule
-      extends AbstractModule
-  {
-    @Override
-    protected void configure() {
-      bind(BeanContainer.class).toInstance(container);
-      bind(IO.class).annotatedWith(named("main")).toInstance(io);
-      bind(Variables.class).annotatedWith(named("main")).toInstance(vars);
-    }
   }
 }
