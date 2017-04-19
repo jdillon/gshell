@@ -71,6 +71,7 @@ public class PlexusRuntime
     return container;
   }
 
+  @Nullable
   public ClassWorld getClassWorld() {
     return classWorld;
   }
