@@ -18,6 +18,7 @@ package com.planet57.gshell.shell;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
+import javax.inject.Singleton;
 
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.console.ConsoleErrorHandler;
@@ -38,6 +39,8 @@ import static org.fusesource.jansi.Ansi.ansi;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
+@Named
+@Singleton
 public class ShellErrorHandler
     implements ConsoleErrorHandler
 {
