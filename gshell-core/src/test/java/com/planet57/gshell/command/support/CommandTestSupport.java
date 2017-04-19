@@ -34,7 +34,6 @@ import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.registry.CommandRegistrar;
 import com.planet57.gshell.command.registry.CommandRegistry;
 import com.planet57.gshell.console.ConsoleErrorHandler;
-import com.planet57.gshell.console.ConsolePrompt;
 import com.planet57.gshell.guice.CoreModule;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.guice.BeanContainer;
@@ -42,7 +41,6 @@ import com.planet57.gshell.logging.LoggingSystem;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.shell.ShellErrorHandler;
 import com.planet57.gshell.shell.ShellImpl;
-import com.planet57.gshell.shell.ShellPrompt;
 import com.planet57.gshell.util.Strings;
 import com.planet57.gshell.variables.Variables;
 import com.planet57.gshell.variables.VariablesImpl;
@@ -110,7 +108,6 @@ public abstract class CommandTestSupport
       protected void configure() {
         bind(BeanContainer.class).toInstance(container);
         bind(LoggingSystem.class).to(TestLoggingSystem.class);
-        bind(ConsolePrompt.class).to(ShellPrompt.class);
         bind(ConsoleErrorHandler.class).to(ShellErrorHandler.class);
         bind(Branding.class).toInstance(new TestBranding(util.resolveFile("target/shell-home")));
         bind(IO.class).annotatedWith(named("main")).toInstance(io);

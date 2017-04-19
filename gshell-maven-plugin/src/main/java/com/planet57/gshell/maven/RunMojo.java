@@ -18,11 +18,8 @@ package com.planet57.gshell.maven;
 import com.google.inject.AbstractModule;
 import com.google.inject.Module;
 import com.planet57.gshell.branding.Branding;
-import com.planet57.gshell.console.ConsolePrompt;
 import com.planet57.gshell.guice.GuiceMainSupport;
 import com.planet57.gshell.logging.LoggingSystem;
-import com.planet57.gshell.shell.ShellErrorHandler;
-import com.planet57.gshell.shell.ShellPrompt;
 import com.planet57.gshell.variables.VariableNames;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -76,7 +73,6 @@ public class RunMojo
             @Override
             protected void configure() {
               bind(LoggingSystem.class).to(LoggingSystemImpl.class);
-              bind(ConsolePrompt.class).to(ShellPrompt.class);
               bind(Branding.class).to(BrandingImpl.class);
 
               // FIXME: see if there is a more dynamic way to bridge components to nested Guice container
