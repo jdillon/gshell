@@ -26,7 +26,6 @@ import javax.inject.Singleton;
 
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.event.EventManager;
-import com.planet57.gshell.util.NameAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,8 +69,8 @@ public class CommandRegistryImpl
     }
 
     // Inject the name of the command
-    if (command instanceof NameAware) {
-      ((NameAware) command).setName(name);
+    if (command instanceof CommandAction.NameAware) {
+      ((CommandAction.NameAware) command).setName(name);
     }
 
     commands.put(name, command);

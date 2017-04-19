@@ -20,7 +20,6 @@ import java.util.MissingResourceException;
 
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.resolver.NodePath;
-import com.planet57.gshell.util.NameAware;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 import jline.console.completer.Completer;
@@ -39,7 +38,7 @@ import static com.google.common.base.Preconditions.checkState;
  * @since 2.0
  */
 public abstract class CommandActionSupport
-    implements CommandAction, NameAware
+    implements CommandAction, CommandAction.NameAware
 {
   protected final Logger log = LoggerFactory.getLogger(getClass());
 

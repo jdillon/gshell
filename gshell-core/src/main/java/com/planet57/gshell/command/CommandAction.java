@@ -64,4 +64,9 @@ public interface CommandAction
      */
     FAILURE // 1
   }
+
+  interface NameAware
+  {
+    void setName(String name);
+  }
 }
