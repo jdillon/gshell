@@ -20,6 +20,8 @@ import java.lang.reflect.Constructor;
 import com.planet57.gshell.util.IllegalAnnotationError;
 import com.planet57.gshell.util.cli2.CliDescriptor;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Provides access to handlers.
  *
@@ -43,8 +45,7 @@ public class Handlers
 
   @SuppressWarnings({"unchecked"})
   public static Handler create(final CliDescriptor desc) {
-    assert desc != null;
-
+    checkNotNull(desc);
     Class<? extends Handler> type = desc.getHandlerType();
 
     if (type == DefaultHandler.class) {

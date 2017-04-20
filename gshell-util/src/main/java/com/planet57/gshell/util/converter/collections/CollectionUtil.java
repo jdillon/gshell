@@ -86,7 +86,7 @@ public class CollectionUtil
   }
 
   @SuppressWarnings({"unchecked"})
-  public static final Map toMap(final String text, final PropertyEditor keyEditor, final PropertyEditor valueEditor) {
+  public static Map toMap(final String text, final PropertyEditor keyEditor, final PropertyEditor valueEditor) {
     Properties properties = new Properties();
     try {
       ByteArrayInputStream stream = new ByteArrayInputStream(text.getBytes());
@@ -112,7 +112,7 @@ public class CollectionUtil
     return map;
   }
 
-  public static final String toString(final Map map, final PropertyEditor keyEditor, final PropertyEditor valueEditor) {
+  public static String toString(final Map map, final PropertyEditor keyEditor, final PropertyEditor valueEditor) {
     // run the properties through the editors
     Properties properties = new Properties();
     for (Iterator iterator = map.entrySet().iterator(); iterator.hasNext(); ) {
@@ -138,7 +138,7 @@ public class CollectionUtil
     }
   }
 
-  private static final String componentToString(final Object value, final PropertyEditor componentEditor) {
+  private static String componentToString(final Object value, final PropertyEditor componentEditor) {
     if (value == null) {
       return null;
     }
@@ -157,7 +157,7 @@ public class CollectionUtil
     }
   }
 
-  private static final Object componentToObject(final String text, final PropertyEditor componentEditor) {
+  private static Object componentToObject(final String text, final PropertyEditor componentEditor) {
     if (text == null) {
       return null;
     }

@@ -22,6 +22,8 @@ import java.util.ListIterator;
 
 import com.planet57.gshell.util.converter.collections.CollectionConverterSupport;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 /**
  * Converter for arrays.
  *
@@ -32,8 +34,8 @@ public class ArrayConverter
 {
   public ArrayConverter(final Class type, final PropertyEditor editor) {
     super(type, editor);
-    assert type.isArray();
-    assert type.getComponentType().isArray();
+    checkArgument(type.isArray());
+    checkArgument(type.getComponentType().isArray());
   }
 
   protected Object createCollection(final List list) {

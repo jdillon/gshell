@@ -19,6 +19,8 @@ import com.planet57.gshell.util.cli2.CliDescriptor;
 import com.planet57.gshell.util.converter.Converters;
 import com.planet57.gshell.util.setter.Setter;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Provides the basic mechanism to handle custom option and argument processing.
  *
@@ -30,8 +32,7 @@ public abstract class Handler
   private final CliDescriptor descriptor;
 
   protected Handler(final CliDescriptor descriptor) {
-    assert descriptor != null;
-    this.descriptor = descriptor;
+    this.descriptor = checkNotNull(descriptor);
   }
 
   public CliDescriptor getDescriptor() {

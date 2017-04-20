@@ -15,7 +15,10 @@
  */
 package com.planet57.gshell.util.converter;
 
+import javax.annotation.Nullable;
 import java.beans.PropertyEditorSupport;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Support for {@link Converter} implementations.
@@ -29,8 +32,7 @@ public abstract class ConverterSupport
   private final Class type;
 
   protected ConverterSupport(final Class type) {
-    assert type != null;
-    this.type = type;
+    this.type = checkNotNull(type);
   }
 
   public final Class getType() {
@@ -54,7 +56,8 @@ public abstract class ConverterSupport
     super.setValue(value);
   }
 
-  public final String toString(final Object value) {
+  @Nullable
+  public final String toString(@Nullable final Object value) {
     if (value == null) {
       return null;
     }
@@ -63,6 +66,7 @@ public abstract class ConverterSupport
     return convertToString(value);
   }
 
+  @Nullable
   public final Object toObject(final String text) {
     if (text == null) {
       return null;

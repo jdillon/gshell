@@ -58,8 +58,7 @@ public class DateConverter
   }
 
   private Object complexParse(String text) throws ParseException {
-    // find out whether the first token is a locale id and style in that
-    // order
+    // find out whether the first token is a locale id and style in that order
     // if there's locale, style is mandatory
     Locale locale = Locale.getDefault();
     int style = DateFormat.MEDIUM;
@@ -107,7 +106,6 @@ public class DateConverter
 
   protected String convertToString(final Object value) {
     Date date = (Date) value;
-    String text = formats.get(0).format(date);
-    return text;
+    return formats.get(0).format(date);
   }
 }
