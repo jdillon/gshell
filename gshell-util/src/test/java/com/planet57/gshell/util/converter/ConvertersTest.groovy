@@ -13,25 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.util.converter;
+package com.planet57.gshell.util.converter
 
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.fest.assertions.api.Assertions.assertThat
 
-import com.planet57.gshell.util.converter.basic.EnumConverter;
-import org.junit.Test;
-import org.sonatype.goodies.testsupport.TestSupport;
+import com.planet57.gshell.util.converter.basic.EnumConverter
+import org.junit.Test
+import org.sonatype.goodies.testsupport.TestSupport
 
-import java.beans.PropertyEditor;
+import java.beans.PropertyEditor
 
 /**
  * Tests for {@link Converters}.
  */
-public class ConvertersTest
+class ConvertersTest
   extends TestSupport
 {
   @Test
-  public void findEnumConverter() throws Exception {
-    PropertyEditor found = Converters.findConverterOrEditor(Thread.State.class);
-    assertThat(found).isOfAnyClassIn(EnumConverter.class);
+  void findEnumConverter() {
+    PropertyEditor found = Converters.findConverterOrEditor(Thread.State.class)
+    assertThat(found).isOfAnyClassIn(EnumConverter.class)
   }
 }
