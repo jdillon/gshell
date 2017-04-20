@@ -19,6 +19,8 @@ import java.util.Locale;
 
 /**
  * Operation-system helpers.
+ *
+ * @since 3.0
  */
 public class OperatingSystem
 {
