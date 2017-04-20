@@ -18,10 +18,10 @@ package com.planet57.gshell.branding;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.StringWriter;
 import java.net.URI;
 
 import com.google.common.io.CharStreams;
-import com.planet57.gshell.util.io.PrintBuffer;
 import com.planet57.gshell.util.io.Closeables;
 
 import javax.annotation.Nullable;
@@ -69,7 +69,7 @@ public class LicenseSupport
       return null;
     }
 
-    PrintBuffer buff = new PrintBuffer();
+    StringWriter buff = new StringWriter();
     InputStream input = uri.toURL().openStream();
     try {
       CharStreams.copy(new InputStreamReader(input), buff);
