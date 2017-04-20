@@ -15,17 +15,13 @@
  */
 package com.planet57.gshell.logging;
 
-// FIXME: Rename, LevelComponent or something, Level is likely to conflict with any logging system and forces use of FQCN
-
 /**
  * Represents a logger level.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-public interface Level
+public interface LevelComponent
 {
   String getName();
-
-  // comparison muck?
 }

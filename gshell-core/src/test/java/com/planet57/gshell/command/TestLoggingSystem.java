@@ -18,9 +18,9 @@ package com.planet57.gshell.command;
 import java.util.Collection;
 import java.util.Collections;
 
+import com.planet57.gshell.logging.LevelComponent;
 import com.planet57.gshell.logging.LoggingComponent;
-import com.planet57.gshell.logging.Level;
-import com.planet57.gshell.logging.Logger;
+import com.planet57.gshell.logging.LoggerComponent;
 import com.planet57.gshell.logging.LoggingSystem;
 
 /**
@@ -31,8 +31,8 @@ import com.planet57.gshell.logging.LoggingSystem;
 public class TestLoggingSystem
     implements LoggingSystem
 {
-  public Level getLevel(final String name) {
-    return new Level()
+  public LevelComponent getLevel(final String name) {
+    return new LevelComponent()
     {
       public String getName() {
         return name;
@@ -40,22 +40,22 @@ public class TestLoggingSystem
     };
   }
 
-  public Collection<? extends Level> getLevels() {
+  public Collection<? extends LevelComponent> getLevels() {
     return Collections.emptySet();
   }
 
-  public Logger getLogger(final String name) {
-    return new Logger()
+  public LoggerComponent getLogger(final String name) {
+    return new LoggerComponent()
     {
       public String getName() {
         return name;
       }
 
-      public Level getLevel() {
+      public LevelComponent getLevel() {
         return null;
       }
 
-      public void setLevel(Level level) {
+      public void setLevel(LevelComponent level) {
         // ignore
       }
 
@@ -63,7 +63,7 @@ public class TestLoggingSystem
         // ignore
       }
 
-      public Logger parent() {
+      public LoggerComponent parent() {
         return null;
       }
 

@@ -28,9 +28,9 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import ch.qos.logback.classic.LoggerContext;
+import com.planet57.gshell.logging.LevelComponent;
+import com.planet57.gshell.logging.LoggerComponent;
 import com.planet57.gshell.logging.LoggingComponent;
-import com.planet57.gshell.logging.Level;
-import com.planet57.gshell.logging.Logger;
 import com.planet57.gshell.logging.LoggingSystem;
 import org.slf4j.LoggerFactory;
 
@@ -50,7 +50,7 @@ public class LogbackLoggingSystem
 {
   private final LoggerContext loggerContext;
 
-  private final Map<String, LevelImpl> levels;
+  private final Map<String, LevelComponentImpl> levels;
 
   private final Set<LoggingComponent> components;
 
@@ -64,7 +64,7 @@ public class LogbackLoggingSystem
     this.loggerContext = (LoggerContext) tmp;
 
     // populate levels
-    Map<String, LevelImpl> levels = new LinkedHashMap<String, LevelImpl>();
+    Map<String, LevelComponentImpl> levels = new LinkedHashMap<String, LevelComponentImpl>();
 
     ch.qos.logback.classic.Level[] source = {
         ch.qos.logback.classic.Level.ALL,
@@ -77,7 +77,7 @@ public class LogbackLoggingSystem
         };
 
     for (ch.qos.logback.classic.Level level : source) {
-      levels.put(level.toString(), new LevelImpl(level));
+      levels.put(level.toString(), new LevelComponentImpl(level));
     }
 
     this.levels = Collections.unmodifiableMap(levels);
@@ -87,15 +87,15 @@ public class LogbackLoggingSystem
   }
 
   //
-  // LevelImpl
+  // LevelComponentImpl
   //
 
-  private class LevelImpl
-      implements Level
+  private class LevelComponentImpl
+      implements LevelComponent
   {
     private final ch.qos.logback.classic.Level target;
 
-    private LevelImpl(final ch.qos.logback.classic.Level level) {
+    private LevelComponentImpl(final ch.qos.logback.classic.Level level) {
       this.target = checkNotNull(level);
     }
 
@@ -120,35 +120,35 @@ public class LogbackLoggingSystem
   }
 
   @Override
-  public Level getLevel(final String name) {
+  public LevelComponent getLevel(final String name) {
     checkNotNull(name);
 
-    Level level = levels.get(name.toUpperCase());
+    LevelComponent level = levels.get(name.toUpperCase());
     if (level == null) {
       throw new RuntimeException("Invalid level name: " + name);
     }
     return level;
   }
 
-  private LevelImpl levelFor(final String name) {
-    return (LevelImpl) getLevel(name);
+  private LevelComponentImpl levelFor(final String name) {
+    return (LevelComponentImpl) getLevel(name);
   }
 
   @Override
-  public Collection<? extends Level> getLevels() {
+  public Collection<? extends LevelComponent> getLevels() {
     return levels.values();
   }
 
   //
-  // LoggerImpl
+  // LoggerComponentImpl
   //
 
-  private class LoggerImpl
-      implements Logger
+  private class LoggerComponentImpl
+      implements LoggerComponent
   {
     private final ch.qos.logback.classic.Logger target;
 
-    public LoggerImpl(final ch.qos.logback.classic.Logger logger) {
+    public LoggerComponentImpl(final ch.qos.logback.classic.Logger logger) {
       this.target = checkNotNull(logger);
     }
 
@@ -158,7 +158,7 @@ public class LogbackLoggingSystem
     }
 
     @Override
-    public Level getLevel() {
+    public LevelComponent getLevel() {
       ch.qos.logback.classic.Level tmp = target.getLevel();
       if (tmp != null) {
         return levelFor(tmp.toString());
@@ -167,7 +167,7 @@ public class LogbackLoggingSystem
     }
 
     @Override
-    public void setLevel(final Level level) {
+    public void setLevel(final LevelComponent level) {
       target.setLevel(levelFor(level.getName()).getTarget());
     }
 
@@ -205,9 +205,9 @@ public class LogbackLoggingSystem
   }
 
   @Override
-  public Logger getLogger(final String name) {
+  public LoggerComponent getLogger(final String name) {
     checkNotNull(name);
-    return new LoggerImpl(loggerContext.getLogger(name));
+    return new LoggerComponentImpl(loggerContext.getLogger(name));
   }
 
   @Override

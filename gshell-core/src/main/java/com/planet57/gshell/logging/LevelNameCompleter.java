@@ -27,7 +27,7 @@ import jline.console.completer.StringsCompleter;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * {@link jline.console.completer.Completer} for {@link Level} names.
+ * {@link jline.console.completer.Completer} for {@link LevelComponent} names.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
@@ -45,7 +45,7 @@ public class LevelNameCompleter
 
     // assume levels do not dynamically change
     delegate = new StringsCompleter();
-    for (Level level : logging.getLevels()) {
+    for (LevelComponent level : logging.getLevels()) {
       delegate.getStrings().add(level.getName());
     }
   }

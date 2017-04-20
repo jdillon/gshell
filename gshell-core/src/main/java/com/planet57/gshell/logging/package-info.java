@@ -13,8 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * Logging access.
+ *
+ * Provides a logging-backend-agnostic api around primitive logging components.
  *
  * @since 2.5
  */

@@ -15,21 +15,19 @@
  */
 package com.planet57.gshell.logging;
 
-// FIXME: Rename, LoggerComponent or something, Logger is likely to conflict with any logging system and forces use of FQCN
-
 /**
  * Represents a logger.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-public interface Logger
+public interface LoggerComponent
 {
   String getName();
 
-  Level getLevel();
+  LevelComponent getLevel();
 
-  void setLevel(Level level);
+  void setLevel(LevelComponent level);
 
   void setLevel(String level);
 

@@ -21,7 +21,7 @@ import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.CommandActionSupport;
-import com.planet57.gshell.logging.Level;
+import com.planet57.gshell.logging.LevelComponent;
 import com.planet57.gshell.logging.LoggingSystem;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -47,7 +47,7 @@ public class LoggerLevelsCommand
     checkNotNull(context);
     IO io = context.getIo();
 
-    for (Level level : logging.getLevels()) {
+    for (LevelComponent level : logging.getLevels()) {
       io.println("%s", level);
     }
 

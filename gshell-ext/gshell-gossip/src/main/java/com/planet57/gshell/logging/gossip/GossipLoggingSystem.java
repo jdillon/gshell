@@ -27,9 +27,9 @@ import javax.inject.Singleton;
 
 import com.planet57.gossip.Gossip;
 import com.planet57.gossip.listener.Listener;
+import com.planet57.gshell.logging.LevelComponent;
 import com.planet57.gshell.logging.LoggingComponent;
-import com.planet57.gshell.logging.Level;
-import com.planet57.gshell.logging.Logger;
+import com.planet57.gshell.logging.LoggerComponent;
 import com.planet57.gshell.logging.LoggingSystem;
 import org.slf4j.LoggerFactory;
 
@@ -49,7 +49,7 @@ public class GossipLoggingSystem
 {
   private final Gossip gossip;
 
-  private final Map<String, LevelImpl> levels;
+  private final Map<String, LevelComponentImpl> levels;
 
   private final Set<LoggingComponent> components;
 
@@ -63,9 +63,9 @@ public class GossipLoggingSystem
     gossip = Gossip.getInstance();
 
     // populate levels
-    Map<String, LevelImpl> levels = new LinkedHashMap<String, LevelImpl>();
+    Map<String, LevelComponentImpl> levels = new LinkedHashMap<String, LevelComponentImpl>();
     for (com.planet57.gossip.Level level : com.planet57.gossip.Level.values()) {
-      levels.put(level.name().toUpperCase(), new LevelImpl(level));
+      levels.put(level.name().toUpperCase(), new LevelComponentImpl(level));
     }
     this.levels = Collections.unmodifiableMap(levels);
 
@@ -75,15 +75,15 @@ public class GossipLoggingSystem
   }
 
   //
-  // LevelImpl
+  // LevelComponentImpl
   //
 
-  private class LevelImpl
-      implements Level
+  private class LevelComponentImpl
+      implements LevelComponent
   {
     private final com.planet57.gossip.Level target;
 
-    private LevelImpl(final com.planet57.gossip.Level level) {
+    private LevelComponentImpl(final com.planet57.gossip.Level level) {
       this.target = checkNotNull(level);
     }
 
@@ -108,35 +108,35 @@ public class GossipLoggingSystem
   }
 
   @Override
-  public Level getLevel(final String name) {
+  public LevelComponent getLevel(final String name) {
     checkNotNull(name);
 
-    Level level = levels.get(name.toUpperCase());
+    LevelComponent level = levels.get(name.toUpperCase());
     if (level == null) {
       throw new RuntimeException("Invalid level name: " + name);
     }
     return level;
   }
 
-  private LevelImpl levelFor(final String name) {
-    return (LevelImpl) getLevel(name);
+  private LevelComponentImpl levelFor(final String name) {
+    return (LevelComponentImpl) getLevel(name);
   }
 
   @Override
-  public Collection<? extends Level> getLevels() {
+  public Collection<? extends LevelComponent> getLevels() {
     return levels.values();
   }
 
   //
-  // LoggerImpl
+  // LoggerComponentImpl
   //
 
-  private class LoggerImpl
-      implements Logger
+  private class LoggerComponentImpl
+      implements LoggerComponent
   {
     private final Gossip.LoggerImpl target;
 
-    public LoggerImpl(final Gossip.LoggerImpl logger) {
+    public LoggerComponentImpl(final Gossip.LoggerImpl logger) {
       this.target = checkNotNull(logger);
     }
 
@@ -146,7 +146,7 @@ public class GossipLoggingSystem
     }
 
     @Override
-    public Level getLevel() {
+    public LevelComponent getLevel() {
       com.planet57.gossip.Level tmp = target.getLevel();
       if (tmp != null) {
         return levelFor(tmp.name());
@@ -155,7 +155,7 @@ public class GossipLoggingSystem
     }
 
     @Override
-    public void setLevel(final Level level) {
+    public void setLevel(final LevelComponent level) {
       target.setLevel(levelFor(level.getName()).getTarget());
     }
 
@@ -186,9 +186,9 @@ public class GossipLoggingSystem
   }
 
   @Override
-  public Logger getLogger(final String name) {
+  public LoggerComponent getLogger(final String name) {
     checkNotNull(name);
-    return new LoggerImpl(gossip.getLogger(name));
+    return new LoggerComponentImpl(gossip.getLogger(name));
   }
 
   @Override

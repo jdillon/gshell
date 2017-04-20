@@ -21,7 +21,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 /**
- * Provides generic access to the underlying logging system.
+ * A generic non-operation/do-nothing {@link LoggingSystem}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
@@ -32,8 +32,8 @@ public class NopLoggingSystem
     implements LoggingSystem
 {
   @Override
-  public Level getLevel(String name) {
-    return new Level()
+  public LevelComponent getLevel(String name) {
+    return new LevelComponent()
     {
       public String getName() {
         return null;
@@ -42,13 +42,13 @@ public class NopLoggingSystem
   }
 
   @Override
-  public Collection<? extends Level> getLevels() {
+  public Collection<? extends LevelComponent> getLevels() {
     return Collections.emptyList();
   }
 
   @Override
-  public Logger getLogger(String name) {
-    return new Logger()
+  public LoggerComponent getLogger(String name) {
+    return new LoggerComponent()
     {
       @Override
       public String getName() {
@@ -56,12 +56,12 @@ public class NopLoggingSystem
       }
 
       @Override
-      public Level getLevel() {
+      public LevelComponent getLevel() {
         return null;
       }
 
       @Override
-      public void setLevel(Level level) {
+      public void setLevel(LevelComponent level) {
         // empty
       }
 
