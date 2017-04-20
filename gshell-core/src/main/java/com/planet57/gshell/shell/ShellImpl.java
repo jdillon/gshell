@@ -120,7 +120,7 @@ public class ShellImpl
     this.history = new ShellHistory(new File(branding.getUserContextDir(), branding.getHistoryFileName()));
   }
 
-  // HACK: primative lifecycle
+  // HACK: primitive lifecycle
 
   public void start() throws Exception {
     events.start();
