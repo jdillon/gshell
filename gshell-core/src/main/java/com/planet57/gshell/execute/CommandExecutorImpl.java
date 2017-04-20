@@ -20,6 +20,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import com.google.common.base.Stopwatch;
 import com.planet57.gshell.alias.AliasRegistry;
 import com.planet57.gshell.alias.NoSuchAliasException;
 import com.planet57.gshell.command.AliasAction;
@@ -152,6 +153,8 @@ public class CommandExecutorImpl
 
     log.debug("Executing ({}): [{}]", name, Strings.join(args, ", "));
 
+    Stopwatch watch = Stopwatch.createStarted();
+
     final CommandAction action = createAction(name);
     MDC.put(CommandAction.class.getName(), name);
 
@@ -229,7 +232,7 @@ public class CommandExecutorImpl
 
     shell.getVariables().set(VariableNames.LAST_RESULT, result);
 
-    log.debug("Result: {}", result);
+    log.debug("Result: {}; {}", result, watch);
 
     return result;
   }
