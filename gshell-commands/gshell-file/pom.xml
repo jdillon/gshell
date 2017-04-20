@@ -31,6 +31,9 @@
   <name>${project.groupId}:${project.artifactId}</name>
 
   <dependencies>
+    <!--
+    FIXME: remove; only here for FileUtils
+    -->
     <dependency>
       <groupId>org.codehaus.plexus</groupId>
       <artifactId>plexus-utils</artifactId>
