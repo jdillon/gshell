@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell;
+package com.planet57.gshell.testharness;
 
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.command.IO;

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.command;
+package com.planet57.gshell.testharness;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,7 +27,9 @@ import com.google.inject.Module;
 import com.google.inject.Stage;
 import com.planet57.gshell.alias.AliasRegistry;
 import com.planet57.gshell.branding.Branding;
-import com.planet57.gshell.branding.TestBranding;
+import com.planet57.gshell.command.Command;
+import com.planet57.gshell.command.CommandAction;
+import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.registry.CommandRegistrar;
 import com.planet57.gshell.command.registry.CommandRegistry;
 import com.planet57.gshell.guice.CoreModule;
@@ -48,6 +50,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.sonatype.goodies.testsupport.TestUtil;
 
 import static com.google.inject.name.Names.named;
 import static org.junit.Assert.assertEquals;
@@ -209,11 +212,11 @@ public abstract class CommandTestSupport
   }
 
   protected void assertOutputEquals(final String expected) {
-    assertEquals(getIo().getOutputString(), expected);
+    Assert.assertEquals(getIo().getOutputString(), expected);
   }
 
   protected void assertErrorOutputEquals(final String expected) {
-    assertEquals(getIo().getErrorString(), expected);
+    Assert.assertEquals(getIo().getErrorString(), expected);
   }
 
   //

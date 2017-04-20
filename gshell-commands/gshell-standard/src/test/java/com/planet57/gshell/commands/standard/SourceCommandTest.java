@@ -18,7 +18,7 @@ package com.planet57.gshell.commands.standard;
 import java.io.FileNotFoundException;
 import java.net.URL;
 
-import com.planet57.gshell.command.CommandTestSupport;
+import com.planet57.gshell.testharness.CommandTestSupport;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

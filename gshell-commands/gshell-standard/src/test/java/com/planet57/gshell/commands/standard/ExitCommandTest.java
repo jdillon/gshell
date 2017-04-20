@@ -15,7 +15,7 @@
  */
 package com.planet57.gshell.commands.standard;
 
-import com.planet57.gshell.command.CommandTestSupport;
+import com.planet57.gshell.testharness.CommandTestSupport;
 import com.planet57.gshell.notification.ExitNotification;
 import org.junit.Test;
 
