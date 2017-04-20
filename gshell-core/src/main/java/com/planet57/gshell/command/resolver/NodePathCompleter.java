@@ -52,10 +52,9 @@ public class NodePathCompleter
 
   @Override
   public int complete(@Nullable final String buffer, final int cursor, final List<CharSequence> candidates) {
-    // buffer can be null
     checkNotNull(candidates);
 
-    Collection<Node> matches = new LinkedHashSet<Node>();
+    Collection<Node> matches = new LinkedHashSet<>();
     String prefix = "";
 
     if (buffer == null || buffer.length() == 0) {

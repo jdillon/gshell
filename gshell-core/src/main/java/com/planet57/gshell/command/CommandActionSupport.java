@@ -70,7 +70,7 @@ public abstract class CommandActionSupport
         messages = createMessages();
       }
       catch (MissingResourceException e) {
-        log.warn("Missing resources: " + e);
+        log.warn("Missing resources", e);
 
         messages = new MessageSource()
         {

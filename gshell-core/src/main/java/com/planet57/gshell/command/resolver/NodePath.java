@@ -15,6 +15,8 @@
  */
 package com.planet57.gshell.command.resolver;
 
+import javax.annotation.Nullable;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.planet57.gshell.command.resolver.Node.CURRENT;
 import static com.planet57.gshell.command.resolver.Node.ROOT;
@@ -53,6 +55,7 @@ public class NodePath
   }
 
   // FIXME: Should be like base() or something
+  @Nullable
   public NodePath parent() {
     int i = path.lastIndexOf(SEPARATOR);
     if (i == 0) {

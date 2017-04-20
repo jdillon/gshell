@@ -110,7 +110,7 @@ public class CommandResolverImpl
 
   @Override
   public List<Node> searchPath() {
-    List<Node> path = new ArrayList<Node>();
+    List<Node> path = new ArrayList<>();
 
     Object tmp = variables.get().get(VariableNames.SHELL_GROUP_PATH);
     if (tmp != null && !(tmp instanceof String)) {
@@ -137,7 +137,6 @@ public class CommandResolverImpl
   @Nullable
   public Node resolve(final NodePath path) {
     checkNotNull(path);
-
     return resolve(path.toString());
   }
 
@@ -145,7 +144,6 @@ public class CommandResolverImpl
   @Nullable
   public Node resolve(final String name) {
     checkNotNull(name);
-
     log.trace("Resolving: {}", name);
 
     for (Node base : searchPath()) {

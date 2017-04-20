@@ -53,6 +53,9 @@ public class CommandHelper
     return messages;
   }
 
+  /**
+   * Construct a {@link CliProcessor} for given action.
+   */
   public CliProcessor createCliProcessor(final CommandAction command) {
     checkNotNull(command);
 
@@ -66,11 +69,17 @@ public class CommandHelper
     return clp;
   }
 
+  /**
+   * Get the description for a given action.
+   */
   public static String getDescription(final CommandAction command) {
     checkNotNull(command);
     return command.getMessages().getMessage(COMMAND_DESCRIPTION);
   }
 
+  /**
+   * Create a {@link PreferenceProcessor} for given action.
+   */
   public static PreferenceProcessor createPreferenceProcessor(final CommandAction command) {
     checkNotNull(command);
 

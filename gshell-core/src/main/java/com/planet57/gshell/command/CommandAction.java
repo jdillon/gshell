@@ -64,7 +64,7 @@ public interface CommandAction
   }
 
   /**
-   * Marker for commands that need to be aware of their names.
+   * Allows commands to be informed of their names at runtime.
    */
   interface NameAware
   {
