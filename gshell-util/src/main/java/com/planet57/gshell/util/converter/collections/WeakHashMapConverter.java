@@ -30,6 +30,7 @@ public class WeakHashMapConverter
     super(WeakHashMap.class);
   }
 
+  @Override
   @SuppressWarnings({"unchecked"})
   protected Map createMap(final Map map) throws Exception {
     return new WeakHashMap(map);

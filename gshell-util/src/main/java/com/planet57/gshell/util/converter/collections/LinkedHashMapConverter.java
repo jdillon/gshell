@@ -30,6 +30,7 @@ public class LinkedHashMapConverter
     super(LinkedHashMap.class);
   }
 
+  @Override
   @SuppressWarnings({"unchecked"})
   protected Map createMap(final Map map) throws Exception {
     return new LinkedHashMap(map);

@@ -29,6 +29,7 @@ public class ShortConverter
     super(Short.class);
   }
 
+  @Override
   protected Object convertToObject(final String text) throws Exception {
     return Short.valueOf(text);
   }

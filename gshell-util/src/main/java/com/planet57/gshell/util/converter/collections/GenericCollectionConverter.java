@@ -31,6 +31,7 @@ public class GenericCollectionConverter
     super(type, editor);
   }
 
+  @Override
   @SuppressWarnings({"unchecked"})
   protected Object createCollection(final List list) throws Exception {
     Collection collection = (Collection) getType().newInstance();

@@ -30,6 +30,7 @@ public class SortedSetConverter
     super(TreeSet.class);
   }
 
+  @Override
   @SuppressWarnings({"unchecked"})
   protected Object createCollection(final List list) throws Exception {
     return new TreeSet(list);

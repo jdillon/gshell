@@ -53,7 +53,7 @@ public abstract class MapConverterSupport
    * @return a Properties object
    * @throws ConversionException An error occurred creating the Properties object.
    */
-  @Nullable
+  @Override
   protected final Object convertToObject(final String text) throws Exception {
     Map map = CollectionUtil.toMap(text, keyEditor, valueEditor);
     if (map == null) {
@@ -64,6 +64,7 @@ public abstract class MapConverterSupport
 
   protected abstract Map createMap(Map map) throws Exception;
 
+  @Override
   protected final String convertToString(final Object value) {
     Map map = (Map) value;
     return CollectionUtil.toString(map, keyEditor, valueEditor);

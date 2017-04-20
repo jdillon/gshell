@@ -30,6 +30,7 @@ public class TreeMapConverter
     super(TreeMap.class);
   }
 
+  @Override
   @SuppressWarnings({"unchecked"})
   protected Map createMap(final Map map) throws Exception {
     return new TreeMap(map);

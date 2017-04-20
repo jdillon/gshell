@@ -31,6 +31,7 @@ public class BigDecimalConverter
     super(BigDecimal.class);
   }
 
+  @Override
   protected Object convertToObject(final String text) throws Exception {
     return new BigDecimal(text);
   }

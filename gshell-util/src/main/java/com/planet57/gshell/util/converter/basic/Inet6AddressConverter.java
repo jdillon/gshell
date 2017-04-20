@@ -31,6 +31,7 @@ public class Inet6AddressConverter
     super(Inet6Address.class);
   }
 
+  @Override
   protected Object convertToObject(final String text) throws Exception {
     return Inet6Address.getByName(text);
   }

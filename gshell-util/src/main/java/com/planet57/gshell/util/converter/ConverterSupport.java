@@ -88,7 +88,7 @@ public abstract class ConverterSupport
    * @return the text equivalent of the value
    */
   protected String convertToString(final Object value) {
-    assert value != null;
+    checkNotNull(value);
     return value.toString();
   }
 
@@ -100,5 +100,6 @@ public abstract class ConverterSupport
    * @return An instance of the converted type
    * @throws Exception Conversion failed
    */
+  @Nullable
   protected abstract Object convertToObject(final String text) throws Exception;
 }

@@ -31,6 +31,7 @@ public class UriConverter
     super(URI.class);
   }
 
+  @Override
   protected Object convertToObject(final String text) throws Exception {
     return new URI(text);
   }

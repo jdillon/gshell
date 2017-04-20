@@ -29,6 +29,7 @@ public class BooleanConverter
     super(Boolean.class);
   }
 
+  @Override
   protected Object convertToObject(final String text) throws Exception {
     return Boolean.valueOf(text);
   }

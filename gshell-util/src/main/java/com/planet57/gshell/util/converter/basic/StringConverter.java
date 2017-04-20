@@ -29,6 +29,7 @@ public class StringConverter
     super(String.class);
   }
 
+  @Override
   protected Object convertToObject(final String text) throws Exception {
     return text;
   }

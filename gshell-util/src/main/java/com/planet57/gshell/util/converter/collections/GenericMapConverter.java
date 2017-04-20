@@ -30,6 +30,7 @@ public class GenericMapConverter
     super(type, keyEditor, valueEditor);
   }
 
+  @Override
   @SuppressWarnings({"unchecked"})
   protected Map createMap(final Map data) throws Exception {
     Map map = (Map) getType().newInstance();

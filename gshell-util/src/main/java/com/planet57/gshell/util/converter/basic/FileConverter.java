@@ -31,6 +31,7 @@ public class FileConverter
     super(File.class);
   }
 
+  @Override
   protected Object convertToObject(final String text) throws Exception {
     return new File(text);
   }

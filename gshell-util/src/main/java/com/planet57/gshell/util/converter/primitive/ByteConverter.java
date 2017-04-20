@@ -29,6 +29,7 @@ public class ByteConverter
     super(Byte.class);
   }
 
+  @Override
   protected Object convertToObject(final String text) throws Exception {
     return Byte.valueOf(text);
   }

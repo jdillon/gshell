@@ -44,6 +44,7 @@ public class DateConverter
     formats.add(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz")); // Atom (ISO 8601)));
   }
 
+  @Override
   protected Object convertToObject(final String text) throws Exception {
     for (DateFormat format : formats) {
       try {
@@ -104,6 +105,7 @@ public class DateConverter
     return formats.parse(text);
   }
 
+  @Override
   protected String convertToString(final Object value) {
     Date date = (Date) value;
     return formats.get(0).format(date);

@@ -29,6 +29,7 @@ public class IntegerConverter
     super(Integer.class);
   }
 
+  @Override
   protected Object convertToObject(final String text) throws Exception {
     return Integer.valueOf(text);
   }

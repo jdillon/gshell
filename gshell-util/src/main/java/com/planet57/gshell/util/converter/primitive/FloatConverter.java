@@ -29,6 +29,7 @@ public class FloatConverter
     super(Float.class);
   }
 
+  @Override
   protected Object convertToObject(final String text) throws Exception {
     return Float.valueOf(text);
   }

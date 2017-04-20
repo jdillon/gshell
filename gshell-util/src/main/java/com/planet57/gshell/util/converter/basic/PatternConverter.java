@@ -31,6 +31,7 @@ public class PatternConverter
     super(Pattern.class);
   }
 
+  @Override
   protected Object convertToObject(final String text) throws Exception {
     return Pattern.compile(text);
   }

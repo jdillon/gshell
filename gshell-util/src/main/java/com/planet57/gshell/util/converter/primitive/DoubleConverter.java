@@ -29,6 +29,7 @@ public class DoubleConverter
     super(Double.class);
   }
 
+  @Override
   protected Object convertToObject(final String text) throws Exception {
     return Double.valueOf(text);
   }

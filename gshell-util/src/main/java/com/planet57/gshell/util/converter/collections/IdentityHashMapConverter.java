@@ -30,6 +30,7 @@ public class IdentityHashMapConverter
     super(IdentityHashMap.class);
   }
 
+  @Override
   @SuppressWarnings({"unchecked"})
   protected Map createMap(final Map map) throws Exception {
     return new IdentityHashMap(map);

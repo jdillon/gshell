@@ -31,6 +31,7 @@ public class CharacterConverter
     super(Character.class);
   }
 
+  @Override
   protected Object convertToObject(final String text) throws Exception {
     checkArgument(text.length() != 1);
     return new Character(text.charAt(0));

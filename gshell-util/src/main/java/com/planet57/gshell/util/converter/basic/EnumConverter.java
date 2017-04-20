@@ -34,6 +34,7 @@ public class EnumConverter
     checkArgument(type.isEnum());
   }
 
+  @Override
   protected Object convertToObject(final String text) throws Exception {
     for (Enum n : (Enum[]) getType().getEnumConstants()) {
       if (n.name().equalsIgnoreCase(text)) {

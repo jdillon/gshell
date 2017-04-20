@@ -30,6 +30,7 @@ public class LinkedHashSetConverter
     super(LinkedHashSet.class);
   }
 
+  @Override
   @SuppressWarnings({"unchecked"})
   protected Object createCollection(final List list) throws Exception {
     return new LinkedHashSet(list);

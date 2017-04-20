@@ -29,6 +29,7 @@ public class LongConverter
     super(Long.class);
   }
 
+  @Override
   protected Object convertToObject(final String text) throws Exception {
     return Long.valueOf(text);
   }

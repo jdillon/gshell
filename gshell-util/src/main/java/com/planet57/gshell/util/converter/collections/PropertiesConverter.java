@@ -30,6 +30,7 @@ public class PropertiesConverter
     super(Properties.class);
   }
 
+  @Override
   @SuppressWarnings({"unchecked"})
   protected Map createMap(final Map map) throws Exception {
     Properties properties = new Properties();

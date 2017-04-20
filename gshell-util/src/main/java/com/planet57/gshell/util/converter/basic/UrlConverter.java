@@ -33,6 +33,7 @@ public class UrlConverter
     super(URL.class);
   }
 
+  @Override
   protected Object convertToObject(final String text) throws Exception {
     try {
       // try to create directly from the text property.

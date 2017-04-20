@@ -29,10 +29,12 @@ public class ClassConverter
     super(Class.class);
   }
 
+  @Override
   protected Object convertToObject(final String text) throws Exception {
     return Class.forName(text, true, Thread.currentThread().getContextClassLoader());
   }
 
+  @Override
   protected String convertToString(final Object value) {
     Class type = (Class) value;
     return type.getSimpleName();

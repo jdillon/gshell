@@ -30,6 +30,7 @@ public class ArrayListConverter
     super(ArrayList.class);
   }
 
+  @Override
   @SuppressWarnings({"unchecked"})
   protected Object createCollection(final List list) {
     return new ArrayList(list);

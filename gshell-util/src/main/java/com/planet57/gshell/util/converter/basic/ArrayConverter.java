@@ -38,6 +38,7 @@ public class ArrayConverter
     checkArgument(type.getComponentType().isArray());
   }
 
+  @Override
   protected Object createCollection(final List list) {
     Object array = Array.newInstance(getType().getComponentType(), list.size());
     for (ListIterator iterator = list.listIterator(); iterator.hasNext(); ) {

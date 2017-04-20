@@ -47,7 +47,7 @@ public abstract class CollectionConverterSupport
     this.editor = checkNotNull(editor);
   }
 
-  @Nullable
+  @Override
   protected final Object convertToObject(final String text) throws Exception {
     List list = CollectionUtil.toList(text, editor);
     if (list == null) {
@@ -59,6 +59,7 @@ public abstract class CollectionConverterSupport
 
   protected abstract Object createCollection(final List list) throws Exception;
 
+  @Override
   @SuppressWarnings({"unchecked"})
   protected final String convertToString(final Object value) {
     Collection values;
