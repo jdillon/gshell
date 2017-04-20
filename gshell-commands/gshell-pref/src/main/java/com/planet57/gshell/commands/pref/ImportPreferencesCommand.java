@@ -25,7 +25,9 @@ import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.util.cli2.Argument;
-import com.planet57.gshell.util.io.Closer;
+import com.planet57.gshell.util.io.Closeables;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Import preference nodes from a file.
@@ -41,10 +43,11 @@ public class ImportPreferencesCommand
   private File source;
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
+
     IO io = context.getIo();
 
-    io.println("Importing preferences from: {}", source); // TODO: i18n
+    io.println("Importing preferences from: %s", source); // TODO: i18n
 
     InputStream in = new BufferedInputStream(new FileInputStream(source));
 
@@ -52,7 +55,7 @@ public class ImportPreferencesCommand
       Preferences.importPreferences(in);
     }
     finally {
-      Closer.close(in);
+      Closeables.close(in);
     }
 
     return Result.SUCCESS;

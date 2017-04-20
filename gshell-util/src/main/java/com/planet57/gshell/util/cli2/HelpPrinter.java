@@ -24,6 +24,11 @@ import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 import jline.TerminalFactory;
 
+import javax.annotation.Nullable;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Helper to print formatted help and usage text.
  *
@@ -43,8 +48,7 @@ public class HelpPrinter
   private String separator = "    ";
 
   public HelpPrinter(final CliProcessor processor) {
-    assert processor != null;
-    this.processor = processor;
+    this.processor = checkNotNull(processor);
 
     // Add messages from the processor
     MessageSource messages = processor.getMessages();
@@ -62,7 +66,7 @@ public class HelpPrinter
   }
 
   public void setTerminalWidth(final int terminalWidth) {
-    assert terminalWidth > 0;
+    checkArgument(terminalWidth > 0);
     this.terminalWidth = terminalWidth;
   }
 
@@ -71,8 +75,7 @@ public class HelpPrinter
   }
 
   public void setPrefix(final String prefix) {
-    assert prefix != null;
-    this.prefix = prefix;
+    this.prefix = checkNotNull(prefix);
   }
 
   public String getSeparator() {
@@ -80,12 +83,11 @@ public class HelpPrinter
   }
 
   public void setSeparator(final String separator) {
-    assert separator != null;
-    this.separator = separator;
+    this.separator = checkNotNull(separator);
   }
 
-  public void printUsage(final PrintWriter out, final String name) {
-    assert out != null;
+  public void printUsage(final PrintWriter out, @Nullable final String name) {
+    checkNotNull(out);
 
     List<ArgumentDescriptor> arguments = new ArrayList<ArgumentDescriptor>();
     arguments.addAll(processor.getArgumentDescriptors());

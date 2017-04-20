@@ -20,9 +20,11 @@ import javax.inject.Inject;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.command.support.CommandActionSupport;
-import com.planet57.gshell.logging.Level;
+import com.planet57.gshell.command.CommandActionSupport;
+import com.planet57.gshell.logging.LevelComponent;
 import com.planet57.gshell.logging.LoggingSystem;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * List valid logger levels.
@@ -38,16 +40,15 @@ public class LoggerLevelsCommand
 
   @Inject
   public LoggerLevelsCommand(final LoggingSystem logging) {
-    assert logging != null;
-    this.logging = logging;
+    this.logging = checkNotNull(logging);
   }
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
     IO io = context.getIo();
 
-    for (Level level : logging.getLevels()) {
-      io.println("{}", level);
+    for (LevelComponent level : logging.getLevels()) {
+      io.println("%s", level);
     }
 
     return Result.SUCCESS;

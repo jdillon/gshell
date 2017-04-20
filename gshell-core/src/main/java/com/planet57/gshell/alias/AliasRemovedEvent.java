@@ -15,7 +15,7 @@
  */
 package com.planet57.gshell.alias;
 
-import java.util.EventObject;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Event fired once an alias has been removed.
@@ -24,21 +24,21 @@ import java.util.EventObject;
  * @since 2.5
  */
 public class AliasRemovedEvent
-    extends EventObject
 {
-  ///CLOVER:OFF
-
   private final String name;
 
   public AliasRemovedEvent(final String name) {
-    super(name);
-
-    assert name != null;
-
-    this.name = name;
+    this.name = checkNotNull(name);
   }
 
   public String getName() {
     return name;
+  }
+
+  @Override
+  public String toString() {
+    return "AliasRemovedEvent{" +
+      "name='" + name + '\'' +
+      '}';
   }
 }

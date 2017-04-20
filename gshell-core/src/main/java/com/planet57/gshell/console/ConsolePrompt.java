@@ -24,7 +24,7 @@ package com.planet57.gshell.console;
 public interface ConsolePrompt
 {
   /**
-   * The default prompt used, when {@link #prompt} returns a null value.
+   * Default prompt used, when {@link #prompt} returns a null value.
    */
   String DEFAULT_PROMPT = "> ";
 

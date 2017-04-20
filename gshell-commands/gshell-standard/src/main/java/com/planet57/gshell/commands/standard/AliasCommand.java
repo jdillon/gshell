@@ -25,12 +25,14 @@ import com.planet57.gshell.alias.AliasRegistry;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.command.support.CommandActionSupport;
+import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.Strings;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.CliProcessor;
 import com.planet57.gshell.util.cli2.CliProcessorAware;
 import jline.console.completer.Completer;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Define an alias or list defined aliases.
@@ -53,24 +55,23 @@ public class AliasCommand
 
   @Inject
   public AliasCommand(final AliasRegistry aliasRegistry) {
-    assert aliasRegistry != null;
-    this.aliasRegistry = aliasRegistry;
+    this.aliasRegistry = checkNotNull(aliasRegistry);
   }
 
   @Inject
   public AliasCommand installCompleters(@Named("alias-name") final Completer c1) {
-    assert c1 != null;
+    checkNotNull(c1);
     setCompleters(c1, null);
     return this;
   }
 
   public void setProcessor(final CliProcessor processor) {
-    assert processor != null;
+    checkNotNull(processor);
     processor.setStopAtNonOption(true);
   }
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
 
     if (name == null) {
       return listAliases(context);
@@ -80,7 +81,6 @@ public class AliasCommand
   }
 
   private Object listAliases(final CommandContext context) throws Exception {
-    assert context != null;
     IO io = context.getIo();
 
     log.debug("Listing defined aliases");
@@ -113,7 +113,6 @@ public class AliasCommand
   }
 
   private Object defineAlias(final CommandContext context) throws Exception {
-    assert context != null;
     IO io = context.getIo();
 
     if (target == null) {

@@ -15,20 +15,25 @@
  */
 package com.planet57.gshell.logging;
 
+import javax.inject.Named;
+import javax.inject.Singleton;
 import java.util.Collection;
 import java.util.Collections;
 
 /**
- * Provides generic access to the underlying logging system.
+ * A generic non-operation/do-nothing {@link LoggingSystem}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
+@Named
+@Singleton
 public class NopLoggingSystem
     implements LoggingSystem
 {
-  public Level getLevel(String name) {
-    return new Level()
+  @Override
+  public LevelComponent getLevel(String name) {
+    return new LevelComponent()
     {
       public String getName() {
         return null;
@@ -36,42 +41,49 @@ public class NopLoggingSystem
     };
   }
 
-  public Collection<? extends Level> getLevels() {
+  @Override
+  public Collection<? extends LevelComponent> getLevels() {
     return Collections.emptyList();
   }
 
-  public Logger getLogger(String name) {
-    return new Logger()
+  @Override
+  public LoggerComponent getLogger(String name) {
+    return new LoggerComponent()
     {
+      @Override
       public String getName() {
         return null;
       }
 
-      public Level getLevel() {
+      @Override
+      public LevelComponent getLevel() {
         return null;
       }
 
-      public void setLevel(Level level) {
+      @Override
+      public void setLevel(LevelComponent level) {
+        // empty
       }
 
+      @Override
       public void setLevel(String level) {
+        // empty
       }
 
-      public Logger parent() {
-        return null;
-      }
-
+      @Override
       public boolean isRoot() {
         return false;
       }
     };
   }
 
+  @Override
   public Collection<String> getLoggerNames() {
     return Collections.emptyList();
   }
 
-  public Collection<? extends Component> getComponents() {
+  @Override
+  public Collection<? extends LoggingComponent> getComponents() {
     return Collections.emptyList();
   }
 }

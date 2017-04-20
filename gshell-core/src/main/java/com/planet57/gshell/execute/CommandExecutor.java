@@ -17,6 +17,8 @@ package com.planet57.gshell.execute;
 
 import com.planet57.gshell.shell.Shell;
 
+import javax.annotation.Nullable;
+
 /**
  * Provides the ability to execute commands.
  *
@@ -33,6 +35,7 @@ public interface CommandExecutor
    * @return Command execution result.
    * @throws Exception Command-line execution failed.
    */
+  @Nullable
   Object execute(Shell shell, String line) throws Exception;
 
   /**
@@ -44,6 +47,7 @@ public interface CommandExecutor
    * @return Command execution result.
    * @throws Exception Command-line execution failed.
    */
+  @Nullable
   Object execute(Shell shell, String command, Object[] args) throws Exception;
 
   /**
@@ -54,6 +58,6 @@ public interface CommandExecutor
    * @return Command execution result.
    * @throws Exception Command-line execution failed.
    */
+  @Nullable
   Object execute(Shell shell, Object... args) throws Exception;
-
 }

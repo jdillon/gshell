@@ -27,6 +27,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -35,7 +36,7 @@ import com.planet57.gshell.branding.License;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.command.support.CommandActionSupport;
+import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.pref.Preference;
@@ -44,6 +45,7 @@ import jline.WindowsTerminal;
 import jline.console.completer.EnumCompleter;
 import org.fusesource.jansi.Ansi;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.planet57.gshell.commands.standard.InfoCommand.Section.SHELL;
 import static org.fusesource.jansi.Ansi.Attribute.INTENSITY_BOLD;
 import static org.fusesource.jansi.Ansi.Color.GREEN;
@@ -68,7 +70,7 @@ public class InfoCommand
 
   private static final NumberFormat FMTD = new DecimalFormat("###,##0.000", new DecimalFormatSymbols(Locale.ENGLISH));
 
-  public static enum Section
+  public enum Section
   {
     SHELL,
     TERMINAL,
@@ -92,7 +94,8 @@ public class InfoCommand
   }
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
+
     IO io = context.getIo();
 
     Branding branding = context.getShell().getBranding();
@@ -107,7 +110,7 @@ public class InfoCommand
     }
 
     if (sections == null) {
-      sections = Arrays.asList(SHELL);
+      sections = Collections.singletonList(SHELL);
     }
 
     //

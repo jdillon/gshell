@@ -23,9 +23,11 @@ import com.planet57.gshell.alias.NoSuchAliasException;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.command.support.CommandActionSupport;
+import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
 import jline.console.completer.Completer;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Undefine an alias.
@@ -44,19 +46,19 @@ public class UnaliasCommand
 
   @Inject
   public UnaliasCommand(final AliasRegistry aliasRegistry) {
-    assert aliasRegistry != null;
-    this.aliasRegistry = aliasRegistry;
+    this.aliasRegistry = checkNotNull(aliasRegistry);
   }
 
   @Inject
   public UnaliasCommand installCompleters(@Named("alias-name") final Completer c1) {
-    assert c1 != null;
+    checkNotNull(c1);
     setCompleters(c1, null);
     return this;
   }
 
   public Object execute(final CommandContext context) {
-    assert context != null;
+    checkNotNull(context);
+
     IO io = context.getIo();
 
     log.debug("Un-defining alias: {}", name);

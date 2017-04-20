@@ -20,15 +20,17 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
+import com.google.common.io.Flushables;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
-import com.planet57.gshell.util.io.Closer;
-import com.planet57.gshell.util.io.Flusher;
+import com.planet57.gshell.util.io.Closeables;
 import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.Preferences;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Export preference nodes to a file.
@@ -49,7 +51,8 @@ public class ExportPreferencesCommand
   private File file;
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
+
     IO io = context.getIo();
     java.util.prefs.Preferences prefs = node();
 
@@ -58,7 +61,7 @@ public class ExportPreferencesCommand
       out = io.streams.out;
     }
     else {
-      io.println("Exporting preferences to: {}", file); // TODO: i18n
+      io.println("Exporting preferences to: %s", file); // TODO: i18n
       out = new BufferedOutputStream(new FileOutputStream(file));
     }
 
@@ -70,11 +73,11 @@ public class ExportPreferencesCommand
         prefs.exportNode(out);
       }
 
-      Flusher.flush(out);
+      Flushables.flushQuietly(out);
     }
     finally {
       if (file != null) {
-        Closer.close(out);
+        Closeables.close(out);
       }
     }
 

@@ -24,10 +24,12 @@ import javax.inject.Inject;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.command.support.CommandActionSupport;
-import com.planet57.gshell.logging.Logger;
+import com.planet57.gshell.command.CommandActionSupport;
+import com.planet57.gshell.logging.LoggerComponent;
 import com.planet57.gshell.logging.LoggingSystem;
 import com.planet57.gshell.util.cli2.Option;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * List loggers.
@@ -53,12 +55,11 @@ public class LoggerListCommand
 
   @Inject
   public LoggerListCommand(final LoggingSystem logging) {
-    assert logging != null;
-    this.logging = logging;
+    this.logging = checkNotNull(logging);
   }
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
     IO io = context.getIo();
 
     List<String> names = new ArrayList<String>();
@@ -67,10 +68,10 @@ public class LoggerListCommand
 
     for (String name : names) {
       if (nameQuery == null || name.contains(nameQuery)) {
-        Logger logger = logging.getLogger(name);
+        LoggerComponent logger = logging.getLogger(name);
         if (all || logger.getLevel() != null &&
             (levelQuery == null || logger.getLevel().toString().contains(levelQuery.toUpperCase()))) {
-          io.println("{}: {}", logger.getName(), logger.getLevel());
+          io.println("%s: %s", logger.getName(), logger.getLevel());
         }
       }
     }

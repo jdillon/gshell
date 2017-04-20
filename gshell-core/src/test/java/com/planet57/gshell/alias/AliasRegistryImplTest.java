@@ -63,7 +63,7 @@ public class AliasRegistryImplTest
       registry.registerAlias(null, null);
       fail();
     }
-    catch (AssertionError e) {
+    catch (NullPointerException e) {
       // ignore
     }
 
@@ -71,7 +71,7 @@ public class AliasRegistryImplTest
       registry.registerAlias("foo", null);
       fail();
     }
-    catch (AssertionError e) {
+    catch (NullPointerException e) {
       // ignore
     }
 
@@ -79,7 +79,7 @@ public class AliasRegistryImplTest
       registry.registerAlias(null, "foo");
       fail();
     }
-    catch (AssertionError e) {
+    catch (NullPointerException e) {
       // ignore
     }
   }
@@ -90,7 +90,7 @@ public class AliasRegistryImplTest
       registry.removeAlias(null);
       fail();
     }
-    catch (AssertionError e) {
+    catch (NullPointerException e) {
       // ignore
     }
   }
@@ -101,7 +101,7 @@ public class AliasRegistryImplTest
       registry.getAlias(null);
       fail();
     }
-    catch (AssertionError e) {
+    catch (NullPointerException e) {
       // ignore
     }
   }
@@ -112,7 +112,7 @@ public class AliasRegistryImplTest
       registry.containsAlias(null);
       fail();
     }
-    catch (AssertionError e) {
+    catch (NullPointerException e) {
       // ignore
     }
   }

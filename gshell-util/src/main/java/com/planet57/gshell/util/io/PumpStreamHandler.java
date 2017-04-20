@@ -72,7 +72,7 @@ public class PumpStreamHandler
       inputPump = createInputPump(streams.in, out, true);
     }
     else {
-      Closer.close(out);
+      Closeables.close(out);
     }
   }
 

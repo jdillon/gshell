@@ -18,6 +18,8 @@ package com.planet57.gshell.command;
 import com.planet57.gshell.util.i18n.MessageSource;
 import jline.console.completer.Completer;
 
+import javax.annotation.Nullable;
+
 /**
  * Provides the user-action for a command.
  *
@@ -31,12 +33,10 @@ public interface CommandAction
 
   String getSimpleName();
 
+  @Nullable
   MessageSource getMessages();
 
   Completer[] getCompleters();
-
-  @SuppressWarnings({"CloneDoesntDeclareCloneNotSupportedException"})
-  CommandAction clone();
 
   /**
    * Execute the command action.
@@ -61,5 +61,21 @@ public interface CommandAction
      * The command execution failed.
      */
     FAILURE // 1
+  }
+
+  /**
+   * Allows commands to be informed of their names at runtime.
+   */
+  interface NameAware
+  {
+    void setName(String name);
+  }
+
+  /**
+   * Commands which are modeled as prototypes.
+   */
+  interface Prototype
+  {
+    CommandAction create();
   }
 }

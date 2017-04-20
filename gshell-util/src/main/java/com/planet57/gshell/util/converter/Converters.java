@@ -75,6 +75,7 @@ import com.planet57.gshell.util.converter.primitive.IntegerConverter;
 import com.planet57.gshell.util.converter.primitive.LongConverter;
 import com.planet57.gshell.util.converter.primitive.ShortConverter;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.planet57.gshell.util.converter.ConverterHelper.getTypeParameters;
 import static com.planet57.gshell.util.converter.ConverterHelper.toClass;
 
@@ -93,9 +94,7 @@ public class Converters
 
   private static boolean registerWithVM;
 
-  /**
-   * Register all of the built in converters
-   */
+  // Register all of the built in converters
   static {
     Map<Class, Class> map = new HashMap<Class, Class>();
     map.put(boolean.class, Boolean.class);
@@ -190,7 +189,7 @@ public class Converters
   }
 
   public static void registerConverter(final Converter converter) {
-    assert converter != null;
+    checkNotNull(converter);
 
     Class type = converter.getType();
     REGISTRY.put(type, converter);
@@ -215,8 +214,8 @@ public class Converters
   }
 
   public static boolean isConvertible(final String type, final ClassLoader classLoader) {
-    assert type != null;
-    assert classLoader != null;
+    checkNotNull(type);
+    checkNotNull(classLoader);
 
     // load using the ClassLoading utility, which also manages arrays and primitive classes.
     Class typeClass;
@@ -256,7 +255,7 @@ public class Converters
   }
 
   public static String toString(final Object value) throws ConversionException {
-    assert value != null;
+    checkNotNull(value);
 
     // get an editor for this type
     Class type = value.getClass();
@@ -288,9 +287,9 @@ public class Converters
   public static Object getValue(final String type, final String value, final ClassLoader classLoader)
       throws ConversionException
   {
-    assert type != null;
-    assert value != null;
-    assert classLoader != null;
+    checkNotNull(type);
+    checkNotNull(value);
+    checkNotNull(classLoader);
 
     // load using the ClassLoading utility, which also manages arrays and primitive classes.
     Class typeClass;
@@ -305,8 +304,8 @@ public class Converters
   }
 
   public static Object getValue(final Type type, final String value) throws ConversionException {
-    assert type != null;
-    assert value != null;
+    checkNotNull(type);
+    checkNotNull(value);
 
     PropertyEditor editor = findConverterOrEditor(type);
 

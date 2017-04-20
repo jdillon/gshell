@@ -30,7 +30,7 @@ import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.event.EventManagerImpl;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
-import com.planet57.gshell.variables.VariablesImpl;
+import com.planet57.gshell.variables.VariablesSupport;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -54,7 +54,7 @@ public class NodePathCompleterTest
 
   @Before
   public void setUp() throws Exception {
-    variables = new VariablesImpl();
+    variables = new VariablesSupport();
     variables.set(VariableNames.SHELL_GROUP, "/");
     variables.set(VariableNames.SHELL_GROUP_PATH, ".:/");
 

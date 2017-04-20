@@ -24,6 +24,10 @@ import java.util.List;
 import com.planet57.gshell.util.converter.ConverterSupport;
 import com.planet57.gshell.util.converter.basic.StringConverter;
 
+import javax.annotation.Nullable;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Support for collection converters.
  *
@@ -40,10 +44,10 @@ public abstract class CollectionConverterSupport
 
   public CollectionConverterSupport(final Class type, final PropertyEditor editor) {
     super(type);
-    assert editor != null;
-    this.editor = editor;
+    this.editor = checkNotNull(editor);
   }
 
+  @Nullable
   protected final Object convertToObject(final String text) throws Exception {
     List list = CollectionUtil.toList(text, editor);
     if (list == null) {

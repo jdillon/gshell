@@ -22,11 +22,13 @@ import javax.inject.Named;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.support.CommandActionSupport;
+import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.variables.Variables;
 import jline.console.completer.Completer;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Unset a variable or property.
@@ -46,13 +48,13 @@ public class UnsetCommand
 
   @Inject
   public UnsetCommand installCompleters(@Named("variable-name") final Completer c1) {
-    assert c1 != null;
+    checkNotNull(c1);
     setCompleters(c1, null);
     return this;
   }
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
 
     Variables variables = context.getVariables();
 

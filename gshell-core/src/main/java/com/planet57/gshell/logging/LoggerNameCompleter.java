@@ -18,17 +18,21 @@ package com.planet57.gshell.logging;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import jline.console.completer.Completer;
 import jline.console.completer.StringsCompleter;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
- * {@link Completer} for {@link Logger} names.
+ * {@link Completer} for {@link LoggerComponent} names.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
+@Named("logger-name")
 @Singleton
 public class LoggerNameCompleter
     implements Completer
@@ -37,8 +41,7 @@ public class LoggerNameCompleter
 
   @Inject
   public LoggerNameCompleter(final LoggingSystem logging) {
-    assert logging != null;
-    this.logging = logging;
+    this.logging = checkNotNull(logging);
   }
 
   public int complete(final String buffer, final int cursor, final List<CharSequence> candidates) {

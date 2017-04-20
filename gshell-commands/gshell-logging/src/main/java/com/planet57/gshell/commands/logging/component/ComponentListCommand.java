@@ -20,10 +20,12 @@ import javax.inject.Inject;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.command.support.CommandActionSupport;
-import com.planet57.gshell.logging.Component;
+import com.planet57.gshell.command.CommandActionSupport;
+import com.planet57.gshell.logging.LoggingComponent;
 import com.planet57.gshell.logging.LoggingSystem;
 import com.planet57.gshell.util.cli2.Option;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * List components.
@@ -48,20 +50,19 @@ public class ComponentListCommand
 
   @Inject
   public ComponentListCommand(final LoggingSystem logging) {
-    assert logging != null;
-    this.logging = logging;
+    this.logging = checkNotNull(logging);
   }
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
     IO io = context.getIo();
 
-    for (Component component : logging.getComponents()) {
+    for (LoggingComponent component : logging.getComponents()) {
       if ((typeQuery == null || component.getType().contains(typeQuery)) &&
           (nameQuery == null || component.getName().contains(nameQuery))) {
-        io.println("{}", component);
+        io.println("%s", component);
         if (verbose) {
-          io.println("  {}", component.getTarget());
+          io.println("  %s", component.getTarget());
         }
       }
     }

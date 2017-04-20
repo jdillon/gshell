@@ -17,12 +17,16 @@ package com.planet57.gshell.branding;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.io.InputStreamReader;
+import java.io.StringWriter;
+import java.net.URI;
 
-import com.planet57.gshell.util.PrintBuffer;
-import com.planet57.gshell.util.io.Closer;
-import com.planet57.gshell.util.io.Copier;
+import com.google.common.io.CharStreams;
+import com.planet57.gshell.util.io.Closeables;
+
+import javax.annotation.Nullable;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Support for {@link License) implementations.
@@ -35,53 +39,51 @@ public class LicenseSupport
 {
   private final String name;
 
-  private final URL url;
+  @Nullable
+  private final URI uri;
 
-  public LicenseSupport(final String name, final URL url) {
-    this.name = name;
-    this.url = url;
+  public LicenseSupport(final String name, @Nullable final URI uri) {
+    this.name = checkNotNull(name);
+    this.uri = uri;
   }
 
-  public LicenseSupport(final String name, final String url) {
-    this.name = name;
-    try {
-      this.url = new URL(url);
-    }
-    catch (MalformedURLException e) {
-      throw new RuntimeException(e);
-    }
+  public LicenseSupport(final String name, final String uri) {
+    this(name, URI.create(uri));
   }
 
+  @Override
   public String getName() {
     return name;
   }
 
-  public URL getUrl() {
-    return url;
+  @Override
+  @Nullable
+  public URI getUrl() {
+    return uri;
   }
 
+  @Override
+  @Nullable
   public String getContent() throws IOException {
-    URL url = getUrl();
-
-    if (url == null) {
+    if (uri == null) {
       return null;
     }
 
-    PrintBuffer buff = new PrintBuffer();
-    InputStream input = url.openStream();
+    StringWriter buff = new StringWriter();
+    InputStream input = uri.toURL().openStream();
     try {
-      Copier.copy(input, buff);
+      CharStreams.copy(new InputStreamReader(input), buff);
     }
     finally {
-      Closer.close(input);
+      Closeables.close(input);
     }
     return buff.toString();
   }
 
   @Override
   public String toString() {
-    if (url != null) {
-      return String.format("%s - %s", name, url);
+    if (uri != null) {
+      return String.format("%s - %s", name, uri);
     }
     return name;
   }

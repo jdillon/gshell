@@ -21,13 +21,14 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.event.EventManager;
-import com.planet57.gshell.util.NameAware;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.planet57.gshell.util.ComponentSupport;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * {@link CommandRegistry} component.
@@ -35,24 +36,24 @@ import org.slf4j.LoggerFactory;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
+@Named
 @Singleton
 public class CommandRegistryImpl
-    implements CommandRegistry
+  extends ComponentSupport
+  implements CommandRegistry
 {
-  private final Logger log = LoggerFactory.getLogger(getClass());
-
   private final Map<String, CommandAction> commands = new LinkedHashMap<String, CommandAction>();
 
   private final EventManager events;
 
   @Inject
   public CommandRegistryImpl(final EventManager events) {
-    assert events != null;
-    this.events = events;
+    this.events = checkNotNull(events);
   }
 
+  @Override
   public void registerCommand(final String name, final CommandAction command) throws DuplicateCommandException {
-    assert name != null;
+    checkNotNull(name);
 
     if (log.isTraceEnabled()) {
       log.trace("Registering command: {} -> {}", name, command);
@@ -66,16 +67,17 @@ public class CommandRegistryImpl
     }
 
     // Inject the name of the command
-    if (command instanceof NameAware) {
-      ((NameAware) command).setName(name);
+    if (command instanceof CommandAction.NameAware) {
+      ((CommandAction.NameAware) command).setName(name);
     }
 
     commands.put(name, command);
     events.publish(new CommandRegisteredEvent(name, command));
   }
 
+  @Override
   public void removeCommand(final String name) throws NoSuchCommandException {
-    assert name != null;
+    checkNotNull(name);
 
     log.trace("Removing command: {}", name);
 
@@ -87,23 +89,29 @@ public class CommandRegistryImpl
     events.publish(new CommandRemovedEvent(name));
   }
 
+  @Override
   public CommandAction getCommand(final String name) throws NoSuchCommandException {
-    assert name != null;
+    checkNotNull(name);
+
     if (!containsCommand(name)) {
       throw new NoSuchCommandException(name);
     }
     return commands.get(name);
   }
 
+  @Override
   public boolean containsCommand(final String name) {
-    assert name != null;
+    checkNotNull(name);
+
     return commands.containsKey(name);
   }
 
+  @Override
   public Collection<String> getCommandNames() {
     return Collections.unmodifiableSet(commands.keySet());
   }
 
+  @Override
   public Collection<CommandAction> getCommands() {
     return Collections.unmodifiableCollection(commands.values());
   }

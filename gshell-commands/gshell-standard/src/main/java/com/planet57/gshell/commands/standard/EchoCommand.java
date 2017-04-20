@@ -21,9 +21,11 @@ import java.util.List;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.command.support.CommandActionSupport;
+import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Print all arguments to the commands standard output.
@@ -42,7 +44,8 @@ public class EchoCommand
   private List<String> args;
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
+
     IO io = context.getIo();
 
     if (args != null && !args.isEmpty()) {

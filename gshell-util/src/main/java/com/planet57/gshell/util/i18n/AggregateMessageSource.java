@@ -22,6 +22,8 @@ import java.util.List;
 import com.planet57.gossip.Log;
 import org.slf4j.Logger;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * A message source which aggregates messages sources in order.
  *
@@ -36,7 +38,7 @@ public class AggregateMessageSource
   private final List<MessageSource> sources = new LinkedList<MessageSource>();
 
   public AggregateMessageSource(final List<MessageSource> sources) {
-    assert sources != null;
+    checkNotNull(sources);
     this.sources.addAll(sources);
   }
 

@@ -20,7 +20,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Stage;
 import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.support.CommandActionSupport;
+import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.event.EventManagerImpl;
 import org.junit.After;
@@ -62,7 +62,7 @@ public class CommandRegistryImplTest
       registry.registerCommand(null, null);
       fail();
     }
-    catch (AssertionError e) {
+    catch (NullPointerException e) {
       // ignore
     }
 
@@ -70,7 +70,7 @@ public class CommandRegistryImplTest
       registry.registerCommand("foo", null);
       fail();
     }
-    catch (AssertionError e) {
+    catch (NullPointerException e) {
       // ignore
     }
 
@@ -84,7 +84,7 @@ public class CommandRegistryImplTest
       });
       fail();
     }
-    catch (AssertionError e) {
+    catch (NullPointerException e) {
       // ignore
     }
   }

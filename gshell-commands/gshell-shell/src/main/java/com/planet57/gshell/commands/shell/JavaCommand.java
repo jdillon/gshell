@@ -20,11 +20,13 @@ import java.util.List;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.support.CommandActionSupport;
+import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Execute a Java standard application.
@@ -52,7 +54,7 @@ public class JavaCommand
   private List<String> args;
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
 
     log.debug("Loading class: {}", className);
     Class type = Thread.currentThread().getContextClassLoader().loadClass(className);

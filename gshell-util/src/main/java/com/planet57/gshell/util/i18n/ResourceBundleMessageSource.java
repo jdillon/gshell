@@ -25,6 +25,10 @@ import java.util.ResourceBundle;
 import com.planet57.gossip.Log;
 import org.slf4j.Logger;
 
+import javax.annotation.Nullable;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Message source backed up by {@link ResourceBundle} instances.
  *
@@ -41,8 +45,7 @@ public class ResourceBundleMessageSource
   private final Locale locale;
 
   public ResourceBundleMessageSource(final Locale locale) {
-    assert locale != null;
-    this.locale = locale;
+    this.locale = checkNotNull(locale);
   }
 
   public ResourceBundleMessageSource(final Class... types) {
@@ -51,7 +54,7 @@ public class ResourceBundleMessageSource
   }
 
   public ResourceBundleMessageSource add(final boolean required, final Class... types) {
-    assert types != null;
+    checkNotNull(types);
 
     for (Class type : types) {
       try {
@@ -80,7 +83,7 @@ public class ResourceBundleMessageSource
    * Get a raw message from the resource bundles using the given code.
    */
   public String getMessage(final String code) {
-    assert code != null;
+    checkNotNull(code);
 
     for (ResourceBundle bundle : bundles) {
       try {
@@ -99,9 +102,7 @@ public class ResourceBundleMessageSource
    * from the resource bundles using the given code as a pattern and the
    * given objects as arguments.
    */
-  public String format(final String code, final Object... args) {
-    // args may be null
-
+  public String format(final String code, @Nullable final Object... args) {
     String pattern = getMessage(code);
     if (args != null) {
       return String.format(pattern, args);

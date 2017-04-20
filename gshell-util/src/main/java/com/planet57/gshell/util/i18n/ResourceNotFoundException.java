@@ -24,8 +24,6 @@ package com.planet57.gshell.util.i18n;
 public class ResourceNotFoundException
     extends RuntimeException
 {
-  ///CLOVER:OFF
-
   public ResourceNotFoundException(final String code) {
     super("Resource not found for code: " + code);
   }

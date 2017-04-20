@@ -15,7 +15,7 @@
  */
 package com.planet57.gshell.alias;
 
-import java.util.EventObject;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Event fired once an alias has been registered.
@@ -24,22 +24,14 @@ import java.util.EventObject;
  * @since 2.5
  */
 public class AliasRegisteredEvent
-    extends EventObject
 {
-  ///CLOVER:OFF
-
   private final String name;
 
   private final String alias;
 
   public AliasRegisteredEvent(final String name, final String alias) {
-    super(name);
-
-    assert name != null;
-    assert alias != null;
-
-    this.name = name;
-    this.alias = alias;
+    this.name = checkNotNull(name);
+    this.alias = checkNotNull(alias);
   }
 
   public String getName() {
@@ -48,5 +40,13 @@ public class AliasRegisteredEvent
 
   public String getAlias() {
     return alias;
+  }
+
+  @Override
+  public String toString() {
+    return "AliasRegisteredEvent{" +
+      "name='" + name + '\'' +
+      ", alias='" + alias + '\'' +
+      '}';
   }
 }

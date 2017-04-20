@@ -21,7 +21,9 @@ import java.util.Date;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.command.support.CommandActionSupport;
+import com.planet57.gshell.command.CommandActionSupport;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Displays the current time and date.
@@ -34,7 +36,8 @@ public class DateCommand
     extends CommandActionSupport
 {
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
+
     IO io = context.getIo();
 
     io.println(DateFormat.getInstance().format(new Date()));

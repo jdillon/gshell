@@ -24,8 +24,6 @@ package com.planet57.gshell.util.cli2;
 public class ProcessingException
     extends Exception
 {
-  ///CLOVER:OFF
-
   private static final long serialVersionUID = 1;
 
   public ProcessingException(String msg) {

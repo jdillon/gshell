@@ -15,18 +15,20 @@
  */
 package com.planet57.gshell.variables;
 
-import java.util.EventObject;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 
-import com.planet57.gshell.event.EventListener;
-import com.planet57.gshell.event.EventManager;
+import com.google.common.eventbus.Subscribe;
+import com.planet57.gshell.event.EventAware;
 import jline.console.completer.Completer;
 import jline.console.completer.StringsCompleter;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * {@link jline.console.completer.Completer} for variable names.
@@ -35,12 +37,11 @@ import jline.console.completer.StringsCompleter;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
+@Named("variable-name")
 @Singleton
 public class VariableNameCompleter
-    implements Completer
+    implements Completer, EventAware
 {
-  private final EventManager events;
-
   private final Provider<Variables> variables;
 
   private final StringsCompleter delegate = new StringsCompleter();
@@ -48,11 +49,8 @@ public class VariableNameCompleter
   private boolean initialized;
 
   @Inject
-  public VariableNameCompleter(final EventManager events, final Provider<Variables> variables) {
-    assert events != null;
-    this.events = events;
-    assert variables != null;
-    this.variables = variables;
+  public VariableNameCompleter(final Provider<Variables> variables) {
+    this.variables = checkNotNull(variables);
   }
 
   private void init() {
@@ -61,22 +59,6 @@ public class VariableNameCompleter
     while (iter.hasNext()) {
       delegate.getStrings().add(iter.next());
     }
-
-    // Register for updates to variable changes
-    events.addListener(new EventListener()
-    {
-      public void onEvent(final EventObject event) throws Exception {
-        if (event instanceof VariableSetEvent) {
-          VariableSetEvent target = (VariableSetEvent) event;
-          delegate.getStrings().add(target.getName());
-        }
-        else if (event instanceof VariableUnsetEvent) {
-          VariableUnsetEvent target = (VariableUnsetEvent) event;
-          delegate.getStrings().remove(target.getName());
-        }
-      }
-    });
-
     initialized = true;
   }
 
@@ -86,5 +68,15 @@ public class VariableNameCompleter
     }
 
     return delegate.complete(buffer, cursor, candidates);
+  }
+
+  @Subscribe
+  void on(final VariableSetEvent event) {
+    delegate.getStrings().add(event.getName());
+  }
+
+  @Subscribe
+  void on(final VariableUnsetEvent event) {
+    delegate.getStrings().remove(event.getName());
   }
 }

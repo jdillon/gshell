@@ -16,24 +16,26 @@
 package com.planet57.gshell.command.resolver;
 
 import java.util.ArrayList;
-import java.util.EventObject;
 import java.util.List;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 
+import com.google.common.eventbus.Subscribe;
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.GroupAction;
 import com.planet57.gshell.command.registry.CommandRegisteredEvent;
 import com.planet57.gshell.command.registry.CommandRegistry;
 import com.planet57.gshell.command.registry.CommandRemovedEvent;
-import com.planet57.gshell.event.EventListener;
-import com.planet57.gshell.event.EventManager;
+import com.planet57.gshell.event.EventAware;
+import com.planet57.gshell.util.ComponentSupport;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * {@link CommandResolver} component.
@@ -41,54 +43,48 @@ import org.slf4j.LoggerFactory;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
+@Named
 @Singleton
 public class CommandResolverImpl
-    implements CommandResolver
+  extends ComponentSupport
+  implements CommandResolver, EventAware
 {
-  private static final Logger log = LoggerFactory.getLogger(CommandResolverImpl.class);
-
   private final Provider<Variables> variables;
 
   private final Node root;
 
   @Inject
-  public CommandResolverImpl(final Provider<Variables> variables, final EventManager events,
+  public CommandResolverImpl(final Provider<Variables> variables,
                              final CommandRegistry commands)
   {
-    assert variables != null;
-    this.variables = variables;
+    this.variables = checkNotNull(variables);
+    checkNotNull(commands);
 
     // Setup the tree
     root = new Node(Node.ROOT, new GroupAction(Node.ROOT));
 
     // Add any pre-registered commands
-    assert commands != null;
     for (CommandAction command : commands.getCommands()) {
       root.add(command.getName(), command);
     }
-
-    // Add a listener to mange the command tree
-    assert events != null;
-    events.addListener(new EventListener()
-    {
-      public void onEvent(final EventObject event) throws Exception {
-        assert event != null;
-        if (event instanceof CommandRegisteredEvent) {
-          CommandRegisteredEvent target = (CommandRegisteredEvent) event;
-          root.add(target.getName(), target.getCommand());
-        }
-        if (event instanceof CommandRemovedEvent) {
-          CommandRemovedEvent target = (CommandRemovedEvent) event;
-          root.remove(target.getName());
-        }
-      }
-    });
   }
 
+  @Subscribe
+  void on(final CommandRegisteredEvent event) {
+    root.add(event.getName(), event.getCommand());
+  }
+
+  @Subscribe
+  void on(final CommandRemovedEvent event) {
+    root.remove(event.getName());
+  }
+
+  @Override
   public Node root() {
     return root;
   }
 
+  @Override
   public Node group() {
     Node node;
 
@@ -112,8 +108,9 @@ public class CommandResolverImpl
     return node;
   }
 
+  @Override
   public List<Node> searchPath() {
-    List<Node> path = new ArrayList<Node>();
+    List<Node> path = new ArrayList<>();
 
     Object tmp = variables.get().get(VariableNames.SHELL_GROUP_PATH);
     if (tmp != null && !(tmp instanceof String)) {
@@ -136,14 +133,17 @@ public class CommandResolverImpl
     return path;
   }
 
+  @Override
+  @Nullable
   public Node resolve(final NodePath path) {
-    assert path != null;
+    checkNotNull(path);
     return resolve(path.toString());
   }
 
+  @Override
+  @Nullable
   public Node resolve(final String name) {
-    assert name != null;
-
+    checkNotNull(name);
     log.trace("Resolving: {}", name);
 
     for (Node base : searchPath()) {

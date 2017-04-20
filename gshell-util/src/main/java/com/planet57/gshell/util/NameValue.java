@@ -15,6 +15,8 @@
  */
 package com.planet57.gshell.util;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Container and parser for <tt>name=value</tt> bits.
  *
@@ -35,7 +37,7 @@ public class NameValue
   }
 
   public static NameValue parse(final String input) {
-    assert input != null;
+    checkNotNull(input);
 
     String name, value;
 

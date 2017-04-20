@@ -15,6 +15,7 @@
  */
 package com.planet57.gshell.variables;
 
+import javax.annotation.Nullable;
 import java.util.Iterator;
 
 /**
@@ -25,22 +26,28 @@ import java.util.Iterator;
  */
 public interface Variables
 {
-  void set(String name, Object value);
+  void set(String name, @Nullable Object value);
 
-  void set(String name, Object value, boolean mutable);
+  void set(String name, @Nullable Object value, boolean mutable);
 
-  void set(Class<?> type, Object value);
+  void set(Class<?> type, @Nullable Object value);
 
+  @Nullable
   Object get(String name);
 
+  @Nullable
   Object get(String name, Object defaultValue);
 
-  <T> T get(String name, Class<T> type, T defaultValue);
+  @Nullable
+  <T> T get(String name, Class<T> type, @Nullable T defaultValue);
 
+  @Nullable
   <T> T get(String name, Class<T> type);
 
-  <T> T get(Class<T> type, T defaultValue);
+  @Nullable
+  <T> T get(Class<T> type, @Nullable T defaultValue);
 
+  @Nullable
   <T> T get(Class<T> type);
 
   void unset(String name);
@@ -61,9 +68,8 @@ public interface Variables
 
   Iterator<String> names();
 
+  @Nullable
   Variables parent();
-
-  ///CLOVER:OFF
 
   /**
    * Throw to indicate that a variable change was attempted but the variable was not muable.

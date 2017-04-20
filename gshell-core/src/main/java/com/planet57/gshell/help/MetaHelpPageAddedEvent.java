@@ -15,9 +15,7 @@
  */
 package com.planet57.gshell.help;
 
-import java.util.EventObject;
-
-import com.planet57.gshell.command.descriptor.HelpPageDescriptor;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Event fired once a help meta page has been added.
@@ -26,20 +24,21 @@ import com.planet57.gshell.command.descriptor.HelpPageDescriptor;
  * @since 2.5
  */
 public class MetaHelpPageAddedEvent
-    extends EventObject
 {
-  ///CLOVER:OFF
+  private final MetaHelpPage page;
 
-  private final HelpPageDescriptor desc;
-
-  public MetaHelpPageAddedEvent(final HelpPageDescriptor desc) {
-    super(desc);
-
-    assert desc != null;
-    this.desc = desc;
+  public MetaHelpPageAddedEvent(final MetaHelpPage page) {
+    this.page = checkNotNull(page);
   }
 
-  public HelpPageDescriptor getDescriptor() {
-    return desc;
+  public MetaHelpPage getPage() {
+    return page;
+  }
+
+  @Override
+  public String toString() {
+    return "MetaHelpPageAddedEvent{" +
+      "page=" + page +
+      '}';
   }
 }

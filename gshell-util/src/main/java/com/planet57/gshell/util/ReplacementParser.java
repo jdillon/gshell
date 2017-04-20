@@ -15,8 +15,11 @@
  */
 package com.planet57.gshell.util;
 
+import javax.annotation.Nullable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Helper to process variable pattern-based replacement.
@@ -31,7 +34,7 @@ public abstract class ReplacementParser
   private final Pattern pattern;
 
   public ReplacementParser(final String pattern) {
-    assert pattern != null;
+    checkNotNull(pattern);
     this.pattern = Pattern.compile(pattern);
   }
 
@@ -39,7 +42,8 @@ public abstract class ReplacementParser
     this(DEFAULT_PATTERN);
   }
 
-  public String parse(String input) {
+  @Nullable
+  public String parse(@Nullable String input) {
     if (input != null) {
       Matcher matcher = pattern.matcher(input);
 

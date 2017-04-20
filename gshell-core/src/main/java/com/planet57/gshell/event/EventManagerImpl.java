@@ -15,69 +15,86 @@
  */
 package com.planet57.gshell.event;
 
-import java.util.EventObject;
-import java.util.LinkedHashSet;
-import java.util.Set;
-
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.google.common.eventbus.EventBus;
+import com.google.inject.Key;
+import com.planet57.gshell.guice.BeanContainer;
+import com.planet57.gshell.util.ComponentSupport;
+import org.eclipse.sisu.BeanEntry;
+import org.eclipse.sisu.Mediator;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * The default {@link EventManager} components.
+ * Default {@link EventManager} component.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ * This is now a thin adapter around a Guava {@link EventBus}.
+ *
+ * Supports automatically calling {@link #register(Object)} for {@link EventAware} components.
+ *
  * @since 2.0
  */
+@Named
 @Singleton
 public class EventManagerImpl
-    implements EventManager
+  extends ComponentSupport
+  implements EventManager
 {
-  private final Logger log = LoggerFactory.getLogger(getClass());
+  private final BeanContainer container;
 
-  private final Set<EventListener> listeners = new LinkedHashSet<EventListener>();
+  private final EventBus eventBus;
 
-  public void addListener(final EventListener listener) {
-    assert listener != null;
+  @Inject
+  public EventManagerImpl(final BeanContainer container) {
+    this.container = checkNotNull(container);
+    this.eventBus = new EventBus();
+  }
 
+  // HACK: really need some component lifecycle
+
+  /**
+   * Automatically register/unregister event-aware components.
+   */
+  @Override
+  public void start() {
+    container.watch(Key.get(EventAware.class, Named.class), new EventAwareMediator(), this);
+  }
+
+  private static class EventAwareMediator
+    implements Mediator<Named, EventAware, EventManagerImpl>
+  {
+    @Override
+    public void add(final BeanEntry<Named, EventAware> entry, final EventManagerImpl watcher) {
+      watcher.register(entry.getValue());
+    }
+
+    @Override
+    public void remove(final BeanEntry<Named, EventAware> entry, final EventManagerImpl watcher) {
+      watcher.unregister(entry.getValue());
+    }
+  }
+
+  @Override
+  public void register(final Object listener) {
+    checkNotNull(listener);
     log.trace("Adding listener: {}", listener);
-
-    synchronized (listeners) {
-      listeners.add(listener);
-    }
+    eventBus.register(listener);
   }
 
-  public void removeListener(final EventListener listener) {
-    assert listener != null;
-
+  @Override
+  public void unregister(final Object listener) {
+    checkNotNull(listener);
     log.trace("Removing listener: {}", listener);
-
-    synchronized (listeners) {
-      listeners.remove(listener);
-    }
+    eventBus.unregister(listener);
   }
 
-  private EventListener[] getListeners() {
-    synchronized (listeners) {
-      return listeners.toArray(new EventListener[listeners.size()]);
-    }
-  }
-
-  public void publish(final EventObject event) {
-    assert event != null;
-
+  @Override
+  public void publish(final Object event) {
+    checkNotNull(event);
     log.trace("Publishing event: {}", event);
-
-    for (EventListener listener : getListeners()) {
-      log.trace("Firing event ({}) to listener: {}", event, listener);
-
-      try {
-        listener.onEvent(event);
-      }
-      catch (Exception e) {
-        log.error("Listener raised an exception", e);
-      }
-    }
+    eventBus.post(event);
   }
 }

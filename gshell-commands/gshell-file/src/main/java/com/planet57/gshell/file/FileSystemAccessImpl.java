@@ -18,12 +18,14 @@ package com.planet57.gshell.file;
 import java.io.File;
 import java.io.IOException;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
 import com.planet57.gshell.variables.Variables;
 import org.codehaus.plexus.util.Os;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.planet57.gshell.variables.VariableNames.SHELL_HOME;
 import static com.planet57.gshell.variables.VariableNames.SHELL_USER_DIR;
 import static com.planet57.gshell.variables.VariableNames.SHELL_USER_HOME;
@@ -42,31 +44,32 @@ public class FileSystemAccessImpl
 
   @Inject
   public FileSystemAccessImpl(final Provider<Variables> variables) {
-    assert variables != null;
-    this.variables = variables;
+    this.variables = checkNotNull(variables);
   }
 
+  @Override
   public File resolveDir(final String name) throws IOException {
-    assert name != null;
+    checkNotNull(name);
     return variables.get().get(name, File.class).getCanonicalFile();
   }
 
+  @Override
   public File getShellHomeDir() throws IOException {
     return resolveDir(SHELL_HOME);
   }
 
+  @Override
   public File getUserDir() throws IOException {
     return resolveDir(SHELL_USER_DIR);
   }
 
+  @Override
   public File getUserHomeDir() throws IOException {
     return resolveDir(SHELL_USER_HOME);
   }
 
-  public File resolveFile(File baseDir, final String path) throws IOException {
-    // baseDir may be null
-    // path may be null
-
+  @Override
+  public File resolveFile(@Nullable File baseDir, @Nullable final String path) throws IOException {
     File userDir = getUserDir();
 
     if (baseDir == null) {
@@ -107,12 +110,14 @@ public class FileSystemAccessImpl
     return file.getCanonicalFile();
   }
 
+  @Override
   public File resolveFile(final String path) throws IOException {
     return resolveFile(null, path);
   }
 
+  @Override
   public boolean hasChildren(final File file) {
-    assert file != null;
+    checkNotNull(file);
 
     if (file.isDirectory()) {
       File[] children = file.listFiles();

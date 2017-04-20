@@ -28,7 +28,7 @@ public class ShellHolder
 {
   private static final Logger log = LoggerFactory.getLogger(ShellHolder.class);
 
-  private static final InheritableThreadLocal<Shell> holder = new InheritableThreadLocal<Shell>();
+  private static final InheritableThreadLocal<Shell> holder = new InheritableThreadLocal<>();
 
   public static Shell set(final Shell shell) {
     Shell last = holder.get();

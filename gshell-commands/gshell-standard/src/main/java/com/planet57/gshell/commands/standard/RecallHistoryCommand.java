@@ -18,9 +18,11 @@ package com.planet57.gshell.commands.standard;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.command.support.CommandActionSupport;
+import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.shell.History;
 import com.planet57.gshell.util.cli2.Argument;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Recall history.
@@ -36,7 +38,8 @@ public class RecallHistoryCommand
   private int index;
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
+
     IO io = context.getIo();
     History history = context.getShell().getHistory();
 

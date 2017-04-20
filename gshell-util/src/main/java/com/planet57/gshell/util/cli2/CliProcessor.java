@@ -30,7 +30,6 @@ import com.planet57.gshell.util.cli2.handler.Handlers;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 import com.planet57.gshell.util.setter.SetterFactory;
-import com.planet57.gshell.util.yarn.Yarn;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.MissingArgumentException;
@@ -39,6 +38,8 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.UnrecognizedOptionException;
 import org.slf4j.Logger;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Processes an object for cli annotations.
@@ -58,7 +59,7 @@ public class CliProcessor
 
   private MessageSource messages;
 
-  public static enum Flavor
+  public enum Flavor
   {
     POSIX,
     GNU
@@ -67,6 +68,7 @@ public class CliProcessor
   private Flavor flavor = Flavor.POSIX;
 
   public CliProcessor() {
+    // empty
   }
 
   public boolean isStopAtNonOption() {
@@ -90,8 +92,7 @@ public class CliProcessor
   }
 
   public void setFlavor(final Flavor flavor) {
-    assert flavor != null;
-    this.flavor = flavor;
+    this.flavor = checkNotNull(flavor);
   }
 
   public List<OptionDescriptor> getOptionDescriptors() {
@@ -197,7 +198,7 @@ public class CliProcessor
   // Processing
   //
 
-  private static interface CliParser
+  private interface CliParser
       extends CommandLineParser
   {
     void ensureRequiredOptionsPresent() throws MissingOptionException;
@@ -232,8 +233,7 @@ public class CliProcessor
   }
 
   public void process(final String... args) throws Exception {
-    assert args != null;
-
+    checkNotNull(args);
     CliParser parser = null;
 
     switch (flavor) {
@@ -367,13 +367,9 @@ public class CliProcessor
     public OptionDescriptor getDescriptor() {
       return desc;
     }
-
-    public String toString() {
-      return Yarn.render(this);
-    }
   }
 
-  private static enum Messages
+  private enum Messages
   {
     MISSING_OPERAND,
     UNDEFINED_OPTION,

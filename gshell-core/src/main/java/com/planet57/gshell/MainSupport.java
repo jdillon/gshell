@@ -44,13 +44,14 @@ import com.planet57.gshell.util.pref.PreferenceProcessor;
 import com.planet57.gshell.util.pref.Preferences;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
-import com.planet57.gshell.variables.VariablesImpl;
+import com.planet57.gshell.variables.VariablesSupport;
 import jline.AnsiWindowsTerminal;
 import jline.NoInterruptUnixTerminal;
 import jline.TerminalFactory;
 import org.fusesource.jansi.Ansi;
 import org.slf4j.Logger;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static jline.TerminalFactory.Flavor.UNIX;
 import static jline.TerminalFactory.Flavor.WINDOWS;
 
@@ -82,7 +83,7 @@ public abstract class MainSupport
 
   protected final IO io = new AnsiIO(StreamSet.SYSTEM_FD, true);
 
-  protected final Variables vars = new VariablesImpl();
+  protected final Variables vars = new VariablesSupport();
 
   protected final MessageSource messages = new ResourceBundleMessageSource()
       .add(false, getClass())
@@ -190,7 +191,7 @@ public abstract class MainSupport
   }
 
   public void boot(String... args) throws Exception {
-    assert args != null;
+    checkNotNull(args);
 
     args = Arguments.clean(args);
     log.debug("Booting w/args: {}", Arrays.asList(args));

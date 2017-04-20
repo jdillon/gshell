@@ -15,19 +15,20 @@
  */
 package com.planet57.gshell.event;
 
-import java.util.EventObject;
-
 /**
  * Manages event subscriptions and publishes events.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 2.0
+ * @since 3.0
  */
 public interface EventManager
 {
-  void addListener(EventListener listener);
+  // HACK: primitive component lifecycle
+  void start();
 
-  void removeListener(EventListener listener);
+  void register(Object listener);
 
-  void publish(EventObject event);
+  void unregister(Object listener);
+
+  void publish(Object event);
 }

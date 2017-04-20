@@ -18,6 +18,7 @@ package com.planet57.gshell.shell;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
+import javax.inject.Singleton;
 
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.console.ConsoleErrorHandler;
@@ -27,6 +28,7 @@ import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static org.fusesource.jansi.Ansi.Attribute.INTENSITY_BOLD;
 import static org.fusesource.jansi.Ansi.Color.RED;
 import static org.fusesource.jansi.Ansi.ansi;
@@ -37,10 +39,12 @@ import static org.fusesource.jansi.Ansi.ansi;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
+@Named
+@Singleton
 public class ShellErrorHandler
     implements ConsoleErrorHandler
 {
-  private static enum Messages
+  private enum Messages
   {
     ERROR_AT,
     ERROR_CAUSED_BY,
@@ -59,15 +63,14 @@ public class ShellErrorHandler
   private final Provider<Variables> variables;
 
   @Inject
-  public ShellErrorHandler(final @Named("main") IO io, final Provider<Variables> variables) {
-    assert io != null;
-    this.io = io;
-    assert variables != null;
-    this.variables = variables;
+  public ShellErrorHandler(@Named("main") final IO io, final Provider<Variables> variables) {
+    this.io = checkNotNull(io);
+    this.variables = checkNotNull(variables);
   }
 
+  @Override
   public boolean handleError(final Throwable error) {
-    assert error != null;
+    checkNotNull(error);
     displayError(error);
     return true;
   }

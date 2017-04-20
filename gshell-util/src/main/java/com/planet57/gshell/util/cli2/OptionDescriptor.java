@@ -17,6 +17,8 @@ package com.planet57.gshell.util.cli2;
 
 import com.planet57.gshell.util.setter.Setter;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * {@link Option} descriptor.
  *
@@ -42,8 +44,7 @@ public class OptionDescriptor
 
   public OptionDescriptor(final Option spec, final Setter setter) {
     super(spec, setter);
-    assert spec != null;
-    this.spec = spec;
+    this.spec = checkNotNull(spec);
     this.name = UNINITIALIZED_STRING.equals(spec.name()) ? null : spec.name();
     this.longName = UNINITIALIZED_STRING.equals(spec.longName()) ? null : spec.longName();
 

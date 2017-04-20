@@ -15,6 +15,8 @@
  */
 package com.planet57.gshell.util.i18n;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * A message source which prefixes message codes.
  *
@@ -29,14 +31,12 @@ public class PrefixingMessageSource
   private final String prefix;
 
   public PrefixingMessageSource(final MessageSource messages, final String prefix) {
-    assert messages != null;
-    this.messages = messages;
-    assert prefix != null;
-    this.prefix = prefix;
+    this.messages = checkNotNull(messages);
+    this.prefix = checkNotNull(prefix);
   }
 
   protected String createCode(final String code) {
-    assert code != null;
+    checkNotNull(code);
     return prefix + code;
   }
 

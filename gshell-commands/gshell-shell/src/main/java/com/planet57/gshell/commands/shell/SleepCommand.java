@@ -17,8 +17,10 @@ package com.planet57.gshell.commands.shell;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.support.CommandActionSupport;
+import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Sleep for a period.
@@ -34,7 +36,7 @@ public class SleepCommand
   private long time;
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
 
     if (log.isDebugEnabled()) {
       log.debug("Sleeping for {} on thread: {}", time, Thread.currentThread());

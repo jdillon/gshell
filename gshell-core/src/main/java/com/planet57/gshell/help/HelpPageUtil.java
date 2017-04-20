@@ -21,6 +21,8 @@ import java.util.LinkedList;
 
 import com.planet57.gshell.command.resolver.Node;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * {@link HelpPage} utilities.
  *
@@ -30,8 +32,8 @@ import com.planet57.gshell.command.resolver.Node;
 public class HelpPageUtil
 {
   public static void render(final PrintWriter out, final Collection<? extends HelpPage> pages) {
-    assert out != null;
-    assert pages != null;
+    checkNotNull(out);
+    checkNotNull(pages);
 
     int max = 0;
     for (HelpPage page : pages) {
@@ -56,8 +58,8 @@ public class HelpPageUtil
   }
 
   public static Collection<HelpPage> pagesFor(final Node node, final HelpContentLoader loader) {
-    assert node != null;
-    assert loader != null;
+    checkNotNull(node);
+    checkNotNull(loader);
 
     Collection<HelpPage> pages = new LinkedList<HelpPage>();
     for (Node child : node.children()) {
@@ -68,8 +70,8 @@ public class HelpPageUtil
   }
 
   public static HelpPage pageFor(final Node node, final HelpContentLoader loader) {
-    assert node != null;
-    assert loader != null;
+    checkNotNull(node);
+    checkNotNull(loader);
 
     if (node.isGroup()) {
       return new GroupHelpPage(node, loader);

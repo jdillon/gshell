@@ -24,8 +24,6 @@ package com.planet57.gshell.command;
 public class CommandException
     extends Exception
 {
-  ///CLOVER:OFF
-
   private static final long serialVersionUID = 1;
 
   public CommandException(final String msg) {

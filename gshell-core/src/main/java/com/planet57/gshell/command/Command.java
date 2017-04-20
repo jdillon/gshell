@@ -36,6 +36,4 @@ import javax.inject.Qualifier;
 public @interface Command
 {
   String name();
-
-  // TODO: maybe add @Group to organize actions
 }

@@ -17,44 +17,19 @@ package com.planet57.gshell.guice;
 
 import java.io.IOException;
 
+import org.fusesource.jansi.AnsiRenderer;
+
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
-import com.planet57.gshell.alias.AliasNameCompleter;
-import com.planet57.gshell.alias.AliasRegistry;
-import com.planet57.gshell.alias.AliasRegistryImpl;
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.command.registry.CommandNameCompleter;
 import com.planet57.gshell.command.registry.CommandRegistrar;
-import com.planet57.gshell.command.registry.CommandRegistry;
-import com.planet57.gshell.command.registry.CommandRegistryImpl;
-import com.planet57.gshell.command.registry.CommandsCompleter;
-import com.planet57.gshell.command.resolver.CommandResolver;
-import com.planet57.gshell.command.resolver.CommandResolverImpl;
-import com.planet57.gshell.command.resolver.NodePathCompleter;
-import com.planet57.gshell.console.completer.FileNameCompleter;
-import com.planet57.gshell.event.EventManager;
-import com.planet57.gshell.event.EventManagerImpl;
-import com.planet57.gshell.execute.CommandExecutor;
-import com.planet57.gshell.execute.CommandExecutorImpl;
-import com.planet57.gshell.help.HelpContentLoader;
-import com.planet57.gshell.help.HelpContentLoaderImpl;
-import com.planet57.gshell.help.HelpPageManager;
-import com.planet57.gshell.help.HelpPageManagerImpl;
-import com.planet57.gshell.help.MetaHelpPageNameCompleter;
-import com.planet57.gshell.logging.LevelNameCompleter;
-import com.planet57.gshell.logging.LoggerNameCompleter;
-import com.planet57.gshell.parser.CommandLineParser;
-import com.planet57.gshell.parser.CommandLineParserImpl;
+import com.planet57.gshell.command.registry.CommandRegistrarImpl;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.shell.ShellHolder;
 import com.planet57.gshell.util.io.PromptReader;
-import com.planet57.gshell.variables.VariableNameCompleter;
 import com.planet57.gshell.variables.Variables;
-import jline.Terminal;
-import jline.console.completer.Completer;
-import org.fusesource.jansi.AnsiRenderer;
 
-import static com.google.inject.name.Names.named;
+import jline.Terminal;
 
 /**
  * GShell core module.
@@ -67,25 +42,8 @@ public class CoreModule
 {
   @Override
   protected void configure() {
-    bind(EventManager.class).to(EventManagerImpl.class);
-    bind(AliasRegistry.class).to(AliasRegistryImpl.class);
-    bind(CommandRegistry.class).to(CommandRegistryImpl.class);
+    // FIXME: for some reason, this is required, @Named is not working for this one component
     bind(CommandRegistrar.class).to(CommandRegistrarImpl.class);
-    bind(HelpContentLoader.class).to(HelpContentLoaderImpl.class);
-    bind(HelpPageManager.class).to(HelpPageManagerImpl.class);
-    bind(CommandLineParser.class).to(CommandLineParserImpl.class);
-    bind(CommandExecutor.class).to(CommandExecutorImpl.class);
-    bind(CommandResolver.class).to(CommandResolverImpl.class);
-
-    bind(Completer.class).annotatedWith(named("commands")).to(CommandsCompleter.class);
-    bind(Completer.class).annotatedWith(named("command-name")).to(CommandNameCompleter.class);
-    bind(Completer.class).annotatedWith(named("node-path")).to(NodePathCompleter.class);
-    bind(Completer.class).annotatedWith(named("alias-name")).to(AliasNameCompleter.class);
-    bind(Completer.class).annotatedWith(named("file-name")).to(FileNameCompleter.class);
-    bind(Completer.class).annotatedWith(named("variable-name")).to(VariableNameCompleter.class);
-    bind(Completer.class).annotatedWith(named("meta-help-page-name")).to(MetaHelpPageNameCompleter.class);
-    bind(Completer.class).annotatedWith(named("level-name")).to(LevelNameCompleter.class);
-    bind(Completer.class).annotatedWith(named("logger-name")).to(LoggerNameCompleter.class);
   }
 
   @Provides

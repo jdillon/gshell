@@ -27,15 +27,16 @@ import javax.inject.Named;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.command.support.CommandActionSupport;
+import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.file.FileSystemAccess;
-import com.planet57.gshell.util.FileAssert;
+import com.planet57.gshell.util.io.FileAssert;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
 import jline.console.ConsoleReader;
 import jline.console.completer.Completer;
 import org.fusesource.jansi.AnsiString;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static org.fusesource.jansi.Ansi.Attribute.INTENSITY_FAINT;
 import static org.fusesource.jansi.Ansi.Color.BLUE;
 import static org.fusesource.jansi.Ansi.ansi;
@@ -66,19 +67,18 @@ public class ListDirectoryCommand
 
   @Inject
   public ListDirectoryCommand(final FileSystemAccess fileSystem) {
-    assert fileSystem != null;
-    this.fileSystem = fileSystem;
+    this.fileSystem = checkNotNull(fileSystem);
   }
 
   @Inject
   public ListDirectoryCommand installCompleters(final @Named("file-name") Completer c1) {
-    assert c1 != null;
+    checkNotNull(c1);
     setCompleters(c1, null);
     return this;
   }
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
     IO io = context.getIo();
 
     File file = fileSystem.resolveFile(path);
@@ -96,9 +96,6 @@ public class ListDirectoryCommand
   }
 
   private void listChildren(final IO io, final File dir) throws Exception {
-    assert io != null;
-    assert dir != null;
-
     File[] files;
 
     if (includeHidden) {
@@ -107,6 +104,7 @@ public class ListDirectoryCommand
     else {
       files = dir.listFiles(new FileFilter()
       {
+        @Override
         public boolean accept(final File file) {
           assert file != null;
           return !file.isHidden();
@@ -150,8 +148,6 @@ public class ListDirectoryCommand
   }
 
   private CharSequence render(final File file) {
-    assert file != null;
-
     String name = file.getName();
 
     if (file.isDirectory()) {

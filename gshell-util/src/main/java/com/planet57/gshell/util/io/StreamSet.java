@@ -15,6 +15,8 @@
  */
 package com.planet57.gshell.util.io;
 
+import com.google.common.io.Flushables;
+
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -81,18 +83,18 @@ public class StreamSet
   }
 
   public void flush() {
-    Flusher.flush(out);
+    Flushables.flushQuietly(out);
 
     if (!isOutputCombined()) {
-      Flusher.flush(err);
+      Flushables.flushQuietly(err);
     }
   }
 
   public void close() {
-    Closer.close(in, out);
+    Closeables.close(in, out);
 
     if (!isOutputCombined()) {
-      Closer.close(err);
+      Closeables.close(err);
     }
   }
 

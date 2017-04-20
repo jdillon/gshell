@@ -19,6 +19,7 @@ import org.codehaus.plexus.logging.AbstractLoggerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static org.codehaus.plexus.logging.Logger.LEVEL_DEBUG;
 
 /**
@@ -34,6 +35,7 @@ public class Slf4jLoggerManager
     return new LoggerImpl(key);
   }
 
+  @Override
   public org.codehaus.plexus.logging.Logger getLoggerForComponent(final String role, final String roleHint) {
     return createLogger(toMapKey(role, roleHint));
   }
@@ -47,27 +49,35 @@ public class Slf4jLoggerManager
     }
   }
 
+  @Override
   public void returnComponentLogger(final String role, final String roleHint) {
     // Ignore
   }
 
+  @Override
   public void setThreshold(final int threshold) {
+    // empty
   }
 
+  @Override
   public int getThreshold() {
     return LEVEL_DEBUG;
   }
 
+  @Override
   public void setThresholds(final int threshold) {
+    // empty
   }
 
   public void setThreshold(final String role, final String roleHint, final int threshold) {
+    // empty
   }
 
   public int getThreshold(final String role, final String roleHint) {
     return LEVEL_DEBUG;
   }
 
+  @Override
   public int getActiveLoggerCount() {
     return 0;
   }
@@ -81,82 +91,101 @@ public class Slf4jLoggerManager
     private final Logger log;
 
     public LoggerImpl(final String name) {
-      assert name != null;
+      checkNotNull(name);
       this.log = LoggerFactory.getLogger(name);
     }
 
+    @Override
     public void debug(String message) {
       log.debug(message);
     }
 
+    @Override
     public void debug(String message, Throwable throwable) {
       log.debug(message, throwable);
     }
 
+    @Override
     public boolean isDebugEnabled() {
       return log.isDebugEnabled();
     }
 
+    @Override
     public void info(String message) {
       log.info(message);
     }
 
+    @Override
     public void info(String message, Throwable throwable) {
       log.info(message, throwable);
     }
 
+    @Override
     public boolean isInfoEnabled() {
       return log.isInfoEnabled();
     }
 
+    @Override
     public void warn(String message) {
       log.warn(message);
     }
 
+    @Override
     public void warn(String message, Throwable throwable) {
       log.warn(message, throwable);
     }
 
+    @Override
     public boolean isWarnEnabled() {
       return log.isWarnEnabled();
     }
 
+    @Override
     public void error(String message) {
       log.error(message);
     }
 
+    @Override
     public void error(String message, Throwable throwable) {
       log.error(message, throwable);
     }
 
+    @Override
     public boolean isErrorEnabled() {
       return log.isErrorEnabled();
     }
 
+    @Override
     public void fatalError(String message) {
       error(message);
     }
 
+    @Override
     public void fatalError(String message, Throwable throwable) {
       error(message, throwable);
     }
 
+    @Override
     public boolean isFatalErrorEnabled() {
       return isErrorEnabled();
     }
 
+    @Override
     public org.codehaus.plexus.logging.Logger getChildLogger(String name) {
       return new LoggerImpl(log.getName() + "." + name);
     }
 
+    @Override
     public int getThreshold() {
       return LEVEL_DEBUG;
     }
 
+    @Override
     public void setThreshold(int threshold) {
       // nothing
     }
 
+    @Override
     public String getName() {
       return log.getName();
     }

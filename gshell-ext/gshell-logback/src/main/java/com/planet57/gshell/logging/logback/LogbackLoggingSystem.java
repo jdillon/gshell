@@ -24,15 +24,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import ch.qos.logback.classic.LoggerContext;
-import com.planet57.gshell.logging.Component;
-import com.planet57.gshell.logging.Level;
-import com.planet57.gshell.logging.Logger;
+import com.planet57.gshell.logging.LevelComponent;
+import com.planet57.gshell.logging.LoggerComponent;
+import com.planet57.gshell.logging.LoggingComponent;
 import com.planet57.gshell.logging.LoggingSystem;
 import org.slf4j.LoggerFactory;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static org.slf4j.Logger.ROOT_LOGGER_NAME;
 
 /**
@@ -41,15 +43,16 @@ import static org.slf4j.Logger.ROOT_LOGGER_NAME;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.6.4
  */
+@Named
 @Singleton
 public class LogbackLoggingSystem
     implements LoggingSystem
 {
   private final LoggerContext loggerContext;
 
-  private final Map<String, LevelImpl> levels;
+  private final Map<String, LevelComponentImpl> levels;
 
-  private final Set<Component> components;
+  private final Set<LoggingComponent> components;
 
   public LogbackLoggingSystem() {
     // Make sure Logback is actually configured, attach to the context
@@ -61,7 +64,7 @@ public class LogbackLoggingSystem
     this.loggerContext = (LoggerContext) tmp;
 
     // populate levels
-    Map<String, LevelImpl> levels = new LinkedHashMap<String, LevelImpl>();
+    Map<String, LevelComponentImpl> levels = new LinkedHashMap<String, LevelComponentImpl>();
 
     ch.qos.logback.classic.Level[] source = {
         ch.qos.logback.classic.Level.ALL,
@@ -74,29 +77,29 @@ public class LogbackLoggingSystem
         };
 
     for (ch.qos.logback.classic.Level level : source) {
-      levels.put(level.toString(), new LevelImpl(level));
+      levels.put(level.toString(), new LevelComponentImpl(level));
     }
 
     this.levels = Collections.unmodifiableMap(levels);
 
     // setup components map
-    components = new LinkedHashSet<Component>();
+    components = new LinkedHashSet<LoggingComponent>();
   }
 
   //
-  // LevelImpl
+  // LevelComponentImpl
   //
 
-  private class LevelImpl
-      implements Level
+  private class LevelComponentImpl
+      implements LevelComponent
   {
     private final ch.qos.logback.classic.Level target;
 
-    private LevelImpl(final ch.qos.logback.classic.Level level) {
-      assert level != null;
-      this.target = level;
+    private LevelComponentImpl(final ch.qos.logback.classic.Level level) {
+      this.target = checkNotNull(level);
     }
 
+    @Override
     public String getName() {
       return target.toString();
     }
@@ -116,42 +119,46 @@ public class LogbackLoggingSystem
     }
   }
 
-  public Level getLevel(final String name) {
-    assert name != null;
-    Level level = levels.get(name.toUpperCase());
+  @Override
+  public LevelComponent getLevel(final String name) {
+    checkNotNull(name);
+
+    LevelComponent level = levels.get(name.toUpperCase());
     if (level == null) {
       throw new RuntimeException("Invalid level name: " + name);
     }
     return level;
   }
 
-  private LevelImpl levelFor(final String name) {
-    return (LevelImpl) getLevel(name);
+  private LevelComponentImpl levelFor(final String name) {
+    return (LevelComponentImpl) getLevel(name);
   }
 
-  public Collection<? extends Level> getLevels() {
+  @Override
+  public Collection<? extends LevelComponent> getLevels() {
     return levels.values();
   }
 
   //
-  // LoggerImpl
+  // LoggerComponentImpl
   //
 
-  private class LoggerImpl
-      implements Logger
+  private class LoggerComponentImpl
+      implements LoggerComponent
   {
     private final ch.qos.logback.classic.Logger target;
 
-    public LoggerImpl(final ch.qos.logback.classic.Logger logger) {
-      assert logger != null;
-      this.target = logger;
+    public LoggerComponentImpl(final ch.qos.logback.classic.Logger logger) {
+      this.target = checkNotNull(logger);
     }
 
+    @Override
     public String getName() {
       return target.getName();
     }
 
-    public Level getLevel() {
+    @Override
+    public LevelComponent getLevel() {
       ch.qos.logback.classic.Level tmp = target.getLevel();
       if (tmp != null) {
         return levelFor(tmp.toString());
@@ -159,14 +166,17 @@ public class LogbackLoggingSystem
       return null;
     }
 
-    public void setLevel(final Level level) {
+    @Override
+    public void setLevel(final LevelComponent level) {
       target.setLevel(levelFor(level.getName()).getTarget());
     }
 
+    @Override
     public void setLevel(final String level) {
       setLevel(levelFor(level));
     }
 
+    @Override
     public boolean isRoot() {
       return getName().equals(ROOT_LOGGER_NAME);
     }
@@ -184,6 +194,7 @@ public class LogbackLoggingSystem
 
   // NOTE: This doesn't seem to be returning all loggers that have been created, just those which have been configured/bound to a level :-(
 
+  @Override
   public Collection<String> getLoggerNames() {
     Collection<ch.qos.logback.classic.Logger> loggers = loggerContext.getLoggerList();
     List<String> names = new ArrayList<String>(loggers.size());
@@ -193,12 +204,14 @@ public class LogbackLoggingSystem
     return names;
   }
 
-  public Logger getLogger(final String name) {
-    assert name != null;
-    return new LoggerImpl(loggerContext.getLogger(name));
+  @Override
+  public LoggerComponent getLogger(final String name) {
+    checkNotNull(name);
+    return new LoggerComponentImpl(loggerContext.getLogger(name));
   }
 
-  public Collection<? extends Component> getComponents() {
+  @Override
+  public Collection<? extends LoggingComponent> getComponents() {
     // TODO: Expose appenders and whatever
     return Collections.emptySet();
   }

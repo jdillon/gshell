@@ -15,8 +15,6 @@
  */
 package com.planet57.gshell.util;
 
-import com.planet57.gshell.util.yarn.Yarn;
-
 /**
  * Base-class for annotation descriptors.
  *
@@ -30,9 +28,4 @@ public abstract class AnnotationDescriptor
   public static final char UNINITIALIZED_CHAR = '\u0000';
 
   public static final Class UNINITIALIZED_CLASS = Void.class;
-
-  @Override
-  public String toString() {
-    return Yarn.render(this);
-  }
 }

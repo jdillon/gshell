@@ -21,6 +21,8 @@ import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.util.cli2.Option;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Remove a tree of preferences.
  *
@@ -35,7 +37,7 @@ public class RemovePreferencesCommand
   private boolean tree;
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
 
     Preferences prefs = node();
 

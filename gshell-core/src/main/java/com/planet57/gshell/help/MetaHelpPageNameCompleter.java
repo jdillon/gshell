@@ -15,16 +15,18 @@
  */
 package com.planet57.gshell.help;
 
-import java.util.EventObject;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 
-import com.planet57.gshell.event.EventListener;
-import com.planet57.gshell.event.EventManager;
+import com.google.common.eventbus.Subscribe;
+import com.planet57.gshell.event.EventAware;
 import jline.console.completer.Completer;
 import jline.console.completer.StringsCompleter;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * {@link jline.console.completer.Completer} for meta help page names.
@@ -33,12 +35,11 @@ import jline.console.completer.StringsCompleter;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
+@Named("meta-help-page-name")
 @Singleton
 public class MetaHelpPageNameCompleter
-    implements Completer
+    implements Completer, EventAware
 {
-  private final EventManager events;
-
   private final HelpPageManager helpPages;
 
   private final StringsCompleter delegate = new StringsCompleter();
@@ -46,29 +47,14 @@ public class MetaHelpPageNameCompleter
   private boolean initialized;
 
   @Inject
-  public MetaHelpPageNameCompleter(final EventManager events, final HelpPageManager helpPages) {
-    assert events != null;
-    this.events = events;
-    assert helpPages != null;
-    this.helpPages = helpPages;
+  public MetaHelpPageNameCompleter(final HelpPageManager helpPages) {
+    this.helpPages = checkNotNull(helpPages);
   }
 
   private void init() {
     for (MetaHelpPage page : helpPages.getMetaPages()) {
       delegate.getStrings().add(page.getName());
     }
-
-    // Register for updates to alias registrations
-    events.addListener(new EventListener()
-    {
-      public void onEvent(final EventObject event) throws Exception {
-        if (event instanceof MetaHelpPageAddedEvent) {
-          MetaHelpPageAddedEvent targetEvent = (MetaHelpPageAddedEvent) event;
-          delegate.getStrings().add(targetEvent.getDescriptor().getName());
-        }
-      }
-    });
-
     initialized = true;
   }
 
@@ -78,5 +64,10 @@ public class MetaHelpPageNameCompleter
     }
 
     return delegate.complete(buffer, cursor, candidates);
+  }
+
+  @Subscribe
+  void on(final MetaHelpPageAddedEvent event) {
+    delegate.getStrings().add(event.getPage().getName());
   }
 }

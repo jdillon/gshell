@@ -22,6 +22,8 @@ import com.planet57.gshell.util.converter.ConversionException;
 import com.planet57.gshell.util.converter.ConverterSupport;
 import com.planet57.gshell.util.converter.basic.StringConverter;
 
+import javax.annotation.Nullable;
+
 /**
  * Support for {@link Map} converters.
  *
@@ -51,6 +53,7 @@ public abstract class MapConverterSupport
    * @return a Properties object
    * @throws ConversionException An error occurred creating the Properties object.
    */
+  @Nullable
   protected final Object convertToObject(final String text) throws Exception {
     Map map = CollectionUtil.toMap(text, keyEditor, valueEditor);
     if (map == null) {

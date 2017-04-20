@@ -27,45 +27,50 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicReference;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.command.IO;
+import com.planet57.gshell.command.registry.CommandRegistrar;
 import com.planet57.gshell.console.Console;
 import com.planet57.gshell.console.ConsoleErrorHandler;
 import com.planet57.gshell.console.ConsolePrompt;
 import com.planet57.gshell.console.ConsoleTask;
-import com.planet57.gshell.event.EventAware;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.execute.CommandExecutor;
 import com.planet57.gshell.notification.ExitNotification;
 import com.planet57.gshell.util.Arguments;
-import com.planet57.gshell.util.io.Closer;
+import com.planet57.gshell.util.ComponentSupport;
 import com.planet57.gshell.util.io.StreamJack;
 import com.planet57.gshell.variables.Variables;
-import com.planet57.gshell.variables.VariablesImpl;
+import com.planet57.gshell.variables.VariablesSupport;
 import jline.console.ConsoleReader;
 import jline.console.completer.AggregateCompleter;
 import jline.console.completer.Completer;
 import jline.console.completer.NullCompleter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * The default {@link Shell} component.
+ * Default {@link Shell} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
+@Named
 public class ShellImpl
-    implements Shell
+  extends ComponentSupport
+  implements Shell
 {
-  private final Logger log = LoggerFactory.getLogger(getClass());
+  private final EventManager events;
 
   private final Branding branding;
 
   private final CommandExecutor executor;
+
+  private final CommandRegistrar commandRegistrar;
 
   private IO io;
 
@@ -91,39 +96,52 @@ public class ShellImpl
 
   @Inject
   public ShellImpl(final EventManager events,
+                   final CommandRegistrar commandRegistrar,
                    final CommandExecutor executor,
                    final Branding branding,
-                   final @Named("main") IO io,
-                   final @Named("main") Variables variables)
+                   @Nullable @Named("main") final IO io,
+                   @Nullable @Named("main") final Variables variables)
       throws IOException
   {
-    assert events != null;
-    assert executor != null;
-    assert branding != null;
-    // io and variables may be null
+    this.events = checkNotNull(events);
+    this.executor = checkNotNull(executor);
+    this.commandRegistrar = checkNotNull(commandRegistrar);
+    this.branding = checkNotNull(branding);
 
-    this.executor = executor;
-    this.branding = branding;
     this.io = io != null ? io : new IO();
-    this.variables = variables != null ? variables : new VariablesImpl();
-    if (variables instanceof EventAware) {
-      ((EventAware) variables).setEventManager(events);
+    this.variables = variables != null ? variables : new VariablesSupport();
+
+    // HACK: adapt variables for events
+    if (variables instanceof VariablesSupport) {
+      ((VariablesSupport) variables).setEventManager(events);
     }
+
     this.history = new ShellHistory(new File(branding.getUserContextDir(), branding.getHistoryFileName()));
   }
 
+  // HACK: primitive lifecycle
+
+  public void start() throws Exception {
+    events.start();
+    commandRegistrar.discoverCommands();
+  }
+
+  @Override
   public Branding getBranding() {
     return branding;
   }
 
+  @Override
   public IO getIo() {
     return io;
   }
 
+  @Override
   public Variables getVariables() {
     return variables;
   }
 
+  @Override
   public History getHistory() {
     return history;
   }
@@ -143,14 +161,15 @@ public class ShellImpl
   }
 
   public void setCompleters(final Completer... completers) {
-    assert completers != null;
-    setCompleters(Arrays.asList(completers));
+    if (completers != null) {
+      this.completers = Arrays.asList(completers);
+    }
   }
 
   @Inject
   public void installCompleters(final @Named("alias-name") Completer c1, final @Named("commands") Completer c2) {
-    assert c1 != null;
-    assert c2 != null;
+    checkNotNull(c1);
+    checkNotNull(c2);
     setCompleters(new AggregateCompleter(c1, c2));
   }
 
@@ -174,6 +193,7 @@ public class ShellImpl
     return opened;
   }
 
+  @Override
   public synchronized void close() {
     opened = false;
   }
@@ -204,27 +224,32 @@ public class ShellImpl
     loadProfileScripts();
   }
 
+  @Override
   public boolean isInteractive() {
     return true;
   }
 
   // FIXME: History should still be appended if not running inside of a JLineConsole
 
+  @Override
   public Object execute(final CharSequence line) throws Exception {
     ensureOpened();
     return executor.execute(this, String.valueOf(line));
   }
 
+  @Override
   public Object execute(final CharSequence command, final Object[] args) throws Exception {
     ensureOpened();
     return executor.execute(this, String.valueOf(command), args);
   }
 
+  @Override
   public Object execute(final Object... args) throws Exception {
     ensureOpened();
     return executor.execute(this, args);
   }
 
+  @Override
   public void run(final Object... args) throws Exception {
     assert args != null;
     ensureOpened();
@@ -384,25 +409,19 @@ public class ShellImpl
   }
 
   protected void loadScript(final File file) throws Exception {
-    assert file != null;
-
+    checkNotNull(file);
     log.debug("Loading script: {}", file);
 
-    BufferedReader reader = new BufferedReader(new FileReader(file));
-    try {
+    try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
       String line;
       while ((line = reader.readLine()) != null) {
         execute(line);
       }
     }
-    finally {
-      Closer.close(reader);
-    }
   }
 
   protected void loadUserScript(final String fileName) throws Exception {
-    assert fileName != null;
-
+    checkNotNull(fileName);
     File file = new File(branding.getUserContextDir(), fileName);
     if (file.exists()) {
       loadScript(file);
@@ -413,8 +432,7 @@ public class ShellImpl
   }
 
   protected void loadSharedScript(final String fileName) throws Exception {
-    assert fileName != null;
-
+    checkNotNull(fileName);
     File file = new File(branding.getShellContextDir(), fileName);
     if (file.exists()) {
       loadScript(file);

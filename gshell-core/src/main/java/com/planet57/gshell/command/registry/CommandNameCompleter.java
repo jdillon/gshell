@@ -16,16 +16,18 @@
 package com.planet57.gshell.command.registry;
 
 import java.util.Collection;
-import java.util.EventObject;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 
-import com.planet57.gshell.event.EventListener;
-import com.planet57.gshell.event.EventManager;
+import com.google.common.eventbus.Subscribe;
+import com.planet57.gshell.event.EventAware;
 import jline.console.completer.Completer;
 import jline.console.completer.StringsCompleter;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * {@link jline.console.completer.Completer} for command names.
@@ -34,12 +36,11 @@ import jline.console.completer.StringsCompleter;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
+@Named("command-name")
 @Singleton
 public class CommandNameCompleter
-    implements Completer
+    implements Completer, EventAware
 {
-  private final EventManager events;
-
   private final CommandRegistry commands;
 
   private final StringsCompleter delegate = new StringsCompleter();
@@ -47,40 +48,32 @@ public class CommandNameCompleter
   private boolean initialized;
 
   @Inject
-  public CommandNameCompleter(final EventManager events, final CommandRegistry commands) {
-    assert events != null;
-    this.events = events;
-    assert commands != null;
-    this.commands = commands;
+  public CommandNameCompleter(final CommandRegistry commands) {
+    this.commands = checkNotNull(commands);
   }
 
   private void init() {
     Collection<String> names = commands.getCommandNames();
     delegate.getStrings().addAll(names);
-
-    // Register for updates to command registrations
-    events.addListener(new EventListener()
-    {
-      public void onEvent(final EventObject event) throws Exception {
-        if (event instanceof CommandRegisteredEvent) {
-          CommandRegisteredEvent target = (CommandRegisteredEvent) event;
-          delegate.getStrings().add(target.getName());
-        }
-        else if (event instanceof CommandRemovedEvent) {
-          CommandRemovedEvent target = (CommandRemovedEvent) event;
-          delegate.getStrings().remove(target.getName());
-        }
-      }
-    });
-
     initialized = true;
   }
 
+  @Override
   public int complete(final String buffer, final int cursor, final List<CharSequence> candidates) {
     if (!initialized) {
       init();
     }
 
     return delegate.complete(buffer, cursor, candidates);
+  }
+
+  @Subscribe
+  void on(final CommandRegisteredEvent event) {
+    delegate.getStrings().add(event.getName());
+  }
+
+  @Subscribe
+  void on(final CommandRemovedEvent event) {
+    delegate.getStrings().remove(event.getName());
   }
 }

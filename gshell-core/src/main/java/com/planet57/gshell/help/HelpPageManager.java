@@ -15,10 +15,9 @@
  */
 package com.planet57.gshell.help;
 
-import java.util.Collection;
+import com.google.common.base.Predicate;
 
-import com.planet57.gshell.command.descriptor.HelpPageDescriptor;
-import com.planet57.gshell.util.filter.Filter;
+import java.util.Collection;
 
 /**
  * Manages {@link HelpPage}s.
@@ -32,9 +31,9 @@ public interface HelpPageManager
 
   Collection<HelpPage> getPages();
 
-  Collection<HelpPage> getPages(Filter<HelpPage> filter);
+  Collection<HelpPage> getPages(Predicate<HelpPage> query);
 
-  void addMetaPage(HelpPageDescriptor descriptor);
+  void addMetaPage(MetaHelpPage page);
 
   Collection<MetaHelpPage> getMetaPages();
 }

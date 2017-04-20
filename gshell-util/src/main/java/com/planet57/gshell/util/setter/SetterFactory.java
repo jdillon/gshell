@@ -20,6 +20,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Collection;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Creates {@link Setter} instances.
  *
@@ -29,8 +31,8 @@ import java.util.Collection;
 public class SetterFactory
 {
   public static Setter create(final AnnotatedElement element, final Object bean) {
-    assert element != null;
-    assert bean != null;
+    checkNotNull(element);
+    checkNotNull(bean);
 
     if (element instanceof Field) {
       Field field = (Field) element;

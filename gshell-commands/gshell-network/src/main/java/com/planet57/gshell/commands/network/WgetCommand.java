@@ -23,15 +23,17 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
+import com.google.common.io.ByteStreams;
+import com.google.common.io.Flushables;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.command.support.CommandActionSupport;
+import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
-import com.planet57.gshell.util.io.Closer;
-import com.planet57.gshell.util.io.Copier;
-import com.planet57.gshell.util.io.Flusher;
+import com.planet57.gshell.util.io.Closeables;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Fetch a file from a URL.
@@ -53,19 +55,19 @@ public class WgetCommand
   private URL source;
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
     IO io = context.getIo();
 
-    io.println("Downloading: {}", source); // TODO: i18n
+    io.println("Downloading: %s", source); // TODO: i18n
     if (verbose) {
-      io.println("Connecting to: {}:{}", source.getHost(),
+      io.println("Connecting to: %s:%s", source.getHost(),
           source.getPort() != -1 ? source.getPort() : source.getDefaultPort()); // TODO: i18n
     }
 
     URLConnection conn = source.openConnection();
 
     if (verbose) {
-      io.println("Length: {} [{}]", conn.getContentLength(), conn.getContentType()); // TODO: i18n
+      io.println("Length: %s [%s]", conn.getContentLength(), conn.getContentType()); // TODO: i18n
     }
 
     InputStream in = conn.getInputStream();
@@ -73,7 +75,7 @@ public class WgetCommand
     OutputStream out;
     if (outputFile != null) {
       if (verbose) {
-        io.println("Saving to file: {}", outputFile); // TODO: i18n
+        io.println("Saving to file: %s", outputFile); // TODO: i18n
       }
       out = new BufferedOutputStream(new FileOutputStream(outputFile));
     }
@@ -81,17 +83,17 @@ public class WgetCommand
       out = io.streams.out;
     }
 
-    Copier.copy(in, out);
+    ByteStreams.copy(in, out);
 
     // if we write a file, close it then return the file
     if (outputFile != null) {
-      Closer.close(out);
-      io.println("Saved {} [{}]", outputFile, outputFile.length()); // TODO: i18n
+      Closeables.close(out);
+      io.println("Saved %s [%s]", outputFile, outputFile.length()); // TODO: i18n
       return outputFile;
     }
 
     // else flush the stream and say we did good
-    Flusher.flush(out);
+    Flushables.flushQuietly(out);
     return Result.SUCCESS;
   }
 }

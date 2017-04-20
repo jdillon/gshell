@@ -32,7 +32,7 @@ public class IOTest
       new IO(null, true);
       fail();
     }
-    catch (AssertionError expected) {
+    catch (NullPointerException expected) {
       // ignore
     }
   }

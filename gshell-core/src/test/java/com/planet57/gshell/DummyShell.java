@@ -50,6 +50,7 @@ public class DummyShell
   }
 
   public void close() {
+    // empty
   }
 
   public Object execute(CharSequence line) throws Exception {

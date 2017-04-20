@@ -15,6 +15,7 @@
  */
 package com.planet57.gshell.plexus;
 
+import com.planet57.gshell.util.ComponentSupport;
 import org.codehaus.plexus.ContainerConfiguration;
 import org.codehaus.plexus.DefaultContainerConfiguration;
 import org.codehaus.plexus.DefaultPlexusContainer;
@@ -24,19 +25,29 @@ import org.codehaus.plexus.classworlds.ClassWorld;
 import org.codehaus.plexus.component.repository.exception.ComponentLookupException;
 import org.codehaus.plexus.logging.Logger;
 
+import javax.annotation.Nullable;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
+
 /**
  * Provides access to Plexus components.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 3.0
  */
+@Named
+@Singleton
 public class PlexusRuntime
+  extends ComponentSupport
 {
+  @Nullable
   private ClassWorld classWorld;
 
   private PlexusContainer container;
 
-  public PlexusRuntime(final ClassWorld classWorld) {
+  @Inject
+  public PlexusRuntime(@Nullable final ClassWorld classWorld) {
     this.classWorld = classWorld;
   }
 
@@ -60,6 +71,7 @@ public class PlexusRuntime
     return container;
   }
 
+  @Nullable
   public ClassWorld getClassWorld() {
     return classWorld;
   }

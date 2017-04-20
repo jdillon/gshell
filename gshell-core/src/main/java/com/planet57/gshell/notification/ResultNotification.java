@@ -15,6 +15,8 @@
  */
 package com.planet57.gshell.notification;
 
+import com.planet57.gshell.util.Notification;
+
 /**
  * Thrown to indicate a command result state.
  *
@@ -24,8 +26,6 @@ package com.planet57.gshell.notification;
 public class ResultNotification
     extends Notification
 {
-  ///CLOVER:OFF
-
   private static final long serialVersionUID = 1;
 
   private final Object result;

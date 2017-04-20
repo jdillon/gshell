@@ -24,25 +24,31 @@ import com.planet57.gshell.parser.impl.Parser;
 import com.planet57.gshell.parser.impl.visitor.ExecutingVisitor;
 import com.planet57.gshell.parser.impl.visitor.LoggingVisitor;
 import com.planet57.gshell.shell.Shell;
-import com.planet57.gshell.util.io.Closer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.planet57.gshell.util.ComponentSupport;
+import com.planet57.gshell.util.io.Closeables;
+
+import javax.inject.Named;
+import javax.inject.Singleton;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * The default {@link CommandLineParser} component.
+ * Default {@link CommandLineParser} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
+@Named
+@Singleton
 public class CommandLineParserImpl
-    implements CommandLineParser
+  extends ComponentSupport
+  implements CommandLineParser
 {
-  private final Logger log = LoggerFactory.getLogger(getClass());
-
   private final Parser parser = new Parser();
 
+  @Override
   public CommandLine parse(final String line) throws Exception {
-    assert line != null;
+    checkNotNull(line);
 
     log.trace("Building command-line for: {}", line);
 
@@ -52,7 +58,7 @@ public class CommandLineParserImpl
       root = parser.parse(reader);
     }
     finally {
-      Closer.close(reader);
+      Closeables.close(reader);
     }
 
     // If trace is enabled, the log the parse tree

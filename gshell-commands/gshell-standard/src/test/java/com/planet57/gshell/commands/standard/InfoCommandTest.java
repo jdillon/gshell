@@ -15,7 +15,7 @@
  */
 package com.planet57.gshell.commands.standard;
 
-import com.planet57.gshell.command.support.CommandTestSupport;
+import com.planet57.gshell.command.CommandTestSupport;
 
 /**
  * Tests for the {@link InfoCommand}.

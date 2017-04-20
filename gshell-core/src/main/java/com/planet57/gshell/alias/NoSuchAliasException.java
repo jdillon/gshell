@@ -26,8 +26,6 @@ import com.planet57.gshell.command.CommandException;
 public class NoSuchAliasException
     extends CommandException
 {
-  ///CLOVER:OFF
-
   private static final long serialVersionUID = 1;
 
   public NoSuchAliasException(final String msg) {

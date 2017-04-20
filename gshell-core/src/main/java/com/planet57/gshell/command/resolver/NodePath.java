@@ -15,6 +15,9 @@
  */
 package com.planet57.gshell.command.resolver;
 
+import javax.annotation.Nullable;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.planet57.gshell.command.resolver.Node.CURRENT;
 import static com.planet57.gshell.command.resolver.Node.ROOT;
 import static com.planet57.gshell.command.resolver.Node.SEPARATOR;
@@ -34,7 +37,7 @@ public class NodePath
   private final StringBuilder path;
 
   public NodePath(final String path) {
-    assert path != null;
+    checkNotNull(path);
     this.path = new StringBuilder(path);
   }
 
@@ -52,6 +55,7 @@ public class NodePath
   }
 
   // FIXME: Should be like base() or something
+  @Nullable
   public NodePath parent() {
     int i = path.lastIndexOf(SEPARATOR);
     if (i == 0) {

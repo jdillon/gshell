@@ -72,6 +72,8 @@
   <properties>
     <gshell.version>3.0.0-SNAPSHOT</gshell.version>
     <apache-maven.version>3.5.0</apache-maven.version>
+    <sonatype-goodies.version>2.2.3</sonatype-goodies.version>
+    <gossip.version>2.0.0</gossip.version>
 
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
@@ -91,9 +93,27 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <version>4.12</version>
+        <groupId>org.sonatype.goodies</groupId>
+        <artifactId>goodies-common</artifactId>
+        <version>${sonatype-goodies.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.sonatype.goodies</groupId>
+        <artifactId>goodies-lifecycle</artifactId>
+        <version>${sonatype-goodies.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.sonatype.goodies</groupId>
+        <artifactId>goodies-testsupport</artifactId>
+        <version>${sonatype-goodies.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.google.code.findbugs</groupId>
+        <artifactId>jsr305</artifactId>
+        <version>3.0.2</version>
       </dependency>
 
       <dependency>
@@ -111,19 +131,19 @@
       <dependency>
         <groupId>com.planet57.gossip</groupId>
         <artifactId>gossip-bootstrap</artifactId>
-        <version>2.0.0</version>
+        <version>${gossip.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.planet57.gossip</groupId>
         <artifactId>gossip-slf4j</artifactId>
-        <version>2.0.0</version>
+        <version>${gossip.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.planet57.gossip</groupId>
         <artifactId>gossip-support</artifactId>
-        <version>2.0.0</version>
+        <version>${gossip.version}</version>
       </dependency>
 
       <dependency>

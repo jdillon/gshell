@@ -18,7 +18,9 @@ package com.planet57.gshell.command.registry;
 import java.util.Collection;
 import java.util.List;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import com.planet57.gshell.command.resolver.CommandResolver;
@@ -34,6 +36,7 @@ import jline.console.completer.NullCompleter;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
+@Named("commands")
 @Singleton
 public class CommandsCompleter
     extends ArgumentCompleter
@@ -68,9 +71,7 @@ public class CommandsCompleter
     }
   }
 
-  private void updateCompleters(final Completer[] completers) {
-    // completers may be null
-
+  private void updateCompleters(@Nullable final Completer[] completers) {
     // Reset the list
     List<Completer> target = getCompleters();
     target.clear();

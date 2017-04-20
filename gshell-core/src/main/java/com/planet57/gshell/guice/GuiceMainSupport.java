@@ -24,14 +24,12 @@ import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.planet57.gshell.MainSupport;
 import com.planet57.gshell.branding.Branding;
+import com.planet57.gshell.branding.BrandingSupport;
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.command.registry.CommandRegistrar;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.shell.ShellImpl;
 import com.planet57.gshell.variables.Variables;
 
-import org.eclipse.sisu.inject.DefaultBeanLocator;
-import org.eclipse.sisu.inject.MutableBeanLocator;
 import org.eclipse.sisu.space.BeanScanning;
 import org.eclipse.sisu.space.SpaceModule;
 import org.eclipse.sisu.space.URLClassSpace;
@@ -48,52 +46,44 @@ import static com.google.inject.name.Names.named;
 public abstract class GuiceMainSupport
     extends MainSupport
 {
-  protected final DefaultBeanLocator container = new DefaultBeanLocator();
+  private final BeanContainer container = new BeanContainer();
 
-  protected final Injector injector;
-
-  public GuiceMainSupport() {
-    List<Module> modules = new ArrayList<>();
-    configure(modules);
-
-    injector = Guice.createInjector(new WireModule(modules));
-    container.add(injector, 0);
-  }
   @Override
   protected Branding createBranding() {
-    return injector.getInstance(Branding.class);
+    // HACK: back to non-injected branding, this is needed too early presently and mess up logging
+    return new BrandingSupport();
   }
 
   @Override
   protected Shell createShell() throws Exception {
+    List<Module> modules = new ArrayList<>();
+    configure(modules);
+
+    Injector injector = Guice.createInjector(new WireModule(modules));
+    container.add(injector, 0);
+
     ShellImpl shell = injector.getInstance(ShellImpl.class);
-    injector.getInstance(CommandRegistrar.class).registerCommands();
+    shell.start();
 
     return shell;
   }
 
   protected void configure(final List<Module> modules) {
-    assert modules != null;
     modules.add(createSpaceModule());
-    modules.add(new BootModule());
+    modules.add(new AbstractModule()
+    {
+      @Override
+      protected void configure() {
+        bind(BeanContainer.class).toInstance(container);
+        bind(IO.class).annotatedWith(named("main")).toInstance(io);
+        bind(Variables.class).annotatedWith(named("main")).toInstance(vars);
+      }
+    });
     modules.add(new CoreModule());
   }
 
   protected SpaceModule createSpaceModule() {
     URLClassSpace space = new URLClassSpace(getClass().getClassLoader());
     return new SpaceModule(space, BeanScanning.INDEX);
-  }
-
-  protected class BootModule
-      extends AbstractModule
-  {
-    @Override
-    protected void configure() {
-      bind(MutableBeanLocator.class).toInstance(container);
-      // TODO: remove: require specific impl to bind this
-      // bind(Branding.class).toInstance(getBranding());
-      bind(IO.class).annotatedWith(named("main")).toInstance(io);
-      bind(Variables.class).annotatedWith(named("main")).toInstance(vars);
-    }
   }
 }

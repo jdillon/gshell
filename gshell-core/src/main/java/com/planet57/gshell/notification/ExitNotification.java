@@ -15,6 +15,8 @@
  */
 package com.planet57.gshell.notification;
 
+import com.planet57.gshell.util.Notification;
+
 /**
  * Thrown to indicate that the current shell should exit.
  *
@@ -24,8 +26,6 @@ package com.planet57.gshell.notification;
 public final class ExitNotification
     extends Notification
 {
-  ///CLOVER:OFF
-
   private static final long serialVersionUID = 1;
 
   public static final int DEFAULT_CODE = 0;

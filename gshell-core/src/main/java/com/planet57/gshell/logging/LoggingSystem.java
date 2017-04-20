@@ -25,15 +25,15 @@ import java.util.Collection;
  */
 public interface LoggingSystem
 {
-  Level getLevel(String name);
+  LevelComponent getLevel(String name);
 
-  Collection<? extends Level> getLevels();
+  Collection<? extends LevelComponent> getLevels();
 
-  Logger getLogger(String name);
+  LoggerComponent getLogger(String name);
 
   Collection<String> getLoggerNames();
 
-  Collection<? extends Component> getComponents();
+  Collection<? extends LoggingComponent> getComponents();
 
   // TODO: Add configure(URL/File)
 

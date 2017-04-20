@@ -28,12 +28,14 @@ import javax.inject.Named;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.support.CommandActionSupport;
+import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.shell.Shell;
-import com.planet57.gshell.util.FileAssert;
+import com.planet57.gshell.util.io.FileAssert;
 import com.planet57.gshell.util.cli2.Argument;
-import com.planet57.gshell.util.io.Closer;
+import com.planet57.gshell.util.io.Closeables;
 import jline.console.completer.Completer;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Read and execute commands from a file in the current shell.
@@ -50,13 +52,14 @@ public class SourceCommand
 
   @Inject
   public SourceCommand installCompleters(final @Named("file-name") Completer c1) {
-    assert c1 != null;
+    checkNotNull(c1);
     setCompleters(c1, null);
     return this;
   }
 
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
+
     Shell shell = context.getShell();
 
     URL url;
@@ -75,7 +78,7 @@ public class SourceCommand
       }
     }
     finally {
-      Closer.close(reader);
+      Closeables.close(reader);
     }
 
     return Result.SUCCESS;

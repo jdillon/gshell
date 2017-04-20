@@ -15,8 +15,7 @@
  */
 package com.planet57.gshell.event;
 
-import java.util.EventObject;
-
+import com.google.common.eventbus.Subscribe;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -61,28 +60,32 @@ public class EventManagerImplTest
   @Test
   public void testAddListener() throws Exception {
     try {
-      manager.addListener(null);
+      manager.register(null);
       fail();
     }
-    catch (AssertionError e) {
+    catch (NullPointerException e) {
       // ignore
     }
 
-    manager.addListener(listener);
+    manager.register(listener);
   }
 
   @Test
   public void testRemoveListener() throws Exception {
     try {
-      manager.removeListener(null);
+      manager.unregister(null);
       fail();
     }
-    catch (AssertionError e) {
+    catch (NullPointerException e) {
       // ignore
     }
 
-    // Can remove a listener which was never added, just ignored
-    manager.removeListener(listener);
+    try {
+      manager.unregister(listener);
+    }
+    catch (IllegalArgumentException e) {
+      // ignore
+    }
   }
 
   @Test
@@ -91,19 +94,19 @@ public class EventManagerImplTest
       manager.publish(null);
       fail();
     }
-    catch (AssertionError e) {
+    catch (NullPointerException e) {
       // ignore
     }
 
-    EventObject event = new EventObject("test");
+    Object event = new Object();
     manager.publish(event);
   }
 
   @Test
   public void testPublishWithListener() throws Exception {
-    manager.addListener(listener);
+    manager.register(listener);
 
-    EventObject event = new EventObject("test");
+    Object event = new Object();
 
     manager.publish(event);
 
@@ -112,12 +115,12 @@ public class EventManagerImplTest
 
   @Test
   public void testPublishWithManyListener() throws Exception {
-    manager.addListener(listener);
+    manager.register(listener);
 
     MockEventListener anotherListener = new MockEventListener();
-    manager.addListener(anotherListener);
+    manager.register(anotherListener);
 
-    EventObject event = new EventObject("test");
+    Object event = new Object();
 
     manager.publish(event);
 
@@ -130,11 +133,11 @@ public class EventManagerImplTest
   //
 
   private static class MockEventListener
-      implements EventListener
   {
-    public EventObject event;
+    Object event;
 
-    public void onEvent(final EventObject event) throws Exception {
+    @Subscribe
+    public void on(final Object event) throws Exception {
       this.event = event;
     }
   }

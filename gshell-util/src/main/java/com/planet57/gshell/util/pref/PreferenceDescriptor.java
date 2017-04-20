@@ -18,6 +18,10 @@ package com.planet57.gshell.util.pref;
 import com.planet57.gshell.util.AnnotationDescriptor;
 import com.planet57.gshell.util.setter.Setter;
 
+import javax.annotation.Nullable;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Descriptor for {@link Preference} annotations.
  *
@@ -27,6 +31,7 @@ import com.planet57.gshell.util.setter.Setter;
 public class PreferenceDescriptor
     extends AnnotationDescriptor
 {
+  @Nullable
   private final Preferences base;
 
   private final Preference spec;
@@ -43,13 +48,10 @@ public class PreferenceDescriptor
 
   private String basePath;
 
-  protected PreferenceDescriptor(final Preferences base, final Preference pref, final Setter setter) {
-    // base could be null
+  protected PreferenceDescriptor(@Nullable final Preferences base, final Preference pref, final Setter setter) {
     this.base = base;
-    assert pref != null;
-    this.spec = pref;
-    assert setter != null;
-    this.setter = setter;
+    this.spec = checkNotNull(pref);
+    this.setter = checkNotNull(setter);
 
     // Handle "" = null, since default values in annotations cannot be set to null
     if (pref.name() != null && pref.name().length() == 0) {

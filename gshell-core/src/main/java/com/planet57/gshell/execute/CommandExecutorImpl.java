@@ -15,8 +15,12 @@
  */
 package com.planet57.gshell.execute;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
 
+import com.google.common.base.Stopwatch;
 import com.planet57.gshell.alias.AliasRegistry;
 import com.planet57.gshell.alias.NoSuchAliasException;
 import com.planet57.gshell.command.AliasAction;
@@ -26,8 +30,7 @@ import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.registry.NoSuchCommandException;
 import com.planet57.gshell.command.resolver.CommandResolver;
 import com.planet57.gshell.command.resolver.Node;
-import com.planet57.gshell.command.support.CommandHelpSupport;
-import com.planet57.gshell.command.support.CommandPreferenceSupport;
+import com.planet57.gshell.command.CommandHelper;
 import com.planet57.gshell.notification.ErrorNotification;
 import com.planet57.gshell.notification.ResultNotification;
 import com.planet57.gshell.parser.CommandLineParser;
@@ -35,6 +38,7 @@ import com.planet57.gshell.parser.CommandLineParser.CommandLine;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.shell.ShellHolder;
 import com.planet57.gshell.util.Arguments;
+import com.planet57.gshell.util.ComponentSupport;
 import com.planet57.gshell.util.Strings;
 import com.planet57.gshell.util.cli2.CliProcessor;
 import com.planet57.gshell.util.cli2.HelpPrinter;
@@ -43,21 +47,22 @@ import com.planet57.gshell.util.io.StreamJack;
 import com.planet57.gshell.util.pref.PreferenceProcessor;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
- * The default {@link CommandExecutor} component.
+ * Default {@link CommandExecutor} component.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
+@Named
+@Singleton
 public class CommandExecutorImpl
-    implements CommandExecutor
+  extends ComponentSupport
+  implements CommandExecutor
 {
-  private final Logger log = LoggerFactory.getLogger(getClass());
-
   private final AliasRegistry aliases;
 
   private final CommandResolver resolver;
@@ -68,17 +73,16 @@ public class CommandExecutorImpl
   public CommandExecutorImpl(final AliasRegistry aliases, final CommandResolver resolver,
                              final CommandLineParser parser)
   {
-    assert aliases != null;
-    this.aliases = aliases;
-    assert resolver != null;
-    this.resolver = resolver;
-    assert parser != null;
-    this.parser = parser;
+    this.aliases = checkNotNull(aliases);
+    this.resolver = checkNotNull(resolver);
+    this.parser = checkNotNull(parser);
   }
 
+  @Override
+  @Nullable
   public Object execute(final Shell shell, final String line) throws Exception {
-    assert shell != null;
-    assert line != null;
+    checkNotNull(shell);
+    checkNotNull(line);
 
     if (line.trim().length() == 0) {
       log.trace("Ignoring empty line");
@@ -111,9 +115,11 @@ public class CommandExecutorImpl
     }
   }
 
+  @Override
+  @Nullable
   public Object execute(final Shell shell, final Object... args) throws Exception {
-    assert shell != null;
-    assert args != null;
+    checkNotNull(shell);
+    checkNotNull(args);
 
     return execute(shell, String.valueOf(args[0]), Arguments.shift(args));
   }
@@ -131,16 +137,23 @@ public class CommandExecutorImpl
       }
       action = node.getAction();
     }
-    // Always return a clone, original instance is a prototype
-    return action.clone();
+
+    if (action instanceof CommandAction.Prototype) {
+      return ((CommandAction.Prototype)action).create();
+    }
+    return action;
   }
 
+  @Override
+  @Nullable
   public Object execute(final Shell shell, final String name, final Object[] args) throws Exception {
-    assert shell != null;
-    assert name != null;
-    assert args != null;
+    checkNotNull(shell);
+    checkNotNull(name);
+    checkNotNull(args);
 
     log.debug("Executing ({}): [{}]", name, Strings.join(args, ", "));
+
+    Stopwatch watch = Stopwatch.createStarted();
 
     final CommandAction action = createAction(name);
     MDC.put(CommandAction.class.getName(), name);
@@ -156,18 +169,18 @@ public class CommandExecutorImpl
       boolean execute = true;
 
       // Process command preferences
-      PreferenceProcessor pp = CommandPreferenceSupport.createProcessor(action);
+      PreferenceProcessor pp = CommandHelper.createPreferenceProcessor(action);
       pp.process();
 
       // Process command arguments unless marked as opaque
       if (!(action instanceof OpaqueArguments)) {
-        CommandHelpSupport help = new CommandHelpSupport();
-        CliProcessor clp = help.createProcessor(action);
+        CommandHelper help = new CommandHelper();
+        CliProcessor clp = help.createCliProcessor(action);
         clp.process(Arguments.toStringArray(args));
 
         // Render command-line usage
         if (help.displayHelp) {
-          io.out.println(CommandHelpSupport.getDescription(action));
+          io.out.println(CommandHelper.getDescription(action));
           io.out.println();
 
           HelpPrinter printer = new HelpPrinter(clp);
@@ -183,18 +196,22 @@ public class CommandExecutorImpl
         try {
           result = action.execute(new CommandContext()
           {
+            @Override
             public Shell getShell() {
               return shell;
             }
 
+            @Override
             public Object[] getArguments() {
               return args;
             }
 
+            @Override
             public IO getIo() {
               return io;
             }
 
+            @Override
             public Variables getVariables() {
               return shell.getVariables();
             }
@@ -215,7 +232,7 @@ public class CommandExecutorImpl
 
     shell.getVariables().set(VariableNames.LAST_RESULT, result);
 
-    log.debug("Result: {}", result);
+    log.debug("Result: {}; {}", result, watch);
 
     return result;
   }

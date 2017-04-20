@@ -24,10 +24,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.MissingResourceException;
 
-import com.planet57.gshell.util.PrintBuffer;
-import com.planet57.gshell.util.io.Closer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.planet57.gshell.util.ComponentSupport;
+import com.planet57.gshell.util.io.PrintBuffer;
+import com.planet57.gshell.util.io.Closeables;
+
+import javax.inject.Named;
+import javax.inject.Singleton;
 
 /**
  * {@link HelpContentLoader} component.
@@ -35,18 +37,19 @@ import org.slf4j.LoggerFactory;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
+@Named
+@Singleton
 public class HelpContentLoaderImpl
-    implements HelpContentLoader
+  extends ComponentSupport
+  implements HelpContentLoader
 {
-  private static final Logger log = LoggerFactory.getLogger(HelpContentLoaderImpl.class);
-
+  @Override
   public String load(final String name, final ClassLoader loader) throws MissingContentException, IOException {
     return load(name, Locale.getDefault(), loader);
   }
 
-  private String load(final String name, final Locale locale, final ClassLoader loader) throws
-                                                                                        MissingContentException,
-                                                                                        IOException
+  private String load(final String name, final Locale locale, final ClassLoader loader)
+    throws MissingContentException, IOException
   {
     log.debug("Loading help content for {} ({})", name, locale);
 
@@ -71,7 +74,7 @@ public class HelpContentLoaderImpl
       }
     }
     finally {
-      Closer.close(input);
+      Closeables.close(input);
     }
 
     return buff.toString();

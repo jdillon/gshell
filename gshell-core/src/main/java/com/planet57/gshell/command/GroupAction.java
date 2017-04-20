@@ -16,12 +16,13 @@
 package com.planet57.gshell.command;
 
 import com.planet57.gshell.command.resolver.NodePath;
+import com.planet57.gshell.util.ComponentSupport;
 import com.planet57.gshell.util.cli2.OpaqueArguments;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.variables.VariableNames;
 import jline.console.completer.Completer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * {@link CommandAction} to switch groups.
@@ -30,27 +31,28 @@ import org.slf4j.LoggerFactory;
  * @since 2.5
  */
 public class GroupAction
-    implements CommandAction, OpaqueArguments
+  extends ComponentSupport
+  implements CommandAction, OpaqueArguments
 {
-  private static final Logger log = LoggerFactory.getLogger(GroupAction.class);
-
   private final String name;
 
   public GroupAction(final String name) {
-    assert name != null;
-    this.name = name;
+    this.name = checkNotNull(name);
   }
 
+  @Override
   public String getName() {
     return name;
   }
 
+  @Override
   public String getSimpleName() {
     return new NodePath(getName()).last();
   }
 
+  @Override
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
+    checkNotNull(context);
 
     log.debug("Changing group to: {}", name);
     context.getVariables().set(VariableNames.SHELL_GROUP, name);
@@ -58,16 +60,13 @@ public class GroupAction
     return Result.SUCCESS;
   }
 
+  @Override
   public MessageSource getMessages() {
     return null;
   }
 
+  @Override
   public Completer[] getCompleters() {
     return new Completer[0];
-  }
-
-  @SuppressWarnings({"CloneDoesntCallSuperClone"})
-  public CommandAction clone() {
-    return this;
   }
 }

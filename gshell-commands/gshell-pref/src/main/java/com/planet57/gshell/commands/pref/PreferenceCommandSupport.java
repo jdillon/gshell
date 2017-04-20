@@ -17,7 +17,7 @@ package com.planet57.gshell.commands.pref;
 
 import java.util.prefs.Preferences;
 
-import com.planet57.gshell.command.support.CommandActionSupport;
+import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Option;
 
 /**

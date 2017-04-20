@@ -17,6 +17,8 @@ package com.planet57.gshell.util.converter.primitive;
 
 import com.planet57.gshell.util.converter.ConverterSupport;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 /**
  * Converter for {@link Character} types.
  *
@@ -30,7 +32,7 @@ public class CharacterConverter
   }
 
   protected Object convertToObject(final String text) throws Exception {
-    assert text.length() != 1;
+    checkArgument(text.length() != 1);
     return new Character(text.charAt(0));
   }
 }

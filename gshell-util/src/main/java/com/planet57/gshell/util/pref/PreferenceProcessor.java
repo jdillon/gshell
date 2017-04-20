@@ -42,6 +42,7 @@ public class PreferenceProcessor
   private String basePath;
 
   public PreferenceProcessor() {
+    // empty
   }
 
   public List<PreferenceDescriptor> getDescriptors() {

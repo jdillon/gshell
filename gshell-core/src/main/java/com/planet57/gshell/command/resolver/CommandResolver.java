@@ -15,6 +15,7 @@
  */
 package com.planet57.gshell.command.resolver;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 /**
@@ -31,7 +32,9 @@ public interface CommandResolver
 
   List<Node> searchPath();
 
+  @Nullable
   Node resolve(NodePath path);
 
+  @Nullable
   Node resolve(String name);
 }

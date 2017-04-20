@@ -19,6 +19,8 @@ import java.lang.reflect.Method;
 
 import com.planet57.gshell.util.converter.ConverterSupport;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 /**
  * Converter for {@link Enum} types.
  *
@@ -29,7 +31,7 @@ public class EnumConverter
 {
   public EnumConverter(final Class type) {
     super(type);
-    assert type.isEnum();
+    checkArgument(type.isEnum());
   }
 
   protected Object convertToObject(final String text) throws Exception {

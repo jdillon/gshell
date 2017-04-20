@@ -15,12 +15,13 @@
  */
 package com.planet57.gshell.command;
 
+import com.planet57.gshell.util.ComponentSupport;
 import com.planet57.gshell.util.Strings;
 import com.planet57.gshell.util.cli2.OpaqueArguments;
 import com.planet57.gshell.util.i18n.MessageSource;
 import jline.console.completer.Completer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * {@link CommandAction} to execute an alias.
@@ -29,32 +30,31 @@ import org.slf4j.LoggerFactory;
  * @since 2.5
  */
 public class AliasAction
-    implements CommandAction, OpaqueArguments
+  extends ComponentSupport
+  implements CommandAction, OpaqueArguments
 {
-  private static final Logger log = LoggerFactory.getLogger(AliasAction.class);
-
   private final String name;
 
   private final String target;
 
   public AliasAction(final String name, final String target) {
-    assert name != null;
-    this.name = name;
-    assert target != null;
-    this.target = target;
+    this.name = checkNotNull(name);
+    this.target = checkNotNull(target);
   }
 
+  @Override
   public String getName() {
     return name;
   }
 
+  @Override
   public String getSimpleName() {
     return name;
   }
 
+  @Override
   public Object execute(final CommandContext context) throws Exception {
-    assert context != null;
-
+    checkNotNull(context);
     String alias = target;
 
     // Need to append any more arguments in the context
@@ -68,16 +68,13 @@ public class AliasAction
     return context.getShell().execute(alias);
   }
 
+  @Override
   public MessageSource getMessages() {
     return null;
   }
 
+  @Override
   public Completer[] getCompleters() {
     return new Completer[0];
-  }
-
-  @SuppressWarnings({"CloneDoesntCallSuperClone"})
-  public CommandAction clone() {
-    return this;
   }
 }
