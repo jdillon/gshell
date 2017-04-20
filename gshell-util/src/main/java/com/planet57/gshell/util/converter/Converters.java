@@ -240,15 +240,15 @@ public class Converters
       return converter;
     }
 
+    converter = findBuiltinConverter(type);
+    if (converter != null) {
+      return converter;
+    }
+
     // fall back to a property editor
     PropertyEditor editor = findEditor(type);
     if (editor != null) {
       return editor;
-    }
-
-    converter = findBuiltinConverter(type);
-    if (converter != null) {
-      return converter;
     }
 
     return null;
