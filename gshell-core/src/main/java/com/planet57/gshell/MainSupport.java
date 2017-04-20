@@ -44,7 +44,7 @@ import com.planet57.gshell.util.pref.PreferenceProcessor;
 import com.planet57.gshell.util.pref.Preferences;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
-import com.planet57.gshell.variables.VariablesImpl;
+import com.planet57.gshell.variables.VariablesSupport;
 import jline.AnsiWindowsTerminal;
 import jline.NoInterruptUnixTerminal;
 import jline.TerminalFactory;
@@ -83,7 +83,7 @@ public abstract class MainSupport
 
   protected final IO io = new AnsiIO(StreamSet.SYSTEM_FD, true);
 
-  protected final Variables vars = new VariablesImpl();
+  protected final Variables vars = new VariablesSupport();
 
   protected final MessageSource messages = new ResourceBundleMessageSource()
       .add(false, getClass())

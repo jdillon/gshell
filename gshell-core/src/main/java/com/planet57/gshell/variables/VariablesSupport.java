@@ -35,7 +35,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public class VariablesImpl
+public class VariablesSupport
     implements Variables, EventAware
 {
   private final Map<String, Object> map;
@@ -43,40 +43,42 @@ public class VariablesImpl
   @Nullable
   private final Variables parent;
 
-  private final Set<String> immutables = new HashSet<String>();
+  private final Set<String> immutables = new HashSet<>();
 
   private EventManager eventManager;
 
-  public VariablesImpl(final Map<String, Object> map, @Nullable final Variables parent) {
+  public VariablesSupport(final Map<String, Object> map, @Nullable final Variables parent) {
     this.map = checkNotNull(map);
     this.parent = parent;
   }
 
-  public VariablesImpl(final Variables parent) {
+  public VariablesSupport(final Variables parent) {
     this(new LinkedHashMap<String, Object>(), parent);
   }
 
-  public VariablesImpl(final Map<String, Object> map) {
+  public VariablesSupport(final Map<String, Object> map) {
     this(map, null);
   }
 
-  public VariablesImpl() {
+  public VariablesSupport() {
     this(new LinkedHashMap<String, Object>());
   }
 
+  /**
+   * Informs variables to become event-aware and fire {@link VariableSetEvent} and {@link VariableUnsetEvent}.
+   */
   public void setEventManager(final EventManager eventManager) {
     this.eventManager = checkNotNull(eventManager);
   }
 
   @Override
-  public void set(final String name, final Object value) {
+  public void set(final String name, @Nullable final Object value) {
     set(name, value, true);
   }
 
   @Override
-  public void set(final String name, final Object value, boolean mutable) {
-    assert name != null;
-
+  public void set(final String name, @Nullable final Object value, boolean mutable) {
+    checkNotNull(name);
     ensureMutable(name);
 
     Object previous = map.put(name, value);
@@ -91,15 +93,15 @@ public class VariablesImpl
   }
 
   @Override
-  public void set(final Class<?> type, final Object value) {
-    assert type != null;
-
+  public void set(final Class<?> type, @Nullable final Object value) {
+    checkNotNull(type);
     set(type.getName(), value);
   }
 
   @Override
+  @Nullable
   public Object get(final String name) {
-    assert name != null;
+    checkNotNull(name);
 
     Object value = map.get(name);
     if (value == null && parent != null) {
@@ -110,10 +112,10 @@ public class VariablesImpl
   }
 
   @Override
+  @Nullable
   @SuppressWarnings({"unchecked"})
   public <T> T get(final String name, final Class<T> type) {
-    assert type != null;
-
+    checkNotNull(type);
     Object value = get(name);
 
     if (value != null && !type.isAssignableFrom(value.getClass())) {
@@ -124,7 +126,8 @@ public class VariablesImpl
   }
 
   @Override
-  public <T> T get(final String name, final Class<T> type, final T defaultValue) {
+  @Nullable
+  public <T> T get(final String name, final Class<T> type, @Nullable final T defaultValue) {
     T value = get(name, type);
     if (value == null) {
       return defaultValue;
@@ -133,21 +136,22 @@ public class VariablesImpl
   }
 
   @Override
-  public <T> T get(final Class<T> type, final T defaultValue) {
-    assert type != null;
-
+  @Nullable
+  public <T> T get(final Class<T> type, @Nullable final T defaultValue) {
+    checkNotNull(type);
     return get(type.getName(), type, defaultValue);
   }
 
   @Override
+  @Nullable
   public <T> T get(final Class<T> type) {
-    assert type != null;
-
+    checkNotNull(type);
     return get(type.getName(), type);
   }
 
   @Override
-  public Object get(final String name, final Object defaultValue) {
+  @Nullable
+  public Object get(final String name, @Nullable final Object defaultValue) {
     Object value = get(name);
     if (value == null) {
       return defaultValue;
@@ -158,8 +162,7 @@ public class VariablesImpl
 
   @Override
   public void unset(final String name) {
-    assert name != null;
-
+    checkNotNull(name);
     ensureMutable(name);
 
     map.remove(name);
@@ -171,29 +174,25 @@ public class VariablesImpl
 
   @Override
   public void unset(final Class<?> type) {
-    assert type != null;
-
+    checkNotNull(type);
     unset(type.getName());
   }
 
   @Override
   public boolean contains(final String name) {
-    assert name != null;
-
+    checkNotNull(name);
     return map.containsKey(name);
   }
 
   @Override
   public boolean contains(final Class<?> type) {
-    assert type != null;
-
+    checkNotNull(type);
     return contains(type.getName());
   }
 
   @Override
   public boolean isMutable(final String name) {
-    assert name != null;
-
+    checkNotNull(name);
     boolean mutable = true;
 
     // First ask out parent if there is one, if they are immutable, then so are we
@@ -210,8 +209,7 @@ public class VariablesImpl
 
   @Override
   public boolean isMutable(final Class<?> type) {
-    assert type != null;
-
+    checkNotNull(type);
     return isMutable(type.getName());
   }
 
@@ -225,8 +223,7 @@ public class VariablesImpl
 
   @Override
   public boolean isCloaked(final String name) {
-    assert name != null;
-
+    checkNotNull(name);
     int count = 0;
 
     Variables vars = this;
@@ -243,8 +240,7 @@ public class VariablesImpl
 
   @Override
   public boolean isCloaked(final Class<?> type) {
-    assert type != null;
-
+    checkNotNull(type);
     return isCloaked(type.getName());
   }
 
@@ -257,6 +253,7 @@ public class VariablesImpl
 
       boolean more = parent() != null;
 
+      @Override
       public boolean hasNext() {
         boolean next = iter.hasNext();
         if (!next && more) {
@@ -268,10 +265,12 @@ public class VariablesImpl
         return next;
       }
 
+      @Override
       public String next() {
         return iter.next();
       }
 
+      @Override
       public void remove() {
         throw new UnsupportedOperationException();
       }
@@ -279,6 +278,7 @@ public class VariablesImpl
   }
 
   @Override
+  @Nullable
   public Variables parent() {
     return parent;
   }

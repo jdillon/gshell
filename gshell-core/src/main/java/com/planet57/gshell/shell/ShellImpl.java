@@ -45,7 +45,7 @@ import com.planet57.gshell.util.Arguments;
 import com.planet57.gshell.util.ComponentSupport;
 import com.planet57.gshell.util.io.StreamJack;
 import com.planet57.gshell.variables.Variables;
-import com.planet57.gshell.variables.VariablesImpl;
+import com.planet57.gshell.variables.VariablesSupport;
 import jline.console.ConsoleReader;
 import jline.console.completer.AggregateCompleter;
 import jline.console.completer.Completer;
@@ -109,11 +109,11 @@ public class ShellImpl
     this.branding = checkNotNull(branding);
 
     this.io = io != null ? io : new IO();
-    this.variables = variables != null ? variables : new VariablesImpl();
+    this.variables = variables != null ? variables : new VariablesSupport();
 
     // HACK: adapt variables for events
-    if (variables instanceof VariablesImpl) {
-      ((VariablesImpl) variables).setEventManager(events);
+    if (variables instanceof VariablesSupport) {
+      ((VariablesSupport) variables).setEventManager(events);
     }
 
     this.history = new ShellHistory(new File(branding.getUserContextDir(), branding.getHistoryFileName()));

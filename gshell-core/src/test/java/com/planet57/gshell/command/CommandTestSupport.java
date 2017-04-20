@@ -38,7 +38,7 @@ import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.shell.ShellImpl;
 import com.planet57.gshell.util.Strings;
 import com.planet57.gshell.variables.Variables;
-import com.planet57.gshell.variables.VariablesImpl;
+import com.planet57.gshell.variables.VariablesSupport;
 import org.eclipse.sisu.space.BeanScanning;
 import org.eclipse.sisu.space.SpaceModule;
 import org.eclipse.sisu.space.URLClassSpace;
@@ -95,7 +95,7 @@ public abstract class CommandTestSupport
   public void setUp() throws Exception {
     container = new BeanContainer();
     io = new TestIO();
-    vars = new VariablesImpl();
+    vars = new VariablesSupport();
 
     Module boot = new AbstractModule()
     {

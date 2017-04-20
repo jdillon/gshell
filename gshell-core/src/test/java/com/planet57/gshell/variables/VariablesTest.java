@@ -42,8 +42,8 @@ public class VariablesTest
 
   @Before
   public void setUp() {
-    vars = new VariablesImpl();
-    parent = new VariablesImpl();
+    vars = new VariablesSupport();
+    parent = new VariablesSupport();
   }
 
   @Test
@@ -82,7 +82,7 @@ public class VariablesTest
 
   @Test
   public void testSetAsImmutableInParent() throws Exception {
-    Variables vars = new VariablesImpl(parent);
+    Variables vars = new VariablesSupport(parent);
     String name = "a";
     Object value = new Object();
 
@@ -101,7 +101,7 @@ public class VariablesTest
 
   @Test
   public void testSetParentFromChild() throws Exception {
-    Variables vars = new VariablesImpl(parent);
+    Variables vars = new VariablesSupport(parent);
     String name = "a";
     Object value = new Object();
 
@@ -140,7 +140,7 @@ public class VariablesTest
 
   @Test
   public void testGetCloaked() throws Exception {
-    Variables vars = new VariablesImpl(parent);
+    Variables vars = new VariablesSupport(parent);
     String name = "a";
     Object value = new Object();
 
@@ -176,7 +176,7 @@ public class VariablesTest
 
   @Test
   public void testUnsetAsImmutableInParent() throws Exception {
-    Variables vars = new VariablesImpl(parent);
+    Variables vars = new VariablesSupport(parent);
     String name = "a";
     Object value = new Object();
 
@@ -195,7 +195,7 @@ public class VariablesTest
 
   @Test
   public void testCloaking() throws Exception {
-    Variables vars = new VariablesImpl(parent);
+    Variables vars = new VariablesSupport(parent);
     String name = "a";
     Object value = new Object();
 
@@ -211,7 +211,7 @@ public class VariablesTest
   public void testParent() throws Exception {
     assertNull(parent.parent());
 
-    Variables vars = new VariablesImpl(parent);
+    Variables vars = new VariablesSupport(parent);
     assertNotNull(vars.parent());
 
     assertEquals(parent, vars.parent());
