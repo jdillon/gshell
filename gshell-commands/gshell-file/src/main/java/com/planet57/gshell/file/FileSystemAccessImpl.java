@@ -22,14 +22,13 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
+import com.planet57.gshell.util.OperatingSystem;
 import com.planet57.gshell.variables.Variables;
-import org.codehaus.plexus.util.Os;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.planet57.gshell.variables.VariableNames.SHELL_HOME;
 import static com.planet57.gshell.variables.VariableNames.SHELL_USER_DIR;
 import static com.planet57.gshell.variables.VariableNames.SHELL_USER_HOME;
-import static org.codehaus.plexus.util.Os.FAMILY_WINDOWS;
 
 /**
  * {@link FileSystemAccess} component.
@@ -89,7 +88,7 @@ public class FileSystemAccessImpl
     }
 
     // support paths like "<drive>:" and "/" on windows
-    if (Os.isFamily(FAMILY_WINDOWS)) {
+    if (OperatingSystem.WINDOWS) {
       if (path != null && path.equals("/")) {
         // Get the current canonical path to access drive root
         String tmp = new File(".").getCanonicalPath().substring(0, 2);
