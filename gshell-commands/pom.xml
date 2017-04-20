@@ -33,23 +33,19 @@
   <packaging>pom</packaging>
 
   <dependencies>
-    <!--
-    FIXME: consider moving this up to each module?
-    -->
-
     <dependency>
       <groupId>com.planet57.gshell</groupId>
       <artifactId>gshell-core</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.sonatype.goodies</groupId>
-      <artifactId>goodies-testsupport</artifactId>
+      <groupId>com.planet57.gshell</groupId>
+      <artifactId>gshell-testsupport</artifactId>
       <scope>test</scope>
     </dependency>
 
     <!--
-    FIXME: remove
+    FIXME: remove; avoid using jar:test-jar
     -->
     <dependency>
       <groupId>com.planet57.gshell</groupId>

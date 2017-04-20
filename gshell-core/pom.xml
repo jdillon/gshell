@@ -63,8 +63,8 @@
     </dependency>
 
     <dependency>
-      <groupId>org.sonatype.goodies</groupId>
-      <artifactId>goodies-testsupport</artifactId>
+      <groupId>com.planet57.gshell</groupId>
+      <artifactId>gshell-testsupport</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
