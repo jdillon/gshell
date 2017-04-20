@@ -41,7 +41,6 @@ import com.planet57.gshell.console.ConsoleTask;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.execute.CommandExecutor;
 import com.planet57.gshell.notification.ExitNotification;
-import com.planet57.gshell.util.Arguments;
 import com.planet57.gshell.util.ComponentSupport;
 import com.planet57.gshell.util.io.StreamJack;
 import com.planet57.gshell.variables.Variables;
@@ -251,10 +250,10 @@ public class ShellImpl
 
   @Override
   public void run(final Object... args) throws Exception {
-    assert args != null;
+    checkNotNull(args);
     ensureOpened();
 
-    log.debug("Starting interactive console; args: {}", Arguments.toStringArray(args));
+    log.debug("Starting interactive console; args: {}", Arrays.asList(args));
 
     loadInteractiveScripts();
 
