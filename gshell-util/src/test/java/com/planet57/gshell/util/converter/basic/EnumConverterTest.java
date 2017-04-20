@@ -15,32 +15,33 @@
  */
 package com.planet57.gshell.util.converter.basic;
 
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
+import static org.fest.assertions.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import org.sonatype.goodies.testsupport.TestSupport;
 
-import static org.junit.Assert.assertEquals;
-
 /**
- * Tests for {@link DateConverter}.
+ * Tests for {@link EnumConverter}.
  */
-public class DateConverterTest
+public class EnumConverterTest
   extends TestSupport
 {
-  @Test
-  public void testToObjectImpl() throws Exception {
-    Date expected = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.US).parse("Mar 1, 1954");
-    Date actual = (Date) new DateConverter().convertToObject("locale=en_US format=MEDIUM Mar 1, 1954");
-    assertEquals(expected, actual);
+  enum TestEnum
+  {
+    FOO,
+    BAR,
+    BAZ
   }
 
   @Test
-  public void testFallbackFormats() throws Exception {
-    DateConverter converter = new DateConverter();
-    converter.convertToObject("2007-10-31");
-    converter.convertToObject("2007-10-31T19:19:19PDT");
+  public void testCaseSensitivity() throws Exception {
+    TestEnum subject;
+
+    subject = (TestEnum) new EnumConverter(TestEnum.class).convertToObject("foo");
+    assertThat(subject).isEqualTo(TestEnum.FOO);
+
+    subject = (TestEnum) new EnumConverter(TestEnum.class).convertToObject("BaR");
+    assertThat(subject).isEqualTo(TestEnum.BAR);
   }
 }

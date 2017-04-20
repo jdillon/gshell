@@ -34,6 +34,7 @@ import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.planet57.gshell.util.converter.basic.ArrayConverter;
 import com.planet57.gshell.util.converter.basic.BigDecimalConverter;
 import com.planet57.gshell.util.converter.basic.BigIntegerConverter;
@@ -234,7 +235,8 @@ public class Converters
     return findConverterOrEditor(type) != null;
   }
 
-  private static PropertyEditor findConverterOrEditor(final Type type) {
+  @VisibleForTesting
+  static PropertyEditor findConverterOrEditor(final Type type) {
     Converter converter = findConverter(type);
     if (converter != null) {
       return converter;
