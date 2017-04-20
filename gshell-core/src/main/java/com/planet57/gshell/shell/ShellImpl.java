@@ -43,7 +43,6 @@ import com.planet57.gshell.execute.CommandExecutor;
 import com.planet57.gshell.notification.ExitNotification;
 import com.planet57.gshell.util.Arguments;
 import com.planet57.gshell.util.ComponentSupport;
-import com.planet57.gshell.util.io.Closeables;
 import com.planet57.gshell.util.io.StreamJack;
 import com.planet57.gshell.variables.Variables;
 import com.planet57.gshell.variables.VariablesImpl;
@@ -410,25 +409,19 @@ public class ShellImpl
   }
 
   protected void loadScript(final File file) throws Exception {
-    assert file != null;
-
+    checkNotNull(file);
     log.debug("Loading script: {}", file);
 
-    BufferedReader reader = new BufferedReader(new FileReader(file));
-    try {
+    try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
       String line;
       while ((line = reader.readLine()) != null) {
         execute(line);
       }
     }
-    finally {
-      Closeables.close(reader);
-    }
   }
 
   protected void loadUserScript(final String fileName) throws Exception {
-    assert fileName != null;
-
+    checkNotNull(fileName);
     File file = new File(branding.getUserContextDir(), fileName);
     if (file.exists()) {
       loadScript(file);
@@ -439,8 +432,7 @@ public class ShellImpl
   }
 
   protected void loadSharedScript(final String fileName) throws Exception {
-    assert fileName != null;
-
+    checkNotNull(fileName);
     File file = new File(branding.getShellContextDir(), fileName);
     if (file.exists()) {
       loadScript(file);
