@@ -51,6 +51,8 @@ public class MainSupportTest
     main = null;
   }
 
+  // FIXME: due to how MainSupport works to setup streams; these tests will spit out to system.out even if surefire configured to redirect
+
   @Test
   public void test_h() throws Exception {
     main.boot("-h");
