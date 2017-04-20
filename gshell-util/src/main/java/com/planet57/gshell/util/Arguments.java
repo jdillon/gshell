@@ -19,6 +19,9 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Utils for command-line arguments.
  *
@@ -32,8 +35,8 @@ public class Arguments
   }
 
   public static Object[] shift(final Object[] source, int pos) {
-    assert source != null;
-    assert source.length >= pos;
+    checkNotNull(source);
+    checkArgument(source.length >= pos);
 
     Object[] target = (Object[]) Array.newInstance(source.getClass().getComponentType(), source.length - pos);
 
@@ -43,7 +46,7 @@ public class Arguments
   }
 
   public static String[] toStringArray(final Object[] args) {
-    assert args != null;
+    checkNotNull(args);
 
     String[] strings = new String[args.length];
 
@@ -55,7 +58,7 @@ public class Arguments
   }
 
   public static String[] clean(final String[] args) {
-    assert args != null;
+    checkNotNull(args);
 
     List<String> cleaned = new ArrayList<String>();
 

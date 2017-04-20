@@ -17,6 +17,8 @@ package com.planet57.gshell.util.setter;
 
 import java.lang.reflect.Field;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Setter for fields.
  *
@@ -30,8 +32,7 @@ public class FieldSetter
 
   public FieldSetter(final Field field, final Object bean) {
     super(field, bean);
-    assert field != null;
-    this.field = field;
+    this.field = checkNotNull(field);
   }
 
   public String getName() {

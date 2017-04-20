@@ -22,6 +22,8 @@ import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 import org.slf4j.Logger;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Support for {@link Setter} implementations.
  *
@@ -38,10 +40,8 @@ public abstract class SetterSupport
   private final Object bean;
 
   public SetterSupport(final AccessibleObject accessible, final Object bean) {
-    assert accessible != null;
-    this.accessible = accessible;
-    assert bean != null;
-    this.bean = bean;
+    this.accessible = checkNotNull(accessible);
+    this.bean = checkNotNull(bean);
   }
 
   public AccessibleObject getAccessible() {
@@ -73,10 +73,10 @@ public abstract class SetterSupport
 
   protected abstract void doSet(Object value) throws IllegalAccessException;
 
-  protected static enum Messages
+  protected enum Messages
   {
     ILLEGAL_METHOD_SIGNATURE,
-    ILLEGAL_FIELD_SIGNATURE,;
+    ILLEGAL_FIELD_SIGNATURE;
 
     private final MessageSource messages = new ResourceBundleMessageSource(SetterSupport.class);
 

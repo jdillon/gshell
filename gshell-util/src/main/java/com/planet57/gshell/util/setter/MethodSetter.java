@@ -18,6 +18,8 @@ package com.planet57.gshell.util.setter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Setter for methods.
  *
@@ -31,9 +33,7 @@ public class MethodSetter
 
   public MethodSetter(final Method method, final Object bean) {
     super(method, bean);
-
-    assert method != null;
-    this.method = method;
+    this.method = checkNotNull(method);
 
     if (method.getParameterTypes().length != 1) {
       throw new IllegalArgumentException(Messages.ILLEGAL_METHOD_SIGNATURE.format(method));

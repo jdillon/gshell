@@ -26,5 +26,5 @@ import org.slf4j.LoggerFactory;
  */
 public class ComponentSupport
 {
-  protected Logger log = LoggerFactory.getLogger(getClass());
+  protected final Logger log = LoggerFactory.getLogger(getClass());
 }

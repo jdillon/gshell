@@ -21,6 +21,10 @@ import java.io.PrintWriter;
 import jline.Terminal;
 import jline.console.ConsoleReader;
 
+import javax.annotation.Nullable;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Helper to prompt a user for information.
  *
@@ -34,15 +38,14 @@ public class PromptReader
   private final ConsoleReader reader;
 
   public PromptReader(final StreamSet streams, final Terminal term) throws IOException {
-    assert streams != null;
-    assert term != null;
-
+    checkNotNull(streams);
+    checkNotNull(term);
     this.reader = createReader(streams, term);
   }
 
   protected ConsoleReader createReader(final StreamSet streams, final Terminal term) throws IOException {
-    assert streams != null;
-    assert term != null;
+    checkNotNull(streams);
+    checkNotNull(term);
     return new ConsoleReader(streams.in, new PrintWriter(streams.out, true), term);
   }
 
@@ -58,10 +61,8 @@ public class PromptReader
   // TODO: Need to provide some completer function here, as well as better expect/require interface
   //
 
-  public String readLine(final String prompt, final Validator validator) throws IOException {
-    assert prompt != null;
-    // validator may be null
-
+  public String readLine(final String prompt, @Nullable final Validator validator) throws IOException {
+    checkNotNull(prompt);
     String value;
 
     while (true) {
@@ -82,10 +83,8 @@ public class PromptReader
     return readLine(prompt, null);
   }
 
-  public String readLine(final String prompt, final char mask, final Validator validator) throws IOException {
-    assert prompt != null;
-    // validator may be null
-
+  public String readLine(final String prompt, final char mask, @Nullable final Validator validator) throws IOException {
+    checkNotNull(prompt);
     String value;
 
     while (true) {
@@ -106,10 +105,8 @@ public class PromptReader
     return readLine(prompt, mask, null);
   }
 
-  public String readPassword(final String prompt, final Validator validator) throws IOException {
-    assert prompt != null;
-    // validator may be null
-
+  public String readPassword(final String prompt, @Nullable final Validator validator) throws IOException {
+    checkNotNull(prompt);
     String value;
 
     while (true) {
@@ -137,7 +134,7 @@ public class PromptReader
   /**
    * Allows caller to customize the validation behavior when prompting.
    */
-  public static interface Validator
+  public interface Validator
   {
     /**
      * Determine if the given value is valid.  If the value is not valid then
