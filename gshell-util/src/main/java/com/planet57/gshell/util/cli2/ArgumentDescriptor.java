@@ -17,6 +17,8 @@ package com.planet57.gshell.util.cli2;
 
 import com.planet57.gshell.util.setter.Setter;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * {@link Argument} descriptor.
  *
@@ -30,8 +32,7 @@ public class ArgumentDescriptor
 
   public ArgumentDescriptor(final Argument spec, final Setter setter) {
     super(spec, setter);
-    assert spec != null;
-    this.spec = spec;
+    this.spec = checkNotNull(spec);
   }
 
   public Argument getSpec() {

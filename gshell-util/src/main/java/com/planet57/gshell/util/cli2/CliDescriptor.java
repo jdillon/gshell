@@ -22,6 +22,8 @@ import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceNotFoundException;
 import com.planet57.gshell.util.setter.Setter;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Base-class for CLI descriptors.
  *
@@ -46,9 +48,8 @@ public abstract class CliDescriptor
   private Handler handler;
 
   public CliDescriptor(final Object spec, final Setter setter) {
-    assert spec != null;
-    assert setter != null;
-    this.setter = setter;
+    checkNotNull(spec);
+    this.setter = checkNotNull(setter);
 
     if (spec instanceof Option) {
       Option opt = (Option) spec;
