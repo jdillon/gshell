@@ -69,10 +69,12 @@ public class Console
 
     this.pipe = new InputPipe(io.streams, io.getTerminal(), new InputPipe.InterruptHandler()
     {
+      @Override
       public boolean interrupt() throws Exception {
         return interruptTask();
       }
 
+      @Override
       public boolean stop() throws Exception {
         return false;
       }
