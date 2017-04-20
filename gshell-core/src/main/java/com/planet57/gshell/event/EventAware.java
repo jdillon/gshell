@@ -18,6 +18,8 @@ package com.planet57.gshell.event;
 /**
  * Marker for components that are should managed for event consumption.
  *
+ * Such components are automatically registered via {@link EventManager#register(Object)}.
+ *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */

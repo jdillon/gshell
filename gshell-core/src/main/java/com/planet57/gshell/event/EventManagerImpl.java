@@ -31,7 +31,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Default {@link EventManager} component.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ * This is now a thin adapter around a Guava {@link EventBus}.
+ *
+ * Supports automatically calling {@link #register(Object)} for {@link EventAware} components.
+ *
  * @since 2.0
  */
 @Named
@@ -77,25 +80,20 @@ public class EventManagerImpl
   @Override
   public void register(final Object listener) {
     checkNotNull(listener);
-
     log.trace("Adding listener: {}", listener);
-
     eventBus.register(listener);
   }
 
   @Override
   public void unregister(final Object listener) {
     checkNotNull(listener);
-
     log.trace("Removing listener: {}", listener);
-
     eventBus.unregister(listener);
   }
 
   @Override
   public void publish(final Object event) {
     checkNotNull(event);
-
     log.trace("Publishing event: {}", event);
     eventBus.post(event);
   }
