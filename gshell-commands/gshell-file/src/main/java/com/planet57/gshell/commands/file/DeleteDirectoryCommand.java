@@ -77,8 +77,6 @@ public class DeleteDirectoryCommand
       return Result.FAILURE;
     }
 
-    // TODO: Add recursive delete
-
     return Result.SUCCESS;
   }
 }

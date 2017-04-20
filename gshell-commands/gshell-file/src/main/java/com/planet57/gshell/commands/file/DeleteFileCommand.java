@@ -25,9 +25,11 @@ import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.file.FileSystemAccess;
+import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.io.FileAssert;
 import com.planet57.gshell.util.cli2.Argument;
 import jline.console.completer.Completer;
+import org.codehaus.plexus.util.FileUtils;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -45,6 +47,12 @@ public class DeleteFileCommand
 
   @Argument(required = true)
   private String path;
+
+  /**
+   * @since 3.0
+   */
+  @Option(name = "r", longName = "recursive")
+  private boolean recursive;
 
   @Inject
   public DeleteFileCommand(final FileSystemAccess fileSystem) {
@@ -70,14 +78,21 @@ public class DeleteFileCommand
       file = fileSystem.resolveFile(path);
     }
 
-    new FileAssert(file).exists().isFile();
+    new FileAssert(file).exists();
 
-    if (!file.delete()) {
-      io.error(getMessages().format("error.delete-failed", file));
-      return Result.FAILURE;
+    if (recursive) {
+      log.debug("Deleting directory: {}", file);
+      new FileAssert((file)).isDirectory();
+      FileUtils.deleteDirectory(file);
     }
-
-    // TODO: Add recursive delete
+    else {
+      log.debug("Deleting file: {}", file);
+      new FileAssert(file).isFile();
+      if (!file.delete()) {
+        io.error(getMessages().format("error.delete-failed", file));
+        return Result.FAILURE;
+      }
+    }
 
     return Result.SUCCESS;
   }
