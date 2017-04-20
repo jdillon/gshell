@@ -117,12 +117,12 @@ public class IO
   }
 
   protected Reader createReader(final InputStream in) {
-    assert in != null;
+    checkNotNull(in);
     return new InputStreamReader(in);
   }
 
   protected PrintWriter createWriter(final PrintStream out, final boolean autoFlush) {
-    assert out != null;
+    checkNotNull(out);
     return new PrintWriter(out, autoFlush);
   }
 
@@ -230,7 +230,7 @@ public class IO
 
   public void warn(final String format, final Object... args) {
     if (!isQuiet()) {
-      err.format(format, args).println();;
+      err.format(format, args).println();
     }
   }
 
@@ -242,7 +242,7 @@ public class IO
 
   public void error(final String format, final Object... args) {
     if (!isSilent()) {
-      err.format(format, args).println();;
+      err.format(format, args).println();
     }
   }
 }
