@@ -28,6 +28,8 @@ import com.planet57.gshell.util.io.StreamSet;
 import jline.Terminal;
 import jline.TerminalFactory;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Provides access to input/output handles.
  *
@@ -67,9 +69,7 @@ public class IO
   private Verbosity verbosity = Verbosity.NORMAL;
 
   public IO(final StreamSet streams, final boolean autoFlush) {
-    assert streams != null;
-
-    this.streams = streams;
+    this.streams = checkNotNull(streams);
     this.in = createReader(streams.in);
     this.out = createWriter(streams.out, autoFlush);
 
@@ -85,8 +85,7 @@ public class IO
   public IO(final StreamSet streams, final Reader in, final PrintWriter out, final PrintWriter err,
             final boolean autoFlush)
   {
-    assert streams != null;
-    this.streams = streams;
+    this.streams = checkNotNull(streams);
 
     if (in == null) {
       this.in = createReader(streams.in);
@@ -157,6 +156,7 @@ public class IO
     }
     return term;
   }
+
   //
   // Verbosity
   //
@@ -164,7 +164,7 @@ public class IO
   /**
    * Defines the valid values of the {@link IO} containers verbosity settings.
    */
-  public static enum Verbosity
+  public enum Verbosity
   {
     NORMAL,
     QUIET,
@@ -175,8 +175,7 @@ public class IO
    * Set the verbosity level.
    */
   public void setVerbosity(final Verbosity verbosity) {
-    assert verbosity != null;
-    this.verbosity = verbosity;
+    this.verbosity = checkNotNull(verbosity);
   }
 
   /**
@@ -214,16 +213,12 @@ public class IO
     }
   }
 
-  //
-  // HACK: Replacing SLF4J MessageFormatter.arrayFormat() with String.format() dynamically... need to update code to use new syntax
-  //
-
   /**
    * @since 2.5
    */
   public void println(final String format, final Object... args) {
     if (isNormal()) {
-      out.println(String.format(format.replaceAll("\\{\\}", "%s"), args));
+      out.format(format, args).println();
     }
   }
 
@@ -235,7 +230,7 @@ public class IO
 
   public void warn(final String format, final Object... args) {
     if (!isQuiet()) {
-      err.println(String.format(format.replaceAll("\\{\\}", "%s"), args));
+      err.format(format, args).println();;
     }
   }
 
@@ -247,7 +242,7 @@ public class IO
 
   public void error(final String format, final Object... args) {
     if (!isSilent()) {
-      err.println(String.format(format.replaceAll("\\{\\}", "%s"), args));
+      err.format(format, args).println();;
     }
   }
 }

@@ -47,7 +47,7 @@ public class ImportPreferencesCommand
 
     IO io = context.getIo();
 
-    io.println("Importing preferences from: {}", source); // TODO: i18n
+    io.println("Importing preferences from: %s", source); // TODO: i18n
 
     InputStream in = new BufferedInputStream(new FileInputStream(source));
 

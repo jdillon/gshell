@@ -71,7 +71,7 @@ public class LoggerListCommand
         Logger logger = logging.getLogger(name);
         if (all || logger.getLevel() != null &&
             (levelQuery == null || logger.getLevel().toString().contains(levelQuery.toUpperCase()))) {
-          io.println("{}: {}", logger.getName(), logger.getLevel());
+          io.println("%s: %s", logger.getName(), logger.getLevel());
         }
       }
     }

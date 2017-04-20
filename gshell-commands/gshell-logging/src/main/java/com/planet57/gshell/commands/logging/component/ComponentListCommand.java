@@ -60,9 +60,9 @@ public class ComponentListCommand
     for (LoggingComponent component : logging.getComponents()) {
       if ((typeQuery == null || component.getType().contains(typeQuery)) &&
           (nameQuery == null || component.getName().contains(nameQuery))) {
-        io.println("{}", component);
+        io.println("%s", component);
         if (verbose) {
-          io.println("  {}", component.getTarget());
+          io.println("  %s", component.getTarget());
         }
       }
     }

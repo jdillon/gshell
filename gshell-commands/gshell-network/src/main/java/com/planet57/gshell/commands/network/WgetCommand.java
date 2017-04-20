@@ -58,16 +58,16 @@ public class WgetCommand
     checkNotNull(context);
     IO io = context.getIo();
 
-    io.println("Downloading: {}", source); // TODO: i18n
+    io.println("Downloading: %s", source); // TODO: i18n
     if (verbose) {
-      io.println("Connecting to: {}:{}", source.getHost(),
+      io.println("Connecting to: %s:%s", source.getHost(),
           source.getPort() != -1 ? source.getPort() : source.getDefaultPort()); // TODO: i18n
     }
 
     URLConnection conn = source.openConnection();
 
     if (verbose) {
-      io.println("Length: {} [{}]", conn.getContentLength(), conn.getContentType()); // TODO: i18n
+      io.println("Length: %s [%s]", conn.getContentLength(), conn.getContentType()); // TODO: i18n
     }
 
     InputStream in = conn.getInputStream();
@@ -75,7 +75,7 @@ public class WgetCommand
     OutputStream out;
     if (outputFile != null) {
       if (verbose) {
-        io.println("Saving to file: {}", outputFile); // TODO: i18n
+        io.println("Saving to file: %s", outputFile); // TODO: i18n
       }
       out = new BufferedOutputStream(new FileOutputStream(outputFile));
     }
@@ -88,7 +88,7 @@ public class WgetCommand
     // if we write a file, close it then return the file
     if (outputFile != null) {
       Closeables.close(out);
-      io.println("Saved {} [{}]", outputFile, outputFile.length()); // TODO: i18n
+      io.println("Saved %s [%s]", outputFile, outputFile.length()); // TODO: i18n
       return outputFile;
     }
 
