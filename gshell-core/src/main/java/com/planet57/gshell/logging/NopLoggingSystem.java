@@ -32,7 +32,7 @@ public class NopLoggingSystem
     implements LoggingSystem
 {
   @Override
-  public LevelComponent getLevel(String name) {
+  public LevelComponent getLevel(final String name) {
     return new LevelComponent()
     {
       public String getName() {
@@ -47,7 +47,7 @@ public class NopLoggingSystem
   }
 
   @Override
-  public LoggerComponent getLogger(String name) {
+  public LoggerComponent getLogger(final String name) {
     return new LoggerComponent()
     {
       @Override
@@ -61,12 +61,12 @@ public class NopLoggingSystem
       }
 
       @Override
-      public void setLevel(LevelComponent level) {
+      public void setLevel(final LevelComponent level) {
         // empty
       }
 
       @Override
-      public void setLevel(String level) {
+      public void setLevel(final String level) {
         // empty
       }
 
