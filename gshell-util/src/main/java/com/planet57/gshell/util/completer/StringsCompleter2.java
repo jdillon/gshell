@@ -23,11 +23,10 @@ import org.jline.utils.AttributedString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -41,9 +40,9 @@ public class StringsCompleter2
 {
   private static final Logger log = LoggerFactory.getLogger(StringsCompleter2.class);
 
-  private final Collection<Candidate> candidates = new ArrayList<>();
+  private final Map<String,Candidate> candidates = new LinkedHashMap<>();
 
-  private volatile boolean initialized = false;
+  private boolean initialized = false;
 
   public StringsCompleter2() {
     // empty
@@ -63,21 +62,12 @@ public class StringsCompleter2
 
   public void addString(final String string) {
     checkNotNull(string);
-    candidates.add(candidate(string));
+    candidates.put(string, candidate(string));
   }
 
   public void removeString(final String string) {
     checkNotNull(string);
-
-    // FIXME: not ideal, but then again neither is the rest of this impl but its used everywhere in gshell presently
-    Iterator<Candidate> iter = candidates.iterator();
-    while (iter.hasNext()) {
-      Candidate candidate = iter.next();
-      if (string.equals(candidate.value())) {
-        iter.remove();
-        return;
-      }
-    }
+    candidates.remove(string);
   }
 
   /**
@@ -104,7 +94,7 @@ public class StringsCompleter2
     }
     prepare();
 
-    candidates.addAll(this.candidates);
+    candidates.addAll(this.candidates.values());
   }
 
   //
