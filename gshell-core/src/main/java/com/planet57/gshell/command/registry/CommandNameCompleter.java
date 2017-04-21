@@ -15,22 +15,19 @@
  */
 package com.planet57.gshell.command.registry;
 
-import java.util.Collection;
-import java.util.List;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
 import com.google.common.eventbus.Subscribe;
 import com.planet57.gshell.event.EventAware;
-import jline.console.completer.Completer;
-import jline.console.completer.StringsCompleter;
+import com.planet57.gshell.util.completer.StringsCompleter2;
+import org.jline.reader.Completer;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * {@link jline.console.completer.Completer} for command names.
+ * {@link Completer} for command names.
  * Keeps up to date automatically by handling command-related events.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
@@ -39,41 +36,28 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Named("command-name")
 @Singleton
 public class CommandNameCompleter
-    implements Completer, EventAware
+  extends StringsCompleter2
+  implements EventAware
 {
   private final CommandRegistry commands;
-
-  private final StringsCompleter delegate = new StringsCompleter();
-
-  private boolean initialized;
 
   @Inject
   public CommandNameCompleter(final CommandRegistry commands) {
     this.commands = checkNotNull(commands);
   }
 
-  private void init() {
-    Collection<String> names = commands.getCommandNames();
-    delegate.getStrings().addAll(names);
-    initialized = true;
-  }
-
   @Override
-  public int complete(final String buffer, final int cursor, final List<CharSequence> candidates) {
-    if (!initialized) {
-      init();
-    }
-
-    return delegate.complete(buffer, cursor, candidates);
+  protected void init() {
+    setStrings(commands.getCommandNames());
   }
 
   @Subscribe
   void on(final CommandRegisteredEvent event) {
-    delegate.getStrings().add(event.getName());
+    addString(event.getName());
   }
 
   @Subscribe
   void on(final CommandRemovedEvent event) {
-    delegate.getStrings().remove(event.getName());
+    removeString(event.getName());
   }
 }

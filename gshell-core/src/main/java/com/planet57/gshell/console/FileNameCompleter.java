@@ -16,6 +16,8 @@
 package com.planet57.gshell.console;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -23,14 +25,14 @@ import javax.inject.Provider;
 import javax.inject.Singleton;
 
 import com.planet57.gshell.variables.Variables;
-import jline.console.completer.Completer;
+import org.jline.reader.Completer;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.planet57.gshell.variables.VariableNames.SHELL_USER_DIR;
 import static com.planet57.gshell.variables.VariableNames.SHELL_USER_HOME;
 
 /**
- * {@link jline.console.completer.Completer} for file names.
+ * {@link Completer} for file names.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
@@ -38,7 +40,7 @@ import static com.planet57.gshell.variables.VariableNames.SHELL_USER_HOME;
 @Named("file-name")
 @Singleton
 public class FileNameCompleter
-    extends jline.console.completer.FileNameCompleter
+    extends org.jline.reader.impl.completer.FileNameCompleter
     implements Completer
 {
   private final Provider<Variables> variables;
@@ -49,47 +51,23 @@ public class FileNameCompleter
   }
 
   @Override
-  protected File getUserHome() {
-    return variables.get().get(SHELL_USER_HOME, File.class);
+  protected Path getUserHome() {
+    return variables.get().get(SHELL_USER_HOME, Path.class);
   }
 
   @Override
-  protected File getUserDir() {
+  protected Path getUserDir() {
     Variables vars = variables.get();
     Object tmp = vars.get(SHELL_USER_DIR);
     assert tmp != null;
 
-    if (tmp instanceof File) {
-      return (File) tmp;
+    if (tmp instanceof Path) {
+      return (Path) tmp;
+    }
+    else if (tmp instanceof File) {
+      return ((File) tmp).toPath();
     }
 
-    return new File(String.valueOf(tmp));
-  }
-
-  @Override
-  protected CharSequence render(final File file, CharSequence name) {
-    assert file != null;
-    assert name != null;
-
-    // FIXME: This is still unhappy, even with AnsiString :-(
-    //         Basically the problem is that what we want to display (ansi-encoced string)
-    //         is different than what we want to be completed (non-ansi string)
-
-        /*
-        if (file.isDirectory()) {
-            name = Ansi.ansi().fg(Ansi.Color.BLUE).a(name).a(File.separator).reset().toString();
-        }
-        else if (file.canExecute()) {
-            name = Ansi.ansi().fg(Ansi.Color.GREEN).a(name).a("*").reset().toString();
-        }
-
-        if (file.isHidden()) {
-            name = Ansi.ansi().a(Ansi.Attribute.INTENSITY_FAINT).a(name).reset().toString();
-        }
-
-        return new AnsiString(name);
-        */
-
-    return name;
+    return Paths.get(String.valueOf(tmp));
   }
 }

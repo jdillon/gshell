@@ -32,8 +32,7 @@ import com.planet57.gshell.file.FileSystemAccess;
 import com.planet57.gshell.util.io.FileAssert;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
-import jline.console.ConsoleReader;
-import jline.console.completer.Completer;
+import org.jline.reader.Completer;
 import org.fusesource.jansi.AnsiString;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -112,8 +111,9 @@ public class ListDirectoryCommand
       });
     }
 
-    ConsoleReader reader = new ConsoleReader(io.streams.in, io.out, null, io.getTerminal());
-    reader.setPaginationEnabled(false);
+    // FIXME:
+//    ConsoleReader reader = new ConsoleReader(io.streams.in, io.out, null, io.getTerminal());
+//    reader.setPaginationEnabled(false);
 
     List<CharSequence> names = new ArrayList<CharSequence>(files.length);
     List<File> dirs = new LinkedList<File>();
@@ -133,9 +133,10 @@ public class ListDirectoryCommand
         io.out.println(name);
       }
     }
-    else {
-      reader.printColumns(names);
-    }
+    // FIXME:
+//    else {
+//      reader.printColumns(names);
+//    }
 
     if (!dirs.isEmpty()) {
       for (File subDir : dirs) {

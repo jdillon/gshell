@@ -18,12 +18,11 @@ package com.planet57.gshell.command;
 import java.util.List;
 import java.util.MissingResourceException;
 
-import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.resolver.NodePath;
 import com.planet57.gshell.util.ComponentSupport;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
-import jline.console.completer.Completer;
+import org.jline.reader.Completer;
 
 import javax.annotation.Nullable;
 

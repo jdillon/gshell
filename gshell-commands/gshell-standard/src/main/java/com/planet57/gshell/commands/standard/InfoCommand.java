@@ -41,9 +41,8 @@ import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.Preferences;
-import jline.WindowsTerminal;
-import jline.console.completer.EnumCompleter;
 import org.fusesource.jansi.Ansi;
+import org.jline.reader.impl.completer.EnumCompleter;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.planet57.gshell.commands.standard.InfoCommand.Section.SHELL;
@@ -137,18 +136,19 @@ public class InfoCommand
           println(io, "ANSI", Ansi.isEnabled());
           break;
 
-        case TERMINAL:
-          printlnHeader(io, "Terminal");
-          println(io, "Type", io.getTerminal().getClass().getName());
-          println(io, "Supported", io.getTerminal().isSupported());
-          println(io, "Height", io.getTerminal().getHeight());
-          println(io, "Width", io.getTerminal().getWidth());
-          println(io, "ANSI", io.getTerminal().isAnsiSupported());
-          println(io, "Echo", io.getTerminal().isEchoEnabled());
-          if (io.getTerminal() instanceof WindowsTerminal) {
-            println(io, "Direct Console", ((WindowsTerminal) io.getTerminal()).getDirectConsole());
-          }
-          break;
+        // FIXME:
+//        case TERMINAL:
+//          printlnHeader(io, "Terminal");
+//          println(io, "Type", io.getTerminal().getClass().getName());
+//          println(io, "Supported", io.getTerminal().isSupported());
+//          println(io, "Height", io.getTerminal().getHeight());
+//          println(io, "Width", io.getTerminal().getWidth());
+//          println(io, "ANSI", io.getTerminal().isAnsiSupported());
+//          println(io, "Echo", io.getTerminal().isEchoEnabled());
+//          if (io.getTerminal() instanceof WindowsTerminal) {
+//            println(io, "Direct Console", ((WindowsTerminal) io.getTerminal()).getDirectConsole());
+//          }
+//          break;
 
         case JVM:
           printlnHeader(io, "JVM");

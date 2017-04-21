@@ -29,7 +29,7 @@ import com.planet57.gshell.shell.ShellHolder;
 import com.planet57.gshell.util.io.PromptReader;
 import com.planet57.gshell.variables.Variables;
 
-import jline.Terminal;
+//import jline.Terminal;
 
 /**
  * GShell core module.
@@ -61,31 +61,34 @@ public class CoreModule
     return provideShell().getVariables();
   }
 
-  @Provides
-  private Terminal provideTerminal() {
-    return provideIo().getTerminal();
-  }
+  // FIXME
+//  @Provides
+//  private Terminal provideTerminal() {
+//    return provideIo().getTerminal();
+//  }
 
   @Provides
   private PromptReader providePromptReader() throws IOException {
     IO io = provideIo();
 
-    return new PromptReader(io.streams, io.getTerminal())
-    {
-      @Override
-      public String readLine(String prompt, Validator validator) throws IOException {
-        return super.readLine(AnsiRenderer.render(prompt), validator);
-      }
-
-      @Override
-      public String readLine(String prompt, char mask, Validator validator) throws IOException {
-        return super.readLine(AnsiRenderer.render(prompt), mask, validator);
-      }
-
-      @Override
-      public String readPassword(String prompt, Validator validator) throws IOException {
-        return super.readPassword(AnsiRenderer.render(prompt), validator);
-      }
-    };
+    // FIXME:
+    return new PromptReader();
+//    return new PromptReader(io.streams, io.getTerminal())
+//    {
+//      @Override
+//      public String readLine(String prompt, Validator validator) throws IOException {
+//        return super.readLine(AnsiRenderer.render(prompt), validator);
+//      }
+//
+//      @Override
+//      public String readLine(String prompt, char mask, Validator validator) throws IOException {
+//        return super.readLine(AnsiRenderer.render(prompt), mask, validator);
+//      }
+//
+//      @Override
+//      public String readPassword(String prompt, Validator validator) throws IOException {
+//        return super.readPassword(AnsiRenderer.render(prompt), validator);
+//      }
+//    };
   }
 }

@@ -25,8 +25,6 @@ import java.io.Reader;
 import com.google.common.io.Flushables;
 import com.planet57.gshell.util.io.Closeables;
 import com.planet57.gshell.util.io.StreamSet;
-import jline.Terminal;
-import jline.TerminalFactory;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -55,12 +53,13 @@ public class IO
    */
   public final PrintWriter err;
 
-  /**
-   * The terminal associated with the given input/output.
-   *
-   * This must be initialized lazily to avoid prematurely selecting a terminal type.
-   */
-  private Terminal term;
+  // FIXME:
+//  /**
+//   * The terminal associated with the given input/output.
+//   *
+//   * This must be initialized lazily to avoid prematurely selecting a terminal type.
+//   */
+//  private Terminal term;
 
   /**
    * The verbosity setting, which commands (and framework) should inspect and respect when
@@ -150,12 +149,13 @@ public class IO
     }
   }
 
-  public Terminal getTerminal() {
-    if (term == null) {
-      term = TerminalFactory.get();
-    }
-    return term;
-  }
+  // FIXME:
+//  public Terminal getTerminal() {
+//    if (term == null) {
+//      term = TerminalFactory.get();
+//    }
+//    return term;
+//  }
 
   //
   // Verbosity

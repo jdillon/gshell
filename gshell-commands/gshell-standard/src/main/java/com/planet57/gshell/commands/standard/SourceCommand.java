@@ -33,7 +33,7 @@ import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.util.io.FileAssert;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.io.Closeables;
-import jline.console.completer.Completer;
+import org.jline.reader.Completer;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

@@ -45,10 +45,8 @@ import com.planet57.gshell.util.ComponentSupport;
 import com.planet57.gshell.util.io.StreamJack;
 import com.planet57.gshell.variables.Variables;
 import com.planet57.gshell.variables.VariablesSupport;
-import jline.console.ConsoleReader;
-import jline.console.completer.AggregateCompleter;
-import jline.console.completer.Completer;
-import jline.console.completer.NullCompleter;
+import org.jline.reader.Completer;
+import org.jline.reader.impl.completer.NullCompleter;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -165,12 +163,13 @@ public class ShellImpl
     }
   }
 
-  @Inject
-  public void installCompleters(final @Named("alias-name") Completer c1, final @Named("commands") Completer c2) {
-    checkNotNull(c1);
-    checkNotNull(c2);
-    setCompleters(new AggregateCompleter(c1, c2));
-  }
+  // FIXME:
+//  @Inject
+//  public void installCompleters(final @Named("alias-name") Completer c1, final @Named("commands") Completer c2) {
+//    checkNotNull(c1);
+//    checkNotNull(c2);
+//    setCompleters(new AggregateCompleter(c1, c2));
+//  }
 
   public boolean isLoadProfileScripts() {
     return loadProfileScripts;
@@ -284,7 +283,8 @@ public class ShellImpl
 
     IO io = getIo();
 
-    Console console = new Console(io, taskFactory, history, loadBindings());
+    // FIXME:
+    Console console = new Console(io, taskFactory, /*history,*/ null /* loadBindings()*/);
 
     if (prompt != null) {
       console.setPrompt(prompt);
@@ -334,40 +334,41 @@ public class ShellImpl
     }
   }
 
-  private InputStream loadBindings() throws IOException {
-    File file = new File(branding.getUserContextDir(), ConsoleReader.JLINE_KEYBINDINGS);
-
-    if (!file.exists() || !file.isFile()) {
-      file = new File(branding.getShellContextDir(), ConsoleReader.JLINE_KEYBINDINGS);
-      if (!file.exists() || file.isFile()) {
-        try {
-          String fileName = System.getProperty(ConsoleReader.JLINE_KEYBINDINGS);
-          if (fileName != null) {
-            file = new File(fileName);
-          }
-          if (!file.exists() || file.isFile()) {
-            file = new File(branding.getUserHomeDir(), ConsoleReader.JLINEBINDINGS_PROPERTIES);
-          }
-        }
-        catch (Exception e) {
-          log.warn("Failed to load key-bindings", e);
-        }
-      }
-    }
-
-    InputStream bindings;
-
-    if (file.exists() && file.isFile() && file.canRead()) {
-      log.debug("Using bindings from file: {}", file);
-      bindings = new BufferedInputStream(new FileInputStream(file));
-    }
-    else {
-      log.trace("Using default bindings");
-      bindings = io.getTerminal().getDefaultBindings();
-    }
-
-    return bindings;
-  }
+  // FIXME:
+//  private InputStream loadBindings() throws IOException {
+//    File file = new File(branding.getUserContextDir(), ConsoleReader.JLINE_KEYBINDINGS);
+//
+//    if (!file.exists() || !file.isFile()) {
+//      file = new File(branding.getShellContextDir(), ConsoleReader.JLINE_KEYBINDINGS);
+//      if (!file.exists() || file.isFile()) {
+//        try {
+//          String fileName = System.getProperty(ConsoleReader.JLINE_KEYBINDINGS);
+//          if (fileName != null) {
+//            file = new File(fileName);
+//          }
+//          if (!file.exists() || file.isFile()) {
+//            file = new File(branding.getUserHomeDir(), ConsoleReader.JLINEBINDINGS_PROPERTIES);
+//          }
+//        }
+//        catch (Exception e) {
+//          log.warn("Failed to load key-bindings", e);
+//        }
+//      }
+//    }
+//
+//    InputStream bindings;
+//
+//    if (file.exists() && file.isFile() && file.canRead()) {
+//      log.debug("Using bindings from file: {}", file);
+//      bindings = new BufferedInputStream(new FileInputStream(file));
+//    }
+//    else {
+//      log.trace("Using default bindings");
+//      bindings = io.getTerminal().getDefaultBindings();
+//    }
+//
+//    return bindings;
+//  }
 
   private void renderMessage(final IO io, final String msg) {
     assert io != null;

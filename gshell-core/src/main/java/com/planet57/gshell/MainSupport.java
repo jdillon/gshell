@@ -45,15 +45,10 @@ import com.planet57.gshell.util.pref.Preferences;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
 import com.planet57.gshell.variables.VariablesSupport;
-import jline.AnsiWindowsTerminal;
-import jline.NoInterruptUnixTerminal;
-import jline.TerminalFactory;
 import org.fusesource.jansi.Ansi;
 import org.slf4j.Logger;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static jline.TerminalFactory.Flavor.UNIX;
-import static jline.TerminalFactory.Flavor.WINDOWS;
 
 /**
  * Support for booting shell applications.
@@ -64,19 +59,20 @@ import static jline.TerminalFactory.Flavor.WINDOWS;
 @Preferences(path = "cli")
 public abstract class MainSupport
 {
-  static {
-    // Register some different terminal flavors for added functionality
-    TerminalFactory.registerFlavor(UNIX, NoInterruptUnixTerminal.class);
-    TerminalFactory.registerFlavor(WINDOWS, AnsiWindowsTerminal.class);
-
-    // Register jline ansi detector
-    Ansi.setDetector(new Callable<Boolean>()
-    {
-      public Boolean call() throws Exception {
-        return TerminalFactory.get().isAnsiSupported();
-      }
-    });
-  }
+  // FIXME:
+//  static {
+//    // Register some different terminal flavors for added functionality
+//    TerminalFactory.registerFlavor(UNIX, NoInterruptUnixTerminal.class);
+//    TerminalFactory.registerFlavor(WINDOWS, AnsiWindowsTerminal.class);
+//
+//    // Register jline ansi detector
+//    Ansi.setDetector(new Callable<Boolean>()
+//    {
+//      public Boolean call() throws Exception {
+//        return TerminalFactory.get().isAnsiSupported();
+//      }
+//    });
+//  }
 
   // Gossip Log used here for bootstrap
   protected final Logger log = Log.getLogger(getClass());
@@ -163,15 +159,16 @@ public abstract class MainSupport
     Ansi.setEnabled(flag);
   }
 
-  @Preference(name = "terminal")
-  @Option(name = "T", longName = "terminal")
-  protected void setTerminalType(final String type) {
-    TerminalFactory.configure(type);
-  }
-
-  protected void setTerminalType(final TerminalFactory.Type type) {
-    TerminalFactory.configure(type);
-  }
+  // FIXME:
+//  @Preference(name = "terminal")
+//  @Option(name = "T", longName = "terminal")
+//  protected void setTerminalType(final String type) {
+//    TerminalFactory.configure(type);
+//  }
+//
+//  protected void setTerminalType(final TerminalFactory.Type type) {
+//    TerminalFactory.configure(type);
+//  }
 
   // TODO: Add --norc && --noprofile
 
@@ -206,7 +203,8 @@ public abstract class MainSupport
 
     // Setup environment defaults
     setConsoleLogLevel(Level.INFO);
-    setTerminalType(TerminalFactory.Type.AUTO);
+    // FIXME:
+//    setTerminalType(TerminalFactory.Type.AUTO);
 
     // Process preferences
     PreferenceProcessor pp = new PreferenceProcessor();

@@ -25,7 +25,7 @@ import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
-import jline.console.completer.Completer;
+import org.jline.reader.Completer;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

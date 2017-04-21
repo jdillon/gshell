@@ -18,9 +18,6 @@ package com.planet57.gshell.shell;
 import java.io.File;
 import java.io.IOException;
 
-import com.google.common.io.Flushables;
-import jline.console.history.FileHistory;
-
 /**
  * Implementation of {@link History} for <a href="http://jline.sf.net">JLine</a>.
  *
@@ -28,17 +25,19 @@ import jline.console.history.FileHistory;
  * @since 2.0
  */
 public class ShellHistory
-    extends FileHistory
+//    extends FileHistory
     implements History
 {
+  // FIXME:
+
   public ShellHistory(final File file) throws IOException {
-    super(file);
+//    super(file);
 
     Runtime.getRuntime().addShutdownHook(new Thread()
     {
       @Override
       public void run() {
-        Flushables.flushQuietly(ShellHistory.this);
+//        Flushables.flushQuietly(ShellHistory.this);
       }
     });
   }

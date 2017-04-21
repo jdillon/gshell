@@ -26,9 +26,9 @@ import javax.inject.Singleton;
 import com.planet57.gshell.command.resolver.CommandResolver;
 import com.planet57.gshell.command.resolver.Node;
 import com.planet57.gshell.command.resolver.NodePathCompleter;
-import jline.console.completer.ArgumentCompleter;
-import jline.console.completer.Completer;
-import jline.console.completer.NullCompleter;
+import org.jline.reader.Completer;
+import org.jline.reader.impl.completer.ArgumentCompleter;
+import org.jline.reader.impl.completer.NullCompleter;
 
 /**
  * Command path and argument completer.
@@ -56,19 +56,20 @@ public class CommandsCompleter
       super(resolver);
     }
 
-    @Override
-    protected int buildCandidates(final List<CharSequence> candidates, final Collection<Node> matches,
-                                  final String prefix)
-    {
-      assert matches != null;
-
-      // If there is only one match, then install that node's action completers
-      if (matches.size() == 1) {
-        updateCompleters(matches.iterator().next().getAction().getCompleters());
-      }
-
-      return super.buildCandidates(candidates, matches, prefix);
-    }
+    // FIXME:
+//    @Override
+//    protected int buildCandidates(final List<CharSequence> candidates, final Collection<Node> matches,
+//                                  final String prefix)
+//    {
+//      assert matches != null;
+//
+//      // If there is only one match, then install that node's action completers
+//      if (matches.size() == 1) {
+//        updateCompleters(matches.iterator().next().getAction().getCompleters());
+//      }
+//
+//      return super.buildCandidates(candidates, matches, prefix);
+//    }
   }
 
   private void updateCompleters(@Nullable final Completer[] completers) {

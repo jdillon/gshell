@@ -46,6 +46,7 @@ import com.planet57.gshell.util.converter.basic.Inet4AddressConverter;
 import com.planet57.gshell.util.converter.basic.Inet6AddressConverter;
 import com.planet57.gshell.util.converter.basic.InetAddressConverter;
 import com.planet57.gshell.util.converter.basic.ObjectNameConverter;
+import com.planet57.gshell.util.converter.basic.PathConverter;
 import com.planet57.gshell.util.converter.basic.PatternConverter;
 import com.planet57.gshell.util.converter.basic.StringConverter;
 import com.planet57.gshell.util.converter.basic.UriConverter;
@@ -131,6 +132,7 @@ public class Converters
     registerConverter(new DateConverter());
     registerConverter(new DoubleConverter());
     registerConverter(new FileConverter());
+    registerConverter(new PathConverter());
     registerConverter(new FloatConverter());
     registerConverter(new HashMapConverter());
     registerConverter(new IdentityHashMapConverter());

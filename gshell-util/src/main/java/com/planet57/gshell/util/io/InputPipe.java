@@ -23,7 +23,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CountDownLatch;
 
-import jline.Terminal;
+//import jline.Terminal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,7 +41,8 @@ public class InputPipe
 
   private final BlockingQueue<Integer> queue = new ArrayBlockingQueue<Integer>(1024);
 
-  private final Terminal term;
+  // FIXME:
+//  private final Terminal term;
 
   private final StreamSet streams;
 
@@ -60,10 +61,10 @@ public class InputPipe
 
   private volatile boolean running;
 
-  public InputPipe(final StreamSet streams, final Terminal terminal, final InterruptHandler interruptHandler) {
+  public InputPipe(final StreamSet streams, /*final Terminal terminal,*/ final InterruptHandler interruptHandler) {
     assert streams != null;
     this.streams = streams;
-    this.term = terminal;
+//    this.term = terminal;
     assert interruptHandler != null;
     this.interruptHandler = interruptHandler;
   }
@@ -76,9 +77,9 @@ public class InputPipe
     }
   }
 
-  private int read() throws IOException {
-    return term.readCharacter(streams.in);
-  }
+//  private int read() throws IOException {
+//    return term.readCharacter(streams.in);
+//  }
 
   @Override
   public void start() {
@@ -94,58 +95,58 @@ public class InputPipe
   }
 
   public void run() {
-    log.trace("Running");
-    running = true;
-
-    try {
-      startSignal.countDown();
-
-      while (running) {
-        try {
-          int c = read();
-
-          switch (c) {
-            case -1:
-              queue.put(c);
-              return;
-
-            case 3: // CTRL-C
-              interrupt = interruptHandler.interrupt();
-              break;
-
-            //                        case 4: // CTRL-D
-            //                            running = interruptHandler.stop();
-            //                            break;
-          }
-
-          queue.put(c);
-        }
-        catch (IOException e) {
-          log.warn("Pipe read error", e);
-
-          // HACK: Reset the terminal
-          term.restore();
-          term.init();
-        }
-      }
-    }
-    catch (Throwable t) {
-      log.error("Pipe read failure", t);
-      if (t instanceof RuntimeException) {
-        throw (RuntimeException) t;
-      }
-      else if (t instanceof Error) {
-        throw (Error) t;
-      }
-      else {
-        throw new Error(t);
-      }
-    }
-    finally {
-      close();
-    }
-
-    log.trace("Stopped");
+//    log.trace("Running");
+//    running = true;
+//
+//    try {
+//      startSignal.countDown();
+//
+//      while (running) {
+//        try {
+//          int c = read();
+//
+//          switch (c) {
+//            case -1:
+//              queue.put(c);
+//              return;
+//
+//            case 3: // CTRL-C
+//              interrupt = interruptHandler.interrupt();
+//              break;
+//
+//            //                        case 4: // CTRL-D
+//            //                            running = interruptHandler.stop();
+//            //                            break;
+//          }
+//
+//          queue.put(c);
+//        }
+//        catch (IOException e) {
+//          log.warn("Pipe read error", e);
+//
+//          // HACK: Reset the terminal
+//          term.restore();
+//          term.init();
+//        }
+//      }
+//    }
+//    catch (Throwable t) {
+//      log.error("Pipe read failure", t);
+//      if (t instanceof RuntimeException) {
+//        throw (RuntimeException) t;
+//      }
+//      else if (t instanceof Error) {
+//        throw (Error) t;
+//      }
+//      else {
+//        throw new Error(t);
+//      }
+//    }
+//    finally {
+//      close();
+//    }
+//
+//    log.trace("Stopped");
   }
 
   public InputStream getInputStream() {

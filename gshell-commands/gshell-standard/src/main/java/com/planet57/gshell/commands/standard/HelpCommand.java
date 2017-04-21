@@ -39,8 +39,8 @@ import com.planet57.gshell.util.predicate.PredicateBuilder;
 import com.planet57.gshell.util.predicate.TypePredicate;
 import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.Preferences;
-import jline.console.completer.AggregateCompleter;
-import jline.console.completer.Completer;
+import org.jline.reader.Completer;
+import org.jline.reader.impl.completer.AggregateCompleter;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

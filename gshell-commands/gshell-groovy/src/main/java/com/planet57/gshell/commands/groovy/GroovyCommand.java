@@ -30,7 +30,7 @@ import com.planet57.gshell.util.pref.Preferences;
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 import groovy.lang.Script;
-import jline.console.completer.Completer;
+import org.jline.reader.Completer;
 import org.codehaus.groovy.control.CompilerConfiguration;
 import org.slf4j.LoggerFactory;
 

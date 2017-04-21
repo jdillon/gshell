@@ -16,7 +16,7 @@
 package com.planet57.gshell.command;
 
 import com.planet57.gshell.util.i18n.MessageSource;
-import jline.console.completer.Completer;
+import org.jline.reader.Completer;
 
 import javax.annotation.Nullable;
 

@@ -30,7 +30,7 @@ import com.planet57.gshell.util.Strings;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.CliProcessor;
 import com.planet57.gshell.util.cli2.CliProcessorAware;
-import jline.console.completer.Completer;
+import org.jline.reader.Completer;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

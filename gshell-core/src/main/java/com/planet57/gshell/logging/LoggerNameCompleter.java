@@ -21,8 +21,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import jline.console.completer.Completer;
-import jline.console.completer.StringsCompleter;
+import com.planet57.gshell.util.completer.StringsCompleter2;
+import org.jline.reader.Candidate;
+import org.jline.reader.Completer;
+import org.jline.reader.LineReader;
+import org.jline.reader.ParsedLine;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -35,7 +38,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Named("logger-name")
 @Singleton
 public class LoggerNameCompleter
-    implements Completer
+    extends StringsCompleter2
 {
   private final LoggingSystem logging;
 
@@ -44,9 +47,9 @@ public class LoggerNameCompleter
     this.logging = checkNotNull(logging);
   }
 
-  public int complete(final String buffer, final int cursor, final List<CharSequence> candidates) {
-    StringsCompleter delegate = new StringsCompleter();
-    delegate.getStrings().addAll(logging.getLoggerNames());
-    return delegate.complete(buffer, cursor, candidates);
+  @Override
+  public void complete(final LineReader reader, final ParsedLine commandLine, final List<Candidate> candidates) {
+    setStrings(logging.getLoggerNames());
+    super.complete(reader, commandLine, candidates);
   }
 }

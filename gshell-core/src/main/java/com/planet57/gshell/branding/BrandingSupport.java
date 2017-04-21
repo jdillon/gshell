@@ -27,7 +27,6 @@ import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 import com.planet57.gshell.util.io.PrintBuffer;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
-import jline.TerminalFactory;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.planet57.gshell.command.resolver.Node.CURRENT;
@@ -90,7 +89,8 @@ public class BrandingSupport
   }
 
   protected String line() {
-    return Strings.repeat("-", TerminalFactory.get().getWidth() - 1);
+    // FIXME:
+    return Strings.repeat("-", /*TerminalFactory.get().getWidth() - 1*/ 79);
   }
 
   @Override

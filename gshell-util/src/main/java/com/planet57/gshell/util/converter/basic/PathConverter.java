@@ -13,15 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.shell;
+package com.planet57.gshell.util.converter.basic;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import com.planet57.gshell.util.converter.ConverterSupport;
 
 /**
- * Provides access to a shells history.
+ * Converter for {@link Path} types.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 2.0
+ * @since 3.0
  */
-public interface History
+public class PathConverter
+    extends ConverterSupport
 {
-  // FIXME: flesh out api, sorting out for jline3
+  public PathConverter() {
+    super(Path.class);
+  }
+
+  @Override
+  protected Object convertToObject(final String text) throws Exception {
+    return Paths.get(text);
+  }
 }

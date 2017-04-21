@@ -43,17 +43,19 @@ public class RecallHistoryCommand
     IO io = context.getIo();
     History history = context.getShell().getHistory();
 
-    if (index < 1 || index > history.size()) {
-      io.error(getMessages().format("error.no-such-index", index));
-      return Result.FAILURE;
-    }
+    // FIXME:
+//    if (index < 1 || index > history.size()) {
+//      io.error(getMessages().format("error.no-such-index", index));
+//      return Result.FAILURE;
+//    }
+//
+//    CharSequence element = history.get(index - 1);
+//    log.debug("Recalling from history: {}", element);
+//
+//    // Replace the last item (which was this command, with the recalled bits)
+//    history.replace(element);
 
-    CharSequence element = history.get(index - 1);
-    log.debug("Recalling from history: {}", element);
-
-    // Replace the last item (which was this command, with the recalled bits)
-    history.replace(element);
-
-    return context.getShell().execute(element);
+//    return context.getShell().execute(element);
+    return null;
   }
 }

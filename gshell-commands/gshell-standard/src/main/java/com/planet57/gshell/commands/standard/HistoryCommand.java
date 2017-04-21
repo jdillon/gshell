@@ -51,15 +51,16 @@ public class HistoryCommand
 
     History history = context.getShell().getHistory();
 
-    if (clear) {
-      history.clear();
-      log.debug("History cleared");
-    }
-
-    if (purge) {
-      history.purge();
-      log.debug("History purged");
-    }
+    // FIXME:
+//    if (clear) {
+//      history.clear();
+//      log.debug("History cleared");
+//    }
+//
+//    if (purge) {
+//      history.purge();
+//      log.debug("History purged");
+//    }
 
     return displayEntries(context);
   }
@@ -68,23 +69,25 @@ public class HistoryCommand
     IO io = context.getIo();
     History history = context.getShell().getHistory();
 
-    log.debug("History size: {}", history.size());
+    // FIXME:
+//    log.debug("History size: {}", history.size());
 
-    int i = 0;
-    if (last != null) {
-      i = history.size() - last;
-      if (i < 0) {
-        i = 0;
-      }
-    }
+//    int i = 0;
+//    if (last != null) {
+//      i = history.size() - last;
+//      if (i < 0) {
+//        i = 0;
+//      }
+//    }
 
-    log.debug("Starting with entry: {}", i);
+//    log.debug("Starting with entry: {}", i);
 
-    ListIterator<History.Entry> entries = history.entries(i);
-    while (entries.hasNext()) {
-      History.Entry entry = entries.next();
-      renderElement(io, entry.index(), entry.value());
-    }
+    // FIXME:
+//    ListIterator<History.Entry> entries = history.entries(i);
+//    while (entries.hasNext()) {
+//      History.Entry entry = entries.next();
+//      renderElement(io, entry.index(), entry.value());
+//    }
 
     return Result.SUCCESS;
   }

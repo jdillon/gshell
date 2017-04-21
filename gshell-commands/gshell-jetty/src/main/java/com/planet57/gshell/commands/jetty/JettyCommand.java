@@ -29,7 +29,7 @@ import com.planet57.gshell.util.NameValue;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.pref.Preferences;
-import jline.console.completer.Completer;
+import org.jline.reader.Completer;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.util.component.LifeCycle;
 import org.eclipse.jetty.util.resource.Resource;

@@ -53,18 +53,21 @@ public class AskCommand
   public Object execute(final CommandContext context) throws Exception {
     checkNotNull(context);
 
-    PromptReader prompter = promptProvider.get();
-    String input;
+    // FIXME:
+//    PromptReader prompter = promptProvider.get();
+//    String input;
+//
+//    if (mask != null) {
+//      input = prompter.readLine(prompt, mask);
+//    }
+//    else {
+//      input = prompter.readLine(prompt);
+//    }
+//
+//    log.debug("Read input: {}", input);
+//
+//    return input;
 
-    if (mask != null) {
-      input = prompter.readLine(prompt, mask);
-    }
-    else {
-      input = prompter.readLine(prompt);
-    }
-
-    log.debug("Read input: {}", input);
-
-    return input;
+    return null;
   }
 }

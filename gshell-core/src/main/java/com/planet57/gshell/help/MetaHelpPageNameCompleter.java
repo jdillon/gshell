@@ -15,21 +15,19 @@
  */
 package com.planet57.gshell.help;
 
-import java.util.List;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
 import com.google.common.eventbus.Subscribe;
 import com.planet57.gshell.event.EventAware;
-import jline.console.completer.Completer;
-import jline.console.completer.StringsCompleter;
+import com.planet57.gshell.util.completer.StringsCompleter2;
+import org.jline.reader.Completer;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * {@link jline.console.completer.Completer} for meta help page names.
+ * {@link Completer} for meta help page names.
  * Keeps up to date automatically by handling meta-page-related events.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
@@ -38,36 +36,25 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Named("meta-help-page-name")
 @Singleton
 public class MetaHelpPageNameCompleter
-    implements Completer, EventAware
+  extends StringsCompleter2
+  implements EventAware
 {
   private final HelpPageManager helpPages;
-
-  private final StringsCompleter delegate = new StringsCompleter();
-
-  private boolean initialized;
 
   @Inject
   public MetaHelpPageNameCompleter(final HelpPageManager helpPages) {
     this.helpPages = checkNotNull(helpPages);
   }
 
-  private void init() {
+  @Override
+  protected void init() {
     for (MetaHelpPage page : helpPages.getMetaPages()) {
-      delegate.getStrings().add(page.getName());
+      addString(page.getName());
     }
-    initialized = true;
-  }
-
-  public int complete(final String buffer, final int cursor, final List<CharSequence> candidates) {
-    if (!initialized) {
-      init();
-    }
-
-    return delegate.complete(buffer, cursor, candidates);
   }
 
   @Subscribe
   void on(final MetaHelpPageAddedEvent event) {
-    delegate.getStrings().add(event.getPage().getName());
+    addString(event.getPage().getName());
   }
 }
