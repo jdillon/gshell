@@ -25,6 +25,7 @@ import org.jline.reader.Completer;
 import org.jline.reader.History;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
+import org.jline.terminal.Terminal;
 
 import javax.annotation.Nullable;
 
@@ -111,20 +112,29 @@ public class Console
     log.trace("Running");
     running = true;
 
-    while (running) {
-      try {
-        running = work();
-      }
-      catch (Throwable t) {
-        log.trace("Work failed", t);
+    // prepare handling for CTRL-C
+    Terminal terminal = io.getTerminal();
+    Terminal.SignalHandler intHandler = terminal.handle(Terminal.Signal.INT, s -> {
+      interruptTask();
+    });
 
-        if (getErrorHandler() != null) {
-          running = getErrorHandler().handleError(t);
-        }
-        else {
-          t.printStackTrace();
+    try {
+      while (running) {
+        try {
+          running = work();
+        } catch (Throwable t) {
+          log.trace("Work failed", t);
+
+          if (getErrorHandler() != null) {
+            running = getErrorHandler().handleError(t);
+          } else {
+            t.printStackTrace();
+          }
         }
       }
+    }
+    finally {
+      terminal.handle(Terminal.Signal.INT, intHandler);
     }
 
     log.trace("Stopped");
@@ -198,7 +208,7 @@ public class Console
     return lineReader.readLine(prompt);
   }
 
-  private boolean interruptTask() throws Exception {
+  private boolean interruptTask() {
     boolean interrupt = false;
 
     ConsoleTask task = getCurrentTask();
