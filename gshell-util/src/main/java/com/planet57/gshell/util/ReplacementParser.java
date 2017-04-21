@@ -43,7 +43,7 @@ public abstract class ReplacementParser
 
   @Nullable
   public String parse(@Nullable String input) {
-    if (input != null) {
+    if (input != null && input.contains("${")) {
       Matcher matcher = pattern.matcher(input);
 
       while (matcher.find()) {

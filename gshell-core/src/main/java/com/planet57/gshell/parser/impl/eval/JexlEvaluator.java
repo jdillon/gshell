@@ -62,11 +62,6 @@ public class JexlEvaluator
 
   @Nullable
   public Object eval(@Nullable final String expression) throws Exception {
-    // Skip evaluation if null or there is no start token
-    if (expression == null || !expression.contains("${")) {
-      return expression;
-    }
-
     return parser.parse(expression);
   }
 
