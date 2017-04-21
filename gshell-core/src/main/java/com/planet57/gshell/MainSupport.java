@@ -81,9 +81,11 @@ public abstract class MainSupport
   @Option(name = "V", longName = "version", override = true)
   protected boolean version;
 
+  // FIXME: there is an issued with Boolean vs. boolean in terms of optionalArg handling; Boolean behaves, boolean does not.
+
   @Preference
-  @Option(name = "e", longName = "errors")
-  protected boolean showErrorTraces = false;
+  @Option(name = "e", longName = "errors", optionalArg = true)
+  protected Boolean showErrorTraces = false; // HACK: Boolean for now until we fix problem
 
   protected void setConsoleLogLevel(final Level level) {
     System.setProperty(VariableNames.SHELL_LOGGING, level.name());
@@ -91,7 +93,7 @@ public abstract class MainSupport
   }
 
   @Preference(name = "debug")
-  @Option(name = "d", longName = "debug")
+  @Option(name = "d", longName = "debug", optionalArg = true)
   protected void setDebug(final boolean flag) {
     if (flag) {
       setConsoleLogLevel(Level.DEBUG);
@@ -101,7 +103,7 @@ public abstract class MainSupport
   }
 
   @Preference(name = "trace")
-  @Option(name = "X", longName = "trace")
+  @Option(name = "X", longName = "trace", optionalArg = true)
   protected void setTrace(final boolean flag) {
     if (flag) {
       setConsoleLogLevel(Level.TRACE);
@@ -111,7 +113,7 @@ public abstract class MainSupport
   }
 
   @Preference(name = "quiet")
-  @Option(name = "q", longName = "quiet")
+  @Option(name = "q", longName = "quiet", optionalArg = true)
   protected void setQuiet(final boolean flag) {
     if (flag) {
       setConsoleLogLevel(Level.ERROR);
@@ -135,7 +137,7 @@ public abstract class MainSupport
   }
 
   @Preference(name = "color")
-  @Option(name = "C", longName = "color")
+  @Option(name = "C", longName = "color", optionalArg = true)
   protected void enableAnsiColors(final Boolean flag) {
     Ansi.setEnabled(flag);
   }
