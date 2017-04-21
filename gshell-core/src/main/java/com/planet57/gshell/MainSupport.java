@@ -61,13 +61,14 @@ public abstract class MainSupport
   // Gossip Log used here for bootstrap
   protected final Logger log = Log.getLogger(getClass());
 
-  protected final IO io = new AnsiIO(StreamSet.SYSTEM_FD, true);
+  private final MessageSource messages = new ResourceBundleMessageSource()
+    .add(false, getClass())
+    .add(MainSupport.class);
 
-  protected final Variables vars = new VariablesSupport();
+  // HACK: these shouldn't be protected
+  protected IO io;
 
-  protected final MessageSource messages = new ResourceBundleMessageSource()
-      .add(false, getClass())
-      .add(MainSupport.class);
+  protected Variables vars;
 
   private Branding branding;
 
@@ -139,16 +140,7 @@ public abstract class MainSupport
     Ansi.setEnabled(flag);
   }
 
-  // FIXME:
-//  @Preference(name = "terminal")
-//  @Option(name = "T", longName = "terminal")
-//  protected void setTerminalType(final String type) {
-//    TerminalFactory.configure(type);
-//  }
-//
-//  protected void setTerminalType(final TerminalFactory.Type type) {
-//    TerminalFactory.configure(type);
-//  }
+  // TODO: Add helpers to control terminal
 
   // TODO: Add --norc && --noprofile
 
@@ -181,10 +173,11 @@ public abstract class MainSupport
       }
     });
 
+    io = new AnsiIO(StreamSet.SYSTEM_FD, true);
+    vars = new VariablesSupport();
+
     // Setup environment defaults
     setConsoleLogLevel(Level.INFO);
-    // FIXME:
-//    setTerminalType(TerminalFactory.Type.AUTO);
 
     // Process preferences
     PreferenceProcessor pp = new PreferenceProcessor();

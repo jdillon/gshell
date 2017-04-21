@@ -43,6 +43,7 @@ import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.Preferences;
 import org.fusesource.jansi.Ansi;
 import org.jline.reader.impl.completer.EnumCompleter;
+import org.jline.terminal.Terminal;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.planet57.gshell.commands.standard.InfoCommand.Section.SHELL;
@@ -136,19 +137,18 @@ public class InfoCommand
           println(io, "ANSI", Ansi.isEnabled());
           break;
 
-        // FIXME:
-//        case TERMINAL:
-//          printlnHeader(io, "Terminal");
-//          println(io, "Type", io.getTerminal().getClass().getName());
-//          println(io, "Supported", io.getTerminal().isSupported());
-//          println(io, "Height", io.getTerminal().getHeight());
-//          println(io, "Width", io.getTerminal().getWidth());
-//          println(io, "ANSI", io.getTerminal().isAnsiSupported());
-//          println(io, "Echo", io.getTerminal().isEchoEnabled());
-//          if (io.getTerminal() instanceof WindowsTerminal) {
-//            println(io, "Direct Console", ((WindowsTerminal) io.getTerminal()).getDirectConsole());
-//          }
-//          break;
+        case TERMINAL: {
+          Terminal terminal = io.getTerminal();
+          printlnHeader(io, "Terminal");
+          println(io, "Name", terminal.getName());
+          println(io, "Type", terminal.getType());
+          println(io, "Echo", terminal.echo());
+          println(io, "Height", terminal.getHeight());
+          println(io, "Width", terminal.getWidth());
+          println(io, "Mouse support", terminal.hasMouseSupport());
+          // TODO: attributes/capabilities?
+          break;
+        }
 
         case JVM:
           printlnHeader(io, "JVM");

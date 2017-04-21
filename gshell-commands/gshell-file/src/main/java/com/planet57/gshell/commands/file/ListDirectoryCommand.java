@@ -111,10 +111,6 @@ public class ListDirectoryCommand
       });
     }
 
-    // FIXME:
-//    ConsoleReader reader = new ConsoleReader(io.streams.in, io.out, null, io.getTerminal());
-//    reader.setPaginationEnabled(false);
-
     List<CharSequence> names = new ArrayList<CharSequence>(files.length);
     List<File> dirs = new LinkedList<File>();
 
@@ -128,12 +124,15 @@ public class ListDirectoryCommand
       names.add(render(file));
     }
 
-    if (longList) {
+    // FIXME:
+    //    ConsoleReader reader = new ConsoleReader(io.streams.in, io.out, null, io.getTerminal());
+    //    reader.setPaginationEnabled(false);
+
+    //    if (longList) {
       for (CharSequence name : names) {
         io.out.println(name);
       }
-    }
-    // FIXME:
+//    }
 //    else {
 //      reader.printColumns(names);
 //    }
@@ -154,9 +153,9 @@ public class ListDirectoryCommand
     if (file.isDirectory()) {
       name = ansi().fg(BLUE).a(name).a(File.separator).reset().toString();
     }
-    //        else if (file.canExecute()) {
-    //            name = ansi().fg(GREEN).a(name).a("*").reset().toString();
-    //        }
+//    else if (file.canExecute()) {
+//        name = ansi().fg(GREEN).a(name).a("*").reset().toString();
+//    }
 
     if (file.isHidden()) {
       name = ansi().a(INTENSITY_FAINT).a(name).reset().toString();

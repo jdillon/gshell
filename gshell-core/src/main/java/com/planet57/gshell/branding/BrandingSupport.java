@@ -89,7 +89,7 @@ public class BrandingSupport
   }
 
   protected String line() {
-    // FIXME:
+    // FIXME: need some way to get a handle on the Terminal instance; maybe add a TerminalHolder?
     return Strings.repeat("-", /*TerminalFactory.get().getWidth() - 1*/ 79);
   }
 

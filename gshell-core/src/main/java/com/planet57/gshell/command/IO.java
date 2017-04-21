@@ -25,6 +25,10 @@ import java.io.Reader;
 import com.google.common.io.Flushables;
 import com.planet57.gshell.util.io.Closeables;
 import com.planet57.gshell.util.io.StreamSet;
+import org.jline.terminal.Terminal;
+import org.jline.terminal.TerminalBuilder;
+
+import javax.annotation.Nullable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -53,13 +57,10 @@ public class IO
    */
   public final PrintWriter err;
 
-  // FIXME:
-//  /**
-//   * The terminal associated with the given input/output.
-//   *
-//   * This must be initialized lazily to avoid prematurely selecting a terminal type.
-//   */
-//  private Terminal term;
+  /**
+   * The terminal associated with the given input/output.
+   */
+  private final Terminal terminal;
 
   /**
    * The verbosity setting, which commands (and framework) should inspect and respect when
@@ -69,6 +70,7 @@ public class IO
 
   public IO(final StreamSet streams, final boolean autoFlush) {
     this.streams = checkNotNull(streams);
+    this.terminal = createTerminal(streams);
     this.in = createReader(streams.in);
     this.out = createWriter(streams.out, autoFlush);
 
@@ -81,10 +83,21 @@ public class IO
     }
   }
 
-  public IO(final StreamSet streams, final Reader in, final PrintWriter out, final PrintWriter err,
+  public IO(final StreamSet streams,
+            @Nullable final Terminal terminal,
+            @Nullable final Reader in,
+            @Nullable final PrintWriter out,
+            @Nullable final PrintWriter err,
             final boolean autoFlush)
   {
     this.streams = checkNotNull(streams);
+
+    if (terminal == null) {
+      this.terminal = createTerminal(streams);
+    }
+    else {
+      this.terminal = terminal;
+    }
 
     if (in == null) {
       this.in = createReader(streams.in);
@@ -108,11 +121,14 @@ public class IO
     }
   }
 
-  /**
-   * Helper which uses current values from {@link StreamSet#system}.
-   */
-  public IO() {
-    this(StreamSet.system(), true);
+  protected Terminal createTerminal(final StreamSet streams) {
+    try {
+      // FIXME: adjust for streams
+      return TerminalBuilder.terminal();
+    }
+    catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   protected Reader createReader(final InputStream in) {
@@ -149,13 +165,9 @@ public class IO
     }
   }
 
-  // FIXME:
-//  public Terminal getTerminal() {
-//    if (term == null) {
-//      term = TerminalFactory.get();
-//    }
-//    return term;
-//  }
+  public Terminal getTerminal() {
+    return terminal;
+  }
 
   //
   // Verbosity

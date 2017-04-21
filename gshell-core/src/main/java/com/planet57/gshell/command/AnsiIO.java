@@ -22,8 +22,12 @@ import com.planet57.gshell.util.io.StreamSet;
 import org.fusesource.jansi.AnsiConsole;
 import org.fusesource.jansi.AnsiRenderWriter;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * ANSI-aware {@link IO}.
+ *
+ * This will setup support to parse {@code @|code text|} strings with {@link AnsiRenderWriter}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
@@ -35,23 +39,19 @@ public class AnsiIO
     super(ansiStreams(streams), autoFlush);
   }
 
-  public AnsiIO() {
-    this(StreamSet.system(), true);
-  }
-
   private static StreamSet ansiStreams(final StreamSet streams) {
-    assert streams != null;
+    checkNotNull(streams);
     return new StreamSet(streams.in, wrap(streams.out), wrap(streams.err));
   }
 
   private static PrintStream wrap(final PrintStream stream) {
-    assert stream != null;
+    checkNotNull(stream);
     return new PrintStream(AnsiConsole.wrapOutputStream(stream));
   }
 
   @Override
   protected PrintWriter createWriter(final PrintStream out, final boolean autoFlush) {
-    assert out != null;
+    checkNotNull(out);
     return new AnsiRenderWriter(out, autoFlush);
   }
 }

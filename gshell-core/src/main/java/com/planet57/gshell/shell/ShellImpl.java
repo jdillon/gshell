@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicReference;
 
-import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -45,7 +44,6 @@ import com.planet57.gshell.variables.VariablesSupport;
 import org.jline.reader.Completer;
 import org.jline.reader.History;
 import org.jline.reader.impl.completer.AggregateCompleter;
-import org.jline.reader.impl.completer.NullCompleter;
 import org.jline.reader.impl.history.DefaultHistory;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -75,7 +73,7 @@ public class ShellImpl
 
   private final History history;
 
-//  private List<Completer> completers;
+  private List<Completer> completers;
 
   private ConsolePrompt prompt;
 
@@ -94,17 +92,16 @@ public class ShellImpl
                    final CommandRegistrar commandRegistrar,
                    final CommandExecutor executor,
                    final Branding branding,
-                   @Nullable @Named("main") final IO io,
-                   @Nullable @Named("main") final Variables variables)
+                   @Named("main") final IO io,
+                   @Named("main") final Variables variables)
       throws IOException
   {
     this.events = checkNotNull(events);
     this.executor = checkNotNull(executor);
     this.commandRegistrar = checkNotNull(commandRegistrar);
     this.branding = checkNotNull(branding);
-
-    this.io = io != null ? io : new IO();
-    this.variables = variables != null ? variables : new VariablesSupport();
+    this.io = checkNotNull(io);
+    this.variables = checkNotNull(variables);
 
     // HACK: adapt variables for events
     if (variables instanceof VariablesSupport) {
@@ -145,29 +142,36 @@ public class ShellImpl
   @Inject
   public void setPrompt(final ConsolePrompt prompt) {
     this.prompt = prompt;
+    log.debug("Prompt: {}", prompt);
   }
+
+  // TODO: these are really builder-arguments
 
   @Inject
   public void setErrorHandler(final ConsoleErrorHandler errorHandler) {
     this.errorHandler = errorHandler;
+    log.debug("Error handler: {}", errorHandler);
   }
 
-//  public void setCompleters(final List<Completer> completers) {
-//    this.completers = completers;
-//  }
-//
-//  public void setCompleters(final Completer... completers) {
-//    if (completers != null) {
-//      this.completers = Arrays.asList(completers);
-//    }
-//  }
-//
-//  @Inject
-//  public void installCompleters(final @Named("alias-name") Completer c1, final @Named("commands") Completer c2) {
-//    checkNotNull(c1);
-//    checkNotNull(c2);
-//    setCompleters(new AggregateCompleter(c1, c2));
-//  }
+  public void setCompleters(final List<Completer> completers) {
+    this.completers = completers;
+    log.debug("Completers: {}", completers);
+  }
+
+  public void setCompleters(final Completer... completers) {
+    if (completers != null) {
+      setCompleters(Arrays.asList(completers));
+    }
+  }
+
+  // FIXME: "commands" completer needs a lot of help; use command-name for now
+
+  @Inject
+  public void installCompleters(final @Named("alias-name") Completer c1, final @Named("command-name") Completer c2) {
+    checkNotNull(c1);
+    checkNotNull(c2);
+    setCompleters(new AggregateCompleter(c1, c2));
+  }
 
   public boolean isLoadProfileScripts() {
     return loadProfileScripts;
@@ -209,10 +213,7 @@ public class ShellImpl
     log.debug("Opening");
 
     StreamJack.maybeInstall();
-
-    // Customize the shell
     branding.customize(this);
-
     opened = true;
     log.debug("Opened");
 
@@ -278,7 +279,7 @@ public class ShellImpl
     };
 
     IO io = getIo();
-    Console console = new Console(io, taskFactory, history);
+    Console console = new Console(io, taskFactory, history, completers);
 
     if (prompt != null) {
       console.setPrompt(prompt);
@@ -287,12 +288,6 @@ public class ShellImpl
     if (errorHandler != null) {
       console.setErrorHandler(errorHandler);
     }
-
-//    if (completers != null && !completers.isEmpty()) {
-//      for (Completer completer : completers) {
-//        console.addCompleter(completer != null ? completer : NullCompleter.INSTANCE);
-//      }
-//    }
 
     if (!io.isQuiet()) {
       renderWelcomeMessage(io);

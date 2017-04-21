@@ -16,15 +16,17 @@
 package com.planet57.gshell.console;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.util.io.StreamSet;
+import org.jline.reader.Completer;
 import org.jline.reader.History;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
-import org.jline.terminal.Terminal;
-import org.jline.terminal.TerminalBuilder;
+import org.jline.reader.impl.completer.AggregateCompleter;
+import org.jline.reader.impl.completer.NullCompleter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,18 +59,29 @@ public class Console
 
   private volatile boolean running;
 
-  public Console(final IO io, final Callable<ConsoleTask> taskFactory, final History history) throws IOException
+  public Console(final IO io,
+                 final Callable<ConsoleTask> taskFactory,
+                 final History history,
+                 @Nullable final List<Completer> completers)
+    throws IOException
   {
     checkNotNull(io);
     this.taskFactory = checkNotNull(taskFactory);
 
-    // FIXME:
-    Terminal terminal = TerminalBuilder.builder().build();
-    this.io = new IO(new StreamSet(io.streams.in, io.streams.out, io.streams.err), null, io.out, io.err, true);
+    // TODO: unsure why we are doing this?
+    this.io = new IO(
+      new StreamSet(io.streams.in, io.streams.out, io.streams.err),
+      io.getTerminal(),
+      null,
+      io.out,
+      io.err,
+      true
+    );
 
     this.lineReader = LineReaderBuilder.builder()
-      .terminal(terminal)
+      .terminal(io.getTerminal())
       .history(history)
+      .completer(completers != null ? new AggregateCompleter(completers) : NullCompleter.INSTANCE)
       .build();
   }
 
