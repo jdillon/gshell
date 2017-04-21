@@ -83,9 +83,7 @@ public class ShellImpl
 
   private boolean opened;
 
-  //
   // TODO: Maybe these should be set in variables?  More supportable than adding new methods for little features like this.
-  //
 
   private boolean loadProfileScripts = true;
 

@@ -17,7 +17,6 @@ package com.planet57.gshell;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicReference;
 
 import com.planet57.gossip.Level;
@@ -59,21 +58,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Preferences(path = "cli")
 public abstract class MainSupport
 {
-  // FIXME:
-//  static {
-//    // Register some different terminal flavors for added functionality
-//    TerminalFactory.registerFlavor(UNIX, NoInterruptUnixTerminal.class);
-//    TerminalFactory.registerFlavor(WINDOWS, AnsiWindowsTerminal.class);
-//
-//    // Register jline ansi detector
-//    Ansi.setDetector(new Callable<Boolean>()
-//    {
-//      public Boolean call() throws Exception {
-//        return TerminalFactory.get().isAnsiSupported();
-//      }
-//    });
-//  }
-
   // Gossip Log used here for bootstrap
   protected final Logger log = Log.getLogger(getClass());
 
