@@ -13,24 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.commands.shell;
+package com.planet57.gshell.util.converter.goodies;
 
-import com.planet57.gshell.testharness.CommandTestSupport;
-import org.junit.Test;
+import com.planet57.gshell.util.converter.ConverterSupport;
+import org.sonatype.goodies.common.Time;
 
 /**
- * Tests for {@link SleepCommand}.
+ * Converter for {@link Time} types.
+ *
+ * @since 3.0
  */
-public class SleepCommandTest
-    extends CommandTestSupport
+public class TimeConverter
+    extends ConverterSupport
 {
-  public SleepCommandTest() {
-    super("sleep", SleepCommand.class);
+  public TimeConverter() {
+    super(Time.class);
   }
 
   @Override
-  @Test
-  public void testDefault() throws Exception {
-    executeWithArgs("1ms");
+  protected Object convertToObject(final String text) throws Exception {
+    return Time.parse(text);
   }
 }

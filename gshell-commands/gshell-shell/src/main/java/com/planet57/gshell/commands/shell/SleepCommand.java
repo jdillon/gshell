@@ -19,6 +19,7 @@ import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
+import org.sonatype.goodies.common.Time;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -33,27 +34,27 @@ public class SleepCommand
     extends CommandActionSupport
 {
   @Argument(required = true)
-  private long time;
+  private Time time;
 
   public Object execute(final CommandContext context) throws Exception {
     checkNotNull(context);
 
-    if (log.isDebugEnabled()) {
-      log.debug("Sleeping for {} on thread: {}", time, Thread.currentThread());
+    if (log.isTraceEnabled()) {
+      log.trace("Sleeping for {} on thread: {}", time, Thread.currentThread());
     }
     else {
-      log.info("Sleeping for {}", time);
+      log.debug("Sleeping for {}", time);
     }
 
     try {
-      Thread.sleep(time);
+      time.sleep();
     }
     catch (InterruptedException ignore) {
       log.debug("Sleep was interrupted... :-(");
       return Result.FAILURE;
     }
 
-    log.info("Awake now");
+    log.debug("Awake now");
 
     return Result.SUCCESS;
   }
