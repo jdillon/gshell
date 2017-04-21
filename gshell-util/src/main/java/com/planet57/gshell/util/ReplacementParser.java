@@ -47,16 +47,16 @@ public abstract class ReplacementParser
       Matcher matcher = pattern.matcher(input);
 
       while (matcher.find()) {
-        Object rep;
+        Object replacment;
         try {
-          rep = replace(matcher.group(1));
+          replacment = replace(matcher.group(1));
         }
         catch (Exception e) {
           throw new RuntimeException(e);
         }
 
-        if (rep != null) {
-          input = input.replace(matcher.group(0), rep.toString());
+        if (replacment != null) {
+          input = input.replace(matcher.group(0), replacment.toString());
           matcher.reset(input);
         }
       }
