@@ -25,6 +25,9 @@
     <encoder>
       <pattern>[%level] %logger{1} - %msg%n</pattern>
     </encoder>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>${shell.logging:-INFO}</level>
+    </filter>
   </appender>
 
   <appender name="FILE" class="ch.qos.logback.core.FileAppender">
@@ -35,7 +38,10 @@
     </encoder>
   </appender>
 
-  <root level="${shell.logging:-INFO}">
+  <!--
+  TODO: document how this is controlled.
+  -->
+  <root level="${shell.root-level:-DEBUG}">
     <appender-ref ref="CONSOLE"/>
     <appender-ref ref="FILE"/>
   </root>

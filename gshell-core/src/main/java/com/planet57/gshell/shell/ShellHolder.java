@@ -44,7 +44,8 @@ public class ShellHolder
   public static Shell get(final boolean allowNull) {
     Shell shell = holder.get();
 
-    log.trace("Getting shell ({}): {}", allowNull, shell);
+    // HACK: this is *way* too verbose, its called a few times
+    // log.trace("Getting shell ({}): {}", allowNull, shell);
 
     if (!allowNull && shell == null) {
       throw new IllegalStateException("Shell not initialized for thread: " + Thread.currentThread());
