@@ -18,7 +18,6 @@ package com.planet57.gshell.commands.standard;
 import com.planet57.gshell.testharness.CommandTestSupport;
 import com.planet57.gshell.util.converter.ConversionException;
 import org.jline.reader.History;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -30,7 +29,6 @@ import static org.junit.Assert.fail;
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
-@Ignore("FIXME")
 public class RecallHistoryCommandTest
     extends CommandTestSupport
 {
@@ -88,16 +86,14 @@ public class RecallHistoryCommandTest
   public void testRecallElement() throws Exception {
     History history = getShell().getHistory();
 
-    // FIXME:
     // Clear history and make sure there is no foo variable
-//    history.clear();
+    history.purge();
     assertFalse(vars.contains("foo"));
 
     // Then add 2 items, both setting foo
-//    history.add("set foo bar");
-//    history.add("set foo baz");
-
-//    assertEquals(2, getShell().getHistory().size());
+    history.add("set foo bar");
+    history.add("set foo baz");
+    assertEquals(2, getShell().getHistory().size());
 
     // Recall the first, which sets foo to bar
     Object result = executeWithArgs("1");
