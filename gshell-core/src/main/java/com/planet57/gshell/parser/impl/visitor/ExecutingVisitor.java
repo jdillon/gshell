@@ -154,7 +154,7 @@ public class ExecutingVisitor
       throw new RuntimeException(e);
     }
 
-    // FIXME: Need to return Object, but for now use String
+    // FIXME: Need to return Object, but for now use String; implies changes to ExpressionState and likely more to convert to Object
     return String.valueOf(value);
   }
 
