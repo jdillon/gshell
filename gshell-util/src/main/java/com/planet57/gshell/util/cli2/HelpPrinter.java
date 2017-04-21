@@ -40,7 +40,8 @@ public class HelpPrinter
 
   private AggregateMessageSource messages = new AggregateMessageSource(new ResourceBundleMessageSource(getClass()));
 
-  private int terminalWidth = 80; // FIXME: TerminalFactory.get().getWidth();
+  // FIXME: Need access to the current threads Terminal to get its width
+  private int terminalWidth = 80; // TerminalFactory.get().getWidth();
 
   private String prefix = "  ";
 

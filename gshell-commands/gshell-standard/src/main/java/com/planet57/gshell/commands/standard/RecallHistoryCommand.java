@@ -51,7 +51,7 @@ public class RecallHistoryCommand
     CharSequence element = history.get(index - 1);
     log.debug("Recalling from history: {}", element);
 
-    // FIXME:
+    // FIXME: unsure if jline3 has a history.replace() function, or alternative api to replace the latest history entry
     // Replace the last item (which was this command, with the recalled bits)
     // history.replace(element);
 

@@ -93,7 +93,7 @@ public class NodePathCompleterTest
   }
 
   protected void assertCompletes(final String input, final String... expected) {
-    // FIXME:
+    // FIXME: Needs to be adjusted once NodePathCompleter has been re-implemented
 //    System.out.println(">");
 //    try {
 //      List<CharSequence> candidates = new ArrayList<CharSequence>();

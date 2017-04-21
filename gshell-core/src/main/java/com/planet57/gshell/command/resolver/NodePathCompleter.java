@@ -61,7 +61,7 @@ public class NodePathCompleter
     Collection<Node> matches = new LinkedHashSet<>();
     String prefix = "";
 
-    // FIXME:
+    // FIXME: this non-trivial completer needs a rewrite for jline3
 //    if (buffer == null || buffer.length() == 0) {
 //      // If there is no context in the buffer, then match every node in the search path
 //      for (Node parent : resolver.searchPath()) {

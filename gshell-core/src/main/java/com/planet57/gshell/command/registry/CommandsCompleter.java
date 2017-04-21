@@ -56,7 +56,7 @@ public class CommandsCompleter
       super(resolver);
     }
 
-    // FIXME:
+    // FIXME: This needs to be rewritten after/with NodePathCompleter
 //    @Override
 //    protected int buildCandidates(final List<CharSequence> candidates, final Collection<Node> matches,
 //                                  final String prefix)
