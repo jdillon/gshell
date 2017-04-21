@@ -16,7 +16,6 @@
 package com.planet57.gshell.console;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.Callable;
 
 import com.planet57.gshell.command.IO;
@@ -25,8 +24,6 @@ import org.jline.reader.Completer;
 import org.jline.reader.History;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
-import org.jline.reader.impl.completer.AggregateCompleter;
-import org.jline.reader.impl.completer.NullCompleter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,7 +59,7 @@ public class Console
   public Console(final IO io,
                  final Callable<ConsoleTask> taskFactory,
                  final History history,
-                 @Nullable final List<Completer> completers)
+                 @Nullable final Completer completer)
     throws IOException
   {
     checkNotNull(io);
@@ -81,7 +78,7 @@ public class Console
     this.lineReader = LineReaderBuilder.builder()
       .terminal(io.getTerminal())
       .history(history)
-      .completer(completers != null ? new AggregateCompleter(completers) : NullCompleter.INSTANCE)
+      .completer(completer)
       .build();
   }
 

@@ -20,7 +20,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -43,7 +42,6 @@ import com.planet57.gshell.variables.Variables;
 import com.planet57.gshell.variables.VariablesSupport;
 import org.jline.reader.Completer;
 import org.jline.reader.History;
-import org.jline.reader.impl.completer.AggregateCompleter;
 import org.jline.reader.impl.history.DefaultHistory;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -73,7 +71,7 @@ public class ShellImpl
 
   private final History history;
 
-  private List<Completer> completers;
+  private Completer completer;
 
   private ConsolePrompt prompt;
 
@@ -93,7 +91,8 @@ public class ShellImpl
                    final CommandExecutor executor,
                    final Branding branding,
                    @Named("main") final IO io,
-                   @Named("main") final Variables variables)
+                   @Named("main") final Variables variables,
+                   @Named("main") final ShellCompleter completer)
       throws IOException
   {
     this.events = checkNotNull(events);
@@ -102,6 +101,7 @@ public class ShellImpl
     this.branding = checkNotNull(branding);
     this.io = checkNotNull(io);
     this.variables = checkNotNull(variables);
+    this.completer = checkNotNull(completer);
 
     // HACK: adapt variables for events
     if (variables instanceof VariablesSupport) {
@@ -153,25 +153,9 @@ public class ShellImpl
     log.debug("Error handler: {}", errorHandler);
   }
 
-  public void setCompleters(final List<Completer> completers) {
-    this.completers = completers;
-    log.debug("Completers: {}", completers);
-  }
-
-  public void setCompleters(final Completer... completers) {
-    if (completers != null) {
-      setCompleters(Arrays.asList(completers));
-    }
-  }
-
-  /**
-   * Shell will resolve completion as an alias-name or command execution.
-   */
-  @Inject
-  public void installCompleters(final @Named("alias-name") Completer c1, final @Named("command") Completer c2) {
-    checkNotNull(c1);
-    checkNotNull(c2);
-    setCompleters(new AggregateCompleter(c1, c2));
+  public void setCompleter(final Completer completer) {
+    log.debug("Completer: {}", completer);
+    this.completer = completer;
   }
 
   public boolean isLoadProfileScripts() {
@@ -280,7 +264,7 @@ public class ShellImpl
     };
 
     IO io = getIo();
-    Console console = new Console(io, taskFactory, history, completers);
+    Console console = new Console(io, taskFactory, history, completer);
 
     if (prompt != null) {
       console.setPrompt(prompt);
