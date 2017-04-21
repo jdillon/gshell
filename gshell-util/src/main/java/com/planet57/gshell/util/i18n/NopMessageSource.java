@@ -25,6 +25,8 @@ public class NopMessageSource
 {
   public static final NopMessageSource INSTANCE = new NopMessageSource();
 
+  // TODO: should this instead throw new ResourceNotFoundException(code)?
+
   @Override
   public String getMessage(final String code) {
     return code;
