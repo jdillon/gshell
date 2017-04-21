@@ -51,9 +51,14 @@
   <url>https://github.com/jdillon/gshell</url>
 
   <issueManagement>
-    <system>Github</system>
+    <system>github</system>
     <url>https://github.com/jdillon/gshell/issues</url>
   </issueManagement>
+
+  <ciManagement>
+    <system>travis</system>
+    <url>https://travis-ci.org/jdillon/gshell</url>
+  </ciManagement>
 
   <developers>
     <developer>
