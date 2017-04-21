@@ -41,7 +41,7 @@
   <!--
   TODO: document how this is controlled.
   -->
-  <root level="${shell.root-level:-DEBUG}">
+  <root level="${shell.root-level:-${shell.logging}}">
     <appender-ref ref="CONSOLE"/>
     <appender-ref ref="FILE"/>
   </root>
