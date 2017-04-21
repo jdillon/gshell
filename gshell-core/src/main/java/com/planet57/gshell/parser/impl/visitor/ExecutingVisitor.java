@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.google.common.base.Joiner;
 import com.planet57.gshell.execute.CommandExecutor;
 import com.planet57.gshell.notification.ErrorNotification;
 import com.planet57.gshell.parser.impl.ASTCommandLine;
@@ -33,7 +34,6 @@ import com.planet57.gshell.parser.impl.eval.Evaluator;
 import com.planet57.gshell.parser.impl.eval.EvaluatorFactory;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.util.Arguments;
-import com.planet57.gshell.util.Strings;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -96,7 +96,7 @@ public class ExecutingVisitor
       result = executor.execute(shell, path, args);
     }
     catch (Exception e) {
-      throw new ErrorNotification("Shell execution failed; path=" + path + "; args=" + Strings.join(args, ", "), e);
+      throw new ErrorNotification("Shell execution failed; path=" + path + "; args=" + Joiner.on(", ").join(args), e);
     }
 
     List results = (List) data;

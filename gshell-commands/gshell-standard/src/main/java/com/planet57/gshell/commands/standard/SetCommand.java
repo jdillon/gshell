@@ -15,18 +15,17 @@
  */
 package com.planet57.gshell.commands.standard;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import com.google.common.base.Joiner;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.CommandActionSupport;
-import com.planet57.gshell.util.Strings;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.i18n.MessageSource;
@@ -90,7 +89,7 @@ public class SetCommand
       return Result.FAILURE;
     }
 
-    String value = Strings.join(values.toArray(), " ");
+    String value = Joiner.on(" ").join(values);
 
     if (evaluate) {
       Object result = context.getShell().execute(value);

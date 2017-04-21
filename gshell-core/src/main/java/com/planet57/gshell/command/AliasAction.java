@@ -15,8 +15,8 @@
  */
 package com.planet57.gshell.command;
 
+import com.google.common.base.Joiner;
 import com.planet57.gshell.util.ComponentSupport;
-import com.planet57.gshell.util.Strings;
 import com.planet57.gshell.util.cli2.OpaqueArguments;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.NopMessageSource;
@@ -61,7 +61,7 @@ public class AliasAction
     // Need to append any more arguments in the context
     Object[] args = context.getArguments();
     if (args.length > 0) {
-      alias = String.format("%s %s", target, Strings.join(args, " "));
+      alias = String.format("%s %s", target, Joiner.on(" ").join(args));
     }
 
     log.debug("Executing alias ({}) -> {}", getName(), alias);

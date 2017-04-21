@@ -20,6 +20,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import com.google.common.base.Joiner;
 import com.google.common.base.Stopwatch;
 import com.planet57.gshell.alias.AliasRegistry;
 import com.planet57.gshell.alias.NoSuchAliasException;
@@ -39,7 +40,6 @@ import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.shell.ShellHolder;
 import com.planet57.gshell.util.Arguments;
 import com.planet57.gshell.util.ComponentSupport;
-import com.planet57.gshell.util.Strings;
 import com.planet57.gshell.util.cli2.CliProcessor;
 import com.planet57.gshell.util.cli2.HelpPrinter;
 import com.planet57.gshell.util.cli2.OpaqueArguments;
@@ -151,7 +151,7 @@ public class CommandExecutorImpl
     checkNotNull(name);
     checkNotNull(args);
 
-    log.debug("Executing ({}): [{}]", name, Strings.join(args, ", "));
+    log.debug("Executing ({}): [{}]", name, Joiner.on(", ").join(args));
 
     Stopwatch watch = Stopwatch.createStarted();
 

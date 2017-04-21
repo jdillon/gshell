@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.base.Joiner;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -38,7 +39,6 @@ import com.planet57.gshell.guice.BeanContainer;
 import com.planet57.gshell.logging.LoggingSystem;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.shell.ShellImpl;
-import com.planet57.gshell.util.Strings;
 import com.planet57.gshell.variables.Variables;
 import com.planet57.gshell.variables.VariablesSupport;
 import org.eclipse.sisu.space.BeanScanning;
@@ -185,7 +185,7 @@ public abstract class CommandTestSupport
   }
 
   protected Object execute(final String... args) throws Exception {
-    return execute(Strings.join(args, " "));
+    return execute(Joiner.on(" ").join(args));
   }
 
   protected Object executeWithArgs(final String args) throws Exception {
@@ -195,7 +195,7 @@ public abstract class CommandTestSupport
 
   protected Object executeWithArgs(final String... args) throws Exception {
     assertNotNull(args);
-    return execute(name, Strings.join(args, " "));
+    return execute(name, Joiner.on(" ").join(args));
   }
 
   //
