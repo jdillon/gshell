@@ -124,7 +124,7 @@ public class ListDirectoryCommand
       names.add(render(file));
     }
 
-    // FIXME:
+    // FIXME: need a replacement for ConsoleReader.printColumns()
     //    ConsoleReader reader = new ConsoleReader(io.streams.in, io.out, null, io.getTerminal());
     //    reader.setPaginationEnabled(false);
 
