@@ -15,7 +15,7 @@ import java.util.List;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * ???
+ * Customized strings completer which provides mutable candidates.
  *
  * @since 3.0
  */
@@ -57,6 +57,8 @@ public class StringsCompleter2
 
   public void removeString(final String string) {
     checkNotNull(string);
+
+    // FIXME: not ideal, but then again neither is the rest of this impl but its used everywhere in gshell presently
     Iterator<Candidate> iter = candidates.iterator();
     while (iter.hasNext()) {
       Candidate candidate = iter.next();
@@ -73,7 +75,7 @@ public class StringsCompleter2
 
   @Override
   public void complete(final LineReader reader, final ParsedLine commandLine, final List<Candidate> candidates) {
-    assert candidates != null;
+    checkNotNull(candidates);
 
     if (!initalized) {
       init();

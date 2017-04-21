@@ -15,13 +15,10 @@
  */
 package com.planet57.gshell.shell;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -46,7 +43,10 @@ import com.planet57.gshell.util.io.StreamJack;
 import com.planet57.gshell.variables.Variables;
 import com.planet57.gshell.variables.VariablesSupport;
 import org.jline.reader.Completer;
+import org.jline.reader.History;
+import org.jline.reader.impl.completer.AggregateCompleter;
 import org.jline.reader.impl.completer.NullCompleter;
+import org.jline.reader.impl.history.DefaultHistory;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -73,7 +73,7 @@ public class ShellImpl
 
   private final Variables variables;
 
-  private final ShellHistory history;
+  private final History history;
 
   private List<Completer> completers;
 
@@ -113,7 +113,8 @@ public class ShellImpl
       ((VariablesSupport) variables).setEventManager(events);
     }
 
-    this.history = new ShellHistory(new File(branding.getUserContextDir(), branding.getHistoryFileName()));
+    // FIXME: looks like we have to set jline LineReader.HISTORY_FILE variable to control this location
+    this.history = new DefaultHistory();
   }
 
   // HACK: primitive lifecycle
@@ -163,13 +164,12 @@ public class ShellImpl
     }
   }
 
-  // FIXME:
-//  @Inject
-//  public void installCompleters(final @Named("alias-name") Completer c1, final @Named("commands") Completer c2) {
-//    checkNotNull(c1);
-//    checkNotNull(c2);
-//    setCompleters(new AggregateCompleter(c1, c2));
-//  }
+  @Inject
+  public void installCompleters(final @Named("alias-name") Completer c1, final @Named("commands") Completer c2) {
+    checkNotNull(c1);
+    checkNotNull(c2);
+    setCompleters(new AggregateCompleter(c1, c2));
+  }
 
   public boolean isLoadProfileScripts() {
     return loadProfileScripts;
@@ -227,8 +227,6 @@ public class ShellImpl
     return true;
   }
 
-  // FIXME: History should still be appended if not running inside of a JLineConsole
-
   @Override
   public Object execute(final CharSequence line) throws Exception {
     ensureOpened();
@@ -284,7 +282,7 @@ public class ShellImpl
     IO io = getIo();
 
     // FIXME:
-    Console console = new Console(io, taskFactory, /*history,*/ null /* loadBindings()*/);
+    Console console = new Console(io, taskFactory /*, history*/);
 
     if (prompt != null) {
       console.setPrompt(prompt);
@@ -333,42 +331,6 @@ public class ShellImpl
       throw n;
     }
   }
-
-  // FIXME:
-//  private InputStream loadBindings() throws IOException {
-//    File file = new File(branding.getUserContextDir(), ConsoleReader.JLINE_KEYBINDINGS);
-//
-//    if (!file.exists() || !file.isFile()) {
-//      file = new File(branding.getShellContextDir(), ConsoleReader.JLINE_KEYBINDINGS);
-//      if (!file.exists() || file.isFile()) {
-//        try {
-//          String fileName = System.getProperty(ConsoleReader.JLINE_KEYBINDINGS);
-//          if (fileName != null) {
-//            file = new File(fileName);
-//          }
-//          if (!file.exists() || file.isFile()) {
-//            file = new File(branding.getUserHomeDir(), ConsoleReader.JLINEBINDINGS_PROPERTIES);
-//          }
-//        }
-//        catch (Exception e) {
-//          log.warn("Failed to load key-bindings", e);
-//        }
-//      }
-//    }
-//
-//    InputStream bindings;
-//
-//    if (file.exists() && file.isFile() && file.canRead()) {
-//      log.debug("Using bindings from file: {}", file);
-//      bindings = new BufferedInputStream(new FileInputStream(file));
-//    }
-//    else {
-//      log.trace("Using default bindings");
-//      bindings = io.getTerminal().getDefaultBindings();
-//    }
-//
-//    return bindings;
-//  }
 
   private void renderMessage(final IO io, final String msg) {
     assert io != null;

@@ -17,9 +17,9 @@ package com.planet57.gshell.testharness;
 
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.shell.History;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.variables.Variables;
+import org.jline.reader.History;
 
 /**
  * Dummy {@link Shell}.

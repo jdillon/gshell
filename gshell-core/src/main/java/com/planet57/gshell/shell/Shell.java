@@ -18,6 +18,7 @@ package com.planet57.gshell.shell;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.variables.Variables;
+import org.jline.reader.History;
 
 /**
  * Provides access to execute commands.

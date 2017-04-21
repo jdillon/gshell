@@ -74,6 +74,7 @@
     <apache-maven.version>3.5.0</apache-maven.version>
     <sonatype-goodies.version>2.2.3</sonatype-goodies.version>
     <gossip.version>2.0.0</gossip.version>
+    <jline.version>3.2.0</jline.version>
 
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
@@ -184,30 +185,37 @@
         <version>20.0</version>
       </dependency>
 
-      <!--<dependency>-->
-        <!--<groupId>org.jline</groupId>-->
-        <!--<artifactId>jline</artifactId>-->
-        <!--<version>3.2.0</version>-->
-      <!--</dependency>-->
+      <!--
+      FIXME: jline3 implies java8
+      -->
 
       <dependency>
         <groupId>org.jline</groupId>
         <artifactId>jline-terminal</artifactId>
-        <version>3.2.0</version>
+        <version>${jline.version}</version>
       </dependency>
 
       <dependency>
         <groupId>org.jline</groupId>
         <artifactId>jline-terminal-jansi</artifactId>
-        <version>3.2.0</version>
+        <version>${jline.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.jline</groupId>
+        <artifactId>jline-terminal-jna</artifactId>
+        <version>${jline.version}</version>
       </dependency>
 
       <dependency>
         <groupId>org.jline</groupId>
         <artifactId>jline-reader</artifactId>
-        <version>3.2.0</version>
+        <version>${jline.version}</version>
       </dependency>
 
+      <!--
+      TODO: consider upgrading to latest 3.1?
+      -->
       <dependency>
         <groupId>commons-jexl</groupId>
         <artifactId>commons-jexl</artifactId>

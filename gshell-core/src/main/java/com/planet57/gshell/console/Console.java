@@ -58,8 +58,7 @@ public class Console
 
   private volatile boolean running;
 
-  public Console(final IO io, final Callable<ConsoleTask> taskFactory, /*@Nullable final History history,*/
-                 @Nullable final InputStream bindings) throws IOException
+  public Console(final IO io, final Callable<ConsoleTask> taskFactory /*@Nullable final History history,*/) throws IOException
   {
     checkNotNull(io);
     this.taskFactory = checkNotNull(taskFactory);

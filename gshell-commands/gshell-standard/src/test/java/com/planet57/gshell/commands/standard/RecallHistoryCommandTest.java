@@ -16,8 +16,8 @@
 package com.planet57.gshell.commands.standard;
 
 import com.planet57.gshell.testharness.CommandTestSupport;
-import com.planet57.gshell.shell.History;
 import com.planet57.gshell.util.converter.ConversionException;
+import org.jline.reader.History;
 import org.junit.Ignore;
 import org.junit.Test;
 

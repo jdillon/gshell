@@ -38,9 +38,9 @@
 
         @{command.name}
 
-    Clear the history:
+    Purge the history:
 
-        @{command.name} -c
+        @{command.name} -p
 
 @|bold SEE ALSO|@
 

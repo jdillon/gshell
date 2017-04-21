@@ -21,9 +21,9 @@ import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.CommandActionSupport;
-import com.planet57.gshell.shell.History;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
+import org.jline.reader.History;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -37,9 +37,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class HistoryCommand
     extends CommandActionSupport
 {
-  @Option(name = "c", longName = "clear")
-  private boolean clear;
-
   @Option(name = "p", longName = "purge")
   private boolean purge;
 
@@ -51,16 +48,10 @@ public class HistoryCommand
 
     History history = context.getShell().getHistory();
 
-    // FIXME:
-//    if (clear) {
-//      history.clear();
-//      log.debug("History cleared");
-//    }
-//
-//    if (purge) {
-//      history.purge();
-//      log.debug("History purged");
-//    }
+    if (purge) {
+      history.purge();
+      log.debug("History purged");
+    }
 
     return displayEntries(context);
   }
@@ -69,25 +60,23 @@ public class HistoryCommand
     IO io = context.getIo();
     History history = context.getShell().getHistory();
 
-    // FIXME:
-//    log.debug("History size: {}", history.size());
+    log.debug("History size: {}", history.size());
 
-//    int i = 0;
-//    if (last != null) {
-//      i = history.size() - last;
-//      if (i < 0) {
-//        i = 0;
-//      }
-//    }
+    int i = 0;
+    if (last != null) {
+      i = history.size() - last;
+      if (i < 0) {
+        i = 0;
+      }
+    }
 
-//    log.debug("Starting with entry: {}", i);
+    log.debug("Starting with entry: {}", i);
 
-    // FIXME:
-//    ListIterator<History.Entry> entries = history.entries(i);
-//    while (entries.hasNext()) {
-//      History.Entry entry = entries.next();
-//      renderElement(io, entry.index(), entry.value());
-//    }
+    ListIterator<History.Entry> entries = history.iterator(i);
+    while (entries.hasNext()) {
+      History.Entry entry = entries.next();
+      renderElement(io, entry.index(), entry.line());
+    }
 
     return Result.SUCCESS;
   }

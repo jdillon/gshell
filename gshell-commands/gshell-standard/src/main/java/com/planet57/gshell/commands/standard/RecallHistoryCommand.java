@@ -19,8 +19,8 @@ import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.CommandActionSupport;
-import com.planet57.gshell.shell.History;
 import com.planet57.gshell.util.cli2.Argument;
+import org.jline.reader.History;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -43,19 +43,18 @@ public class RecallHistoryCommand
     IO io = context.getIo();
     History history = context.getShell().getHistory();
 
-    // FIXME:
-//    if (index < 1 || index > history.size()) {
-//      io.error(getMessages().format("error.no-such-index", index));
-//      return Result.FAILURE;
-//    }
-//
-//    CharSequence element = history.get(index - 1);
-//    log.debug("Recalling from history: {}", element);
-//
-//    // Replace the last item (which was this command, with the recalled bits)
-//    history.replace(element);
+    if (index < 1 || index > history.size()) {
+      io.error(getMessages().format("error.no-such-index", index));
+      return Result.FAILURE;
+    }
 
-//    return context.getShell().execute(element);
-    return null;
+    CharSequence element = history.get(index - 1);
+    log.debug("Recalling from history: {}", element);
+
+    // FIXME:
+    // Replace the last item (which was this command, with the recalled bits)
+    // history.replace(element);
+
+    return context.getShell().execute(element);
   }
 }

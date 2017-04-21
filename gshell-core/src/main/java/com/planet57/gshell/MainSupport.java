@@ -87,11 +87,7 @@ public abstract class MainSupport
 
   private Branding branding;
 
-  //
-  // TODO: Add flag to capture output to log file. Need to bring back TeeOutputStream ans
-  //       get prefixed stuff working proper.
-  //
-
+  // TODO: Add flag to capture output to log file. Need to bring back TeeOutputStream and get prefixed stuff working proper.
   // TODO: Add --batch flag (for non-interactive)
 
   @Option(name = "h", longName = "help", override = true)

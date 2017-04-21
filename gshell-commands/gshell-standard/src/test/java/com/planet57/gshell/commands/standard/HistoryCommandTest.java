@@ -60,8 +60,7 @@ public class HistoryCommandTest
     Object result = executeWithArgs("-p");
     assertEqualsSuccess(result);
 
-    // FIXME:
-//    Assert.assertEquals(0, getShell().getHistory().size());
+    Assert.assertEquals(0, getShell().getHistory().size());
   }
 
   @Test
