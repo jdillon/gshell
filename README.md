@@ -15,32 +15,28 @@
     limitations under the License.
 
 -->
-Description
------------
+# Description
 
 GShell - A command-line shell framework.
 
 [![Build Status](https://travis-ci.org/jdillon/gshell.svg?branch=master)](https://travis-ci.org/jdillon/gshell)
 
-License
--------
+# License
 
 [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
+# Building
 
-Building
---------
+## Requirements
 
-### Requirements
-
-* [Maven](http://maven.apache.org) 3.3+
-* [Java](http://java.oracle.com/) 7+
+* [Maven](http://maven.apache.org) 3.3+ (prefer included maven-wrapper)
+* [Java](http://java.oracle.com/) 8+
 
 Check out and build:
 
     git clone git://github.com/jdillon/gshell.git
     cd gshell
-    mvn install
+    ./mvnw install
 
 After this completes, you can unzip the assembly and launch the shell:
 
@@ -49,7 +45,6 @@ After this completes, you can unzip the assembly and launch the shell:
 
 Use the 'help' command for further assistance.
 
-Implementations
----------------
+# Implementations
 
 GShell is used by the [Maven Shell](https://github.com/jdillon/mvnsh)
