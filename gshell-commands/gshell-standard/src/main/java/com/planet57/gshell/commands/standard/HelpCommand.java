@@ -150,6 +150,7 @@ public class HelpCommand
     HelpPageUtil.render(io.out, pages);
   }
 
+  // TODO: investigate "heap-pollution" warnings
   private Predicate<HelpPage> query(@Nullable final Predicate<HelpPage>... predicates) {
     PredicateBuilder<HelpPage> query = new PredicateBuilder<>();
 

@@ -19,6 +19,7 @@ import com.planet57.gshell.util.ComponentSupport;
 import com.planet57.gshell.util.Strings;
 import com.planet57.gshell.util.cli2.OpaqueArguments;
 import com.planet57.gshell.util.i18n.MessageSource;
+import com.planet57.gshell.util.i18n.NopMessageSource;
 import org.jline.reader.Completer;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -70,7 +71,7 @@ public class AliasAction
 
   @Override
   public MessageSource getMessages() {
-    return null;
+    return NopMessageSource.INSTANCE;
   }
 
   @Override

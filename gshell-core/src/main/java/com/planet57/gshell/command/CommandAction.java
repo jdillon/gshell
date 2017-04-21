@@ -33,7 +33,6 @@ public interface CommandAction
 
   String getSimpleName();
 
-  @Nullable
   MessageSource getMessages();
 
   Completer[] getCompleters();

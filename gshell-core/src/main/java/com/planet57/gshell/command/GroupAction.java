@@ -19,6 +19,7 @@ import com.planet57.gshell.command.resolver.NodePath;
 import com.planet57.gshell.util.ComponentSupport;
 import com.planet57.gshell.util.cli2.OpaqueArguments;
 import com.planet57.gshell.util.i18n.MessageSource;
+import com.planet57.gshell.util.i18n.NopMessageSource;
 import com.planet57.gshell.variables.VariableNames;
 import org.jline.reader.Completer;
 
@@ -62,7 +63,7 @@ public class GroupAction
 
   @Override
   public MessageSource getMessages() {
-    return null;
+    return NopMessageSource.INSTANCE;
   }
 
   @Override

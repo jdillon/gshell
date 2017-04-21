@@ -63,9 +63,7 @@ public abstract class CommandActionSupport
     return new NodePath(getName()).last();
   }
 
-  // override the default  nullability, as by default this is nullable but here its always non-null
   @Override
-  @Nonnull
   public MessageSource getMessages() {
     if (messages == null) {
       try {
