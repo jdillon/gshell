@@ -49,14 +49,6 @@ public class StringsCompleter2
     // empty
   }
 
-  public StringsCompleter2(final String... strings) {
-    setStrings(strings);
-  }
-
-  public StringsCompleter2(final Iterable<String> strings) {
-    setStrings(strings);
-  }
-
   public void setStrings(final String... strings) {
     checkNotNull(strings);
     setStrings(Arrays.asList(strings));
