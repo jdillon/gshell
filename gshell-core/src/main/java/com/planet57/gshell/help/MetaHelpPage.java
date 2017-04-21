@@ -43,6 +43,8 @@ public class MetaHelpPage
 
   private final HelpContentLoader loader;
 
+  private ResourceBundle resources;
+
   public MetaHelpPage(final String name, final String resource, final HelpContentLoader loader) {
     this.name = checkNotNull(name);
     this.resource = checkNotNull(resource);
@@ -53,8 +55,6 @@ public class MetaHelpPage
   public String getName() {
     return name;
   }
-
-  private ResourceBundle resources;
 
   @Override
   public String getDescription() {
@@ -87,5 +87,13 @@ public class MetaHelpPage
     catch (Exception e) {
       throw new RuntimeException(e);
     }
+  }
+
+  @Override
+  public String toString() {
+    return "MetaHelpPage{" +
+      "name='" + name + '\'' +
+      ", resource='" + resource + '\'' +
+      '}';
   }
 }

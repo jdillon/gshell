@@ -16,8 +16,8 @@
 package com.planet57.gshell.console;
 
 import com.planet57.gshell.util.ComponentSupport;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Encapsulates a console execute task.
@@ -48,6 +48,8 @@ public abstract class ConsoleTask
    * True if the task is stopping (ie. {@link #stop} was invoked).
    */
   private boolean stopping;
+
+  private String input;
 
   /**
    * True if the task is running (ie. {@link #execute} was invoked).
@@ -93,6 +95,8 @@ public abstract class ConsoleTask
    * @throws Exception The console task failed.
    */
   public boolean execute(final String input) throws Exception {
+    this.input = checkNotNull(input);
+
     ConsoleTask prevTask;
 
     synchronized (this) {
@@ -147,6 +151,20 @@ public abstract class ConsoleTask
   public Thread getExecuteThread() {
     return thread;
   }
+
+  @Override
+  public String toString() {
+    return "ConsoleTask{" +
+      "thread=" + thread +
+      ", running=" + running +
+      ", stopping=" + stopping +
+      ", input='" + input + '\'' +
+      '}';
+  }
+
+  //
+  // Helpers
+  //
 
   /**
    * Get the currently running task.
