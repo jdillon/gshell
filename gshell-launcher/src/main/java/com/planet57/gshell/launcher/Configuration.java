@@ -15,6 +15,7 @@
  */
 package com.planet57.gshell.launcher;
 
+import javax.annotation.Nullable;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
@@ -172,6 +173,7 @@ public class Configuration
     return input;
   }
 
+  @Nullable
   private File getPropertyAsFile(final String name) {
     String path = getProperty(name);
     if (path != null) {
@@ -193,7 +195,7 @@ public class Configuration
 
   public List<URL> getClassPath() throws Exception {
     ensureConfigured();
-    List<URL> classPath = new ArrayList<URL>();
+    List<URL> classPath = new ArrayList<>();
 
     classPath.add(getPropertyAsFile(SHELL_ETC).toURI().toURL());
 
