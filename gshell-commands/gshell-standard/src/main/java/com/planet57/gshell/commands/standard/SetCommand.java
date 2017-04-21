@@ -140,10 +140,7 @@ public class SetCommand
 
       case VARIABLE: {
         Variables variables = context.getVariables();
-        Iterator<String> iter = variables.names();
-
-        while (iter.hasNext()) {
-          String name = iter.next();
+        for (String name : variables.names()) {
           Object value = variables.get(name);
 
           io.streams.out.print(name);

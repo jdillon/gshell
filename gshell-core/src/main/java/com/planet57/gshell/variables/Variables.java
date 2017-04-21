@@ -66,18 +66,18 @@ public interface Variables
 
   boolean isCloaked(Class<?> type);
 
-  Iterator<String> names();
+  Iterable<String> names();
 
   @Nullable
   Variables parent();
 
   /**
-   * Throw to indicate that a variable change was attempted but the variable was not muable.
+   * Throw to indicate that a variable change was attempted but the variable was not mutable.
    */
   class ImmutableVariableException
       extends RuntimeException
   {
-    public ImmutableVariableException(String name) {
+    public ImmutableVariableException(final String name) {
       super(name);
     }
   }

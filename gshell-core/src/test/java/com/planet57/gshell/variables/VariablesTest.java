@@ -58,7 +58,7 @@ public class VariablesTest
     Object obj = vars.get(name);
     assertEquals(value, obj);
 
-    String str = vars.names().next();
+    String str = vars.names().iterator().next();
     assertEquals(name, str);
   }
 
@@ -110,7 +110,7 @@ public class VariablesTest
     assertEquals(value, parent.get(name));
 
     // Make sure the iter sees it
-    assertTrue(vars.names().hasNext());
+    assertTrue(vars.names().iterator().hasNext());
   }
 
   @Test
@@ -219,7 +219,7 @@ public class VariablesTest
 
   @Test
   public void testNames() throws Exception {
-    Iterator<String> iter = vars.names();
+    Iterator<String> iter = vars.names().iterator();
     assertNotNull(iter);
     assertFalse(iter.hasNext());
   }
@@ -228,7 +228,7 @@ public class VariablesTest
   public void testNamesImmutable() throws Exception {
     vars.set("a", "b");
 
-    Iterator<String> iter = vars.names();
+    Iterator<String> iter = vars.names().iterator();
     iter.next();
 
     try {

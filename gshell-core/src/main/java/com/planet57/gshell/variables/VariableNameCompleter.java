@@ -52,9 +52,8 @@ public class VariableNameCompleter
   @Override
   protected void init() {
     // Prime the delegate with any existing variable names
-    Iterator<String> iter = variables.get().names();
-    while (iter.hasNext()) {
-      addString(iter.next());
+    for (String name : variables.get().names()) {
+      addString(name);
     }
   }
 
