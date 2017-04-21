@@ -68,6 +68,7 @@ import com.planet57.gshell.util.converter.collections.SortedSetConverter;
 import com.planet57.gshell.util.converter.collections.TreeMapConverter;
 import com.planet57.gshell.util.converter.collections.TreeSetConverter;
 import com.planet57.gshell.util.converter.collections.WeakHashMapConverter;
+import com.planet57.gshell.util.converter.goodies.ByteSizeConverter;
 import com.planet57.gshell.util.converter.goodies.TimeConverter;
 import com.planet57.gshell.util.converter.primitive.BooleanConverter;
 import com.planet57.gshell.util.converter.primitive.ByteConverter;
@@ -160,7 +161,10 @@ public class Converters
     registerConverter(new UrlConverter());
     registerConverter(new PatternConverter());
     registerConverter(new WeakHashMapConverter());
+
+    // goodies
     registerConverter(new TimeConverter());
+    registerConverter(new ByteSizeConverter());
   }
 
   /**
