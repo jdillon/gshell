@@ -164,6 +164,9 @@ public class ShellImpl
     }
   }
 
+  /**
+   * Shell will resolve completion as an alias-name or command execution.
+   */
   @Inject
   public void installCompleters(final @Named("alias-name") Completer c1, final @Named("command") Completer c2) {
     checkNotNull(c1);
