@@ -24,6 +24,7 @@ import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 import org.jline.reader.Completer;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -62,7 +63,9 @@ public abstract class CommandActionSupport
     return new NodePath(getName()).last();
   }
 
+  // override the default  nullability, as by default this is nullable but here its always non-null
   @Override
+  @Nonnull
   public MessageSource getMessages() {
     if (messages == null) {
       try {
