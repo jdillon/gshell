@@ -17,6 +17,7 @@ package com.planet57.gshell.commands.file;
 
 import java.io.File;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -64,8 +65,8 @@ public class ChangeDirectoryCommand
     return this;
   }
 
-  public Object execute(final CommandContext context) throws Exception {
-    checkNotNull(context);
+  @Override
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
     Variables vars = context.getVariables();
 

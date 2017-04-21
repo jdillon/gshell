@@ -33,6 +33,8 @@ import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.io.Closeables;
 
+import javax.annotation.Nonnull;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -54,8 +56,8 @@ public class WgetCommand
   @Argument(required = true)
   private URL source;
 
-  public Object execute(final CommandContext context) throws Exception {
-    checkNotNull(context);
+  @Override
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
 
     io.println("Downloading: %s", source); // TODO: i18n

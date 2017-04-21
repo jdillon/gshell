@@ -28,6 +28,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.sonatype.goodies.testsupport.TestSupport;
 
+import javax.annotation.Nonnull;
+
 import static org.junit.Assert.fail;
 
 /**
@@ -77,7 +79,7 @@ public class CommandRegistryImplTest
     try {
       registry.registerCommand(null, new CommandActionSupport()
       {
-        public Object execute(CommandContext context) throws Exception {
+        public Object execute(@Nonnull CommandContext context) throws Exception {
           // ignore
           return null;
         }

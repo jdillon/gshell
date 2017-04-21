@@ -23,6 +23,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -57,9 +58,8 @@ public class SourceCommand
     return this;
   }
 
-  public Object execute(final CommandContext context) throws Exception {
-    checkNotNull(context);
-
+  @Override
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
     Shell shell = context.getShell();
 
     URL url;

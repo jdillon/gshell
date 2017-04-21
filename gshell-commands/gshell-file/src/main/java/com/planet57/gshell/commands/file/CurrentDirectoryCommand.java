@@ -17,6 +17,7 @@ package com.planet57.gshell.commands.file;
 
 import java.io.File;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import com.planet57.gshell.command.Command;
@@ -45,8 +46,8 @@ public class CurrentDirectoryCommand
     this.fileSystem = checkNotNull(fileSystem);
   }
 
-  public Object execute(final CommandContext context) throws Exception {
-    checkNotNull(context);
+  @Override
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
 
     File dir = fileSystem.getUserDir();

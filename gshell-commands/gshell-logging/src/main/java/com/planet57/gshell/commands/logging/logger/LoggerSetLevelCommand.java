@@ -15,6 +15,7 @@
  */
 package com.planet57.gshell.commands.logging.logger;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -59,9 +60,8 @@ public class LoggerSetLevelCommand
     setCompleters(c1, c2, null);
   }
 
-  public Object execute(final CommandContext context) throws Exception {
-    checkNotNull(context);
-
+  @Override
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
     LoggerComponent logger = logging.getLogger(loggerName);
     LevelComponent level = logging.getLevel(levelName);
     logger.setLevel(level);

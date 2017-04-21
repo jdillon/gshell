@@ -26,6 +26,8 @@ import com.planet57.gshell.util.io.PumpStreamHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -45,9 +47,8 @@ public class ExecuteCommand
 
   // TODO: Support setting the process directory and environment muck
 
-  public Object execute(final CommandContext context) throws Exception {
-    checkNotNull(context);
-
+  @Override
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
 
     ProcessBuilder builder = new ProcessBuilder(args);

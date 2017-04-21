@@ -15,6 +15,7 @@
  */
 package com.planet57.gshell.commands.logging.logger;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import com.planet57.gshell.command.Command;
@@ -43,8 +44,8 @@ public class LoggerLevelsCommand
     this.logging = checkNotNull(logging);
   }
 
-  public Object execute(final CommandContext context) throws Exception {
-    checkNotNull(context);
+  @Override
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
 
     for (LevelComponent level : logging.getLevels()) {

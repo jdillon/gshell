@@ -15,6 +15,7 @@
  */
 package com.planet57.gshell.commands.standard;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -56,9 +57,8 @@ public class UnaliasCommand
     return this;
   }
 
-  public Object execute(final CommandContext context) {
-    checkNotNull(context);
-
+  @Override
+  public Object execute(@Nonnull final CommandContext context) {
     IO io = context.getIo();
 
     log.debug("Un-defining alias: {}", name);

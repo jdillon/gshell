@@ -18,6 +18,7 @@ package com.planet57.gshell.commands.jetty;
 import java.io.File;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -70,9 +71,8 @@ public class JettyCommand
     setCompleters(c1, null);
   }
 
-  public Object execute(final CommandContext context) throws Exception {
-    checkNotNull(context);
-
+  @Override
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
     if (context.getVariables().contains(Server.class)) {
       log.error("Jetty server is already running");
       return false;

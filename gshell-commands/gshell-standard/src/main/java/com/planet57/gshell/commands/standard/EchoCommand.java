@@ -25,6 +25,8 @@ import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
 
+import javax.annotation.Nonnull;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -43,9 +45,8 @@ public class EchoCommand
   @Argument()
   private List<String> args;
 
-  public Object execute(final CommandContext context) throws Exception {
-    checkNotNull(context);
-
+  @Override
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
 
     if (args != null && !args.isEmpty()) {

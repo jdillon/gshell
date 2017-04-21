@@ -35,6 +35,7 @@ public class FailCommand
   @Argument
   private String message = "Failed";
 
+  @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     throw new FailException(message);
   }

@@ -21,6 +21,8 @@ import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
 import org.sonatype.goodies.common.Time;
 
+import javax.annotation.Nonnull;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -36,9 +38,8 @@ public class SleepCommand
   @Argument(required = true)
   private Time time;
 
-  public Object execute(final CommandContext context) throws Exception {
-    checkNotNull(context);
-
+  @Override
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
     if (log.isTraceEnabled()) {
       log.trace("Sleeping for {} on thread: {}", time, Thread.currentThread());
     }

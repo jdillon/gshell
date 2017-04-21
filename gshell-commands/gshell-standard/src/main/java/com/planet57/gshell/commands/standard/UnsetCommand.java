@@ -17,6 +17,7 @@ package com.planet57.gshell.commands.standard;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -53,9 +54,8 @@ public class UnsetCommand
     return this;
   }
 
-  public Object execute(final CommandContext context) throws Exception {
-    checkNotNull(context);
-
+  @Override
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
     Variables variables = context.getVariables();
 
     for (String arg : args) {

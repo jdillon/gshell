@@ -21,6 +21,8 @@ import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.CommandActionSupport;
 import org.fusesource.jansi.Ansi;
 
+import javax.annotation.Nonnull;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -33,9 +35,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class ClearCommand
     extends CommandActionSupport
 {
-  public Object execute(final CommandContext context) throws Exception {
-    checkNotNull(context);
-
+  @Override
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
 
     io.out.print(Ansi.ansi().eraseScreen(Ansi.Erase.ALL));

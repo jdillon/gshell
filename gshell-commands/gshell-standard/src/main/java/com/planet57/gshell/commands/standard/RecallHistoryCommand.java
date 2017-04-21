@@ -22,6 +22,8 @@ import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
 import org.jline.reader.History;
 
+import javax.annotation.Nonnull;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -37,9 +39,8 @@ public class RecallHistoryCommand
   @Argument(required = true)
   private int index;
 
-  public Object execute(final CommandContext context) throws Exception {
-    checkNotNull(context);
-
+  @Override
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
     History history = context.getShell().getHistory();
 

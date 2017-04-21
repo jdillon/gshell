@@ -15,6 +15,7 @@
  */
 package com.planet57.gshell.commands.logging.component;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import com.planet57.gshell.command.Command;
@@ -34,7 +35,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 2.5
  */
 @Command(name = "logging/component/list")
-public class ComponentListCommand
+public class LoggingComponentListCommand
     extends CommandActionSupport
 {
   private final LoggingSystem logging;
@@ -49,12 +50,12 @@ public class ComponentListCommand
   private boolean verbose;
 
   @Inject
-  public ComponentListCommand(final LoggingSystem logging) {
+  public LoggingComponentListCommand(final LoggingSystem logging) {
     this.logging = checkNotNull(logging);
   }
 
-  public Object execute(final CommandContext context) throws Exception {
-    checkNotNull(context);
+  @Override
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
 
     for (LoggingComponent component : logging.getComponents()) {

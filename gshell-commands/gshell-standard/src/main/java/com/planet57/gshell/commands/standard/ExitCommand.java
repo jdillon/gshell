@@ -21,6 +21,8 @@ import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.notification.ExitNotification;
 import com.planet57.gshell.util.cli2.Argument;
 
+import javax.annotation.Nonnull;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -36,9 +38,8 @@ public class ExitCommand
   @Argument
   private int exitCode = 0;
 
-  public Object execute(final CommandContext context) throws Exception {
-    checkNotNull(context);
-
+  @Override
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
     log.debug("Exiting w/code: {}", exitCode);
 
     // Do not call System.exit(), ask the shell to exit instead.

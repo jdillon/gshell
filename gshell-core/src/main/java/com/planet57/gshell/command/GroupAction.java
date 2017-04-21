@@ -23,6 +23,8 @@ import com.planet57.gshell.util.i18n.NopMessageSource;
 import com.planet57.gshell.variables.VariableNames;
 import org.jline.reader.Completer;
 
+import javax.annotation.Nonnull;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -52,9 +54,7 @@ public class GroupAction
   }
 
   @Override
-  public Object execute(final CommandContext context) throws Exception {
-    checkNotNull(context);
-
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
     log.debug("Changing group to: {}", name);
     context.getVariables().set(VariableNames.SHELL_GROUP, name);
 

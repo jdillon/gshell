@@ -22,6 +22,8 @@ import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.NopMessageSource;
 import org.jline.reader.Completer;
 
+import javax.annotation.Nonnull;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -54,8 +56,7 @@ public class AliasAction
   }
 
   @Override
-  public Object execute(final CommandContext context) throws Exception {
-    checkNotNull(context);
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
     String alias = target;
 
     // Need to append any more arguments in the context

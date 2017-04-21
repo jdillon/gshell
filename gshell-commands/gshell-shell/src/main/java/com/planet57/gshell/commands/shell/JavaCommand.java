@@ -26,6 +26,8 @@ import com.planet57.gshell.util.cli2.Option;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -53,9 +55,8 @@ public class JavaCommand
   @Argument(index = 1)
   private List<String> args;
 
-  public Object execute(final CommandContext context) throws Exception {
-    checkNotNull(context);
-
+  @Override
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
     log.debug("Loading class: {}", className);
     Class type = Thread.currentThread().getContextClassLoader().loadClass(className);
     log.info("Using type: {}", type);

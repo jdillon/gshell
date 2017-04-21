@@ -15,6 +15,7 @@
  */
 package com.planet57.gshell.commands.shell;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
@@ -50,9 +51,8 @@ public class AskCommand
     this.promptProvider = checkNotNull(promptProvider);
   }
 
-  public Object execute(final CommandContext context) throws Exception {
-    checkNotNull(context);
-
+  @Override
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
     PromptReader prompter = promptProvider.get();
     String input;
 

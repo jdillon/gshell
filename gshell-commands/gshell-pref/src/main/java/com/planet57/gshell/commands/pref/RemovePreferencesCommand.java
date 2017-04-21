@@ -21,6 +21,8 @@ import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.util.cli2.Option;
 
+import javax.annotation.Nonnull;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -36,9 +38,8 @@ public class RemovePreferencesCommand
   @Option(name = "r", longName = "tree")
   private boolean tree;
 
-  public Object execute(final CommandContext context) throws Exception {
-    checkNotNull(context);
-
+  @Override
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
     Preferences prefs = node();
 
     log.debug("Removing preferences: {}", prefs);

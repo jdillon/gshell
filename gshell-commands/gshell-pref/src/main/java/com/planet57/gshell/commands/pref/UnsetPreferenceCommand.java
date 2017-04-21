@@ -21,6 +21,8 @@ import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.util.cli2.Argument;
 
+import javax.annotation.Nonnull;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -36,9 +38,8 @@ public class UnsetPreferenceCommand
   @Argument(index = 1, required = true)
   private String key;
 
-  public Object execute(final CommandContext context) throws Exception {
-    checkNotNull(context);
-
+  @Override
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
     log.debug("Unsetting preference: {}", key);
 
     Preferences prefs = node();

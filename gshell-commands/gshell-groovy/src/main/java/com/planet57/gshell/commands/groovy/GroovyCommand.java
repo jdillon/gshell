@@ -18,6 +18,7 @@ package com.planet57.gshell.commands.groovy;
 import java.io.File;
 import java.util.List;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -58,9 +59,8 @@ public class GroovyCommand
     setCompleters(c1, null);
   }
 
-  public Object execute(final CommandContext context) throws Exception {
-    checkNotNull(context);
-
+  @Override
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
     Branding branding = context.getShell().getBranding();
     Binding binding = new Binding();
     binding.setVariable("context", context);

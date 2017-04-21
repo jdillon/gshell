@@ -15,6 +15,8 @@
  */
 package com.planet57.gshell.command;
 
+import javax.annotation.Nonnull;
+
 /**
  * Dummy {@link CommandAction}.
  */
@@ -27,7 +29,7 @@ public class DummyAction
 
   public DummyAction() {}
 
-  public Object execute(final CommandContext context) throws Exception {
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
     return null;
   }
 }

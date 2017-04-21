@@ -23,6 +23,8 @@ import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Option;
 
+import javax.annotation.Nonnull;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -38,8 +40,8 @@ public class HostnameCommand
   @Option(name = "v", longName = "verbose")
   private boolean verbose;
 
-  public Object execute(final CommandContext context) throws Exception {
-    checkNotNull(context);
+  @Override
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
 
     InetAddress localhost = InetAddress.getLocalHost();

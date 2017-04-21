@@ -45,6 +45,8 @@ import org.fusesource.jansi.Ansi;
 import org.jline.reader.impl.completer.EnumCompleter;
 import org.jline.terminal.Terminal;
 
+import javax.annotation.Nonnull;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.planet57.gshell.commands.standard.InfoCommand.Section.SHELL;
 import static org.fusesource.jansi.Ansi.Attribute.INTENSITY_BOLD;
@@ -93,9 +95,8 @@ public class InfoCommand
     this.setCompleters(new EnumCompleter(Section.class));
   }
 
-  public Object execute(final CommandContext context) throws Exception {
-    checkNotNull(context);
-
+  @Override
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
 
     Branding branding = context.getShell().getBranding();

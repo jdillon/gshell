@@ -22,6 +22,8 @@ import com.planet57.gshell.util.pref.Preferences;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.util.component.LifeCycle;
 
+import javax.annotation.Nonnull;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -34,9 +36,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class JettyStopCommand
     extends CommandActionSupport
 {
-  public Object execute(final CommandContext context) throws Exception {
-    checkNotNull(context);
-
+  @Override
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
     LifeCycle lc = context.getVariables().get(Server.class);
     if (lc != null) {
       lc.stop();

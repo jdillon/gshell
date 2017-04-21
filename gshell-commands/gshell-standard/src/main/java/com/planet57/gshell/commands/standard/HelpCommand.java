@@ -17,6 +17,7 @@ package com.planet57.gshell.commands.standard;
 
 import java.util.Collection;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -96,9 +97,8 @@ public class HelpCommand
     return this;
   }
 
-  public Object execute(final CommandContext context) throws Exception {
-    checkNotNull(context);
-
+  @Override
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
 
     // If there is no argument given, display all help pages in context

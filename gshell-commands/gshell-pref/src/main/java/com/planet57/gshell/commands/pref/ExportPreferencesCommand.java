@@ -30,6 +30,8 @@ import com.planet57.gshell.util.io.Closeables;
 import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.Preferences;
 
+import javax.annotation.Nonnull;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -50,9 +52,8 @@ public class ExportPreferencesCommand
   @Argument(index = 1)
   private File file;
 
-  public Object execute(final CommandContext context) throws Exception {
-    checkNotNull(context);
-
+  @Override
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
     java.util.prefs.Preferences prefs = node();
 

@@ -22,6 +22,8 @@ import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.Preferences;
 
+import javax.annotation.Nonnull;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.fusesource.jansi.Ansi.Attribute.INTENSITY_BOLD;
 import static org.fusesource.jansi.Ansi.Color.GREEN;
@@ -42,9 +44,8 @@ public class ListPreferencesCommand
   @Option(name = "r", longName = "recursive")
   private boolean recursive;
 
-  public Object execute(final CommandContext context) throws Exception {
-    checkNotNull(context);
-
+  @Override
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
 
     list(io, node());
