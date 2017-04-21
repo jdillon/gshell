@@ -20,7 +20,6 @@ import java.util.concurrent.Callable;
 
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.util.ComponentSupport;
-import com.planet57.gshell.util.io.StreamSet;
 import org.jline.reader.Completer;
 import org.jline.reader.History;
 import org.jline.reader.LineReader;
@@ -61,19 +60,8 @@ public class Console
                  @Nullable final Completer completer)
     throws IOException
   {
-    checkNotNull(io);
+    this.io = checkNotNull(io);
     this.taskFactory = checkNotNull(taskFactory);
-
-    // TODO: unsure why we are doing this?
-    this.io = new IO(
-      new StreamSet(io.streams.in, io.streams.out, io.streams.err),
-      io.getTerminal(),
-      null,
-      io.out,
-      io.err,
-      true
-    );
-
     this.lineReader = LineReaderBuilder.builder()
       .terminal(io.getTerminal())
       .history(history)
