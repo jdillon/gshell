@@ -43,7 +43,7 @@ public class StringsCompleter2
 
   private final Collection<Candidate> candidates = new ArrayList<>();
 
-  private volatile boolean initalized = false;
+  private volatile boolean initialized = false;
 
   public StringsCompleter2() {
     // empty
@@ -98,9 +98,9 @@ public class StringsCompleter2
   public void complete(final LineReader reader, final ParsedLine commandLine, final List<Candidate> candidates) {
     checkNotNull(candidates);
 
-    if (!initalized) {
+    if (!initialized) {
       init();
-      initalized = true;
+      initialized = true;
     }
     prepare();
 
