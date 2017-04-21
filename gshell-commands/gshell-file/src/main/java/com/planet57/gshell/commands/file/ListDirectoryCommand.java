@@ -36,7 +36,6 @@ import com.planet57.gshell.file.FileSystemAccess;
 import com.planet57.gshell.util.io.FileAssert;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
-import org.fusesource.jansi.AnsiString;
 import org.jline.reader.Completer;
 import org.jline.terminal.Terminal;
 import org.jline.utils.AttributedString;
@@ -44,10 +43,6 @@ import org.jline.utils.AttributedStringBuilder;
 import org.jline.utils.AttributedStyle;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.fusesource.jansi.Ansi.Attribute.INTENSITY_FAINT;
-import static org.fusesource.jansi.Ansi.ansi;
-import static org.jline.utils.AttributedStyle.BLUE;
-import static org.jline.utils.AttributedStyle.GREEN;
 
 /**
  * List the contents of a file or directory.
