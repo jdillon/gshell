@@ -16,10 +16,13 @@
 package com.planet57.gshell.commands.file;
 
 import java.io.File;
-import java.io.FileFilter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.IntBinaryOperator;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -34,12 +37,11 @@ import com.planet57.gshell.util.io.FileAssert;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
 import org.jline.reader.Completer;
-import org.fusesource.jansi.AnsiString;
+import org.jline.terminal.Terminal;
+import org.jline.utils.AttributedString;
+import org.jline.utils.AttributedStringBuilder;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.fusesource.jansi.Ansi.Attribute.INTENSITY_FAINT;
-import static org.fusesource.jansi.Ansi.Color.BLUE;
-import static org.fusesource.jansi.Ansi.ansi;
 
 /**
  * List the contents of a file or directory.
@@ -49,8 +51,7 @@ import static org.fusesource.jansi.Ansi.ansi;
  */
 @Command(name = "ls")
 public class ListDirectoryCommand
-    extends CommandActionSupport
-{
+  extends CommandActionSupport {
   private final FileSystemAccess fileSystem;
 
   @Argument
@@ -102,18 +103,15 @@ public class ListDirectoryCommand
       files = dir.listFiles();
     }
     else {
-      files = dir.listFiles(new FileFilter()
-      {
-        @Override
-        public boolean accept(final File file) {
-          assert file != null;
-          return !file.isHidden();
-        }
+      files = dir.listFiles(file -> {
+        assert file != null;
+        return !file.isHidden();
       });
     }
+    assert files != null;
 
-    List<CharSequence> names = new ArrayList<CharSequence>(files.length);
-    List<File> dirs = new LinkedList<File>();
+    List<String> names = new ArrayList<>(files.length);
+    List<File> dirs = new LinkedList<>();
 
     for (File file : files) {
       if (fileSystem.hasChildren(file)) {
@@ -122,21 +120,17 @@ public class ListDirectoryCommand
         }
       }
 
-      names.add(render(file));
+      // FIXME: render
+      names.add(file.getName());
     }
 
-    // FIXME: need a replacement for ConsoleReader.printColumns()
-    //    ConsoleReader reader = new ConsoleReader(io.streams.in, io.out, null, io.getTerminal());
-    //    reader.setPaginationEnabled(false);
-
-    //    if (longList) {
+    if (longList) {
       for (CharSequence name : names) {
         io.out.println(name);
       }
-//    }
-//    else {
-//      reader.printColumns(names);
-//    }
+    } else {
+      toColumn(io.getTerminal(), io.out, names.stream(), true);
+    }
 
     if (!dirs.isEmpty()) {
       for (File subDir : dirs) {
@@ -148,20 +142,70 @@ public class ListDirectoryCommand
     }
   }
 
-  private CharSequence render(final File file) {
-    String name = file.getName();
+  // FIXME: sort out api to apply ansi that is compatible with jline3
 
-    if (file.isDirectory()) {
-      name = ansi().fg(BLUE).a(name).a(File.separator).reset().toString();
-    }
-//    else if (file.canExecute()) {
-//        name = ansi().fg(GREEN).a(name).a("*").reset().toString();
+//  private CharSequence render(final File file) {
+//    String name = file.getName();
+//
+//    if (file.isDirectory()) {
+//      name = ansi().fg(BLUE).a(name).a(File.separator).reset().toString();
 //    }
+//    else if (file.canExecute()) {
+//      name = ansi().fg(GREEN).a(name).a("*").reset().toString();
+//    }
+//
+//    if (file.isHidden()) {
+//      name = ansi().a(INTENSITY_FAINT).a(name).reset().toString();
+//    }
+//
+//    return new AnsiString(name);
+//  }
 
-    if (file.isHidden()) {
-      name = ansi().a(INTENSITY_FAINT).a(name).reset().toString();
+  // TODO: move to helper
+
+  // Adapted from: https://github.com/apache/felix/blob/trunk/gogo/jline/src/main/java/org/apache/felix/gogo/jline/Posix.java
+
+  private void toColumn(final Terminal terminal, final PrintWriter out, final Stream<String> values, final boolean horizontal) {
+    int width = terminal.getWidth();
+    List<AttributedString> strings = values.map(AttributedString::fromAnsi).collect(Collectors.toList());
+
+    if (!strings.isEmpty()) {
+      int max = strings.stream().mapToInt(AttributedString::columnLength).max().getAsInt();
+      int c = Math.max(1, width / max);
+      while (c > 1 && c * max + (c - 1) >= width) {
+        c--;
+      }
+
+      int columns = c;
+      int lines = (strings.size() + columns - 1) / columns;
+      IntBinaryOperator index;
+
+      if (horizontal) {
+        index = (i, j) -> i * columns + j;
+      }
+      else {
+        index = (i, j) -> j * lines + i;
+      }
+
+      AttributedStringBuilder buff = new AttributedStringBuilder();
+      for (int i = 0; i < lines; i++) {
+        for (int j = 0; j < columns; j++) {
+          int idx = index.applyAsInt(i, j);
+          if (idx < strings.size()) {
+            AttributedString str = strings.get(idx);
+            boolean hasRightItem = j < columns - 1 && index.applyAsInt(i, j + 1) < strings.size();
+            buff.append(str);
+            if (hasRightItem) {
+              for (int k = 0; k <= max - str.length(); k++) {
+                buff.append(' ');
+              }
+            }
+          }
+        }
+        buff.append('\n');
+      }
+
+      out.print(buff.toAnsi(terminal));
     }
-
-    return new AnsiString(name);
   }
 }
