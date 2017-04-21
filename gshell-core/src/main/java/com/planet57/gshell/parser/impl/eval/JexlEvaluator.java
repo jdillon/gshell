@@ -15,42 +15,42 @@
  */
 package com.planet57.gshell.parser.impl.eval;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
-
 import com.planet57.gshell.shell.ShellHolder;
+import com.planet57.gshell.util.ComponentSupport;
 import com.planet57.gshell.util.ReplacementParser;
 import com.planet57.gshell.variables.Variables;
-import org.apache.commons.jexl.Expression;
-import org.apache.commons.jexl.ExpressionFactory;
-import org.apache.commons.jexl.JexlContext;
-import org.apache.commons.jexl.resolver.FlatResolver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.jexl3.JexlBuilder;
+import org.apache.commons.jexl3.JexlContext;
+import org.apache.commons.jexl3.JexlEngine;
+import org.apache.commons.jexl3.JexlExpression;
+
+import javax.annotation.Nullable;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Uses Commons Jexl to evaluate expressions.
+ * Uses <a href="http://commons.apache.org/proper/commons-jexl/">Commons Jexl</a> to evaluate expressions.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 public class JexlEvaluator
+    extends ComponentSupport
     implements Evaluator
 {
-  private final Logger log = LoggerFactory.getLogger(getClass());
-
   private final ReplacementParser parser = new ReplacementParser()
   {
+    private final JexlEngine jexl = new JexlBuilder().create();
+
     @Override
     protected Object replace(final String key) throws Exception {
       assert key != null;
 
       log.debug("Evaluating: {}", key);
 
-      JexlContext ctx = new Context();
-      Expression expr = ExpressionFactory.createExpression(key);
-      expr.addPostResolver(resolver);
+      JexlContext ctx = new VariablesContext(ShellHolder.get().getVariables());
+      JexlExpression expr = jexl.createExpression(key);
+      // FIXME: how we we get a jexl 1.x-style "flat-resolver"?
 
       Object result = expr.evaluate(ctx);
 
@@ -60,11 +60,8 @@ public class JexlEvaluator
     }
   };
 
-  private final FlatResolver resolver = new FlatResolver(true);
-
-  public Object eval(String expression) throws Exception {
-    // expression could be null
-
+  @Nullable
+  public Object eval(@Nullable final String expression) throws Exception {
     // Skip evaluation if null or there is no start token
     if (expression == null || !expression.contains("${")) {
       return expression;
@@ -73,89 +70,35 @@ public class JexlEvaluator
     return parser.parse(expression);
   }
 
-  private static class Context
+  /**
+   * Adapts {@link Variables} to {@link JexlContext}.
+   */
+  private static class VariablesContext
       implements JexlContext
   {
-    private final ContextVariables vars = new ContextVariables();
+    private final Variables variables;
 
-    public void setVars(final Map map) {
-      throw new UnsupportedOperationException();
+    public VariablesContext(final Variables variables) {
+      this.variables = checkNotNull(variables);
     }
 
-    public Map getVars() {
-      return vars;
-    }
-  }
-
-  private static class ContextVariables
-      implements Map<String, Object>
-  {
-    private final Variables vars = ShellHolder.get().getVariables();
-
-    public Object get(final Object key) {
-      assert key != null;
-
-      String name = String.valueOf(key);
-      Object value;
-
-      value = vars.get(name);
+    @Override
+    public Object get(final String name) {
+      Object value = variables.get(name);
       if (value == null) {
         value = System.getProperty(name);
       }
-
       return value;
     }
 
-    public Object put(final String key, final Object value) {
-      assert key != null;
-
-      Object prev = get(key);
-
-      vars.set(key, value);
-
-      return prev;
+    @Override
+    public void set(final String name, final Object value) {
+      variables.set(name, value);
     }
 
-    // Jexl only uses Map.put() and Map.get() stub everything else
-
-    public int size() {
-      return 0;
-    }
-
-    public boolean isEmpty() {
-      return false;
-    }
-
-    public boolean containsKey(Object key) {
-      return false;
-    }
-
-    public boolean containsValue(Object value) {
-      return false;
-    }
-
-    public Object remove(Object key) {
-      return null;
-    }
-
-    public void putAll(Map<? extends String, ? extends Object> m) {
-      // empty
-    }
-
-    public void clear() {
-      // empty
-    }
-
-    public Set<String> keySet() {
-      return null;
-    }
-
-    public Collection<Object> values() {
-      return null;
-    }
-
-    public Set<Entry<String, Object>> entrySet() {
-      return null;
+    @Override
+    public boolean has(final String name) {
+      return variables.contains(name);
     }
   }
 }

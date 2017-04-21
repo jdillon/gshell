@@ -29,17 +29,16 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public abstract class ReplacementParser
 {
-  public static final String DEFAULT_PATTERN = "\\$\\{([^}]+)\\}";
+  private static final String DEFAULT_PATTERN = "\\$\\{([^}]+)\\}";
 
   private final Pattern pattern;
 
-  public ReplacementParser(final String pattern) {
-    checkNotNull(pattern);
-    this.pattern = Pattern.compile(pattern);
+  public ReplacementParser(final Pattern pattern) {
+    this.pattern = checkNotNull(pattern);
   }
 
   public ReplacementParser() {
-    this(DEFAULT_PATTERN);
+    this(Pattern.compile(DEFAULT_PATTERN));
   }
 
   @Nullable
@@ -66,5 +65,6 @@ public abstract class ReplacementParser
     return input;
   }
 
+  @Nullable
   protected abstract Object replace(String key) throws Exception;
 }

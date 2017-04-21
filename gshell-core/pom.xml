@@ -52,8 +52,8 @@
     </dependency>
 
     <dependency>
-      <groupId>commons-jexl</groupId>
-      <artifactId>commons-jexl</artifactId>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-jexl3</artifactId>
       <optional>true</optional>
     </dependency>
 

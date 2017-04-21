@@ -19,6 +19,8 @@ import com.planet57.gshell.shell.ShellHolder;
 import com.planet57.gshell.util.ReplacementParser;
 import com.planet57.gshell.variables.Variables;
 
+import javax.annotation.Nullable;
+
 /**
  * Evaluates expressions using regular expressions.
  *
@@ -42,9 +44,8 @@ public class DefaultEvaluator
     }
   };
 
-  public Object eval(final String expression) throws Exception {
-    // expression could be null
-
+  @Nullable
+  public Object eval(@Nullable final String expression) throws Exception {
     // Skip interpolation if null or there is no start token
     if (expression == null || !expression.contains("${")) {
       return expression;
