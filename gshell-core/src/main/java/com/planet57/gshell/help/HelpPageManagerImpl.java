@@ -61,7 +61,7 @@ public class HelpPageManagerImpl
 
   private final HelpContentLoader loader;
 
-  private final Map<String, MetaHelpPage> metaPages = new LinkedHashMap<String, MetaHelpPage>();
+  private final Map<String, MetaHelpPage> metaPages = new LinkedHashMap<>();
 
   @Inject
   public HelpPageManagerImpl(final BeanContainer container,
@@ -117,7 +117,7 @@ public class HelpPageManagerImpl
   public Collection<HelpPage> getPages(final Predicate<HelpPage> query) {
     assert query != null;
 
-    List<HelpPage> pages = new LinkedList<HelpPage>();
+    List<HelpPage> pages = new LinkedList<>();
     for (HelpPage page : getPages()) {
       if (query.apply(page)) {
         pages.add(page);
@@ -129,7 +129,7 @@ public class HelpPageManagerImpl
 
   @Override
   public Collection<HelpPage> getPages() {
-    Map<String, HelpPage> pages = new TreeMap<String, HelpPage>();
+    Map<String, HelpPage> pages = new TreeMap<>();
 
     // Add aliases
     for (Map.Entry<String, String> entry : aliases.getAliases().entrySet()) {

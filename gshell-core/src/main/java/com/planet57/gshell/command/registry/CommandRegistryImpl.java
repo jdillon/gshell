@@ -42,7 +42,7 @@ public class CommandRegistryImpl
   extends ComponentSupport
   implements CommandRegistry
 {
-  private final Map<String, CommandAction> commands = new LinkedHashMap<String, CommandAction>();
+  private final Map<String, CommandAction> commands = new LinkedHashMap<>();
 
   private final EventManager events;
 

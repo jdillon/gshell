@@ -13,27 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.shell;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import org.jline.reader.Completer;
-import org.jline.reader.impl.completer.AggregateCompleter;
-
 /**
- * Shell {@link Completer}.
+ * Branding support.
  *
- * @since 3.0
+ * @since 2.5
  */
-@Named("main")
-public class ShellCompleter
-  extends AggregateCompleter
-{
-  @Inject
-  public ShellCompleter(final @Named("alias-name") Completer c1,
-                        final @Named("command") Completer c2)
-  {
-    super(c1, c2);
-  }
-}
+package com.planet57.gshell.branding;

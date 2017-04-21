@@ -15,8 +15,6 @@
  */
 package com.planet57.gshell.variables;
 
-import java.util.Iterator;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
@@ -51,10 +49,7 @@ public class VariableNameCompleter
 
   @Override
   protected void init() {
-    // Prime the delegate with any existing variable names
-    for (String name : variables.get().names()) {
-      addString(name);
-    }
+    setStrings(variables.get().names());
   }
 
   @Subscribe

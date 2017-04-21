@@ -50,6 +50,8 @@ public interface Variables
   @Nullable
   <T> T get(Class<T> type);
 
+  // FIXME: add non-nullable require() to get values
+
   void unset(String name);
 
   void unset(Class<?> type);

@@ -48,12 +48,24 @@ public class StringsCompleter2
     // empty
   }
 
+  /**
+   * Set completion strings; replacing any existing.
+   */
   public void setStrings(final String... strings) {
     checkNotNull(strings);
     setStrings(Arrays.asList(strings));
   }
 
+  /**
+   * Set completion strings; replacing any existing.
+   */
   public void setStrings(final Iterable<String> strings) {
+    checkNotNull(strings);
+    candidates.clear();
+    addStrings(strings);
+  }
+
+  public void addStrings(final Iterable<String> strings) {
     checkNotNull(strings);
     for (String string : strings) {
       addString(string);

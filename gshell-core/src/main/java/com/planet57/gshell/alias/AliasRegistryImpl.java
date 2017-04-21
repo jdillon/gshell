@@ -40,7 +40,7 @@ public class AliasRegistryImpl
   extends ComponentSupport
   implements AliasRegistry
 {
-  private final Map<String, String> aliases = new LinkedHashMap<String, String>();
+  private final Map<String, String> aliases = new LinkedHashMap<>();
 
   private final EventManager events;
 

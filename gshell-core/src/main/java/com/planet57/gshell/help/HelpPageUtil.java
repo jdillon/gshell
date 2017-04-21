@@ -61,7 +61,7 @@ public class HelpPageUtil
     checkNotNull(node);
     checkNotNull(loader);
 
-    Collection<HelpPage> pages = new LinkedList<HelpPage>();
+    Collection<HelpPage> pages = new LinkedList<>();
     for (Node child : node.children()) {
       pages.add(pageFor(child, loader));
     }

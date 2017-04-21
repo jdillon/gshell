@@ -86,10 +86,8 @@ public class ShellErrorHandler
     Variables vars = variables.get();
 
     // Determine if the stack trace flag is set
-    boolean showTrace = false;
-    if (vars.contains(VariableNames.SHELL_ERRORS)) {
-      showTrace = vars.get(VariableNames.SHELL_ERRORS, Boolean.class);
-    }
+    Boolean showTrace = vars.get(VariableNames.SHELL_ERRORS, Boolean.class, false);
+    assert showTrace != null;
 
     if (showTrace || !io.isSilent()) {
       io.err.print(ansi().a(INTENSITY_BOLD).fg(RED).a(cause.getClass().getName()).reset());

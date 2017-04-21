@@ -55,6 +55,8 @@ public class FileNameCompleter
     return variables.get().get(SHELL_USER_HOME, Path.class);
   }
 
+  // FIXME: this could probably be simplified to avoid this complex file/path/string handling
+
   @Override
   protected Path getUserDir() {
     Variables vars = variables.get();

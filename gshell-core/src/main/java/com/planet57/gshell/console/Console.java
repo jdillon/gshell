@@ -19,13 +19,12 @@ import java.io.IOException;
 import java.util.concurrent.Callable;
 
 import com.planet57.gshell.command.IO;
+import com.planet57.gshell.util.ComponentSupport;
 import com.planet57.gshell.util.io.StreamSet;
 import org.jline.reader.Completer;
 import org.jline.reader.History;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nullable;
 
@@ -38,10 +37,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 2.0
  */
 public class Console
+    extends ComponentSupport
     implements Runnable
 {
-  private static final Logger log = LoggerFactory.getLogger(Console.class);
-
   private final IO io;
 
   private final LineReader lineReader;
