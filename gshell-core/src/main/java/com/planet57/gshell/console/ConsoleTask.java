@@ -15,6 +15,7 @@
  */
 package com.planet57.gshell.console;
 
+import com.planet57.gshell.util.ComponentSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,14 +26,13 @@ import org.slf4j.LoggerFactory;
  * @since 2.0
  */
 public abstract class ConsoleTask
+  extends ComponentSupport
 {
-  protected static final Logger log = LoggerFactory.getLogger(ConsoleTask.class);
-
   /**
    * Holds the currently executing task for the thread.  To allow for edge cases where the
    * originating thread is not the desired thread to interrupt/stop.
    */
-  private static final InheritableThreadLocal<ConsoleTask> holder = new InheritableThreadLocal<ConsoleTask>();
+  private static final InheritableThreadLocal<ConsoleTask> holder = new InheritableThreadLocal<>();
 
   /**
    * The thread which is executing this task.

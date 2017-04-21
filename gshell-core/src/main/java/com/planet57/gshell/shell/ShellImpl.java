@@ -75,7 +75,7 @@ public class ShellImpl
 
   private final History history;
 
-  private List<Completer> completers;
+//  private List<Completer> completers;
 
   private ConsolePrompt prompt;
 
@@ -152,22 +152,22 @@ public class ShellImpl
     this.errorHandler = errorHandler;
   }
 
-  public void setCompleters(final List<Completer> completers) {
-    this.completers = completers;
-  }
-
-  public void setCompleters(final Completer... completers) {
-    if (completers != null) {
-      this.completers = Arrays.asList(completers);
-    }
-  }
-
-  @Inject
-  public void installCompleters(final @Named("alias-name") Completer c1, final @Named("commands") Completer c2) {
-    checkNotNull(c1);
-    checkNotNull(c2);
-    setCompleters(new AggregateCompleter(c1, c2));
-  }
+//  public void setCompleters(final List<Completer> completers) {
+//    this.completers = completers;
+//  }
+//
+//  public void setCompleters(final Completer... completers) {
+//    if (completers != null) {
+//      this.completers = Arrays.asList(completers);
+//    }
+//  }
+//
+//  @Inject
+//  public void installCompleters(final @Named("alias-name") Completer c1, final @Named("commands") Completer c2) {
+//    checkNotNull(c1);
+//    checkNotNull(c2);
+//    setCompleters(new AggregateCompleter(c1, c2));
+//  }
 
   public boolean isLoadProfileScripts() {
     return loadProfileScripts;
@@ -278,9 +278,7 @@ public class ShellImpl
     };
 
     IO io = getIo();
-
-    // FIXME:
-    Console console = new Console(io, taskFactory /*, history*/);
+    Console console = new Console(io, taskFactory, history);
 
     if (prompt != null) {
       console.setPrompt(prompt);
@@ -290,11 +288,11 @@ public class ShellImpl
       console.setErrorHandler(errorHandler);
     }
 
-    if (completers != null && !completers.isEmpty()) {
-      for (Completer completer : completers) {
-        console.addCompleter(completer != null ? completer : NullCompleter.INSTANCE);
-      }
-    }
+//    if (completers != null && !completers.isEmpty()) {
+//      for (Completer completer : completers) {
+//        console.addCompleter(completer != null ? completer : NullCompleter.INSTANCE);
+//      }
+//    }
 
     if (!io.isQuiet()) {
       renderWelcomeMessage(io);

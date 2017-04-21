@@ -16,13 +16,15 @@
 package com.planet57.gshell.console;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.concurrent.Callable;
 
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.util.io.InputPipe;
 import com.planet57.gshell.util.io.StreamSet;
-import org.jline.reader.Completer;
+import org.jline.reader.History;
+import org.jline.reader.LineReader;
+import org.jline.reader.LineReaderBuilder;
+import org.jline.terminal.Terminal;
+import org.jline.terminal.TerminalBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,12 +43,9 @@ public class Console
 {
   private static final Logger log = LoggerFactory.getLogger(Console.class);
 
-  private final InputPipe pipe;
-
   private final IO io;
 
-  // FIXME:
-//  private final ConsoleReader reader;
+  private final LineReader lineReader;
 
   private final Callable<ConsoleTask> taskFactory;
 
@@ -58,50 +57,23 @@ public class Console
 
   private volatile boolean running;
 
-  public Console(final IO io, final Callable<ConsoleTask> taskFactory /*@Nullable final History history,*/) throws IOException
+  public Console(final IO io, final Callable<ConsoleTask> taskFactory, final History history) throws IOException
   {
     checkNotNull(io);
     this.taskFactory = checkNotNull(taskFactory);
 
     // FIXME:
-    this.pipe = new InputPipe(io.streams, /*io.getTerminal(),*/ new InputPipe.InterruptHandler()
-    {
-      @Override
-      public boolean interrupt() throws Exception {
-        return interruptTask();
-      }
+    Terminal terminal = TerminalBuilder.builder().build();
+    this.io = new IO(new StreamSet(io.streams.in, io.streams.out, io.streams.err), null, io.out, io.err, true);
 
-      @Override
-      public boolean stop() throws Exception {
-        return false;
-      }
-    });
-    this.pipe.setName("Console InputPipe");
-    this.pipe.setDaemon(true);
-
-    // Setup a new IO w/our pipe input stream & rebuilding the input reader
-    this.io = new IO(new StreamSet(pipe.getInputStream(), io.streams.out, io.streams.err), null, io.out, io.err, true);
-
-    // FIXME:
-//    this.reader = new ConsoleReader(
-//        this.io.streams.in,
-//        this.io.out,
-//        bindings,
-//        io.getTerminal());
-//
-//    this.reader.setPaginationEnabled(true);
-//    this.reader.setCompletionHandler(new CandidateListCompletionHandler());
-//    this.reader.setHistory(history != null ? history : new MemoryHistory());
+    this.lineReader = LineReaderBuilder.builder()
+      .terminal(terminal)
+      .history(history)
+      .build();
   }
 
   public IO getIo() {
     return io;
-  }
-
-  public void addCompleter(final Completer completer) {
-    checkNotNull(completer);
-    // FIXME:
-//    reader.addCompleter(completer);
   }
 
   public void setPrompt(final ConsolePrompt prompt) {
@@ -123,14 +95,12 @@ public class Console
   public void close() {
     if (running) {
       log.trace("Closing");
-      pipe.interrupt();
       running = false;
     }
   }
 
   public void run() {
     log.trace("Running");
-    pipe.start();
     running = true;
 
     while (running) {
@@ -146,15 +116,6 @@ public class Console
         else {
           t.printStackTrace();
         }
-
-        // FIXME:
-        // Need to reset the terminal in some cases after a failure
-//        try {
-//          io.getTerminal().reset();
-//        }
-//        catch (Exception e) {
-//          log.error("Failed to reset terminal", e);
-//        }
       }
     }
 
@@ -226,17 +187,11 @@ public class Console
   }
 
   private String readLine(@Nullable final String prompt) throws IOException {
-    // FIXME:
-//    return reader.readLine(prompt);
-    return null;
+    return lineReader.readLine(prompt);
   }
 
   private boolean interruptTask() throws Exception {
     boolean interrupt = false;
-
-    // FIXME:
-//    reader.getCursorBuffer().clear();
-//    reader.redrawLine();
 
     ConsoleTask task = getCurrentTask();
     if (task != null) {
