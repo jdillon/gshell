@@ -35,6 +35,8 @@ import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.util.Arguments;
 import com.planet57.gshell.util.Strings;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Visitor which will execute command-lines as parsed.
  *
@@ -51,11 +53,8 @@ public class ExecutingVisitor
   private final Evaluator evaluator;
 
   public ExecutingVisitor(final Shell shell, final CommandExecutor executor) {
-    assert shell != null;
-    assert executor != null;
-
-    this.shell = shell;
-    this.executor = executor;
+    this.shell = checkNotNull(shell);
+    this.executor = checkNotNull(executor);
     this.evaluator = EvaluatorFactory.get();
   }
 
@@ -170,13 +169,13 @@ public class ExecutingVisitor
     private final List<Object> args;
 
     public ExpressionState(final ASTExpression root) {
-      assert root != null;
+      checkNotNull(root);
       this.args = new ArrayList<>(root.jjtGetNumChildren());
       this.buff = new StringBuilder();
     }
 
     public String append(final String value) {
-      assert value != null;
+      checkNotNull(value);
       buff.append(value);
       return value;
     }
