@@ -28,8 +28,7 @@ import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.shell.ShellHolder;
 import com.planet57.gshell.util.io.PromptReader;
 import com.planet57.gshell.variables.Variables;
-
-//import jline.Terminal;
+import org.jline.terminal.Terminal;
 
 /**
  * GShell core module.
@@ -57,38 +56,38 @@ public class CoreModule
   }
 
   @Provides
+  private Terminal provideTerminal() {
+    return provideIo().getTerminal();
+  }
+
+  @Provides
   private Variables provideVariables() {
     return provideShell().getVariables();
   }
 
-  // FIXME
-//  @Provides
-//  private Terminal provideTerminal() {
-//    return provideIo().getTerminal();
-//  }
-
+  /**
+   * Provides ANSI-aware prompt renderer for the current-thread environment.
+   */
   @Provides
   private PromptReader providePromptReader() throws IOException {
     IO io = provideIo();
 
-    // FIXME:
-    return new PromptReader();
-//    return new PromptReader(io.streams, io.getTerminal())
-//    {
-//      @Override
-//      public String readLine(String prompt, Validator validator) throws IOException {
-//        return super.readLine(AnsiRenderer.render(prompt), validator);
-//      }
-//
-//      @Override
-//      public String readLine(String prompt, char mask, Validator validator) throws IOException {
-//        return super.readLine(AnsiRenderer.render(prompt), mask, validator);
-//      }
-//
-//      @Override
-//      public String readPassword(String prompt, Validator validator) throws IOException {
-//        return super.readPassword(AnsiRenderer.render(prompt), validator);
-//      }
-//    };
+    return new PromptReader(io.streams, io.getTerminal())
+    {
+      @Override
+      public String readLine(String prompt, Validator validator) throws IOException {
+        return super.readLine(AnsiRenderer.render(prompt), validator);
+      }
+
+      @Override
+      public String readLine(String prompt, char mask, Validator validator) throws IOException {
+        return super.readLine(AnsiRenderer.render(prompt), mask, validator);
+      }
+
+      @Override
+      public String readPassword(String prompt, Validator validator) throws IOException {
+        return super.readPassword(AnsiRenderer.render(prompt), validator);
+      }
+    };
   }
 }

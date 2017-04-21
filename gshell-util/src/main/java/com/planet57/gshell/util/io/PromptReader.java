@@ -15,11 +15,11 @@
  */
 package com.planet57.gshell.util.io;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+import org.jline.reader.LineReader;
+import org.jline.reader.LineReaderBuilder;
+import org.jline.terminal.Terminal;
 
-//import jline.Terminal;
-//import jline.console.ConsoleReader;
+import java.io.IOException;
 
 import javax.annotation.Nullable;
 
@@ -35,20 +35,27 @@ public class PromptReader
 {
   private char mask = '*';
 
-  // FIXME:
-//  private final ConsoleReader reader;
-//
-//  public PromptReader(final StreamSet streams, final Terminal term) throws IOException {
-//    checkNotNull(streams);
-//    checkNotNull(term);
-//    this.reader = createReader(streams, term);
-//  }
-//
-//  protected ConsoleReader createReader(final StreamSet streams, final Terminal term) throws IOException {
-//    checkNotNull(streams);
-//    checkNotNull(term);
-//    return new ConsoleReader(streams.in, new PrintWriter(streams.out, true), term);
-//  }
+  private final LineReader reader;
+
+  public PromptReader(final StreamSet streams, final Terminal terminal) throws IOException {
+    checkNotNull(streams);
+    checkNotNull(terminal);
+    this.reader = createReader(streams, terminal);
+  }
+
+  protected LineReader createReader(final StreamSet streams, final Terminal terminal) throws IOException {
+    checkNotNull(streams);
+    checkNotNull(terminal);
+
+    // TODO: is this optimal?  provide null history anything else for a lightweight reader
+
+    return LineReaderBuilder.builder()
+      .terminal(terminal)
+      .build();
+  }
+
+  // TODO: This may be better off as a builder, with all the various configuration options
+  // TODO: allow setting buffer value for initial selection
 
   public char getMask() {
     return mask;
@@ -58,75 +65,73 @@ public class PromptReader
     this.mask = mask;
   }
 
-  //
   // TODO: Need to provide some completer function here, as well as better expect/require interface
-  //
 
-//  public String readLine(final String prompt, @Nullable final Validator validator) throws IOException {
-//    checkNotNull(prompt);
-//    String value;
-//
-//    while (true) {
-//      value = reader.readLine(prompt);
-//
-//      if (validator == null) {
-//        break;
-//      }
-//      else if (validator.isValid(value)) {
-//        break;
-//      }
-//    }
-//
-//    return value;
-//  }
-//
-//  public String readLine(final String prompt) throws IOException {
-//    return readLine(prompt, null);
-//  }
-//
-//  public String readLine(final String prompt, final char mask, @Nullable final Validator validator) throws IOException {
-//    checkNotNull(prompt);
-//    String value;
-//
-//    while (true) {
-//      value = reader.readLine(prompt, mask);
-//
-//      if (validator == null) {
-//        break;
-//      }
-//      else if (validator.isValid(value)) {
-//        break;
-//      }
-//    }
-//
-//    return value;
-//  }
-//
-//  public String readLine(final String prompt, final char mask) throws IOException {
-//    return readLine(prompt, mask, null);
-//  }
-//
-//  public String readPassword(final String prompt, @Nullable final Validator validator) throws IOException {
-//    checkNotNull(prompt);
-//    String value;
-//
-//    while (true) {
-//      value = reader.readLine(prompt, mask);
-//
-//      if (validator == null) {
-//        break;
-//      }
-//      else if (validator.isValid(value)) {
-//        break;
-//      }
-//    }
-//
-//    return value;
-//  }
-//
-//  public String readPassword(final String prompt) throws IOException {
-//    return readPassword(prompt, null);
-//  }
+  public String readLine(final String prompt, @Nullable final Validator validator) throws IOException {
+    checkNotNull(prompt);
+    String value;
+
+    while (true) {
+      value = reader.readLine(prompt);
+
+      if (validator == null) {
+        break;
+      }
+      else if (validator.isValid(value)) {
+        break;
+      }
+    }
+
+    return value;
+  }
+
+  public String readLine(final String prompt) throws IOException {
+    return readLine(prompt, null);
+  }
+
+  public String readLine(final String prompt, final char mask, @Nullable final Validator validator) throws IOException {
+    checkNotNull(prompt);
+    String value;
+
+    while (true) {
+      value = reader.readLine(prompt, mask);
+
+      if (validator == null) {
+        break;
+      }
+      else if (validator.isValid(value)) {
+        break;
+      }
+    }
+
+    return value;
+  }
+
+  public String readLine(final String prompt, final char mask) throws IOException {
+    return readLine(prompt, mask, null);
+  }
+
+  public String readPassword(final String prompt, @Nullable final Validator validator) throws IOException {
+    checkNotNull(prompt);
+    String value;
+
+    while (true) {
+      value = reader.readLine(prompt, mask);
+
+      if (validator == null) {
+        break;
+      }
+      else if (validator.isValid(value)) {
+        break;
+      }
+    }
+
+    return value;
+  }
+
+  public String readPassword(final String prompt) throws IOException {
+    return readPassword(prompt, null);
+  }
 
   //
   // Validator

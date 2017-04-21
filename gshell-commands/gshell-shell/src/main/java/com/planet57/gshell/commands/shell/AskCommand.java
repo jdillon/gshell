@@ -42,7 +42,7 @@ public class AskCommand
   @Option(name = "m", longName = "mask")
   private Character mask;
 
-  @Argument
+  @Argument(required = true)
   private String prompt;
 
   @Inject
@@ -53,21 +53,18 @@ public class AskCommand
   public Object execute(final CommandContext context) throws Exception {
     checkNotNull(context);
 
-    // FIXME:
-//    PromptReader prompter = promptProvider.get();
-//    String input;
-//
-//    if (mask != null) {
-//      input = prompter.readLine(prompt, mask);
-//    }
-//    else {
-//      input = prompter.readLine(prompt);
-//    }
-//
-//    log.debug("Read input: {}", input);
-//
-//    return input;
+    PromptReader prompter = promptProvider.get();
+    String input;
 
-    return null;
+    if (mask != null) {
+      input = prompter.readLine(prompt, mask);
+    }
+    else {
+      input = prompter.readLine(prompt);
+    }
+
+    log.debug("Read input: {}", input);
+
+    return input;
   }
 }
