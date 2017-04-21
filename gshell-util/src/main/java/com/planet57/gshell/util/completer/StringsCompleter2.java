@@ -5,6 +5,8 @@ import org.jline.reader.Completer;
 import org.jline.reader.LineReader;
 import org.jline.reader.ParsedLine;
 import org.jline.utils.AttributedString;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,6 +24,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class StringsCompleter2
   implements Completer
 {
+  private static final Logger log = LoggerFactory.getLogger(StringsCompleter2.class);
+
   private final Collection<Candidate> candidates = new ArrayList<>();
 
   private volatile boolean initalized = false;
@@ -93,6 +97,7 @@ public class StringsCompleter2
    * Returns an ANSI-enabled candidate for given string.
    */
   public static Candidate candidate(final String value) {
+    log.trace("Creating candidate: {}", value);
     return new Candidate(AttributedString.stripAnsi(value), value, null, null, null, null, true);
   }
 }
