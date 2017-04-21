@@ -165,6 +165,7 @@ public class ListDirectoryCommand
       buff.style(AttributedStyle.DEFAULT);
     }
     else {
+      // not styled
       return name;
     }
 
