@@ -116,7 +116,7 @@ public class Console
           if (getErrorHandler() != null) {
             running = getErrorHandler().handleError(t);
           } else {
-            t.printStackTrace();
+            t.printStackTrace(io.err);
           }
         }
       }
@@ -144,7 +144,7 @@ public class Console
    * @throws Exception Work failed.
    */
   private boolean work() throws Exception {
-    String line = readLine(prompt != null ? prompt.prompt() : ConsolePrompt.DEFAULT_PROMPT);
+    String line = lineReader.readLine(prompt != null ? prompt.prompt() : ConsolePrompt.DEFAULT_PROMPT);
 
     log.trace("Read line: {}", line);
 
@@ -190,10 +190,6 @@ public class Console
 
     log.trace("HEX: {}", hex);
     log.trace("     {}", idx);
-  }
-
-  private String readLine(@Nullable final String prompt) throws IOException {
-    return lineReader.readLine(prompt);
   }
 
   private boolean interruptTask() {
