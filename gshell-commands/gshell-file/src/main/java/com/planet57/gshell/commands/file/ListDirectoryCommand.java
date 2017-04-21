@@ -36,12 +36,18 @@ import com.planet57.gshell.file.FileSystemAccess;
 import com.planet57.gshell.util.io.FileAssert;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
+import org.fusesource.jansi.AnsiString;
 import org.jline.reader.Completer;
 import org.jline.terminal.Terminal;
 import org.jline.utils.AttributedString;
 import org.jline.utils.AttributedStringBuilder;
+import org.jline.utils.AttributedStyle;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static org.fusesource.jansi.Ansi.Attribute.INTENSITY_FAINT;
+import static org.fusesource.jansi.Ansi.ansi;
+import static org.jline.utils.AttributedStyle.BLUE;
+import static org.jline.utils.AttributedStyle.GREEN;
 
 /**
  * List the contents of a file or directory.
@@ -120,8 +126,7 @@ public class ListDirectoryCommand
         }
       }
 
-      // FIXME: render
-      names.add(file.getName());
+      names.add(render(file));
     }
 
     if (longList) {
@@ -142,24 +147,34 @@ public class ListDirectoryCommand
     }
   }
 
-  // FIXME: sort out api to apply ansi that is compatible with jline3
+  // TODO: sort out some sort of scheme where this can be made configurable
 
-//  private CharSequence render(final File file) {
-//    String name = file.getName();
-//
-//    if (file.isDirectory()) {
-//      name = ansi().fg(BLUE).a(name).a(File.separator).reset().toString();
-//    }
-//    else if (file.canExecute()) {
-//      name = ansi().fg(GREEN).a(name).a("*").reset().toString();
-//    }
-//
-//    if (file.isHidden()) {
-//      name = ansi().a(INTENSITY_FAINT).a(name).reset().toString();
-//    }
-//
-//    return new AnsiString(name);
-//  }
+  private String render(final File file) {
+    String name = file.getName();
+
+    AttributedStringBuilder buff = new AttributedStringBuilder();
+    if (file.isDirectory()) {
+      buff.style(AttributedStyle.DEFAULT.foreground(AttributedStyle.BLUE));
+      buff.append(name);
+      buff.append(File.separator);
+      buff.style(AttributedStyle.DEFAULT);
+    }
+    else if (file.canExecute()) {
+      buff.style(AttributedStyle.DEFAULT.foreground(AttributedStyle.GREEN));
+      buff.append(name);
+      buff.style(AttributedStyle.DEFAULT);
+    }
+    else if (file.isHidden()) {
+      buff.style(AttributedStyle.DEFAULT.faint());
+      buff.append(name);
+      buff.style(AttributedStyle.DEFAULT);
+    }
+    else {
+      return name;
+    }
+
+    return buff.toAnsi();
+  }
 
   // TODO: move to helper
 
