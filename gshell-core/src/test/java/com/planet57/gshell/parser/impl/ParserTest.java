@@ -23,8 +23,6 @@ import static org.junit.Assert.fail;
 
 /**
  * Unit tests for the {@link com.planet57.gshell.parser.impl.Parser} class.
- *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class ParserTest
     extends ParserTestSupport

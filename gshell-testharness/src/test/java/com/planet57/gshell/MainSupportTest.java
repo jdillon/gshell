@@ -25,19 +25,16 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.sonatype.goodies.testsupport.TestUtil;
+import org.sonatype.goodies.testsupport.TestSupport;
 
 import static org.junit.Assert.assertEquals;
 
 /**
  * Tests for {@link MainSupport}.
- *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class MainSupportTest
+  extends TestSupport
 {
-  private final TestUtil util = new TestUtil(this);
-
   private MockMain main;
 
   @Before
@@ -85,5 +82,4 @@ public class MainSupportTest
       this.exitCode = code;
     }
   }
-
 }

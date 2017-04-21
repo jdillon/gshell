@@ -60,8 +60,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Support for testing {@link CommandAction} instances.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 2.5
+ * @since 3.0
  */
 public abstract class CommandTestSupport
 {

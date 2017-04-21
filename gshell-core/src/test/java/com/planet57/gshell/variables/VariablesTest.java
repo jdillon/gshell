@@ -19,6 +19,7 @@ import java.util.Iterator;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.sonatype.goodies.testsupport.TestSupport;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -31,10 +32,9 @@ import static org.junit.Assert.fail;
 
 /**
  * Unit tests for the {@link Variables} class.
- *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class VariablesTest
+  extends TestSupport
 {
   private Variables vars;
 

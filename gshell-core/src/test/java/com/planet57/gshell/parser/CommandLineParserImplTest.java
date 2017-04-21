@@ -22,15 +22,15 @@ import com.google.inject.Stage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.sonatype.goodies.testsupport.TestSupport;
 
 import static org.junit.Assert.fail;
 
 /**
  * Unit tests for the {@link CommandLineParserImpl} class.
- *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class CommandLineParserImplTest
+  extends TestSupport
 {
   private CommandLineParser parser;
 

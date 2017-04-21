@@ -15,9 +15,6 @@
  */
 package com.planet57.gshell.command.resolver;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -34,8 +31,7 @@ import com.planet57.gshell.variables.VariablesSupport;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
+import org.sonatype.goodies.testsupport.TestSupport;
 
 /**
  * Tests for {@link NodePathCompleter}.
@@ -43,6 +39,7 @@ import static junit.framework.Assert.assertEquals;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class NodePathCompleterTest
+  extends TestSupport
 {
   private Variables variables;
 

@@ -26,15 +26,15 @@ import com.planet57.gshell.event.EventManagerImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.sonatype.goodies.testsupport.TestSupport;
 
 import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link CommandRegistryImpl}.
- *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class CommandRegistryImplTest
+  extends TestSupport
 {
   private CommandRegistry registry;
 

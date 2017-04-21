@@ -15,6 +15,8 @@
  */
 package com.planet57.gshell.parser.impl;
 
+import org.sonatype.goodies.testsupport.TestSupport;
+
 import java.io.Reader;
 import java.io.StringReader;
 
@@ -22,10 +24,9 @@ import static org.junit.Assert.assertNotNull;
 
 /**
  * Support for parser testing.
- *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class ParserTestSupport
+  extends TestSupport
 {
   protected ASTCommandLine parse(final String input) throws ParseException {
     assertNotNull(input);

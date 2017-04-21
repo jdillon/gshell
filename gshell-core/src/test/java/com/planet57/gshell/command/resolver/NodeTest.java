@@ -25,6 +25,7 @@ import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.sonatype.goodies.testsupport.TestSupport;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
@@ -33,10 +34,9 @@ import static junit.framework.Assert.assertTrue;
 
 /**
  * Tests for {@link Node}.
- *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class NodeTest
+  extends TestSupport
 {
   private Node root;
 

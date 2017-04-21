@@ -26,7 +26,7 @@ import com.planet57.gshell.logging.LoggingSystem;
 /**
  * Test {@link LoggingSystem}.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ * @since 3.0
  */
 public class TestLoggingSystem
     implements LoggingSystem

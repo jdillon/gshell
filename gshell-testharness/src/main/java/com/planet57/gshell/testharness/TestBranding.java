@@ -23,7 +23,7 @@ import java.io.File;
 /**
  * Test {@link Branding}.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ * @since 3.0
  */
 public class TestBranding
     extends BrandingSupport

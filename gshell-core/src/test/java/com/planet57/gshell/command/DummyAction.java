@@ -16,9 +16,7 @@
 package com.planet57.gshell.command;
 
 /**
- * Dummy {@link CommandAction}
- *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ * Dummy {@link CommandAction}.
  */
 public class DummyAction
     extends CommandActionSupport

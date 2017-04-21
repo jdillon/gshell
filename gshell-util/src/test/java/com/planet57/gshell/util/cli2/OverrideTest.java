@@ -21,8 +21,6 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Tests options.
- *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class OverrideTest
     extends CliProcessorTestSupport
