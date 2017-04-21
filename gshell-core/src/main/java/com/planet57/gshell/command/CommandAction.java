@@ -18,7 +18,7 @@ package com.planet57.gshell.command;
 import com.planet57.gshell.util.i18n.MessageSource;
 import org.jline.reader.Completer;
 
-import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 
 /**
  * Provides the user-action for a command.
@@ -44,7 +44,7 @@ public interface CommandAction
    * @return The result of the command execution.
    * @throws Exception Command execution failed.
    */
-  Object execute(CommandContext context) throws Exception;
+  Object execute(@Nonnull CommandContext context) throws Exception;
 
   /**
    * Enumeration for the basic return types of a command execution.
