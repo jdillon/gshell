@@ -80,7 +80,17 @@ public class StringsCompleter2
     }
   }
 
+  /**
+   * Invoked first time a completion occurs.
+   */
   protected void init() {
+    // empty
+  }
+
+  /**
+   * Invoked before candidates are applied.
+   */
+  protected void prepare() {
     // empty
   }
 
@@ -92,6 +102,7 @@ public class StringsCompleter2
       init();
       initalized = true;
     }
+    prepare();
 
     candidates.addAll(this.candidates);
   }

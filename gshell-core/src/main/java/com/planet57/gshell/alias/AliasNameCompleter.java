@@ -46,6 +46,8 @@ public class AliasNameCompleter
     this.aliases = checkNotNull(aliases);
   }
 
+  // maintain alias-names to complete; from initial aliases and any alias changes
+
   @Override
   protected void init() {
     setStrings(aliases.getAliases().keySet());

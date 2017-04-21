@@ -15,17 +15,12 @@
  */
 package com.planet57.gshell.logging;
 
-import java.util.List;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
 import com.planet57.gshell.util.completer.StringsCompleter2;
-import org.jline.reader.Candidate;
 import org.jline.reader.Completer;
-import org.jline.reader.LineReader;
-import org.jline.reader.ParsedLine;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -47,9 +42,11 @@ public class LoggerNameCompleter
     this.logging = checkNotNull(logging);
   }
 
+  /**
+   * Re-adjusted completions each attempt to complete; loggers could change dynamically.
+   */
   @Override
-  public void complete(final LineReader reader, final ParsedLine commandLine, final List<Candidate> candidates) {
+  protected void prepare() {
     setStrings(logging.getLoggerNames());
-    super.complete(reader, commandLine, candidates);
   }
 }
