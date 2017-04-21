@@ -59,6 +59,7 @@ public class ExecutingVisitor
     this.evaluator = EvaluatorFactory.get();
   }
 
+  @Override
   public Object visit(final SimpleNode node, final Object data) {
     assert node != null;
 
@@ -66,6 +67,7 @@ public class ExecutingVisitor
     throw new Error("Unhandled node type: " + node.getClass().getName());
   }
 
+  @Override
   public Object visit(final ASTCommandLine node, final Object data) {
     assert node != null;
 
@@ -79,6 +81,7 @@ public class ExecutingVisitor
     return null;
   }
 
+  @Override
   public Object visit(final ASTExpression node, final Object data) {
     assert node != null;
 
@@ -104,6 +107,7 @@ public class ExecutingVisitor
     return result;
   }
 
+  @Override
   public Object visit(final ASTWhitespace node, final Object data) {
     assert node != null;
     assert data != null;
@@ -113,6 +117,7 @@ public class ExecutingVisitor
     return data;
   }
 
+  @Override
   public Object visit(final ASTQuotedArgument node, final Object data) {
     assert node != null;
     assert data != null;
@@ -122,6 +127,7 @@ public class ExecutingVisitor
     return state.append(value);
   }
 
+  @Override
   public Object visit(final ASTPlainArgument node, final Object data) {
     assert node != null;
     assert data != null;
@@ -131,6 +137,7 @@ public class ExecutingVisitor
     return state.append(value);
   }
 
+  @Override
   public Object visit(final ASTOpaqueArgument node, final Object data) {
     assert node != null;
 
@@ -164,7 +171,7 @@ public class ExecutingVisitor
 
     public ExpressionState(final ASTExpression root) {
       assert root != null;
-      this.args = new ArrayList<Object>(root.jjtGetNumChildren());
+      this.args = new ArrayList<>(root.jjtGetNumChildren());
       this.buff = new StringBuilder();
     }
 

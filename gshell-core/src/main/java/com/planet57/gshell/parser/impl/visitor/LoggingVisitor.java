@@ -27,6 +27,8 @@ import com.planet57.gshell.parser.impl.SimpleNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Logs nodes in the tree.
  *
@@ -36,7 +38,7 @@ import org.slf4j.LoggerFactory;
 public class LoggingVisitor
     implements ParserVisitor
 {
-  public static enum Level
+  public enum Level
   {
     INFO,
     DEBUG
@@ -57,11 +59,8 @@ public class LoggingVisitor
   }
 
   public LoggingVisitor(final Logger log, final Level level) {
-    assert log != null;
-    assert level != null;
-
-    this.log = log;
-    this.level = level;
+    this.log = checkNotNull(log);
+    this.level = checkNotNull(level);
   }
 
   private Object log(final Class type, final SimpleNode node, Object data) {
@@ -104,30 +103,37 @@ public class LoggingVisitor
     return data;
   }
 
+  @Override
   public Object visit(final SimpleNode node, Object data) {
     return log(SimpleNode.class, node, data);
   }
 
+  @Override
   public Object visit(final ASTCommandLine node, Object data) {
     return log(ASTCommandLine.class, node, data);
   }
 
+  @Override
   public Object visit(final ASTExpression node, Object data) {
     return log(ASTExpression.class, node, data);
   }
 
+  @Override
   public Object visit(final ASTWhitespace node, Object data) {
     return log(ASTWhitespace.class, node, data);
   }
 
+  @Override
   public Object visit(final ASTQuotedArgument node, Object data) {
     return log(ASTQuotedArgument.class, node, data);
   }
 
+  @Override
   public Object visit(final ASTOpaqueArgument node, Object data) {
     return log(ASTOpaqueArgument.class, node, data);
   }
 
+  @Override
   public Object visit(final ASTPlainArgument node, Object data) {
     return log(ASTPlainArgument.class, node, data);
   }
