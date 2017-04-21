@@ -164,10 +164,8 @@ public class ShellImpl
     }
   }
 
-  // FIXME: "commands" completer needs a lot of help; use command-name for now
-
   @Inject
-  public void installCompleters(final @Named("alias-name") Completer c1, final @Named("command-name") Completer c2) {
+  public void installCompleters(final @Named("alias-name") Completer c1, final @Named("command") Completer c2) {
     checkNotNull(c1);
     checkNotNull(c2);
     setCompleters(new AggregateCompleter(c1, c2));

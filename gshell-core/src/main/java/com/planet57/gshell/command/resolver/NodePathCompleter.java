@@ -15,6 +15,7 @@
  */
 package com.planet57.gshell.command.resolver;
 
+import com.planet57.gshell.util.completer.StringsCompleter2;
 import org.jline.reader.Candidate;
 import org.jline.reader.Completer;
 import org.jline.reader.LineReader;
@@ -60,111 +61,108 @@ public class NodePathCompleter
 
     Collection<Node> matches = new LinkedHashSet<>();
     String prefix = "";
+    String buffer = line.line();
 
-    // FIXME: this non-trivial completer needs a rewrite for jline3
-//    if (buffer == null || buffer.length() == 0) {
-//      // If there is no context in the buffer, then match every node in the search path
-//      for (Node parent : resolver.searchPath()) {
-//        matches.addAll(parent.children());
-//      }
-//
-//      if (!resolver.group().isRoot()) {
-//        candidates.add(PARENT);
-//      }
-//    }
-//    else if (buffer.startsWith(ROOT) || buffer.startsWith(CURRENT)) {
-//      NodePath path = new NodePath(buffer);
-//
-//      // If the path starts with / or . (..) then no need to use the group search path
-//      Node node = resolver.resolve(path);
-//      prefix = getPrefix(buffer);
-//
-//      if (node != null) {
-//        // direct match found
-//        if (node.isGroup() && buffer.endsWith(SEPARATOR)) {
-//          // if the node is a group and the buffer ends with /, then match children
-//          prefix = buffer;
-//          matches.addAll(node.children());
-//        }
-//        else if (node.isGroup() && buffer.endsWith(PARENT)) {
-//          candidates.add(buffer + SEPARATOR);
-//        }
-//        else if (node.isGroup() && buffer.endsWith(CURRENT)) {
-//          candidates.add(buffer + SEPARATOR);
-//          candidates.add(buffer + CURRENT + SEPARATOR);
-//        }
-//        else {
-//          // else match the single node, if its a group, next match will append /
-//          matches.add(node);
-//        }
-//      }
-//      else {
-//        path = path.parent();
-//        node = resolver.resolve(path);
-//
-//        if (node != null && node.isGroup()) {
-//          String suffix = getSuffix(buffer);
-//          for (Node child : node.children()) {
-//            if (child.getName().startsWith(suffix)) {
-//              matches.add(child);
-//            }
-//          }
-//        }
-//      }
-//    }
-//    else {
-//      // need to look for matches in the group search path
-//      for (Node parent : resolver.searchPath()) {
-//        Node node = parent.find(buffer);
-//
-//        if (node != null) {
-//          // direct match found
-//          if (node.isGroup() && buffer.endsWith(SEPARATOR)) {
-//            // if the node is a group and the buffer ends with /, then match children
-//            prefix = buffer;
-//            matches.addAll(node.children());
-//          }
-//          else {
-//            // else match the single node, if its a group, next match will append /
-//            matches.add(node);
-//          }
-//        }
-//        else {
-//          // no direct match, find the parent node and match its children by name
-//          NodePath path = new NodePath(buffer);
-//          path = path.parent();
-//          if (path != null) {
-//            node = parent.find(path);
-//          }
-//          else {
-//            node = parent;
-//          }
-//
-//          if (node != null && node.isGroup()) {
-//            // if the buffer contains a /, then set the prefix
-//            if (buffer.contains(SEPARATOR)) {
-//              prefix = getPrefix(buffer);
-//            }
-//
-//            // look for all nodes matching the suffix
-//            String suffix = getSuffix(buffer);
-//            for (Node child : node.children()) {
-//              if (child.getName().startsWith(suffix)) {
-//                matches.add(child);
-//              }
-//            }
-//          }
-//        }
-//      }
-//    }
-//
-//    return buildCandidates(candidates, matches, prefix);
+    if (buffer == null || buffer.length() == 0) {
+      // If there is no context in the buffer, then match every node in the search path
+      for (Node parent : resolver.searchPath()) {
+        matches.addAll(parent.children());
+      }
+
+      if (!resolver.group().isRoot()) {
+        candidates.add(StringsCompleter2.candidate(PARENT));
+      }
+    }
+    else if (buffer.startsWith(ROOT) || buffer.startsWith(CURRENT)) {
+      NodePath path = new NodePath(buffer);
+
+      // If the path starts with / or . (..) then no need to use the group search path
+      Node node = resolver.resolve(path);
+      prefix = getPrefix(buffer);
+
+      if (node != null) {
+        // direct match found
+        if (node.isGroup() && buffer.endsWith(SEPARATOR)) {
+          // if the node is a group and the buffer ends with /, then match children
+          prefix = buffer;
+          matches.addAll(node.children());
+        }
+        else if (node.isGroup() && buffer.endsWith(PARENT)) {
+          candidates.add(StringsCompleter2.candidate(buffer + SEPARATOR));
+        }
+        else if (node.isGroup() && buffer.endsWith(CURRENT)) {
+          candidates.add(StringsCompleter2.candidate(buffer + SEPARATOR));
+          candidates.add(StringsCompleter2.candidate(buffer + CURRENT + SEPARATOR));
+        }
+        else {
+          // else match the single node, if its a group, next match will append /
+          matches.add(node);
+        }
+      }
+      else {
+        path = path.parent();
+        node = resolver.resolve(path);
+
+        if (node != null && node.isGroup()) {
+          String suffix = getSuffix(buffer);
+          for (Node child : node.children()) {
+            if (child.getName().startsWith(suffix)) {
+              matches.add(child);
+            }
+          }
+        }
+      }
+    }
+    else {
+      // need to look for matches in the group search path
+      for (Node parent : resolver.searchPath()) {
+        Node node = parent.find(buffer);
+
+        if (node != null) {
+          // direct match found
+          if (node.isGroup() && buffer.endsWith(SEPARATOR)) {
+            // if the node is a group and the buffer ends with /, then match children
+            prefix = buffer;
+            matches.addAll(node.children());
+          }
+          else {
+            // else match the single node, if its a group, next match will append /
+            matches.add(node);
+          }
+        }
+        else {
+          // no direct match, find the parent node and match its children by name
+          NodePath path = new NodePath(buffer);
+          path = path.parent();
+          if (path != null) {
+            node = parent.find(path);
+          }
+          else {
+            node = parent;
+          }
+
+          if (node != null && node.isGroup()) {
+            // if the buffer contains a /, then set the prefix
+            if (buffer.contains(SEPARATOR)) {
+              prefix = getPrefix(buffer);
+            }
+
+            // look for all nodes matching the suffix
+            String suffix = getSuffix(buffer);
+            for (Node child : node.children()) {
+              if (child.getName().startsWith(suffix)) {
+                matches.add(child);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    buildCandidates(candidates, matches, prefix);
   }
 
-  protected int buildCandidates(final List<Candidate> candidates,
-                                final Collection<Node> matches,
-                                final String prefix)
-  {
+  protected void buildCandidates(final List<Candidate> candidates, final Collection<Node> matches, final String prefix) {
     assert candidates != null;
     assert matches != null;
     assert prefix != null;
@@ -182,8 +180,6 @@ public class NodePathCompleter
         ));
       }
     }
-
-    return candidates.isEmpty() ? -1 : 0;
   }
 
   private Candidate createCandidate(final String string) {

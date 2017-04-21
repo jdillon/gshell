@@ -52,7 +52,7 @@ public class StringsCompleter2
 
   public void addString(final String string) {
     checkNotNull(string);
-    candidates.add(new Candidate(AttributedString.stripAnsi(string), string, null, null, null, null, true));
+    candidates.add(candidate(string));
   }
 
   public void removeString(final String string) {
@@ -83,5 +83,16 @@ public class StringsCompleter2
     }
 
     candidates.addAll(this.candidates);
+  }
+
+  //
+  // Helpers
+  //
+
+  /**
+   * Returns an ANSI-enabled candidate for given string.
+   */
+  public static Candidate candidate(final String value) {
+    return new Candidate(AttributedString.stripAnsi(value), value, null, null, null, null, true);
   }
 }
