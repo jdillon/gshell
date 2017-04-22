@@ -239,6 +239,7 @@ public class ShellImpl
     log.debug("Starting interactive console; args: {}", Arrays.asList(args));
 
     final Terminal previousTerminal = TerminalHolder.set(io.getTerminal());
+    final Shell lastShell = ShellHolder.set(this);
 
     try {
       loadInteractiveScripts();
@@ -261,7 +262,6 @@ public class ShellImpl
         }
       };
 
-      IO io = getIo();
       Console console = new Console(io, taskFactory, history, completer);
 
       if (prompt != null) {
@@ -281,18 +281,7 @@ public class ShellImpl
         execute(args);
       }
 
-      // HACK: We have to replace the IO with the consoles so that children use the piped input
-      final IO lastIo = io;
-      this.io = console.getIo();
-
-      final Shell lastShell = ShellHolder.set(this);
-
-      try {
-        console.run();
-      } finally {
-        this.io = lastIo;
-        ShellHolder.set(lastShell);
-      }
+      console.run();
 
       if (!io.isQuiet()) {
         renderGoodbyeMessage(io);
@@ -306,6 +295,7 @@ public class ShellImpl
     }
     finally {
       TerminalHolder.set(previousTerminal);
+      ShellHolder.set(lastShell);
     }
   }
 
