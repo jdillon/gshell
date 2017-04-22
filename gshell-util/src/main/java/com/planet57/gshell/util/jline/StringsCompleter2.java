@@ -65,6 +65,9 @@ public class StringsCompleter2
     addAll(strings);
   }
 
+  /**
+   * Add all strings to existing candidates.
+   */
   public void addAll(final Iterable<String> strings) {
     checkNotNull(strings);
     for (String string : strings) {
@@ -72,11 +75,17 @@ public class StringsCompleter2
     }
   }
 
+  /**
+   * Add a string to existing candidates.
+   */
   public void add(final String string) {
     checkNotNull(string);
     candidates.put(string, candidate(string));
   }
 
+  /**
+   * Remove string from candidates.
+   */
   public void remove(final String string) {
     checkNotNull(string);
     candidates.remove(string);
