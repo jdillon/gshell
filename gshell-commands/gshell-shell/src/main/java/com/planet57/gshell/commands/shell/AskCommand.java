@@ -43,6 +43,9 @@ public class AskCommand
   @Option(name = "m", longName = "mask")
   private Character mask;
 
+  @Option(name = "v", longName = "variable")
+  private String variable;
+
   @Argument(required = true)
   private String prompt;
 
@@ -62,8 +65,12 @@ public class AskCommand
     else {
       input = prompter.readLine(prompt);
     }
-
     log.debug("Read input: {}", input);
+
+    // set variable if configured
+    if (variable != null) {
+      context.getVariables().set(variable, input);
+    }
 
     return input;
   }
