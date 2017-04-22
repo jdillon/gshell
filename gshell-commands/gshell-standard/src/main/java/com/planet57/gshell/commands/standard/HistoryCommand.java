@@ -15,6 +15,10 @@
  */
 package com.planet57.gshell.commands.standard;
 
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ListIterator;
 
 import com.planet57.gshell.command.Command;
@@ -24,10 +28,10 @@ import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
 import org.jline.reader.History;
+import org.jline.utils.AttributedStringBuilder;
+import org.jline.utils.AttributedStyle;
 
 import javax.annotation.Nonnull;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Display history.
@@ -42,6 +46,12 @@ public class HistoryCommand
   @Option(name = "p", longName = "purge")
   private boolean purge;
 
+  @Option(name = "s", longName = "save")
+  private boolean save;
+
+  @Option(name = "t", longName = "timestamps")
+  private boolean timestamps;
+
   @Argument()
   private Integer last;
 
@@ -54,6 +64,11 @@ public class HistoryCommand
       log.debug("History purged");
     }
 
+    if (save) {
+      history.save();
+      log.debug("History saved");
+    }
+
     return displayEntries(context);
   }
 
@@ -64,26 +79,32 @@ public class HistoryCommand
     log.debug("History size: {}", history.size());
 
     int i = 0;
-    if (last != null) {
-      i = history.size() - last;
-      if (i < 0) {
-        i = 0;
-      }
-    }
-
     log.debug("Starting with entry: {}", i);
 
     ListIterator<History.Entry> entries = history.iterator(i);
     while (entries.hasNext()) {
-      History.Entry entry = entries.next();
-      renderElement(io, entry.index(), entry.line());
+      renderEntry(io, entries.next());
     }
 
     return Result.SUCCESS;
   }
 
-  private void renderElement(final IO io, final int i, final CharSequence element) {
-    String index = String.format("%3d", i + 1);
-    io.println("  @|bold %s|@ %s", index, element);
+  private void renderEntry(final IO io, final History.Entry entry) {
+    String index = String.format("%3d", entry.index() + 1);
+
+    AttributedStringBuilder buff = new AttributedStringBuilder();
+
+    if (timestamps) {
+      LocalTime lt = LocalTime.from(entry.time().atZone(ZoneId.systemDefault())).truncatedTo(ChronoUnit.SECONDS);
+      DateTimeFormatter.ISO_LOCAL_TIME.formatTo(lt, buff);
+      buff.append(" ");
+    }
+
+    buff.style(AttributedStyle.BOLD);
+    buff.append(index);
+    buff.style(AttributedStyle.DEFAULT);
+    buff.append(" ").append(entry.line());
+
+    io.println(buff.toAnsi(io.getTerminal()));
   }
 }
