@@ -63,14 +63,7 @@ public class ShellCompleter
 
   @Override
   public void complete(final LineReader reader, final ParsedLine line, final List<Candidate> candidates) {
-    // HACK: object has no reasonable toString
-    log.info("Parsed-line: line={}, words={}, wordIndex: {}, wordCursor: {}, cursor: {}",
-      line.line(),
-      line.words(),
-      line.wordIndex(),
-      line.wordCursor(),
-      line.cursor()
-    );
+    explain("Parsed-line", line);
 
     if (line.wordIndex() == 0) {
       aliasNameCompleter.complete(reader, line, candidates);
@@ -94,31 +87,46 @@ public class ShellCompleter
         }
         log.debug("Completer: {}", completer);
 
-        // rebuild parsed-line stripping out the first word (the command-name)
-        LinkedList<String> words = Lists.newLinkedList(line.words());
-        words.pop();
-
         // HACK: complexity here to re-use ArgumentCompleter; not terribly efficient
-        String rawLine = line.line();
-        ParsedLine argumentList = new DefaultParser.ArgumentList(
-          rawLine.substring(command.length() + 1, rawLine.length()),
-          words,
-          line.wordIndex() - 1,
-          line.wordCursor(),
-          line.cursor() - command.length() + 1
-        );
+        ParsedLine arguments = extractCommandArguments(line);
+        explain("Command-arguments", arguments);
 
-        // HACK: object has no reasonable toString
-        log.debug("Command argument-list: line={}, words={}, wordIndex: {}, wordCursor: {}, cursor: {}",
-          argumentList.line(),
-          argumentList.words(),
-          argumentList.wordIndex(),
-          argumentList.wordCursor(),
-          argumentList.cursor()
-        );
-
-        completer.complete(reader, argumentList, candidates);
+        completer.complete(reader, arguments, candidates);
       }
     }
+  }
+
+  /**
+   * Helper to log {@link ParsedLine} details.
+   */
+  private void explain(final String message, final ParsedLine line) {
+    // HACK: ParsedLine has no sane toString(); render all its details to logging
+    log.debug("{}: line={}, words={}, wordIndex: {}, wordCursor: {}, cursor: {}",
+      message,
+      line.line(),
+      line.words(),
+      line.wordIndex(),
+      line.wordCursor(),
+      line.cursor()
+    );
+  }
+
+  /**
+   * Extract the command specific portions of the given line.
+   *
+   * This is everything past the first word.
+   */
+  private static ParsedLine extractCommandArguments(final ParsedLine line) {
+    LinkedList<String> words = Lists.newLinkedList(line.words());
+    String remove = words.pop();
+
+    String rawLine = line.line();
+    return new DefaultParser.ArgumentList(
+      rawLine.substring(remove.length() + 1, rawLine.length()),
+      words,
+      line.wordIndex() - 1,
+      line.wordCursor(),
+      line.cursor() - remove.length() + 1
+    );
   }
 }
