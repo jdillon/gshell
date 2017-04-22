@@ -97,7 +97,7 @@ public class ShellImpl
                    final Branding branding,
                    @Named("main") final IO io,
                    @Named("main") final Variables variables,
-                   @Named("main") final ShellCompleter completer)
+                   @Named("shell") final Completer completer)
       throws IOException
   {
     this.events = checkNotNull(events);

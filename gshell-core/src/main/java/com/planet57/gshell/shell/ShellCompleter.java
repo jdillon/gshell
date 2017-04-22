@@ -40,7 +40,7 @@ import com.planet57.gshell.command.resolver.Node;
  *
  * @since 3.0
  */
-@Named("main")
+@Named("shell")
 public class ShellCompleter
   extends ComponentSupport
   implements Completer
