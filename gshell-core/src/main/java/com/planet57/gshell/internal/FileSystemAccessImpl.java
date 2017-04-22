@@ -20,7 +20,9 @@ import java.io.IOException;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Provider;
+import javax.inject.Singleton;
 
 import com.planet57.gshell.util.OperatingSystem;
 import com.planet57.gshell.util.io.FileSystemAccess;
@@ -32,11 +34,12 @@ import static com.planet57.gshell.variables.VariableNames.SHELL_USER_DIR;
 import static com.planet57.gshell.variables.VariableNames.SHELL_USER_HOME;
 
 /**
- * {@link FileSystemAccess} component.
+ * Default {@link FileSystemAccess} component.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.3
  */
+@Named
+@Singleton
 public class FileSystemAccessImpl
     implements FileSystemAccess
 {
