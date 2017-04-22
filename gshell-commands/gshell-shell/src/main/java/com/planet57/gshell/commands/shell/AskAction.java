@@ -15,34 +15,63 @@
  */
 package com.planet57.gshell.commands.shell;
 
-import java.text.DateFormat;
-import java.util.Date;
+import javax.annotation.Nonnull;
+import javax.inject.Inject;
+import javax.inject.Provider;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.CommandActionSupport;
-
-import javax.annotation.Nonnull;
+import com.planet57.gshell.util.cli2.Argument;
+import com.planet57.gshell.util.cli2.Option;
+import com.planet57.gshell.util.io.PromptReader;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Displays the current time and date.
+ * Ask for some input.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "date")
-public class DateCommand
+@Command(name = "ask")
+public class AskAction
     extends CommandActionSupport
 {
+  private final Provider<PromptReader> promptProvider;
+
+  @Option(name = "m", longName = "mask")
+  private Character mask;
+
+  @Option(name = "v", longName = "variable")
+  private String variable;
+
+  @Argument(required = true)
+  private String prompt;
+
+  @Inject
+  public AskAction(final Provider<PromptReader> promptProvider) {
+    this.promptProvider = checkNotNull(promptProvider);
+  }
+
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    IO io = context.getIo();
+    PromptReader prompter = promptProvider.get();
+    String input;
 
-    io.println(DateFormat.getInstance().format(new Date()));
+    if (mask != null) {
+      input = prompter.readLine(prompt, mask);
+    }
+    else {
+      input = prompter.readLine(prompt);
+    }
+    log.debug("Read input: {}", input);
 
-    return Result.SUCCESS;
+    // set variable if configured
+    if (variable != null) {
+      context.getVariables().set(variable, input);
+    }
+
+    return input;
   }
 }

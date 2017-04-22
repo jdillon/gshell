@@ -41,7 +41,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 2.0
  */
 @Command(name = "java")
-public class JavaCommand
+public class JavaAction
     extends CommandActionSupport
 {
   private final Logger log = LoggerFactory.getLogger(getClass());

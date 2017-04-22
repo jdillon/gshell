@@ -19,32 +19,44 @@ import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
+import org.sonatype.goodies.common.Time;
 
 import javax.annotation.Nonnull;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
- * Fail with an exception.
+ * Sleep for a period.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "fail")
-public class FailCommand
+@Command(name = "sleep")
+public class SleepAction
     extends CommandActionSupport
 {
-  @Argument
-  private String message = "Failed";
+  @Argument(required = true)
+  private Time time;
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    throw new FailException(message);
-  }
-
-  private static class FailException
-      extends Exception
-  {
-    public FailException(final String message) {
-      super(message);
+    if (log.isTraceEnabled()) {
+      log.trace("Sleeping for {} on thread: {}", time, Thread.currentThread());
     }
+    else {
+      log.debug("Sleeping for {}", time);
+    }
+
+    try {
+      time.sleep();
+    }
+    catch (InterruptedException ignore) {
+      log.debug("Sleep was interrupted... :-(");
+      return Result.FAILURE;
+    }
+
+    log.debug("Awake now");
+
+    return Result.SUCCESS;
   }
 }

@@ -32,7 +32,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 2.0
  */
 @Command(name = "clear")
-public class ClearCommand
+public class ClearAction
     extends CommandActionSupport
 {
   @Override

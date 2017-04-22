@@ -81,7 +81,7 @@ public abstract class CommandTestSupport
 
   protected Variables vars;
 
-  protected final Map<String, Class> requiredCommands = new HashMap<String, Class>();
+  protected final Map<String, Class> requiredCommands = new HashMap<>();
 
   protected CommandTestSupport(final String name, final Class<?> type) {
     assertNotNull(name);
@@ -112,7 +112,7 @@ public abstract class CommandTestSupport
       }
     };
 
-    List<Module> modules = new ArrayList<Module>();
+    List<Module> modules = new ArrayList<>();
     modules.add(boot);
     configureModules(modules);
 

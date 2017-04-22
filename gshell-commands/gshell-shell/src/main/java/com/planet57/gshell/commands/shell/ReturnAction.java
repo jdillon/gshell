@@ -19,44 +19,26 @@ import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
-import org.sonatype.goodies.common.Time;
 
 import javax.annotation.Nonnull;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Sleep for a period.
+ * Set the return value.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "sleep")
-public class SleepCommand
+@Command(name = "return")
+public class ReturnAction
     extends CommandActionSupport
 {
   @Argument(required = true)
-  private Time time;
+  private int result;
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    if (log.isTraceEnabled()) {
-      log.trace("Sleeping for {} on thread: {}", time, Thread.currentThread());
-    }
-    else {
-      log.debug("Sleeping for {}", time);
-    }
-
-    try {
-      time.sleep();
-    }
-    catch (InterruptedException ignore) {
-      log.debug("Sleep was interrupted... :-(");
-      return Result.FAILURE;
-    }
-
-    log.debug("Awake now");
-
-    return Result.SUCCESS;
+    return result;
   }
 }

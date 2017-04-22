@@ -15,30 +15,22 @@
  */
 package com.planet57.gshell.commands.shell;
 
-import com.planet57.gshell.command.Command;
-import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.CommandActionSupport;
-import com.planet57.gshell.util.cli2.Argument;
-
-import javax.annotation.Nonnull;
-
-import static com.google.common.base.Preconditions.checkNotNull;
+import com.planet57.gshell.testharness.CommandTestSupport;
+import org.junit.Test;
 
 /**
- * Set the return value.
- *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 2.0
+ * Tests for {@link SleepAction}.
  */
-@Command(name = "return")
-public class ReturnCommand
-    extends CommandActionSupport
+public class SleepActionTest
+    extends CommandTestSupport
 {
-  @Argument(required = true)
-  private int result;
+  public SleepActionTest() {
+    super("sleep", SleepAction.class);
+  }
 
   @Override
-  public Object execute(@Nonnull final CommandContext context) throws Exception {
-    return result;
+  @Test
+  public void testDefault() throws Exception {
+    executeWithArgs("1ms");
   }
 }

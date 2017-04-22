@@ -37,7 +37,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 2.0
  */
 @Command(name = "exec")
-public class ExecuteCommand
+public class ExecuteAction
     extends CommandActionSupport
 {
   private final Logger log = LoggerFactory.getLogger(getClass());

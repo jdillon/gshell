@@ -15,63 +15,36 @@
  */
 package com.planet57.gshell.commands.shell;
 
-import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.inject.Provider;
-
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
-import com.planet57.gshell.util.cli2.Option;
-import com.planet57.gshell.util.io.PromptReader;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import javax.annotation.Nonnull;
 
 /**
- * Ask for some input.
+ * Fail with an exception.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "ask")
-public class AskCommand
+@Command(name = "fail")
+public class FailAction
     extends CommandActionSupport
 {
-  private final Provider<PromptReader> promptProvider;
-
-  @Option(name = "m", longName = "mask")
-  private Character mask;
-
-  @Option(name = "v", longName = "variable")
-  private String variable;
-
-  @Argument(required = true)
-  private String prompt;
-
-  @Inject
-  public AskCommand(final Provider<PromptReader> promptProvider) {
-    this.promptProvider = checkNotNull(promptProvider);
-  }
+  @Argument
+  private String message = "Failed";
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    PromptReader prompter = promptProvider.get();
-    String input;
+    throw new FailException(message);
+  }
 
-    if (mask != null) {
-      input = prompter.readLine(prompt, mask);
+  private static class FailException
+      extends Exception
+  {
+    public FailException(final String message) {
+      super(message);
     }
-    else {
-      input = prompter.readLine(prompt);
-    }
-    log.debug("Read input: {}", input);
-
-    // set variable if configured
-    if (variable != null) {
-      context.getVariables().set(variable, input);
-    }
-
-    return input;
   }
 }
