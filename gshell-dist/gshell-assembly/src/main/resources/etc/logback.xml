@@ -26,7 +26,9 @@
       <pattern>[%level] %logger{1} - %msg%n</pattern>
     </encoder>
     <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-      <level>${shell.logging:-INFO}</level>
+      <!-- HACK: for completer testing -->
+      <!--<level>${shell.logging:-INFO}</level>-->
+      <level>ERROR</level>
     </filter>
   </appender>
 
@@ -38,10 +40,9 @@
     </encoder>
   </appender>
 
-  <!--
-  TODO: document how this is controlled.
-  -->
-  <root level="${shell.root-level:-${shell.logging}}">
+  <!-- HACK: for completer testing -->
+  <!--<root level="${shell.root-level:-${shell.logging}}">-->
+  <root level="DEBUG">
     <appender-ref ref="CONSOLE"/>
     <appender-ref ref="FILE"/>
   </root>
