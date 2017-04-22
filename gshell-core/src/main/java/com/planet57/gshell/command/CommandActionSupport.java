@@ -43,7 +43,7 @@ public abstract class CommandActionSupport
 
   private MessageSource messages;
 
-  private Completer[] completers;
+  private Completer[] completers = {};
 
   @Override
   public String getName() {
