@@ -20,6 +20,7 @@ import com.planet57.gshell.command.IO;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.variables.Variables;
 import org.jline.reader.History;
+import org.sonatype.goodies.lifecycle.LifecycleSupport;
 
 /**
  * Dummy {@link Shell}.
@@ -27,7 +28,8 @@ import org.jline.reader.History;
  * @since 3.0
  */
 public class DummyShell
-    implements Shell
+  extends LifecycleSupport
+  implements Shell
 {
   public Branding getBranding() {
     return null;

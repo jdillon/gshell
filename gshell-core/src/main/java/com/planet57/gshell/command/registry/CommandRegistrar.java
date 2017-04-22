@@ -15,6 +15,8 @@
  */
 package com.planet57.gshell.command.registry;
 
+import org.sonatype.goodies.lifecycle.Lifecycle;
+
 /**
  * Registers commands.
  *
@@ -22,6 +24,7 @@ package com.planet57.gshell.command.registry;
  * @since 2.5
  */
 public interface CommandRegistrar
+  extends Lifecycle
 {
   void discoverCommands() throws Exception;
 

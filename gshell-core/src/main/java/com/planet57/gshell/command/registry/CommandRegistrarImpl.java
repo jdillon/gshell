@@ -28,6 +28,7 @@ import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.guice.BeanContainer;
 import org.sonatype.goodies.common.ComponentSupport;
 import org.eclipse.sisu.BeanEntry;
+import org.sonatype.goodies.lifecycle.LifecycleSupport;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
@@ -41,7 +42,7 @@ import static com.google.common.base.Preconditions.checkState;
 @Named
 @Singleton
 public class CommandRegistrarImpl
-  extends ComponentSupport
+  extends LifecycleSupport
   implements CommandRegistrar
 {
   private final BeanContainer container;
@@ -54,6 +55,11 @@ public class CommandRegistrarImpl
   {
     this.container = checkNotNull(container);
     this.registry = checkNotNull(registry);
+  }
+
+  @Override
+  protected void doStart() throws Exception {
+    discoverCommands();
   }
 
   @Override

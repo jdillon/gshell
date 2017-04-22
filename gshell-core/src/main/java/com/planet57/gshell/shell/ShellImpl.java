@@ -119,7 +119,7 @@ public class ShellImpl
   @Override
   protected void doStart() throws Exception {
     Lifecycles.start(events);
-    commandRegistrar.discoverCommands();
+    Lifecycles.start(commandRegistrar);
   }
 
   @Override
@@ -147,8 +147,6 @@ public class ShellImpl
     this.prompt = prompt;
     log.debug("Prompt: {}", prompt);
   }
-
-  // TODO: these are really builder-arguments
 
   @Inject
   public void setErrorHandler(@Nullable final ConsoleErrorHandler errorHandler) {

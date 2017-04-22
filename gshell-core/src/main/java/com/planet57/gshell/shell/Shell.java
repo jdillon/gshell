@@ -19,6 +19,7 @@ import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.variables.Variables;
 import org.jline.reader.History;
+import org.sonatype.goodies.lifecycle.Lifecycle;
 
 /**
  * Provides access to execute commands.
@@ -27,6 +28,7 @@ import org.jline.reader.History;
  * @since 2.0
  */
 public interface Shell
+  extends Lifecycle
 {
   Branding getBranding();
 
