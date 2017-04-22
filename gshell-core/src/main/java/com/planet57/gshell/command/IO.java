@@ -129,8 +129,9 @@ public class IO
 
   protected Terminal createTerminal(final StreamSet streams) {
     try {
-      // FIXME: adjust for streams
-      return TerminalBuilder.terminal();
+      return TerminalBuilder.builder()
+        .streams(streams.in, streams.out)
+        .build();
     }
     catch (IOException e) {
       throw new RuntimeException(e);

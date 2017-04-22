@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-// FIXME: simplify and use guava EventBus
-
 /**
  * Event management.
  *

@@ -127,10 +127,6 @@ public class CommandHelpPage
       buff.println();
     }
 
-    //
-    // FIXME: The indent on the results for arguments+options is 2, not 4 (should be consistent)
-    //
-
     @SuppressWarnings("unused")
     public String getArguments() {
       if (clp.getArgumentDescriptors().isEmpty()) {

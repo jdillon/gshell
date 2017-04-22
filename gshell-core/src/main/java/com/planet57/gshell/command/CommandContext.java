@@ -18,6 +18,8 @@ package com.planet57.gshell.command;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.variables.Variables;
 
+import javax.annotation.Nonnull;
+
 /**
  * Provides commands with the context of it's execution.
  *
@@ -31,6 +33,7 @@ public interface CommandContext
    *
    * @return The invoking shell instance; never null.
    */
+  @Nonnull
   Shell getShell();
 
   /**
@@ -38,6 +41,7 @@ public interface CommandContext
    *
    * @return The command arguments; never null.
    */
+  @Nonnull
   Object[] getArguments();
 
   /**
@@ -45,6 +49,7 @@ public interface CommandContext
    *
    * @return Command input/output; never null.
    */
+  @Nonnull
   IO getIo();
 
   /**
@@ -52,7 +57,6 @@ public interface CommandContext
    *
    * @return Command variables; never null.
    */
+  @Nonnull
   Variables getVariables();
-
-  // TODO: Consider adding generic state set/get muck here to allow commands to pass state internally
 }
