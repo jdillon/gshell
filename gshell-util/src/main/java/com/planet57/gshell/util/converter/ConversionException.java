@@ -24,6 +24,7 @@ public class ConversionException
     extends RuntimeException
 {
   public ConversionException() {
+    // empty
   }
 
   public ConversionException(final Throwable cause) {
