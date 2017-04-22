@@ -24,8 +24,6 @@ import org.jline.reader.History;
 
 import javax.annotation.Nonnull;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Recall history.
  *
@@ -51,10 +49,6 @@ public class RecallHistoryCommand
 
     CharSequence element = history.get(index - 1);
     log.debug("Recalling from history: {}", element);
-
-    // FIXME: unsure if jline3 has a history.replace() function, or alternative api to replace the latest history entry
-    // Replace the last item (which was this command, with the recalled bits)
-    // history.replace(element);
 
     return context.getShell().execute(element);
   }
