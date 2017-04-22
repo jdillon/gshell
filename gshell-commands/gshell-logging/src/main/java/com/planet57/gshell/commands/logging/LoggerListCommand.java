@@ -13,7 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.commands.logging.component;
+package com.planet57.gshell.commands.logging;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -22,20 +26,20 @@ import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.CommandActionSupport;
-import com.planet57.gshell.logging.LoggingComponent;
+import com.planet57.gshell.logging.LoggerComponent;
 import com.planet57.gshell.logging.LoggingSystem;
 import com.planet57.gshell.util.cli2.Option;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * List components.
+ * List loggers.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Command(name = "logging/component/list")
-public class LoggingComponentListCommand
+@Command(name = "logging/logger/list")
+public class LoggerListCommand
     extends CommandActionSupport
 {
   private final LoggingSystem logging;
@@ -43,14 +47,15 @@ public class LoggingComponentListCommand
   @Option(name = "n", longName = "name")
   private String nameQuery;
 
-  @Option(name = "t", longName = "type")
-  private String typeQuery;
 
-  @Option(name = "v", longName = "verbose")
-  private boolean verbose;
+  @Option(name = "l", longName = "level")
+  private String levelQuery;
+
+  @Option(name = "a", longName = "all")
+  private boolean all;
 
   @Inject
-  public LoggingComponentListCommand(final LoggingSystem logging) {
+  public LoggerListCommand(final LoggingSystem logging) {
     this.logging = checkNotNull(logging);
   }
 
@@ -58,12 +63,16 @@ public class LoggingComponentListCommand
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
 
-    for (LoggingComponent component : logging.getComponents()) {
-      if ((typeQuery == null || component.getType().contains(typeQuery)) &&
-          (nameQuery == null || component.getName().contains(nameQuery))) {
-        io.println("%s", component);
-        if (verbose) {
-          io.println("  %s", component.getTarget());
+    List<String> names = new ArrayList<String>();
+    names.addAll(logging.getLoggerNames());
+    Collections.sort(names);
+
+    for (String name : names) {
+      if (nameQuery == null || name.contains(nameQuery)) {
+        LoggerComponent logger = logging.getLogger(name);
+        if (all || logger.getLevel() != null &&
+            (levelQuery == null || logger.getLevel().toString().contains(levelQuery.toUpperCase()))) {
+          io.println("%s: %s", logger.getName(), logger.getLevel());
         }
       }
     }
