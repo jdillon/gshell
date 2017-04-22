@@ -16,13 +16,9 @@
 package com.planet57.gshell.commands.file;
 
 import java.io.File;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.IntBinaryOperator;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -36,9 +32,8 @@ import com.planet57.gshell.file.FileSystemAccess;
 import com.planet57.gshell.util.io.FileAssert;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
+import com.planet57.gshell.util.jline.TerminalHelper;
 import org.jline.reader.Completer;
-import org.jline.terminal.Terminal;
-import org.jline.utils.AttributedString;
 import org.jline.utils.AttributedStringBuilder;
 import org.jline.utils.AttributedStyle;
 
@@ -129,7 +124,7 @@ public class ListDirectoryCommand
         io.out.println(name);
       }
     } else {
-      toColumn(io.getTerminal(), io.out, names.stream(), true);
+      TerminalHelper.printColumns(io.getTerminal(), io.out, names.stream(), true);
     }
 
     if (!dirs.isEmpty()) {
@@ -170,53 +165,5 @@ public class ListDirectoryCommand
     }
 
     return buff.toAnsi();
-  }
-
-  // TODO: move to helper
-
-  // Adapted from: https://github.com/apache/felix/blob/trunk/gogo/jline/src/main/java/org/apache/felix/gogo/jline/Posix.java
-
-  private void toColumn(final Terminal terminal, final PrintWriter out, final Stream<String> values, final boolean horizontal) {
-    int width = terminal.getWidth();
-    List<AttributedString> strings = values.map(AttributedString::fromAnsi).collect(Collectors.toList());
-
-    if (!strings.isEmpty()) {
-      int max = strings.stream().mapToInt(AttributedString::columnLength).max().getAsInt();
-      int c = Math.max(1, width / max);
-      while (c > 1 && c * max + (c - 1) >= width) {
-        c--;
-      }
-
-      int columns = c;
-      int lines = (strings.size() + columns - 1) / columns;
-      IntBinaryOperator index;
-
-      if (horizontal) {
-        index = (i, j) -> i * columns + j;
-      }
-      else {
-        index = (i, j) -> j * lines + i;
-      }
-
-      AttributedStringBuilder buff = new AttributedStringBuilder();
-      for (int i = 0; i < lines; i++) {
-        for (int j = 0; j < columns; j++) {
-          int idx = index.applyAsInt(i, j);
-          if (idx < strings.size()) {
-            AttributedString str = strings.get(idx);
-            boolean hasRightItem = j < columns - 1 && index.applyAsInt(i, j + 1) < strings.size();
-            buff.append(str);
-            if (hasRightItem) {
-              for (int k = 0; k <= max - str.length(); k++) {
-                buff.append(' ');
-              }
-            }
-          }
-        }
-        buff.append('\n');
-      }
-
-      out.print(buff.toAnsi(terminal));
-    }
   }
 }
