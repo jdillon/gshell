@@ -89,7 +89,7 @@ public class SourceCommand
 
     if (source instanceof File) {
       File file = (File) source;
-      log.info("Using source file: {}", file);
+      log.debug("Using source file: {}", file);
 
       new FileAssert(file).exists().isFile().isReadable();
 
@@ -97,7 +97,7 @@ public class SourceCommand
     }
     else if (source instanceof URL) {
       URL url = (URL) source;
-      log.info("Using source URL: {}", url);
+      log.debug("Using source URL: {}", url);
 
       reader = new BufferedReader(new InputStreamReader(url.openStream()));
     }
@@ -107,14 +107,14 @@ public class SourceCommand
       // First try a URL
       try {
         URL url = new URL(tmp);
-        log.info("Using source URL: {}", url);
+        log.debug("Using source URL: {}", url);
 
         reader = new BufferedReader(new InputStreamReader(url.openStream()));
       }
       catch (MalformedURLException e) {
         // They try a file
         File file = new File(tmp);
-        log.info("Using source file: {}", file);
+        log.debug("Using source file: {}", file);
 
         reader = new BufferedReader(new FileReader(tmp));
       }

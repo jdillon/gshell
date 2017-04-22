@@ -76,13 +76,13 @@ public class UnsetCommand
   }
 
   private void unsetProperty(final String name) {
-    log.info("Un-setting system property: {}", name);
+    log.debug("Un-setting system property: {}", name);
 
     System.getProperties().remove(name);
   }
 
   private void unsetVariable(final Variables vars, final String name) {
-    log.info("Un-setting variable: {}", name);
+    log.debug("Un-setting variable: {}", name);
 
     vars.unset(name);
   }

@@ -53,7 +53,7 @@ public class ExecuteCommand
 
     ProcessBuilder builder = new ProcessBuilder(args);
 
-    log.info("Executing: {}", builder.command());
+    log.debug("Executing: {}", builder.command());
 
     Process p = builder.start();
 
@@ -65,7 +65,7 @@ public class ExecuteCommand
 
     int status = p.waitFor();
 
-    log.info("Process exited w/status: {}", status);
+    log.debug("Process exited w/status: {}", status);
 
     handler.stop();
 

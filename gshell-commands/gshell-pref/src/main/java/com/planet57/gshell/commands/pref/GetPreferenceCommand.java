@@ -41,7 +41,7 @@ public class GetPreferenceCommand
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
 
-    log.info("Getting preference: {}", key);
+    log.debug("Getting preference: {}", key);
 
     Object value = node().get(key, null);
     io.println(value);

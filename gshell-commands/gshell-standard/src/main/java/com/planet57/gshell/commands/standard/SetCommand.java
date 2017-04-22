@@ -102,13 +102,13 @@ public class SetCommand
 
     switch (mode) {
       case PROPERTY:
-        log.info("Setting system property: {}={}", name, value);
+        log.debug("Setting system property: {}={}", name, value);
         System.setProperty(name, value);
         break;
 
       case VARIABLE:
         Variables vars = context.getVariables();
-        log.info("Setting variable: {}={}", name, value);
+        log.debug("Setting variable: {}={}", name, value);
         vars.set(name, value);
         break;
     }

@@ -59,15 +59,15 @@ public class JavaCommand
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     log.debug("Loading class: {}", className);
     Class type = Thread.currentThread().getContextClassLoader().loadClass(className);
-    log.info("Using type: {}", type);
+    log.debug("Using type: {}", type);
 
     log.debug("Locating method: {}", methodName);
     Method method = type.getMethod(methodName, String[].class);
-    log.info("Using method: {}", method);
+    log.debug("Using method: {}", method);
 
-    log.info("Invoking w/arguments: {}", args);
+    log.debug("Invoking w/arguments: {}", args);
     Object result = method.invoke(null, args);
-    log.info("Result: {}", result);
+    log.debug("Result: {}", result);
 
     return result;
   }

@@ -78,7 +78,7 @@ public class JettyCommand
       return false;
     }
 
-    log.info("Loading configuration: {}", file);
+    log.debug("Loading configuration: {}", file);
 
     XmlConfiguration config = new XmlConfiguration(Resource.newResource(file.toURI()).getURL());
     Map<String, String> props = config.getProperties();
@@ -106,7 +106,7 @@ public class JettyCommand
       LifeCycle lc = (LifeCycle) obj;
       if (!lc.isRunning()) {
         lc.start();
-        log.info("Started");
+        log.debug("Started");
       }
     }
 
