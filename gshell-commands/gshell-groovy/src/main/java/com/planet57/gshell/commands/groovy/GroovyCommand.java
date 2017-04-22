@@ -70,7 +70,6 @@ public class GroovyCommand
     binding.setVariable("args", args);
 
     CompilerConfiguration cc = new CompilerConfiguration();
-    cc.setOutput(context.getIo().out);
     cc.setTargetDirectory(new File(branding.getUserContextDir(), "var/classes"));
 
     ClassLoader cl = getClass().getClassLoader();
