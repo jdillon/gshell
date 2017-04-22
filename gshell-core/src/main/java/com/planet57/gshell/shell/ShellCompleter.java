@@ -117,6 +117,7 @@ public class ShellCompleter
    * This is everything past the first word.
    */
   private static ParsedLine extractCommandArguments(final ParsedLine line) {
+    // copy the list, so we can mutate and pop the first item off
     LinkedList<String> words = Lists.newLinkedList(line.words());
     String remove = words.pop();
 
