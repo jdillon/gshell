@@ -16,41 +16,35 @@
 package com.planet57.gshell.commands.shell;
 
 import java.io.File;
-import java.nio.file.Paths;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.planet57.gshell.util.cli2.Option;
-import org.jline.builtins.Less;
-import org.jline.builtins.Source;
+import org.jline.builtins.Nano;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.util.cli2.Argument;
+import com.planet57.gshell.variables.VariableNames;
+import com.planet57.gshell.variables.Variables;
 import org.jline.reader.Completer;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Less action.
+ * Nano action.
  *
  * @since 3.0
  */
-@Command(name = "less")
-public class LessAction
+@Command(name = "nano")
+public class NanoAction
     extends CommandActionSupport
 {
-  // TODO: expose more options; see Commands.less() in jline-builtins
-
-  @Option(name = "n", longName = "line-numbers")
-  private Boolean lineNumbers;
-
-  // TODO: leaving this as "source" for now, as this could be adapted to url or file/path
   @Argument(required = true)
-  private File source;
+  private List<String> files;
 
   @Inject
   public void installCompleters(final @Named("file-name") Completer c1) {
@@ -60,14 +54,13 @@ public class LessAction
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    Less less = new Less(context.getIo().getTerminal());
+    Variables variables = context.getVariables();
+    File currentDir = variables.get(VariableNames.SHELL_USER_DIR, File.class);
+    assert currentDir != null;
 
-    if (lineNumbers != null) {
-      less.printLineNumbers = lineNumbers;
-    }
-
-    Source input = new Source.PathSource(source.toPath(), source.getName());
-    less.run(input);
+    Nano nano = new Nano(context.getIo().getTerminal(), currentDir);
+    nano.open(files);
+    nano.run();
 
     return Result.SUCCESS;
   }
