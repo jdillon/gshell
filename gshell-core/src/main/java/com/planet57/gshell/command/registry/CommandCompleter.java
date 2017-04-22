@@ -31,6 +31,8 @@ import org.jline.reader.Completer;
 import org.jline.reader.impl.completer.ArgumentCompleter;
 import org.jline.reader.impl.completer.NullCompleter;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Command path and argument completer.
  *
@@ -44,51 +46,11 @@ import org.jline.reader.impl.completer.NullCompleter;
 public class CommandCompleter
     extends ArgumentCompleter
 {
-  private final PathCompleter first;
-
   @Inject
-  public CommandCompleter(final CommandResolver resolver) {
-    first = new PathCompleter(resolver);
+  public CommandCompleter(final CommandNameCompleter first) {
+    checkNotNull(first);
     getCompleters().add(first);
-  }
 
-  private class PathCompleter
-      extends NodePathCompleter
-  {
-    private PathCompleter(final CommandResolver resolver) {
-      super(resolver);
-    }
-
-    @Override
-    protected void buildCandidates(final List<Candidate> candidates,
-                                   final Collection<Node> matches,
-                                   final String prefix)
-    {
-      assert matches != null;
-
-      // If there is only one match, then install that node's action completers
-      if (matches.size() == 1) {
-        updateCompleters(matches.iterator().next().getAction().getCompleters());
-      }
-
-      super.buildCandidates(candidates, matches, prefix);
-    }
-  }
-
-  private void updateCompleters(@Nullable final Completer[] completers) {
-    // Reset the list
-    List<Completer> target = getCompleters();
-    target.clear();
-    target.add(first);
-
-    // Install new child completers
-    if (completers != null) {
-      for (Completer completer : completers) {
-        target.add(completer != null ? completer : NullCompleter.INSTANCE);
-      }
-    }
-    else {
-      target.add(NullCompleter.INSTANCE);
-    }
+    // TODO: how do we wire up command competers
   }
 }

@@ -13,24 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.file;
+package com.planet57.gshell.util.io;
 
-import javax.inject.Named;
-
-import com.google.inject.AbstractModule;
+import java.io.File;
+import java.io.IOException;
 
 /**
- * File module.
+ * Provides access to the file system.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.3
  */
-@Named
-public class FileModule
-    extends AbstractModule
+public interface FileSystemAccess
 {
-  @Override
-  protected void configure() {
-    bind(FileSystemAccess.class).to(FileSystemAccessImpl.class);
-  }
+  File resolveDir(final String name) throws IOException;
+
+  File getShellHomeDir() throws IOException;
+
+  File getUserDir() throws IOException;
+
+  File getUserHomeDir() throws IOException;
+
+  File resolveFile(File baseDir, final String path) throws IOException;
+
+  File resolveFile(final String path) throws IOException;
+
+  boolean hasChildren(final File file);
 }

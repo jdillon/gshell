@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.file;
+package com.planet57.gshell.internal;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,6 +23,7 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 
 import com.planet57.gshell.util.OperatingSystem;
+import com.planet57.gshell.util.io.FileSystemAccess;
 import com.planet57.gshell.variables.Variables;
 
 import static com.google.common.base.Preconditions.checkNotNull;
