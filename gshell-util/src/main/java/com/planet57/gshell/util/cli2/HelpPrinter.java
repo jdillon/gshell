@@ -22,6 +22,8 @@ import java.util.List;
 import com.planet57.gshell.util.i18n.AggregateMessageSource;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
+import com.planet57.gshell.util.jline.TerminalHolder;
+import org.jline.terminal.Terminal;
 
 import javax.annotation.Nullable;
 
@@ -40,8 +42,7 @@ public class HelpPrinter
 
   private AggregateMessageSource messages = new AggregateMessageSource(new ResourceBundleMessageSource(getClass()));
 
-  // FIXME: Need access to the current threads Terminal to get its width
-  private int terminalWidth = 80; // TerminalFactory.get().getWidth();
+  private int terminalWidth = 80;
 
   private String prefix = "  ";
 
@@ -54,6 +55,11 @@ public class HelpPrinter
     MessageSource messages = processor.getMessages();
     if (messages != null) {
       addMessages(messages);
+    }
+
+    Terminal terminal = TerminalHolder.get(true);
+    if (terminal != null) {
+      terminalWidth = terminal.getWidth();
     }
   }
 

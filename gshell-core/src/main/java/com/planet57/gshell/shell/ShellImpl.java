@@ -38,11 +38,13 @@ import com.planet57.gshell.execute.CommandExecutor;
 import com.planet57.gshell.notification.ExitNotification;
 import com.planet57.gshell.util.ComponentSupport;
 import com.planet57.gshell.util.io.StreamJack;
+import com.planet57.gshell.util.jline.TerminalHolder;
 import com.planet57.gshell.variables.Variables;
 import com.planet57.gshell.variables.VariablesSupport;
 import org.jline.reader.Completer;
 import org.jline.reader.History;
 import org.jline.reader.impl.history.DefaultHistory;
+import org.jline.terminal.Terminal;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -236,75 +238,74 @@ public class ShellImpl
 
     log.debug("Starting interactive console; args: {}", Arrays.asList(args));
 
-    loadInteractiveScripts();
-
-    // Setup 2 final refs to allow our executor to pass stuff back to us
-    final AtomicReference<ExitNotification> exitNotifHolder = new AtomicReference<ExitNotification>();
-
-    Callable<ConsoleTask> taskFactory = new Callable<ConsoleTask>()
-    {
-      public ConsoleTask call() throws Exception {
-        return new ConsoleTask()
-        {
-          @Override
-          public boolean doExecute(final String input) throws Exception {
-            try {
-              // result is saved to LAST_RESULT via the CommandExecutor
-              ShellImpl.this.execute(input);
-            }
-            catch (ExitNotification n) {
-              exitNotifHolder.set(n);
-              return false;
-            }
-
-            return true;
-          }
-        };
-      }
-    };
-
-    IO io = getIo();
-    Console console = new Console(io, taskFactory, history, completer);
-
-    if (prompt != null) {
-      console.setPrompt(prompt);
-    }
-
-    if (errorHandler != null) {
-      console.setErrorHandler(errorHandler);
-    }
-
-    if (!io.isQuiet()) {
-      renderWelcomeMessage(io);
-    }
-
-    // Check if there are args, and run them and then enter interactive
-    if (args.length != 0) {
-      execute(args);
-    }
-
-    // HACK: We have to replace the IO with the consoles so that children use the piped input
-    final IO lastIo = io;
-    this.io = console.getIo();
-
-    final Shell lastShell = ShellHolder.set(this);
+    final Terminal previousTerminal = TerminalHolder.set(io.getTerminal());
 
     try {
-      console.run();
+      loadInteractiveScripts();
+
+      // Setup 2 final refs to allow our executor to pass stuff back to us
+      final AtomicReference<ExitNotification> exitNotifHolder = new AtomicReference<>();
+
+      Callable<ConsoleTask> taskFactory = () -> new ConsoleTask() {
+        @Override
+        public boolean doExecute(final String input) throws Exception {
+          try {
+            // result is saved to LAST_RESULT via the CommandExecutor
+            ShellImpl.this.execute(input);
+          } catch (ExitNotification n) {
+            exitNotifHolder.set(n);
+            return false;
+          }
+
+          return true;
+        }
+      };
+
+      IO io = getIo();
+      Console console = new Console(io, taskFactory, history, completer);
+
+      if (prompt != null) {
+        console.setPrompt(prompt);
+      }
+
+      if (errorHandler != null) {
+        console.setErrorHandler(errorHandler);
+      }
+
+      if (!io.isQuiet()) {
+        renderWelcomeMessage(io);
+      }
+
+      // Check if there are args, and run them and then enter interactive
+      if (args.length != 0) {
+        execute(args);
+      }
+
+      // HACK: We have to replace the IO with the consoles so that children use the piped input
+      final IO lastIo = io;
+      this.io = console.getIo();
+
+      final Shell lastShell = ShellHolder.set(this);
+
+      try {
+        console.run();
+      } finally {
+        this.io = lastIo;
+        ShellHolder.set(lastShell);
+      }
+
+      if (!io.isQuiet()) {
+        renderGoodbyeMessage(io);
+      }
+
+      // If any exit notification occurred while running, then puke it up
+      ExitNotification n = exitNotifHolder.get();
+      if (n != null) {
+        throw n;
+      }
     }
     finally {
-      this.io = lastIo;
-      ShellHolder.set(lastShell);
-    }
-
-    if (!io.isQuiet()) {
-      renderGoodbyeMessage(io);
-    }
-
-    // If any exit notification occurred while running, then puke it up
-    ExitNotification n = exitNotifHolder.get();
-    if (n != null) {
-      throw n;
+      TerminalHolder.set(previousTerminal);
     }
   }
 

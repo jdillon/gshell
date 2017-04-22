@@ -18,6 +18,9 @@ package com.planet57.gshell.shell;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 /**
  * {@link Shell} thread context holder.
  *
@@ -30,7 +33,7 @@ public class ShellHolder
 
   private static final InheritableThreadLocal<Shell> holder = new InheritableThreadLocal<>();
 
-  public static Shell set(final Shell shell) {
+  public static Shell set(@Nullable final Shell shell) {
     Shell last = holder.get();
 
     if (shell != last) {
@@ -41,11 +44,9 @@ public class ShellHolder
     return last;
   }
 
+  @Nullable
   public static Shell get(final boolean allowNull) {
     Shell shell = holder.get();
-
-    // HACK: this is *way* too verbose, its called a few times
-    // log.trace("Getting shell ({}): {}", allowNull, shell);
 
     if (!allowNull && shell == null) {
       throw new IllegalStateException("Shell not initialized for thread: " + Thread.currentThread());
@@ -54,7 +55,9 @@ public class ShellHolder
     return shell;
   }
 
+  @Nonnull
   public static Shell get() {
+    //noinspection ConstantConditions
     return get(false);
   }
 }

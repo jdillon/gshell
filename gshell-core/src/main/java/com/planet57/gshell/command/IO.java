@@ -28,6 +28,7 @@ import com.planet57.gshell.util.io.StreamSet;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -40,26 +41,31 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class IO
 {
+  @Nonnull
   public final StreamSet streams;
 
   /**
    * Input reader.
    */
+  @Nonnull
   public final Reader in;
 
   /**
    * Output writer.
    */
+  @Nonnull
   public final PrintWriter out;
 
   /**
    * Error output writer.
    */
+  @Nonnull
   public final PrintWriter err;
 
   /**
    * The terminal associated with the given input/output.
    */
+  @Nonnull
   private final Terminal terminal;
 
   /**

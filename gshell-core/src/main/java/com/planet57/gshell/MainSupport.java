@@ -168,12 +168,7 @@ public abstract class MainSupport
     log.debug("Booting w/args: {}", Arrays.asList(args));
 
     // Register default handler for uncaught exceptions
-    Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler()
-    {
-      public void uncaughtException(final Thread thread, final Throwable cause) {
-        log.warn("Unhandled exception occurred on thread: " + thread, cause);
-      }
-    });
+    Thread.setDefaultUncaughtExceptionHandler((thread, cause) -> log.warn("Unhandled exception occurred on thread: " + thread, cause));
 
     io = new AnsiIO(StreamSet.SYSTEM_FD, true);
     vars = new VariablesSupport();

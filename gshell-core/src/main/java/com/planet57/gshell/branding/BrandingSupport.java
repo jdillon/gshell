@@ -25,8 +25,10 @@ import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 import com.planet57.gshell.util.io.PrintBuffer;
+import com.planet57.gshell.util.jline.TerminalHolder;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
+import org.jline.terminal.Terminal;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.planet57.gshell.command.resolver.Node.CURRENT;
@@ -89,8 +91,9 @@ public class BrandingSupport
   }
 
   protected String line() {
-    // FIXME: need some way to get a handle on the Terminal instance; maybe add a TerminalHolder?
-    return Strings.repeat("-", /*TerminalFactory.get().getWidth() - 1*/ 79);
+    Terminal terminal = TerminalHolder.get(true);
+    int width = terminal != null ? terminal.getWidth() - 1 : 79;
+    return Strings.repeat("-", width);
   }
 
   @Override
