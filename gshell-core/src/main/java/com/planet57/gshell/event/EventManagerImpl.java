@@ -22,9 +22,9 @@ import javax.inject.Singleton;
 import com.google.common.eventbus.EventBus;
 import com.google.inject.Key;
 import com.planet57.gshell.guice.BeanContainer;
-import org.sonatype.goodies.common.ComponentSupport;
 import org.eclipse.sisu.BeanEntry;
 import org.eclipse.sisu.Mediator;
+import org.sonatype.goodies.lifecycle.LifecycleSupport;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -40,7 +40,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Named
 @Singleton
 public class EventManagerImpl
-  extends ComponentSupport
+  extends LifecycleSupport
   implements EventManager
 {
   private final BeanContainer container;
@@ -53,13 +53,8 @@ public class EventManagerImpl
     this.eventBus = new EventBus();
   }
 
-  // HACK: really need some component lifecycle
-
-  /**
-   * Automatically register/unregister event-aware components.
-   */
   @Override
-  public void start() {
+  protected void doStart() throws Exception {
     container.watch(Key.get(EventAware.class, Named.class), new EventAwareMediator(), this);
   }
 

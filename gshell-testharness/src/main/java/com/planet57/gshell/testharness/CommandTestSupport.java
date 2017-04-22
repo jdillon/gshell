@@ -50,6 +50,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.sonatype.goodies.lifecycle.Lifecycles;
 import org.sonatype.goodies.testsupport.TestUtil;
 
 import static com.google.inject.name.Names.named;
@@ -118,8 +119,7 @@ public abstract class CommandTestSupport
     Injector injector = Guice.createInjector(Stage.DEVELOPMENT, new WireModule(modules));
     container.add(injector, 0);
 
-    // HACK: really need some component lifecycle
-    injector.getInstance(EventManager.class).start();
+    Lifecycles.start(injector.getInstance(EventManager.class));
 
     CommandRegistrar registrar = injector.getInstance(CommandRegistrar.class);
     for (Map.Entry<String, Class> entry : requiredCommands.entrySet()) {

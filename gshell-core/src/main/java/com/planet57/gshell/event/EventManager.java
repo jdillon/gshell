@@ -23,9 +23,6 @@ package com.planet57.gshell.event;
  */
 public interface EventManager
 {
-  // HACK: primitive component lifecycle
-  void start();
-
   void register(Object listener);
 
   void unregister(Object listener);

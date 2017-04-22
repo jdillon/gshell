@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicReference;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -36,7 +37,6 @@ import com.planet57.gshell.console.ConsoleTask;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.execute.CommandExecutor;
 import com.planet57.gshell.notification.ExitNotification;
-import org.sonatype.goodies.common.ComponentSupport;
 import com.planet57.gshell.util.io.StreamJack;
 import com.planet57.gshell.util.jline.TerminalHolder;
 import com.planet57.gshell.variables.Variables;
@@ -45,6 +45,8 @@ import org.jline.reader.Completer;
 import org.jline.reader.History;
 import org.jline.reader.impl.history.DefaultHistory;
 import org.jline.terminal.Terminal;
+import org.sonatype.goodies.lifecycle.LifecycleSupport;
+import org.sonatype.goodies.lifecycle.Lifecycles;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -56,7 +58,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 @Named
 public class ShellImpl
-  extends ComponentSupport
+  extends LifecycleSupport
   implements Shell
 {
   private final EventManager events;
@@ -114,10 +116,9 @@ public class ShellImpl
     this.history = new DefaultHistory();
   }
 
-  // HACK: primitive lifecycle
-
-  public void start() throws Exception {
-    events.start();
+  @Override
+  protected void doStart() throws Exception {
+    Lifecycles.start(events);
     commandRegistrar.discoverCommands();
   }
 
@@ -142,7 +143,7 @@ public class ShellImpl
   }
 
   @Inject
-  public void setPrompt(final ConsolePrompt prompt) {
+  public void setPrompt(@Nullable final ConsolePrompt prompt) {
     this.prompt = prompt;
     log.debug("Prompt: {}", prompt);
   }
@@ -150,12 +151,12 @@ public class ShellImpl
   // TODO: these are really builder-arguments
 
   @Inject
-  public void setErrorHandler(final ConsoleErrorHandler errorHandler) {
+  public void setErrorHandler(@Nullable final ConsoleErrorHandler errorHandler) {
     this.errorHandler = errorHandler;
     log.debug("Error handler: {}", errorHandler);
   }
 
-  public void setCompleter(final Completer completer) {
+  public void setCompleter(@Nullable final Completer completer) {
     log.debug("Completer: {}", completer);
     this.completer = completer;
   }
