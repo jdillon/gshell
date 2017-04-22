@@ -24,6 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -105,17 +106,37 @@ public class StringsCompleter2
     // empty
   }
 
-  @Override
-  public void complete(final LineReader reader, final ParsedLine commandLine, final List<Candidate> candidates) {
-    checkNotNull(candidates);
-
+  /**
+   * Handles {@link #init()} and {@link #prepare()} to establish configuration of candidates.
+   */
+  private void setup() {
     if (!initialized) {
       init();
       initialized = true;
     }
     prepare();
+  }
 
-    candidates.addAll(this.candidates.values());
+  /**
+   * Returns all configured candidate strings.
+   */
+  public Collection<String> getStrings() {
+    setup();
+    return candidates.keySet();
+  }
+
+  /**
+   * Returns all configured candidates.
+   */
+  public Collection<Candidate> getCandidates() {
+    setup();
+    return candidates.values();
+  }
+
+  @Override
+  public void complete(final LineReader reader, final ParsedLine commandLine, final List<Candidate> candidates) {
+    checkNotNull(candidates);
+    candidates.addAll(getCandidates());
   }
 
   //
