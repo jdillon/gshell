@@ -57,10 +57,12 @@ public class Arguments
     return strings;
   }
 
+  // adapted from org.apache.maven.cli.CleanArgument
+
   public static String[] clean(final String[] args) {
     checkNotNull(args);
 
-    List<String> cleaned = new ArrayList<String>();
+    List<String> cleaned = new ArrayList<>();
 
     StringBuilder currentArg = null;
 
