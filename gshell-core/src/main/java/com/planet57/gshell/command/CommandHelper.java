@@ -84,7 +84,7 @@ public class CommandHelper
     checkNotNull(command);
 
     PreferenceProcessor pp = new PreferenceProcessor();
-    Branding branding = ShellHolder.get().getBranding();
+    Branding branding = ShellHolder.require().getBranding();
     pp.setBasePath(branding.getPreferencesBasePath());
     pp.addBean(command);
 

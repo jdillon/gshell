@@ -22,6 +22,8 @@ import org.jline.terminal.Terminal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.google.common.base.Preconditions.checkState;
+
 /**
  * {@link Terminal} thread context holder.
  *
@@ -38,26 +40,26 @@ public class TerminalHolder
 
     if (terminal != last) {
       log.trace("Setting terminal: {}", terminal);
-      holder.set(terminal);
+      if (terminal == null) {
+        holder.remove();
+      }
+      else {
+        holder.set(terminal);
+      }
     }
 
     return last;
   }
 
   @Nullable
-  public static Terminal get(final boolean allowNull) {
-    Terminal Terminal = holder.get();
-
-    if (!allowNull && Terminal == null) {
-      throw new IllegalStateException("Terminal not initialized for thread: " + Thread.currentThread());
-    }
-
-    return Terminal;
+  public static Terminal get() {
+    return holder.get();
   }
 
   @Nonnull
-  public static Terminal get() {
-    //noinspection ConstantConditions
-    return get(false);
+  public static Terminal require() {
+    Terminal terminal = get();
+    checkState(terminal != null, "Terminal not initialized for thread: %s", Thread.currentThread());
+    return terminal;
   }
 }

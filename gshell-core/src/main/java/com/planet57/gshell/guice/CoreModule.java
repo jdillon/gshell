@@ -47,7 +47,7 @@ public class CoreModule
 
   @Provides
   private Shell provideShell() {
-    return ShellHolder.get();
+    return ShellHolder.require();
   }
 
   @Provides

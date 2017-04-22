@@ -91,7 +91,7 @@ public class BrandingSupport
   }
 
   protected String line() {
-    Terminal terminal = TerminalHolder.get(true);
+    Terminal terminal = TerminalHolder.get();
     int width = terminal != null ? terminal.getWidth() - 1 : 79;
     return Strings.repeat("-", width);
   }

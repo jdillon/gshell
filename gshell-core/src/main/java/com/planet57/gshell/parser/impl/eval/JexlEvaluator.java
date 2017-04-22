@@ -48,7 +48,7 @@ public class JexlEvaluator
 
       log.debug("Evaluating: {}", key);
 
-      JexlContext ctx = new VariablesContext(ShellHolder.get().getVariables());
+      JexlContext ctx = new VariablesContext(ShellHolder.require().getVariables());
       JexlExpression expr = jexl.createExpression(key);
       // FIXME: how we we get a jexl 1.x-style "flat-resolver"?
 

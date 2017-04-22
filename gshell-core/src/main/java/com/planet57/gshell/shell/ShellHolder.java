@@ -21,6 +21,8 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import static com.google.common.base.Preconditions.checkState;
+
 /**
  * {@link Shell} thread context holder.
  *
@@ -38,26 +40,29 @@ public class ShellHolder
 
     if (shell != last) {
       log.trace("Setting shell: {}", shell);
-      holder.set(shell);
+      if (shell == null) {
+        holder.remove();
+      }
+      else {
+        holder.set(shell);
+      }
     }
 
     return last;
   }
 
   @Nullable
-  public static Shell get(final boolean allowNull) {
-    Shell shell = holder.get();
-
-    if (!allowNull && shell == null) {
-      throw new IllegalStateException("Shell not initialized for thread: " + Thread.currentThread());
-    }
-
-    return shell;
+  public static Shell get() {
+    return holder.get();
   }
 
+  /**
+   * @since 3.0
+   */
   @Nonnull
-  public static Shell get() {
-    //noinspection ConstantConditions
-    return get(false);
+  public static Shell require() {
+    Shell shell = get();
+    checkState(shell != null, "Shell not initialized for thread: %s", Thread.currentThread());
+    return shell;
   }
 }

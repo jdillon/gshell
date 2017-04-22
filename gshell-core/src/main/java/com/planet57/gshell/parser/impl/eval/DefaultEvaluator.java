@@ -34,7 +34,7 @@ public class DefaultEvaluator
   {
     @Override
     protected Object replace(final String key) {
-      Variables vars = ShellHolder.get().getVariables();
+      Variables vars = ShellHolder.require().getVariables();
       Object rep = vars.get(key);
 
       if (rep == null) {

@@ -57,7 +57,7 @@ public class HelpPrinter
       addMessages(messages);
     }
 
-    Terminal terminal = TerminalHolder.get(true);
+    Terminal terminal = TerminalHolder.get();
     if (terminal != null) {
       terminalWidth = terminal.getWidth();
     }

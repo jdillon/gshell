@@ -71,11 +71,11 @@ public class MetaHelpPage
 
     Interpolator interp = new StringSearchInterpolator("@{", "}");
     interp.addValueSource(new PrefixedObjectValueSource("command.", this));
-    interp.addValueSource(new PrefixedObjectValueSource("branding.", ShellHolder.get().getBranding()));
+    interp.addValueSource(new PrefixedObjectValueSource("branding.", ShellHolder.require().getBranding()));
     interp.addValueSource(new AbstractValueSource(false)
     {
       public Object getValue(final String expression) {
-        return ShellHolder.get().getVariables().get(expression);
+        return ShellHolder.require().getVariables().get(expression);
       }
     });
     interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));
