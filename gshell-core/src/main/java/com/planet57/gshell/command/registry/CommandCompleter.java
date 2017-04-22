@@ -15,21 +15,11 @@
  */
 package com.planet57.gshell.command.registry;
 
-import java.util.Collection;
-import java.util.List;
-
-import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import com.planet57.gshell.command.resolver.CommandResolver;
-import com.planet57.gshell.command.resolver.Node;
-import com.planet57.gshell.command.resolver.NodePathCompleter;
-import org.jline.reader.Candidate;
-import org.jline.reader.Completer;
 import org.jline.reader.impl.completer.ArgumentCompleter;
-import org.jline.reader.impl.completer.NullCompleter;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

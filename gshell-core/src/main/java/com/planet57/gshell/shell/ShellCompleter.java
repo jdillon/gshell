@@ -20,6 +20,8 @@ import javax.inject.Named;
 
 import org.jline.reader.Completer;
 import org.jline.reader.impl.completer.AggregateCompleter;
+import org.jline.reader.impl.completer.ArgumentCompleter;
+import org.jline.reader.impl.completer.NullCompleter;
 
 /**
  * Shell {@link Completer}.
@@ -28,12 +30,12 @@ import org.jline.reader.impl.completer.AggregateCompleter;
  */
 @Named("main")
 public class ShellCompleter
-  extends AggregateCompleter
+  extends ArgumentCompleter
 {
   @Inject
   public ShellCompleter(final @Named("alias-name") Completer alias,
                         final @Named("command-name") Completer command)
   {
-    super(alias, command);
+    super(new AggregateCompleter(alias, command), NullCompleter.INSTANCE);
   }
 }
