@@ -104,7 +104,7 @@ public class HistoryCommand
     buff.style(AttributedStyle.BOLD);
     buff.append(index);
     buff.style(AttributedStyle.DEFAULT);
-    buff.append(" ").append(entry.line());
+    buff.append("  ").append(entry.line());
 
     io.println(buff.toAnsi(io.getTerminal()));
   }
