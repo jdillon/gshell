@@ -151,16 +151,11 @@ public class HelpContentLoaderImpl
     }
 
     return buff.toString();
-
   }
 
   private String toResourceName(final String bundleName, final String suffix) {
     assert bundleName != null;
     assert suffix != null;
-
-    // FIXME: simplify StringBuilder here per IDEA advice
-    StringBuilder buff = new StringBuilder(bundleName.length() + 1 + suffix.length());
-    buff.append(bundleName.replace('.', '/')).append('.').append(suffix);
-    return buff.toString();
+    return bundleName.replace('.', '/') + '.' + suffix;
   }
 }
