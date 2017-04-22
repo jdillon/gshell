@@ -58,5 +58,5 @@ public @interface Option
 
   Class<? extends Handler> handler() default DefaultHandler.class;
 
-  // TODO: Add completer
+  // TODO: Add completer; could also introduce another annotation for this
 }
