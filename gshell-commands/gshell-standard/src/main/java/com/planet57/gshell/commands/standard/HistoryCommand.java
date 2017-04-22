@@ -62,11 +62,12 @@ public class HistoryCommand
     if (purge) {
       history.purge();
       log.debug("History purged");
+      return Result.SUCCESS;
     }
-
-    if (save) {
+    else if (save) {
       history.save();
       log.debug("History saved");
+      return Result.SUCCESS;
     }
 
     return displayEntries(context);
