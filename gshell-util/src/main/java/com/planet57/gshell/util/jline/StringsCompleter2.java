@@ -93,14 +93,14 @@ public class StringsCompleter2
   }
 
   /**
-   * Invoked first time a completion occurs.
+   * Invoked first time candidates are accessed.
    */
   protected void init() {
     // empty
   }
 
   /**
-   * Invoked before candidates are applied.
+   * Invoked before candidates are accessed.
    */
   protected void prepare() {
     // empty
