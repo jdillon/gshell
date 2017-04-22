@@ -47,6 +47,6 @@ public class LoggerNameCompleter
    */
   @Override
   protected void prepare() {
-    setStrings(logging.getLoggerNames());
+    set(logging.getLoggerNames());
   }
 }

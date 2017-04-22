@@ -45,7 +45,7 @@ public class LevelNameCompleter
   @Override
   protected void init() {
     for (LevelComponent level : logging.getLevels()) {
-      addString(level.getName());
+      add(level.getName());
     }
   }
 }

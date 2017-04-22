@@ -48,16 +48,16 @@ public class CommandNameCompleter
 
   @Override
   protected void init() {
-    setStrings(commands.getCommandNames());
+    set(commands.getCommandNames());
   }
 
   @Subscribe
   void on(final CommandRegisteredEvent event) {
-    addString(event.getName());
+    add(event.getName());
   }
 
   @Subscribe
   void on(final CommandRemovedEvent event) {
-    removeString(event.getName());
+    remove(event.getName());
   }
 }

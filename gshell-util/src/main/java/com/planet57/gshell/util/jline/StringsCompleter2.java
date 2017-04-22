@@ -51,33 +51,33 @@ public class StringsCompleter2
   /**
    * Set completion strings; replacing any existing.
    */
-  public void setStrings(final String... strings) {
+  public void set(final String... strings) {
     checkNotNull(strings);
-    setStrings(Arrays.asList(strings));
+    set(Arrays.asList(strings));
   }
 
   /**
    * Set completion strings; replacing any existing.
    */
-  public void setStrings(final Iterable<String> strings) {
+  public void set(final Iterable<String> strings) {
     checkNotNull(strings);
     candidates.clear();
-    addStrings(strings);
+    addAll(strings);
   }
 
-  public void addStrings(final Iterable<String> strings) {
+  public void addAll(final Iterable<String> strings) {
     checkNotNull(strings);
     for (String string : strings) {
-      addString(string);
+      add(string);
     }
   }
 
-  public void addString(final String string) {
+  public void add(final String string) {
     checkNotNull(string);
     candidates.put(string, candidate(string));
   }
 
-  public void removeString(final String string) {
+  public void remove(final String string) {
     checkNotNull(string);
     candidates.remove(string);
   }

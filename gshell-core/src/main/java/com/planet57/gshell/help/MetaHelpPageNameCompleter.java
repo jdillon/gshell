@@ -49,12 +49,12 @@ public class MetaHelpPageNameCompleter
   @Override
   protected void init() {
     for (MetaHelpPage page : helpPages.getMetaPages()) {
-      addString(page.getName());
+      add(page.getName());
     }
   }
 
   @Subscribe
   void on(final MetaHelpPageAddedEvent event) {
-    addString(event.getPage().getName());
+    add(event.getPage().getName());
   }
 }

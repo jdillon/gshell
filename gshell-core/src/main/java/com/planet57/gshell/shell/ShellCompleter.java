@@ -31,9 +31,9 @@ public class ShellCompleter
   extends AggregateCompleter
 {
   @Inject
-  public ShellCompleter(final @Named("alias-name") Completer c1,
-                        final @Named("command") Completer c2)
+  public ShellCompleter(final @Named("alias-name") Completer alias,
+                        final @Named("command-name") Completer command)
   {
-    super(c1, c2);
+    super(alias, command);
   }
 }

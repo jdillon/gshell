@@ -49,16 +49,16 @@ public class VariableNameCompleter
 
   @Override
   protected void init() {
-    setStrings(variables.get().names());
+    set(variables.get().names());
   }
 
   @Subscribe
   void on(final VariableSetEvent event) {
-    addString(event.getName());
+    add(event.getName());
   }
 
   @Subscribe
   void on(final VariableUnsetEvent event) {
-    removeString(event.getName());
+    remove(event.getName());
   }
 }

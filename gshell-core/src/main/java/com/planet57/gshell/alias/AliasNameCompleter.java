@@ -50,16 +50,16 @@ public class AliasNameCompleter
 
   @Override
   protected void init() {
-    setStrings(aliases.getAliases().keySet());
+    set(aliases.getAliases().keySet());
   }
 
   @Subscribe
   void on(final AliasRegisteredEvent event) {
-    addString(event.getName());
+    add(event.getName());
   }
 
   @Subscribe
   void on(final AliasRemovedEvent event) {
-    removeString(event.getName());
+    remove(event.getName());
   }
 }
