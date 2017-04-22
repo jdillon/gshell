@@ -17,6 +17,7 @@ package com.planet57.gshell.shell;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -94,8 +95,8 @@ public class ShellCompleter
         log.debug("Completer: {}", completer);
 
         // rebuild parsed-line stripping out the first word (the command-name)
-        List<String> words = Lists.newLinkedList(line.words());
-        words.remove(0); // shift
+        LinkedList<String> words = Lists.newLinkedList(line.words());
+        words.pop();
 
         // HACK: complexity here to re-use ArgumentCompleter; not terribly efficient
         String rawLine = line.line();
@@ -103,7 +104,7 @@ public class ShellCompleter
           rawLine.substring(command.length() + 1, rawLine.length()),
           words,
           line.wordIndex() - 1,
-          line.wordCursor() - 1,
+          line.wordCursor(),
           line.cursor() - command.length() + 1
         );
 

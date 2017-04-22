@@ -50,7 +50,7 @@ public class ChangeDirectoryAction
   private String path;
 
   @Inject
-  public ChangeDirectoryAction installCompleters(final @Named("file-name") Completer c1) {
+  public ChangeDirectoryAction installCompleters(final @Named("directory-name") Completer c1) {
     checkNotNull(c1);
     setCompleters(c1, null);
     return this;

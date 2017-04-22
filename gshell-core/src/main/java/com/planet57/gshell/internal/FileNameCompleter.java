@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.console;
+package com.planet57.gshell.internal;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -40,8 +40,7 @@ import static com.planet57.gshell.variables.VariableNames.SHELL_USER_HOME;
 @Named("file-name")
 @Singleton
 public class FileNameCompleter
-    extends org.jline.reader.impl.completer.FileNameCompleter
-    implements Completer
+  extends org.jline.reader.impl.completer.FileNameCompleter
 {
   private final Provider<Variables> variables;
 
