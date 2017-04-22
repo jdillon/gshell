@@ -38,6 +38,7 @@ import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.execute.CommandExecutor;
 import com.planet57.gshell.notification.ExitNotification;
 import com.planet57.gshell.util.io.StreamJack;
+import com.planet57.gshell.util.jline.LoggingCompleter;
 import com.planet57.gshell.util.jline.TerminalHolder;
 import com.planet57.gshell.variables.Variables;
 import com.planet57.gshell.variables.VariablesSupport;
@@ -261,7 +262,7 @@ public class ShellImpl
         }
       };
 
-      Console console = new Console(io, taskFactory, history, completer);
+      Console console = new Console(io, taskFactory, history, new LoggingCompleter(completer));
 
       if (prompt != null) {
         console.setPrompt(prompt);
