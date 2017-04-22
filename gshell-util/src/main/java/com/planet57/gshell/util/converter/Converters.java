@@ -100,7 +100,7 @@ public class Converters
 
   // Register all of the built in converters
   static {
-    Map<Class, Class> map = new HashMap<Class, Class>();
+    Map<Class, Class> map = new HashMap<>();
     map.put(boolean.class, Boolean.class);
     map.put(char.class, Character.class);
     map.put(byte.class, Byte.class);
@@ -112,7 +112,7 @@ public class Converters
     PRIMITIVE_TO_WRAPPER = Collections.unmodifiableMap(map);
 
 
-    map = new HashMap<Class, Class>();
+    map = new HashMap<>();
     map.put(Boolean.class, boolean.class);
     map.put(Character.class, char.class);
     map.put(Byte.class, byte.class);
@@ -182,7 +182,7 @@ public class Converters
    * If the new value is true, all currently registered converters are
    * immediately registered with the VM.
    */
-  public static void setRegisterWithVM(boolean registerWithVM) {
+  public static void setRegisterWithVM(final boolean registerWithVM) {
     if (Converters.registerWithVM != registerWithVM) {
       Converters.registerWithVM = registerWithVM;
 
