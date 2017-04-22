@@ -36,7 +36,7 @@ import com.planet57.gshell.console.ConsoleTask;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.execute.CommandExecutor;
 import com.planet57.gshell.notification.ExitNotification;
-import com.planet57.gshell.util.ComponentSupport;
+import org.sonatype.goodies.common.ComponentSupport;
 import com.planet57.gshell.util.io.StreamJack;
 import com.planet57.gshell.util.jline.TerminalHolder;
 import com.planet57.gshell.variables.Variables;

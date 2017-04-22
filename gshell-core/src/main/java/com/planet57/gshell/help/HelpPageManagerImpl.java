@@ -34,7 +34,7 @@ import com.planet57.gshell.command.resolver.CommandResolver;
 import com.planet57.gshell.command.resolver.Node;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.guice.BeanContainer;
-import com.planet57.gshell.util.ComponentSupport;
+import org.sonatype.goodies.common.ComponentSupport;
 import org.eclipse.sisu.BeanEntry;
 
 import static com.google.common.base.Preconditions.checkNotNull;

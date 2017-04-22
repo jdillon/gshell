@@ -15,7 +15,7 @@
  */
 package com.planet57.gshell.command.resolver;
 
-import com.planet57.gshell.util.ComponentSupport;
+import org.sonatype.goodies.common.ComponentSupport;
 import com.planet57.gshell.util.jline.StringsCompleter2;
 import org.jline.reader.Candidate;
 import org.jline.reader.Completer;

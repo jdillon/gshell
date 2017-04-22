@@ -39,7 +39,7 @@ import com.planet57.gshell.parser.CommandLineParser.CommandLine;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.shell.ShellHolder;
 import com.planet57.gshell.util.Arguments;
-import com.planet57.gshell.util.ComponentSupport;
+import org.sonatype.goodies.common.ComponentSupport;
 import com.planet57.gshell.util.cli2.CliProcessor;
 import com.planet57.gshell.util.cli2.HelpPrinter;
 import com.planet57.gshell.util.cli2.OpaqueArguments;

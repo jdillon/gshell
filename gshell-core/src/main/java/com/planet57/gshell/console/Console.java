@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.concurrent.Callable;
 
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.util.ComponentSupport;
+import org.sonatype.goodies.common.ComponentSupport;
 import org.jline.reader.Completer;
 import org.jline.reader.History;
 import org.jline.reader.LineReader;

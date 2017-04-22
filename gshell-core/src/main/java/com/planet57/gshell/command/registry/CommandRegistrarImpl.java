@@ -26,7 +26,7 @@ import com.google.inject.Key;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.guice.BeanContainer;
-import com.planet57.gshell.util.ComponentSupport;
+import org.sonatype.goodies.common.ComponentSupport;
 import org.eclipse.sisu.BeanEntry;
 
 import static com.google.common.base.Preconditions.checkNotNull;

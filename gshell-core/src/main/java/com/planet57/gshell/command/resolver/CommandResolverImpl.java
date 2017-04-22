@@ -31,7 +31,7 @@ import com.planet57.gshell.command.registry.CommandRegisteredEvent;
 import com.planet57.gshell.command.registry.CommandRegistry;
 import com.planet57.gshell.command.registry.CommandRemovedEvent;
 import com.planet57.gshell.event.EventAware;
-import com.planet57.gshell.util.ComponentSupport;
+import org.sonatype.goodies.common.ComponentSupport;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
 

@@ -16,7 +16,7 @@
 package com.planet57.gshell.command;
 
 import com.planet57.gshell.command.resolver.NodePath;
-import com.planet57.gshell.util.ComponentSupport;
+import org.sonatype.goodies.common.ComponentSupport;
 import com.planet57.gshell.util.cli2.OpaqueArguments;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.NopMessageSource;

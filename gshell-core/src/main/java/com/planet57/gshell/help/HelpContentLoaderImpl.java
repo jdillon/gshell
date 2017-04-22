@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.MissingResourceException;
 
-import com.planet57.gshell.util.ComponentSupport;
+import org.sonatype.goodies.common.ComponentSupport;
 import com.planet57.gshell.util.io.PrintBuffer;
 import com.planet57.gshell.util.io.Closeables;
 

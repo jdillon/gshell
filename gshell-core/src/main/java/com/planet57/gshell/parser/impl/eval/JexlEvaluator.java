@@ -16,7 +16,7 @@
 package com.planet57.gshell.parser.impl.eval;
 
 import com.planet57.gshell.shell.ShellHolder;
-import com.planet57.gshell.util.ComponentSupport;
+import org.sonatype.goodies.common.ComponentSupport;
 import com.planet57.gshell.util.ReplacementParser;
 import com.planet57.gshell.variables.Variables;
 import org.apache.commons.jexl3.JexlBuilder;

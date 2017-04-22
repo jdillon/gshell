@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.MissingResourceException;
 
 import com.planet57.gshell.command.resolver.NodePath;
-import com.planet57.gshell.util.ComponentSupport;
+import org.sonatype.goodies.common.ComponentSupport;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 import org.jline.reader.Completer;

@@ -24,7 +24,7 @@ import com.planet57.gshell.parser.impl.Parser;
 import com.planet57.gshell.parser.impl.visitor.ExecutingVisitor;
 import com.planet57.gshell.parser.impl.visitor.LoggingVisitor;
 import com.planet57.gshell.shell.Shell;
-import com.planet57.gshell.util.ComponentSupport;
+import org.sonatype.goodies.common.ComponentSupport;
 import com.planet57.gshell.util.io.Closeables;
 
 import javax.inject.Named;

@@ -15,7 +15,7 @@
  */
 package com.planet57.gshell.console;
 
-import com.planet57.gshell.util.ComponentSupport;
+import org.sonatype.goodies.common.ComponentSupport;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

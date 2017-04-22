@@ -22,7 +22,7 @@ import javax.inject.Singleton;
 import com.google.common.eventbus.EventBus;
 import com.google.inject.Key;
 import com.planet57.gshell.guice.BeanContainer;
-import com.planet57.gshell.util.ComponentSupport;
+import org.sonatype.goodies.common.ComponentSupport;
 import org.eclipse.sisu.BeanEntry;
 import org.eclipse.sisu.Mediator;
 
