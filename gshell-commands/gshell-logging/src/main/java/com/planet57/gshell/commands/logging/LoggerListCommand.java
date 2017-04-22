@@ -20,17 +20,12 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.logging.LoggerComponent;
-import com.planet57.gshell.logging.LoggingSystem;
 import com.planet57.gshell.util.cli2.Option;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * List loggers.
@@ -40,13 +35,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 @Command(name = "logging/logger/list")
 public class LoggerListCommand
-    extends CommandActionSupport
+  extends LoggingComponenSupport
 {
-  private final LoggingSystem logging;
-
   @Option(name = "n", longName = "name")
   private String nameQuery;
-
 
   @Option(name = "l", longName = "level")
   private String levelQuery;
@@ -54,22 +46,17 @@ public class LoggerListCommand
   @Option(name = "a", longName = "all")
   private boolean all;
 
-  @Inject
-  public LoggerListCommand(final LoggingSystem logging) {
-    this.logging = checkNotNull(logging);
-  }
-
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
 
-    List<String> names = new ArrayList<String>();
-    names.addAll(logging.getLoggerNames());
+    List<String> names = new ArrayList<>();
+    names.addAll(getLogging().getLoggerNames());
     Collections.sort(names);
 
     for (String name : names) {
       if (nameQuery == null || name.contains(nameQuery)) {
-        LoggerComponent logger = logging.getLogger(name);
+        LoggerComponent logger = getLogging().getLogger(name);
         if (all || logger.getLevel() != null &&
             (levelQuery == null || logger.getLevel().toString().contains(levelQuery.toUpperCase()))) {
           io.println("%s: %s", logger.getName(), logger.getLevel());

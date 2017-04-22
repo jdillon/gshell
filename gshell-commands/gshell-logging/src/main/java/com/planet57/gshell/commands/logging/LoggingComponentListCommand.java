@@ -16,17 +16,12 @@
 package com.planet57.gshell.commands.logging;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.logging.LoggingComponent;
-import com.planet57.gshell.logging.LoggingSystem;
 import com.planet57.gshell.util.cli2.Option;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * List components.
@@ -36,10 +31,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 @Command(name = "logging/component/list")
 public class LoggingComponentListCommand
-    extends CommandActionSupport
+  extends LoggingComponenSupport
 {
-  private final LoggingSystem logging;
-
   @Option(name = "n", longName = "name")
   private String nameQuery;
 
@@ -49,16 +42,11 @@ public class LoggingComponentListCommand
   @Option(name = "v", longName = "verbose")
   private boolean verbose;
 
-  @Inject
-  public LoggingComponentListCommand(final LoggingSystem logging) {
-    this.logging = checkNotNull(logging);
-  }
-
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
 
-    for (LoggingComponent component : logging.getComponents()) {
+    for (LoggingComponent component : getLogging().getComponents()) {
       if ((typeQuery == null || component.getType().contains(typeQuery)) &&
           (nameQuery == null || component.getName().contains(nameQuery))) {
         io.println("%s", component);

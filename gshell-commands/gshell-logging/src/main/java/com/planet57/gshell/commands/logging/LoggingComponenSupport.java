@@ -15,31 +15,30 @@
  */
 package com.planet57.gshell.commands.logging;
 
-import javax.annotation.Nonnull;
+import javax.inject.Inject;
 
-import com.planet57.gshell.command.Command;
-import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.IO;
-import com.planet57.gshell.logging.LevelComponent;
+import com.planet57.gshell.command.CommandActionSupport;
+import com.planet57.gshell.logging.LoggingSystem;
+
+import static com.google.common.base.Preconditions.checkState;
 
 /**
- * List valid logger levels.
+ * Support for {@code logging} commands.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 2.5
+ * @since 3.0
  */
-@Command(name = "logging/logger/levels")
-public class LoggerLevelsCommand
-  extends LoggingComponenSupport
+public abstract class LoggingComponenSupport
+    extends CommandActionSupport
 {
-  @Override
-  public Object execute(@Nonnull final CommandContext context) throws Exception {
-    IO io = context.getIo();
+  private LoggingSystem logging;
 
-    for (LevelComponent level : getLogging().getLevels()) {
-      io.println(level);
-    }
+  @Inject
+  public void setLogging(final LoggingSystem logging) {
+    this.logging = logging;
+  }
 
-    return Result.SUCCESS;
+  protected LoggingSystem getLogging() {
+    checkState(logging != null);
+    return logging;
   }
 }

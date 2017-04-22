@@ -15,20 +15,19 @@
  */
 package com.planet57.gshell.commands.logging;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.planet57.gshell.command.Command;
-import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.CommandActionSupport;
-import com.planet57.gshell.logging.LevelComponent;
-import com.planet57.gshell.logging.LoggerComponent;
-import com.planet57.gshell.logging.LoggingSystem;
-import com.planet57.gshell.util.cli2.Argument;
 import org.jline.reader.Completer;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import com.planet57.gshell.command.Command;
+import com.planet57.gshell.command.CommandContext;
+import com.planet57.gshell.logging.LevelComponent;
+import com.planet57.gshell.logging.LoggerComponent;
+import com.planet57.gshell.util.cli2.Argument;
 
 /**
  * Set the level of a logger.
@@ -38,20 +37,13 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 @Command(name = "logging/logger/set")
 public class LoggerSetLevelCommand
-    extends CommandActionSupport
+  extends LoggingComponenSupport
 {
-  private final LoggingSystem logging;
-
   @Argument(index = 0, required = true)
   private String loggerName;
 
   @Argument(index = 1, required = true)
   private String levelName;
-
-  @Inject
-  public LoggerSetLevelCommand(final LoggingSystem logging) {
-    this.logging = checkNotNull(logging);
-  }
 
   @Inject
   public void installCompleters(final @Named("logger-name") Completer c1, final @Named("level-name") Completer c2) {
@@ -62,8 +54,8 @@ public class LoggerSetLevelCommand
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    LoggerComponent logger = logging.getLogger(loggerName);
-    LevelComponent level = logging.getLevel(levelName);
+    LoggerComponent logger = getLogging().getLogger(loggerName);
+    LevelComponent level = getLogging().getLevel(levelName);
     logger.setLevel(level);
 
     log.debug("Set logger {} level to: {}", logger, level);
