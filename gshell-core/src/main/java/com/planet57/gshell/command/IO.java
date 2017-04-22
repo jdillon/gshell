@@ -128,9 +128,9 @@ public class IO
   }
 
   protected Terminal createTerminal(final StreamSet streams) {
+    // FIXME: deal with stream-set; may have some impact on jline3
     try {
       return TerminalBuilder.builder()
-        .streams(streams.in, streams.out)
         .build();
     }
     catch (IOException e) {
