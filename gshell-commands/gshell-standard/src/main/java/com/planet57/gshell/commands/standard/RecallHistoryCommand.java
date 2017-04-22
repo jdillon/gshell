@@ -47,7 +47,7 @@ public class RecallHistoryCommand
       return Result.FAILURE;
     }
 
-    CharSequence element = history.get(index - 1);
+    String element = history.get(index - 1);
     log.debug("Recalling from history: {}", element);
 
     return context.getShell().execute(element);

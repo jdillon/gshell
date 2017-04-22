@@ -240,10 +240,6 @@ public class InfoCommand
     return FMTI.format(i);
   }
 
-  //
-  // TODO: i18n all this
-  //
-
   private String printSizeInKb(final double size) {
     return FMTI.format((long) (size / 1024)) + " kbytes";
   }

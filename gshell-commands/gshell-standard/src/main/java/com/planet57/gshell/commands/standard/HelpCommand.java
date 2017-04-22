@@ -112,13 +112,8 @@ public class HelpCommand
 
     // if not direct match, then look for similar pages
     if (page == null) {
-      Collection<HelpPage> pages = helpPages.getPages(query(new Predicate<HelpPage>()
-      {
-        @Override
-        public boolean apply(final HelpPage page) {
-          return page.getName().contains(name) || page.getDescription().contains(name);
-        }
-      }));
+      Collection<HelpPage> pages = helpPages.getPages(
+        query((Predicate<HelpPage>) page1 -> page1.getName().contains(name) || page1.getDescription().contains(name)));
 
       if (pages.size() == 1) {
         // if there is only one match, treat as a direct match
@@ -156,16 +151,16 @@ public class HelpCommand
 
     if (includeAll == null || !includeAll) {
       if (includeAliases != null && !includeAliases) {
-        query.not(new TypePredicate<HelpPage>(AliasHelpPage.class));
+        query.not(new TypePredicate<>(AliasHelpPage.class));
       }
       if (includeMeta != null && !includeMeta) {
-        query.not(new TypePredicate<HelpPage>(MetaHelpPage.class));
+        query.not(new TypePredicate<>(MetaHelpPage.class));
       }
       if (includeCommands != null && !includeCommands) {
-        query.not(new TypePredicate<HelpPage>(CommandHelpPage.class));
+        query.not(new TypePredicate<>(CommandHelpPage.class));
       }
       if (includeGroups != null && !includeGroups) {
-        query.not(new TypePredicate<HelpPage>(GroupHelpPage.class));
+        query.not(new TypePredicate<>(GroupHelpPage.class));
       }
     }
 
