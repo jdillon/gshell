@@ -24,6 +24,7 @@ import com.planet57.gshell.variables.VariableNames;
 import org.jline.reader.Completer;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -67,7 +68,8 @@ public class GroupAction
   }
 
   @Override
-  public Completer[] getCompleters() {
-    return new Completer[0];
+  @Nullable
+  public Completer getCompleter() {
+    return null;
   }
 }

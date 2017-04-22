@@ -17,7 +17,6 @@ package com.planet57.gshell.shell;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -28,8 +27,6 @@ import org.jline.reader.Completer;
 import org.jline.reader.LineReader;
 import org.jline.reader.ParsedLine;
 import org.jline.reader.impl.DefaultParser;
-import org.jline.reader.impl.completer.ArgumentCompleter;
-import org.jline.reader.impl.completer.NullCompleter;
 import org.sonatype.goodies.common.ComponentSupport;
 
 import com.google.common.collect.Lists;
@@ -89,22 +86,12 @@ public class ShellCompleter
       if (node != null) {
         CommandAction action = node.getAction();
 
-        List<Completer> completers = Arrays.asList(action.getCompleters());
-
-        // skip further processing if command has no completers
-        if (completers.isEmpty()) {
-          log.debug("Action has no specific completers; skipping");
+        Completer completer = action.getCompleter();
+        if (completer == null) {
+          log.debug("Action has no specific completer; skipping");
           return;
         }
-
-        // HACK: adjust completers 'null' is expected to be translated to NullCompleter.INSTNACE
-        for (int i=0; i<completers.size(); i++) {
-          if (completers.get(i) == null) {
-            // null means stop completing, else w/o implies to use the last completer; this is due to strict?
-            completers.set(i, NullCompleter.INSTANCE);
-          }
-        }
-        log.debug("Completers: {}", completers);
+        log.debug("Completer: {}", completer);
 
         // rebuild parsed-line stripping out the first word (the command-name)
         List<String> words = Lists.newLinkedList(line.words());
@@ -129,8 +116,7 @@ public class ShellCompleter
           argumentList.cursor()
         );
 
-        ArgumentCompleter delegate = new ArgumentCompleter(completers);
-        delegate.complete(reader, argumentList, candidates);
+        completer.complete(reader, argumentList, candidates);
       }
     }
   }

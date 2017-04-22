@@ -15,10 +15,13 @@
  */
 package com.planet57.gshell.command;
 
-import java.util.List;
+import java.util.Arrays;
 import java.util.MissingResourceException;
+import java.util.stream.Collectors;
 
 import com.planet57.gshell.command.resolver.NodePath;
+import org.jline.reader.impl.completer.ArgumentCompleter;
+import org.jline.reader.impl.completer.NullCompleter;
 import org.sonatype.goodies.common.ComponentSupport;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
@@ -43,7 +46,8 @@ public abstract class CommandActionSupport
 
   private MessageSource messages;
 
-  private Completer[] completers = {};
+  @Nullable
+  private Completer completer;
 
   @Override
   public String getName() {
@@ -97,18 +101,31 @@ public abstract class CommandActionSupport
   }
 
   @Override
-  public Completer[] getCompleters() {
-    return completers;
+  @Nullable
+  public Completer getCompleter() {
+    return completer;
   }
 
-  public void setCompleters(@Nullable final Completer... completers) {
-    this.completers = completers;
+  /**
+   * Install a raw completer.
+   *
+   * @since 3.0
+   */
+  protected void setCompleter(final Completer completer) {
+    this.completer = checkNotNull(completer);
   }
 
-  public void setCompleters(@Nullable final List<Completer> completers) {
-    if (completers != null) {
-      setCompleters(completers.toArray(new Completer[completers.size()]));
-    }
+  /**
+   * Install argument completer for the given completers.
+   *
+   * This will handle translating null members of completers into {@link NullCompleter#INSTANCE}.
+   */
+  protected void setCompleters(final Completer... completers) {
+    checkNotNull(completers);
+    completer = new ArgumentCompleter(
+      // translate null to NullCompleter.INSTANCE
+      Arrays.stream(completers).map(it -> it == null ? NullCompleter.INSTANCE : it).collect(Collectors.toList())
+    );
   }
 
   @Override

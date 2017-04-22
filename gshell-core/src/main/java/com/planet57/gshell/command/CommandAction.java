@@ -19,6 +19,7 @@ import com.planet57.gshell.util.i18n.MessageSource;
 import org.jline.reader.Completer;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Provides the user-action for a command.
@@ -35,7 +36,11 @@ public interface CommandAction
 
   MessageSource getMessages();
 
-  Completer[] getCompleters();
+  /**
+   * @since 3.0
+   */
+  @Nullable
+  Completer getCompleter();
 
   /**
    * Execute the command action.
