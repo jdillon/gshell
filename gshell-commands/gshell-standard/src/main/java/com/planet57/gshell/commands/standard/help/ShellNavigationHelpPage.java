@@ -23,7 +23,7 @@ import com.planet57.gshell.help.HelpContentLoader;
 import com.planet57.gshell.help.MetaHelpPage;
 
 /**
- * ???
+ * Meta-help page for {@code shell-navigation}.
  *
  * @since 3.0
  */
