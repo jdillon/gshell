@@ -147,6 +147,7 @@ public class StringsCompleter2
    * Returns an ANSI-enabled candidate for given string.
    */
   public static Candidate candidate(final String value) {
+    checkNotNull(value);
     log.trace("Creating candidate: {}", value);
     // display is allowed to have ANSI, but value is stripped
     return new Candidate(AttributedString.stripAnsi(value), value, null, null, null, null, true);
