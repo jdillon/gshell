@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.util.completer;
+package com.planet57.gshell.util.jline;
 
 import org.jline.reader.Candidate;
 import org.jline.reader.Completer;

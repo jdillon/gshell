@@ -16,7 +16,7 @@
 package com.planet57.gshell.command.resolver;
 
 import com.planet57.gshell.util.ComponentSupport;
-import com.planet57.gshell.util.completer.StringsCompleter2;
+import com.planet57.gshell.util.jline.StringsCompleter2;
 import org.jline.reader.Candidate;
 import org.jline.reader.Completer;
 import org.jline.reader.LineReader;

@@ -21,7 +21,7 @@ import javax.inject.Singleton;
 
 import com.google.common.eventbus.Subscribe;
 import com.planet57.gshell.event.EventAware;
-import com.planet57.gshell.util.completer.StringsCompleter2;
+import com.planet57.gshell.util.jline.StringsCompleter2;
 import org.jline.reader.Completer;
 
 import static com.google.common.base.Preconditions.checkNotNull;

@@ -19,7 +19,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import com.planet57.gshell.util.completer.StringsCompleter2;
+import com.planet57.gshell.util.jline.StringsCompleter2;
 import org.jline.reader.Completer;
 
 import static com.google.common.base.Preconditions.checkNotNull;

@@ -15,7 +15,7 @@
  */
 package com.planet57.gshell.logging;
 
-import com.planet57.gshell.util.completer.StringsCompleter2;
+import com.planet57.gshell.util.jline.StringsCompleter2;
 import org.jline.reader.Completer;
 
 import javax.inject.Inject;
