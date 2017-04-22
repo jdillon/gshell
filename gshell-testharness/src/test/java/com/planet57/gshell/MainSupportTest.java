@@ -22,12 +22,12 @@ import com.planet57.gshell.testharness.DummyShell;
 import com.planet57.gshell.testharness.TestBranding;
 import org.fusesource.jansi.Ansi;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.sonatype.goodies.testsupport.TestSupport;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 /**
  * Tests for {@link MainSupport}.
@@ -53,13 +53,13 @@ public class MainSupportTest
   @Test
   public void test_h() throws Exception {
     main.boot("-h");
-    Assert.assertEquals(ExitNotification.DEFAULT_CODE, main.exitCode);
+    assertThat(main.exitCode, is(ExitNotification.DEFAULT_CODE));
   }
 
   @Test
   public void test__help() throws Exception {
     main.boot("--help");
-    assertEquals(ExitNotification.DEFAULT_CODE, main.exitCode);
+    assertThat(main.exitCode, is(ExitNotification.DEFAULT_CODE));
   }
 
   private class MockMain
