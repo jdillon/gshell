@@ -27,7 +27,7 @@ import static com.google.common.base.Preconditions.checkState;
  *
  * @since 3.0
  */
-public abstract class LoggingComponenSupport
+public abstract class LoggingCommandActionSupport
     extends CommandActionSupport
 {
   private LoggingSystem logging;

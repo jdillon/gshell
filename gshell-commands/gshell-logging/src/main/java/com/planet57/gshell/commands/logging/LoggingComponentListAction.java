@@ -15,51 +15,43 @@
  */
 package com.planet57.gshell.commands.logging;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import javax.annotation.Nonnull;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.logging.LoggerComponent;
+import com.planet57.gshell.logging.LoggingComponent;
 import com.planet57.gshell.util.cli2.Option;
 
 /**
- * List loggers.
+ * List components.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Command(name = "logging/logger/list")
-public class LoggerListCommand
-  extends LoggingComponenSupport
+@Command(name = "logging/components")
+public class LoggingComponentListAction
+  extends LoggingCommandActionSupport
 {
   @Option(name = "n", longName = "name")
   private String nameQuery;
 
-  @Option(name = "l", longName = "level")
-  private String levelQuery;
+  @Option(name = "t", longName = "type")
+  private String typeQuery;
 
-  @Option(name = "a", longName = "all")
-  private boolean all;
+  @Option(name = "v", longName = "verbose")
+  private boolean verbose;
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
 
-    List<String> names = new ArrayList<>();
-    names.addAll(getLogging().getLoggerNames());
-    Collections.sort(names);
-
-    for (String name : names) {
-      if (nameQuery == null || name.contains(nameQuery)) {
-        LoggerComponent logger = getLogging().getLogger(name);
-        if (all || logger.getLevel() != null &&
-            (levelQuery == null || logger.getLevel().toString().contains(levelQuery.toUpperCase()))) {
-          io.println("%s: %s", logger.getName(), logger.getLevel());
+    for (LoggingComponent component : getLogging().getComponents()) {
+      if ((typeQuery == null || component.getType().contains(typeQuery)) &&
+          (nameQuery == null || component.getName().contains(nameQuery))) {
+        io.println("%s", component);
+        if (verbose) {
+          io.println("  %s", component.getTarget());
         }
       }
     }

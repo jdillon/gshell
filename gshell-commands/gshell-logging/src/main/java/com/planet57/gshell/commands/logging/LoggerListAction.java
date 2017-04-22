@@ -15,50 +15,54 @@
  */
 package com.planet57.gshell.commands.logging;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import org.jline.reader.Completer;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.logging.LevelComponent;
+import com.planet57.gshell.command.IO;
 import com.planet57.gshell.logging.LoggerComponent;
-import com.planet57.gshell.util.cli2.Argument;
+import com.planet57.gshell.util.cli2.Option;
 
 /**
- * Set the level of a logger.
+ * List loggers.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Command(name = "logging/logger/set")
-public class LoggerSetLevelCommand
-  extends LoggingComponenSupport
+@Command(name = "logging/loggers")
+public class LoggerListAction
+  extends LoggingCommandActionSupport
 {
-  @Argument(index = 0, required = true)
-  private String loggerName;
+  @Option(name = "n", longName = "name")
+  private String nameQuery;
 
-  @Argument(index = 1, required = true)
-  private String levelName;
+  @Option(name = "l", longName = "level")
+  private String levelQuery;
 
-  @Inject
-  public void installCompleters(final @Named("logger-name") Completer c1, final @Named("level-name") Completer c2) {
-    checkNotNull(c1);
-    checkNotNull(c2);
-    setCompleters(c1, c2, null);
-  }
+  @Option(name = "a", longName = "all")
+  private boolean all;
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    LoggerComponent logger = getLogging().getLogger(loggerName);
-    LevelComponent level = getLogging().getLevel(levelName);
-    logger.setLevel(level);
+    IO io = context.getIo();
 
-    log.debug("Set logger {} level to: {}", logger, level);
+    List<String> names = new ArrayList<>();
+    names.addAll(getLogging().getLoggerNames());
+    Collections.sort(names);
+
+    for (String name : names) {
+      if (nameQuery == null || name.contains(nameQuery)) {
+        LoggerComponent logger = getLogging().getLogger(name);
+        if (all || logger.getLevel() != null &&
+            (levelQuery == null || logger.getLevel().toString().contains(levelQuery.toUpperCase()))) {
+          io.println("%s: %s", logger.getName(), logger.getLevel());
+        }
+      }
+    }
 
     return Result.SUCCESS;
   }

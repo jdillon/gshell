@@ -15,30 +15,50 @@
  */
 package com.planet57.gshell.commands.logging;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import javax.annotation.Nonnull;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import org.jline.reader.Completer;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.IO;
 import com.planet57.gshell.logging.LevelComponent;
+import com.planet57.gshell.logging.LoggerComponent;
+import com.planet57.gshell.util.cli2.Argument;
 
 /**
- * List valid logger levels.
+ * Set the level of a logger.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Command(name = "logging/logger/levels")
-public class LoggerLevelsCommand
-  extends LoggingComponenSupport
+@Command(name = "logging/logger")
+public class LoggerSetLevelAction
+  extends LoggingCommandActionSupport
 {
+  @Argument(index = 0, required = true)
+  private String loggerName;
+
+  @Argument(index = 1, required = true)
+  private String levelName;
+
+  @Inject
+  public void installCompleters(final @Named("logger-name") Completer c1, final @Named("level-name") Completer c2) {
+    checkNotNull(c1);
+    checkNotNull(c2);
+    setCompleters(c1, c2, null);
+  }
+
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    IO io = context.getIo();
+    LoggerComponent logger = getLogging().getLogger(loggerName);
+    LevelComponent level = getLogging().getLevel(levelName);
+    logger.setLevel(level);
 
-    for (LevelComponent level : getLogging().getLevels()) {
-      io.println(level);
-    }
+    log.debug("Set logger {} level to: {}", logger, level);
 
     return Result.SUCCESS;
   }

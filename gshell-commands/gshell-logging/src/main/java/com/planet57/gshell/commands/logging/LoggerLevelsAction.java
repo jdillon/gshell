@@ -20,40 +20,24 @@ import javax.annotation.Nonnull;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.logging.LoggingComponent;
-import com.planet57.gshell.util.cli2.Option;
+import com.planet57.gshell.logging.LevelComponent;
 
 /**
- * List components.
+ * List valid logger levels.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Command(name = "logging/component/list")
-public class LoggingComponentListCommand
-  extends LoggingComponenSupport
+@Command(name = "logging/levels")
+public class LoggerLevelsAction
+  extends LoggingCommandActionSupport
 {
-  @Option(name = "n", longName = "name")
-  private String nameQuery;
-
-  @Option(name = "t", longName = "type")
-  private String typeQuery;
-
-  @Option(name = "v", longName = "verbose")
-  private boolean verbose;
-
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
 
-    for (LoggingComponent component : getLogging().getComponents()) {
-      if ((typeQuery == null || component.getType().contains(typeQuery)) &&
-          (nameQuery == null || component.getName().contains(nameQuery))) {
-        io.println("%s", component);
-        if (verbose) {
-          io.println("  %s", component.getTarget());
-        }
-      }
+    for (LevelComponent level : getLogging().getLevels()) {
+      io.println(level);
     }
 
     return Result.SUCCESS;
