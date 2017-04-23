@@ -20,8 +20,6 @@ import org.jline.reader.Completer;
 import org.jline.reader.LineReader;
 import org.jline.reader.ParsedLine;
 import org.jline.utils.AttributedString;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -39,8 +37,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class StringsCompleter2
   implements Completer
 {
-  private static final Logger log = LoggerFactory.getLogger(StringsCompleter2.class);
-
   private final Map<String,Candidate> candidates = new LinkedHashMap<>();
 
   private boolean initialized = false;
@@ -148,7 +144,6 @@ public class StringsCompleter2
    */
   public static Candidate candidate(final String value) {
     checkNotNull(value);
-    log.trace("Creating candidate: {}", value);
     // display is allowed to have ANSI, but value is stripped
     return new Candidate(AttributedString.stripAnsi(value), value, null, null, null, null, true);
   }
