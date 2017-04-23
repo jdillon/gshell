@@ -26,6 +26,7 @@ import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.util.converter.Converters;
 
 import javax.annotation.Nullable;
+import javax.inject.Inject;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -53,7 +54,7 @@ public class VariablesSupport
   }
 
   public VariablesSupport(final Variables parent) {
-    this(new LinkedHashMap<String, Object>(), parent);
+    this(new LinkedHashMap<>(), parent);
   }
 
   public VariablesSupport(final Map<String, Object> map) {
@@ -61,12 +62,13 @@ public class VariablesSupport
   }
 
   public VariablesSupport() {
-    this(new LinkedHashMap<String, Object>());
+    this(new LinkedHashMap<>());
   }
 
   /**
    * Informs variables to become event-aware and fire {@link VariableSetEvent} and {@link VariableUnsetEvent}.
    */
+  @Inject
   public void setEventManager(final EventManager eventManager) {
     this.eventManager = checkNotNull(eventManager);
   }

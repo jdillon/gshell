@@ -38,7 +38,6 @@ import com.planet57.gshell.util.io.StreamJack;
 import com.planet57.gshell.util.jline.LoggingCompleter;
 import com.planet57.gshell.util.jline.TerminalHolder;
 import com.planet57.gshell.variables.Variables;
-import com.planet57.gshell.variables.VariablesSupport;
 import org.jline.reader.Completer;
 import org.jline.reader.History;
 import org.jline.reader.LineReader;
@@ -106,11 +105,6 @@ public class ShellImpl
     this.completer = checkNotNull(completer);
     this.prompt = checkNotNull(prompt);
     this.errorHandler = checkNotNull(errorHandler);
-
-    // HACK: adapt variables for events
-    if (variables instanceof VariablesSupport) {
-      ((VariablesSupport) variables).setEventManager(events);
-    }
 
     // FIXME: looks like we have to set jline LineReader.HISTORY_FILE variable to control this location
     this.history = new DefaultHistory();
