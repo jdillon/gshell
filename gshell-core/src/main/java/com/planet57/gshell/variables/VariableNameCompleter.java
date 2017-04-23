@@ -22,8 +22,12 @@ import javax.inject.Singleton;
 
 import com.google.common.eventbus.Subscribe;
 import com.planet57.gshell.event.EventAware;
+import com.planet57.gshell.util.jline.DynamicCompleter;
 import com.planet57.gshell.util.jline.StringsCompleter2;
+import org.jline.reader.Candidate;
 import org.jline.reader.Completer;
+
+import java.util.Collection;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -37,9 +41,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Named("variable-name")
 @Singleton
 public class VariableNameCompleter
-  extends StringsCompleter2
+  extends DynamicCompleter
   implements EventAware
 {
+  private final StringsCompleter2 delegate = new StringsCompleter2();
+
   private final Provider<Variables> variables;
 
   @Inject
@@ -49,16 +55,21 @@ public class VariableNameCompleter
 
   @Override
   protected void init() {
-    set(variables.get().names());
+    delegate.set(variables.get().names());
+  }
+
+  @Override
+  protected Collection<Candidate> getCandidates() {
+    return delegate.getCandidates();
   }
 
   @Subscribe
   void on(final VariableSetEvent event) {
-    add(event.getName());
+    delegate.add(event.getName());
   }
 
   @Subscribe
   void on(final VariableUnsetEvent event) {
-    remove(event.getName());
+    delegate.remove(event.getName());
   }
 }

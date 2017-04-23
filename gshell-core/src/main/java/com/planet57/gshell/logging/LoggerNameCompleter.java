@@ -19,8 +19,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import com.planet57.gshell.util.jline.DynamicCompleter;
 import com.planet57.gshell.util.jline.StringsCompleter2;
+import org.jline.reader.Candidate;
 import org.jline.reader.Completer;
+
+import java.util.Collection;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -33,8 +37,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Named("logger-name")
 @Singleton
 public class LoggerNameCompleter
-    extends StringsCompleter2
+    extends DynamicCompleter
 {
+  private final StringsCompleter2 delegate = new StringsCompleter2();
+
   private final LoggingSystem logging;
 
   @Inject
@@ -47,6 +53,11 @@ public class LoggerNameCompleter
    */
   @Override
   protected void prepare() {
-    set(logging.getLoggerNames());
+    delegate.set(logging.getLoggerNames());
+  }
+
+  @Override
+  protected Collection<Candidate> getCandidates() {
+    return delegate.getCandidates();
   }
 }

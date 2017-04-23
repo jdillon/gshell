@@ -21,8 +21,12 @@ import javax.inject.Singleton;
 
 import com.google.common.eventbus.Subscribe;
 import com.planet57.gshell.event.EventAware;
+import com.planet57.gshell.util.jline.DynamicCompleter;
 import com.planet57.gshell.util.jline.StringsCompleter2;
+import org.jline.reader.Candidate;
 import org.jline.reader.Completer;
+
+import java.util.Collection;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -36,9 +40,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Named("alias-name")
 @Singleton
 public class AliasNameCompleter
-  extends StringsCompleter2
+  extends DynamicCompleter
   implements EventAware
 {
+  private final StringsCompleter2 delegate = new StringsCompleter2();
+
   private final AliasRegistry aliases;
 
   @Inject
@@ -50,16 +56,21 @@ public class AliasNameCompleter
 
   @Override
   protected void init() {
-    set(aliases.getAliases().keySet());
+    delegate.set(aliases.getAliases().keySet());
+  }
+
+  @Override
+  protected Collection<Candidate> getCandidates() {
+    return delegate.getCandidates();
   }
 
   @Subscribe
   void on(final AliasRegisteredEvent event) {
-    add(event.getName());
+    delegate.add(event.getName());
   }
 
   @Subscribe
   void on(final AliasRemovedEvent event) {
-    remove(event.getName());
+    delegate.remove(event.getName());
   }
 }

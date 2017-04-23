@@ -39,8 +39,6 @@ public class StringsCompleter2
 {
   private final Map<String,Candidate> candidates = new LinkedHashMap<>();
 
-  private boolean initialized = false;
-
   public StringsCompleter2() {
     // empty
   }
@@ -89,35 +87,9 @@ public class StringsCompleter2
   }
 
   /**
-   * Invoked first time candidates are accessed.
-   */
-  protected void init() {
-    // empty
-  }
-
-  /**
-   * Invoked before candidates are accessed.
-   */
-  protected void prepare() {
-    // empty
-  }
-
-  /**
-   * Handles {@link #init()} and {@link #prepare()} to establish configuration of candidates.
-   */
-  private void setup() {
-    if (!initialized) {
-      init();
-      initialized = true;
-    }
-    prepare();
-  }
-
-  /**
    * Returns all configured candidate strings.
    */
   public Collection<String> getStrings() {
-    setup();
     return candidates.keySet();
   }
 
@@ -125,7 +97,6 @@ public class StringsCompleter2
    * Returns all configured candidates.
    */
   public Collection<Candidate> getCandidates() {
-    setup();
     return candidates.values();
   }
 

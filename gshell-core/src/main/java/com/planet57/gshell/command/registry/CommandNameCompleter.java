@@ -21,8 +21,12 @@ import javax.inject.Singleton;
 
 import com.google.common.eventbus.Subscribe;
 import com.planet57.gshell.event.EventAware;
+import com.planet57.gshell.util.jline.DynamicCompleter;
 import com.planet57.gshell.util.jline.StringsCompleter2;
+import org.jline.reader.Candidate;
 import org.jline.reader.Completer;
+
+import java.util.Collection;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -36,9 +40,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Named("command-name")
 @Singleton
 public class CommandNameCompleter
-  extends StringsCompleter2
+  extends DynamicCompleter
   implements EventAware
 {
+  private final StringsCompleter2 delegate = new StringsCompleter2();
+
   private final CommandRegistry commands;
 
   @Inject
@@ -48,16 +54,21 @@ public class CommandNameCompleter
 
   @Override
   protected void init() {
-    set(commands.getCommandNames());
+    delegate.set(commands.getCommandNames());
+  }
+
+  @Override
+  protected Collection<Candidate> getCandidates() {
+    return delegate.getCandidates();
   }
 
   @Subscribe
   void on(final CommandRegisteredEvent event) {
-    add(event.getName());
+    delegate.add(event.getName());
   }
 
   @Subscribe
   void on(final CommandRemovedEvent event) {
-    remove(event.getName());
+    delegate.remove(event.getName());
   }
 }
