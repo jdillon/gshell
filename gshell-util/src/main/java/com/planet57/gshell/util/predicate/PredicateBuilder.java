@@ -31,8 +31,13 @@ public class PredicateBuilder<T>
 {
   private final List<Predicate<T>> predicates = new ArrayList<>();
 
-  public PredicateBuilder<T> include(final Predicate<T>... predicates) {
-    this.predicates.addAll(Arrays.asList(predicates));
+  public PredicateBuilder<T> include(final Predicate<T> predicate) {
+    this.predicates.add(predicate);
+    return this;
+  }
+
+  public PredicateBuilder<T> include(final List<Predicate<T>> predicates) {
+    this.predicates.addAll(predicates);
     return this;
   }
 

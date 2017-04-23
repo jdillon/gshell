@@ -66,7 +66,7 @@ public class HelpAction
 
   @Preference
   @Option(longName = "pager", optionalArg = true)
-  private Boolean pager = true;
+  private Boolean pager = false;
 
   // TODO: maybe use an enum here to say; --include groups,commands,aliases (exclude meta) etc...
 
@@ -99,9 +99,9 @@ public class HelpAction
   }
 
   @Inject
-  public void installCompleters(final @Named("alias-name") Completer c1,
-                                final @Named("node-path") Completer c2,
-                                final @Named("meta-help-page-name") Completer c3)
+  public void installCompleters(@Named("alias-name") final Completer c1,
+                                @Named("node-path") final Completer c2,
+                                @Named("meta-help-page-name") final Completer c3)
   {
     setCompleters(new AggregateCompleter(c1, c2, c3), null);
   }
@@ -121,9 +121,9 @@ public class HelpAction
 
     // if not direct match, then look for similar pages
     if (page == null) {
-      Collection<HelpPage> pages = helpPages.getPages(
-        query((Predicate<HelpPage>) it -> it.getName().contains(name) || it.getDescription().contains(name))
-      );
+      Collection<HelpPage> pages = helpPages.getPages(query(
+        it -> it != null && (it.getName().contains(name) || it.getDescription().contains(name))
+      ));
 
       if (pages.size() == 1) {
         // if there is only one match, treat as a direct match
@@ -163,14 +163,13 @@ public class HelpAction
   }
 
   private void displayAvailable(final CommandContext context) {
-    Collection<HelpPage> pages = helpPages.getPages(query());
+    Collection<HelpPage> pages = helpPages.getPages(query(null));
     IO io = context.getIo();
     io.out.println(getMessages().format("info.available-pages"));
     HelpPageUtil.render(io.out, pages);
   }
 
-  // TODO: investigate "heap-pollution" warnings
-  private Predicate<HelpPage> query(@Nullable final Predicate<HelpPage>... predicates) {
+  private Predicate<HelpPage> query(@Nullable final Predicate<HelpPage> predicate) {
     PredicateBuilder<HelpPage> query = new PredicateBuilder<>();
 
     if (includeAll == null || !includeAll) {
@@ -188,8 +187,8 @@ public class HelpAction
       }
     }
 
-    if (predicates != null) {
-      query.include(predicates);
+    if (predicate != null) {
+      query.include(predicate);
     }
 
     return query.build();
