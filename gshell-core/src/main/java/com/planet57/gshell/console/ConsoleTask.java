@@ -15,6 +15,7 @@
  */
 package com.planet57.gshell.console;
 
+import com.planet57.gshell.util.Notification;
 import org.sonatype.goodies.common.ComponentSupport;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -77,13 +78,13 @@ public abstract class ConsoleTask
   }
 
   /**
-   * Kill the tasks execute thread via {@link Thread#stop}.  Thread is given a {@link AbortTaskError}.
+   * Kill the tasks execute thread via {@link Thread#stop}.  Thread is given a {@link AbortTaskNotification}.
    */
   @SuppressWarnings({"deprecation", "ThrowableInstanceNeverThrown"})
   public synchronized void abort() {
     if (running) {
       log.trace("Aborting");
-      thread.stop(new AbortTaskError());
+      thread.stop(new AbortTaskNotification());
     }
   }
 
@@ -137,10 +138,7 @@ public abstract class ConsoleTask
    * @param thread The new thread considered to be the tasks execute thread.
    */
   public void setExecuteThread(final Thread thread) {
-    if (thread == null) {
-      throw new IllegalArgumentException();
-    }
-    this.thread = thread;
+    this.thread = checkNotNull(thread);
   }
 
   /**
@@ -190,10 +188,10 @@ public abstract class ConsoleTask
   }
 
   /**
-   * Error thrown to tasks which are asked to {link #abort}.
+   * Thrown to tasks which are asked to {link #abort}.
    */
-  public static class AbortTaskError
-      extends Error
+  public static class AbortTaskNotification
+      extends Notification
   {
     private static final long serialVersionUID = 1;
   }
