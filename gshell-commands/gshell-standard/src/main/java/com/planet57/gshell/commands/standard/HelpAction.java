@@ -123,7 +123,8 @@ public class HelpAction
     // if not direct match, then look for similar pages
     if (page == null) {
       Collection<HelpPage> pages = helpPages.getPages(
-        query((Predicate<HelpPage>) page1 -> page1.getName().contains(name) || page1.getDescription().contains(name)));
+        query((Predicate<HelpPage>) it -> it.getName().contains(name) || it.getDescription().contains(name))
+      );
 
       if (pages.size() == 1) {
         // if there is only one match, treat as a direct match
