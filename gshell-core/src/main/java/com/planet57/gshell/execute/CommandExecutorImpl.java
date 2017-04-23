@@ -20,7 +20,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import com.google.common.base.Joiner;
 import com.google.common.base.Stopwatch;
 import com.planet57.gshell.alias.AliasRegistry;
 import com.planet57.gshell.alias.NoSuchAliasException;
@@ -48,6 +47,8 @@ import com.planet57.gshell.util.pref.PreferenceProcessor;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
 import org.slf4j.MDC;
+
+import java.util.Arrays;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -151,7 +152,9 @@ public class CommandExecutorImpl
     checkNotNull(name);
     checkNotNull(args);
 
-    log.debug("Executing ({}): [{}]", name, Joiner.on(", ").join(args));
+    if (log.isDebugEnabled()) {
+      log.debug("Executing ({}): {}", name, Arrays.asList(args));
+    }
 
     Stopwatch watch = Stopwatch.createStarted();
 
