@@ -15,6 +15,9 @@
  */
 package com.planet57.gshell.commands.standard;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintWriter;
 import java.util.Collection;
 
 import javax.annotation.Nonnull;
@@ -36,10 +39,13 @@ import com.planet57.gshell.help.HelpPageUtil;
 import com.planet57.gshell.help.MetaHelpPage;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
+import com.planet57.gshell.util.jline.InputStreamSource;
 import com.planet57.gshell.util.predicate.PredicateBuilder;
 import com.planet57.gshell.util.predicate.TypePredicate;
 import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.Preferences;
+import org.fusesource.jansi.AnsiRenderWriter;
+import org.jline.builtins.Less;
 import org.jline.reader.Completer;
 import org.jline.reader.impl.completer.AggregateCompleter;
 
@@ -57,6 +63,10 @@ public class HelpAction
     extends CommandActionSupport
 {
   private final HelpPageManager helpPages;
+
+  @Preference
+  @Option(longName = "pager", optionalArg = true)
+  private Boolean pager = true;
 
   // TODO: maybe use an enum here to say; --include groups,commands,aliases (exclude meta) etc...
 
@@ -133,8 +143,20 @@ public class HelpAction
       return Result.FAILURE;
     }
 
-    // else render the matched page
-    page.render(io.out);
+    // render matched page; with pager or directly
+    if (pager) {
+      Less less = new Less(io.getTerminal());
+      try (ByteArrayOutputStream buff = new ByteArrayOutputStream()) {
+        PrintWriter writer = new PrintWriter(buff);
+        page.render(new AnsiRenderWriter(writer));
+        writer.close();
+        less.run(new InputStreamSource(page.getName(), new ByteArrayInputStream(buff.toByteArray())));
+      }
+    }
+    else {
+      page.render(io.out);
+    }
+
     return Result.SUCCESS;
   }
 
