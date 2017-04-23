@@ -15,9 +15,6 @@
  */
 package com.planet57.gshell.shell;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.concurrent.Callable;
@@ -84,13 +81,9 @@ public class ShellImpl
 
   private ConsoleErrorHandler errorHandler;
 
+  private ShellScriptLoader scriptLoader;
+
   private boolean opened;
-
-  // TODO: Maybe these should be set in variables?  More supportable than adding new methods for little features like this.
-
-  private boolean loadProfileScripts = true;
-
-  private boolean loadInteractiveScripts = true;
 
   @Inject
   public ShellImpl(final EventManager events,
@@ -117,6 +110,9 @@ public class ShellImpl
 
     // FIXME: looks like we have to set jline LineReader.HISTORY_FILE variable to control this location
     this.history = new DefaultHistory();
+
+    // FIXME: for now leave this as default non-configurable
+    this.scriptLoader = new ShellScriptLoader();
   }
 
   @Override
@@ -162,22 +158,6 @@ public class ShellImpl
     this.completer = completer;
   }
 
-  public boolean isLoadProfileScripts() {
-    return loadProfileScripts;
-  }
-
-  public void setLoadProfileScripts(boolean enable) {
-    this.loadProfileScripts = enable;
-  }
-
-  public boolean isLoadInteractiveScripts() {
-    return loadInteractiveScripts;
-  }
-
-  public void setLoadInteractiveScripts(boolean enable) {
-    this.loadInteractiveScripts = enable;
-  }
-
   public synchronized boolean isOpened() {
     return opened;
   }
@@ -207,7 +187,7 @@ public class ShellImpl
     log.debug("Opened");
 
     // Do this after we are marked as opened
-    loadProfileScripts();
+    scriptLoader.loadProfileScripts(this);
   }
 
   @Override
@@ -244,7 +224,7 @@ public class ShellImpl
     final Shell lastShell = ShellHolder.set(this);
 
     try {
-      loadInteractiveScripts();
+      scriptLoader.loadInteractiveScripts(this);
 
       // Setup 2 final refs to allow our executor to pass stuff back to us
       final AtomicReference<ExitNotification> exitNotifHolder = new AtomicReference<>();
@@ -313,61 +293,5 @@ public class ShellImpl
 
   protected void renderGoodbyeMessage(final IO io) {
     renderMessage(io, branding.getGoodbyeMessage());
-  }
-
-  // Script Loader
-
-  protected void loadProfileScripts() throws Exception {
-    if (!isLoadProfileScripts()) {
-      return;
-    }
-
-    String fileName = branding.getProfileScriptName();
-    loadSharedScript(fileName);
-    loadUserScript(fileName);
-  }
-
-  protected void loadInteractiveScripts() throws Exception {
-    if (!isLoadInteractiveScripts()) {
-      return;
-    }
-
-    String fileName = branding.getInteractiveScriptName();
-    loadSharedScript(fileName);
-    loadUserScript(fileName);
-  }
-
-  protected void loadScript(final File file) throws Exception {
-    checkNotNull(file);
-    log.debug("Loading script: {}", file);
-
-    try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-      String line;
-      while ((line = reader.readLine()) != null) {
-        execute(line);
-      }
-    }
-  }
-
-  protected void loadUserScript(final String fileName) throws Exception {
-    checkNotNull(fileName);
-    File file = new File(branding.getUserContextDir(), fileName);
-    if (file.exists()) {
-      loadScript(file);
-    }
-    else {
-      log.trace("User script is not present: {}", file);
-    }
-  }
-
-  protected void loadSharedScript(final String fileName) throws Exception {
-    checkNotNull(fileName);
-    File file = new File(branding.getShellContextDir(), fileName);
-    if (file.exists()) {
-      loadScript(file);
-    }
-    else {
-      log.trace("Shared script is not present: {}", file);
-    }
   }
 }
