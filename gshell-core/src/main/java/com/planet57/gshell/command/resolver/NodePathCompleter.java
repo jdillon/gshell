@@ -24,6 +24,7 @@ import org.jline.reader.ParsedLine;
 
 import java.util.Collection;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -57,37 +58,13 @@ public class NodePathCompleter
   public void complete(final LineReader reader, final ParsedLine line, final List<Candidate> candidates) {
     checkNotNull(candidates);
 
-    Collection<Node> matches = new LinkedHashSet<>();
+    Collection<Node> matches = new LinkedList<>();
+
     String word = line.word();
     log.trace("Completing; {}; word: {}, line: {}, words: {}", line, word, line.line(), line.words());
 
-    // need to look for matches in the group search path
-    log.trace("Consult search path");
-
     for (Node parent : resolver.searchPath()) {
-      Node node = parent.find(word);
-
-      if (node != null) {
-        log.trace("Found direct match: {}", node);
-        matches.add(node);
-      }
-      else {
-        // no direct match, find the parent node and match its children by name
-        NodePath path = new NodePath(word);
-        path = path.parent();
-        log.trace("No direct match; parent: {}", path);
-
-        if (path != null) {
-          node = parent.find(path);
-        }
-        else {
-          node = parent;
-        }
-
-        if (node != null) {
-          matches.add(node);
-        }
-      }
+      matches.addAll(parent.children());
     }
 
     buildCandidates(candidates, matches);
@@ -99,16 +76,19 @@ public class NodePathCompleter
     }
 
     Set<String> strings = new LinkedHashSet<>();
+
+    // append all matching nodes
     for (Node node : matches) {
       appendNode(strings, node);
     }
 
+    // construct candidates from matches
     for (String string : strings) {
       candidates.add(StringsCompleter2.candidate(string));
     }
   }
 
-  private static void appendNode(final Set<String> strings, final Node node) {
+  private static void appendNode(final Collection<String> strings, final Node node) {
     if (node.isRoot()) {
       appendChildren(strings, node);
     }
@@ -121,7 +101,7 @@ public class NodePathCompleter
     }
   }
 
-  private static void appendChildren(final Set<String> strings, final Node parent) {
+  private static void appendChildren(final Collection<String> strings, final Node parent) {
     assert parent.isGroup();
 
     // prefix children with ${parent.name} + SEPARATOR; unless root
