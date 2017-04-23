@@ -145,6 +145,7 @@ public class HelpAction
 
     // render matched page; with pager or directly
     if (pager) {
+      // TODO: consider adding a means to create these generically; and control if enabled via variable?
       Less less = new Less(io.getTerminal());
       try (ByteArrayOutputStream buff = new ByteArrayOutputStream()) {
         PrintWriter writer = new PrintWriter(buff);
