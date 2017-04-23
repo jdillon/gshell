@@ -19,13 +19,12 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
 import java.util.Collection;
+import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.google.common.base.Predicate;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
@@ -40,7 +39,6 @@ import com.planet57.gshell.help.MetaHelpPage;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.jline.InputStreamSource;
-import com.planet57.gshell.util.predicate.PredicateBuilder;
 import com.planet57.gshell.util.predicate.TypePredicate;
 import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.Preferences;
@@ -163,34 +161,30 @@ public class HelpAction
   }
 
   private void displayAvailable(final CommandContext context) {
-    Collection<HelpPage> pages = helpPages.getPages(query(null));
+    Collection<HelpPage> pages = helpPages.getPages(query(helpPage -> true));
     IO io = context.getIo();
     io.out.println(getMessages().format("info.available-pages"));
     HelpPageUtil.render(io.out, pages);
   }
 
-  private Predicate<HelpPage> query(@Nullable final Predicate<HelpPage> predicate) {
-    PredicateBuilder<HelpPage> query = new PredicateBuilder<>();
+  private Predicate<HelpPage> query(final Predicate<HelpPage> predicate) {
+    Predicate<HelpPage> query = predicate;
 
     if (includeAll == null || !includeAll) {
       if (includeAliases != null && !includeAliases) {
-        query.not(new TypePredicate<>(AliasHelpPage.class));
+        query = query.and(TypePredicate.of(AliasHelpPage.class).negate());
       }
       if (includeMeta != null && !includeMeta) {
-        query.not(new TypePredicate<>(MetaHelpPage.class));
+        query = query.and(TypePredicate.of(MetaHelpPage.class).negate());
       }
       if (includeCommands != null && !includeCommands) {
-        query.not(new TypePredicate<>(CommandHelpPage.class));
+        query = query.and(TypePredicate.of(CommandHelpPage.class).negate());
       }
       if (includeGroups != null && !includeGroups) {
-        query.not(new TypePredicate<>(GroupHelpPage.class));
+        query = query.and(TypePredicate.of(GroupHelpPage.class).negate());
       }
     }
 
-    if (predicate != null) {
-      query.include(predicate);
-    }
-
-    return query.build();
+    return query;
   }
 }

@@ -17,16 +17,15 @@ package com.planet57.gshell.help;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import com.google.common.base.Predicate;
 import com.google.inject.Key;
 import com.planet57.gshell.alias.AliasRegistry;
 import com.planet57.gshell.alias.NoSuchAliasException;
@@ -115,16 +114,8 @@ public class HelpPageManagerImpl
 
   @Override
   public Collection<HelpPage> getPages(final Predicate<HelpPage> query) {
-    assert query != null;
-
-    List<HelpPage> pages = new LinkedList<>();
-    for (HelpPage page : getPages()) {
-      if (query.apply(page)) {
-        pages.add(page);
-      }
-    }
-
-    return pages;
+    checkNotNull(query);
+    return getPages().stream().filter(query).collect(Collectors.toList());
   }
 
   @Override

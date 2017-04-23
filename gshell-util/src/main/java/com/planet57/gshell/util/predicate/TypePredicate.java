@@ -15,7 +15,7 @@
  */
 package com.planet57.gshell.util.predicate;
 
-import com.google.common.base.Predicate;
+import java.util.function.Predicate;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -34,7 +34,11 @@ public class TypePredicate<T>
   }
 
   @Override
-  public boolean apply(final T page) {
-    return page != null && type.isAssignableFrom(page.getClass());
+  public boolean test(final T value) {
+    return value != null && type.isAssignableFrom(value.getClass());
+  }
+
+  public static <T> Predicate<T> of(final Class<?> type) {
+    return new TypePredicate<>(type);
   }
 }
