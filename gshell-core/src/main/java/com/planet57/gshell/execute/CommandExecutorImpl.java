@@ -21,6 +21,7 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import com.google.common.base.Stopwatch;
+import com.google.common.base.Throwables;
 import com.planet57.gshell.alias.AliasRegistry;
 import com.planet57.gshell.alias.NoSuchAliasException;
 import com.planet57.gshell.command.AliasAction;
@@ -91,25 +92,16 @@ public class CommandExecutorImpl
     }
 
     final Shell lastShell = ShellHolder.set(shell);
-
     CommandLine cl = parser.parse(line);
 
     try {
       return cl.execute(shell, this);
     }
     catch (ErrorNotification n) {
-      // Decode the error notification
       Throwable cause = n.getCause();
-
-      if (cause instanceof Exception) {
-        throw (Exception) cause;
-      }
-      else if (cause instanceof Error) {
-        throw (Error) cause;
-      }
-      else {
-        throw n;
-      }
+      Throwables.propagateIfPossible(cause, Exception.class, Error.class);
+      // should normally never happen
+      throw n;
     }
     finally {
       ShellHolder.set(lastShell);
