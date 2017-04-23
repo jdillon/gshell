@@ -59,7 +59,13 @@ public class CliProcessor
 
   private MessageSource messages;
 
-  private CliParserFlavor flavor = CliParserFlavor.DEFAULT;
+  public enum Flavor
+  {
+    POSIX,
+    GNU
+  }
+
+  private Flavor flavor = Flavor.POSIX;
 
   public CliProcessor() {
     // empty
@@ -81,11 +87,11 @@ public class CliProcessor
     this.messages = messages;
   }
 
-  public CliParserFlavor getFlavor() {
+  public Flavor getFlavor() {
     return flavor;
   }
 
-  public void setFlavor(final CliParserFlavor flavor) {
+  public void setFlavor(final Flavor flavor) {
     this.flavor = checkNotNull(flavor);
   }
 
@@ -184,9 +190,55 @@ public class CliProcessor
   // Processing
   //
 
+  private interface CliParser
+      extends CommandLineParser
+  {
+    void ensureRequiredOptionsPresent() throws MissingOptionException;
+  }
+
+  private static class GnuParser
+      extends org.apache.commons.cli.GnuParser
+      implements CliParser
+  {
+    @Override
+    protected void checkRequiredOptions() {
+      // delay, need to check for required options after processing to support override
+    }
+
+    public void ensureRequiredOptionsPresent() throws MissingOptionException {
+      super.checkRequiredOptions();
+    }
+  }
+
+  private static class PosixParser
+      extends org.apache.commons.cli.PosixParser
+      implements CliParser
+  {
+    @Override
+    protected void checkRequiredOptions() {
+      // delay, need to check for required options after processing to support override
+    }
+
+    public void ensureRequiredOptionsPresent() throws MissingOptionException {
+      super.checkRequiredOptions();
+    }
+  }
+
   public void process(final String... args) throws Exception {
     checkNotNull(args);
-    CommandLineParser parser = flavor.create();
+    CliParser parser = null;
+
+    switch (flavor) {
+      case POSIX:
+        parser = new PosixParser();
+        break;
+      case GNU:
+        parser = new GnuParser();
+        break;
+    }
+
+    assert parser != null;
+
     CommandLine cl;
 
     try {
@@ -199,14 +251,11 @@ public class CliProcessor
       OptionDescriptor desc = ((Opt) e.getOption()).getDescriptor();
       throw new ProcessingException(Messages.MISSING_OPERAND.format(desc.getSyntax(), desc.renderToken(messages)));
     }
-    catch (MissingOptionException e) {
-      throw new ProcessingException(Messages.REQUIRED_OPTION_MISSING.format(e.getMissingOptions()));
-    }
     catch (ParseException e) {
       throw new ProcessingException(e);
     }
 
-    Set<CliDescriptor> present = new HashSet<>();
+    Set<CliDescriptor> present = new HashSet<CliDescriptor>();
     boolean override = false;
 
     for (Object tmp : cl.getOptions()) {
@@ -223,8 +272,6 @@ public class CliProcessor
 
       Handler handler = Handlers.create(desc);
       String[] values = opt.getValues();
-
-      // FIXME: if user uses -option=foo syntax, then value will end up erroneously as "=foo"
 
       if (values == null || values.length == 0) {
         // Set the value
@@ -265,12 +312,12 @@ public class CliProcessor
 
     // Check for any required arguments which were not present
     if (!override) {
-//      try {
-//        parser.ensureRequiredOptionsPresent();
-//      }
-//      catch (MissingOptionException e) {
-//        throw new ProcessingException(Messages.REQUIRED_OPTION_MISSING.format(e.getMissingOptions()));
-//      }
+      try {
+        parser.ensureRequiredOptionsPresent();
+      }
+      catch (MissingOptionException e) {
+        throw new ProcessingException(Messages.REQUIRED_OPTION_MISSING.format(e.getMissingOptions()));
+      }
 
       for (ArgumentDescriptor arg : argumentDescriptors) {
         if (arg.isRequired() && !present.contains(arg)) {

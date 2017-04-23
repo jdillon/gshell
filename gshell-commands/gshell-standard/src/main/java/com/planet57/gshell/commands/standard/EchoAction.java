@@ -27,6 +27,8 @@ import com.planet57.gshell.util.cli2.Option;
 
 import javax.annotation.Nonnull;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Print all arguments to the commands standard output.
  *
@@ -37,7 +39,7 @@ import javax.annotation.Nonnull;
 public class EchoAction
     extends CommandActionSupport
 {
-  @Option(name = "n")
+  @Option(name = "n", optionalArg = true)
   private boolean noTrailingNewline;
 
   @Argument()
