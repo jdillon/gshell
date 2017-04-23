@@ -51,17 +51,14 @@ public class ShellHolder
     return last;
   }
 
-  @Nullable
-  public static Shell get() {
-    return holder.get();
-  }
+  // FIXME: remove the need for folks to get this via ThreadLocal
 
   /**
    * @since 3.0
    */
   @Nonnull
   public static Shell require() {
-    Shell shell = get();
+    Shell shell = holder.get();
     checkState(shell != null, "Shell not initialized for thread: %s", Thread.currentThread());
     return shell;
   }
