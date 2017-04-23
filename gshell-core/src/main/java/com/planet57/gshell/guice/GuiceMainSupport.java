@@ -79,7 +79,6 @@ public abstract class GuiceMainSupport
         bind(Variables.class).annotatedWith(named("main")).toInstance(vars);
       }
     });
-    modules.add(new CoreModule());
   }
 
   protected SpaceModule createSpaceModule() {

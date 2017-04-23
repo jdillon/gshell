@@ -42,8 +42,6 @@ public class BeanContainer
     beanLocator.watch(key, mediator, watcher);
   }
 
-  // HACK: expose minimal MutableBeanLocator api needed
-
   public void add(final Injector injector, final int rank) {
     beanLocator.add(injector, rank);
   }

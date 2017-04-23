@@ -33,7 +33,6 @@ import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.registry.CommandRegistrar;
 import com.planet57.gshell.command.registry.CommandRegistry;
-import com.planet57.gshell.guice.CoreModule;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.guice.BeanContainer;
 import com.planet57.gshell.logging.LoggingSystem;
@@ -51,8 +50,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.sonatype.goodies.lifecycle.Lifecycles;
-import org.sonatype.goodies.testsupport.TestUtil;
+import org.sonatype.goodies.testsupport.TestSupport;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.inject.name.Names.named;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -64,10 +64,9 @@ import static org.junit.Assert.assertTrue;
  * @since 3.0
  */
 public abstract class CommandTestSupport
+  extends TestSupport
 {
   protected final String name;
-
-  private final TestUtil util = new TestUtil(this);
 
   private BeanContainer container;
 
@@ -138,9 +137,8 @@ public abstract class CommandTestSupport
   }
 
   protected void configureModules(final List<Module> modules) {
-    assert modules != null;
+    checkNotNull(modules);
     modules.add(createSpaceModule());
-    modules.add(new CoreModule());
   }
 
   protected SpaceModule createSpaceModule() {

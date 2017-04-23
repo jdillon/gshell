@@ -26,7 +26,6 @@ import com.google.inject.Key;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.guice.BeanContainer;
-import org.sonatype.goodies.common.ComponentSupport;
 import org.eclipse.sisu.BeanEntry;
 import org.sonatype.goodies.lifecycle.LifecycleSupport;
 
