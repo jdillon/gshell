@@ -40,6 +40,8 @@
     </encoder>
   </appender>
 
+  <logger name="Sisu" level="${sisu.log-level:-INFO}"/>
+
   <!-- HACK: for completer testing -->
   <!--<root level="${shell.root-level:-${shell.logging}}">-->
   <root level="TRACE">
