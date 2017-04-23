@@ -20,6 +20,8 @@ import com.planet57.gshell.branding.BrandingSupport;
 
 import java.io.File;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Test {@link Branding}.
  *
@@ -31,8 +33,7 @@ public class TestBranding
   private File baseDir;
 
   public TestBranding(final File baseDir) {
-    assert baseDir != null;
-    this.baseDir = baseDir;
+    this.baseDir = checkNotNull(baseDir);
   }
 
   @Override

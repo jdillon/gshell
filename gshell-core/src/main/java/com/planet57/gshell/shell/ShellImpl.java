@@ -146,6 +146,7 @@ public class ShellImpl
 
   @Override
   public synchronized void close() {
+    // FIXME: this is pretty silly
     opened = false;
   }
 

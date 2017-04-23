@@ -18,7 +18,6 @@ package com.planet57.gshell;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.notification.ExitNotification;
 import com.planet57.gshell.shell.Shell;
-import com.planet57.gshell.testharness.DummyShell;
 import com.planet57.gshell.testharness.TestBranding;
 import org.fusesource.jansi.Ansi;
 import org.junit.After;
@@ -28,6 +27,7 @@ import org.sonatype.goodies.testsupport.TestSupport;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
 
 /**
  * Tests for {@link MainSupport}.
@@ -50,12 +50,18 @@ public class MainSupportTest
 
   // FIXME: due to how MainSupport works to setup streams; these tests will spit out to system.out even if surefire configured to redirect
 
+  /**
+   * All commands must support {@code -h}.
+   */
   @Test
   public void test_h() throws Exception {
     main.boot("-h");
     assertThat(main.exitCode, is(ExitNotification.DEFAULT_CODE));
   }
 
+  /**
+   * All commands must support {@code --help}.
+   */
   @Test
   public void test__help() throws Exception {
     main.boot("--help");
@@ -74,7 +80,7 @@ public class MainSupportTest
 
     @Override
     protected Shell createShell() throws Exception {
-      return new DummyShell();
+      return mock(Shell.class);
     }
 
     @Override

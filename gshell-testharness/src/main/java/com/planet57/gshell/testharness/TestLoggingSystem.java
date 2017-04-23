@@ -31,52 +31,53 @@ import com.planet57.gshell.logging.LoggingSystem;
 public class TestLoggingSystem
     implements LoggingSystem
 {
+  @Override
   public LevelComponent getLevel(final String name) {
-    return new LevelComponent()
-    {
-      public String getName() {
-        return name;
-      }
-    };
+    return () -> name;
   }
 
+  @Override
   public Collection<? extends LevelComponent> getLevels() {
     return Collections.emptySet();
   }
 
+  @Override
   public LoggerComponent getLogger(final String name) {
     return new LoggerComponent()
     {
+      @Override
       public String getName() {
         return name;
       }
 
+      @Override
       public LevelComponent getLevel() {
         return null;
       }
 
+      @Override
       public void setLevel(LevelComponent level) {
         // ignore
       }
 
+      @Override
       public void setLevel(String level) {
         // ignore
       }
 
-      public LoggerComponent parent() {
-        return null;
-      }
-
+      @Override
       public boolean isRoot() {
         return false;
       }
     };
   }
 
+  @Override
   public Collection<String> getLoggerNames() {
     return Collections.emptySet();
   }
 
+  @Override
   public Collection<? extends LoggingComponent> getComponents() {
     return Collections.emptySet();
   }

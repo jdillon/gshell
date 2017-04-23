@@ -16,17 +16,14 @@
 package com.planet57.gshell.commands.shell;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.inject.Provider;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
-import com.planet57.gshell.util.io.PromptReader;
-
-import static com.google.common.base.Preconditions.checkNotNull;
+import org.jline.reader.LineReader;
+import org.jline.reader.LineReaderBuilder;
 
 /**
  * Ask for some input.
@@ -38,8 +35,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class AskAction
     extends CommandActionSupport
 {
-  private final Provider<PromptReader> promptProvider;
-
   @Option(name = "m", longName = "mask")
   private Character mask;
 
@@ -49,21 +44,19 @@ public class AskAction
   @Argument(required = true)
   private String prompt;
 
-  @Inject
-  public AskAction(final Provider<PromptReader> promptProvider) {
-    this.promptProvider = checkNotNull(promptProvider);
-  }
-
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    PromptReader prompter = promptProvider.get();
-    String input;
+    // TODO: look into if there is a better way to do this to create a light-weight LineReader
+    LineReader lineReader = LineReaderBuilder.builder()
+      .terminal(context.getIo().getTerminal())
+      .build();
 
+    String input;
     if (mask != null) {
-      input = prompter.readLine(prompt, mask);
+      input = lineReader.readLine(prompt, mask);
     }
     else {
-      input = prompter.readLine(prompt);
+      input = lineReader.readLine(prompt);
     }
     log.debug("Read input: {}", input);
 

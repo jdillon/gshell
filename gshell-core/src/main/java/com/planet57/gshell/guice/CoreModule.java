@@ -15,9 +15,6 @@
  */
 package com.planet57.gshell.guice;
 
-import java.io.IOException;
-
-import org.fusesource.jansi.AnsiRenderer;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
@@ -26,7 +23,6 @@ import com.planet57.gshell.command.registry.CommandRegistrar;
 import com.planet57.gshell.command.registry.CommandRegistrarImpl;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.shell.ShellHolder;
-import com.planet57.gshell.util.io.PromptReader;
 import com.planet57.gshell.variables.Variables;
 import org.jline.terminal.Terminal;
 
@@ -63,31 +59,5 @@ public class CoreModule
   @Provides
   private Variables provideVariables() {
     return provideShell().getVariables();
-  }
-
-  /**
-   * Provides ANSI-aware prompt renderer for the current-thread environment.
-   */
-  @Provides
-  private PromptReader providePromptReader() throws IOException {
-    IO io = provideIo();
-
-    return new PromptReader(io.streams, io.getTerminal())
-    {
-      @Override
-      public String readLine(String prompt, Validator validator) throws IOException {
-        return super.readLine(AnsiRenderer.render(prompt), validator);
-      }
-
-      @Override
-      public String readLine(String prompt, char mask, Validator validator) throws IOException {
-        return super.readLine(AnsiRenderer.render(prompt), mask, validator);
-      }
-
-      @Override
-      public String readPassword(String prompt, Validator validator) throws IOException {
-        return super.readPassword(AnsiRenderer.render(prompt), validator);
-      }
-    };
   }
 }
