@@ -15,7 +15,6 @@
  */
 package com.planet57.gshell.console;
 
-import java.io.IOException;
 import java.util.concurrent.Callable;
 
 import org.sonatype.goodies.common.ComponentSupport;
@@ -53,16 +52,11 @@ public class Console
                  final ConsolePrompt prompt,
                  final Callable<ConsoleTask> taskFactory,
                  final ConsoleErrorHandler errorHandler)
-    throws IOException
   {
     this.prompt = checkNotNull(prompt);
     this.taskFactory = checkNotNull(taskFactory);
     this.errorHandler = checkNotNull(errorHandler);
     this.lineReader = checkNotNull(lineReader);
-  }
-
-  public ConsoleTask getCurrentTask() {
-    return currentTask;
   }
 
   public void close() {
@@ -108,7 +102,7 @@ public class Console
    * @throws Exception Work failed.
    */
   private boolean work() throws Exception {
-    String line = lineReader.readLine(prompt != null ? prompt.prompt() : ConsolePrompt.DEFAULT_PROMPT);
+    String line = lineReader.readLine(prompt.prompt());
 
     log.trace("Read line: {}", line);
 
@@ -127,8 +121,6 @@ public class Console
     // Build the task and execute it
     checkState(currentTask == null);
     currentTask = taskFactory.call();
-    log.trace("Current task: {}", currentTask);
-
     try {
       return currentTask.execute(line);
     }
@@ -137,29 +129,29 @@ public class Console
     }
   }
 
+  /**
+   * Logs line with HEX details.
+   */
   private void traceLine(@Nullable final String line) {
     if (line == null) {
       return;
     }
 
-    StringBuilder idx = new StringBuilder();
     StringBuilder hex = new StringBuilder();
+    StringBuilder idx = new StringBuilder();
 
     for (byte b : line.getBytes()) {
-      String h = Integer.toHexString(b);
-
-      hex.append('x').append(h).append(' ');
+      hex.append('x').append(Integer.toHexString(b)).append(' ');
       idx.append(' ').append((char) b).append("  ");
     }
 
-    log.trace("HEX: {}", hex);
-    log.trace("     {}", idx);
+    log.trace("\n{}\n{}", hex, idx);
   }
 
   private boolean interruptTask() {
     boolean interrupt = false;
 
-    ConsoleTask task = getCurrentTask();
+    ConsoleTask task = currentTask;
     if (task != null) {
       synchronized (task) {
         log.debug("Interrupting task");

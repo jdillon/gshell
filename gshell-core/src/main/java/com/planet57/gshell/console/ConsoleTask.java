@@ -30,12 +30,6 @@ public abstract class ConsoleTask
   extends ComponentSupport
 {
   /**
-   * Holds the currently executing task for the thread.  To allow for edge cases where the
-   * originating thread is not the desired thread to interrupt/stop.
-   */
-  private static final InheritableThreadLocal<ConsoleTask> holder = new InheritableThreadLocal<>();
-
-  /**
    * The thread which is executing this task.
    */
   private Thread thread;
@@ -98,12 +92,8 @@ public abstract class ConsoleTask
   public boolean execute(final String input) throws Exception {
     this.input = checkNotNull(input);
 
-    ConsoleTask prevTask;
-
     synchronized (this) {
       log.trace("Running");
-      prevTask = holder.get();
-      holder.set(this);
       thread = Thread.currentThread();
       running = true;
     }
@@ -116,7 +106,6 @@ public abstract class ConsoleTask
         stopping = false;
         running = false;
         thread = null;
-        holder.set(prevTask);
         log.trace("Stopped");
       }
     }
@@ -165,32 +154,9 @@ public abstract class ConsoleTask
   //
 
   /**
-   * Get the currently running task.
-   *
-   * @param allowNull False to throw an {@link IllegalStateException} if there is not current task.
-   * @return The current task or null.
-   */
-  public static ConsoleTask get(final boolean allowNull) {
-    ConsoleTask task = holder.get();
-
-    if (!allowNull && task == null) {
-      throw new IllegalStateException("ConsoleTask not initialized for thread: " + Thread.currentThread());
-    }
-
-    return task;
-  }
-
-  /**
-   * Get the currently running task.
-   */
-  public static ConsoleTask get() {
-    return get(false);
-  }
-
-  /**
    * Thrown to tasks which are asked to {link #abort}.
    */
-  public static class AbortTaskNotification
+  private static class AbortTaskNotification
       extends Notification
   {
     private static final long serialVersionUID = 1;
