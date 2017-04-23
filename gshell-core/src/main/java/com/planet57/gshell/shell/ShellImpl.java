@@ -44,6 +44,8 @@ import com.planet57.gshell.variables.Variables;
 import com.planet57.gshell.variables.VariablesSupport;
 import org.jline.reader.Completer;
 import org.jline.reader.History;
+import org.jline.reader.LineReader;
+import org.jline.reader.LineReaderBuilder;
 import org.jline.reader.impl.history.DefaultHistory;
 import org.jline.terminal.Terminal;
 import org.sonatype.goodies.lifecycle.LifecycleSupport;
@@ -262,16 +264,13 @@ public class ShellImpl
         }
       };
 
-      // FIXME: refactor this, so we can better control how the LineReader is setup and allow passing this via context
-      Console console = new Console(io, taskFactory, history, new LoggingCompleter(completer));
+      LineReader lineReader = LineReaderBuilder.builder()
+        .terminal(io.getTerminal())
+        .history(history)
+        .completer(new LoggingCompleter(completer))
+        .build();
 
-      if (prompt != null) {
-        console.setPrompt(prompt);
-      }
-
-      if (errorHandler != null) {
-        console.setErrorHandler(errorHandler);
-      }
+      Console console = new Console(lineReader, prompt, taskFactory, errorHandler);
 
       if (!io.isQuiet()) {
         renderWelcomeMessage(io);

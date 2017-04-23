@@ -18,17 +18,14 @@ package com.planet57.gshell.console;
 import java.io.IOException;
 import java.util.concurrent.Callable;
 
-import com.planet57.gshell.command.IO;
 import org.sonatype.goodies.common.ComponentSupport;
-import org.jline.reader.Completer;
-import org.jline.reader.History;
 import org.jline.reader.LineReader;
-import org.jline.reader.LineReaderBuilder;
 import org.jline.terminal.Terminal;
 
 import javax.annotation.Nullable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
 /**
  * Provides an abstraction of a console.
@@ -40,49 +37,28 @@ public class Console
     extends ComponentSupport
     implements Runnable
 {
-  private final IO io;
-
   private final LineReader lineReader;
+
+  private final ConsolePrompt prompt;
 
   private final Callable<ConsoleTask> taskFactory;
 
-  private ConsolePrompt prompt;
+  private final ConsoleErrorHandler errorHandler;
 
-  private ConsoleErrorHandler errorHandler;
-
-  private ConsoleTask currentTask;
+  private volatile ConsoleTask currentTask;
 
   private volatile boolean running;
 
-  public Console(final IO io,
+  public Console(final LineReader lineReader,
+                 final ConsolePrompt prompt,
                  final Callable<ConsoleTask> taskFactory,
-                 final History history,
-                 @Nullable final Completer completer)
+                 final ConsoleErrorHandler errorHandler)
     throws IOException
   {
-    this.io = checkNotNull(io);
+    this.prompt = checkNotNull(prompt);
     this.taskFactory = checkNotNull(taskFactory);
-    this.lineReader = LineReaderBuilder.builder()
-      .terminal(io.getTerminal())
-      .history(history)
-      .completer(completer)
-      .build();
-  }
-
-  public IO getIo() {
-    return io;
-  }
-
-  public void setPrompt(final ConsolePrompt prompt) {
-    this.prompt = prompt;
-  }
-
-  public ConsoleErrorHandler getErrorHandler() {
-    return errorHandler;
-  }
-
-  public void setErrorHandler(final ConsoleErrorHandler errorHandler) {
-    this.errorHandler = errorHandler;
+    this.errorHandler = checkNotNull(errorHandler);
+    this.lineReader = checkNotNull(lineReader);
   }
 
   public ConsoleTask getCurrentTask() {
@@ -101,7 +77,7 @@ public class Console
     running = true;
 
     // prepare handling for CTRL-C
-    Terminal terminal = io.getTerminal();
+    Terminal terminal = lineReader.getTerminal();
     Terminal.SignalHandler intHandler = terminal.handle(Terminal.Signal.INT, s -> {
       interruptTask();
     });
@@ -110,14 +86,10 @@ public class Console
       while (running) {
         try {
           running = work();
-        } catch (Throwable t) {
+        }
+        catch (Throwable t) {
           log.trace("Work failed", t);
-
-          if (getErrorHandler() != null) {
-            running = getErrorHandler().handleError(t);
-          } else {
-            t.printStackTrace(io.err);
-          }
+          running = errorHandler.handleError(t);
         }
       }
     }
@@ -126,15 +98,6 @@ public class Console
     }
 
     log.trace("Stopped");
-  }
-
-  protected ConsoleTask createTask() {
-    try {
-      return taskFactory.call();
-    }
-    catch (Exception e) {
-      throw new RuntimeException(e);
-    }
   }
 
   /**
@@ -161,8 +124,8 @@ public class Console
     }
 
     // Build the task and execute it
-    assert currentTask == null;
-    currentTask = createTask();
+    checkState(currentTask == null);
+    currentTask = taskFactory.call();
     log.trace("Current task: {}", currentTask);
 
     try {
