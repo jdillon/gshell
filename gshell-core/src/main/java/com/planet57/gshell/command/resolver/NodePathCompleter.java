@@ -63,6 +63,8 @@ public class NodePathCompleter
     String word = line.word();
     log.trace("Completing; {}; word: {}, line: {}, words: {}", line, word, line.line(), line.words());
 
+    // TODO: handle ., .. and /
+
     for (Node parent : resolver.searchPath()) {
       matches.addAll(parent.children());
     }
