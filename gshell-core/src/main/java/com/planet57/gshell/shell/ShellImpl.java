@@ -69,19 +69,19 @@ public class ShellImpl
 
   private final CommandRegistrar commandRegistrar;
 
-  private IO io;
+  private final IO io;
 
   private final Variables variables;
 
   private final History history;
 
-  private Completer completer;
+  private final Completer completer;
 
-  private ConsolePrompt prompt;
+  private final ConsolePrompt prompt;
 
-  private ConsoleErrorHandler errorHandler;
+  private final ConsoleErrorHandler errorHandler;
 
-  private ShellScriptLoader scriptLoader;
+  private final ShellScriptLoader scriptLoader;
 
   private boolean opened;
 
@@ -92,7 +92,9 @@ public class ShellImpl
                    final Branding branding,
                    @Named("main") final IO io,
                    @Named("main") final Variables variables,
-                   @Named("shell") final Completer completer)
+                   @Named("shell") final Completer completer,
+                   final ConsolePrompt prompt,
+                   final ConsoleErrorHandler errorHandler)
       throws IOException
   {
     this.events = checkNotNull(events);
@@ -102,6 +104,8 @@ public class ShellImpl
     this.io = checkNotNull(io);
     this.variables = checkNotNull(variables);
     this.completer = checkNotNull(completer);
+    this.prompt = checkNotNull(prompt);
+    this.errorHandler = checkNotNull(errorHandler);
 
     // HACK: adapt variables for events
     if (variables instanceof VariablesSupport) {
@@ -141,23 +145,7 @@ public class ShellImpl
     return history;
   }
 
-  @Inject
-  public void setPrompt(@Nullable final ConsolePrompt prompt) {
-    this.prompt = prompt;
-    log.debug("Prompt: {}", prompt);
-  }
-
-  @Inject
-  public void setErrorHandler(@Nullable final ConsoleErrorHandler errorHandler) {
-    this.errorHandler = errorHandler;
-    log.debug("Error handler: {}", errorHandler);
-  }
-
-  public void setCompleter(@Nullable final Completer completer) {
-    log.debug("Completer: {}", completer);
-    this.completer = completer;
-  }
-
+  @Override
   public synchronized boolean isOpened() {
     return opened;
   }
@@ -279,7 +267,10 @@ public class ShellImpl
     }
   }
 
-  private void renderMessage(final IO io, final String msg) {
+  /**
+   * Helper to optionally render a welcome or goodbye message.
+   */
+  private static void renderMessage(final IO io, @Nullable final String msg) {
     assert io != null;
     if (msg != null) {
       io.out.println(msg);
