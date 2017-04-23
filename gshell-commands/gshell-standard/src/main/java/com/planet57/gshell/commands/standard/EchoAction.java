@@ -39,7 +39,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class EchoAction
     extends CommandActionSupport
 {
-  @Option(name = "n", optionalArg = true)
+  @Option(name = "n")
   private boolean noTrailingNewline;
 
   @Argument()
