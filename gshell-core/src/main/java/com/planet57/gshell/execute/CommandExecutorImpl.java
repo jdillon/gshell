@@ -32,8 +32,6 @@ import com.planet57.gshell.command.registry.NoSuchCommandException;
 import com.planet57.gshell.command.resolver.CommandResolver;
 import com.planet57.gshell.command.resolver.Node;
 import com.planet57.gshell.command.CommandHelper;
-import com.planet57.gshell.notification.ErrorNotification;
-import com.planet57.gshell.notification.ResultNotification;
 import com.planet57.gshell.parser.CommandLineParser;
 import com.planet57.gshell.parser.CommandLineParser.CommandLine;
 import com.planet57.gshell.shell.Shell;

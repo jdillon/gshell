@@ -13,22 +13,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.notification;
+package com.planet57.gshell.execute;
 
 import com.planet57.gshell.util.Notification;
 
 /**
- * Thrown to indicate an error notification state.
+ * Thrown to indicate that the current shell should exit.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public final class ErrorNotification
+public final class ExitNotification
     extends Notification
 {
   private static final long serialVersionUID = 1;
 
-  public ErrorNotification(final String msg, final Throwable cause) {
-    super(msg, cause);
+  public static final int SUCCESS_CODE = 0;
+
+  public static final int ERROR_CODE = 1;
+
+  public static final int FATAL_CODE = 2;
+
+  public final int code;
+
+  public ExitNotification(final int code) {
+    this.code = code;
+  }
+
+  public ExitNotification() {
+    this(SUCCESS_CODE);
+  }
+
+  public static void exit(final int code) {
+    throw new ExitNotification(code);
+  }
+
+  public static void exit() {
+    throw new ExitNotification();
   }
 }

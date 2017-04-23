@@ -13,37 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.notification;
+package com.planet57.gshell.execute;
 
 import com.planet57.gshell.util.Notification;
 
-import javax.annotation.Nullable;
-
 /**
- * Allows command execution to stop early from notification instead of normal return value.
+ * Thrown to indicate an error notification state.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public class ResultNotification
+public final class ErrorNotification
     extends Notification
 {
   private static final long serialVersionUID = 1;
 
-  @Nullable
-  private final Object result;
-
-  public ResultNotification(@Nullable final Object result) {
-    this.result = result;
-  }
-
-  public ResultNotification(final String msg, @Nullable final Object result) {
-    super(msg);
-    this.result = result;
-  }
-
-  @Nullable
-  public Object getResult() {
-    return result;
+  public ErrorNotification(final String msg, final Throwable cause) {
+    super(msg, cause);
   }
 }

@@ -33,7 +33,7 @@ import com.planet57.gshell.console.ConsolePrompt;
 import com.planet57.gshell.console.ConsoleTask;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.execute.CommandExecutor;
-import com.planet57.gshell.notification.ExitNotification;
+import com.planet57.gshell.execute.ExitNotification;
 import com.planet57.gshell.util.io.StreamJack;
 import com.planet57.gshell.util.jline.LoggingCompleter;
 import com.planet57.gshell.util.jline.TerminalHolder;

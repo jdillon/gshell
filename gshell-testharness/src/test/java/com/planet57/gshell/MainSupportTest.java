@@ -16,7 +16,7 @@
 package com.planet57.gshell;
 
 import com.planet57.gshell.branding.Branding;
-import com.planet57.gshell.notification.ExitNotification;
+import com.planet57.gshell.execute.ExitNotification;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.testharness.TestBranding;
 import org.fusesource.jansi.Ansi;

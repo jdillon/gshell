@@ -13,42 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.notification;
+package com.planet57.gshell.execute;
 
 import com.planet57.gshell.util.Notification;
 
+import javax.annotation.Nullable;
+
 /**
- * Thrown to indicate that the current shell should exit.
+ * Allows command execution to stop early from notification instead of normal return value.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public final class ExitNotification
+public class ResultNotification
     extends Notification
 {
   private static final long serialVersionUID = 1;
 
-  public static final int SUCCESS_CODE = 0;
+  @Nullable
+  private final Object result;
 
-  public static final int ERROR_CODE = 1;
-
-  public static final int FATAL_CODE = 2;
-
-  public final int code;
-
-  public ExitNotification(final int code) {
-    this.code = code;
+  public ResultNotification(@Nullable final Object result) {
+    this.result = result;
   }
 
-  public ExitNotification() {
-    this(SUCCESS_CODE);
+  public ResultNotification(final String msg, @Nullable final Object result) {
+    super(msg);
+    this.result = result;
   }
 
-  public static void exit(final int code) {
-    throw new ExitNotification(code);
-  }
-
-  public static void exit() {
-    throw new ExitNotification();
+  @Nullable
+  public Object getResult() {
+    return result;
   }
 }

@@ -21,7 +21,7 @@ import java.util.List;
 
 import com.google.common.base.Joiner;
 import com.planet57.gshell.execute.CommandExecutor;
-import com.planet57.gshell.notification.ErrorNotification;
+import com.planet57.gshell.execute.ErrorNotification;
 import com.planet57.gshell.parser.impl.ASTCommandLine;
 import com.planet57.gshell.parser.impl.ASTExpression;
 import com.planet57.gshell.parser.impl.ASTOpaqueArgument;

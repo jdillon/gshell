@@ -25,7 +25,7 @@ import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.command.AnsiIO;
 import com.planet57.gshell.command.CommandAction.Result;
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.notification.ExitNotification;
+import com.planet57.gshell.execute.ExitNotification;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.shell.ShellHolder;
 import com.planet57.gshell.util.Arguments;
