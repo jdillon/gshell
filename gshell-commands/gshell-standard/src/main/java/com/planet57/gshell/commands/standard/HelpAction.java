@@ -99,12 +99,11 @@ public class HelpAction
   }
 
   @Inject
-  public HelpAction installCompleters(final @Named("alias-name") Completer c1,
-                                       final @Named("node-path") Completer c2,
-                                       final @Named("meta-help-page-name") Completer c3)
+  public void installCompleters(final @Named("alias-name") Completer c1,
+                                final @Named("node-path") Completer c2,
+                                final @Named("meta-help-page-name") Completer c3)
   {
     setCompleters(new AggregateCompleter(c1, c2, c3), null);
-    return this;
   }
 
   @Override
