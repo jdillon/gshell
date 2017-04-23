@@ -86,6 +86,7 @@ public class NodePathCompleter
 
     // construct candidates from matches
     for (String string : strings) {
+      log.trace("Candidate: {}", string);
       candidates.add(StringsCompleter2.candidate(string));
     }
   }
