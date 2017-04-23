@@ -262,6 +262,7 @@ public class ShellImpl
         }
       };
 
+      // FIXME: refactor this, so we can better control how the LineReader is setup and allow passing this via context
       Console console = new Console(io, taskFactory, history, new LoggingCompleter(completer));
 
       if (prompt != null) {
