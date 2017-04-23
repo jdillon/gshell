@@ -30,12 +30,5 @@
   <artifactId>gshell-shell</artifactId>
   <name>${project.groupId}:${project.artifactId}</name>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.jline</groupId>
-      <artifactId>jline-builtins</artifactId>
-    </dependency>
-  </dependencies>
-
 </project>
 
