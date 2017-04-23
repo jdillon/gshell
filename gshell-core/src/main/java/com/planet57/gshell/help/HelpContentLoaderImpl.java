@@ -110,7 +110,7 @@ public class HelpContentLoaderImpl
     String country = locale.getCountry();
     String variant = locale.getVariant();
 
-    List<Locale> locales = new ArrayList<Locale>(4);
+    List<Locale> locales = new ArrayList<>(4);
 
     if (variant.length() > 0) {
       locales.add(locale);
