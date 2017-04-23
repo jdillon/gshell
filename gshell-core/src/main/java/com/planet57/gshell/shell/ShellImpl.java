@@ -82,7 +82,7 @@ public class ShellImpl
 
   private final ShellScriptLoader scriptLoader;
 
-  private boolean opened;
+  private volatile boolean opened;
 
   @Inject
   public ShellImpl(final EventManager events,
