@@ -25,15 +25,24 @@ import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 import com.planet57.gshell.util.io.PrintBuffer;
-import com.planet57.gshell.util.jline.TerminalHolder;
-import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
 import org.jline.terminal.Terminal;
+
+import javax.annotation.Nullable;
+import javax.inject.Inject;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.planet57.gshell.command.resolver.Node.CURRENT;
 import static com.planet57.gshell.command.resolver.Node.PATH_SEPARATOR;
 import static com.planet57.gshell.command.resolver.Node.ROOT;
+import static com.planet57.gshell.variables.VariableNames.SHELL_GROUP;
+import static com.planet57.gshell.variables.VariableNames.SHELL_GROUP_PATH;
+import static com.planet57.gshell.variables.VariableNames.SHELL_HOME;
+import static com.planet57.gshell.variables.VariableNames.SHELL_PROGRAM;
+import static com.planet57.gshell.variables.VariableNames.SHELL_PROMPT;
+import static com.planet57.gshell.variables.VariableNames.SHELL_USER_DIR;
+import static com.planet57.gshell.variables.VariableNames.SHELL_USER_HOME;
+import static com.planet57.gshell.variables.VariableNames.SHELL_VERSION;
 
 /**
  * Support for {@link Branding} implementations.
@@ -49,6 +58,9 @@ public class BrandingSupport
 
   private final Properties props;
 
+  @Nullable
+  private Terminal terminal;
+
   public BrandingSupport(final Properties props) {
     if (props == null) {
       this.props = System.getProperties();
@@ -60,6 +72,11 @@ public class BrandingSupport
 
   public BrandingSupport() {
     this(null);
+  }
+
+  @Inject
+  public void setTerminal(@Nullable final Terminal terminal) {
+    this.terminal = terminal;
   }
 
   protected MessageSource getMessages() {
@@ -77,7 +94,7 @@ public class BrandingSupport
 
   @Override
   public String getProgramName() {
-    return getProperties().getProperty(VariableNames.SHELL_PROGRAM);
+    return getProperties().getProperty(SHELL_PROGRAM);
   }
 
   @Override
@@ -87,11 +104,10 @@ public class BrandingSupport
 
   @Override
   public String getVersion() {
-    return getProperties().getProperty(VariableNames.SHELL_VERSION);
+    return getProperties().getProperty(SHELL_VERSION);
   }
 
   protected String line() {
-    Terminal terminal = TerminalHolder.get();
     int width = terminal != null ? terminal.getWidth() - 1 : 79;
     return Strings.repeat("-", width);
   }
@@ -151,7 +167,7 @@ public class BrandingSupport
 
   @Override
   public File getShellHomeDir() {
-    return resolveFile(System.getProperty(VariableNames.SHELL_HOME));
+    return resolveFile(System.getProperty(SHELL_HOME));
   }
 
   @Override
@@ -180,26 +196,26 @@ public class BrandingSupport
     Variables vars = shell.getVariables();
 
     // Setup default variables
-    if (!vars.contains(VariableNames.SHELL_HOME)) {
-      vars.set(VariableNames.SHELL_HOME, getShellHomeDir(), false);
+    if (!vars.contains(SHELL_HOME)) {
+      vars.set(SHELL_HOME, getShellHomeDir(), false);
     }
-    if (!vars.contains(VariableNames.SHELL_VERSION)) {
-      vars.set(VariableNames.SHELL_VERSION, getVersion(), false);
+    if (!vars.contains(SHELL_VERSION)) {
+      vars.set(SHELL_VERSION, getVersion(), false);
     }
-    if (!vars.contains(VariableNames.SHELL_USER_HOME)) {
-      vars.set(VariableNames.SHELL_USER_HOME, getUserHomeDir(), false);
+    if (!vars.contains(SHELL_USER_HOME)) {
+      vars.set(SHELL_USER_HOME, getUserHomeDir(), false);
     }
-    if (!vars.contains(VariableNames.SHELL_PROMPT)) {
-      vars.set(VariableNames.SHELL_PROMPT, getPrompt());
+    if (!vars.contains(SHELL_PROMPT)) {
+      vars.set(SHELL_PROMPT, getPrompt());
     }
-    if (!vars.contains(VariableNames.SHELL_USER_DIR)) {
-      vars.set(VariableNames.SHELL_USER_DIR, new File(".").getCanonicalFile());
+    if (!vars.contains(SHELL_USER_DIR)) {
+      vars.set(SHELL_USER_DIR, new File(".").getCanonicalFile());
     }
-    if (!vars.contains(VariableNames.SHELL_GROUP)) {
-      vars.set(VariableNames.SHELL_GROUP, ROOT);
+    if (!vars.contains(SHELL_GROUP)) {
+      vars.set(SHELL_GROUP, ROOT);
     }
-    if (!vars.contains(VariableNames.SHELL_GROUP_PATH)) {
-      vars.set(VariableNames.SHELL_GROUP_PATH, String.format("%s%s%s", CURRENT, PATH_SEPARATOR, ROOT));
+    if (!vars.contains(SHELL_GROUP_PATH)) {
+      vars.set(SHELL_GROUP_PATH, String.format("%s%s%s", CURRENT, PATH_SEPARATOR, ROOT));
     }
   }
 }

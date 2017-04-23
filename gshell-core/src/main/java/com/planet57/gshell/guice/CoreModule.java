@@ -17,14 +17,8 @@ package com.planet57.gshell.guice;
 
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Provides;
-import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.registry.CommandRegistrar;
 import com.planet57.gshell.command.registry.CommandRegistrarImpl;
-import com.planet57.gshell.shell.Shell;
-import com.planet57.gshell.shell.ShellHolder;
-import com.planet57.gshell.variables.Variables;
-import org.jline.terminal.Terminal;
 
 /**
  * GShell core module.
@@ -39,25 +33,5 @@ public class CoreModule
   protected void configure() {
     // FIXME: for some reason, this is required, @Named is not working for this one component
     bind(CommandRegistrar.class).to(CommandRegistrarImpl.class);
-  }
-
-  @Provides
-  private Shell provideShell() {
-    return ShellHolder.require();
-  }
-
-  @Provides
-  private IO provideIo() {
-    return provideShell().getIo();
-  }
-
-  @Provides
-  private Terminal provideTerminal() {
-    return provideIo().getTerminal();
-  }
-
-  @Provides
-  private Variables provideVariables() {
-    return provideShell().getVariables();
   }
 }
