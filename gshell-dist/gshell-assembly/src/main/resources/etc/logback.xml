@@ -42,7 +42,7 @@
 
   <!-- HACK: for completer testing -->
   <!--<root level="${shell.root-level:-${shell.logging}}">-->
-  <root level="DEBUG">
+  <root level="TRACE">
     <appender-ref ref="CONSOLE"/>
     <appender-ref ref="FILE"/>
   </root>

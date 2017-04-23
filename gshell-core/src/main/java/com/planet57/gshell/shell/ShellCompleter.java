@@ -28,6 +28,7 @@ import org.jline.reader.Completer;
 import org.jline.reader.LineReader;
 import org.jline.reader.ParsedLine;
 import org.jline.reader.impl.DefaultParser;
+import org.jline.reader.impl.completer.AggregateCompleter;
 import org.sonatype.goodies.common.ComponentSupport;
 
 import com.google.common.collect.Lists;
@@ -47,18 +48,15 @@ public class ShellCompleter
 {
   private final CommandResolver commandResolver;
 
-  private final Completer aliasNameCompleter;
-
-  private final Completer commandNameCompleter;
+  private final Completer commandCompleter;
 
   @Inject
   public ShellCompleter(final CommandResolver commandResolver,
-                        @Named("alias-name") final Completer aliasName,
-                        @Named("command-name") final Completer commandName)
+                        @Named("alias-name") final Completer aliasNameCompleter,
+                        @Named("node-path") final Completer nodePathCompleter)
   {
     this.commandResolver = checkNotNull(commandResolver);
-    this.aliasNameCompleter = checkNotNull(aliasName);
-    this.commandNameCompleter = checkNotNull(commandName);
+    this.commandCompleter = new AggregateCompleter(aliasNameCompleter, nodePathCompleter);
   }
 
   @Override
@@ -66,8 +64,7 @@ public class ShellCompleter
     explain("Parsed-line", line);
 
     if (line.wordIndex() == 0) {
-      aliasNameCompleter.complete(reader, line, candidates);
-      commandNameCompleter.complete(reader, line, candidates);
+      commandCompleter.complete(reader, line, candidates);
     }
     else {
       String command = line.words().get(0);
@@ -101,7 +98,7 @@ public class ShellCompleter
    */
   private void explain(final String message, final ParsedLine line) {
     // HACK: ParsedLine has no sane toString(); render all its details to logging
-    log.debug("{}: line={}, words={}, wordIndex: {}, wordCursor: {}, cursor: {}",
+    log.debug("{}: line={}, words={}, word-index: {}, word-cursor: {}, cursor: {}",
       message,
       line.line(),
       line.words(),
