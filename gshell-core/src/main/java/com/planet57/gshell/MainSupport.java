@@ -81,11 +81,9 @@ public abstract class MainSupport
   @Option(name = "V", longName = "version", override = true)
   protected boolean version;
 
-  // FIXME: there is an issued with Boolean vs. boolean in terms of optionalArg handling; Boolean behaves, boolean does not.
-
   @Preference
   @Option(name = "e", longName = "errors", optionalArg = true)
-  protected Boolean showErrorTraces = false; // HACK: Boolean for now until we fix problem
+  protected boolean showErrorTraces = false;
 
   protected void setConsoleLogLevel(final Level level) {
     System.setProperty(VariableNames.SHELL_LOGGING, level.name());

@@ -51,9 +51,9 @@ public class CliProcessor
 {
   private static final Logger log = Log.getLogger(CliProcessor.class);
 
-  private final List<OptionDescriptor> optionDescriptors = new ArrayList<OptionDescriptor>();
+  private final List<OptionDescriptor> optionDescriptors = new ArrayList<>();
 
-  private final List<ArgumentDescriptor> argumentDescriptors = new ArrayList<ArgumentDescriptor>();
+  private final List<ArgumentDescriptor> argumentDescriptors = new ArrayList<>();
 
   private boolean stopAtNonOption;
 
@@ -152,14 +152,6 @@ public class CliProcessor
       log.trace("Discovered @Option for: {}", element);
 
       OptionDescriptor desc = new OptionDescriptor(opt, SetterFactory.create(element, bean));
-
-      // If the type is boolean, and its marked as optional or requires args, complain to use Boolean instead
-      if (desc.getSetter().getType() == boolean.class) {
-        if (desc.isArgumentOptional() || desc.getArgs() != 0) {
-          throw new IllegalAnnotationError(
-              String.format("Using Boolean for advanced processing of boolean types, on: %s", element));
-        }
-      }
 
       // Make sure we have unique names
       for (OptionDescriptor tmp : optionDescriptors) {

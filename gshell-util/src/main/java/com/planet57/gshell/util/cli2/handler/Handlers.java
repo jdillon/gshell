@@ -54,7 +54,7 @@ public class Handlers
       if (Enum.class.isAssignableFrom(valueType)) {
         return new EnumHandler(desc);
       }
-      else if (boolean.class.isAssignableFrom(valueType) || Boolean.class.isAssignableFrom(valueType)) {
+      else if (valueType == boolean.class || valueType == Boolean.class) {
         return new BooleanHandler(desc);
       }
       else {
