@@ -248,41 +248,37 @@ public class VariablesSupport
 
   @Override
   public Iterable<String> names() {
-    return new Iterable<String>()
-    {
-      @Override
-      public Iterator<String> iterator() {
-        // Chain to parent iterator if we have a parent
-        return new Iterator<String>()
-        {
-          Iterator<String> iter = map.keySet().iterator();
+    return () -> {
+      // Chain to parent iterator if we have a parent
+      return new Iterator<String>()
+      {
+        Iterator<String> iter = map.keySet().iterator();
 
-          Variables parent = parent();
-          boolean more = parent != null;
+        Variables parent = parent();
+        boolean more = parent != null;
 
-          @Override
-          public boolean hasNext() {
-            boolean next = iter.hasNext();
-            if (!next && more) {
-              iter = parent.names().iterator();
-              more = false;
-              next = hasNext();
-            }
-
-            return next;
+        @Override
+        public boolean hasNext() {
+          boolean next = iter.hasNext();
+          if (!next && more) {
+            iter = parent.names().iterator();
+            more = false;
+            next = hasNext();
           }
 
-          @Override
-          public String next() {
-            return iter.next();
-          }
+          return next;
+        }
 
-          @Override
-          public void remove() {
-            throw new UnsupportedOperationException();
-          }
-        };
-      }
+        @Override
+        public String next() {
+          return iter.next();
+        }
+
+        @Override
+        public void remove() {
+          throw new UnsupportedOperationException();
+        }
+      };
     };
   }
 
