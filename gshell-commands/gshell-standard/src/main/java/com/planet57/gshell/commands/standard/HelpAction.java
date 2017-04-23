@@ -149,6 +149,7 @@ public class HelpAction
       Less less = new Less(io.getTerminal());
       try (ByteArrayOutputStream buff = new ByteArrayOutputStream()) {
         PrintWriter writer = new PrintWriter(buff);
+        // help pages are expected to replace AnsiRender tokens, so wrap with stream
         page.render(new AnsiRenderWriter(writer));
         writer.close();
         less.run(new InputStreamSource(page.getName(), new ByteArrayInputStream(buff.toByteArray())));
