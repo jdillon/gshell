@@ -72,6 +72,7 @@ public class Console
     }
   }
 
+  @Override
   public void run() {
     log.trace("Running");
     running = true;
