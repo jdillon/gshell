@@ -42,7 +42,7 @@ public class ExitActionTest
       fail();
     }
     catch (ExitNotification n) {
-      assertEquals(ExitNotification.DEFAULT_CODE, n.code);
+      assertEquals(ExitNotification.SUCCESS_CODE, n.code);
     }
   }
 

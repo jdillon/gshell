@@ -28,7 +28,7 @@ public final class ExitNotification
 {
   private static final long serialVersionUID = 1;
 
-  public static final int DEFAULT_CODE = 0;
+  public static final int SUCCESS_CODE = 0;
 
   public static final int ERROR_CODE = 1;
 
@@ -41,7 +41,7 @@ public final class ExitNotification
   }
 
   public ExitNotification() {
-    this(DEFAULT_CODE);
+    this(SUCCESS_CODE);
   }
 
   public static void exit(final int code) {

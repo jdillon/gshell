@@ -56,7 +56,7 @@ public class MainSupportTest
   @Test
   public void test_h() throws Exception {
     main.boot("-h");
-    assertThat(main.exitCode, is(ExitNotification.DEFAULT_CODE));
+    assertThat(main.exitCode, is(ExitNotification.SUCCESS_CODE));
   }
 
   /**
@@ -65,7 +65,7 @@ public class MainSupportTest
   @Test
   public void test__help() throws Exception {
     main.boot("--help");
-    assertThat(main.exitCode, is(ExitNotification.DEFAULT_CODE));
+    assertThat(main.exitCode, is(ExitNotification.SUCCESS_CODE));
   }
 
   private class MockMain

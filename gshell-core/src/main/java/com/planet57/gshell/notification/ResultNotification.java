@@ -17,8 +17,10 @@ package com.planet57.gshell.notification;
 
 import com.planet57.gshell.util.Notification;
 
+import javax.annotation.Nullable;
+
 /**
- * Thrown to indicate a command result state.
+ * Allows command execution to stop early from notification instead of normal return value.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
@@ -28,20 +30,19 @@ public class ResultNotification
 {
   private static final long serialVersionUID = 1;
 
+  @Nullable
   private final Object result;
 
-  public ResultNotification(final Object result) {
-    super();
-
+  public ResultNotification(@Nullable final Object result) {
     this.result = result;
   }
 
-  public ResultNotification(final String msg, final Object result) {
+  public ResultNotification(final String msg, @Nullable final Object result) {
     super(msg);
-
     this.result = result;
   }
 
+  @Nullable
   public Object getResult() {
     return result;
   }

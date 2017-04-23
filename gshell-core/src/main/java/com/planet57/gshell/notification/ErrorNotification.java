@@ -28,19 +28,7 @@ public final class ErrorNotification
 {
   private static final long serialVersionUID = 1;
 
-  public ErrorNotification(final String msg) {
-    super(msg);
-  }
-
   public ErrorNotification(final String msg, final Throwable cause) {
     super(msg, cause);
-  }
-
-  public ErrorNotification(final Throwable cause) {
-    super(cause);
-  }
-
-  public ErrorNotification() {
-    super();
   }
 }

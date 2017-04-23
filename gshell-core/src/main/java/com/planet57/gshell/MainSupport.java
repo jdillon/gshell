@@ -202,12 +202,12 @@ public abstract class MainSupport
     if (help) {
       HelpPrinter printer = new HelpPrinter(clp);
       printer.printUsage(io.out, getBranding().getProgramName());
-      exit(ExitNotification.DEFAULT_CODE);
+      exit(ExitNotification.SUCCESS_CODE);
     }
 
     if (version) {
       io.out.format("%s %s", getBranding().getDisplayName(), getBranding().getVersion()).println();
-      exit(ExitNotification.DEFAULT_CODE);
+      exit(ExitNotification.SUCCESS_CODE);
     }
 
     StreamJack.maybeInstall(io.streams);
