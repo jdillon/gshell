@@ -15,14 +15,11 @@
  */
 package com.planet57.gshell.util.jline;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.jline.terminal.Terminal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static com.google.common.base.Preconditions.checkState;
 
 /**
  * {@link Terminal} thread context holder.
@@ -51,15 +48,10 @@ public class TerminalHolder
     return last;
   }
 
+  // FIXME: remove the need for folks to get this via ThreadLocal
+
   @Nullable
   public static Terminal get() {
     return holder.get();
-  }
-
-  @Nonnull
-  public static Terminal require() {
-    Terminal terminal = get();
-    checkState(terminal != null, "Terminal not initialized for thread: %s", Thread.currentThread());
-    return terminal;
   }
 }
