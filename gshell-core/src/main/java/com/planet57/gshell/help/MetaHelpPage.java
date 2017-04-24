@@ -74,6 +74,7 @@ public class MetaHelpPage
     interp.addValueSource(new PrefixedObjectValueSource("branding.", ShellHolder.require().getBranding()));
     interp.addValueSource(new AbstractValueSource(false)
     {
+      @Override
       public Object getValue(final String expression) {
         return ShellHolder.require().getVariables().get(expression);
       }

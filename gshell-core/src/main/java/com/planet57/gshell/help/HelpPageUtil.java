@@ -18,6 +18,8 @@ package com.planet57.gshell.help;
 import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.function.BiFunction;
+import java.util.stream.Collectors;
 
 import com.planet57.gshell.command.resolver.Node;
 
@@ -35,11 +37,8 @@ public class HelpPageUtil
     checkNotNull(out);
     checkNotNull(pages);
 
-    int max = 0;
-    for (HelpPage page : pages) {
-      int len = page.getName().length();
-      max = Math.max(len, max);
-    }
+    // construct a printf format with sizing for showing columns
+    int max = pages.stream().mapToInt(page -> page.getName().length()).max().getAsInt();
     String nameFormat = "%-" + max + 's';
 
     for (HelpPage page : pages) {
@@ -48,8 +47,7 @@ public class HelpPageUtil
 
       String description = page.getDescription();
       if (description != null) {
-        out.print("  ");
-        out.println(description);
+        out.printf("   %s%n", description);
       }
       else {
         out.println();
@@ -61,12 +59,7 @@ public class HelpPageUtil
     checkNotNull(node);
     checkNotNull(loader);
 
-    Collection<HelpPage> pages = new LinkedList<>();
-    for (Node child : node.children()) {
-      pages.add(pageFor(child, loader));
-    }
-
-    return pages;
+    return node.children().stream().map(child -> pageFor(child, loader)).collect(Collectors.toList());
   }
 
   public static HelpPage pageFor(final Node node, final HelpContentLoader loader) {

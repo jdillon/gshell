@@ -50,9 +50,7 @@ public class LevelNameCompleter
 
   @Override
   protected void init() {
-    for (LevelComponent level : logging.getLevels()) {
-      delegate.add(level.getName());
-    }
+    logging.getLevels().forEach(level -> delegate.add(level.getName()));
   }
 
   @Override

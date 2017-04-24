@@ -54,9 +54,7 @@ public class MetaHelpPageNameCompleter
 
   @Override
   protected void init() {
-    for (MetaHelpPage page : helpPages.getMetaPages()) {
-      delegate.add(page.getName());
-    }
+    helpPages.getMetaPages().forEach(page -> delegate.add(page.getName()));
   }
 
   @Override

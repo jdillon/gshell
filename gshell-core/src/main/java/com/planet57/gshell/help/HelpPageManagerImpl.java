@@ -34,7 +34,6 @@ import com.planet57.gshell.command.resolver.Node;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.guice.BeanContainer;
 import org.sonatype.goodies.common.ComponentSupport;
-import org.eclipse.sisu.BeanEntry;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -81,10 +80,7 @@ public class HelpPageManagerImpl
   private void discoverMetaPages() {
     log.trace("Discovering meta-pages");
 
-    for (BeanEntry<?,MetaHelpPage> entry : container.locate(Key.get(MetaHelpPage.class))) {
-      MetaHelpPage page = entry.getValue();
-      addMetaPage(page);
-    }
+    container.locate(Key.get(MetaHelpPage.class)).forEach(entry -> addMetaPage(entry.getValue()));
   }
 
   @Override
@@ -123,9 +119,7 @@ public class HelpPageManagerImpl
     Map<String, HelpPage> pages = new TreeMap<>();
 
     // Add aliases
-    for (Map.Entry<String, String> entry : aliases.getAliases().entrySet()) {
-      pages.put(entry.getKey(), new AliasHelpPage(entry.getKey(), entry.getValue()));
-    }
+    aliases.getAliases().forEach((key, value) -> pages.put(key, new AliasHelpPage(key, value)));
 
     // Add commands
     for (Node parent : resolver.searchPath()) {
@@ -142,11 +136,9 @@ public class HelpPageManagerImpl
     }
 
     // Add meta-pages
-    for (MetaHelpPage page : getMetaPages()) {
-      if (!pages.containsKey(page.getName())) {
-        pages.put(page.getName(), page);
-      }
-    }
+    getMetaPages().stream()
+      .filter(page -> !pages.containsKey(page.getName()))
+      .forEach(page -> pages.put(page.getName(), page));
 
     return pages.values();
   }
