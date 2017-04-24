@@ -52,6 +52,7 @@ public class ShellHolder
   }
 
   // FIXME: remove the need for folks to get this via ThreadLocal
+  // FIXME: Now the sole place this is needed is BrandingSupport to access the terminal to render line
 
   @Nullable
   public static Shell get() {

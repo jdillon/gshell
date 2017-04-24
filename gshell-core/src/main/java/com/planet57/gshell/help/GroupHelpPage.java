@@ -18,6 +18,7 @@ package com.planet57.gshell.help;
 import java.io.PrintWriter;
 
 import com.planet57.gshell.command.resolver.Node;
+import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 
@@ -63,7 +64,8 @@ public class GroupHelpPage
   }
 
   @Override
-  public void render(final PrintWriter out) {
+  public void render(final Shell shell, final PrintWriter out) {
+    checkNotNull(shell);
     checkNotNull(out);
 
     out.println(getMessages().format("group-content-header", getName()));

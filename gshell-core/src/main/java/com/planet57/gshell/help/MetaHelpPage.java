@@ -20,7 +20,6 @@ import java.util.ResourceBundle;
 
 import com.planet57.gshell.command.CommandHelper;
 import com.planet57.gshell.shell.Shell;
-import com.planet57.gshell.shell.ShellHolder;
 import org.codehaus.plexus.interpolation.AbstractValueSource;
 import org.codehaus.plexus.interpolation.Interpolator;
 import org.codehaus.plexus.interpolation.PrefixedObjectValueSource;
@@ -67,11 +66,9 @@ public class MetaHelpPage
   }
 
   @Override
-  public void render(final PrintWriter out) {
-    assert out != null;
-
-    // FIXME: remove use of ShellHolder
-    final Shell shell = ShellHolder.require();
+  public void render(final Shell shell, final PrintWriter out) {
+    checkNotNull(shell);
+    checkNotNull(out);
 
     Interpolator interp = new StringSearchInterpolator("@{", "}");
     interp.addValueSource(new PrefixedObjectValueSource("command.", this));

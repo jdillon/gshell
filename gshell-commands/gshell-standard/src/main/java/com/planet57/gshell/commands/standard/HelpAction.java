@@ -141,13 +141,13 @@ public class HelpAction
     // render matched page; with pager or directly
     if (pager) {
       try (StringWriter writer = new StringWriter()) {
-        page.render(new AnsiRenderWriter(writer));
+        page.render(context.getShell(), new AnsiRenderWriter(writer));
         writer.flush();
         TerminalHelper.pageOutput(io.terminal, page.getName(), writer.toString());
       }
     }
     else {
-      page.render(io.out);
+      page.render(context.getShell(), io.out);
     }
 
     return Result.SUCCESS;

@@ -22,7 +22,6 @@ import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.resolver.Node;
 import com.planet57.gshell.command.CommandHelper;
 import com.planet57.gshell.shell.Shell;
-import com.planet57.gshell.shell.ShellHolder;
 import com.planet57.gshell.util.io.PrintBuffer;
 import com.planet57.gshell.util.cli2.CliProcessor;
 import com.planet57.gshell.util.cli2.HelpPrinter;
@@ -205,11 +204,9 @@ public class CommandHelpPage
   }
 
   @Override
-  public void render(final PrintWriter out) {
+  public void render(final Shell shell, final PrintWriter out) {
+    checkNotNull(shell);
     checkNotNull(out);
-
-    // FIXME: remove use of ShellHolder
-    final Shell shell = ShellHolder.require();
 
     Interpolator interp = new StringSearchInterpolator("@{", "}");
     interp.addValueSource(new PrefixedObjectValueSource("command.", new Helper(shell.getIo().terminal, shell.getBranding())));
