@@ -127,7 +127,7 @@ public class HelpAction
       else if (pages.size() > 1) {
         // else show matching pages
         io.out.println(getMessages().format("info.matching-pages"));
-        HelpPageUtil.render(io.out, pages);
+        HelpPageUtil.renderIndex(io.out, pages);
         return Result.SUCCESS;
       }
     }
@@ -157,7 +157,7 @@ public class HelpAction
     Collection<HelpPage> pages = helpPages.getPages(query(helpPage -> true));
     IO io = context.getIo();
     io.out.println(getMessages().format("info.available-pages"));
-    HelpPageUtil.render(io.out, pages);
+    HelpPageUtil.renderIndex(io.out, pages);
   }
 
   private Predicate<HelpPage> query(final Predicate<HelpPage> predicate) {

@@ -33,7 +33,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class HelpPageUtil
 {
-  public static void render(final PrintWriter out, final Collection<? extends HelpPage> pages) {
+  /**
+   * Render a column-formatted index of help pages.
+   */
+  public static void renderIndex(final PrintWriter out, final Collection<? extends HelpPage> pages) {
     checkNotNull(out);
     checkNotNull(pages);
 

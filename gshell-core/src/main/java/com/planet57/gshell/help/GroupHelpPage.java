@@ -69,7 +69,7 @@ public class GroupHelpPage
     checkNotNull(out);
 
     out.println(getMessages().format("group-content-header", getName()));
-    HelpPageUtil.render(out, HelpPageUtil.pagesFor(node, loader));
+    HelpPageUtil.renderIndex(out, HelpPageUtil.pagesFor(node, loader));
   }
 
   @Override
