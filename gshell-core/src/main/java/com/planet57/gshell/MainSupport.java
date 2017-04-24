@@ -143,11 +143,19 @@ public abstract class MainSupport
   @Argument()
   protected List<String> appArgs = null;
 
+  /**
+   * Allow control of exit behavior.
+   */
   protected void exit(final int code) {
     io.flush();
     System.exit(code);
   }
 
+  /**
+   * Branding is lazily-loaded.
+   *
+   * @see #createBranding()
+   */
   protected Branding getBranding() {
     if (branding == null) {
       branding = createBranding();
@@ -155,10 +163,25 @@ public abstract class MainSupport
     return branding;
   }
 
+  /**
+   * Create a the {@link Branding} instance.
+   *
+   * @see #getBranding()
+   */
+  protected abstract Branding createBranding();
+
+  /**
+   * Create the {@link StreamSet} used to register.
+   */
   @VisibleForTesting
   protected StreamSet createStreamSet() {
     return StreamSet.SYSTEM_FD;
   }
+
+  /**
+   * Create the {@link Shell} instance.
+   */
+  protected abstract Shell createShell() throws Exception;
 
   public void boot(String... args) throws Exception {
     checkNotNull(args);
@@ -260,8 +283,4 @@ public abstract class MainSupport
     codeRef.set(code);
     exit(code);
   }
-
-  protected abstract Branding createBranding();
-
-  protected abstract Shell createShell() throws Exception;
 }
