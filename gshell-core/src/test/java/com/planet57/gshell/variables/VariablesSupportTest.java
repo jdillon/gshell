@@ -31,18 +31,18 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
- * Unit tests for the {@link Variables} class.
+ * Tests for {@link VariablesSupport}.
  */
-public class VariablesTest
+public class VariablesSupportTest
   extends TestSupport
 {
-  private Variables vars;
+  private VariablesSupport underTest;
 
-  private Variables parent;
+  private VariablesSupport parent;
 
   @Before
   public void setUp() {
-    vars = new VariablesSupport();
+    underTest = new VariablesSupport();
     parent = new VariablesSupport();
   }
 
@@ -51,14 +51,14 @@ public class VariablesTest
     String name = "a";
     Object value = new Object();
 
-    assertFalse(vars.contains(name));
-    vars.set(name, value);
-    assertTrue(vars.contains(name));
+    assertFalse(underTest.contains(name));
+    underTest.set(name, value);
+    assertTrue(underTest.contains(name));
 
-    Object obj = vars.get(name);
+    Object obj = underTest.get(name);
     assertEquals(value, obj);
 
-    String str = vars.names().iterator().next();
+    String str = underTest.names().iterator().next();
     assertEquals(name, str);
   }
 
@@ -67,12 +67,12 @@ public class VariablesTest
     String name = "a";
     Object value = new Object();
 
-    assertTrue(vars.isMutable(name));
-    vars.set(name, value, false);
-    assertFalse(vars.isMutable(name));
+    assertTrue(underTest.isMutable(name));
+    underTest.set(name, value, false);
+    assertFalse(underTest.isMutable(name));
 
     try {
-      vars.set(name, value);
+      underTest.set(name, value);
       fail("Set an immutable variable");
     }
     catch (Variables.ImmutableVariableException expected) {
@@ -118,11 +118,11 @@ public class VariablesTest
     String name = "a";
     Object value = new Object();
 
-    Object obj1 = vars.get(name);
+    Object obj1 = underTest.get(name);
     assertNull(obj1);
 
-    vars.set(name, value);
-    Object obj2 = vars.get(name);
+    underTest.set(name, value);
+    Object obj2 = underTest.get(name);
     assertSame(value, obj2);
   }
 
@@ -131,10 +131,10 @@ public class VariablesTest
     String name = "a";
     Object value = new Object();
 
-    Object obj1 = vars.get(name);
+    Object obj1 = underTest.get(name);
     assertNull(obj1);
 
-    Object obj2 = vars.get(name, value);
+    Object obj2 = underTest.get(name, value);
     assertSame(value, obj2);
   }
 
@@ -161,12 +161,12 @@ public class VariablesTest
     String name = "a";
     Object value = new Object();
 
-    assertTrue(vars.isMutable(name));
-    vars.set(name, value, false);
-    assertFalse(vars.isMutable(name));
+    assertTrue(underTest.isMutable(name));
+    underTest.set(name, value, false);
+    assertFalse(underTest.isMutable(name));
 
     try {
-      vars.unset(name);
+      underTest.unset(name);
       fail("Unset an immutable variable");
     }
     catch (Variables.ImmutableVariableException expected) {
@@ -219,16 +219,16 @@ public class VariablesTest
 
   @Test
   public void testNames() throws Exception {
-    Iterator<String> iter = vars.names().iterator();
+    Iterator<String> iter = underTest.names().iterator();
     assertNotNull(iter);
     assertFalse(iter.hasNext());
   }
 
   @Test
   public void testNamesImmutable() throws Exception {
-    vars.set("a", "b");
+    underTest.set("a", "b");
 
-    Iterator<String> iter = vars.names().iterator();
+    Iterator<String> iter = underTest.names().iterator();
     iter.next();
 
     try {

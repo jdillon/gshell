@@ -21,7 +21,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 /**
- * Unit tests for the {@link com.planet57.gshell.parser.impl.ParserVisitor} usage.
+ * Tests for {@link ParserVisitor}.
  */
 public class ParserVisitorTest
     extends ParserTestSupport

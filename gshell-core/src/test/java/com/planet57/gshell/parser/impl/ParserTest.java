@@ -22,7 +22,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 /**
- * Unit tests for the {@link com.planet57.gshell.parser.impl.Parser} class.
+ * Tests for {@link Parser}.
  */
 public class ParserTest
     extends ParserTestSupport
