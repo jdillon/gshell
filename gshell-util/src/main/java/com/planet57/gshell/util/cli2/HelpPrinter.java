@@ -57,6 +57,11 @@ public class HelpPrinter
     }
 
     terminalWidth = terminal != null ? terminal.getWidth() : 80;
+
+    // HACK: adjust for mock
+    if (terminalWidth <= 0) {
+      terminalWidth = 80;
+    }
   }
 
   public void addMessages(final MessageSource messages) {
