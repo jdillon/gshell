@@ -27,6 +27,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+// FIXME: Branding isn't realy properly a guice component
+
 /**
  * Branding for Maven GShell plugin.
  *
