@@ -106,7 +106,7 @@ public abstract class MainSupport
    * Adjust the threshold of all logging.
    */
   private void setLoggingThreshold(final Level level) {
-    System.setProperty("shell.logging.console.threshold", level.name());
+    setConsoleLoggingThreshold(level);
     System.setProperty("shell.logging.file.threshold", level.name());
     System.setProperty("shell.logging.root-level", level.name());
   }
@@ -126,14 +126,6 @@ public abstract class MainSupport
     if (flag) {
       setLoggingThreshold(Level.TRACE);
       showErrorTraces = true;
-    }
-  }
-
-  @Preference(name = "quiet")
-  @Option(name = "q", longName = "quiet", optionalArg = true)
-  private void setQuiet(final boolean flag) {
-    if (flag) {
-      setConsoleLoggingThreshold(Level.ERROR);
     }
   }
 
@@ -157,10 +149,6 @@ public abstract class MainSupport
   private void enableAnsiColors(final Boolean flag) {
     Ansi.setEnabled(flag);
   }
-
-  // TODO: Add helpers to control terminal; presently relies on java properties for jline3
-
-  // TODO: Add --norc && --noprofile; implies making ScriptLoader helper exposed
 
   @Argument()
   private List<String> appArgs = null;
