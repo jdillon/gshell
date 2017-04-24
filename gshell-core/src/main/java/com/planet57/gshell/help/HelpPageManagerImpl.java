@@ -38,7 +38,7 @@ import org.sonatype.goodies.common.ComponentSupport;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * {@link HelpPageManager} component.
+ * Default {@link HelpPageManager}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5

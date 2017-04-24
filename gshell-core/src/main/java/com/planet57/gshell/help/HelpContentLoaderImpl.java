@@ -60,21 +60,15 @@ public class HelpContentLoaderImpl
 
     log.debug("Using resource: {}", resource);
 
-    BufferedReader input = new BufferedReader(new InputStreamReader(resource.openStream()));
-    PrintBuffer buff;
-    try {
-      buff = new PrintBuffer();
+    PrintBuffer buff = new PrintBuffer();
+    try (BufferedReader input = new BufferedReader(new InputStreamReader(resource.openStream()))) {
       String line;
-
       while ((line = input.readLine()) != null) {
         // Ignore lines starting with #, these are comments
         if (!line.startsWith("#")) {
           buff.println(line);
         }
       }
-    }
-    finally {
-      Closeables.close(input);
     }
 
     return buff.toString();

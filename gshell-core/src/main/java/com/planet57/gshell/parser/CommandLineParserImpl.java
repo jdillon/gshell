@@ -18,14 +18,11 @@ package com.planet57.gshell.parser;
 import java.io.Reader;
 import java.io.StringReader;
 
-import com.planet57.gshell.execute.CommandExecutor;
 import com.planet57.gshell.parser.impl.ASTCommandLine;
 import com.planet57.gshell.parser.impl.Parser;
 import com.planet57.gshell.parser.impl.visitor.ExecutingVisitor;
 import com.planet57.gshell.parser.impl.visitor.LoggingVisitor;
-import com.planet57.gshell.shell.Shell;
 import org.sonatype.goodies.common.ComponentSupport;
-import com.planet57.gshell.util.io.Closeables;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -33,7 +30,7 @@ import javax.inject.Singleton;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Default {@link CommandLineParser} component.
+ * Default {@link CommandLineParser}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
@@ -52,13 +49,9 @@ public class CommandLineParserImpl
 
     log.trace("Building command-line for: {}", line);
 
-    Reader reader = new StringReader(line);
     final ASTCommandLine root;
-    try {
+    try (Reader reader = new StringReader(line)) {
       root = parser.parse(reader);
-    }
-    finally {
-      Closeables.close(reader);
     }
 
     // If trace is enabled, the log the parse tree
@@ -66,12 +59,9 @@ public class CommandLineParserImpl
       root.jjtAccept(new LoggingVisitor(log), null);
     }
 
-    return new CommandLine()
-    {
-      public Object execute(final Shell shell, final CommandExecutor executor) throws Exception {
-        ExecutingVisitor visitor = new ExecutingVisitor(shell, executor);
-        return root.jjtAccept(visitor, null);
-      }
+    return (shell, executor) -> {
+      ExecutingVisitor visitor = new ExecutingVisitor(shell, executor);
+      return root.jjtAccept(visitor, null);
     };
   }
 }

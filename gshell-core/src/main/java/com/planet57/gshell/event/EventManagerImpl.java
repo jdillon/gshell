@@ -29,7 +29,7 @@ import org.sonatype.goodies.lifecycle.LifecycleSupport;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Default {@link EventManager} component.
+ * Default {@link EventManager}.
  *
  * This is now a thin adapter around a Guava {@link EventBus}.
  *

@@ -33,12 +33,7 @@ public class NopLoggingSystem
 {
   @Override
   public LevelComponent getLevel(final String name) {
-    return new LevelComponent()
-    {
-      public String getName() {
-        return null;
-      }
-    };
+    return () -> null;
   }
 
   @Override

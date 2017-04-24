@@ -40,9 +40,8 @@ public class GroupHelpPage
   private MessageSource messages;
 
   public GroupHelpPage(final Node node, final HelpContentLoader loader) {
-    checkNotNull(node);
+    this.node = checkNotNull(node);
     checkArgument(node.isGroup());
-    this.node = node;
     this.loader = checkNotNull(loader);
   }
 

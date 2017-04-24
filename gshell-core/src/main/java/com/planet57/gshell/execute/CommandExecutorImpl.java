@@ -52,7 +52,7 @@ import java.util.Arrays;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Default {@link CommandExecutor} component.
+ * Default {@link CommandExecutor}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
@@ -70,7 +70,8 @@ public class CommandExecutorImpl
   private final CommandLineParser parser;
 
   @Inject
-  public CommandExecutorImpl(final AliasRegistry aliases, final CommandResolver resolver,
+  public CommandExecutorImpl(final AliasRegistry aliases,
+                             final CommandResolver resolver,
                              final CommandLineParser parser)
   {
     this.aliases = checkNotNull(aliases);
