@@ -21,12 +21,12 @@ import java.io.StringReader;
 import com.planet57.gossip.Level;
 import com.planet57.gshell.parser.impl.ASTCommandLine;
 import com.planet57.gshell.parser.impl.Parser;
-import com.planet57.gshell.parser.impl.eval.DefaultEvaluator;
 import com.planet57.gshell.parser.impl.eval.Evaluator;
 import com.planet57.gshell.parser.impl.visitor.ExecutingVisitor;
 import com.planet57.gshell.parser.impl.visitor.LoggingVisitor;
 import org.sonatype.goodies.common.ComponentSupport;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
@@ -44,7 +44,14 @@ public class CommandLineParserImpl
   extends ComponentSupport
   implements CommandLineParser
 {
+  private final Evaluator evaluator;
+
   private final Parser parser = new Parser();
+
+  @Inject
+  public CommandLineParserImpl(final Evaluator evaluator) {
+    this.evaluator = checkNotNull(evaluator);
+  }
 
   @Override
   public CommandLine parse(final String line) throws Exception {
@@ -63,7 +70,6 @@ public class CommandLineParserImpl
     }
 
     return (shell, executor) -> {
-      Evaluator evaluator = new DefaultEvaluator(shell.getVariables());
       ExecutingVisitor visitor = new ExecutingVisitor(shell, executor, evaluator);
       return root.jjtAccept(visitor, null);
     };

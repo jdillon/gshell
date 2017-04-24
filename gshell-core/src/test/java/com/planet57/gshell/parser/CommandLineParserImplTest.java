@@ -15,10 +15,12 @@
  */
 package com.planet57.gshell.parser;
 
-import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.Module;
 import com.google.inject.Stage;
+import com.planet57.gshell.parser.impl.eval.Evaluator;
+import com.planet57.gshell.parser.impl.eval.RegexEvaluator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +29,7 @@ import org.sonatype.goodies.testsupport.TestSupport;
 import static org.junit.Assert.fail;
 
 /**
- * Unit tests for the {@link CommandLineParserImpl} class.
+ * Tests for {@link CommandLineParserImpl}.
  */
 public class CommandLineParserImplTest
   extends TestSupport
@@ -36,12 +38,9 @@ public class CommandLineParserImplTest
 
   @Before
   public void setUp() throws Exception {
-    Injector injector = Guice.createInjector(Stage.DEVELOPMENT, new AbstractModule()
-    {
-      @Override
-      protected void configure() {
-        bind(CommandLineParser.class).to(CommandLineParserImpl.class);
-      }
+    Injector injector = Guice.createInjector(Stage.DEVELOPMENT, (Module) binder -> {
+      binder.bind(CommandLineParser.class).to(CommandLineParserImpl.class);
+      binder.bind(Evaluator.class).to(RegexEvaluator.class);
     });
     parser = injector.getInstance(CommandLineParser.class);
   }

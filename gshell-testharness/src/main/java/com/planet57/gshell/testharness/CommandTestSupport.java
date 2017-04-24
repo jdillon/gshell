@@ -35,6 +35,8 @@ import com.planet57.gshell.command.registry.CommandRegistry;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.guice.BeanContainer;
 import com.planet57.gshell.logging.LoggingSystem;
+import com.planet57.gshell.parser.impl.eval.Evaluator;
+import com.planet57.gshell.parser.impl.eval.RegexEvaluator;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.shell.ShellImpl;
 import com.planet57.gshell.variables.Variables;
@@ -114,6 +116,7 @@ public abstract class CommandTestSupport
       binder.bind(Branding.class).toInstance(new TestBranding(util.resolveFile("target/shell-home")));
       binder.bind(IO.class).annotatedWith(named("main")).toInstance(io);
       binder.bind(Variables.class).annotatedWith(named("main")).toInstance(vars);
+      binder.bind(Evaluator.class).to(RegexEvaluator.class);
     });
     configureModules(modules);
 

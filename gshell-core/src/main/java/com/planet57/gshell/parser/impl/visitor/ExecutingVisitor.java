@@ -147,7 +147,7 @@ public class ExecutingVisitor
     // expression could be null
     Object value;
     try {
-      value = evaluator.eval(expression);
+      value = evaluator.eval(shell.getVariables(), expression);
     }
     catch (Exception e) {
       throw new RuntimeException(e);

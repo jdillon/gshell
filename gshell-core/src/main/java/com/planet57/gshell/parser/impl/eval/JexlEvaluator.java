@@ -23,7 +23,10 @@ import org.apache.commons.jexl3.JexlContext;
 import org.apache.commons.jexl3.JexlEngine;
 import org.apache.commons.jexl3.JexlExpression;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.inject.Named;
+import javax.inject.Singleton;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -33,22 +36,26 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
+@Named
+@Singleton
 public class JexlEvaluator
     extends ComponentSupport
     implements Evaluator
 {
-  private final ReplacementParser parser;
+  private final JexlEngine jexl = new JexlBuilder().create();
 
-  public JexlEvaluator(final Variables variables) {
+  @Nullable
+  public Object eval(final Variables variables, @Nullable final String expression) throws Exception {
     checkNotNull(variables);
-    this.parser = new ReplacementParser()
+
+    if (expression == null) {
+      return null;
+    }
+
+    ReplacementParser parser = new ReplacementParser()
     {
-      private final JexlEngine jexl = new JexlBuilder().create();
-
       @Override
-      protected Object replace(final String key) throws Exception {
-        assert key != null;
-
+      protected Object replace(@Nonnull final String key) throws Exception {
         log.debug("Evaluating: {}", key);
 
         JexlContext ctx = new VariablesContext(variables);
@@ -62,10 +69,7 @@ public class JexlEvaluator
         return result;
       }
     };
-  }
 
-  @Nullable
-  public Object eval(@Nullable final String expression) throws Exception {
     return parser.parse(expression);
   }
 

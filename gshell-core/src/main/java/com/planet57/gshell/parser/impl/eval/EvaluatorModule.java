@@ -15,18 +15,23 @@
  */
 package com.planet57.gshell.parser.impl.eval;
 
-import com.planet57.gshell.variables.Variables;
+import com.google.inject.Binder;
+import com.google.inject.Module;
 
-import javax.annotation.Nullable;
+import javax.inject.Named;
 
 /**
- * Provides {@code ${expression}} evaluation for parser.
+ * Evaluator module.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 2.0
+ * @since 3.0
  */
-public interface Evaluator
+@Named
+public class EvaluatorModule
+  implements Module
 {
-  @Nullable
-  Object eval(Variables variables, @Nullable String expression) throws Exception;
+  @Override
+  public void configure(final Binder binder) {
+    // for now default to regex; pending if we want to make jexl work or configurable
+    binder.bind(Evaluator.class).to(RegexEvaluator.class);
+  }
 }

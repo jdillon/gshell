@@ -18,7 +18,10 @@ package com.planet57.gshell.parser.impl.eval;
 import com.planet57.gshell.util.ReplacementParser;
 import com.planet57.gshell.variables.Variables;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.inject.Named;
+import javax.inject.Singleton;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -28,17 +31,23 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public class DefaultEvaluator
+@Named
+@Singleton
+public class RegexEvaluator
     implements Evaluator
 {
-  private final ReplacementParser parser;
-
-  public DefaultEvaluator(final Variables variables) {
+  @Nullable
+  public Object eval(final Variables variables, @Nullable final String expression) throws Exception {
     checkNotNull(variables);
-    this.parser = new ReplacementParser()
+
+    if (expression == null) {
+      return null;
+    }
+
+    ReplacementParser parser = new ReplacementParser()
     {
       @Override
-      protected Object replace(final String key) {
+      protected Object replace(@Nonnull final String key) {
         Object replacement = variables.get(key);
         if (replacement == null) {
           replacement = System.getProperty(key);
@@ -46,10 +55,7 @@ public class DefaultEvaluator
         return replacement;
       }
     };
-  }
 
-  @Nullable
-  public Object eval(@Nullable final String expression) throws Exception {
     return parser.parse(expression);
   }
 }
