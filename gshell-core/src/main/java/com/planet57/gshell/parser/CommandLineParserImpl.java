@@ -21,8 +21,8 @@ import java.io.StringReader;
 import com.planet57.gossip.Level;
 import com.planet57.gshell.parser.impl.ASTCommandLine;
 import com.planet57.gshell.parser.impl.Parser;
+import com.planet57.gshell.parser.impl.eval.DefaultEvaluator;
 import com.planet57.gshell.parser.impl.eval.Evaluator;
-import com.planet57.gshell.parser.impl.eval.EvaluatorFactory;
 import com.planet57.gshell.parser.impl.visitor.ExecutingVisitor;
 import com.planet57.gshell.parser.impl.visitor.LoggingVisitor;
 import org.sonatype.goodies.common.ComponentSupport;
@@ -63,7 +63,7 @@ public class CommandLineParserImpl
     }
 
     return (shell, executor) -> {
-      Evaluator evaluator = EvaluatorFactory.create(shell.getVariables());
+      Evaluator evaluator = new DefaultEvaluator(shell.getVariables());
       ExecutingVisitor visitor = new ExecutingVisitor(shell, executor, evaluator);
       return root.jjtAccept(visitor, null);
     };
