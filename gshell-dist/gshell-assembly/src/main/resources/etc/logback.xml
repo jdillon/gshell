@@ -21,7 +21,7 @@
   <contextName>default</contextName>
 
   <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
-    <target>System.out</target>
+    <target>${shell.logging.console.target:-System.out}</target>
     <encoder>
       <pattern>${shell.logging.console.pattern:-[%level] %logger{1} - %msg%n}</pattern>
     </encoder>
