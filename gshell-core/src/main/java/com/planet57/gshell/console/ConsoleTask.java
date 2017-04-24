@@ -72,7 +72,9 @@ public abstract class ConsoleTask
   }
 
   /**
-   * Kill the tasks execute thread via {@link Thread#stop}.  Thread is given a {@link AbortTaskNotification}.
+   * Kill the tasks execute thread via {@link Thread#stop}.
+   *
+   * Thread is given an {@link AbortTaskNotification}.
    */
   @SuppressWarnings({"deprecation", "ThrowableInstanceNeverThrown"})
   public synchronized void abort() {
