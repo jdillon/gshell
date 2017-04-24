@@ -65,9 +65,7 @@ public class NodePathCompleter
 
     // TODO: handle ./, ../ and / resolution
 
-    for (Node parent : resolver.searchPath()) {
-      matches.addAll(parent.children());
-    }
+    resolver.searchPath().forEach(parent -> matches.addAll(parent.children()));
 
     buildCandidates(candidates, matches);
   }
@@ -80,15 +78,13 @@ public class NodePathCompleter
     Set<String> strings = new LinkedHashSet<>();
 
     // append all matching nodes
-    for (Node node : matches) {
-      appendNode(strings, node);
-    }
+    matches.forEach(node -> appendNode(strings, node));
 
     // construct candidates from matches
-    for (String string : strings) {
+    strings.forEach(string -> {
       log.trace("Candidate: {}", string);
       candidates.add(StringsCompleter2.candidate(string));
-    }
+    });
   }
 
   private static void appendNode(final Collection<String> strings, final Node node) {
@@ -110,7 +106,7 @@ public class NodePathCompleter
     // prefix children with ${parent.name} + SEPARATOR; unless root
     String prefix = parent.isRoot() ? "" : parent.getName() + SEPARATOR;
 
-    for (Node child : parent.children()) {
+    parent.children().forEach(child -> {
       if (child.isGroup()) {
         strings.add(prefix + child.getName() + SEPARATOR);
         appendChildren(strings, child);
@@ -118,6 +114,6 @@ public class NodePathCompleter
       else {
         strings.add(prefix + child.getName());
       }
-    }
+    });
   }
 }

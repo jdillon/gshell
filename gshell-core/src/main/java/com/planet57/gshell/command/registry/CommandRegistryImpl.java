@@ -31,7 +31,7 @@ import org.sonatype.goodies.common.ComponentSupport;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * {@link CommandRegistry} component.
+ * Default {@link CommandRegistry}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
@@ -104,11 +104,6 @@ public class CommandRegistryImpl
     checkNotNull(name);
 
     return commands.containsKey(name);
-  }
-
-  @Override
-  public Collection<String> getCommandNames() {
-    return Collections.unmodifiableSet(commands.keySet());
   }
 
   @Override

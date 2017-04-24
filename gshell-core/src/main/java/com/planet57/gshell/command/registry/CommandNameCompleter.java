@@ -54,7 +54,7 @@ public class CommandNameCompleter
 
   @Override
   protected void init() {
-    delegate.set(commands.getCommandNames());
+    commands.getCommands().forEach(command -> delegate.add(command.getName()));
   }
 
   @Override

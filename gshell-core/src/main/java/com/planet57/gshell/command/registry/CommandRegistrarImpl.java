@@ -33,7 +33,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
 /**
- * Guice {@link CommandRegistrar}.
+ * Default {@link CommandRegistrar}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
@@ -80,8 +80,8 @@ public class CommandRegistrarImpl
 
     log.trace("Registering command: {} -> {}", name, className);
 
-    CommandAction command = createAction(className);
-    registry.registerCommand(name, command);
+    CommandAction action = createAction(className);
+    registry.registerCommand(name, action);
   }
 
   @Override
@@ -90,13 +90,12 @@ public class CommandRegistrarImpl
 
     log.trace("Registering command: {}", className);
 
-    CommandAction command = createAction(className);
+    CommandAction action = createAction(className);
 
-    Command meta = command.getClass().getAnnotation(Command.class);
-    checkState(meta != null, "Missing @Command: %s", className);
-    String name = meta.name();
+    Command command = action.getClass().getAnnotation(Command.class);
+    checkState(command != null, "Missing @Command: %s", className);
 
-    registry.registerCommand(name, command);
+    registry.registerCommand(command.name(), action);
   }
 
   @SuppressWarnings({"unchecked"})

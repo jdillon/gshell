@@ -38,7 +38,7 @@ import com.planet57.gshell.variables.Variables;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * {@link CommandResolver} component.
+ * Default {@link CommandResolver}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
@@ -64,9 +64,7 @@ public class CommandResolverImpl
     root = new Node(Node.ROOT, new GroupAction(Node.ROOT));
 
     // Add any pre-registered commands
-    for (CommandAction command : commands.getCommands()) {
-      root.add(command.getName(), command);
-    }
+    commands.getCommands().forEach(command -> root.add(command.getName(), command));
   }
 
   @Subscribe
@@ -152,7 +150,6 @@ public class CommandResolverImpl
         log.trace("Resolved: {} -> {}", name, node);
         return node;
       }
-
     }
 
     return null;
