@@ -37,9 +37,8 @@ public class TestIO
     this(new ByteArrayOutputStream(), new ByteArrayOutputStream());
   }
 
-  private TestIO(ByteArrayOutputStream output, ByteArrayOutputStream error) {
+  public TestIO(final ByteArrayOutputStream output, final ByteArrayOutputStream error) {
     super(new StreamSet(System.in, new PrintStream(output), new PrintStream(error)), true);
-
     this.output = output;
     this.error = error;
   }
