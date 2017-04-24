@@ -53,6 +53,11 @@ public class ShellHolder
 
   // FIXME: remove the need for folks to get this via ThreadLocal
 
+  @Nullable
+  public static Shell get() {
+    return holder.get();
+  }
+
   /**
    * @since 3.0
    */

@@ -22,14 +22,11 @@ import java.util.Properties;
 
 import com.google.common.base.Strings;
 import com.planet57.gshell.shell.Shell;
+import com.planet57.gshell.shell.ShellHolder;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 import com.planet57.gshell.util.io.PrintBuffer;
 import com.planet57.gshell.variables.Variables;
-import org.jline.terminal.Terminal;
-
-import javax.annotation.Nullable;
-import javax.inject.Inject;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.planet57.gshell.command.resolver.Node.CURRENT;
@@ -58,9 +55,6 @@ public class BrandingSupport
 
   private final Properties props;
 
-  @Nullable
-  private Terminal terminal;
-
   public BrandingSupport(final Properties props) {
     if (props == null) {
       this.props = System.getProperties();
@@ -72,11 +66,6 @@ public class BrandingSupport
 
   public BrandingSupport() {
     this(null);
-  }
-
-  @Inject
-  public void setTerminal(@Nullable final Terminal terminal) {
-    this.terminal = terminal;
   }
 
   protected MessageSource getMessages() {
@@ -108,7 +97,12 @@ public class BrandingSupport
   }
 
   protected String line() {
-    int width = terminal != null ? terminal.getWidth() - 1 : 79;
+    // HACK: Branding isn't really a proper guice component; its needed to early, so we have to hack round some dependencies
+    int width = 79;
+    Shell shell = ShellHolder.get();
+    if (shell != null) {
+      width = shell.getIo().getTerminal().getWidth() - 1;
+    }
     return Strings.repeat("-", width);
   }
 
