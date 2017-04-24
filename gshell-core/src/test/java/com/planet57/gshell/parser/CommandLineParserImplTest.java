@@ -34,7 +34,7 @@ import static org.junit.Assert.fail;
 public class CommandLineParserImplTest
   extends TestSupport
 {
-  private CommandLineParser parser;
+  private CommandLineParser underTest;
 
   @Before
   public void setUp() throws Exception {
@@ -42,18 +42,18 @@ public class CommandLineParserImplTest
       binder.bind(CommandLineParser.class).to(CommandLineParserImpl.class);
       binder.bind(Evaluator.class).to(RegexEvaluator.class);
     });
-    parser = injector.getInstance(CommandLineParser.class);
+    underTest = injector.getInstance(CommandLineParser.class);
   }
 
   @After
   public void tearDown() {
-    parser = null;
+    underTest = null;
   }
 
   @Test
   public void testParseNull() throws Exception {
     try {
-      parser.parse(null);
+      underTest.parse(null);
       fail();
     }
     catch (NullPointerException expected) {

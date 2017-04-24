@@ -15,9 +15,9 @@
  */
 package com.planet57.gshell.alias;
 
-import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.Module;
 import com.google.inject.Stage;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.event.EventManagerImpl;
@@ -39,30 +39,26 @@ import static org.junit.Assert.fail;
 public class AliasRegistryImplTest
   extends TestSupport
 {
-  private AliasRegistry registry;
+  private AliasRegistryImpl underTest;
 
   @Before
   public void setUp() throws Exception {
-    Injector injector = Guice.createInjector(Stage.DEVELOPMENT, new AbstractModule()
-    {
-      @Override
-      protected void configure() {
-        bind(EventManager.class).to(EventManagerImpl.class);
-        bind(AliasRegistry.class).to(AliasRegistryImpl.class);
-      }
+    Injector injector = Guice.createInjector(Stage.DEVELOPMENT, (Module) binder -> {
+      binder.bind(EventManager.class).to(EventManagerImpl.class);
+      binder.bind(AliasRegistry.class).to(AliasRegistryImpl.class);
     });
-    registry = injector.getInstance(AliasRegistry.class);
+    underTest = injector.getInstance(AliasRegistryImpl.class);
   }
 
   @After
   public void tearDown() {
-    registry = null;
+    underTest = null;
   }
 
   @Test
   public void testRegisterAliasInvalid() throws Exception {
     try {
-      registry.registerAlias(null, null);
+      underTest.registerAlias(null, null);
       fail();
     }
     catch (NullPointerException e) {
@@ -70,7 +66,7 @@ public class AliasRegistryImplTest
     }
 
     try {
-      registry.registerAlias("foo", null);
+      underTest.registerAlias("foo", null);
       fail();
     }
     catch (NullPointerException e) {
@@ -78,7 +74,7 @@ public class AliasRegistryImplTest
     }
 
     try {
-      registry.registerAlias(null, "foo");
+      underTest.registerAlias(null, "foo");
       fail();
     }
     catch (NullPointerException e) {
@@ -89,7 +85,7 @@ public class AliasRegistryImplTest
   @Test
   public void testRemoveAliasInvalid() throws Exception {
     try {
-      registry.removeAlias(null);
+      underTest.removeAlias(null);
       fail();
     }
     catch (NullPointerException e) {
@@ -100,7 +96,7 @@ public class AliasRegistryImplTest
   @Test
   public void testGetAliasInvalid() throws Exception {
     try {
-      registry.getAlias(null);
+      underTest.getAlias(null);
       fail();
     }
     catch (NullPointerException e) {
@@ -111,7 +107,7 @@ public class AliasRegistryImplTest
   @Test
   public void testContainsAliasInvalid() throws Exception {
     try {
-      registry.containsAlias(null);
+      underTest.containsAlias(null);
       fail();
     }
     catch (NullPointerException e) {
@@ -121,13 +117,13 @@ public class AliasRegistryImplTest
 
   @Test
   public void testRegisterAlias() throws Exception {
-    assertFalse(registry.containsAlias("foo"));
+    assertFalse(underTest.containsAlias("foo"));
 
-    registry.registerAlias("foo", "bar");
+    underTest.registerAlias("foo", "bar");
 
-    assertTrue(registry.containsAlias("foo"));
+    assertTrue(underTest.containsAlias("foo"));
 
-    String alias = registry.getAlias("foo");
+    String alias = underTest.getAlias("foo");
     assertEquals("bar", alias);
   }
 
@@ -135,38 +131,38 @@ public class AliasRegistryImplTest
   public void testReRegisterAlias() throws Exception {
     testRegisterAlias();
 
-    assertTrue(registry.containsAlias("foo"));
+    assertTrue(underTest.containsAlias("foo"));
 
-    registry.registerAlias("foo", "baz");
+    underTest.registerAlias("foo", "baz");
 
-    assertTrue(registry.containsAlias("foo"));
+    assertTrue(underTest.containsAlias("foo"));
 
-    String alias = registry.getAlias("foo");
+    String alias = underTest.getAlias("foo");
     assertEquals("baz", alias);
   }
 
   @Test
   public void testRemoveAlias() throws Exception {
-    assertFalse(registry.containsAlias("foo"));
+    assertFalse(underTest.containsAlias("foo"));
 
     try {
-      registry.removeAlias("foo");
+      underTest.removeAlias("foo");
     }
     catch (NoSuchAliasException e) {
       // expected
     }
 
     testRegisterAlias();
-    registry.removeAlias("foo");
-    assertFalse(registry.containsAlias("foo"));
+    underTest.removeAlias("foo");
+    assertFalse(underTest.containsAlias("foo"));
   }
 
   @Test
   public void testGetAliasNotRegistered() throws Exception {
-    assertFalse(registry.containsAlias("foo"));
+    assertFalse(underTest.containsAlias("foo"));
 
     try {
-      registry.getAlias("foo");
+      underTest.getAlias("foo");
     }
     catch (NoSuchAliasException e) {
       // expected

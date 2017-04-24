@@ -15,10 +15,9 @@
  */
 package com.planet57.gshell.command.resolver;
 
-import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.google.inject.Provides;
+import com.google.inject.Module;
 import com.google.inject.Stage;
 import com.planet57.gshell.command.DummyAction;
 import com.planet57.gshell.command.registry.CommandRegistry;
@@ -47,7 +46,7 @@ public class NodePathCompleterTest
 
   private Node root;
 
-  private NodePathCompleter completer;
+  private NodePathCompleter underTest;
 
   @Before
   public void setUp() throws Exception {
@@ -55,23 +54,15 @@ public class NodePathCompleterTest
     variables.set(VariableNames.SHELL_GROUP, "/");
     variables.set(VariableNames.SHELL_GROUP_PATH, ".:/");
 
-    Injector injector = Guice.createInjector(Stage.DEVELOPMENT, new AbstractModule()
-    {
-      @Override
-      protected void configure() {
-        bind(EventManager.class).to(EventManagerImpl.class);
-        bind(CommandRegistry.class).to(CommandRegistryImpl.class);
-        bind(CommandResolver.class).to(CommandResolverImpl.class);
-      }
-
-      @Provides
-      private Variables provideVariables() {
-        return variables;
-      }
+    Injector injector = Guice.createInjector(Stage.DEVELOPMENT, (Module) binder -> {
+      binder.bind(EventManager.class).to(EventManagerImpl.class);
+      binder.bind(CommandRegistry.class).to(CommandRegistryImpl.class);
+      binder.bind(CommandResolver.class).to(CommandResolverImpl.class);
+      binder.bind(Variables.class).toInstance(variables);
     });
 
     resolver = injector.getInstance(CommandResolver.class);
-    completer = injector.getInstance(NodePathCompleter.class);
+    underTest = injector.getInstance(NodePathCompleter.class);
 
     root = resolver.root();
     root.add("foo/a1", new DummyAction());
@@ -86,7 +77,7 @@ public class NodePathCompleterTest
     resolver = null;
     variables = null;
     root = null;
-    completer = null;
+    underTest = null;
   }
 
   protected void assertCompletes(final String input, final String... expected) {
@@ -94,7 +85,7 @@ public class NodePathCompleterTest
 //    System.out.println(">");
 //    try {
 //      List<CharSequence> candidates = new ArrayList<CharSequence>();
-//      int result = completer.complete(input, 0, candidates);
+//      int result = underTest.complete(input, 0, candidates);
 //
 //      System.out.println("Result: " + result + ", Candidates: " + candidates);
 //
