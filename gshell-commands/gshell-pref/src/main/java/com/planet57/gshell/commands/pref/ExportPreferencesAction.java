@@ -62,7 +62,7 @@ public class ExportPreferencesAction
       out = io.streams.out;
     }
     else {
-      io.println("Exporting preferences to: %s", file); // TODO: i18n
+      io.out.printf("Exporting preferences to: %s%%s", file); // TODO: i18n
       out = new BufferedOutputStream(new FileOutputStream(file));
     }
 
@@ -77,9 +77,7 @@ public class ExportPreferencesAction
       Flushables.flushQuietly(out);
     }
     finally {
-      if (file != null) {
-        Closeables.close(out);
-      }
+      Closeables.close(out);
     }
 
     prefs.sync();

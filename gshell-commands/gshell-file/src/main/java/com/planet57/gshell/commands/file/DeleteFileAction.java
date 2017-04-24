@@ -81,7 +81,7 @@ public class DeleteFileAction
       log.debug("Deleting file: {}", file);
       new FileAssert(file).isFile();
       if (!file.delete()) {
-        io.error(getMessages().format("error.delete-failed", file));
+        io.err.println(getMessages().format("error.delete-failed", file));
         return Result.FAILURE;
       }
     }

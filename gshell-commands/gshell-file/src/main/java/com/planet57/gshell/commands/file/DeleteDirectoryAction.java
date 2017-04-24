@@ -65,7 +65,7 @@ public class DeleteDirectoryAction
     new FileAssert(file).exists().isDirectory();
 
     if (!file.delete()) {
-      io.error(getMessages().format("error.delete-failed", file));
+      io.err.println(getMessages().format("error.delete-failed", file));
       return Result.FAILURE;
     }
 

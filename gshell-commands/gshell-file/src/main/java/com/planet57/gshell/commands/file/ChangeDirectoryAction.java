@@ -73,7 +73,7 @@ public class ChangeDirectoryAction
 
     vars.set(SHELL_USER_DIR, file.getPath());
     if (verbose) {
-      io.println(file.getPath());
+      io.out.println(file.getPath());
     }
 
     return Result.SUCCESS;

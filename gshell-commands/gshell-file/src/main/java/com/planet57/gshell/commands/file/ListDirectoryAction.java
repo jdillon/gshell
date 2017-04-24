@@ -78,7 +78,7 @@ public class ListDirectoryAction
       listChildren(io, file);
     }
     else {
-      io.println(file.getPath());
+      io.out.println(file.getPath());
     }
 
     return Result.SUCCESS;

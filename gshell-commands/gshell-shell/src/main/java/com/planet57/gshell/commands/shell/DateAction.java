@@ -41,7 +41,7 @@ public class DateAction
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
 
-    io.println(DateFormat.getInstance().format(new Date()));
+    io.out.println(DateFormat.getInstance().format(new Date()));
 
     return Result.SUCCESS;
   }

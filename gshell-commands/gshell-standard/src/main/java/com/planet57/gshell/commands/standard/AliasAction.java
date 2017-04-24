@@ -88,7 +88,7 @@ public class AliasAction
     Map<String, String> aliases = aliasRegistry.getAliases();
 
     if (aliases.isEmpty()) {
-      io.println(getMessages().format("info.no-aliases"));
+      io.out.println(getMessages().format("info.no-aliases"));
     }
     else {
       // Determine the maximum name length
@@ -116,7 +116,8 @@ public class AliasAction
     IO io = context.getIo();
 
     if (target == null) {
-      io.error(getMessages().format("error.missing-arg"), getMessages().getMessage("command.argument.target.token"));
+      io.err.printf(getMessages().format("error.missing-arg"), getMessages().getMessage("command.argument.target.token"));
+      io.err.println();
       return Result.FAILURE;
     }
 

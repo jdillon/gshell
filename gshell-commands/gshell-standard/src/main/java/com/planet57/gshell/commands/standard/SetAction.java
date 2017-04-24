@@ -85,7 +85,7 @@ public class SetAction
       return displayList(context);
     }
     else if (values == null) {
-      io.error(getMessages().format("error.missing-arg", messages.getMessage("command.argument.values.token")));
+      io.err.println(getMessages().format("error.missing-arg", messages.getMessage("command.argument.values.token")));
       return Result.FAILURE;
     }
 
@@ -94,7 +94,7 @@ public class SetAction
     if (evaluate) {
       Object result = context.getShell().execute(value);
       if (result == null || result instanceof Result) {
-        io.error(messages.format("error.expression-did-not-return-a-value", value));
+        io.err.println(messages.format("error.expression-did-not-return-a-value", value));
         return Result.FAILURE;
       }
       value = result.toString();

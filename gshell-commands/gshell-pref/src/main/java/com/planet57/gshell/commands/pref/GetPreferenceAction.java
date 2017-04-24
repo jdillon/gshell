@@ -44,7 +44,7 @@ public class GetPreferenceAction
     log.debug("Getting preference: {}", key);
 
     Object value = node().get(key, null);
-    io.println(value);
+    io.out.println(value);
 
     return value;
   }

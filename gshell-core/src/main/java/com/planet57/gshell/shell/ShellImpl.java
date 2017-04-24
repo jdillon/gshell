@@ -236,9 +236,7 @@ public class ShellImpl
 
       Console console = new Console(lineReader, prompt, taskFactory, errorHandler);
 
-      if (!io.isQuiet()) {
-        renderWelcomeMessage(io);
-      }
+      renderWelcomeMessage(io);
 
       // Check if there are args, and run them and then enter interactive
       if (args.length != 0) {
@@ -247,9 +245,7 @@ public class ShellImpl
 
       console.run();
 
-      if (!io.isQuiet()) {
-        renderGoodbyeMessage(io);
-      }
+      renderGoodbyeMessage(io);
 
       // If any exit notification occurred while running, then puke it up
       ExitNotification n = exitNotifHolder.get();

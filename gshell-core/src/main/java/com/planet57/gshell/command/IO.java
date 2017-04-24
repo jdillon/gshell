@@ -15,15 +15,14 @@
  */
 package com.planet57.gshell.command;
 
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.Reader;
 
 import com.google.common.io.Flushables;
-import com.planet57.gshell.util.io.Closeables;
 import com.planet57.gshell.util.io.StreamSet;
+import org.fusesource.jansi.Ansi;
 import org.fusesource.jansi.AnsiConsole;
 import org.fusesource.jansi.AnsiRenderWriter;
 import org.jline.terminal.Terminal;
@@ -64,12 +63,6 @@ public class IO
   @Nonnull
   public final PrintWriter err;
 
-    /**
-   * The verbosity setting, which commands (and framework) should inspect and respect when
-   * spitting up output to the user.
-   */
-  private Verbosity verbosity = Verbosity.NORMAL;
-
   public IO(final StreamSet streams, final Terminal terminal) {
     this.streams = ansiStreams(checkNotNull(streams));
     this.terminal = checkNotNull(terminal);
@@ -86,11 +79,18 @@ public class IO
   }
 
   private static StreamSet ansiStreams(@Nonnull final StreamSet streams) {
-    return new StreamSet(
-      streams.in,
-      new PrintStream(AnsiConsole.wrapOutputStream(streams.out), true),
-      new PrintStream(AnsiConsole.wrapOutputStream(streams.err), true)
-    );
+    if (Ansi.isEnabled()) {
+      return new StreamSet(
+        streams.in,
+        new PrintStream(AnsiConsole.wrapOutputStream(streams.out), true),
+        new PrintStream(AnsiConsole.wrapOutputStream(streams.err), true)
+      );
+    }
+    return streams;
+  }
+
+  public Terminal getTerminal() {
+    return terminal;
   }
 
   /**
@@ -102,113 +102,6 @@ public class IO
     // Only attempt to flush the err stream if we aren't sharing it with out
     if (!streams.isOutputCombined()) {
       Flushables.flushQuietly(err);
-    }
-  }
-
-  /**
-   * Close all streams.
-   */
-  public void close() throws IOException {
-    Closeables.close(in, out);
-
-    // Only attempt to close the err stream if we aren't sharing it with out
-    if (!streams.isOutputCombined()) {
-      Closeables.close(err);
-    }
-  }
-
-  public Terminal getTerminal() {
-    return terminal;
-  }
-
-  //
-  // Verbosity
-  //
-
-  // FIXME: refine/redo verbosity
-
-  /**
-   * Defines the valid values of the {@link IO} containers verbosity settings.
-   */
-  public enum Verbosity
-  {
-    NORMAL,
-    QUIET,
-    SILENT
-  }
-
-  /**
-   * Set the verbosity level.
-   */
-  public void setVerbosity(final Verbosity verbosity) {
-    this.verbosity = checkNotNull(verbosity);
-  }
-
-//  /**
-//   * Returns the verbosity level.
-//   */
-//  public Verbosity getVerbosity() {
-//    return verbosity;
-//  }
-
-  /**
-   * @since 2.5
-   */
-  public boolean isNormal() {
-    return verbosity == Verbosity.NORMAL;
-  }
-
-  public boolean isQuiet() {
-    return verbosity == Verbosity.QUIET || isSilent();
-  }
-
-  public boolean isSilent() {
-    return verbosity == Verbosity.SILENT;
-  }
-
-  //
-  // Output Helpers
-  //
-
-  /**
-   * @since 2.5
-   */
-  public void println(final Object msg) {
-    if (isNormal()) {
-      out.println(msg);
-    }
-  }
-
-  /**
-   * @since 2.5
-   */
-  public void println(final String format, final Object... args) {
-    if (isNormal()) {
-      out.format(format, args).println();
-    }
-  }
-
-//  public void warn(final Object msg) {
-//    if (!isQuiet()) {
-//      err.println(msg);
-//    }
-//  }
-
-//  public void warn(final String format, final Object... args) {
-//    if (!isQuiet()) {
-//      err.format(format, args).println();
-//    }
-//  }
-
-  public void error(final Object msg) {
-    if (!isSilent()) {
-      err.println(msg);
-    }
-  }
-
-  public void error(final String format, final Object... args) {
-    if (!isSilent()) {
-      err.format(format, args).println();
     }
   }
 }

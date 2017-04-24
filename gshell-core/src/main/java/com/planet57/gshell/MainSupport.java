@@ -116,7 +116,6 @@ public abstract class MainSupport
   private void setDebug(final boolean flag) {
     if (flag) {
       setLoggingThreshold(Level.DEBUG);
-      io.setVerbosity(IO.Verbosity.NORMAL);
       showErrorTraces = true;
     }
   }
@@ -126,7 +125,6 @@ public abstract class MainSupport
   private void setTrace(final boolean flag) {
     if (flag) {
       setLoggingThreshold(Level.TRACE);
-      io.setVerbosity(IO.Verbosity.NORMAL);
       showErrorTraces = true;
     }
   }
@@ -136,7 +134,6 @@ public abstract class MainSupport
   private void setQuiet(final boolean flag) {
     if (flag) {
       setConsoleLoggingThreshold(Level.ERROR);
-      io.setVerbosity(IO.Verbosity.QUIET);
     }
   }
 

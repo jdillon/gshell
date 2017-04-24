@@ -89,7 +89,7 @@ public class ShellErrorHandler
     Boolean showTrace = vars.get(VariableNames.SHELL_ERRORS, Boolean.class, false);
     assert showTrace != null;
 
-    if (showTrace || !io.isSilent()) {
+    if (showTrace) {
       io.err.print(ansi().a(INTENSITY_BOLD).fg(RED).a(cause.getClass().getName()).reset());
       if (cause.getMessage() != null) {
         io.err.print(": ");

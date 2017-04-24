@@ -49,9 +49,9 @@ public class LoggingComponentListAction
     for (LoggingComponent component : getLogging().getComponents()) {
       if ((typeQuery == null || component.getType().contains(typeQuery)) &&
           (nameQuery == null || component.getName().contains(nameQuery))) {
-        io.println("%s", component);
+        io.out.println(component);
         if (verbose) {
-          io.println("  %s", component.getTarget());
+          io.out.printf("  %s%n", component.getTarget());
         }
       }
     }

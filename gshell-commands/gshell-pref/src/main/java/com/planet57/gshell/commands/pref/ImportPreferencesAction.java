@@ -48,7 +48,7 @@ public class ImportPreferencesAction
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
 
-    io.println("Importing preferences from: %s", source); // TODO: i18n
+    io.out.printf("Importing preferences from: %s%n", source); // TODO: i18n
 
     InputStream in = new BufferedInputStream(new FileInputStream(source));
 

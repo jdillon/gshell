@@ -43,7 +43,7 @@ public class RecallHistoryAction
     History history = context.getShell().getHistory();
 
     if (index < 1 || index > history.size()) {
-      io.error(getMessages().format("error.no-such-index", index));
+      io.err.println(getMessages().format("error.no-such-index", index));
       return Result.FAILURE;
     }
 
