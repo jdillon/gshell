@@ -15,11 +15,12 @@
  */
 package com.planet57.gshell.parser.impl.eval;
 
-import com.planet57.gshell.shell.ShellHolder;
 import com.planet57.gshell.util.ReplacementParser;
 import com.planet57.gshell.variables.Variables;
 
 import javax.annotation.Nullable;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Evaluates expressions using regular expressions.
@@ -30,19 +31,22 @@ import javax.annotation.Nullable;
 public class DefaultEvaluator
     implements Evaluator
 {
-  private final ReplacementParser parser = new ReplacementParser()
-  {
-    @Override
-    protected Object replace(final String key) {
-      Variables vars = ShellHolder.require().getVariables();
-      Object rep = vars.get(key);
+  private final ReplacementParser parser;
 
-      if (rep == null) {
-        rep = System.getProperty(key);
+  public DefaultEvaluator(final Variables variables) {
+    checkNotNull(variables);
+    this.parser = new ReplacementParser()
+    {
+      @Override
+      protected Object replace(final String key) {
+        Object replacement = variables.get(key);
+        if (replacement == null) {
+          replacement = System.getProperty(key);
+        }
+        return replacement;
       }
-      return rep;
-    }
-  };
+    };
+  }
 
   @Nullable
   public Object eval(@Nullable final String expression) throws Exception {

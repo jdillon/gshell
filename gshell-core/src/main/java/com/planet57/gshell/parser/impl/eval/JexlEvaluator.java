@@ -15,7 +15,6 @@
  */
 package com.planet57.gshell.parser.impl.eval;
 
-import com.planet57.gshell.shell.ShellHolder;
 import org.sonatype.goodies.common.ComponentSupport;
 import com.planet57.gshell.util.ReplacementParser;
 import com.planet57.gshell.variables.Variables;
@@ -38,27 +37,32 @@ public class JexlEvaluator
     extends ComponentSupport
     implements Evaluator
 {
-  private final ReplacementParser parser = new ReplacementParser()
-  {
-    private final JexlEngine jexl = new JexlBuilder().create();
+  private final ReplacementParser parser;
 
-    @Override
-    protected Object replace(final String key) throws Exception {
-      assert key != null;
+  public JexlEvaluator(final Variables variables) {
+    checkNotNull(variables);
+    this.parser = new ReplacementParser()
+    {
+      private final JexlEngine jexl = new JexlBuilder().create();
 
-      log.debug("Evaluating: {}", key);
+      @Override
+      protected Object replace(final String key) throws Exception {
+        assert key != null;
 
-      JexlContext ctx = new VariablesContext(ShellHolder.require().getVariables());
-      JexlExpression expr = jexl.createExpression(key);
-      // FIXME: how we we get a jexl 1.x-style "flat-resolver"?
+        log.debug("Evaluating: {}", key);
 
-      Object result = expr.evaluate(ctx);
+        JexlContext ctx = new VariablesContext(variables);
+        JexlExpression expr = jexl.createExpression(key);
+        // FIXME: how we we get a jexl 1.x-style "flat-resolver"?
 
-      log.debug("Result: {}", result);
+        Object result = expr.evaluate(ctx);
 
-      return result;
-    }
-  };
+        log.debug("Result: {}", result);
+
+        return result;
+      }
+    };
+  }
 
   @Nullable
   public Object eval(@Nullable final String expression) throws Exception {

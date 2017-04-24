@@ -15,6 +15,7 @@
  */
 package com.planet57.gshell.parser.impl.eval;
 
+import com.planet57.gshell.shell.ShellHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,13 +52,13 @@ public class EvaluatorFactory
     try {
       cl.loadClass("org.apache.commons.jexl.Expression");
 
-      return new JexlEvaluator();
+      return new JexlEvaluator(ShellHolder.require().getVariables());
     }
     catch (Exception e) {
       // ignore
     }
 
-    return new DefaultEvaluator();
+    return new DefaultEvaluator(ShellHolder.require().getVariables());
   }
 
   public static Evaluator get() {
