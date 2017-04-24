@@ -136,7 +136,7 @@ public abstract class MainSupport
     Ansi.setEnabled(flag);
   }
 
-  // TODO: Add helpers to control terminal
+  // TODO: Add helpers to control terminal; presently relies on java properties for jline3
 
   // TODO: Add --norc && --noprofile; implies making ScriptLoader helper exposed
 
