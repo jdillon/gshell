@@ -16,37 +16,36 @@
     limitations under the License.
 
 -->
-<configuration debug="false" scan="true" scanPeriod="30 seconds">
+<configuration debug="${shell.logging.debug:-false}" scan="${shell.logging.scan:-false}" scanPeriod="${shell.logging.scan-period:-30 seconds}">
 
   <contextName>default</contextName>
 
-  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+  <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
     <target>System.out</target>
     <encoder>
-      <pattern>[%level] %logger{1} - %msg%n</pattern>
+      <pattern>${shell.logging.console.pattern:-[%level] %logger{1} - %msg%n}</pattern>
     </encoder>
     <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-      <!-- HACK: for completer testing -->
-      <!--<level>${shell.logging:-INFO}</level>-->
-      <level>ERROR</level>
+      <level>${shell.logging.console.threshold}</level>
     </filter>
   </appender>
 
-  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-    <file>${shell.home}/log/shell.log</file>
-    <append>false</append>
+  <appender name="file" class="ch.qos.logback.core.FileAppender">
+    <file>${shell.logging.file.path:-${shell.home}/log/shell.log}</file>
+    <append>${shell.logging.file.append:-false}</append>
     <encoder>
-      <pattern>%date %level [%thread%X{DC}] %logger - %msg%n</pattern>
+      <pattern>${shell.logging.file.pattern:-%date %level [%thread%X{DC}] %logger - %msg%n}</pattern>
     </encoder>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>${shell.logging.file.threshold}</level>
+    </filter>
   </appender>
 
-  <logger name="Sisu" level="${sisu.log-level:-INFO}"/>
+  <logger name="Sisu" level="${shell.logging.logger.Sisu.level:-INFO}"/>
 
-  <!-- HACK: for completer testing -->
-  <!--<root level="${shell.root-level:-${shell.logging}}">-->
-  <root level="TRACE">
-    <appender-ref ref="CONSOLE"/>
-    <appender-ref ref="FILE"/>
+  <root level="${shell.logging.root-level:-INFO}">
+    <appender-ref ref="console"/>
+    <appender-ref ref="file"/>
   </root>
 
 </configuration>

@@ -37,8 +37,6 @@ public interface VariableNames
 
   String SHELL_ERRORS = "shell.errors";
 
-  String SHELL_LOGGING = "shell.logging";
-
   /**
    * @since 2.5
    */

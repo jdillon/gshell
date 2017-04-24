@@ -94,16 +94,27 @@ public abstract class MainSupport
   @Option(name = "e", longName = "errors", optionalArg = true)
   private boolean showErrorTraces = false;
 
-  private void setConsoleLogLevel(final Level level) {
-    System.setProperty(VariableNames.SHELL_LOGGING, level.name());
-    vars.set(VariableNames.SHELL_LOGGING, level);
+  /**
+   * Adjust the threshold of the {@code console} appender.
+   */
+  private void setConsoleLoggingThreshold(final Level level) {
+    System.setProperty("shell.logging.console.threshold", level.name());
+  }
+
+  /**
+   * Adjust the threshold of all logging.
+   */
+  private void setLoggingThreshold(final Level level) {
+    System.setProperty("shell.logging.console.threshold", level.name());
+    System.setProperty("shell.logging.file.threshold", level.name());
+    System.setProperty("shell.logging.root-level", level.name());
   }
 
   @Preference(name = "debug")
   @Option(name = "d", longName = "debug", optionalArg = true)
   private void setDebug(final boolean flag) {
     if (flag) {
-      setConsoleLogLevel(Level.DEBUG);
+      setLoggingThreshold(Level.DEBUG);
       io.setVerbosity(IO.Verbosity.NORMAL);
       showErrorTraces = true;
     }
@@ -113,7 +124,7 @@ public abstract class MainSupport
   @Option(name = "X", longName = "trace", optionalArg = true)
   private void setTrace(final boolean flag) {
     if (flag) {
-      setConsoleLogLevel(Level.TRACE);
+      setLoggingThreshold(Level.TRACE);
       io.setVerbosity(IO.Verbosity.NORMAL);
       showErrorTraces = true;
     }
@@ -123,7 +134,7 @@ public abstract class MainSupport
   @Option(name = "q", longName = "quiet", optionalArg = true)
   private void setQuiet(final boolean flag) {
     if (flag) {
-      setConsoleLogLevel(Level.ERROR);
+      setConsoleLoggingThreshold(Level.ERROR);
       io.setVerbosity(IO.Verbosity.QUIET);
     }
   }
@@ -210,7 +221,7 @@ public abstract class MainSupport
     vars = new VariablesSupport();
 
     // Setup environment defaults
-    setConsoleLogLevel(Level.INFO);
+    setConsoleLoggingThreshold(Level.INFO);
 
     // Process preferences
     PreferenceProcessor pp = new PreferenceProcessor();
