@@ -16,10 +16,12 @@
 package com.planet57.gshell.testharness;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.util.io.StreamSet;
+import org.jline.terminal.TerminalBuilder;
 
 /**
  * Test {@link IO}.
@@ -33,12 +35,12 @@ public class TestIO
 
   private ByteArrayOutputStream error;
 
-  public TestIO() {
+  public TestIO() throws IOException {
     this(new ByteArrayOutputStream(), new ByteArrayOutputStream());
   }
 
-  public TestIO(final ByteArrayOutputStream output, final ByteArrayOutputStream error) {
-    super(new StreamSet(System.in, new PrintStream(output), new PrintStream(error)), true);
+  public TestIO(final ByteArrayOutputStream output, final ByteArrayOutputStream error) throws IOException {
+    super(new StreamSet(System.in, new PrintStream(output), new PrintStream(error)), TerminalBuilder.terminal());
     this.output = output;
     this.error = error;
   }

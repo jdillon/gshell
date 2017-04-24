@@ -23,7 +23,6 @@ import com.google.common.annotations.VisibleForTesting;
 import com.planet57.gossip.Level;
 import com.planet57.gossip.Log;
 import com.planet57.gshell.branding.Branding;
-import com.planet57.gshell.command.AnsiIO;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.execute.ExitNotification;
 import com.planet57.gshell.shell.Shell;
@@ -45,6 +44,8 @@ import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
 import com.planet57.gshell.variables.VariablesSupport;
 import org.fusesource.jansi.Ansi;
+import org.jline.terminal.Terminal;
+import org.jline.terminal.TerminalBuilder;
 import org.slf4j.Logger;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -217,7 +218,10 @@ public abstract class MainSupport
     // Register default handler for uncaught exceptions
     Thread.setDefaultUncaughtExceptionHandler((thread, cause) -> log.warn("Unhandled exception occurred on thread: " + thread, cause));
 
-    io = new AnsiIO(createStreamSet(), true);
+    Terminal terminal = TerminalBuilder.builder()
+      .build();
+
+    io = new IO(createStreamSet(), terminal);
     vars = new VariablesSupport();
 
     // Setup environment defaults

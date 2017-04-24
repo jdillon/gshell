@@ -16,7 +16,6 @@
 package com.planet57.gshell.command;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -25,11 +24,11 @@ import java.io.Reader;
 import com.google.common.io.Flushables;
 import com.planet57.gshell.util.io.Closeables;
 import com.planet57.gshell.util.io.StreamSet;
+import org.fusesource.jansi.AnsiConsole;
+import org.fusesource.jansi.AnsiRenderWriter;
 import org.jline.terminal.Terminal;
-import org.jline.terminal.TerminalBuilder;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -44,6 +43,9 @@ public class IO
   @Nonnull
   public final StreamSet streams;
 
+  @Nonnull
+  private final Terminal terminal;
+
   /**
    * Input reader.
    */
@@ -57,95 +59,38 @@ public class IO
   public final PrintWriter out;
 
   /**
-   * Error output writer.
+   * Error-output writer.
    */
   @Nonnull
   public final PrintWriter err;
 
-  /**
-   * The terminal associated with the given input/output.
-   */
-  @Nonnull
-  private final Terminal terminal;
-
-  /**
+    /**
    * The verbosity setting, which commands (and framework) should inspect and respect when
    * spitting up output to the user.
    */
   private Verbosity verbosity = Verbosity.NORMAL;
 
-  public IO(final StreamSet streams, final boolean autoFlush) {
-    this.streams = checkNotNull(streams);
-    this.terminal = createTerminal(streams);
-    this.in = createReader(streams.in);
-    this.out = createWriter(streams.out, autoFlush);
+  public IO(final StreamSet streams, final Terminal terminal) {
+    this.streams = ansiStreams(checkNotNull(streams));
+    this.terminal = checkNotNull(terminal);
+    this.in = new InputStreamReader(streams.in);
+    this.out = new AnsiRenderWriter(new PrintWriter(streams.out, true));
 
     /// Don't rewrite the error stream if we have the same stream for out and error
     if (streams.isOutputCombined()) {
       this.err = this.out;
     }
     else {
-      this.err = createWriter(streams.err, autoFlush);
+      this.err = new AnsiRenderWriter(new PrintWriter(streams.err, true));
     }
   }
 
-  public IO(final StreamSet streams,
-            @Nullable final Terminal terminal,
-            @Nullable final Reader in,
-            @Nullable final PrintWriter out,
-            @Nullable final PrintWriter err,
-            final boolean autoFlush)
-  {
-    this.streams = checkNotNull(streams);
-
-    if (terminal == null) {
-      this.terminal = createTerminal(streams);
-    }
-    else {
-      this.terminal = terminal;
-    }
-
-    if (in == null) {
-      this.in = createReader(streams.in);
-    }
-    else {
-      this.in = in;
-    }
-
-    if (out == null) {
-      this.out = createWriter(streams.out, autoFlush);
-    }
-    else {
-      this.out = out;
-    }
-
-    if (err == null) {
-      this.err = createWriter(streams.err, autoFlush);
-    }
-    else {
-      this.err = err;
-    }
-  }
-
-  protected Terminal createTerminal(final StreamSet streams) {
-    // FIXME: deal with stream-set; may have some impact on jline3
-    try {
-      return TerminalBuilder.builder()
-        .build();
-    }
-    catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-  protected Reader createReader(final InputStream in) {
-    checkNotNull(in);
-    return new InputStreamReader(in);
-  }
-
-  protected PrintWriter createWriter(final PrintStream out, final boolean autoFlush) {
-    checkNotNull(out);
-    return new PrintWriter(out, autoFlush);
+  private static StreamSet ansiStreams(@Nonnull final StreamSet streams) {
+    return new StreamSet(
+      streams.in,
+      new PrintStream(AnsiConsole.wrapOutputStream(streams.out), true),
+      new PrintStream(AnsiConsole.wrapOutputStream(streams.err), true)
+    );
   }
 
   /**
@@ -180,6 +125,8 @@ public class IO
   // Verbosity
   //
 
+  // FIXME: refine/redo verbosity
+
   /**
    * Defines the valid values of the {@link IO} containers verbosity settings.
    */
@@ -197,12 +144,12 @@ public class IO
     this.verbosity = checkNotNull(verbosity);
   }
 
-  /**
-   * Returns the verbosity level.
-   */
-  public Verbosity getVerbosity() {
-    return verbosity;
-  }
+//  /**
+//   * Returns the verbosity level.
+//   */
+//  public Verbosity getVerbosity() {
+//    return verbosity;
+//  }
 
   /**
    * @since 2.5
@@ -241,17 +188,17 @@ public class IO
     }
   }
 
-  public void warn(final Object msg) {
-    if (!isQuiet()) {
-      err.println(msg);
-    }
-  }
+//  public void warn(final Object msg) {
+//    if (!isQuiet()) {
+//      err.println(msg);
+//    }
+//  }
 
-  public void warn(final String format, final Object... args) {
-    if (!isQuiet()) {
-      err.format(format, args).println();
-    }
-  }
+//  public void warn(final String format, final Object... args) {
+//    if (!isQuiet()) {
+//      err.format(format, args).println();
+//    }
+//  }
 
   public void error(final Object msg) {
     if (!isSilent()) {
