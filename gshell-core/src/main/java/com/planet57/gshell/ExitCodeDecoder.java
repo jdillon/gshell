@@ -15,7 +15,9 @@
  */
 package com.planet57.gshell;
 
+import com.planet57.gossip.Log;
 import com.planet57.gshell.command.CommandAction;
+import org.slf4j.Logger;
 
 import javax.annotation.Nullable;
 
@@ -26,7 +28,11 @@ import javax.annotation.Nullable;
  */
 public class ExitCodeDecoder
 {
+  private static final Logger log = Log.getLogger(ExitCodeDecoder.class);
+
   public static int decode(@Nullable final Object result) {
+    log.debug("Decoding: {}", result);
+
     if (result instanceof CommandAction.Result) {
       return ((CommandAction.Result) result).ordinal();
     }
