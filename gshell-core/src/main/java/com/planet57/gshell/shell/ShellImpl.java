@@ -15,6 +15,7 @@
  */
 package com.planet57.gshell.shell;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.concurrent.Callable;
@@ -42,7 +43,6 @@ import org.jline.reader.History;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 import org.jline.reader.impl.history.DefaultHistory;
-import org.jline.terminal.Terminal;
 import org.sonatype.goodies.lifecycle.LifecycleSupport;
 import org.sonatype.goodies.lifecycle.Lifecycles;
 
@@ -105,7 +105,7 @@ public class ShellImpl
     this.prompt = checkNotNull(prompt);
     this.errorHandler = checkNotNull(errorHandler);
 
-    // FIXME: looks like we have to set jline LineReader.HISTORY_FILE variable to control this location
+    // HACK: exposed here as some commands needs reference to this
     this.history = new DefaultHistory();
 
     // FIXME: for now leave this as default non-configurable
@@ -225,10 +225,13 @@ public class ShellImpl
         }
       };
 
+      File historyFile = new File(branding.getUserContextDir(), branding.getHistoryFileName());
+
       LineReader lineReader = LineReaderBuilder.builder()
         .terminal(io.getTerminal())
-        .history(history)
         .completer(new LoggingCompleter(completer))
+        .history(history)
+        .variable(LineReader.HISTORY_FILE, historyFile)
         .build();
 
       Console console = new Console(lineReader, prompt, taskFactory, errorHandler);

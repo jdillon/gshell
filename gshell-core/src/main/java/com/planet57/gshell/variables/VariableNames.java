@@ -35,8 +35,6 @@ public interface VariableNames
 
   String SHELL_PROMPT = "shell.prompt";
 
-  String SHELL_HISTORY = "shell.history";
-
   String SHELL_ERRORS = "shell.errors";
 
   String SHELL_LOGGING = "shell.logging";
