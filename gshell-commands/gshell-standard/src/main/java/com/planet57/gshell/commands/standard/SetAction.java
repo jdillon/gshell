@@ -119,7 +119,7 @@ public class SetAction
   private Object displayList(final CommandContext context) throws Exception {
     IO io = context.getIo();
 
-    // NOTE: Using io.outputStream to display values to avoid any ANSI encoding or other translation.
+    // using RAW io.stream.out to avoid any ANSI encoding
 
     switch (mode) {
       case PROPERTY: {
@@ -128,11 +128,7 @@ public class SetAction
         for (Object o : props.keySet()) {
           String name = (String) o;
           String value = props.getProperty(name);
-
-          io.streams.out.print(name);
-          io.streams.out.print("='");
-          io.streams.out.print(value);
-          io.streams.out.println("'");
+          io.streams.out.printf("%s='%s'%n", name, value);
         }
         break;
       }
@@ -141,18 +137,11 @@ public class SetAction
         Variables variables = context.getVariables();
         for (String name : variables.names()) {
           Object value = variables.get(name);
-
-          io.streams.out.print(name);
-          io.streams.out.print("='");
-          io.streams.out.print(value);
-          io.streams.out.flush();
-          io.streams.out.print("'");
+          io.streams.out.printf("%s='%s'", name, value);
 
           // When --verbose include the class details of the values
           if (verbose && value != null) {
-            io.streams.out.print(" (");
-            io.streams.out.print(value.getClass());
-            io.streams.out.print(")");
+            io.streams.out.printf(" (%s)", value.getClass());
           }
 
           io.streams.out.println();
@@ -161,7 +150,7 @@ public class SetAction
       }
     }
 
-    // Manually flush the stream, normally framework only flushes io.out
+    // force RAW stream to flush
     io.streams.out.flush();
 
     return Result.SUCCESS;
