@@ -109,7 +109,7 @@
           <!-- avoid older version of gossip from leaking in; use in goodies-common is minimal limited to UnhandledThrowable -->
           <exclusion>
             <groupId>org.sonatype.gossip</groupId>
-            <artifactId>gossip-suppport</artifactId>
+            <artifactId>gossip-support</artifactId>
           </exclusion>
         </exclusions>
       </dependency>
