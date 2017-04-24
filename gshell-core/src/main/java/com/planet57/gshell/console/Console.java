@@ -104,8 +104,6 @@ public class Console
   private boolean work() throws Exception {
     String line = lineReader.readLine(prompt.prompt());
 
-    log.trace("Read line: {}", line);
-
     if (log.isTraceEnabled()) {
       traceLine(line);
     }
@@ -145,7 +143,7 @@ public class Console
       idx.append(' ').append((char) b).append("  ");
     }
 
-    log.trace("\n{}\n{}", hex, idx);
+    log.trace("Read line: {}\n{}\n{}", line, hex, idx);
   }
 
   private boolean interruptTask() {
