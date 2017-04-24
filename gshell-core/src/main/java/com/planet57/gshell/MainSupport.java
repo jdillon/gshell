@@ -24,7 +24,6 @@ import com.planet57.gossip.Level;
 import com.planet57.gossip.Log;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.command.AnsiIO;
-import com.planet57.gshell.command.CommandAction.Result;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.execute.ExitNotification;
 import com.planet57.gshell.shell.Shell;
@@ -66,15 +65,11 @@ public abstract class MainSupport
     .add(false, getClass())
     .add(MainSupport.class);
 
-  // HACK: these shouldn't be protected
   protected IO io;
 
   protected Variables vars;
 
   private Branding branding;
-
-  // TODO: Add flag to capture output to log file. Need to bring back TeeOutputStream and get prefixed stuff working proper.
-  // TODO: Add --batch flag (for non-interactive)
 
   @Option(name = "h", longName = "help", override = true)
   protected boolean help;
