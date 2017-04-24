@@ -68,6 +68,9 @@ public class RunMojo
           super.configure(modules);
           modules.add(binder -> {
             binder.bind(LoggingSystem.class).to(LoggingSystemImpl.class);
+
+            // FIXME: see if there is a better way to bridge maven components to gshell
+            binder.bind(MavenProject.class).toInstance(project);
           });
         }
       };
