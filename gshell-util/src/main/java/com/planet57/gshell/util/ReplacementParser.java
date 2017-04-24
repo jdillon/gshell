@@ -15,6 +15,7 @@
  */
 package com.planet57.gshell.util;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,7 +30,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public abstract class ReplacementParser
 {
-  private static final String DEFAULT_PATTERN = "\\$\\{([^}]+)\\}";
+  private static final String DEFAULT_PATTERN_REGEX = "\\$\\{([^}]+)\\}";
+
+  private static final Pattern DEFAULT_PATTERN = Pattern.compile(DEFAULT_PATTERN_REGEX);
 
   private final Pattern pattern;
 
@@ -38,7 +41,7 @@ public abstract class ReplacementParser
   }
 
   public ReplacementParser() {
-    this(Pattern.compile(DEFAULT_PATTERN));
+    this(DEFAULT_PATTERN);
   }
 
   @Nullable
@@ -66,5 +69,5 @@ public abstract class ReplacementParser
   }
 
   @Nullable
-  protected abstract Object replace(String key) throws Exception;
+  protected abstract Object replace(@Nonnull String key) throws Exception;
 }
