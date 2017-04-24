@@ -36,7 +36,7 @@ public class TTopAction
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    TTop ttop = new TTop(context.getIo().getTerminal());
+    TTop ttop = new TTop(context.getIo().terminal);
     ttop.run();
 
     return Result.SUCCESS;

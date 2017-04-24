@@ -101,7 +101,7 @@ public class BrandingSupport
     int width = 79;
     Shell shell = ShellHolder.get();
     if (shell != null) {
-      width = shell.getIo().getTerminal().getWidth() - 1;
+      width = shell.getIo().terminal.getWidth() - 1;
     }
     return Strings.repeat("-", width);
   }

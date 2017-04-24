@@ -89,7 +89,7 @@ public class CommandHelpPage
     public Helper() {
       CommandHelper help = new CommandHelper();
       clp = help.createCliProcessor(command);
-      printer = new HelpPrinter(clp, ShellHolder.require().getIo().getTerminal());
+      printer = new HelpPrinter(clp, ShellHolder.require().getIo().terminal);
       pp = CommandHelper.createPreferenceProcessor(command);
     }
 

@@ -58,7 +58,7 @@ public class NanoAction
     File currentDir = variables.get(VariableNames.SHELL_USER_DIR, File.class);
     assert currentDir != null;
 
-    Nano nano = new Nano(context.getIo().getTerminal(), currentDir);
+    Nano nano = new Nano(context.getIo().terminal, currentDir);
     nano.open(files);
     nano.run();
 

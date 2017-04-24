@@ -48,7 +48,7 @@ public class AskAction
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     // TODO: look into if there is a better way to do this to create a light-weight LineReader
     LineReader lineReader = LineReaderBuilder.builder()
-      .terminal(context.getIo().getTerminal())
+      .terminal(context.getIo().terminal)
       .build();
 
     String input;

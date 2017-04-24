@@ -60,7 +60,7 @@ public class LessAction
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    Less less = new Less(context.getIo().getTerminal());
+    Less less = new Less(context.getIo().terminal);
 
     if (lineNumbers != null) {
       less.printLineNumbers = lineNumbers;
