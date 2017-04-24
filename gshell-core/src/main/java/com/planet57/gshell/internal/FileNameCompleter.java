@@ -15,9 +15,7 @@
  */
 package com.planet57.gshell.internal;
 
-import java.io.File;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -54,21 +52,16 @@ public class FileNameCompleter
     return variables.get().get(SHELL_USER_HOME, Path.class);
   }
 
-  // FIXME: this could probably be simplified to avoid this complex file/path/string handling
-
   @Override
   protected Path getUserDir() {
-    Variables vars = variables.get();
-    Object tmp = vars.get(SHELL_USER_DIR);
-    assert tmp != null;
+    return variables.get().get(SHELL_USER_DIR, Path.class);
+  }
 
-    if (tmp instanceof Path) {
-      return (Path) tmp;
-    }
-    else if (tmp instanceof File) {
-      return ((File) tmp).toPath();
-    }
-
-    return Paths.get(String.valueOf(tmp));
+  /**
+   * Super by default does not accept hidden files.
+   */
+  @Override
+  protected boolean accept(final Path path) {
+    return true;
   }
 }

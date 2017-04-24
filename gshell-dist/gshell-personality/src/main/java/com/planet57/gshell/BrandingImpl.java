@@ -21,8 +21,10 @@ import com.planet57.gshell.branding.BrandingSupport;
 import com.planet57.gshell.branding.License;
 import com.planet57.gshell.branding.LicenseSupport;
 import com.planet57.gshell.util.io.PrintBuffer;
-import com.planet57.gshell.variables.VariableNames;
 import org.fusesource.jansi.Ansi;
+
+import static com.planet57.gshell.variables.VariableNames.SHELL_GROUP;
+import static com.planet57.gshell.variables.VariableNames.SHELL_USER_DIR;
 
 /**
  * Branding for <tt>gsh</tt>.
@@ -77,7 +79,7 @@ public class BrandingImpl
 
   @Override
   public String getPrompt() {
-    return String.format("@|bold %s|@:${%s}> ", getProgramName(), VariableNames.SHELL_GROUP);
+    return String.format("@|bold %s|@(${%s}):${%s}> ", getProgramName(), SHELL_GROUP, SHELL_USER_DIR + "~.");
   }
 
   @Override
