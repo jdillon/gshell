@@ -80,9 +80,10 @@ public class NodePathCompleter
     // append all matching nodes
     matches.forEach(node -> appendNode(strings, node));
 
+    log.trace("Candidates: {}", strings);
+
     // construct candidates from matches
     strings.forEach(string -> {
-      log.trace("Candidate: {}", string);
       candidates.add(StringsCompleter2.candidate(string));
     });
   }

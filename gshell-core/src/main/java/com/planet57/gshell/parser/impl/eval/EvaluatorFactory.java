@@ -15,9 +15,11 @@
  */
 package com.planet57.gshell.parser.impl.eval;
 
-import com.planet57.gshell.shell.ShellHolder;
+import com.planet57.gshell.variables.Variables;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Creates {@link Evaluator} instances.
@@ -31,9 +33,15 @@ public class EvaluatorFactory
 
   private static final Logger log = LoggerFactory.getLogger(EvaluatorFactory.class);
 
-  private static Evaluator instance;
+  // TODO: may need to refactor to prevent re-loading logic here, but allow the variables to be passed in
+  // TODO: this could likely be simplified with Guice injection/binding
 
-  public static Evaluator create() {
+  /**
+   * @sincd 3.0
+   */
+  public static Evaluator create(final Variables variables) {
+    checkNotNull(variables);
+
     ClassLoader cl = Thread.currentThread().getContextClassLoader();
 
     String className = System.getProperty(TYPE);
@@ -52,21 +60,12 @@ public class EvaluatorFactory
     try {
       cl.loadClass("org.apache.commons.jexl.Expression");
 
-      return new JexlEvaluator(ShellHolder.require().getVariables());
+      return new JexlEvaluator(variables);
     }
     catch (Exception e) {
       // ignore
     }
 
-    return new DefaultEvaluator(ShellHolder.require().getVariables());
-  }
-
-  public static Evaluator get() {
-    if (instance == null) {
-      instance = create();
-      log.debug("Using evaluator: {}", instance);
-    }
-
-    return instance;
+    return new DefaultEvaluator(variables);
   }
 }

@@ -18,6 +18,7 @@ package com.planet57.gshell.parser;
 import java.io.Reader;
 import java.io.StringReader;
 
+import com.planet57.gossip.Level;
 import com.planet57.gshell.parser.impl.ASTCommandLine;
 import com.planet57.gshell.parser.impl.Parser;
 import com.planet57.gshell.parser.impl.eval.Evaluator;
@@ -58,13 +59,11 @@ public class CommandLineParserImpl
 
     // If trace is enabled, the log the parse tree
     if (log.isTraceEnabled()) {
-      root.jjtAccept(new LoggingVisitor(log), null);
+      root.jjtAccept(new LoggingVisitor(log, Level.TRACE), null);
     }
 
-    // TODO: could inject this; may help unravel ShellHolder needs as well
-    Evaluator evaluator = EvaluatorFactory.get();
-
     return (shell, executor) -> {
+      Evaluator evaluator = EvaluatorFactory.create(shell.getVariables());
       ExecutingVisitor visitor = new ExecutingVisitor(shell, executor, evaluator);
       return root.jjtAccept(visitor, null);
     };

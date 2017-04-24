@@ -105,6 +105,13 @@
         <groupId>org.sonatype.goodies</groupId>
         <artifactId>goodies-common</artifactId>
         <version>${sonatype-goodies.version}</version>
+        <exclusions>
+          <!-- avoid older version of gossip from leaking in; use in goodies-common is minimal limited to UnhandledThrowable -->
+          <exclusion>
+            <groupId>org.sonatype.gossip</groupId>
+            <artifactId>gossip-suppport</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
 
       <dependency>
@@ -123,6 +130,7 @@
         <groupId>org.sonatype.goodies</groupId>
         <artifactId>goodies-testsupport</artifactId>
         <version>${sonatype-goodies.version}</version>
+        <!-- this will include older gossip for TestSupport and TestTracer; but should be fine and won't impact general runtime -->
       </dependency>
 
       <dependency>
