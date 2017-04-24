@@ -222,21 +222,17 @@ public abstract class MainSupport
     final AtomicReference<Integer> codeRef = new AtomicReference<Integer>();
     Object result = null;
 
-    Runtime.getRuntime().addShutdownHook(new Thread()
-    {
-      @Override
-      public void run() {
-        if (codeRef.get() == null) {
-          // Give the user a warning when the JVM shutdown abnormally, normal shutdown
-          // will set an exit code through the proper channels
+    Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+      if (codeRef.get() == null) {
+        // Give the user a warning when the JVM shutdown abnormally, normal shutdown
+        // will set an exit code through the proper channels
 
-          io.err.println();
-          io.err.println(messages.getMessage("warning.abnormalShutdown"));
-        }
-
-        io.flush();
+        io.err.println();
+        io.err.println(messages.getMessage("warning.abnormalShutdown"));
       }
-    });
+
+      io.flush();
+    }));
 
     try {
       vars.set(VariableNames.SHELL_ERRORS, showErrorTraces);
@@ -265,24 +261,8 @@ public abstract class MainSupport
       result = vars.get(VariableNames.LAST_RESULT);
     }
 
-    int code;
-
-    // TODO: Support parsing strings for exit code.  Move this to a helper class
-    if (result instanceof Result) {
-      code = ((Result) result).ordinal();
-    }
-    else if (result instanceof Number) {
-      code = ((Number) result).intValue();
-    }
-    else if (result == null) {
-      code = 0;
-    }
-    else {
-      code = 1;
-    }
-
+    int code = ExitCodeDecoder.decode(result);
     codeRef.set(code);
-
     exit(code);
   }
 
