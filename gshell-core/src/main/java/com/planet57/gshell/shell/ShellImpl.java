@@ -36,7 +36,6 @@ import com.planet57.gshell.execute.CommandExecutor;
 import com.planet57.gshell.execute.ExitNotification;
 import com.planet57.gshell.util.io.StreamJack;
 import com.planet57.gshell.util.jline.LoggingCompleter;
-import com.planet57.gshell.util.jline.TerminalHolder;
 import com.planet57.gshell.variables.Variables;
 import org.jline.reader.Completer;
 import org.jline.reader.History;
@@ -203,7 +202,6 @@ public class ShellImpl
 
     log.debug("Starting interactive console; args: {}", Arrays.asList(args));
 
-    final Terminal previousTerminal = TerminalHolder.set(io.getTerminal());
     final Shell lastShell = ShellHolder.set(this);
 
     try {
@@ -257,7 +255,6 @@ public class ShellImpl
       }
     }
     finally {
-      TerminalHolder.set(previousTerminal);
       ShellHolder.set(lastShell);
     }
   }
