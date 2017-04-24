@@ -47,9 +47,11 @@ public class IO
 
   /**
    * Attached terminal.
+   *
+   * @since 3.0
    */
   @Nonnull
-  private final Terminal terminal;
+  public final Terminal terminal;
 
   /**
    * Input reader.
@@ -100,10 +102,6 @@ public class IO
     return streams;
   }
 
-  public Terminal getTerminal() {
-    return terminal;
-  }
-
   /**
    * Flush both output streams.
    */
@@ -114,5 +112,7 @@ public class IO
     if (!streams.isOutputCombined()) {
       Flushables.flushQuietly(err);
     }
+
+    // TODO: terminal.flush()?
   }
 }

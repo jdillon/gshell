@@ -228,7 +228,7 @@ public class ShellImpl
       File historyFile = new File(branding.getUserContextDir(), branding.getHistoryFileName());
 
       LineReader lineReader = LineReaderBuilder.builder()
-        .terminal(io.getTerminal())
+        .terminal(io.terminal)
         .completer(new LoggingCompleter(completer))
         .history(history)
         .variable(LineReader.HISTORY_FILE, historyFile)

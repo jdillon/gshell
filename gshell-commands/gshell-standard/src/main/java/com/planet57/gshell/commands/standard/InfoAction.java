@@ -47,7 +47,6 @@ import com.planet57.gshell.util.pref.Preferences;
 import org.fusesource.jansi.Ansi;
 import org.fusesource.jansi.AnsiRenderWriter;
 import org.jline.reader.impl.completer.EnumCompleter;
-import org.jline.terminal.Terminal;
 
 import javax.annotation.Nonnull;
 
@@ -145,14 +144,13 @@ public class InfoAction
           break;
 
         case TERMINAL: {
-          Terminal terminal = io.getTerminal();
           printlnHeader(writer, "Terminal");
-          println(writer, "Name", terminal.getName());
-          println(writer, "Type", terminal.getType());
-          println(writer, "Echo", terminal.echo());
-          println(writer, "Height", terminal.getHeight());
-          println(writer, "Width", terminal.getWidth());
-          println(writer, "Mouse support", terminal.hasMouseSupport());
+          println(writer, "Name", io.terminal.getName());
+          println(writer, "Type", io.terminal.getType());
+          println(writer, "Echo", io.terminal.echo());
+          println(writer, "Height", io.terminal.getHeight());
+          println(writer, "Width", io.terminal.getWidth());
+          println(writer, "Mouse support", io.terminal.hasMouseSupport());
           // TODO: attributes/capabilities?
           break;
         }
@@ -233,7 +231,7 @@ public class InfoAction
     writer.flush();
 
     if (pager) {
-      TerminalHelper.pageOutput(io.getTerminal(), buff.toString());
+      TerminalHelper.pageOutput(io.terminal, buff.toString());
     }
     else {
       io.out.println(buff.toString());

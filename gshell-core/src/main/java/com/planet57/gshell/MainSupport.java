@@ -239,7 +239,7 @@ public abstract class MainSupport
     }
 
     if (help) {
-      HelpPrinter printer = new HelpPrinter(clp, io.getTerminal());
+      HelpPrinter printer = new HelpPrinter(clp, io.terminal);
       printer.printUsage(io.out, getBranding().getProgramName());
       exit(ExitNotification.SUCCESS_CODE);
     }

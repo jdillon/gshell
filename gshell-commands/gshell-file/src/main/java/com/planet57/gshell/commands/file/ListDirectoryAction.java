@@ -116,7 +116,7 @@ public class ListDirectoryAction
         io.out.println(name);
       }
     } else {
-      TerminalHelper.printColumns(io.getTerminal(), io.out, names.stream(), true);
+      TerminalHelper.printColumns(io.terminal, io.out, names.stream(), true);
     }
 
     if (!dirs.isEmpty()) {

@@ -143,7 +143,7 @@ public class HelpAction
       try (StringWriter writer = new StringWriter()) {
         page.render(new AnsiRenderWriter(writer));
         writer.flush();
-        TerminalHelper.pageOutput(io.getTerminal(), page.getName(), writer.toString());
+        TerminalHelper.pageOutput(io.terminal, page.getName(), writer.toString());
       }
     }
     else {

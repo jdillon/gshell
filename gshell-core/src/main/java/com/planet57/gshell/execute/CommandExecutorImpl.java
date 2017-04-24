@@ -176,7 +176,7 @@ public class CommandExecutorImpl
           io.out.println(CommandHelper.getDescription(action));
           io.out.println();
 
-          HelpPrinter printer = new HelpPrinter(clp, io.getTerminal());
+          HelpPrinter printer = new HelpPrinter(clp, io.terminal);
           printer.printUsage(io.out, action.getSimpleName());
 
           // Skip execution
