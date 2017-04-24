@@ -37,12 +37,6 @@ public interface CommandAction
   MessageSource getMessages();
 
   /**
-   * @since 3.0
-   */
-  @Nullable
-  Completer getCompleter();
-
-  /**
    * Execute the command action.
    *
    * @param context The execution context of the command.
@@ -81,5 +75,13 @@ public interface CommandAction
   interface Prototype
   {
     CommandAction create();
+  }
+
+  /**
+   * Commands which support completion.
+   */
+  interface Completable
+  {
+    Completer getCompleter();
   }
 }

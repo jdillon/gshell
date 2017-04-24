@@ -77,18 +77,16 @@ public class ShellCompleter
       if (node != null) {
         CommandAction action = node.getAction();
 
-        Completer completer = action.getCompleter();
-        if (completer == null) {
-          log.debug("Action has no specific completer; skipping");
-          return;
+        if (action instanceof CommandAction.Completable) {
+          Completer completer = ((CommandAction.Completable)action).getCompleter();
+          log.debug("Completer: {}", completer);
+
+          // HACK: complexity here to re-use ArgumentCompleter; not terribly efficient
+          ParsedLine arguments = extractCommandArguments(line);
+          explain("Command-arguments", arguments);
+
+          completer.complete(reader, arguments, candidates);
         }
-        log.debug("Completer: {}", completer);
-
-        // HACK: complexity here to re-use ArgumentCompleter; not terribly efficient
-        ParsedLine arguments = extractCommandArguments(line);
-        explain("Command-arguments", arguments);
-
-        completer.complete(reader, arguments, candidates);
       }
     }
   }

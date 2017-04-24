@@ -40,14 +40,14 @@ import static com.google.common.base.Preconditions.checkState;
  */
 public abstract class CommandActionSupport
   extends ComponentSupport
-  implements CommandAction, CommandAction.NameAware, CommandAction.Prototype
+  implements CommandAction, CommandAction.NameAware, CommandAction.Prototype, CommandAction.Completable
 {
   private String name;
 
   private MessageSource messages;
 
   @Nullable
-  private Completer completer;
+  private Completer completer = NullCompleter.INSTANCE;
 
   @Override
   public String getName() {
@@ -101,7 +101,6 @@ public abstract class CommandActionSupport
   }
 
   @Override
-  @Nullable
   public Completer getCompleter() {
     return completer;
   }
