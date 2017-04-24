@@ -55,9 +55,8 @@ public class CommandHelpPage
   private final CommandAction command;
 
   public CommandHelpPage(final Node node, final HelpContentLoader loader) {
-    checkNotNull(node);
+    this.node = checkNotNull(node);
     checkArgument(!node.isGroup());
-    this.node = node;
     this.loader = checkNotNull(loader);
     this.command = node.getAction();
   }
@@ -206,10 +205,6 @@ public class CommandHelpPage
   @Override
   public void render(final PrintWriter out) {
     checkNotNull(out);
-
-    //
-    // FIXME: Really need a little bit more of a help page language here to simplify the formatting of things
-    //
 
     Interpolator interp = new StringSearchInterpolator("@{", "}");
     interp.addValueSource(new PrefixedObjectValueSource("command.", new Helper()));
