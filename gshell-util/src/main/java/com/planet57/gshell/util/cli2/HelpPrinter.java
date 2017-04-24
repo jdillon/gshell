@@ -41,7 +41,7 @@ public class HelpPrinter
 
   private AggregateMessageSource messages = new AggregateMessageSource(new ResourceBundleMessageSource(getClass()));
 
-  private int terminalWidth = 80;
+  private int terminalWidth;
 
   private String prefix = "  ";
 
@@ -56,9 +56,7 @@ public class HelpPrinter
       addMessages(messages);
     }
 
-    if (terminal != null) {
-      terminalWidth = terminal.getWidth();
-    }
+    terminalWidth = terminal != null ? terminal.getWidth() : 80;
   }
 
   public void addMessages(final MessageSource messages) {
@@ -93,10 +91,10 @@ public class HelpPrinter
   public void printUsage(final PrintWriter out, @Nullable final String name) {
     checkNotNull(out);
 
-    List<ArgumentDescriptor> arguments = new ArrayList<ArgumentDescriptor>();
+    List<ArgumentDescriptor> arguments = new ArrayList<>();
     arguments.addAll(processor.getArgumentDescriptors());
 
-    List<OptionDescriptor> options = new ArrayList<OptionDescriptor>();
+    List<OptionDescriptor> options = new ArrayList<>();
     options.addAll(processor.getOptionDescriptors());
 
     if (name != null) {

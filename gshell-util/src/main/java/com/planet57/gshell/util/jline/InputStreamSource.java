@@ -17,6 +17,7 @@ package com.planet57.gshell.util.jline;
 
 import org.jline.builtins.Source;
 
+import javax.annotation.Nullable;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -30,16 +31,18 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class InputStreamSource
   implements Source
 {
+  @Nullable
   private final String name;
 
   private final InputStream stream;
 
-  public InputStreamSource(final String name, final InputStream stream) {
-    this.name = checkNotNull(name);
+  public InputStreamSource(final InputStream stream, @Nullable final String name) {
     this.stream = checkNotNull(stream);
+    this.name = name;
   }
 
   @Override
+  @Nullable
   public String getName() {
     return name;
   }

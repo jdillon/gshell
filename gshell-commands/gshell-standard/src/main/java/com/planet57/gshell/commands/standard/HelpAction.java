@@ -15,9 +15,7 @@
  */
 package com.planet57.gshell.commands.standard;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Collection;
 import java.util.function.Predicate;
 
@@ -38,12 +36,11 @@ import com.planet57.gshell.help.HelpPageUtil;
 import com.planet57.gshell.help.MetaHelpPage;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
-import com.planet57.gshell.util.jline.InputStreamSource;
+import com.planet57.gshell.util.jline.TerminalHelper;
 import com.planet57.gshell.util.predicate.TypePredicate;
 import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.Preferences;
 import org.fusesource.jansi.AnsiRenderWriter;
-import org.jline.builtins.Less;
 import org.jline.reader.Completer;
 import org.jline.reader.impl.completer.AggregateCompleter;
 
@@ -143,14 +140,10 @@ public class HelpAction
 
     // render matched page; with pager or directly
     if (pager) {
-      // TODO: consider adding a means to create these generically; and control if enabled via variable?
-      Less less = new Less(io.getTerminal());
-      try (ByteArrayOutputStream buff = new ByteArrayOutputStream()) {
-        PrintWriter writer = new PrintWriter(buff);
-        // help pages are expected to replace AnsiRender tokens, so wrap with stream
+      try (StringWriter writer = new StringWriter()) {
         page.render(new AnsiRenderWriter(writer));
-        writer.close();
-        less.run(new InputStreamSource(page.getName(), new ByteArrayInputStream(buff.toByteArray())));
+        writer.flush();
+        TerminalHelper.pageOutput(io.getTerminal(), page.getName(), writer.toString());
       }
     }
     else {

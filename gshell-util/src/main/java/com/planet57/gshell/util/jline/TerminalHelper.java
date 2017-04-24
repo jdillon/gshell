@@ -15,10 +15,14 @@
  */
 package com.planet57.gshell.util.jline;
 
+import org.jline.builtins.Less;
 import org.jline.terminal.Terminal;
 import org.jline.utils.AttributedString;
 import org.jline.utils.AttributedStringBuilder;
 
+import javax.annotation.Nullable;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.function.IntBinaryOperator;
@@ -76,5 +80,18 @@ public class TerminalHelper
 
       out.print(buff.toAnsi(terminal));
     }
+  }
+
+  public static void pageOutput(final Terminal terminal, @Nullable final String name, final String output)
+    throws IOException, InterruptedException
+  {
+    Less less = new Less(terminal);
+    less.run(new InputStreamSource(new ByteArrayInputStream(output.getBytes()), name));
+  }
+
+  public static void pageOutput(final Terminal terminal, final String output)
+    throws IOException, InterruptedException
+  {
+    pageOutput(terminal, null, output);
   }
 }
