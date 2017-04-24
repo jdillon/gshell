@@ -31,7 +31,6 @@ import com.planet57.gshell.parser.impl.ASTWhitespace;
 import com.planet57.gshell.parser.impl.ParserVisitor;
 import com.planet57.gshell.parser.impl.SimpleNode;
 import com.planet57.gshell.parser.impl.eval.Evaluator;
-import com.planet57.gshell.parser.impl.eval.EvaluatorFactory;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.util.Arguments;
 
@@ -52,10 +51,10 @@ public class ExecutingVisitor
 
   private final Evaluator evaluator;
 
-  public ExecutingVisitor(final Shell shell, final CommandExecutor executor) {
+  public ExecutingVisitor(final Shell shell, final CommandExecutor executor, final Evaluator evaluator) {
     this.shell = checkNotNull(shell);
     this.executor = checkNotNull(executor);
-    this.evaluator = EvaluatorFactory.get();
+    this.evaluator = checkNotNull(evaluator);
   }
 
   @Override

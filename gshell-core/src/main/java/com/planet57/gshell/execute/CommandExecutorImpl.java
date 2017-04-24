@@ -90,6 +90,8 @@ public class CommandExecutorImpl
       return null;
     }
 
+    // FIXME: remove use of ShellHolder
+
     final Shell lastShell = ShellHolder.set(shell);
     CommandLine cl = parser.parse(line);
 

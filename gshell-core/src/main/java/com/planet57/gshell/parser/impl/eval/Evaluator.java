@@ -18,7 +18,7 @@ package com.planet57.gshell.parser.impl.eval;
 import javax.annotation.Nullable;
 
 /**
- * Provides pluggable expression evaluation.
+ * Provides expression evaluation.
  *
  * Need this abstraction until the parser can handle evaluating bits inside of <tt>${}</tt>.
  *
