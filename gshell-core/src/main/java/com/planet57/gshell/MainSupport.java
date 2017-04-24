@@ -48,6 +48,7 @@ import org.fusesource.jansi.Ansi;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 import org.slf4j.Logger;
+import org.slf4j.bridge.SLF4JBridgeHandler;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -248,6 +249,10 @@ public abstract class MainSupport
       io.out.format("%s %s", getBranding().getDisplayName(), getBranding().getVersion()).println();
       exit(ExitNotification.SUCCESS_CODE);
     }
+
+    // adapt JUL and force slf4j backend to initialize
+    SLF4JBridgeHandler.removeHandlersForRootLogger();
+    SLF4JBridgeHandler.install();
 
     // hijack streams
     StreamJack.maybeInstall(io.streams);

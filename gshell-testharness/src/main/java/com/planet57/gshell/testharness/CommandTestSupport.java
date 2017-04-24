@@ -50,6 +50,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.sonatype.goodies.lifecycle.Lifecycles;
 import org.sonatype.goodies.testsupport.TestTracer;
 import org.sonatype.goodies.testsupport.TestUtil;
@@ -69,6 +70,11 @@ import static org.junit.Assert.assertThat;
  */
 public abstract class CommandTestSupport
 {
+  static {
+    SLF4JBridgeHandler.removeHandlersForRootLogger();
+    SLF4JBridgeHandler.install();
+  }
+
   protected final TestUtil util = new TestUtil(getClass());
 
   protected final String name;
