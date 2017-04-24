@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.planet57.gossip.Level;
 import com.planet57.gossip.Log;
 import com.planet57.gshell.branding.Branding;
@@ -159,6 +160,11 @@ public abstract class MainSupport
     return branding;
   }
 
+  @VisibleForTesting
+  protected StreamSet createStreamSet() {
+    return StreamSet.SYSTEM_FD;
+  }
+
   public void boot(String... args) throws Exception {
     checkNotNull(args);
 
@@ -168,7 +174,7 @@ public abstract class MainSupport
     // Register default handler for uncaught exceptions
     Thread.setDefaultUncaughtExceptionHandler((thread, cause) -> log.warn("Unhandled exception occurred on thread: " + thread, cause));
 
-    io = new AnsiIO(StreamSet.SYSTEM_FD, true);
+    io = new AnsiIO(createStreamSet(), true);
     vars = new VariablesSupport();
 
     // Setup environment defaults

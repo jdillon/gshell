@@ -19,11 +19,17 @@ import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.execute.ExitNotification;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.testharness.TestBranding;
+import com.planet57.gshell.util.io.StreamJack;
+import com.planet57.gshell.util.io.StreamSet;
 import org.fusesource.jansi.Ansi;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.sonatype.goodies.testsupport.TestSupport;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -48,23 +54,29 @@ public class MainSupportTest
     main = null;
   }
 
-  // FIXME: due to how MainSupport works to setup streams; these tests will spit out to system.out even if surefire configured to redirect
-
-  /**
-   * All commands must support {@code -h}.
-   */
   @Test
   public void test_h() throws Exception {
-    main.boot("-h");
+    try {
+      main.boot("-h");
+    }
+    finally {
+      StreamJack.uninstall();
+    }
+
+    log(new String(main.out.toByteArray()));
     assertThat(main.exitCode, is(ExitNotification.SUCCESS_CODE));
   }
 
-  /**
-   * All commands must support {@code --help}.
-   */
   @Test
   public void test__help() throws Exception {
-    main.boot("--help");
+    try {
+      main.boot("--help");
+    }
+    finally {
+      StreamJack.uninstall();
+    }
+
+    log(new String(main.out.toByteArray()));
     assertThat(main.exitCode, is(ExitNotification.SUCCESS_CODE));
   }
 
@@ -72,6 +84,15 @@ public class MainSupportTest
       extends MainSupport
   {
     public int exitCode;
+
+    public ByteArrayInputStream in = new ByteArrayInputStream(new byte[0]);
+
+    public ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+    @Override
+    protected StreamSet createStreamSet() {
+      return new StreamSet(in, new PrintStream(out, true));
+    }
 
     @Override
     protected Branding createBranding() {

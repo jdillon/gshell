@@ -38,7 +38,7 @@ public class StreamJack
   /**
    * Contains a {@link StreamRegistration} for the current thread if its registered, else null.
    */
-  private static final InheritableThreadLocal<StreamRegistration> registrations = new InheritableThreadLocal<StreamRegistration>();
+  private static final InheritableThreadLocal<StreamRegistration> registrations = new InheritableThreadLocal<>();
 
   /**
    * The previously installed System streams, initialized when installing.
