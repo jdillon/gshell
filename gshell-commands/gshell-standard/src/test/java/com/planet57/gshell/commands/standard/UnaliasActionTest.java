@@ -33,18 +33,6 @@ public class UnaliasActionTest
     super(UnaliasAction.class);
   }
 
-  @Override
-  @Test
-  public void testDefault() throws Exception {
-    try {
-      super.testDefault();
-      fail();
-    }
-    catch (Exception e) {
-      // expected
-    }
-  }
-
   @Test
   public void testTooManyArguments() throws Exception {
     try {

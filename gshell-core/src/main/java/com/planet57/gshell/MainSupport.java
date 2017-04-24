@@ -58,37 +58,50 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Preferences(path = "cli")
 public abstract class MainSupport
 {
-  // Gossip Log used here for bootstrap
-  protected final Logger log = Log.getLogger(getClass());
+  private final Logger log = Log.getLogger(getClass());
 
   private final MessageSource messages = new ResourceBundleMessageSource()
     .add(false, getClass())
     .add(MainSupport.class);
 
-  protected IO io;
+  private IO io;
 
-  protected Variables vars;
+  /**
+   * Visible for {@link com.planet57.gshell.guice.GuiceMainSupport}.
+   */
+  protected IO getIo() {
+    return io;
+  }
+
+  private Variables vars;
+
+  /**
+   * Visible for {@link com.planet57.gshell.guice.GuiceMainSupport}.
+   */
+  protected Variables getVariables() {
+    return vars;
+  }
 
   private Branding branding;
 
   @Option(name = "h", longName = "help", override = true)
-  protected boolean help;
+  private boolean help;
 
   @Option(name = "V", longName = "version", override = true)
-  protected boolean version;
+  private boolean version;
 
   @Preference
   @Option(name = "e", longName = "errors", optionalArg = true)
-  protected boolean showErrorTraces = false;
+  private boolean showErrorTraces = false;
 
-  protected void setConsoleLogLevel(final Level level) {
+  private void setConsoleLogLevel(final Level level) {
     System.setProperty(VariableNames.SHELL_LOGGING, level.name());
     vars.set(VariableNames.SHELL_LOGGING, level);
   }
 
   @Preference(name = "debug")
   @Option(name = "d", longName = "debug", optionalArg = true)
-  protected void setDebug(final boolean flag) {
+  private void setDebug(final boolean flag) {
     if (flag) {
       setConsoleLogLevel(Level.DEBUG);
       io.setVerbosity(IO.Verbosity.NORMAL);
@@ -98,7 +111,7 @@ public abstract class MainSupport
 
   @Preference(name = "trace")
   @Option(name = "X", longName = "trace", optionalArg = true)
-  protected void setTrace(final boolean flag) {
+  private void setTrace(final boolean flag) {
     if (flag) {
       setConsoleLogLevel(Level.TRACE);
       io.setVerbosity(IO.Verbosity.NORMAL);
@@ -108,7 +121,7 @@ public abstract class MainSupport
 
   @Preference(name = "quiet")
   @Option(name = "q", longName = "quiet", optionalArg = true)
-  protected void setQuiet(final boolean flag) {
+  private void setQuiet(final boolean flag) {
     if (flag) {
       setConsoleLogLevel(Level.ERROR);
       io.setVerbosity(IO.Verbosity.QUIET);
@@ -116,23 +129,23 @@ public abstract class MainSupport
   }
 
   @Option(name = "c", longName = "command")
-  protected String command;
+  private String command;
 
   @Option(name = "D", longName = "define")
-  protected void setVariable(final String input) {
+  private void setVariable(final String input) {
     NameValue nv = NameValue.parse(input);
     vars.set(nv.name, nv.value);
   }
 
   @Option(name = "P", longName = "property")
-  protected void setSystemProperty(final String input) {
+  private void setSystemProperty(final String input) {
     NameValue nv = NameValue.parse(input);
     System.setProperty(nv.name, nv.value);
   }
 
   @Preference(name = "color")
   @Option(name = "C", longName = "color", optionalArg = true)
-  protected void enableAnsiColors(final Boolean flag) {
+  private void enableAnsiColors(final Boolean flag) {
     Ansi.setEnabled(flag);
   }
 
@@ -141,11 +154,12 @@ public abstract class MainSupport
   // TODO: Add --norc && --noprofile; implies making ScriptLoader helper exposed
 
   @Argument()
-  protected List<String> appArgs = null;
+  private List<String> appArgs = null;
 
   /**
    * Allow control of exit behavior.
    */
+  @VisibleForTesting
   protected void exit(final int code) {
     io.flush();
     System.exit(code);

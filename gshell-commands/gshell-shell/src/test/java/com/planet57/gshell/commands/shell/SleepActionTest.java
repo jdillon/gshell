@@ -28,7 +28,6 @@ public class SleepActionTest
     super("sleep", SleepAction.class);
   }
 
-  @Override
   @Test
   public void testDefault() throws Exception {
     executeWithArgs("1ms");

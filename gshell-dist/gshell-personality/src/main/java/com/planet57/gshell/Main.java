@@ -17,12 +17,13 @@ package com.planet57.gshell;
 
 import java.util.List;
 
-import com.google.inject.AbstractModule;
 import com.google.inject.Module;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.guice.GuiceMainSupport;
 import com.planet57.gshell.logging.LoggingSystem;
 import com.planet57.gshell.logging.logback.LogbackLoggingSystem;
+
+import javax.annotation.Nonnull;
 
 /**
  * Command-line bootstrap for GShell (<tt>gsh</tt>).
@@ -34,19 +35,16 @@ public class Main
     extends GuiceMainSupport
 {
   @Override
-  protected void configure(final List<Module> modules) {
+  protected Branding createBranding() {
+    return new BrandingImpl();
+  }
+
+  @Override
+  protected void configure(@Nonnull final List<Module> modules) {
     super.configure(modules);
-
-    Module custom = new AbstractModule()
-    {
-      @Override
-      protected void configure() {
-        bind(LoggingSystem.class).to(LogbackLoggingSystem.class);
-        bind(Branding.class).to(BrandingImpl.class);
-      }
-    };
-
-    modules.add(custom);
+    modules.add(binder -> {
+      binder.bind(LoggingSystem.class).to(LogbackLoggingSystem.class);
+    });
   }
 
   public static void main(final String[] args) throws Exception {

@@ -34,18 +34,6 @@ public class ExitActionTest
     super(ExitAction.class);
   }
 
-  @Override
-  @Test
-  public void testDefault() throws Exception {
-    try {
-      execute();
-      fail();
-    }
-    catch (ExitNotification n) {
-      assertEquals(ExitNotification.SUCCESS_CODE, n.code);
-    }
-  }
-
   @Test
   public void testTooManyArguments() throws Exception {
     try {

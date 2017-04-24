@@ -18,7 +18,6 @@ package com.planet57.gshell.guice;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
@@ -35,6 +34,8 @@ import org.eclipse.sisu.space.SpaceModule;
 import org.eclipse.sisu.space.URLClassSpace;
 import org.eclipse.sisu.wire.WireModule;
 
+import javax.annotation.Nonnull;
+
 import static com.google.inject.name.Names.named;
 
 /**
@@ -50,7 +51,6 @@ public abstract class GuiceMainSupport
 
   @Override
   protected Branding createBranding() {
-    // HACK: back to non-injected branding, this is needed too early presently and mess up logging
     return new BrandingSupport();
   }
 
@@ -68,16 +68,15 @@ public abstract class GuiceMainSupport
     return shell;
   }
 
-  protected void configure(final List<Module> modules) {
+  protected void configure(@Nonnull final List<Module> modules) {
     modules.add(createSpaceModule());
-    modules.add(new AbstractModule()
-    {
-      @Override
-      protected void configure() {
-        bind(BeanContainer.class).toInstance(container);
-        bind(IO.class).annotatedWith(named("main")).toInstance(io);
-        bind(Variables.class).annotatedWith(named("main")).toInstance(vars);
-      }
+    modules.add(binder -> {
+      binder.bind(BeanContainer.class).toInstance(container);
+
+      // FIXME: due to ShellImpl being a Guice component, but there are not we have to bind these so they can be injected
+      binder.bind(IO.class).annotatedWith(named("main")).toInstance(getIo());
+      binder.bind(Variables.class).annotatedWith(named("main")).toInstance(getVariables());
+      binder.bind(Branding.class).toInstance(getBranding());
     });
   }
 

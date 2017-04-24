@@ -24,17 +24,12 @@ import com.planet57.gshell.util.io.PrintBuffer;
 import com.planet57.gshell.variables.VariableNames;
 import org.fusesource.jansi.Ansi;
 
-import javax.inject.Named;
-import javax.inject.Singleton;
-
 /**
  * Branding for <tt>gsh</tt>.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Named
-@Singleton
 public class BrandingImpl
     extends BrandingSupport
 {

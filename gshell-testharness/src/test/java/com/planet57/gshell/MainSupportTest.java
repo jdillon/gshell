@@ -41,43 +41,43 @@ import static org.mockito.Mockito.mock;
 public class MainSupportTest
   extends TestSupport
 {
-  private MockMain main;
+  private MockMain underTest;
 
   @Before
   public void setUp() throws Exception {
     Ansi.setEnabled(false);
-    main = new MockMain();
+    underTest = new MockMain();
   }
 
   @After
   public void tearDown() throws Exception {
-    main = null;
+    underTest = null;
   }
 
   @Test
   public void test_h() throws Exception {
     try {
-      main.boot("-h");
+      underTest.boot("-h");
     }
     finally {
       StreamJack.uninstall();
     }
 
-    log(new String(main.out.toByteArray()));
-    assertThat(main.exitCode, is(ExitNotification.SUCCESS_CODE));
+    log(new String(underTest.out.toByteArray()));
+    assertThat(underTest.exitCode, is(ExitNotification.SUCCESS_CODE));
   }
 
   @Test
   public void test__help() throws Exception {
     try {
-      main.boot("--help");
+      underTest.boot("--help");
     }
     finally {
       StreamJack.uninstall();
     }
 
-    log(new String(main.out.toByteArray()));
-    assertThat(main.exitCode, is(ExitNotification.SUCCESS_CODE));
+    log(new String(underTest.out.toByteArray()));
+    assertThat(underTest.exitCode, is(ExitNotification.SUCCESS_CODE));
   }
 
   private class MockMain

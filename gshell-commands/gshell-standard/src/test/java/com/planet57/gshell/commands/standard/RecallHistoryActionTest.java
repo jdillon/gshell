@@ -42,18 +42,6 @@ public class RecallHistoryActionTest
     super.setUp();
   }
 
-  @Override
-  @Test
-  public void testDefault() throws Exception {
-    try {
-      super.testDefault();
-      fail();
-    }
-    catch (Exception e) {
-      // expected
-    }
-  }
-
   @Test
   public void testTooManyArguments() throws Exception {
     try {

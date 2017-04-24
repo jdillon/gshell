@@ -15,9 +15,7 @@
  */
 package com.planet57.gshell.maven;
 
-import com.google.inject.AbstractModule;
 import com.google.inject.Module;
-import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.guice.GuiceMainSupport;
 import com.planet57.gshell.logging.LoggingSystem;
 import com.planet57.gshell.variables.VariableNames;
@@ -28,6 +26,7 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
+import javax.annotation.Nonnull;
 import java.io.File;
 import java.util.List;
 
@@ -65,19 +64,10 @@ public class RunMojo
       GuiceMainSupport main = new GuiceMainSupport()
       {
         @Override
-        protected void configure(final List<Module> modules) {
+        protected void configure(@Nonnull final List<Module> modules) {
           super.configure(modules);
-
-          modules.add(new AbstractModule()
-          {
-            @Override
-            protected void configure() {
-              bind(LoggingSystem.class).to(LoggingSystemImpl.class);
-              bind(Branding.class).to(BrandingImpl.class);
-
-              // FIXME: see if there is a more dynamic way to bridge components to nested Guice container
-              bind(MavenProject.class).toInstance(project);
-            }
+          modules.add(binder -> {
+            binder.bind(LoggingSystem.class).to(LoggingSystemImpl.class);
           });
         }
       };

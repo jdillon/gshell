@@ -23,7 +23,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
- * Tests for the {@link com.planet57.gshell.commands.UnsetCommand}.
+ * Tests for the {@link UnsetAction}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
@@ -32,18 +32,6 @@ public class UnsetActionTest
 {
   public UnsetActionTest() {
     super(UnsetAction.class);
-  }
-
-  @Override
-  @Test
-  public void testDefault() throws Exception {
-    try {
-      super.testDefault();
-      fail();
-    }
-    catch (Exception e) {
-      // expected
-    }
   }
 
   @Test
