@@ -55,6 +55,9 @@ public abstract class CommandActionSupport
     return name;
   }
 
+  /**
+   * @see CommandAction.NameAware
+   */
   @Override
   public void setName(final String name) {
     checkState(this.name == null);
@@ -100,6 +103,9 @@ public abstract class CommandActionSupport
     return new ResourceBundleMessageSource(getClass());
   }
 
+  /**
+   * @see CommandAction.Completable
+   */
   @Override
   public Completer getCompleter() {
     return completer;
@@ -127,6 +133,9 @@ public abstract class CommandActionSupport
     );
   }
 
+  /**
+   * @see CommandAction.Prototype
+   */
   @Override
   public CommandAction create() {
     try {
