@@ -214,7 +214,7 @@ public abstract class MainSupport
     StreamJack.maybeInstall(io.streams);
 
     // Setup a reference for our exit code so our callback thread can tell if we've shutdown normally or not
-    final AtomicReference<Integer> codeRef = new AtomicReference<Integer>();
+    final AtomicReference<Integer> codeRef = new AtomicReference<>();
     Object result = null;
 
     Runtime.getRuntime().addShutdownHook(new Thread(() -> {
