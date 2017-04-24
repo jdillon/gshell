@@ -22,7 +22,6 @@ import java.util.List;
 import com.planet57.gshell.util.i18n.AggregateMessageSource;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
-import com.planet57.gshell.util.jline.TerminalHolder;
 import org.jline.terminal.Terminal;
 
 import javax.annotation.Nullable;
@@ -48,7 +47,7 @@ public class HelpPrinter
 
   private String separator = "    ";
 
-  public HelpPrinter(final CliProcessor processor) {
+  public HelpPrinter(final CliProcessor processor, @Nullable final Terminal terminal) {
     this.processor = checkNotNull(processor);
 
     // Add messages from the processor
@@ -57,7 +56,6 @@ public class HelpPrinter
       addMessages(messages);
     }
 
-    Terminal terminal = TerminalHolder.get();
     if (terminal != null) {
       terminalWidth = terminal.getWidth();
     }

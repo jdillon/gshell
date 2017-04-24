@@ -26,6 +26,7 @@ import com.planet57.gshell.util.cli2.CliProcessor;
 import com.planet57.gshell.util.cli2.HelpPrinter;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
+import com.planet57.gshell.util.jline.TerminalHolder;
 import com.planet57.gshell.util.pref.PreferenceDescriptor;
 import com.planet57.gshell.util.pref.PreferenceProcessor;
 import org.codehaus.plexus.interpolation.AbstractValueSource;
@@ -90,7 +91,7 @@ public class CommandHelpPage
     public Helper() {
       CommandHelper help = new CommandHelper();
       clp = help.createCliProcessor(command);
-      printer = new HelpPrinter(clp);
+      printer = new HelpPrinter(clp, TerminalHolder.get());
       pp = CommandHelper.createPreferenceProcessor(command);
     }
 
