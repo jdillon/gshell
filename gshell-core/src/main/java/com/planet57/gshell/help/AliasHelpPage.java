@@ -62,7 +62,7 @@ public class AliasHelpPage
   }
 
   @Override
-  public void render(final Shell shell, final PrintWriter out) {
+  public void render(final Shell shell, final PrintWriter out) throws Exception {
     checkNotNull(shell);
     checkNotNull(out);
     out.println(getMessages().format("alias-content", name, alias));

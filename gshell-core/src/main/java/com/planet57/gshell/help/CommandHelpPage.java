@@ -204,7 +204,7 @@ public class CommandHelpPage
   }
 
   @Override
-  public void render(final Shell shell, final PrintWriter out) {
+  public void render(final Shell shell, final PrintWriter out) throws Exception {
     checkNotNull(shell);
     checkNotNull(out);
 
@@ -220,12 +220,7 @@ public class CommandHelpPage
     });
     interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));
 
-    try {
-      String text = loader.load(command.getClass().getName(), command.getClass().getClassLoader());
-      out.println(interp.interpolate(text));
-    }
-    catch (Exception e) {
-      throw new RuntimeException(e);
-    }
+    String text = loader.load(command.getClass().getName(), command.getClass().getClassLoader());
+    out.println(interp.interpolate(text));
   }
 }

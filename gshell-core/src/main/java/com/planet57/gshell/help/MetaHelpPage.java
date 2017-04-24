@@ -66,7 +66,7 @@ public class MetaHelpPage
   }
 
   @Override
-  public void render(final Shell shell, final PrintWriter out) {
+  public void render(final Shell shell, final PrintWriter out) throws Exception {
     checkNotNull(shell);
     checkNotNull(out);
 
@@ -82,13 +82,8 @@ public class MetaHelpPage
     });
     interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));
 
-    try {
-      String text = loader.load(resource, Thread.currentThread().getContextClassLoader());
-      out.println(interp.interpolate(text));
-    }
-    catch (Exception e) {
-      throw new RuntimeException(e);
-    }
+    String text = loader.load(resource, Thread.currentThread().getContextClassLoader());
+    out.println(interp.interpolate(text));
   }
 
   @Override

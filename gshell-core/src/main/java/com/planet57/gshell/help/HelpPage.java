@@ -34,10 +34,10 @@ public interface HelpPage
   // TODO: Section?
 
   // FIXME: Could probably use CommandContext instead of Shell here?
-  // FIXME: ... as this is only used by HelpAction
+  // FIXME: ... as this is only used by HelpAction; various bits of context are needed
 
   /**
    * @since 3.0
    */
-  void render(Shell shell, PrintWriter out);
+  void render(Shell shell, PrintWriter out) throws Exception;
 }
