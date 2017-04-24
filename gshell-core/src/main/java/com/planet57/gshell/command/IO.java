@@ -78,6 +78,9 @@ public class IO
     }
   }
 
+  /**
+   * Adapt {@link StreamSet} to be ANSI-aware if configured.
+   */
   private static StreamSet ansiStreams(@Nonnull final StreamSet streams) {
     if (Ansi.isEnabled()) {
       return new StreamSet(
