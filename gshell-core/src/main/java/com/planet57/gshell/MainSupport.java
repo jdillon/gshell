@@ -234,6 +234,7 @@ public abstract class MainSupport
       exit(ExitNotification.SUCCESS_CODE);
     }
 
+    // hijack streams
     StreamJack.maybeInstall(io.streams);
 
     // Setup a reference for our exit code so our callback thread can tell if we've shutdown normally or not
