@@ -138,7 +138,7 @@ public abstract class MainSupport
 
   // TODO: Add helpers to control terminal
 
-  // TODO: Add --norc && --noprofile
+  // TODO: Add --norc && --noprofile; implies making ScriptLoader helper exposed
 
   @Argument()
   protected List<String> appArgs = null;
