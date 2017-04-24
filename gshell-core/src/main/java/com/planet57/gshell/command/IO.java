@@ -39,9 +39,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class IO
 {
+  /**
+   * RAW underlying streams.
+   */
   @Nonnull
   public final StreamSet streams;
 
+  /**
+   * Attached terminal.
+   */
   @Nonnull
   private final Terminal terminal;
 
@@ -66,15 +72,17 @@ public class IO
   public IO(final StreamSet streams, final Terminal terminal) {
     this.streams = ansiStreams(checkNotNull(streams));
     this.terminal = checkNotNull(terminal);
-    this.in = new InputStreamReader(streams.in);
-    this.out = new AnsiRenderWriter(new PrintWriter(streams.out, true));
+
+    // prepare stream references
+    this.in = new InputStreamReader(this.streams.in);
+    this.out = new AnsiRenderWriter(new PrintWriter(this.streams.out, true));
 
     /// Don't rewrite the error stream if we have the same stream for out and error
     if (streams.isOutputCombined()) {
       this.err = this.out;
     }
     else {
-      this.err = new AnsiRenderWriter(new PrintWriter(streams.err, true));
+      this.err = new AnsiRenderWriter(new PrintWriter(this.streams.err, true));
     }
   }
 
