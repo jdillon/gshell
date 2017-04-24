@@ -27,7 +27,6 @@ import com.planet57.gshell.command.IO;
 import com.planet57.gshell.execute.ExitNotification;
 import com.planet57.gshell.internal.ExitCodeDecoder;
 import com.planet57.gshell.shell.Shell;
-import com.planet57.gshell.shell.ShellHolder;
 import com.planet57.gshell.util.Arguments;
 import com.planet57.gshell.util.NameValue;
 import com.planet57.gshell.util.cli2.Argument;
@@ -277,7 +276,6 @@ public abstract class MainSupport
       vars.set(VariableNames.SHELL_ERRORS, showErrorTraces);
 
       Shell shell = createShell();
-      ShellHolder.set(shell);
 
       if (command != null) {
         result = shell.execute(command);

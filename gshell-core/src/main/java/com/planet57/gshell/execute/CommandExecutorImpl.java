@@ -35,7 +35,6 @@ import com.planet57.gshell.command.CommandHelper;
 import com.planet57.gshell.parser.CommandLineParser;
 import com.planet57.gshell.parser.CommandLineParser.CommandLine;
 import com.planet57.gshell.shell.Shell;
-import com.planet57.gshell.shell.ShellHolder;
 import com.planet57.gshell.util.Arguments;
 import org.sonatype.goodies.common.ComponentSupport;
 import com.planet57.gshell.util.cli2.CliProcessor;
@@ -91,8 +90,6 @@ public class CommandExecutorImpl
     }
 
     // FIXME: remove use of ShellHolder
-
-    final Shell lastShell = ShellHolder.set(shell);
     CommandLine cl = parser.parse(line);
 
     try {
@@ -103,9 +100,6 @@ public class CommandExecutorImpl
       Throwables.propagateIfPossible(cause, Exception.class, Error.class);
       // should normally never happen
       throw n;
-    }
-    finally {
-      ShellHolder.set(lastShell);
     }
   }
 
@@ -155,7 +149,7 @@ public class CommandExecutorImpl
     MDC.put(CommandAction.class.getName(), name);
 
     final ClassLoader cl = Thread.currentThread().getContextClassLoader();
-    final Shell lastShell = ShellHolder.set(shell);
+
     final IO io = shell.getIo();
 
     StreamJack.maybeInstall(io.streams);
@@ -165,7 +159,7 @@ public class CommandExecutorImpl
       boolean execute = true;
 
       // Process command preferences
-      PreferenceProcessor pp = CommandHelper.createPreferenceProcessor(action);
+      PreferenceProcessor pp = CommandHelper.createPreferenceProcessor(action, shell.getBranding());
       pp.process();
 
       // Process command arguments unless marked as opaque
@@ -221,7 +215,6 @@ public class CommandExecutorImpl
     finally {
       io.flush();
       StreamJack.deregister();
-      ShellHolder.set(lastShell);
       Thread.currentThread().setContextClassLoader(cl);
       MDC.remove(CommandAction.class.getName());
     }

@@ -19,6 +19,7 @@ import java.io.PrintWriter;
 import java.util.ResourceBundle;
 
 import com.planet57.gshell.command.CommandHelper;
+import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.shell.ShellHolder;
 import org.codehaus.plexus.interpolation.AbstractValueSource;
 import org.codehaus.plexus.interpolation.Interpolator;
@@ -69,14 +70,17 @@ public class MetaHelpPage
   public void render(final PrintWriter out) {
     assert out != null;
 
+    // FIXME: remove use of ShellHolder
+    final Shell shell = ShellHolder.require();
+
     Interpolator interp = new StringSearchInterpolator("@{", "}");
     interp.addValueSource(new PrefixedObjectValueSource("command.", this));
-    interp.addValueSource(new PrefixedObjectValueSource("branding.", ShellHolder.require().getBranding()));
+    interp.addValueSource(new PrefixedObjectValueSource("branding.", shell.getBranding()));
     interp.addValueSource(new AbstractValueSource(false)
     {
       @Override
       public Object getValue(final String expression) {
-        return ShellHolder.require().getVariables().get(expression);
+        return shell.getVariables().get(expression);
       }
     });
     interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));

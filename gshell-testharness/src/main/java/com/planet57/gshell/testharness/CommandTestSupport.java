@@ -38,6 +38,7 @@ import com.planet57.gshell.logging.LoggingSystem;
 import com.planet57.gshell.parser.impl.eval.Evaluator;
 import com.planet57.gshell.parser.impl.eval.RegexEvaluator;
 import com.planet57.gshell.shell.Shell;
+import com.planet57.gshell.shell.ShellHolder;
 import com.planet57.gshell.shell.ShellImpl;
 import com.planet57.gshell.variables.Variables;
 import com.planet57.gshell.variables.VariablesSupport;
@@ -137,6 +138,10 @@ public abstract class CommandTestSupport
     }
 
     shell = injector.getInstance(ShellImpl.class);
+
+    // FIXME: remove use of ShellHolder
+    ShellHolder.set(shell);
+
     vars = shell.getVariables();
     aliasRegistry = injector.getInstance(AliasRegistry.class);
     commandRegistry = injector.getInstance(CommandRegistry.class);
@@ -162,6 +167,10 @@ public abstract class CommandTestSupport
       shell.close();
     }
     shell = null;
+
+    // FIXME: remove use of ShellHolder
+    ShellHolder.set(null);
+
     requiredCommands.clear();
     if (container != null) {
       container.clear();

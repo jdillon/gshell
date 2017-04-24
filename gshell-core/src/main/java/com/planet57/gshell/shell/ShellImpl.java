@@ -202,6 +202,7 @@ public class ShellImpl
 
     log.debug("Starting interactive console; args: {}", Arrays.asList(args));
 
+    // FIXME: remove use of ShellHolder
     final Shell lastShell = ShellHolder.set(this);
 
     try {
@@ -254,6 +255,7 @@ public class ShellImpl
       }
     }
     finally {
+      // FIXME: remove use of ShellHolder
       ShellHolder.set(lastShell);
     }
   }
