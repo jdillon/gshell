@@ -60,6 +60,9 @@ public class RunMojo
     System.setProperty(VariableNames.SHELL_PROGRAM, shellProgram);
     System.setProperty(VariableNames.SHELL_VERSION, shellVersion);
 
+    // FIXME: using GuiceMainSupport isn't really appropriate here as most of its cli handling and setup is meant to be for static void main(String[]) invocation
+    // FIXME: really need a different helper that only setups the basic bits, but doesn't mess with the environment and/or process initial options?
+
     try {
       GuiceMainSupport main = new GuiceMainSupport()
       {
