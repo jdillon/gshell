@@ -44,7 +44,6 @@ import org.eclipse.sisu.space.URLClassSpace;
 import org.eclipse.sisu.wire.WireModule;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
-import org.sonatype.goodies.lifecycle.Lifecycles;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -182,7 +181,7 @@ public class RunMojo
       // ignore
     }
     finally {
-      Lifecycles.stop(shell);
+      shell.stop();
       io.flush();
       terminal.close();
     }

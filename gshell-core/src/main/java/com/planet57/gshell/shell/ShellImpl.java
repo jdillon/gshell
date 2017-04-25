@@ -37,7 +37,6 @@ import com.planet57.gshell.console.ConsoleTask;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.execute.CommandExecutor;
 import com.planet57.gshell.execute.ExitNotification;
-import com.planet57.gshell.util.io.StreamJack;
 import com.planet57.gshell.util.jline.LoggingCompleter;
 import com.planet57.gshell.variables.Variables;
 import org.jline.reader.Completer;
@@ -46,7 +45,6 @@ import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 import org.jline.reader.impl.history.DefaultHistory;
 import org.sonatype.goodies.lifecycle.LifecycleSupport;
-import org.sonatype.goodies.lifecycle.Lifecycles;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -114,9 +112,10 @@ public class ShellImpl
 
   @Override
   protected void doStart() throws Exception {
-    Lifecycles.start(events);
-    Lifecycles.start(commandRegistrar);
+    events.start();
+    commandRegistrar.start();
 
+    // apply any branding customization
     branding.customize(this);
 
     // Do this after we are marked as opened

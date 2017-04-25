@@ -48,7 +48,6 @@ import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 import org.slf4j.Logger;
 import org.slf4j.bridge.SLF4JBridgeHandler;
-import org.sonatype.goodies.lifecycle.Lifecycles;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -290,7 +289,7 @@ public abstract class MainSupport
         }
       }
       finally {
-        Lifecycles.stop(shell);
+        shell.stop();
       }
     }
     catch (ExitNotification n) {
