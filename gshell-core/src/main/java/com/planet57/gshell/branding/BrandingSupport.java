@@ -185,29 +185,29 @@ public class BrandingSupport
   @Override
   public void customize(final Shell shell) throws Exception {
     checkNotNull(shell);
-    Variables vars = shell.getVariables();
+    Variables variables = shell.getVariables();
 
     // Setup default variables
-    if (!vars.contains(SHELL_HOME)) {
-      vars.set(SHELL_HOME, getShellHomeDir(), false);
+    if (!variables.contains(SHELL_HOME)) {
+      variables.set(SHELL_HOME, getShellHomeDir(), false);
     }
-    if (!vars.contains(SHELL_VERSION)) {
-      vars.set(SHELL_VERSION, getVersion(), false);
+    if (!variables.contains(SHELL_VERSION)) {
+      variables.set(SHELL_VERSION, getVersion(), false);
     }
-    if (!vars.contains(SHELL_USER_HOME)) {
-      vars.set(SHELL_USER_HOME, getUserHomeDir(), false);
+    if (!variables.contains(SHELL_USER_HOME)) {
+      variables.set(SHELL_USER_HOME, getUserHomeDir(), false);
     }
-    if (!vars.contains(SHELL_PROMPT)) {
-      vars.set(SHELL_PROMPT, getPrompt());
+    if (!variables.contains(SHELL_PROMPT)) {
+      variables.set(SHELL_PROMPT, getPrompt());
     }
-    if (!vars.contains(SHELL_USER_DIR)) {
-      vars.set(SHELL_USER_DIR, new File(".").getCanonicalFile());
+    if (!variables.contains(SHELL_USER_DIR)) {
+      variables.set(SHELL_USER_DIR, new File(".").getCanonicalFile());
     }
-    if (!vars.contains(SHELL_GROUP)) {
-      vars.set(SHELL_GROUP, ROOT);
+    if (!variables.contains(SHELL_GROUP)) {
+      variables.set(SHELL_GROUP, ROOT);
     }
-    if (!vars.contains(SHELL_GROUP_PATH)) {
-      vars.set(SHELL_GROUP_PATH, String.format("%s%s%s", CURRENT, PATH_SEPARATOR, ROOT));
+    if (!variables.contains(SHELL_GROUP_PATH)) {
+      variables.set(SHELL_GROUP_PATH, String.format("%s%s%s", CURRENT, PATH_SEPARATOR, ROOT));
     }
   }
 }
