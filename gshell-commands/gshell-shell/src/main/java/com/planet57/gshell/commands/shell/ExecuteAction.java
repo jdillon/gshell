@@ -66,12 +66,12 @@ public class ExecuteAction
 
     log.debug("Waiting for process to exit...");
 
-    int status = p.waitFor();
+    int exitCode = p.waitFor();
 
-    log.debug("Process exited w/status: {}", status);
+    log.debug("Process exited w/code: {}", exitCode);
 
     handler.stop();
 
-    return status;
+    return exitCode;
   }
 }
