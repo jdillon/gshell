@@ -15,20 +15,41 @@
  */
 package com.planet57.gshell.maven;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import com.google.inject.Module;
-import com.planet57.gshell.guice.GuiceMainSupport;
+import com.planet57.gshell.branding.Branding;
+import com.planet57.gshell.branding.BrandingSupport;
+import com.planet57.gshell.branding.License;
+import com.planet57.gshell.branding.LicenseSupport;
+import com.planet57.gshell.command.IO;
+import com.planet57.gshell.execute.ExitNotification;
+import com.planet57.gshell.guice.BeanContainer;
 import com.planet57.gshell.logging.LoggingSystem;
+import com.planet57.gshell.shell.ShellImpl;
+import com.planet57.gshell.util.io.PrintBuffer;
+import com.planet57.gshell.util.io.StreamSet;
 import com.planet57.gshell.variables.VariableNames;
+import com.planet57.gshell.variables.Variables;
+import com.planet57.gshell.variables.VariablesSupport;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
+import org.eclipse.sisu.space.BeanScanning;
+import org.eclipse.sisu.space.SpaceModule;
+import org.eclipse.sisu.space.URLClassSpace;
+import org.eclipse.sisu.wire.WireModule;
+import org.jline.terminal.Terminal;
+import org.jline.terminal.TerminalBuilder;
 
-import javax.annotation.Nonnull;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+
+import static com.google.inject.name.Names.named;
 
 /**
  * Run shell.
@@ -51,39 +72,105 @@ public class RunMojo
   @Parameter(defaultValue = "${project.version}")
   String shellVersion;
 
-  @Parameter(defaultValue = "${gshell.arguments}")
-  String[] shellArgs;
+  @Parameter
+  boolean shellErrors = false;
 
   public void execute() throws MojoExecutionException, MojoFailureException {
-    // HACK: Need to setup some bootstrap muck
-    System.setProperty(VariableNames.SHELL_HOME, shellHome.getAbsolutePath());
-    System.setProperty(VariableNames.SHELL_PROGRAM, shellProgram);
-    System.setProperty(VariableNames.SHELL_VERSION, shellVersion);
-
-    // FIXME: using GuiceMainSupport isn't really appropriate here as most of its cli handling and setup is meant to be for static void main(String[]) invocation
-    // FIXME: really need a different helper that only setups the basic bits, but doesn't mess with the environment and/or process initial options?
-
     try {
-      GuiceMainSupport main = new GuiceMainSupport()
-      {
-        // FIXME: need to adjust for Branding; this presently ends up using the default from createBranding()
-
-        @Override
-        protected void configure(@Nonnull final List<Module> modules) {
-          super.configure(modules);
-          modules.add(binder -> {
-            binder.bind(LoggingSystem.class).to(LoggingSystemImpl.class);
-
-            // FIXME: see if there is a better way to bridge maven components to gshell
-            binder.bind(MavenProject.class).toInstance(project);
-          });
-        }
-      };
-
-      main.boot(shellArgs);
+      doExecute();
     }
     catch (Exception e) {
       throw new MojoExecutionException(e.getMessage(), e);
+    }
+  }
+
+  private class BrandingImpl
+    extends BrandingSupport
+  {
+    @Override
+    public String getProgramName() {
+      return shellProgram;
+    }
+
+    @Override
+    public String getVersion() {
+      return shellVersion;
+    }
+
+    @Override
+    public String getDisplayName() {
+      return "@|bold GShell|@";
+    }
+
+    @Override
+    public File getShellHomeDir() {
+      return shellHome;
+    }
+
+    @Override
+    public File getShellContextDir() {
+      return project.getBasedir();
+    }
+
+    @Override
+    public File getUserContextDir() {
+      return resolveFile(new File(getUserHomeDir(), ".m2/gshell/" + getProgramName()));
+    }
+
+    @Override
+    public License getLicense() {
+      return new LicenseSupport("Apache License, Version 2.0", "http://www.apache.org/licenses/LICENSE-2.0.txt");
+    }
+
+    @Override
+    public String getWelcomeMessage() {
+      PrintBuffer buff = new PrintBuffer();
+      buff.format("%nType '@|bold help|@' for more information.%n");
+      buff.print(LINE_TOKEN);
+      return buff.toString();
+    }
+
+    @Override
+    public String getGoodbyeMessage() {
+      return "@|green Goodbye!|@\n";
+    }
+  }
+
+  private void doExecute() throws Exception {
+    final BeanContainer container = new BeanContainer();
+    final Terminal terminal = TerminalBuilder.builder().build();
+    final IO io = new IO(StreamSet.SYSTEM_FD, terminal);
+    final Variables variables = new VariablesSupport();
+    variables.set(VariableNames.SHELL_ERRORS, shellErrors);
+    final Branding branding = new BrandingImpl();
+
+    List<Module> modules = new ArrayList<>();
+    URLClassSpace space = new URLClassSpace(getClass().getClassLoader());
+    modules.add(new SpaceModule(space, BeanScanning.INDEX));
+
+    modules.add(binder -> {
+      binder.bind(BeanContainer.class).toInstance(container);
+      binder.bind(Branding.class).toInstance(branding);
+      binder.bind(IO.class).annotatedWith(named("main")).toInstance(io);
+      binder.bind(Variables.class).annotatedWith(named("main")).toInstance(variables);
+      binder.bind(LoggingSystem.class).to(LoggingSystemImpl.class);
+    });
+
+    Injector injector = Guice.createInjector(new WireModule(modules));
+    container.add(injector, 0);
+
+    ShellImpl shell = injector.getInstance(ShellImpl.class);
+    shell.start();
+
+    // FIXME: allow more options
+    try {
+      shell.run();
+    }
+    catch (ExitNotification e) {
+      // ignore
+    }
+    finally {
+      io.flush();
     }
   }
 }

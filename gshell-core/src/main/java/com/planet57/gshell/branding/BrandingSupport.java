@@ -48,8 +48,7 @@ import static com.planet57.gshell.variables.VariableNames.SHELL_VERSION;
 public class BrandingSupport
     implements Branding
 {
-  private final MessageSource messages = new ResourceBundleMessageSource()
-      .add(false, getClass());
+  private MessageSource messages;
 
   /**
    * Render a terminal (width - 1) line for {@link #getGoodbyeMessage()} or {@link #getGoodbyeMessage()}.
@@ -74,6 +73,10 @@ public class BrandingSupport
   }
 
   protected MessageSource getMessages() {
+    if (messages == null) {
+      messages = new ResourceBundleMessageSource()
+        .add(false, getClass());
+    }
     return messages;
   }
 
