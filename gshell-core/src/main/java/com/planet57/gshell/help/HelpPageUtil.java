@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 
 import com.planet57.gshell.command.resolver.Node;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -39,6 +40,8 @@ public class HelpPageUtil
   public static void renderIndex(final PrintWriter out, final Collection<? extends HelpPage> pages) {
     checkNotNull(out);
     checkNotNull(pages);
+
+    checkArgument(!pages.isEmpty(), "No help pages to render index");
 
     // construct a printf format with sizing for showing columns
     int max = pages.stream().mapToInt(page -> page.getName().length()).max().getAsInt();
