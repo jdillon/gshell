@@ -119,6 +119,7 @@ public class RunMojo
 
     @Override
     public License getLicense() {
+      // FIXME: could be pulled from project?
       return new LicenseSupport("Apache License, Version 2.0", "http://www.apache.org/licenses/LICENSE-2.0.txt");
     }
 
