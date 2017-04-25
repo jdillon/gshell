@@ -40,6 +40,8 @@ public class TestIO
   }
 
   public TestIO(final ByteArrayOutputStream output, final ByteArrayOutputStream error) throws IOException {
+    // FIXME: sort out how to properly build a terminal for testing, this presently complains with:
+    // FIXME: ... "Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)"
     super(new StreamSet(System.in, new PrintStream(output), new PrintStream(error)), TerminalBuilder.terminal());
     this.output = output;
     this.error = error;
