@@ -25,7 +25,7 @@ public class SleepActionTest
     extends CommandTestSupport
 {
   public SleepActionTest() {
-    super("sleep", SleepAction.class);
+    super(SleepAction.class);
   }
 
   @Test
