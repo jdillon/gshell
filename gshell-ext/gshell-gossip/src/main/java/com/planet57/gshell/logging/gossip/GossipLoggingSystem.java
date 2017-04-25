@@ -16,12 +16,12 @@
 package com.planet57.gshell.logging.gossip;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -63,12 +63,7 @@ public class GossipLoggingSystem
     checkState(tmp instanceof Gossip, "SLF4J logger factory does not appear to be Gossip; found: %s", tmp.getClass().getName());
     gossip = Gossip.getInstance();
 
-    // populate levels
-    Map<String, LevelComponentImpl> levels = new LinkedHashMap<>();
-    for (Level level : Level.values()) {
-      levels.put(level.name().toUpperCase(Locale.US), new LevelComponentImpl(level));
-    }
-    this.levels = Collections.unmodifiableMap(levels);
+    this.levels = Arrays.stream(Level.values()).collect(Collectors.toMap(level -> level.name().toUpperCase(Locale.US), LevelComponentImpl::new));
   }
 
   //
