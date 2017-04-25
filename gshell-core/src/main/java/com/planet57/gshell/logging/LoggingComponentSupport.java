@@ -42,7 +42,7 @@ public class LoggingComponentSupport
   }
 
   public LoggingComponentSupport(final Object target) {
-    this(target.getClass().getName(), null);
+    this(target.getClass().getName());
     this.target = target;
   }
 

@@ -197,8 +197,16 @@ public class LogbackLoggingSystem
 
     LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
     components.add(new LoggingComponentSupport(context));
+
+    // add all context-listeners
     context.getCopyOfListenerList().forEach(listener -> components.add(new LoggingComponentSupport(listener)));
+
+    // add all turbo-filters
     context.getTurboFilterList().forEach(filter -> components.add(new LoggingComponentSupport(filter)));
+
+    // add all root appenders
+    Logger root = context.getLogger(ROOT_LOGGER_NAME);
+    root.iteratorForAppenders().forEachRemaining(appender -> components.add(new LoggingComponentSupport(appender)));
 
     return components;
   }
