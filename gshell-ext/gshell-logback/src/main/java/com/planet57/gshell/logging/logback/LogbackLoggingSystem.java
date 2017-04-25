@@ -23,10 +23,12 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.LoggerContext;
 import com.planet57.gshell.logging.LevelComponent;
 import com.planet57.gshell.logging.LoggerComponent;
@@ -64,7 +66,7 @@ public class LogbackLoggingSystem
     this.loggerContext = (LoggerContext) tmp;
 
     // populate levels
-    Map<String, LevelComponentImpl> levels = new LinkedHashMap<String, LevelComponentImpl>();
+    Map<String, LevelComponentImpl> levels = new LinkedHashMap<>();
 
     ch.qos.logback.classic.Level[] source = {
         ch.qos.logback.classic.Level.ALL,
@@ -83,7 +85,7 @@ public class LogbackLoggingSystem
     this.levels = Collections.unmodifiableMap(levels);
 
     // setup components map
-    components = new LinkedHashSet<LoggingComponent>();
+    components = new LinkedHashSet<>();
   }
 
   //
@@ -197,11 +199,7 @@ public class LogbackLoggingSystem
   @Override
   public Collection<String> getLoggerNames() {
     Collection<ch.qos.logback.classic.Logger> loggers = loggerContext.getLoggerList();
-    List<String> names = new ArrayList<String>(loggers.size());
-    for (ch.qos.logback.classic.Logger logger : loggers) {
-      names.add(logger.getName());
-    }
-    return names;
+    return loggers.stream().map(Logger::getName).collect(Collectors.toList());
   }
 
   @Override

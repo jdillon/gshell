@@ -63,14 +63,14 @@ public class GossipLoggingSystem
     gossip = Gossip.getInstance();
 
     // populate levels
-    Map<String, LevelComponentImpl> levels = new LinkedHashMap<String, LevelComponentImpl>();
+    Map<String, LevelComponentImpl> levels = new LinkedHashMap<>();
     for (com.planet57.gossip.Level level : com.planet57.gossip.Level.values()) {
       levels.put(level.name().toUpperCase(), new LevelComponentImpl(level));
     }
     this.levels = Collections.unmodifiableMap(levels);
 
     // setup components map
-    components = new LinkedHashSet<LoggingComponent>();
+    components = new LinkedHashSet<>();
     // leave the rest to lazy init for now
   }
 
