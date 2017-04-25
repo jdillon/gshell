@@ -128,20 +128,23 @@ public abstract class CommandTestSupport
     Injector injector = Guice.createInjector(Stage.DEVELOPMENT, new WireModule(modules));
     container.add(injector, 0);
 
-    // HACK: pre-register required commands for test; this needs to be done early due to lack of lifecycle on CommandResolverImpl and CommandRegistryImpl
-    CommandRegistrarImpl registrar = injector.getInstance(CommandRegistrarImpl.class);
-    registrar.discoveryEnabled = false;
-    for (Map.Entry<String, Class> entry : requiredCommands.entrySet()) {
-      System.out.println(entry);
-      registrar.registerCommand(entry.getKey(), entry.getValue().getName());
-    }
-
     shell = injector.getInstance(ShellImpl.class);
     vars = shell.getVariables();
     aliasRegistry = injector.getInstance(AliasRegistry.class);
     commandRegistry = injector.getInstance(CommandRegistry.class);
 
+    // TODO: disable meta-page discovery, and any other discovery?
+
+    // disable default command discovery
+    CommandRegistrarImpl registrar = injector.getInstance(CommandRegistrarImpl.class);
+    registrar.setDiscoveryEnabled(false);
+
     shell.start();
+
+    // register required commands
+    for (Map.Entry<String, Class> entry : requiredCommands.entrySet()) {
+      registrar.registerCommand(entry.getKey(), entry.getValue().getName());
+    }
   }
 
   protected void configureModules(final List<Module> modules) {
@@ -162,8 +165,8 @@ public abstract class CommandTestSupport
     io = null;
     if (shell != null) {
        Lifecycles.stop(shell);
+      shell = null;
     }
-    shell = null;
     if (container != null) {
       container.clear();
       container = null;

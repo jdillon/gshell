@@ -25,10 +25,8 @@ import javax.inject.Provider;
 import javax.inject.Singleton;
 
 import com.google.common.eventbus.Subscribe;
-import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.GroupAction;
 import com.planet57.gshell.command.registry.CommandRegisteredEvent;
-import com.planet57.gshell.command.registry.CommandRegistry;
 import com.planet57.gshell.command.registry.CommandRemovedEvent;
 import com.planet57.gshell.event.EventAware;
 import org.sonatype.goodies.common.ComponentSupport;
@@ -54,19 +52,9 @@ public class CommandResolverImpl
   private final Node root;
 
   @Inject
-  public CommandResolverImpl(final Provider<Variables> variables,
-                             final CommandRegistry commands)
-  {
+  public CommandResolverImpl(final Provider<Variables> variables) {
     this.variables = checkNotNull(variables);
-    checkNotNull(commands);
-
-    // Setup the tree
-    root = new Node(Node.ROOT, new GroupAction(Node.ROOT));
-
-    // FIXME: this may need to be moved to lifecycle; also this probably shouldn't be done here; this is for testing purposes only IIRC
-
-    // Add any pre-registered commands
-    commands.getCommands().forEach(command -> root.add(command.getName(), command));
+    this.root = new Node(Node.ROOT, new GroupAction(Node.ROOT));
   }
 
   @Subscribe

@@ -49,9 +49,7 @@ public class CommandRegistrarImpl
 
   private final CommandRegistry registry;
 
-  // HACK: problem introduce for testability with lifecycle
-  @VisibleForTesting
-  public boolean discoveryEnabled = true;
+  private boolean discoveryEnabled = true;
 
   @Inject
   public CommandRegistrarImpl(final BeanContainer container,
@@ -59,6 +57,12 @@ public class CommandRegistrarImpl
   {
     this.container = checkNotNull(container);
     this.registry = checkNotNull(registry);
+  }
+
+  @VisibleForTesting
+  public void setDiscoveryEnabled(final boolean discoveryEnabled) {
+    log.debug("Discovery enabled: {}", discoveryEnabled);
+    this.discoveryEnabled = discoveryEnabled;
   }
 
   @Override

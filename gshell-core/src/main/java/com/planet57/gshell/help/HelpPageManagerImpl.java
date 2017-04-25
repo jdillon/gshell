@@ -74,6 +74,7 @@ public class HelpPageManagerImpl
     this.resolver = checkNotNull(resolver);
     this.loader = checkNotNull(loader);
 
+    // FIXME: move to lifecycle; and allow disabling
     discoverMetaPages();
   }
 
