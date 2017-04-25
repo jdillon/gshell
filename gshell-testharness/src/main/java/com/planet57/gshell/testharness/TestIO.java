@@ -16,12 +16,11 @@
 package com.planet57.gshell.testharness;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.PrintStream;
 
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.util.io.StreamSet;
-import org.jline.terminal.TerminalBuilder;
+import org.jline.terminal.Terminal;
 
 /**
  * Test {@link IO}.
@@ -35,14 +34,12 @@ public class TestIO
 
   private ByteArrayOutputStream error;
 
-  public TestIO() throws IOException {
-    this(new ByteArrayOutputStream(), new ByteArrayOutputStream());
+  public TestIO(final Terminal terminal) {
+    this(new ByteArrayOutputStream(), new ByteArrayOutputStream(), terminal);
   }
 
-  public TestIO(final ByteArrayOutputStream output, final ByteArrayOutputStream error) throws IOException {
-    // FIXME: sort out how to properly build a terminal for testing, this presently complains with:
-    // FIXME: ... "Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)"
-    super(new StreamSet(System.in, new PrintStream(output), new PrintStream(error)), TerminalBuilder.terminal());
+  private TestIO(final ByteArrayOutputStream output, final ByteArrayOutputStream error, final Terminal terminal) {
+    super(new StreamSet(System.in, new PrintStream(output), new PrintStream(error)), terminal);
     this.output = output;
     this.error = error;
   }

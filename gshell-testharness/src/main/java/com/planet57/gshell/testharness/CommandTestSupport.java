@@ -45,6 +45,8 @@ import org.eclipse.sisu.space.SpaceModule;
 import org.eclipse.sisu.space.URLClassSpace;
 import org.eclipse.sisu.wire.WireModule;
 import org.fusesource.jansi.Ansi;
+import org.jline.terminal.Terminal;
+import org.jline.terminal.TerminalBuilder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -83,6 +85,8 @@ public abstract class CommandTestSupport
 
   private BeanContainer container;
 
+  private Terminal terminal;
+
   private TestIO io;
 
   private Shell shell;
@@ -111,7 +115,8 @@ public abstract class CommandTestSupport
     Ansi.setEnabled(false);
 
     container = new BeanContainer();
-    io = new TestIO();
+    terminal = TerminalBuilder.builder().dumb(true).build();
+    io = new TestIO(terminal);
     vars = new VariablesSupport();
 
     List<Module> modules = new ArrayList<>();
@@ -163,6 +168,10 @@ public abstract class CommandTestSupport
     aliasRegistry = null;
     vars = null;
     io = null;
+    if (terminal != null) {
+      terminal.close();
+      terminal = null;
+    }
     if (shell != null) {
        Lifecycles.stop(shell);
       shell = null;

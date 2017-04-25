@@ -27,9 +27,9 @@
     </encoder>
   </appender>
 
-  <logger name="Sisu" level="DEBUG"/>
+  <logger name="Sisu" level="INFO"/>
 
-  <root level="TRACE">
+  <root level="DEBUG">
     <appender-ref ref="console"/>
   </root>
 
