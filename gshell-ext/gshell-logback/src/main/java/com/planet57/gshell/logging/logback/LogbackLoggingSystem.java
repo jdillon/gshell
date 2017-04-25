@@ -76,11 +76,6 @@ public class LogbackLoggingSystem
     this.levels = ALL_LEVELS.stream().collect(Collectors.toMap(level -> level.toString().toUpperCase(Locale.US), LevelComponentImpl::new));
   }
 
-  @Override
-  public boolean isSupported() {
-    return true;
-  }
-
   //
   // LevelComponentImpl
   //

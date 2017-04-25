@@ -25,15 +25,6 @@ import java.util.Collection;
  */
 public interface LoggingSystem
 {
-  /**
-   * Returns {@code true} if the logging-system is supported.
-   *
-   * Unsupported logging-system will not have any meaningful implementations of api.
-   *
-   * @since 3.0
-   */
-  boolean isSupported();
-
   LevelComponent getLevel(String name);
 
   Collection<? extends LevelComponent> getLevels();

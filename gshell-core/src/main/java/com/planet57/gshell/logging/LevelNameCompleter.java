@@ -20,6 +20,7 @@ import com.planet57.gshell.util.jline.StringsCompleter2;
 import org.jline.reader.Candidate;
 import org.jline.reader.Completer;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -41,16 +42,19 @@ public class LevelNameCompleter
 {
   private final StringsCompleter2 delegate = new StringsCompleter2();
 
-  private final LoggingSystem logging;
+  @Nullable
+  private LoggingSystem logging;
 
   @Inject
-  public LevelNameCompleter(final LoggingSystem logging) {
-    this.logging = checkNotNull(logging);
+  public LevelNameCompleter(@Nullable final LoggingSystem logging) {
+    this.logging = logging;
   }
 
   @Override
   protected void init() {
-    logging.getLevels().forEach(level -> delegate.add(level.getName()));
+    if (logging != null) {
+      logging.getLevels().forEach(level -> delegate.add(level.getName()));
+    }
   }
 
   @Override

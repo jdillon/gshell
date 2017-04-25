@@ -25,8 +25,6 @@ import com.planet57.gshell.branding.License;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.execute.ExitNotification;
 import com.planet57.gshell.internal.BeanContainer;
-import com.planet57.gshell.logging.LoggingSystem;
-import com.planet57.gshell.logging.NopLoggingSystem;
 import com.planet57.gshell.shell.ShellImpl;
 import com.planet57.gshell.util.io.PrintBuffer;
 import com.planet57.gshell.util.io.StreamSet;
@@ -165,9 +163,6 @@ public class RunMojo
       binder.bind(Branding.class).toInstance(branding);
       binder.bind(IO.class).annotatedWith(named("main")).toInstance(io);
       binder.bind(Variables.class).annotatedWith(named("main")).toInstance(variables);
-
-      // FIXME: can we cope with whatever Maven might have for logging?
-      binder.bind(LoggingSystem.class).to(NopLoggingSystem.class);
     });
 
     Injector injector = Guice.createInjector(new WireModule(modules));

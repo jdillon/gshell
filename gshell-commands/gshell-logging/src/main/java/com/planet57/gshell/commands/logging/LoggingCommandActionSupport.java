@@ -15,6 +15,7 @@
  */
 package com.planet57.gshell.commands.logging;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import com.planet57.gshell.command.CommandActionSupport;
@@ -30,18 +31,16 @@ import static com.google.common.base.Preconditions.checkState;
 public abstract class LoggingCommandActionSupport
     extends CommandActionSupport
 {
+  @Nullable
   private LoggingSystem logging;
 
   @Inject
-  public void setLogging(final LoggingSystem logging) {
+  public void setLogging(@Nullable final LoggingSystem logging) {
     this.logging = logging;
   }
 
   protected LoggingSystem getLogging() {
-    checkState(logging != null);
-
-    // complain if logging system is not supported; otherwise command results may be strangely empty
-    checkState(logging.isSupported(), "Logging system is not supported: %s", logging);
+    checkState(logging != null, "Logging-system is not configured");
 
     return logging;
   }

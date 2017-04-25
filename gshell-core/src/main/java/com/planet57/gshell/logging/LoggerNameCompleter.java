@@ -15,6 +15,7 @@
  */
 package com.planet57.gshell.logging;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -41,11 +42,12 @@ public class LoggerNameCompleter
 {
   private final StringsCompleter2 delegate = new StringsCompleter2();
 
+  @Nullable
   private final LoggingSystem logging;
 
   @Inject
-  public LoggerNameCompleter(final LoggingSystem logging) {
-    this.logging = checkNotNull(logging);
+  public LoggerNameCompleter(@Nullable final LoggingSystem logging) {
+    this.logging = logging;
   }
 
   /**
@@ -53,7 +55,9 @@ public class LoggerNameCompleter
    */
   @Override
   protected void prepare() {
-    delegate.set(logging.getLoggerNames());
+    if (logging != null) {
+      delegate.set(logging.getLoggerNames());
+    }
   }
 
   @Override
