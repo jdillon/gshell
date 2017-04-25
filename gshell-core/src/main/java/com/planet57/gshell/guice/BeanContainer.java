@@ -24,6 +24,8 @@ import org.eclipse.sisu.inject.MutableBeanLocator;
 
 import java.lang.annotation.Annotation;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Guice container abstraction.
  *
@@ -32,7 +34,19 @@ import java.lang.annotation.Annotation;
 public class BeanContainer
 {
   // using MutableBeanLocator as the api here, as impl strips out generics
-  private final MutableBeanLocator beanLocator = new DefaultBeanLocator();
+  private final MutableBeanLocator beanLocator;
+
+  public BeanContainer(final MutableBeanLocator beanLocator) {
+    this.beanLocator = checkNotNull(beanLocator);
+  }
+
+  public BeanContainer() {
+    this(new DefaultBeanLocator());
+  }
+
+  public MutableBeanLocator getBeanLocator() {
+    return beanLocator;
+  }
 
   public <Q extends Annotation, T> Iterable<? extends BeanEntry<Q, T>> locate(final Key<T> key) {
     return beanLocator.locate(key);
