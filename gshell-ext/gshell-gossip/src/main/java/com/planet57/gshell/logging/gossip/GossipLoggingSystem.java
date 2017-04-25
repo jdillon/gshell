@@ -26,6 +26,7 @@ import java.util.Map;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import com.planet57.gossip.EffectiveProfile;
 import com.planet57.gossip.Gossip;
 import com.planet57.gossip.Level;
 import com.planet57.gossip.listener.Listener;
@@ -190,8 +191,9 @@ public class GossipLoggingSystem
     List<LoggingComponent> components = new ArrayList<>();
 
     components.add(new LoggingComponentSupport(gossip));
-    components.add(new LoggingComponentSupport(gossip.getEffectiveProfile()));
-    for (Listener listener : gossip.getEffectiveProfile().getListeners()) {
+    EffectiveProfile effectiveProfile = gossip.getEffectiveProfile();
+    components.add(new LoggingComponentSupport(effectiveProfile));
+    for (Listener listener : effectiveProfile.getListeners()) {
       components.add(new LoggingComponentSupport(listener));
     }
 
