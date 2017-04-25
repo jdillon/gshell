@@ -31,7 +31,7 @@ import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.registry.CommandRegistrarImpl;
 import com.planet57.gshell.command.registry.CommandRegistry;
-import com.planet57.gshell.guice.BeanContainer;
+import com.planet57.gshell.internal.BeanContainer;
 import com.planet57.gshell.logging.LoggingSystem;
 import com.planet57.gshell.parser.impl.eval.Evaluator;
 import com.planet57.gshell.parser.impl.eval.RegexEvaluator;

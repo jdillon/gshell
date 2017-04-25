@@ -26,7 +26,7 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.inject.Key;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandAction;
-import com.planet57.gshell.guice.BeanContainer;
+import com.planet57.gshell.internal.BeanContainer;
 import org.eclipse.sisu.BeanEntry;
 import org.sonatype.goodies.lifecycle.LifecycleSupport;
 

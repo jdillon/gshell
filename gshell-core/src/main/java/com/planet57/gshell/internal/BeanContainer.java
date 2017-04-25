@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.guice;
+package com.planet57.gshell.internal;
 
 import com.google.inject.Injector;
 import com.google.inject.Key;

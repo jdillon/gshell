@@ -15,18 +15,25 @@
  */
 package com.planet57.gshell;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Module;
 import com.planet57.gossip.Level;
 import com.planet57.gossip.Log;
 import com.planet57.gshell.branding.Branding;
+import com.planet57.gshell.branding.BrandingSupport;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.execute.ExitNotification;
+import com.planet57.gshell.internal.BeanContainer;
 import com.planet57.gshell.internal.ExitCodeDecoder;
 import com.planet57.gshell.shell.Shell;
+import com.planet57.gshell.shell.ShellImpl;
 import com.planet57.gshell.util.Arguments;
 import com.planet57.gshell.util.NameValue;
 import com.planet57.gshell.util.cli2.Argument;
@@ -43,13 +50,20 @@ import com.planet57.gshell.util.pref.Preferences;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
 import com.planet57.gshell.variables.VariablesSupport;
+import org.eclipse.sisu.space.BeanScanning;
+import org.eclipse.sisu.space.SpaceModule;
+import org.eclipse.sisu.space.URLClassSpace;
+import org.eclipse.sisu.wire.WireModule;
 import org.fusesource.jansi.Ansi;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 import org.slf4j.Logger;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
+import javax.annotation.Nonnull;
+
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.inject.name.Names.named;
 
 /**
  * Support for booting shell applications.
@@ -68,21 +82,7 @@ public abstract class MainSupport
 
   private IO io;
 
-  /**
-   * Visible for {@link com.planet57.gshell.guice.GuiceMainSupport}.
-   */
-  protected IO getIo() {
-    return io;
-  }
-
-  private Variables vars;
-
-  /**
-   * Visible for {@link com.planet57.gshell.guice.GuiceMainSupport}.
-   */
-  protected Variables getVariables() {
-    return vars;
-  }
+  private Variables variables;
 
   private Branding branding;
 
@@ -136,7 +136,7 @@ public abstract class MainSupport
   @Option(name = "D", longName = "define")
   private void setVariable(final String input) {
     NameValue nv = NameValue.parse(input);
-    vars.set(nv.name, nv.value);
+    variables.set(nv.name, nv.value);
   }
 
   @Option(name = "P", longName = "property")
@@ -180,7 +180,9 @@ public abstract class MainSupport
    *
    * @see #getBranding()
    */
-  protected abstract Branding createBranding();
+  protected Branding createBranding() {
+    return new BrandingSupport();
+  }
 
   /**
    * Create the {@link StreamSet} used to register.
@@ -190,10 +192,34 @@ public abstract class MainSupport
     return StreamSet.SYSTEM_FD;
   }
 
-  /**
-   * Create the {@link Shell} instance.
-   */
-  protected abstract Shell createShell() throws Exception;
+  private final BeanContainer container = new BeanContainer();
+
+  protected Shell createShell() throws Exception {
+    List<Module> modules = new ArrayList<>();
+    configure(modules);
+
+    Injector injector = Guice.createInjector(new WireModule(modules));
+    container.add(injector, 0);
+
+    return injector.getInstance(ShellImpl.class);
+  }
+
+  protected void configure(@Nonnull final List<Module> modules) {
+    modules.add(createSpaceModule());
+    modules.add(binder -> {
+      binder.bind(BeanContainer.class).toInstance(container);
+
+      // FIXME: due to ShellImpl being a Guice component, but there are not we have to bind these so they can be injected
+      binder.bind(IO.class).annotatedWith(named("main")).toInstance(io);
+      binder.bind(Variables.class).annotatedWith(named("main")).toInstance(variables);
+      binder.bind(Branding.class).toInstance(getBranding());
+    });
+  }
+
+  protected SpaceModule createSpaceModule() {
+    URLClassSpace space = new URLClassSpace(getClass().getClassLoader());
+    return new SpaceModule(space, BeanScanning.INDEX);
+  }
 
   public void boot(String... args) throws Exception {
     checkNotNull(args);
@@ -208,7 +234,7 @@ public abstract class MainSupport
       .build();
 
     io = new IO(createStreamSet(), terminal);
-    vars = new VariablesSupport();
+    variables = new VariablesSupport();
 
     // Setup environment defaults
     setConsoleLoggingThreshold(Level.INFO);
@@ -273,7 +299,7 @@ public abstract class MainSupport
     }));
 
     try {
-      vars.set(VariableNames.SHELL_ERRORS, showErrorTraces);
+      variables.set(VariableNames.SHELL_ERRORS, showErrorTraces);
 
       Shell shell = createShell();
       shell.start();
@@ -301,7 +327,7 @@ public abstract class MainSupport
     }
 
     if (result == null) {
-      result = vars.get(VariableNames.LAST_RESULT);
+      result = variables.get(VariableNames.LAST_RESULT);
     }
 
     int code = ExitCodeDecoder.decode(result);
