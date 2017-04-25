@@ -17,8 +17,6 @@ package com.planet57.gshell.help;
 
 import java.io.PrintWriter;
 import java.util.Collection;
-import java.util.LinkedList;
-import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 import com.planet57.gshell.command.resolver.Node;

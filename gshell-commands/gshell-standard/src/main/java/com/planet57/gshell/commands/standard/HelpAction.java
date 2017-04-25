@@ -160,6 +160,8 @@ public class HelpAction
     HelpPageUtil.renderIndex(io.out, pages);
   }
 
+  // FIXME: this and the --include-all doesn't seem to be very happy, redefine one one queries different types of pages
+
   private Predicate<HelpPage> query(final Predicate<HelpPage> predicate) {
     Predicate<HelpPage> query = predicate;
 
