@@ -15,25 +15,30 @@
  */
 package com.planet57.gshell.logging.gossip;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
 
 import com.planet57.gossip.Gossip;
+import com.planet57.gossip.Level;
 import com.planet57.gossip.listener.Listener;
 import com.planet57.gshell.logging.LevelComponent;
 import com.planet57.gshell.logging.LoggingComponent;
 import com.planet57.gshell.logging.LoggerComponent;
+import com.planet57.gshell.logging.LoggingComponentSupport;
 import com.planet57.gshell.logging.LoggingSystem;
 import org.slf4j.LoggerFactory;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 import static com.planet57.gossip.Gossip.LoggerImpl.ROOT_NAME;
 
 /**
@@ -51,27 +56,18 @@ public class GossipLoggingSystem
 
   private final Map<String, LevelComponentImpl> levels;
 
-  private final Set<LoggingComponent> components;
-
   public GossipLoggingSystem() {
     // Make sure Gossip is actually configured, attach to the context
     Object tmp = LoggerFactory.getILoggerFactory();
-    if (!(tmp instanceof Gossip)) {
-      throw new RuntimeException(
-          "SLF4J logger factory does not appear to be Gossip; found: " + tmp.getClass().getName());
-    }
+    checkState(tmp instanceof Gossip, "SLF4J logger factory does not appear to be Gossip; found: %s", tmp.getClass().getName());
     gossip = Gossip.getInstance();
 
     // populate levels
     Map<String, LevelComponentImpl> levels = new LinkedHashMap<>();
-    for (com.planet57.gossip.Level level : com.planet57.gossip.Level.values()) {
-      levels.put(level.name().toUpperCase(), new LevelComponentImpl(level));
+    for (Level level : Level.values()) {
+      levels.put(level.name().toUpperCase(Locale.US), new LevelComponentImpl(level));
     }
     this.levels = Collections.unmodifiableMap(levels);
-
-    // setup components map
-    components = new LinkedHashSet<>();
-    // leave the rest to lazy init for now
   }
 
   //
@@ -81,9 +77,9 @@ public class GossipLoggingSystem
   private class LevelComponentImpl
       implements LevelComponent
   {
-    private final com.planet57.gossip.Level target;
+    private final Level target;
 
-    private LevelComponentImpl(final com.planet57.gossip.Level level) {
+    private LevelComponentImpl(final Level level) {
       this.target = checkNotNull(level);
     }
 
@@ -92,7 +88,7 @@ public class GossipLoggingSystem
       return target.name();
     }
 
-    public com.planet57.gossip.Level getTarget() {
+    public Level getTarget() {
       return target;
     }
 
@@ -111,10 +107,8 @@ public class GossipLoggingSystem
   public LevelComponent getLevel(final String name) {
     checkNotNull(name);
 
-    LevelComponent level = levels.get(name.toUpperCase());
-    if (level == null) {
-      throw new RuntimeException("Invalid level name: " + name);
-    }
+    LevelComponent level = levels.get(name.toUpperCase(Locale.US));
+    checkArgument(level != null, "Invalid level name: %s", name);
     return level;
   }
 
@@ -147,7 +141,7 @@ public class GossipLoggingSystem
 
     @Override
     public LevelComponent getLevel() {
-      com.planet57.gossip.Level tmp = target.getLevel();
+      Level tmp = target.getLevel();
       if (tmp != null) {
         return levelFor(tmp.name());
       }
@@ -193,17 +187,14 @@ public class GossipLoggingSystem
 
   @Override
   public Collection<? extends LoggingComponent> getComponents() {
-    synchronized (components) {
-      if (components.isEmpty()) {
-        components.add(new EffectiveProfileLoggingComponent(gossip.getEffectiveProfile()));
+    List<LoggingComponent> components = new ArrayList<>();
 
-        for (Listener listener : gossip.getEffectiveProfile().getListeners()) {
-          components.add(new ListenerLoggingComponent(listener));
-        }
-
-        // TODO: Add the rest of the components
-      }
+    components.add(new LoggingComponentSupport(gossip));
+    components.add(new LoggingComponentSupport(gossip.getEffectiveProfile()));
+    for (Listener listener : gossip.getEffectiveProfile().getListeners()) {
+      components.add(new LoggingComponentSupport(listener));
     }
-    return Collections.unmodifiableSet(components);
+
+    return components;
   }
 }
