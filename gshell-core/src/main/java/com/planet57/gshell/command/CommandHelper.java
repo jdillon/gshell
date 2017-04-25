@@ -16,7 +16,6 @@
 package com.planet57.gshell.command;
 
 import com.planet57.gshell.branding.Branding;
-import com.planet57.gshell.shell.ShellHolder;
 import com.planet57.gshell.util.cli2.CliProcessor;
 import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.i18n.AggregateMessageSource;
@@ -80,11 +79,11 @@ public class CommandHelper
   /**
    * Create a {@link PreferenceProcessor} for given action.
    */
-  public static PreferenceProcessor createPreferenceProcessor(final CommandAction command) {
+  public static PreferenceProcessor createPreferenceProcessor(final CommandAction command, final Branding branding) {
     checkNotNull(command);
+    checkNotNull(branding);
 
     PreferenceProcessor pp = new PreferenceProcessor();
-    Branding branding = ShellHolder.get().getBranding();
     pp.setBasePath(branding.getPreferencesBasePath());
     pp.addBean(command);
 

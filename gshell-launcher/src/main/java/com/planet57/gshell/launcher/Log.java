@@ -23,21 +23,16 @@ package com.planet57.gshell.launcher;
  */
 public class Log
 {
-  @SuppressWarnings({"StringConcatenation"})
   public static final boolean DEBUG = Boolean.getBoolean(Log.class.getName() + ".debug");
 
   public static void debug(final Object... messages) {
     if (DEBUG) {
-      synchronized (System.err) {
-        System.err.print("[DEBUG] ");
-
-        for (Object message : messages) {
-          System.err.print(message);
-        }
-
-        System.err.println();
-        System.err.flush();
+      StringBuilder buff = new StringBuilder("[DEBUG] ");
+      for (Object message : messages) {
+        buff.append(message);
       }
+      System.err.println(buff);
+      System.err.flush();
     }
   }
 }

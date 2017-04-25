@@ -15,6 +15,8 @@
  */
 package com.planet57.gshell.help;
 
+import com.planet57.gshell.shell.Shell;
+
 import java.io.PrintWriter;
 
 /**
@@ -31,5 +33,11 @@ public interface HelpPage
 
   // TODO: Section?
 
-  void render(PrintWriter out);
+  // FIXME: Could probably use CommandContext instead of Shell here?
+  // FIXME: ... as this is only used by HelpAction; various bits of context are needed
+
+  /**
+   * @since 3.0
+   */
+  void render(Shell shell, PrintWriter out) throws Exception;
 }

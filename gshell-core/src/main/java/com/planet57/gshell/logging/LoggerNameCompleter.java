@@ -15,14 +15,17 @@
  */
 package com.planet57.gshell.logging;
 
-import java.util.List;
-
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import jline.console.completer.Completer;
-import jline.console.completer.StringsCompleter;
+import com.planet57.gshell.util.jline.DynamicCompleter;
+import com.planet57.gshell.util.jline.StringsCompleter2;
+import org.jline.reader.Candidate;
+import org.jline.reader.Completer;
+
+import java.util.Collection;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -35,18 +38,30 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Named("logger-name")
 @Singleton
 public class LoggerNameCompleter
-    implements Completer
+    extends DynamicCompleter
 {
+  private final StringsCompleter2 delegate = new StringsCompleter2();
+
+  @Nullable
   private final LoggingSystem logging;
 
   @Inject
-  public LoggerNameCompleter(final LoggingSystem logging) {
-    this.logging = checkNotNull(logging);
+  public LoggerNameCompleter(@Nullable final LoggingSystem logging) {
+    this.logging = logging;
   }
 
-  public int complete(final String buffer, final int cursor, final List<CharSequence> candidates) {
-    StringsCompleter delegate = new StringsCompleter();
-    delegate.getStrings().addAll(logging.getLoggerNames());
-    return delegate.complete(buffer, cursor, candidates);
+  /**
+   * Re-adjusted completions each attempt to complete; loggers could change dynamically.
+   */
+  @Override
+  protected void prepare() {
+    if (logging != null) {
+      delegate.set(logging.getLoggerNames());
+    }
+  }
+
+  @Override
+  protected Collection<Candidate> getCandidates() {
+    return delegate.getCandidates();
   }
 }

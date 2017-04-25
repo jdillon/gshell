@@ -15,9 +15,8 @@
  */
 package com.planet57.gshell.help;
 
-import com.google.common.base.Predicate;
-
 import java.util.Collection;
+import java.util.function.Predicate;
 
 /**
  * Manages {@link HelpPage}s.

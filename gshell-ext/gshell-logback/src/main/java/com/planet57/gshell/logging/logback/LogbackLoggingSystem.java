@@ -17,24 +17,28 @@ package com.planet57.gshell.logging.logback;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.LoggerContext;
+import com.google.common.collect.ImmutableList;
 import com.planet57.gshell.logging.LevelComponent;
 import com.planet57.gshell.logging.LoggerComponent;
 import com.planet57.gshell.logging.LoggingComponent;
+import com.planet57.gshell.logging.LoggingComponentSupport;
 import com.planet57.gshell.logging.LoggingSystem;
 import org.slf4j.LoggerFactory;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 import static org.slf4j.Logger.ROOT_LOGGER_NAME;
 
 /**
@@ -48,42 +52,28 @@ import static org.slf4j.Logger.ROOT_LOGGER_NAME;
 public class LogbackLoggingSystem
     implements LoggingSystem
 {
+  private static final List<Level> ALL_LEVELS = ImmutableList.of(
+    Level.ALL,
+    Level.TRACE,
+    Level.DEBUG,
+    Level.INFO,
+    Level.WARN,
+    Level.ERROR,
+    Level.OFF
+  );
+
   private final LoggerContext loggerContext;
 
   private final Map<String, LevelComponentImpl> levels;
 
-  private final Set<LoggingComponent> components;
-
   public LogbackLoggingSystem() {
     // Make sure Logback is actually configured, attach to the context
     Object tmp = LoggerFactory.getILoggerFactory();
-    if (!(tmp instanceof LoggerContext)) {
-      throw new RuntimeException(
-          "SLF4J logger factory does not appear to be LOGBack; found: " + tmp.getClass().getName());
-    }
+    checkState(tmp instanceof LoggerContext, "SLF4J logger factory does not appear to be LOGBack; found: %s", tmp.getClass().getName());
     this.loggerContext = (LoggerContext) tmp;
 
-    // populate levels
-    Map<String, LevelComponentImpl> levels = new LinkedHashMap<String, LevelComponentImpl>();
-
-    ch.qos.logback.classic.Level[] source = {
-        ch.qos.logback.classic.Level.ALL,
-        ch.qos.logback.classic.Level.TRACE,
-        ch.qos.logback.classic.Level.DEBUG,
-        ch.qos.logback.classic.Level.INFO,
-        ch.qos.logback.classic.Level.WARN,
-        ch.qos.logback.classic.Level.ERROR,
-        ch.qos.logback.classic.Level.OFF,
-        };
-
-    for (ch.qos.logback.classic.Level level : source) {
-      levels.put(level.toString(), new LevelComponentImpl(level));
-    }
-
-    this.levels = Collections.unmodifiableMap(levels);
-
-    // setup components map
-    components = new LinkedHashSet<LoggingComponent>();
+    // generate logger level mapping
+    this.levels = ALL_LEVELS.stream().collect(Collectors.toMap(level -> level.toString().toUpperCase(Locale.US), LevelComponentImpl::new));
   }
 
   //
@@ -93,9 +83,9 @@ public class LogbackLoggingSystem
   private class LevelComponentImpl
       implements LevelComponent
   {
-    private final ch.qos.logback.classic.Level target;
+    private final Level target;
 
-    private LevelComponentImpl(final ch.qos.logback.classic.Level level) {
+    private LevelComponentImpl(final Level level) {
       this.target = checkNotNull(level);
     }
 
@@ -104,7 +94,7 @@ public class LogbackLoggingSystem
       return target.toString();
     }
 
-    public ch.qos.logback.classic.Level getTarget() {
+    public Level getTarget() {
       return target;
     }
 
@@ -123,10 +113,8 @@ public class LogbackLoggingSystem
   public LevelComponent getLevel(final String name) {
     checkNotNull(name);
 
-    LevelComponent level = levels.get(name.toUpperCase());
-    if (level == null) {
-      throw new RuntimeException("Invalid level name: " + name);
-    }
+    LevelComponent level = levels.get(name.toUpperCase(Locale.US));
+    checkArgument(level != null, "Invalid level name: %s", name);
     return level;
   }
 
@@ -146,9 +134,9 @@ public class LogbackLoggingSystem
   private class LoggerComponentImpl
       implements LoggerComponent
   {
-    private final ch.qos.logback.classic.Logger target;
+    private final Logger target;
 
-    public LoggerComponentImpl(final ch.qos.logback.classic.Logger logger) {
+    public LoggerComponentImpl(final Logger logger) {
       this.target = checkNotNull(logger);
     }
 
@@ -159,7 +147,7 @@ public class LogbackLoggingSystem
 
     @Override
     public LevelComponent getLevel() {
-      ch.qos.logback.classic.Level tmp = target.getLevel();
+      Level tmp = target.getLevel();
       if (tmp != null) {
         return levelFor(tmp.toString());
       }
@@ -192,16 +180,9 @@ public class LogbackLoggingSystem
     }
   }
 
-  // NOTE: This doesn't seem to be returning all loggers that have been created, just those which have been configured/bound to a level :-(
-
   @Override
   public Collection<String> getLoggerNames() {
-    Collection<ch.qos.logback.classic.Logger> loggers = loggerContext.getLoggerList();
-    List<String> names = new ArrayList<String>(loggers.size());
-    for (ch.qos.logback.classic.Logger logger : loggers) {
-      names.add(logger.getName());
-    }
-    return names;
+    return loggerContext.getLoggerList().stream().map(Logger::getName).collect(Collectors.toList());
   }
 
   @Override
@@ -212,7 +193,21 @@ public class LogbackLoggingSystem
 
   @Override
   public Collection<? extends LoggingComponent> getComponents() {
-    // TODO: Expose appenders and whatever
-    return Collections.emptySet();
+    List<LoggingComponent> components = new ArrayList<>();
+
+    LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
+    components.add(new LoggingComponentSupport(context));
+
+    // add all context-listeners
+    context.getCopyOfListenerList().forEach(listener -> components.add(new LoggingComponentSupport(listener)));
+
+    // add all turbo-filters
+    context.getTurboFilterList().forEach(filter -> components.add(new LoggingComponentSupport(filter)));
+
+    // add all root appenders
+    Logger root = context.getLogger(ROOT_LOGGER_NAME);
+    root.iteratorForAppenders().forEachRemaining(appender -> components.add(new LoggingComponentSupport(appender)));
+
+    return components;
   }
 }

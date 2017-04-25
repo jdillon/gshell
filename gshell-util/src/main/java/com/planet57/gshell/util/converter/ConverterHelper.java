@@ -149,8 +149,7 @@ public class ConverterHelper
 
       Type rawType = parameterizedType.getRawType();
       if (desiredType.equals(rawType)) {
-        Type[] argument = parameterizedType.getActualTypeArguments();
-        return argument;
+        return parameterizedType.getActualTypeArguments();
       }
 
       Type[] collectionTypes = getTypeParameters(desiredType, rawType);

@@ -16,6 +16,7 @@
 package com.planet57.gshell.parser.impl.visitor;
 
 import com.google.common.base.Strings;
+import com.planet57.gossip.Level;
 import com.planet57.gshell.parser.impl.ASTCommandLine;
 import com.planet57.gshell.parser.impl.ASTExpression;
 import com.planet57.gshell.parser.impl.ASTOpaqueArgument;
@@ -25,7 +26,8 @@ import com.planet57.gshell.parser.impl.ASTWhitespace;
 import com.planet57.gshell.parser.impl.ParserVisitor;
 import com.planet57.gshell.parser.impl.SimpleNode;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Logs nodes in the tree.
@@ -36,50 +38,18 @@ import org.slf4j.LoggerFactory;
 public class LoggingVisitor
     implements ParserVisitor
 {
-  public static enum Level
-  {
-    INFO,
-    DEBUG
-  }
-
-  private final Logger log;
+  private final Logger logger;
 
   private final Level level;
 
   private int indent = 0;
 
-  public LoggingVisitor() {
-    this(LoggerFactory.getLogger(LoggingVisitor.class));
-  }
-
-  public LoggingVisitor(final Logger log) {
-    this(log, Level.DEBUG);
-  }
-
-  public LoggingVisitor(final Logger log, final Level level) {
-    assert log != null;
-    assert level != null;
-
-    this.log = log;
-    this.level = level;
+  public LoggingVisitor(final Logger logger, final Level level) {
+    this.logger = checkNotNull(logger);
+    this.level = checkNotNull(level);
   }
 
   private Object log(final Class type, final SimpleNode node, Object data) {
-    // Short-circuit of logging level does not match
-    switch (level) {
-      case INFO:
-        if (!log.isInfoEnabled()) {
-          return data;
-        }
-        break;
-
-      case DEBUG:
-        if (!log.isDebugEnabled()) {
-          return data;
-        }
-        break;
-    }
-
     StringBuilder buff = new StringBuilder(Strings.repeat(" ", indent));
 
     buff.append(node).append(" (").append(type.getName()).append(')');
@@ -87,15 +57,7 @@ public class LoggingVisitor
       buff.append("; Data: ").append(data);
     }
 
-    switch (level) {
-      case INFO:
-        log.info(buff.toString());
-        break;
-
-      case DEBUG:
-        log.debug(buff.toString());
-        break;
-    }
+    level.log(logger, buff.toString());
 
     indent++;
     data = node.childrenAccept(this, data);
@@ -104,30 +66,37 @@ public class LoggingVisitor
     return data;
   }
 
+  @Override
   public Object visit(final SimpleNode node, Object data) {
     return log(SimpleNode.class, node, data);
   }
 
+  @Override
   public Object visit(final ASTCommandLine node, Object data) {
     return log(ASTCommandLine.class, node, data);
   }
 
+  @Override
   public Object visit(final ASTExpression node, Object data) {
     return log(ASTExpression.class, node, data);
   }
 
+  @Override
   public Object visit(final ASTWhitespace node, Object data) {
     return log(ASTWhitespace.class, node, data);
   }
 
+  @Override
   public Object visit(final ASTQuotedArgument node, Object data) {
     return log(ASTQuotedArgument.class, node, data);
   }
 
+  @Override
   public Object visit(final ASTOpaqueArgument node, Object data) {
     return log(ASTOpaqueArgument.class, node, data);
   }
 
+  @Override
   public Object visit(final ASTPlainArgument node, Object data) {
     return log(ASTPlainArgument.class, node, data);
   }

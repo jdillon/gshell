@@ -17,30 +17,28 @@ package com.planet57.gshell.help;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import com.google.common.base.Predicate;
 import com.google.inject.Key;
 import com.planet57.gshell.alias.AliasRegistry;
 import com.planet57.gshell.alias.NoSuchAliasException;
 import com.planet57.gshell.command.resolver.CommandResolver;
 import com.planet57.gshell.command.resolver.Node;
 import com.planet57.gshell.event.EventManager;
-import com.planet57.gshell.guice.BeanContainer;
-import com.planet57.gshell.util.ComponentSupport;
-import org.eclipse.sisu.BeanEntry;
+import com.planet57.gshell.internal.BeanContainer;
+import org.sonatype.goodies.common.ComponentSupport;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * {@link HelpPageManager} component.
+ * Default {@link HelpPageManager}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
@@ -61,7 +59,7 @@ public class HelpPageManagerImpl
 
   private final HelpContentLoader loader;
 
-  private final Map<String, MetaHelpPage> metaPages = new LinkedHashMap<String, MetaHelpPage>();
+  private final Map<String, MetaHelpPage> metaPages = new LinkedHashMap<>();
 
   @Inject
   public HelpPageManagerImpl(final BeanContainer container,
@@ -76,16 +74,14 @@ public class HelpPageManagerImpl
     this.resolver = checkNotNull(resolver);
     this.loader = checkNotNull(loader);
 
+    // FIXME: move to lifecycle; and allow disabling
     discoverMetaPages();
   }
 
   private void discoverMetaPages() {
     log.trace("Discovering meta-pages");
 
-    for (BeanEntry<?,MetaHelpPage> entry : container.locate(Key.get(MetaHelpPage.class))) {
-      MetaHelpPage page = entry.getValue();
-      addMetaPage(page);
-    }
+    container.locate(Key.get(MetaHelpPage.class)).forEach(entry -> addMetaPage(entry.getValue()));
   }
 
   @Override
@@ -115,26 +111,16 @@ public class HelpPageManagerImpl
 
   @Override
   public Collection<HelpPage> getPages(final Predicate<HelpPage> query) {
-    assert query != null;
-
-    List<HelpPage> pages = new LinkedList<HelpPage>();
-    for (HelpPage page : getPages()) {
-      if (query.apply(page)) {
-        pages.add(page);
-      }
-    }
-
-    return pages;
+    checkNotNull(query);
+    return getPages().stream().filter(query).collect(Collectors.toList());
   }
 
   @Override
   public Collection<HelpPage> getPages() {
-    Map<String, HelpPage> pages = new TreeMap<String, HelpPage>();
+    Map<String, HelpPage> pages = new TreeMap<>();
 
     // Add aliases
-    for (Map.Entry<String, String> entry : aliases.getAliases().entrySet()) {
-      pages.put(entry.getKey(), new AliasHelpPage(entry.getKey(), entry.getValue()));
-    }
+    aliases.getAliases().forEach((key, value) -> pages.put(key, new AliasHelpPage(key, value)));
 
     // Add commands
     for (Node parent : resolver.searchPath()) {
@@ -151,11 +137,9 @@ public class HelpPageManagerImpl
     }
 
     // Add meta-pages
-    for (MetaHelpPage page : getMetaPages()) {
-      if (!pages.containsKey(page.getName())) {
-        pages.put(page.getName(), page);
-      }
-    }
+    getMetaPages().stream()
+      .filter(page -> !pages.containsKey(page.getName()))
+      .forEach(page -> pages.put(page.getName(), page));
 
     return pages.values();
   }

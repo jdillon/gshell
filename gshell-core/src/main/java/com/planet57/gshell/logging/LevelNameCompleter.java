@@ -15,19 +15,22 @@
  */
 package com.planet57.gshell.logging;
 
-import java.util.List;
+import com.planet57.gshell.util.jline.DynamicCompleter;
+import com.planet57.gshell.util.jline.StringsCompleter2;
+import org.jline.reader.Candidate;
+import org.jline.reader.Completer;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import jline.console.completer.Completer;
-import jline.console.completer.StringsCompleter;
+import java.util.Collection;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * {@link jline.console.completer.Completer} for {@link LevelComponent} names.
+ * {@link Completer} for {@link LevelComponent} names.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
@@ -35,22 +38,27 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Named("level-name")
 @Singleton
 public class LevelNameCompleter
-    implements Completer
+    extends DynamicCompleter
 {
-  private final StringsCompleter delegate;
+  private final StringsCompleter2 delegate = new StringsCompleter2();
+
+  @Nullable
+  private LoggingSystem logging;
 
   @Inject
-  public LevelNameCompleter(final LoggingSystem logging) {
-    checkNotNull(logging);
+  public LevelNameCompleter(@Nullable final LoggingSystem logging) {
+    this.logging = logging;
+  }
 
-    // assume levels do not dynamically change
-    delegate = new StringsCompleter();
-    for (LevelComponent level : logging.getLevels()) {
-      delegate.getStrings().add(level.getName());
+  @Override
+  protected void init() {
+    if (logging != null) {
+      logging.getLevels().forEach(level -> delegate.add(level.getName()));
     }
   }
 
-  public int complete(final String buffer, final int cursor, final List<CharSequence> candidates) {
-    return delegate.complete(buffer, cursor, candidates);
+  @Override
+  protected Collection<Candidate> getCandidates() {
+    return delegate.getCandidates();
   }
 }

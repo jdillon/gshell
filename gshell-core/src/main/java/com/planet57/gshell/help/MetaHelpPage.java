@@ -19,7 +19,7 @@ import java.io.PrintWriter;
 import java.util.ResourceBundle;
 
 import com.planet57.gshell.command.CommandHelper;
-import com.planet57.gshell.shell.ShellHolder;
+import com.planet57.gshell.shell.Shell;
 import org.codehaus.plexus.interpolation.AbstractValueSource;
 import org.codehaus.plexus.interpolation.Interpolator;
 import org.codehaus.plexus.interpolation.PrefixedObjectValueSource;
@@ -43,6 +43,8 @@ public class MetaHelpPage
 
   private final HelpContentLoader loader;
 
+  private ResourceBundle resources;
+
   public MetaHelpPage(final String name, final String resource, final HelpContentLoader loader) {
     this.name = checkNotNull(name);
     this.resource = checkNotNull(resource);
@@ -54,8 +56,6 @@ public class MetaHelpPage
     return name;
   }
 
-  private ResourceBundle resources;
-
   @Override
   public String getDescription() {
     if (resources == null) {
@@ -66,26 +66,31 @@ public class MetaHelpPage
   }
 
   @Override
-  public void render(final PrintWriter out) {
-    assert out != null;
+  public void render(final Shell shell, final PrintWriter out) throws Exception {
+    checkNotNull(shell);
+    checkNotNull(out);
 
     Interpolator interp = new StringSearchInterpolator("@{", "}");
     interp.addValueSource(new PrefixedObjectValueSource("command.", this));
-    interp.addValueSource(new PrefixedObjectValueSource("branding.", ShellHolder.get().getBranding()));
+    interp.addValueSource(new PrefixedObjectValueSource("branding.", shell.getBranding()));
     interp.addValueSource(new AbstractValueSource(false)
     {
+      @Override
       public Object getValue(final String expression) {
-        return ShellHolder.get().getVariables().get(expression);
+        return shell.getVariables().get(expression);
       }
     });
     interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));
 
-    try {
-      String text = loader.load(resource, Thread.currentThread().getContextClassLoader());
-      out.println(interp.interpolate(text));
-    }
-    catch (Exception e) {
-      throw new RuntimeException(e);
-    }
+    String text = loader.load(resource, Thread.currentThread().getContextClassLoader());
+    out.println(interp.interpolate(text));
+  }
+
+  @Override
+  public String toString() {
+    return "MetaHelpPage{" +
+      "name='" + name + '\'' +
+      ", resource='" + resource + '\'' +
+      '}';
   }
 }

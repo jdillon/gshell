@@ -19,8 +19,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.google.common.base.Joiner;
 import com.planet57.gshell.execute.CommandExecutor;
-import com.planet57.gshell.notification.ErrorNotification;
+import com.planet57.gshell.execute.ErrorNotification;
 import com.planet57.gshell.parser.impl.ASTCommandLine;
 import com.planet57.gshell.parser.impl.ASTExpression;
 import com.planet57.gshell.parser.impl.ASTOpaqueArgument;
@@ -30,10 +31,10 @@ import com.planet57.gshell.parser.impl.ASTWhitespace;
 import com.planet57.gshell.parser.impl.ParserVisitor;
 import com.planet57.gshell.parser.impl.SimpleNode;
 import com.planet57.gshell.parser.impl.eval.Evaluator;
-import com.planet57.gshell.parser.impl.eval.EvaluatorFactory;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.util.Arguments;
-import com.planet57.gshell.util.Strings;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Visitor which will execute command-lines as parsed.
@@ -50,15 +51,13 @@ public class ExecutingVisitor
 
   private final Evaluator evaluator;
 
-  public ExecutingVisitor(final Shell shell, final CommandExecutor executor) {
-    assert shell != null;
-    assert executor != null;
-
-    this.shell = shell;
-    this.executor = executor;
-    this.evaluator = EvaluatorFactory.get();
+  public ExecutingVisitor(final Shell shell, final CommandExecutor executor, final Evaluator evaluator) {
+    this.shell = checkNotNull(shell);
+    this.executor = checkNotNull(executor);
+    this.evaluator = checkNotNull(evaluator);
   }
 
+  @Override
   public Object visit(final SimpleNode node, final Object data) {
     assert node != null;
 
@@ -66,6 +65,7 @@ public class ExecutingVisitor
     throw new Error("Unhandled node type: " + node.getClass().getName());
   }
 
+  @Override
   public Object visit(final ASTCommandLine node, final Object data) {
     assert node != null;
 
@@ -79,6 +79,7 @@ public class ExecutingVisitor
     return null;
   }
 
+  @Override
   public Object visit(final ASTExpression node, final Object data) {
     assert node != null;
 
@@ -94,7 +95,7 @@ public class ExecutingVisitor
       result = executor.execute(shell, path, args);
     }
     catch (Exception e) {
-      throw new ErrorNotification("Shell execution failed; path=" + path + "; args=" + Strings.join(args, ", "), e);
+      throw new ErrorNotification("Shell execution failed; path=" + path + "; args=" + Joiner.on(", ").join(args), e);
     }
 
     List results = (List) data;
@@ -104,6 +105,7 @@ public class ExecutingVisitor
     return result;
   }
 
+  @Override
   public Object visit(final ASTWhitespace node, final Object data) {
     assert node != null;
     assert data != null;
@@ -113,6 +115,7 @@ public class ExecutingVisitor
     return data;
   }
 
+  @Override
   public Object visit(final ASTQuotedArgument node, final Object data) {
     assert node != null;
     assert data != null;
@@ -122,6 +125,7 @@ public class ExecutingVisitor
     return state.append(value);
   }
 
+  @Override
   public Object visit(final ASTPlainArgument node, final Object data) {
     assert node != null;
     assert data != null;
@@ -131,6 +135,7 @@ public class ExecutingVisitor
     return state.append(value);
   }
 
+  @Override
   public Object visit(final ASTOpaqueArgument node, final Object data) {
     assert node != null;
 
@@ -142,13 +147,13 @@ public class ExecutingVisitor
     // expression could be null
     Object value;
     try {
-      value = evaluator.eval(expression);
+      value = evaluator.eval(shell.getVariables(), expression);
     }
     catch (Exception e) {
       throw new RuntimeException(e);
     }
 
-    // FIXME: Need to return Object, but for now use String
+    // FIXME: Need to return Object, but for now use String; implies changes to ExpressionState and likely more to convert to Object
     return String.valueOf(value);
   }
 
@@ -163,13 +168,13 @@ public class ExecutingVisitor
     private final List<Object> args;
 
     public ExpressionState(final ASTExpression root) {
-      assert root != null;
-      this.args = new ArrayList<Object>(root.jjtGetNumChildren());
+      checkNotNull(root);
+      this.args = new ArrayList<>(root.jjtGetNumChildren());
       this.buff = new StringBuilder();
     }
 
     public String append(final String value) {
-      assert value != null;
+      checkNotNull(value);
       buff.append(value);
       return value;
     }

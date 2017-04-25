@@ -18,6 +18,7 @@ package com.planet57.gshell.help;
 import java.io.PrintWriter;
 
 import com.planet57.gshell.command.resolver.Node;
+import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 
@@ -40,9 +41,8 @@ public class GroupHelpPage
   private MessageSource messages;
 
   public GroupHelpPage(final Node node, final HelpContentLoader loader) {
-    checkNotNull(node);
+    this.node = checkNotNull(node);
     checkArgument(node.isGroup());
-    this.node = node;
     this.loader = checkNotNull(loader);
   }
 
@@ -64,11 +64,12 @@ public class GroupHelpPage
   }
 
   @Override
-  public void render(final PrintWriter out) {
+  public void render(final Shell shell, final PrintWriter out) throws Exception {
+    checkNotNull(shell);
     checkNotNull(out);
 
     out.println(getMessages().format("group-content-header", getName()));
-    HelpPageUtil.render(out, HelpPageUtil.pagesFor(node, loader));
+    HelpPageUtil.renderIndex(out, HelpPageUtil.pagesFor(node, loader));
   }
 
   @Override

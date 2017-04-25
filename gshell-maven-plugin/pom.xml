@@ -33,18 +33,8 @@
 
   <dependencies>
     <dependency>
-      <groupId>com.planet57.gossip</groupId>
-      <artifactId>gossip-slf4j</artifactId>
-    </dependency>
-
-    <dependency>
       <groupId>com.planet57.gshell</groupId>
       <artifactId>gshell-core</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>com.planet57.gshell.ext</groupId>
-      <artifactId>gshell-gossip</artifactId>
     </dependency>
 
     <dependency>

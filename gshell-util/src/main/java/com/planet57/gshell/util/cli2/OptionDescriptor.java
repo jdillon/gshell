@@ -50,38 +50,30 @@ public class OptionDescriptor
 
     Class type = setter.getType();
 
-    // FIXME: Clean up this [b|B]oolean handling...
-
-    if (type == boolean.class) {
-      args = 0;
-      optionalArg = false;
+    if (spec.args() != UNINITIALIZED) {
+      args = spec.args();
     }
     else {
-      if (spec.args() != UNINITIALIZED) {
-        args = spec.args();
+      if (type == Void.class) {
+        args = 0;
       }
-      else {
-        if (type == Void.class) {
-          args = 0;
-        }
-        else if (type == Boolean.class) {
-          if (spec.optionalArg()) {
-            args = 1;
-          }
-          else {
-            args = spec.args();
-          }
-        }
-        else if (setter.isMultiValued()) {
-          args = UNLIMITED;
-        }
-        else {
+      else if (type == boolean.class || type == Boolean.class) {
+        if (spec.optionalArg()) {
           args = 1;
         }
+        else {
+          args = spec.args();
+        }
       }
-
-      optionalArg = spec.optionalArg();
+      else if (setter.isMultiValued()) {
+        args = UNLIMITED;
+      }
+      else {
+        args = 1;
+      }
     }
+
+    optionalArg = spec.optionalArg();
   }
 
   public Option getSpec() {

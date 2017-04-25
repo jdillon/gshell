@@ -17,15 +17,15 @@ package com.planet57.gshell.util.i18n;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.sonatype.goodies.testsupport.TestSupport;
 
 import static org.junit.Assert.assertEquals;
 
 /**
  * Unit tests for the {@link ResourceBundleMessageSource} class.
- *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class ResourceBundleMessageSourceTest
+  extends TestSupport
 {
   private MessageSource messages;
 

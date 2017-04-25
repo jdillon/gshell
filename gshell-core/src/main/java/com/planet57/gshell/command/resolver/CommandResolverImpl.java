@@ -25,20 +25,18 @@ import javax.inject.Provider;
 import javax.inject.Singleton;
 
 import com.google.common.eventbus.Subscribe;
-import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.GroupAction;
 import com.planet57.gshell.command.registry.CommandRegisteredEvent;
-import com.planet57.gshell.command.registry.CommandRegistry;
 import com.planet57.gshell.command.registry.CommandRemovedEvent;
 import com.planet57.gshell.event.EventAware;
-import com.planet57.gshell.util.ComponentSupport;
+import org.sonatype.goodies.common.ComponentSupport;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * {@link CommandResolver} component.
+ * Default {@link CommandResolver}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
@@ -54,19 +52,9 @@ public class CommandResolverImpl
   private final Node root;
 
   @Inject
-  public CommandResolverImpl(final Provider<Variables> variables,
-                             final CommandRegistry commands)
-  {
+  public CommandResolverImpl(final Provider<Variables> variables) {
     this.variables = checkNotNull(variables);
-    checkNotNull(commands);
-
-    // Setup the tree
-    root = new Node(Node.ROOT, new GroupAction(Node.ROOT));
-
-    // Add any pre-registered commands
-    for (CommandAction command : commands.getCommands()) {
-      root.add(command.getName(), command);
-    }
+    this.root = new Node(Node.ROOT, new GroupAction(Node.ROOT));
   }
 
   @Subscribe
@@ -152,7 +140,6 @@ public class CommandResolverImpl
         log.trace("Resolved: {} -> {}", name, node);
         return node;
       }
-
     }
 
     return null;

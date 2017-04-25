@@ -30,6 +30,14 @@
   <artifactId>gshell-launcher</artifactId>
   <name>${project.groupId}:${project.artifactId}</name>
 
+  <dependencies>
+    <dependency>
+      <groupId>com.google.code.findbugs</groupId>
+      <artifactId>jsr305</artifactId>
+      <optional>true</optional>
+    </dependency>
+  </dependencies>
+
   <build>
     <plugins>
       <plugin>

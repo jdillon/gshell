@@ -24,12 +24,12 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import com.planet57.gshell.event.EventManager;
-import com.planet57.gshell.util.ComponentSupport;
+import org.sonatype.goodies.common.ComponentSupport;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * {@link AliasRegistry} component.
+ * Default {@link AliasRegistry}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
@@ -40,7 +40,7 @@ public class AliasRegistryImpl
   extends ComponentSupport
   implements AliasRegistry
 {
-  private final Map<String, String> aliases = new LinkedHashMap<String, String>();
+  private final Map<String, String> aliases = new LinkedHashMap<>();
 
   private final EventManager events;
 

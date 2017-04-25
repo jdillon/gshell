@@ -16,28 +16,40 @@
     limitations under the License.
 
 -->
-<configuration debug="false" scan="true" scanPeriod="30 seconds">
+<configuration debug="${shell.logging.debug:-false}" scan="${shell.logging.scan:-false}" scanPeriod="${shell.logging.scan-period:-30 seconds}">
 
   <contextName>default</contextName>
 
-  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-    <target>System.out</target>
+  <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+    <resetJUL>true</resetJUL>
+  </contextListener>
+
+  <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+    <target>${shell.logging.console.target:-System.out}</target>
     <encoder>
-      <pattern>[%level] %logger{1} - %msg%n</pattern>
+      <pattern>${shell.logging.console.pattern:-[%level] %logger{1} - %msg%n}</pattern>
     </encoder>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>${shell.logging.console.threshold}</level>
+    </filter>
   </appender>
 
-  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-    <file>${shell.home}/log/shell.log</file>
-    <append>false</append>
+  <appender name="file" class="ch.qos.logback.core.FileAppender">
+    <file>${shell.logging.file.path:-${shell.home}/log/shell.log}</file>
+    <append>${shell.logging.file.append:-false}</append>
     <encoder>
-      <pattern>%date %level [%thread%X{DC}] %logger - %msg%n</pattern>
+      <pattern>${shell.logging.file.pattern:-%date %level [%thread%X{DC}] %logger - %msg%n}</pattern>
     </encoder>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>${shell.logging.file.threshold}</level>
+    </filter>
   </appender>
 
-  <root level="${shell.logging:-INFO}">
-    <appender-ref ref="CONSOLE"/>
-    <appender-ref ref="FILE"/>
+  <logger name="Sisu" level="${shell.logging.logger.Sisu.level:-INFO}"/>
+
+  <root level="${shell.logging.root-level:-INFO}">
+    <appender-ref ref="console"/>
+    <appender-ref ref="file"/>
   </root>
 
 </configuration>

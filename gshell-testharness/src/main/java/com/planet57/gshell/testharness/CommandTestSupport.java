@@ -20,25 +20,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.inject.AbstractModule;
+import com.google.common.base.Joiner;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.Stage;
-import com.planet57.gshell.alias.AliasRegistry;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.command.registry.CommandRegistrar;
+import com.planet57.gshell.command.registry.CommandRegistrarImpl;
 import com.planet57.gshell.command.registry.CommandRegistry;
-import com.planet57.gshell.guice.CoreModule;
-import com.planet57.gshell.event.EventManager;
-import com.planet57.gshell.guice.BeanContainer;
-import com.planet57.gshell.logging.LoggingSystem;
+import com.planet57.gshell.internal.BeanContainer;
+import com.planet57.gshell.parser.impl.eval.Evaluator;
+import com.planet57.gshell.parser.impl.eval.RegexEvaluator;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.shell.ShellImpl;
-import com.planet57.gshell.util.Strings;
 import com.planet57.gshell.variables.Variables;
 import com.planet57.gshell.variables.VariablesSupport;
 import org.eclipse.sisu.space.BeanScanning;
@@ -46,47 +43,67 @@ import org.eclipse.sisu.space.SpaceModule;
 import org.eclipse.sisu.space.URLClassSpace;
 import org.eclipse.sisu.wire.WireModule;
 import org.fusesource.jansi.Ansi;
+import org.jline.terminal.Terminal;
+import org.jline.terminal.TerminalBuilder;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.slf4j.bridge.SLF4JBridgeHandler;
+import org.sonatype.goodies.testsupport.TestTracer;
 import org.sonatype.goodies.testsupport.TestUtil;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 import static com.google.inject.name.Names.named;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+
+// FIXME: Goodies TestSupport initMocks() is causing some issues in mvnsh; so don't use it for now
 
 /**
  * Support for testing {@link CommandAction} instances.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 2.5
+ * @since 3.0
  */
 public abstract class CommandTestSupport
 {
-  protected final String name;
+  static {
+    SLF4JBridgeHandler.removeHandlersForRootLogger();
+    SLF4JBridgeHandler.install();
+  }
 
-  private final TestUtil util = new TestUtil(this);
+  protected final TestUtil util = new TestUtil(getClass());
+
+  /**
+   * The name of the command under-test.
+   *
+   * Used for default command tests.
+   */
+  private final String name;
+
+  @Rule
+  public final TestTracer tracer = new TestTracer(this);
 
   private BeanContainer container;
+
+  protected Injector injector;
+
+  private Terminal terminal;
 
   private TestIO io;
 
   private Shell shell;
 
-  protected AliasRegistry aliasRegistry;
-
   protected CommandRegistry commandRegistry;
 
-  protected Variables vars;
+  protected Variables variables;
 
-  protected final Map<String, Class> requiredCommands = new HashMap<String, Class>();
+  protected final Map<String, Class> requiredCommands = new HashMap<>();
 
   protected CommandTestSupport(final String name, final Class<?> type) {
-    assertNotNull(name);
-    assertNotNull(type);
-    this.name = name;
+    this.name = checkNotNull(name);
+    checkNotNull(type);
     requiredCommands.put(name, type);
   }
 
@@ -96,52 +113,48 @@ public abstract class CommandTestSupport
 
   @Before
   public void setUp() throws Exception {
-    container = new BeanContainer();
-    io = new TestIO();
-    vars = new VariablesSupport();
-
-    Module boot = new AbstractModule()
-    {
-      @Override
-      protected void configure() {
-        bind(BeanContainer.class).toInstance(container);
-        bind(LoggingSystem.class).to(TestLoggingSystem.class);
-        bind(Branding.class).toInstance(new TestBranding(util.resolveFile("target/shell-home")));
-        bind(IO.class).annotatedWith(named("main")).toInstance(io);
-        bind(Variables.class).annotatedWith(named("main")).toInstance(vars);
-      }
-    };
-
-    List<Module> modules = new ArrayList<Module>();
-    modules.add(boot);
-    configureModules(modules);
-
-    Injector injector = Guice.createInjector(Stage.DEVELOPMENT, new WireModule(modules));
-    container.add(injector, 0);
-
-    // HACK: really need some component lifecycle
-    injector.getInstance(EventManager.class).start();
-
-    CommandRegistrar registrar = injector.getInstance(CommandRegistrar.class);
-    for (Map.Entry<String, Class> entry : requiredCommands.entrySet()) {
-      registrar.registerCommand(entry.getKey(), entry.getValue().getName());
-    }
-
-    shell = injector.getInstance(ShellImpl.class);
-
     // For simplicity of output verification disable ANSI
     Ansi.setEnabled(false);
 
-    vars = shell.getVariables();
+    terminal = TerminalBuilder.builder().dumb(true).build();
+    io = new TestIO(terminal);
+    variables = new VariablesSupport();
 
-    aliasRegistry = injector.getInstance(AliasRegistry.class);
+    container = new BeanContainer();
+    List<Module> modules = new ArrayList<>();
+    modules.add(binder -> {
+      binder.bind(BeanContainer.class).toInstance(container);
+      binder.bind(Branding.class).toInstance(new TestBranding(util.resolveFile("target/shell-home")));
+      binder.bind(IO.class).annotatedWith(named("main")).toInstance(io);
+      binder.bind(Variables.class).annotatedWith(named("main")).toInstance(variables);
+      binder.bind(Evaluator.class).to(RegexEvaluator.class);
+    });
+    configureModules(modules);
+
+    injector = Guice.createInjector(Stage.DEVELOPMENT, new WireModule(modules));
+    container.add(injector, 0);
+
+    shell = injector.getInstance(ShellImpl.class);
+    variables = shell.getVariables();
     commandRegistry = injector.getInstance(CommandRegistry.class);
+
+    // TODO: disable meta-page discovery, and any other discovery?
+
+    // disable default command discovery
+    CommandRegistrarImpl registrar = injector.getInstance(CommandRegistrarImpl.class);
+    registrar.setDiscoveryEnabled(false);
+
+    shell.start();
+
+    // register required commands
+    for (Map.Entry<String, Class> entry : requiredCommands.entrySet()) {
+      registrar.registerCommand(entry.getKey(), entry.getValue());
+    }
   }
 
   protected void configureModules(final List<Module> modules) {
-    assert modules != null;
+    checkNotNull(modules);
     modules.add(createSpaceModule());
-    modules.add(new CoreModule());
   }
 
   protected SpaceModule createSpaceModule() {
@@ -152,32 +165,35 @@ public abstract class CommandTestSupport
   @After
   public void tearDown() throws Exception {
     commandRegistry = null;
-    aliasRegistry = null;
-    vars = null;
+    variables = null;
     io = null;
-    if (shell != null) {
-      shell.close();
+    if (terminal != null) {
+      terminal.close();
+      terminal = null;
     }
-    shell = null;
-    requiredCommands.clear();
+    if (shell != null) {
+      shell.stop();
+      shell = null;
+    }
     if (container != null) {
       container.clear();
       container = null;
     }
+    injector = null;
   }
 
   protected Shell getShell() {
-    assertNotNull(shell);
+    checkState(shell != null);
     return shell;
   }
 
   protected TestIO getIo() {
-    assertNotNull(io);
+    checkState(io != null);
     return io;
   }
 
   protected Object execute(final String line) throws Exception {
-    assertNotNull(line);
+    checkNotNull(line);
     return getShell().execute(line);
   }
 
@@ -186,17 +202,17 @@ public abstract class CommandTestSupport
   }
 
   protected Object execute(final String... args) throws Exception {
-    return execute(Strings.join(args, " "));
+    return execute(Joiner.on(" ").join(args));
   }
 
   protected Object executeWithArgs(final String args) throws Exception {
-    assertNotNull(args);
+    checkNotNull(args);
     return execute(name, args);
   }
 
   protected Object executeWithArgs(final String... args) throws Exception {
-    assertNotNull(args);
-    return execute(name, Strings.join(args, " "));
+    checkNotNull(args);
+    return execute(name, Joiner.on(" ").join(args));
   }
 
   //
@@ -204,30 +220,36 @@ public abstract class CommandTestSupport
   //
 
   protected void assertEqualsSuccess(final Object result) {
-    Assert.assertEquals(CommandAction.Result.SUCCESS, result);
+    assertThat(result, is(CommandAction.Result.SUCCESS));
   }
 
   protected void assertEqualsFailure(final Object result) {
-    assertEquals(CommandAction.Result.FAILURE, result);
+    assertThat(result, is(CommandAction.Result.FAILURE));
   }
 
   protected void assertOutputEquals(final String expected) {
-    Assert.assertEquals(getIo().getOutputString(), expected);
+    assertThat(getIo().getOutputString(), is(expected));
   }
 
   protected void assertErrorOutputEquals(final String expected) {
-    Assert.assertEquals(getIo().getErrorString(), expected);
+    assertThat(getIo().getErrorString(), is(expected));
   }
 
   //
-  // Some default tests for all commands
+  // Default tests for all commands
   //
 
+  /**
+   * All commands should be registered with {@link CommandRegistry} component.
+   */
   @Test
   public void testRegistered() throws Exception {
-    assertTrue(commandRegistry.containsCommand(name));
+    assertThat(commandRegistry.containsCommand(name), is(true));
   }
 
+  /**
+   * All commands must provide {@code --help} and {@code -h} handling.
+   */
   @Test
   public void testHelp() throws Exception {
     Object result;
@@ -236,12 +258,6 @@ public abstract class CommandTestSupport
     assertEqualsSuccess(result);
 
     result = executeWithArgs("-h");
-    assertEqualsSuccess(result);
-  }
-
-  @Test
-  public void testDefault() throws Exception {
-    Object result = execute();
     assertEqualsSuccess(result);
   }
 }

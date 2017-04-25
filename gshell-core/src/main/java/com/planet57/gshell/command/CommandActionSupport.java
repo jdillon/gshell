@@ -15,15 +15,17 @@
  */
 package com.planet57.gshell.command;
 
-import java.util.List;
+import java.util.Arrays;
 import java.util.MissingResourceException;
+import java.util.stream.Collectors;
 
-import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.resolver.NodePath;
-import com.planet57.gshell.util.ComponentSupport;
+import org.jline.reader.impl.completer.ArgumentCompleter;
+import org.jline.reader.impl.completer.NullCompleter;
+import org.sonatype.goodies.common.ComponentSupport;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
-import jline.console.completer.Completer;
+import org.jline.reader.Completer;
 
 import javax.annotation.Nullable;
 
@@ -38,13 +40,14 @@ import static com.google.common.base.Preconditions.checkState;
  */
 public abstract class CommandActionSupport
   extends ComponentSupport
-  implements CommandAction, CommandAction.NameAware, CommandAction.Prototype
+  implements CommandAction, CommandAction.NameAware, CommandAction.Prototype, CommandAction.Completable
 {
   private String name;
 
   private MessageSource messages;
 
-  private Completer[] completers;
+  @Nullable
+  private Completer completer = NullCompleter.INSTANCE;
 
   @Override
   public String getName() {
@@ -52,6 +55,9 @@ public abstract class CommandActionSupport
     return name;
   }
 
+  /**
+   * @see CommandAction.NameAware
+   */
   @Override
   public void setName(final String name) {
     checkState(this.name == null);
@@ -97,21 +103,39 @@ public abstract class CommandActionSupport
     return new ResourceBundleMessageSource(getClass());
   }
 
+  /**
+   * @see CommandAction.Completable
+   */
   @Override
-  public Completer[] getCompleters() {
-    return completers;
+  public Completer getCompleter() {
+    return completer;
   }
 
-  public void setCompleters(@Nullable final Completer... completers) {
-    this.completers = completers;
+  /**
+   * Install a raw completer.
+   *
+   * @since 3.0
+   */
+  protected void setCompleter(final Completer completer) {
+    this.completer = checkNotNull(completer);
   }
 
-  public void setCompleters(@Nullable final List<Completer> completers) {
-    if (completers != null) {
-      setCompleters(completers.toArray(new Completer[completers.size()]));
-    }
+  /**
+   * Install argument completer for the given completers.
+   *
+   * This will handle translating null members of completers into {@link NullCompleter#INSTANCE}.
+   */
+  protected void setCompleters(final Completer... completers) {
+    checkNotNull(completers);
+    completer = new ArgumentCompleter(
+      // translate null to NullCompleter.INSTANCE
+      Arrays.stream(completers).map(it -> it == null ? NullCompleter.INSTANCE : it).collect(Collectors.toList())
+    );
   }
 
+  /**
+   * @see CommandAction.Prototype
+   */
   @Override
   public CommandAction create() {
     try {

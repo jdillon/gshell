@@ -17,13 +17,13 @@ package com.planet57.gshell.util.pref;
 
 import org.junit.After;
 import org.junit.Before;
+import org.sonatype.goodies.testsupport.TestSupport;
 
 /**
  * Support for {@link PreferenceProcessor} tests.
- *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public abstract class PreferenceProcessorTestSupport
+  extends TestSupport
 {
   protected PreferenceProcessor processor;
 

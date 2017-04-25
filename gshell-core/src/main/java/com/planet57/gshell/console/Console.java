@@ -15,159 +15,84 @@
  */
 package com.planet57.gshell.console;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.concurrent.Callable;
 
-import com.planet57.gshell.command.IO;
-import com.planet57.gshell.util.io.InputPipe;
-import com.planet57.gshell.util.io.StreamSet;
-import jline.console.ConsoleReader;
-import jline.console.completer.CandidateListCompletionHandler;
-import jline.console.completer.Completer;
-import jline.console.history.History;
-import jline.console.history.MemoryHistory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.sonatype.goodies.common.ComponentSupport;
+import org.jline.reader.LineReader;
+import org.jline.terminal.Terminal;
 
 import javax.annotation.Nullable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
 /**
- * Provides an abstraction of a console.
+ * Console abstraction.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 public class Console
+    extends ComponentSupport
     implements Runnable
 {
-  private static final Logger log = LoggerFactory.getLogger(Console.class);
+  private final LineReader lineReader;
 
-  private final InputPipe pipe;
-
-  private final IO io;
-
-  private final ConsoleReader reader;
+  private final ConsolePrompt prompt;
 
   private final Callable<ConsoleTask> taskFactory;
 
-  private ConsolePrompt prompt;
+  private final ConsoleErrorHandler errorHandler;
 
-  private ConsoleErrorHandler errorHandler;
-
-  private ConsoleTask currentTask;
+  private volatile ConsoleTask currentTask;
 
   private volatile boolean running;
 
-  public Console(final IO io, final Callable<ConsoleTask> taskFactory, @Nullable final History history,
-                 @Nullable final InputStream bindings) throws IOException
+  public Console(final LineReader lineReader,
+                 final ConsolePrompt prompt,
+                 final Callable<ConsoleTask> taskFactory,
+                 final ConsoleErrorHandler errorHandler)
   {
-    checkNotNull(io);
+    this.prompt = checkNotNull(prompt);
     this.taskFactory = checkNotNull(taskFactory);
-
-    this.pipe = new InputPipe(io.streams, io.getTerminal(), new InputPipe.InterruptHandler()
-    {
-      @Override
-      public boolean interrupt() throws Exception {
-        return interruptTask();
-      }
-
-      @Override
-      public boolean stop() throws Exception {
-        return false;
-      }
-    });
-    this.pipe.setName("Console InputPipe");
-    this.pipe.setDaemon(true);
-
-    // Setup a new IO w/our pipe input stream & rebuilding the input reader
-    this.io = new IO(new StreamSet(pipe.getInputStream(), io.streams.out, io.streams.err), null, io.out, io.err, true);
-
-    this.reader = new ConsoleReader(
-        this.io.streams.in,
-        this.io.out,
-        bindings,
-        io.getTerminal());
-
-    this.reader.setPaginationEnabled(true);
-    this.reader.setCompletionHandler(new CandidateListCompletionHandler());
-    this.reader.setHistory(history != null ? history : new MemoryHistory());
-  }
-
-  public IO getIo() {
-    return io;
-  }
-
-  public void addCompleter(final Completer completer) {
-    checkNotNull(completer);
-    reader.addCompleter(completer);
-  }
-
-  public void setPrompt(final ConsolePrompt prompt) {
-    this.prompt = prompt;
-  }
-
-  public ConsoleErrorHandler getErrorHandler() {
-    return errorHandler;
-  }
-
-  public void setErrorHandler(final ConsoleErrorHandler errorHandler) {
-    this.errorHandler = errorHandler;
-  }
-
-  public ConsoleTask getCurrentTask() {
-    return currentTask;
+    this.errorHandler = checkNotNull(errorHandler);
+    this.lineReader = checkNotNull(lineReader);
   }
 
   public void close() {
     if (running) {
       log.trace("Closing");
-      pipe.interrupt();
       running = false;
     }
   }
 
+  @Override
   public void run() {
     log.trace("Running");
-    pipe.start();
     running = true;
 
-    while (running) {
-      try {
-        running = work();
-      }
-      catch (Throwable t) {
-        log.trace("Work failed", t);
+    // prepare handling for CTRL-C
+    Terminal terminal = lineReader.getTerminal();
+    Terminal.SignalHandler intHandler = terminal.handle(Terminal.Signal.INT, s -> {
+      interruptTask();
+    });
 
-        if (getErrorHandler() != null) {
-          running = getErrorHandler().handleError(t);
-        }
-        else {
-          t.printStackTrace();
-        }
-
-        // Need to reset the terminal in some cases after a failure
+    try {
+      while (running) {
         try {
-          io.getTerminal().reset();
+          running = work();
         }
-        catch (Exception e) {
-          log.error("Failed to reset terminal", e);
+        catch (Throwable t) {
+          log.trace("Work failed", t);
+          running = errorHandler.handleError(t);
         }
       }
+    }
+    finally {
+      terminal.handle(Terminal.Signal.INT, intHandler);
     }
 
     log.trace("Stopped");
-  }
-
-  protected ConsoleTask createTask() {
-    try {
-      return taskFactory.call();
-    }
-    catch (Exception e) {
-      throw new RuntimeException(e);
-    }
   }
 
   /**
@@ -177,9 +102,7 @@ public class Console
    * @throws Exception Work failed.
    */
   private boolean work() throws Exception {
-    String line = readLine(prompt != null ? prompt.prompt() : ConsolePrompt.DEFAULT_PROMPT);
-
-    log.trace("Read line: {}", line);
+    String line = lineReader.readLine(prompt.prompt());
 
     if (log.isTraceEnabled()) {
       traceLine(line);
@@ -194,10 +117,8 @@ public class Console
     }
 
     // Build the task and execute it
-    assert currentTask == null;
-    currentTask = createTask();
-    log.trace("Current task: {}", currentTask);
-
+    checkState(currentTask == null);
+    currentTask = taskFactory.call();
     try {
       return currentTask.execute(line);
     }
@@ -206,36 +127,29 @@ public class Console
     }
   }
 
+  /**
+   * Logs line with HEX details.
+   */
   private void traceLine(@Nullable final String line) {
     if (line == null) {
       return;
     }
 
-    StringBuilder idx = new StringBuilder();
     StringBuilder hex = new StringBuilder();
+    StringBuilder idx = new StringBuilder();
 
     for (byte b : line.getBytes()) {
-      String h = Integer.toHexString(b);
-
-      hex.append('x').append(h).append(' ');
+      hex.append('x').append(Integer.toHexString(b)).append(' ');
       idx.append(' ').append((char) b).append("  ");
     }
 
-    log.trace("HEX: {}", hex);
-    log.trace("     {}", idx);
+    log.trace("Read line: {}\n{}\n{}", line, hex, idx);
   }
 
-  private String readLine(@Nullable final String prompt) throws IOException {
-    return reader.readLine(prompt);
-  }
-
-  private boolean interruptTask() throws Exception {
+  private boolean interruptTask() {
     boolean interrupt = false;
 
-    reader.getCursorBuffer().clear();
-    reader.redrawLine();
-
-    ConsoleTask task = getCurrentTask();
+    ConsoleTask task = currentTask;
     if (task != null) {
       synchronized (task) {
         log.debug("Interrupting task");

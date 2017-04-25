@@ -15,9 +15,9 @@
  */
 package com.planet57.gshell.command.registry;
 
-import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.Module;
 import com.google.inject.Stage;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.CommandActionSupport;
@@ -26,40 +26,38 @@ import com.planet57.gshell.event.EventManagerImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.sonatype.goodies.testsupport.TestSupport;
+
+import javax.annotation.Nonnull;
 
 import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link CommandRegistryImpl}.
- *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class CommandRegistryImplTest
+  extends TestSupport
 {
-  private CommandRegistry registry;
+  private CommandRegistryImpl underTest;
 
   @Before
   public void setUp() throws Exception {
-    Injector injector = Guice.createInjector(Stage.DEVELOPMENT, new AbstractModule()
-    {
-      @Override
-      protected void configure() {
-        bind(EventManager.class).to(EventManagerImpl.class);
-        bind(CommandRegistry.class).to(CommandRegistryImpl.class);
-      }
+    Injector injector = Guice.createInjector(Stage.DEVELOPMENT, (Module) binder -> {
+      binder.bind(EventManager.class).to(EventManagerImpl.class);
+      binder.bind(CommandRegistry.class).to(CommandRegistryImpl.class);
     });
-    registry = injector.getInstance(CommandRegistry.class);
+    underTest = injector.getInstance(CommandRegistryImpl.class);
   }
 
   @After
   public void tearDown() {
-    registry = null;
+    underTest = null;
   }
 
   @Test
   public void testRegisterCommandInvalid() throws Exception {
     try {
-      registry.registerCommand(null, null);
+      underTest.registerCommand(null, null);
       fail();
     }
     catch (NullPointerException e) {
@@ -67,7 +65,7 @@ public class CommandRegistryImplTest
     }
 
     try {
-      registry.registerCommand("foo", null);
+      underTest.registerCommand("foo", null);
       fail();
     }
     catch (NullPointerException e) {
@@ -75,9 +73,9 @@ public class CommandRegistryImplTest
     }
 
     try {
-      registry.registerCommand(null, new CommandActionSupport()
+      underTest.registerCommand(null, new CommandActionSupport()
       {
-        public Object execute(CommandContext context) throws Exception {
+        public Object execute(@Nonnull CommandContext context) throws Exception {
           // ignore
           return null;
         }

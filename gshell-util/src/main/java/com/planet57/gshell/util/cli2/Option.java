@@ -54,9 +54,14 @@ public @interface Option
 
   //    String defaultValue() default UNINITIALIZED_STRING;
 
+  /**
+   * True to override default required argument handling when option is present.
+   *
+   * This is to support {@code --help} and similar options for commands that may have required arguments.
+   */
   boolean override() default false;
 
   Class<? extends Handler> handler() default DefaultHandler.class;
 
-  // TODO: Add completer
+  // TODO: Add completer; could also introduce another annotation for this
 }

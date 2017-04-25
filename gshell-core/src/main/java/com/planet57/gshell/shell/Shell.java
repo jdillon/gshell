@@ -18,6 +18,8 @@ package com.planet57.gshell.shell;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.variables.Variables;
+import org.jline.reader.History;
+import org.sonatype.goodies.lifecycle.Lifecycle;
 
 /**
  * Provides access to execute commands.
@@ -26,6 +28,7 @@ import com.planet57.gshell.variables.Variables;
  * @since 2.0
  */
 public interface Shell
+  extends Lifecycle
 {
   Branding getBranding();
 
@@ -35,22 +38,11 @@ public interface Shell
 
   History getHistory();
 
-  boolean isOpened();
-
-  void close();
-
   Object execute(CharSequence line) throws Exception;
 
   Object execute(CharSequence command, Object[] args) throws Exception;
 
   Object execute(Object... args) throws Exception;
-
-  /**
-   * Check if the shell can be run interactively.
-   *
-   * @return True if the shell is interactive.
-   */
-  boolean isInteractive();
 
   /**
    * Run the shell interactively.

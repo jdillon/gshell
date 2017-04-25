@@ -15,6 +15,7 @@
  */
 package com.planet57.gshell.util;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,13 +30,14 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public abstract class ReplacementParser
 {
-  public static final String DEFAULT_PATTERN = "\\$\\{([^}]+)\\}";
+  private static final String DEFAULT_PATTERN_REGEX = "\\$\\{([^}]+)\\}";
+
+  private static final Pattern DEFAULT_PATTERN = Pattern.compile(DEFAULT_PATTERN_REGEX);
 
   private final Pattern pattern;
 
-  public ReplacementParser(final String pattern) {
-    checkNotNull(pattern);
-    this.pattern = Pattern.compile(pattern);
+  public ReplacementParser(final Pattern pattern) {
+    this.pattern = checkNotNull(pattern);
   }
 
   public ReplacementParser() {
@@ -44,20 +46,20 @@ public abstract class ReplacementParser
 
   @Nullable
   public String parse(@Nullable String input) {
-    if (input != null) {
+    if (input != null && input.contains("${")) {
       Matcher matcher = pattern.matcher(input);
 
       while (matcher.find()) {
-        Object rep;
+        Object replacement;
         try {
-          rep = replace(matcher.group(1));
+          replacement = replace(matcher.group(1));
         }
         catch (Exception e) {
           throw new RuntimeException(e);
         }
 
-        if (rep != null) {
-          input = input.replace(matcher.group(0), rep.toString());
+        if (replacement != null) {
+          input = input.replace(matcher.group(0), replacement.toString());
           matcher.reset(input);
         }
       }
@@ -66,5 +68,6 @@ public abstract class ReplacementParser
     return input;
   }
 
-  protected abstract Object replace(String key) throws Exception;
+  @Nullable
+  protected abstract Object replace(@Nonnull String key) throws Exception;
 }

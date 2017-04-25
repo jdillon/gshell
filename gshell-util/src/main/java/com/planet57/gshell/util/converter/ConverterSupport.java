@@ -67,7 +67,7 @@ public abstract class ConverterSupport
   }
 
   @Nullable
-  public final Object toObject(final String text) {
+  public final Object toObject(@Nullable final String text) {
     if (text == null) {
       return null;
     }

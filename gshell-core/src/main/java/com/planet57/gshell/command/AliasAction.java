@@ -15,11 +15,13 @@
  */
 package com.planet57.gshell.command;
 
-import com.planet57.gshell.util.ComponentSupport;
-import com.planet57.gshell.util.Strings;
+import com.google.common.base.Joiner;
+import org.sonatype.goodies.common.ComponentSupport;
 import com.planet57.gshell.util.cli2.OpaqueArguments;
 import com.planet57.gshell.util.i18n.MessageSource;
-import jline.console.completer.Completer;
+import com.planet57.gshell.util.i18n.NopMessageSource;
+
+import javax.annotation.Nonnull;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -53,14 +55,13 @@ public class AliasAction
   }
 
   @Override
-  public Object execute(final CommandContext context) throws Exception {
-    checkNotNull(context);
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
     String alias = target;
 
     // Need to append any more arguments in the context
     Object[] args = context.getArguments();
     if (args.length > 0) {
-      alias = String.format("%s %s", target, Strings.join(args, " "));
+      alias = String.format("%s %s", target, Joiner.on(" ").join(args));
     }
 
     log.debug("Executing alias ({}) -> {}", getName(), alias);
@@ -70,11 +71,6 @@ public class AliasAction
 
   @Override
   public MessageSource getMessages() {
-    return null;
-  }
-
-  @Override
-  public Completer[] getCompleters() {
-    return new Completer[0];
+    return NopMessageSource.INSTANCE;
   }
 }

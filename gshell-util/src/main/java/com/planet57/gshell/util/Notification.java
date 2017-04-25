@@ -15,6 +15,8 @@
  */
 package com.planet57.gshell.util;
 
+// TODO: could normalize with goodies-common, except it lacks a cause which is needed by ErrorNotification
+
 /**
  * Thrown to indicate a notification state.
  * <p/>

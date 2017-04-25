@@ -17,6 +17,7 @@ package com.planet57.gshell.shell;
 
 import java.io.File;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
@@ -60,7 +61,7 @@ public class ShellPrompt
     parser = new ReplacementParser()
     {
       @Override
-      protected Object replace(final String key) {
+      protected Object replace(@Nonnull final String key) {
         Variables vars = variables.get();
 
         // HACK: Handled some magic with shell.user.dir~ (only if shell.user.dir exists)

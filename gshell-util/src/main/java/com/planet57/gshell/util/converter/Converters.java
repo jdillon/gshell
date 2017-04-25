@@ -46,6 +46,7 @@ import com.planet57.gshell.util.converter.basic.Inet4AddressConverter;
 import com.planet57.gshell.util.converter.basic.Inet6AddressConverter;
 import com.planet57.gshell.util.converter.basic.InetAddressConverter;
 import com.planet57.gshell.util.converter.basic.ObjectNameConverter;
+import com.planet57.gshell.util.converter.basic.PathConverter;
 import com.planet57.gshell.util.converter.basic.PatternConverter;
 import com.planet57.gshell.util.converter.basic.StringConverter;
 import com.planet57.gshell.util.converter.basic.UriConverter;
@@ -67,6 +68,8 @@ import com.planet57.gshell.util.converter.collections.SortedSetConverter;
 import com.planet57.gshell.util.converter.collections.TreeMapConverter;
 import com.planet57.gshell.util.converter.collections.TreeSetConverter;
 import com.planet57.gshell.util.converter.collections.WeakHashMapConverter;
+import com.planet57.gshell.util.converter.goodies.ByteSizeConverter;
+import com.planet57.gshell.util.converter.goodies.TimeConverter;
 import com.planet57.gshell.util.converter.primitive.BooleanConverter;
 import com.planet57.gshell.util.converter.primitive.ByteConverter;
 import com.planet57.gshell.util.converter.primitive.CharacterConverter;
@@ -97,7 +100,7 @@ public class Converters
 
   // Register all of the built in converters
   static {
-    Map<Class, Class> map = new HashMap<Class, Class>();
+    Map<Class, Class> map = new HashMap<>();
     map.put(boolean.class, Boolean.class);
     map.put(char.class, Character.class);
     map.put(byte.class, Byte.class);
@@ -109,7 +112,7 @@ public class Converters
     PRIMITIVE_TO_WRAPPER = Collections.unmodifiableMap(map);
 
 
-    map = new HashMap<Class, Class>();
+    map = new HashMap<>();
     map.put(Boolean.class, boolean.class);
     map.put(Character.class, char.class);
     map.put(Byte.class, byte.class);
@@ -131,6 +134,7 @@ public class Converters
     registerConverter(new DateConverter());
     registerConverter(new DoubleConverter());
     registerConverter(new FileConverter());
+    registerConverter(new PathConverter());
     registerConverter(new FloatConverter());
     registerConverter(new HashMapConverter());
     registerConverter(new IdentityHashMapConverter());
@@ -157,6 +161,10 @@ public class Converters
     registerConverter(new UrlConverter());
     registerConverter(new PatternConverter());
     registerConverter(new WeakHashMapConverter());
+
+    // goodies
+    registerConverter(new TimeConverter());
+    registerConverter(new ByteSizeConverter());
   }
 
   /**
@@ -174,7 +182,7 @@ public class Converters
    * If the new value is true, all currently registered converters are
    * immediately registered with the VM.
    */
-  public static void setRegisterWithVM(boolean registerWithVM) {
+  public static void setRegisterWithVM(final boolean registerWithVM) {
     if (Converters.registerWithVM != registerWithVM) {
       Converters.registerWithVM = registerWithVM;
 

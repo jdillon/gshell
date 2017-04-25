@@ -21,6 +21,7 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import com.google.common.base.Stopwatch;
+import com.google.common.base.Throwables;
 import com.planet57.gshell.alias.AliasRegistry;
 import com.planet57.gshell.alias.NoSuchAliasException;
 import com.planet57.gshell.command.AliasAction;
@@ -31,15 +32,11 @@ import com.planet57.gshell.command.registry.NoSuchCommandException;
 import com.planet57.gshell.command.resolver.CommandResolver;
 import com.planet57.gshell.command.resolver.Node;
 import com.planet57.gshell.command.CommandHelper;
-import com.planet57.gshell.notification.ErrorNotification;
-import com.planet57.gshell.notification.ResultNotification;
 import com.planet57.gshell.parser.CommandLineParser;
 import com.planet57.gshell.parser.CommandLineParser.CommandLine;
 import com.planet57.gshell.shell.Shell;
-import com.planet57.gshell.shell.ShellHolder;
 import com.planet57.gshell.util.Arguments;
-import com.planet57.gshell.util.ComponentSupport;
-import com.planet57.gshell.util.Strings;
+import org.sonatype.goodies.common.ComponentSupport;
 import com.planet57.gshell.util.cli2.CliProcessor;
 import com.planet57.gshell.util.cli2.HelpPrinter;
 import com.planet57.gshell.util.cli2.OpaqueArguments;
@@ -49,10 +46,12 @@ import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
 import org.slf4j.MDC;
 
+import java.util.Arrays;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Default {@link CommandExecutor} component.
+ * Default {@link CommandExecutor}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
@@ -70,7 +69,8 @@ public class CommandExecutorImpl
   private final CommandLineParser parser;
 
   @Inject
-  public CommandExecutorImpl(final AliasRegistry aliases, final CommandResolver resolver,
+  public CommandExecutorImpl(final AliasRegistry aliases,
+                             final CommandResolver resolver,
                              final CommandLineParser parser)
   {
     this.aliases = checkNotNull(aliases);
@@ -89,29 +89,17 @@ public class CommandExecutorImpl
       return null;
     }
 
-    final Shell lastShell = ShellHolder.set(shell);
-
+    // FIXME: remove use of ShellHolder
     CommandLine cl = parser.parse(line);
 
     try {
       return cl.execute(shell, this);
     }
     catch (ErrorNotification n) {
-      // Decode the error notification
       Throwable cause = n.getCause();
-
-      if (cause instanceof Exception) {
-        throw (Exception) cause;
-      }
-      else if (cause instanceof Error) {
-        throw (Error) cause;
-      }
-      else {
-        throw n;
-      }
-    }
-    finally {
-      ShellHolder.set(lastShell);
+      Throwables.propagateIfPossible(cause, Exception.class, Error.class);
+      // should normally never happen
+      throw n;
     }
   }
 
@@ -151,7 +139,9 @@ public class CommandExecutorImpl
     checkNotNull(name);
     checkNotNull(args);
 
-    log.debug("Executing ({}): [{}]", name, Strings.join(args, ", "));
+    if (log.isDebugEnabled()) {
+      log.debug("Executing ({}): {}", name, Arrays.asList(args));
+    }
 
     Stopwatch watch = Stopwatch.createStarted();
 
@@ -159,7 +149,7 @@ public class CommandExecutorImpl
     MDC.put(CommandAction.class.getName(), name);
 
     final ClassLoader cl = Thread.currentThread().getContextClassLoader();
-    final Shell lastShell = ShellHolder.set(shell);
+
     final IO io = shell.getIo();
 
     StreamJack.maybeInstall(io.streams);
@@ -169,7 +159,7 @@ public class CommandExecutorImpl
       boolean execute = true;
 
       // Process command preferences
-      PreferenceProcessor pp = CommandHelper.createPreferenceProcessor(action);
+      PreferenceProcessor pp = CommandHelper.createPreferenceProcessor(action, shell.getBranding());
       pp.process();
 
       // Process command arguments unless marked as opaque
@@ -183,7 +173,7 @@ public class CommandExecutorImpl
           io.out.println(CommandHelper.getDescription(action));
           io.out.println();
 
-          HelpPrinter printer = new HelpPrinter(clp);
+          HelpPrinter printer = new HelpPrinter(clp, io.terminal);
           printer.printUsage(io.out, action.getSimpleName());
 
           // Skip execution
@@ -225,7 +215,6 @@ public class CommandExecutorImpl
     finally {
       io.flush();
       StreamJack.deregister();
-      ShellHolder.set(lastShell);
       Thread.currentThread().setContextClassLoader(cl);
       MDC.remove(CommandAction.class.getName());
     }

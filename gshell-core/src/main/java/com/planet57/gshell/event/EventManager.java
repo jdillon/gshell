@@ -15,6 +15,8 @@
  */
 package com.planet57.gshell.event;
 
+import org.sonatype.goodies.lifecycle.Lifecycle;
+
 /**
  * Manages event subscriptions and publishes events.
  *
@@ -22,10 +24,8 @@ package com.planet57.gshell.event;
  * @since 3.0
  */
 public interface EventManager
+  extends Lifecycle
 {
-  // HACK: primitive component lifecycle
-  void start();
-
   void register(Object listener);
 
   void unregister(Object listener);

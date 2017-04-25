@@ -22,7 +22,7 @@ import java.util.List;
 import com.planet57.gshell.util.i18n.AggregateMessageSource;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
-import jline.TerminalFactory;
+import org.jline.terminal.Terminal;
 
 import javax.annotation.Nullable;
 
@@ -41,19 +41,26 @@ public class HelpPrinter
 
   private AggregateMessageSource messages = new AggregateMessageSource(new ResourceBundleMessageSource(getClass()));
 
-  private int terminalWidth = TerminalFactory.get().getWidth();
+  private int terminalWidth;
 
   private String prefix = "  ";
 
   private String separator = "    ";
 
-  public HelpPrinter(final CliProcessor processor) {
+  public HelpPrinter(final CliProcessor processor, @Nullable final Terminal terminal) {
     this.processor = checkNotNull(processor);
 
     // Add messages from the processor
     MessageSource messages = processor.getMessages();
     if (messages != null) {
       addMessages(messages);
+    }
+
+    terminalWidth = terminal != null ? terminal.getWidth() : 80;
+
+    // HACK: adjust for mock
+    if (terminalWidth <= 0) {
+      terminalWidth = 80;
     }
   }
 
@@ -89,10 +96,10 @@ public class HelpPrinter
   public void printUsage(final PrintWriter out, @Nullable final String name) {
     checkNotNull(out);
 
-    List<ArgumentDescriptor> arguments = new ArrayList<ArgumentDescriptor>();
+    List<ArgumentDescriptor> arguments = new ArrayList<>();
     arguments.addAll(processor.getArgumentDescriptors());
 
-    List<OptionDescriptor> options = new ArrayList<OptionDescriptor>();
+    List<OptionDescriptor> options = new ArrayList<>();
     options.addAll(processor.getOptionDescriptors());
 
     if (name != null) {

@@ -17,15 +17,14 @@ package com.planet57.gshell;
 
 import java.io.File;
 
+import com.planet57.gshell.branding.Asl2License;
 import com.planet57.gshell.branding.BrandingSupport;
 import com.planet57.gshell.branding.License;
-import com.planet57.gshell.branding.LicenseSupport;
 import com.planet57.gshell.util.io.PrintBuffer;
-import com.planet57.gshell.variables.VariableNames;
 import org.fusesource.jansi.Ansi;
 
-import javax.inject.Named;
-import javax.inject.Singleton;
+import static com.planet57.gshell.variables.VariableNames.SHELL_GROUP;
+import static com.planet57.gshell.variables.VariableNames.SHELL_USER_DIR;
 
 /**
  * Branding for <tt>gsh</tt>.
@@ -33,8 +32,6 @@ import javax.inject.Singleton;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Named
-@Singleton
 public class BrandingImpl
     extends BrandingSupport
 {
@@ -50,18 +47,13 @@ public class BrandingImpl
   @Override
   public String getWelcomeMessage() {
     PrintBuffer buff = new PrintBuffer();
-
     for (String line : BANNER) {
       buff.println(Ansi.ansi().fg(Ansi.Color.CYAN).a(line).reset());
     }
-
     buff.println();
-    buff.format("%s (%s)", getDisplayName(), getVersion()).println();
-    buff.println();
+    buff.format("%s (%s)%n%n", getDisplayName(), getVersion());
     buff.println("Type '@|bold help|@' for more information.");
-    buff.print(line());
-    buff.flush();
-
+    buff.print(LINE_TOKEN);
     return buff.toString();
   }
 
@@ -82,11 +74,11 @@ public class BrandingImpl
 
   @Override
   public String getPrompt() {
-    return String.format("@|bold %s|@:${%s}> ", getProgramName(), VariableNames.SHELL_GROUP);
+    return String.format("@|bold %s|@(${%s}):${%s}> ", getProgramName(), SHELL_GROUP, SHELL_USER_DIR + "~.");
   }
 
   @Override
   public License getLicense() {
-    return new LicenseSupport("Apache License, Version 2.0", "http://www.apache.org/licenses/LICENSE-2.0.txt");
+    return new Asl2License();
   }
 }

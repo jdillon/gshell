@@ -16,11 +16,13 @@
 package com.planet57.gshell.command;
 
 import com.planet57.gshell.command.resolver.NodePath;
-import com.planet57.gshell.util.ComponentSupport;
+import org.sonatype.goodies.common.ComponentSupport;
 import com.planet57.gshell.util.cli2.OpaqueArguments;
 import com.planet57.gshell.util.i18n.MessageSource;
+import com.planet57.gshell.util.i18n.NopMessageSource;
 import com.planet57.gshell.variables.VariableNames;
-import jline.console.completer.Completer;
+
+import javax.annotation.Nonnull;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -51,9 +53,7 @@ public class GroupAction
   }
 
   @Override
-  public Object execute(final CommandContext context) throws Exception {
-    checkNotNull(context);
-
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
     log.debug("Changing group to: {}", name);
     context.getVariables().set(VariableNames.SHELL_GROUP, name);
 
@@ -62,11 +62,6 @@ public class GroupAction
 
   @Override
   public MessageSource getMessages() {
-    return null;
-  }
-
-  @Override
-  public Completer[] getCompleters() {
-    return new Completer[0];
+    return NopMessageSource.INSTANCE;
   }
 }

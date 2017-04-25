@@ -31,7 +31,6 @@ import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 import com.planet57.gshell.util.setter.SetterFactory;
 import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.MissingArgumentException;
 import org.apache.commons.cli.MissingOptionException;
 import org.apache.commons.cli.Options;
@@ -51,21 +50,16 @@ public class CliProcessor
 {
   private static final Logger log = Log.getLogger(CliProcessor.class);
 
-  private final List<OptionDescriptor> optionDescriptors = new ArrayList<OptionDescriptor>();
+  private final List<OptionDescriptor> optionDescriptors = new ArrayList<>();
 
-  private final List<ArgumentDescriptor> argumentDescriptors = new ArrayList<ArgumentDescriptor>();
+  private final List<ArgumentDescriptor> argumentDescriptors = new ArrayList<>();
 
   private boolean stopAtNonOption;
 
   private MessageSource messages;
 
-  public enum Flavor
-  {
-    POSIX,
-    GNU
-  }
-
-  private Flavor flavor = Flavor.POSIX;
+  // TODO: change to Flavor.DEFAULT; but have to sort out control/handling of required-options which are delayed for Option.override handling
+  private CliParser.Flavor flavor = CliParser.Flavor.POSIX;
 
   public CliProcessor() {
     // empty
@@ -87,11 +81,11 @@ public class CliProcessor
     this.messages = messages;
   }
 
-  public Flavor getFlavor() {
+  public CliParser.Flavor getFlavor() {
     return flavor;
   }
 
-  public void setFlavor(final Flavor flavor) {
+  public void setFlavor(final CliParser.Flavor flavor) {
     this.flavor = checkNotNull(flavor);
   }
 
@@ -153,14 +147,6 @@ public class CliProcessor
 
       OptionDescriptor desc = new OptionDescriptor(opt, SetterFactory.create(element, bean));
 
-      // If the type is boolean, and its marked as optional or requires args, complain to use Boolean instead
-      if (desc.getSetter().getType() == boolean.class) {
-        if (desc.isArgumentOptional() || desc.getArgs() != 0) {
-          throw new IllegalAnnotationError(
-              String.format("Using Boolean for advanced processing of boolean types, on: %s", element));
-        }
-      }
-
       // Make sure we have unique names
       for (OptionDescriptor tmp : optionDescriptors) {
         if (desc.getName() != null && desc.getName().equals(tmp.getName())) {
@@ -198,55 +184,10 @@ public class CliProcessor
   // Processing
   //
 
-  private interface CliParser
-      extends CommandLineParser
-  {
-    void ensureRequiredOptionsPresent() throws MissingOptionException;
-  }
-
-  private static class GnuParser
-      extends org.apache.commons.cli.GnuParser
-      implements CliParser
-  {
-    @Override
-    protected void checkRequiredOptions() {
-      // delay, need to check for required options after processing to support override
-    }
-
-    public void ensureRequiredOptionsPresent() throws MissingOptionException {
-      super.checkRequiredOptions();
-    }
-  }
-
-  private static class PosixParser
-      extends org.apache.commons.cli.PosixParser
-      implements CliParser
-  {
-    @Override
-    protected void checkRequiredOptions() {
-      // delay, need to check for required options after processing to support override
-    }
-
-    public void ensureRequiredOptionsPresent() throws MissingOptionException {
-      super.checkRequiredOptions();
-    }
-  }
 
   public void process(final String... args) throws Exception {
     checkNotNull(args);
-    CliParser parser = null;
-
-    switch (flavor) {
-      case POSIX:
-        parser = new PosixParser();
-        break;
-      case GNU:
-        parser = new GnuParser();
-        break;
-    }
-
-    assert parser != null;
-
+    CliParser parser = flavor.create();
     CommandLine cl;
 
     try {
@@ -263,7 +204,7 @@ public class CliProcessor
       throw new ProcessingException(e);
     }
 
-    Set<CliDescriptor> present = new HashSet<CliDescriptor>();
+    Set<CliDescriptor> present = new HashSet<>();
     boolean override = false;
 
     for (Object tmp : cl.getOptions()) {

@@ -22,18 +22,19 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.inject.Key;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandAction;
-import com.planet57.gshell.guice.BeanContainer;
-import com.planet57.gshell.util.ComponentSupport;
+import com.planet57.gshell.internal.BeanContainer;
 import org.eclipse.sisu.BeanEntry;
+import org.sonatype.goodies.lifecycle.LifecycleSupport;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
 /**
- * Guice {@link CommandRegistrar}.
+ * Default {@link CommandRegistrar}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
@@ -41,12 +42,14 @@ import static com.google.common.base.Preconditions.checkState;
 @Named
 @Singleton
 public class CommandRegistrarImpl
-  extends ComponentSupport
+  extends LifecycleSupport
   implements CommandRegistrar
 {
   private final BeanContainer container;
 
   private final CommandRegistry registry;
+
+  private boolean discoveryEnabled = true;
 
   @Inject
   public CommandRegistrarImpl(final BeanContainer container,
@@ -56,9 +59,22 @@ public class CommandRegistrarImpl
     this.registry = checkNotNull(registry);
   }
 
+  @VisibleForTesting
+  public void setDiscoveryEnabled(final boolean discoveryEnabled) {
+    log.debug("Discovery enabled: {}", discoveryEnabled);
+    this.discoveryEnabled = discoveryEnabled;
+  }
+
+  @Override
+  protected void doStart() throws Exception {
+    if (discoveryEnabled) {
+      discoverCommands();
+    }
+  }
+
   @Override
   public void discoverCommands() throws Exception {
-    log.trace("Registering commands");
+    log.trace("Discovering commands");
 
     for (BeanEntry<?,CommandAction> entry : container.locate(Key.get(CommandAction.class, Command.class))) {
       log.trace("Registering command: {}", entry);
@@ -75,8 +91,8 @@ public class CommandRegistrarImpl
 
     log.trace("Registering command: {} -> {}", name, className);
 
-    CommandAction command = createAction(className);
-    registry.registerCommand(name, command);
+    CommandAction action = createAction(className);
+    registry.registerCommand(name, action);
   }
 
   @Override
@@ -85,19 +101,42 @@ public class CommandRegistrarImpl
 
     log.trace("Registering command: {}", className);
 
-    CommandAction command = createAction(className);
+    CommandAction action = createAction(className);
+    String name = detectCommandName(action);
+    registry.registerCommand(name, action);
+  }
 
-    Command meta = command.getClass().getAnnotation(Command.class);
-    checkState(meta != null, "Missing @Command: %s", className);
-    String name = meta.name();
+  @Override
+  public void registerCommand(final String name, final Class type) throws Exception {
+    checkNotNull(name);
+    checkNotNull(type);
 
-    registry.registerCommand(name, command);
+    CommandAction action = createAction(type);
+    registry.registerCommand(name, action);
+  }
+
+  @Override
+  public void registerCommand(final Class type) throws Exception {
+    checkNotNull(type);
+
+    CommandAction action = createAction(type);
+    String name = detectCommandName(action);
+    registry.registerCommand(name, action);
+  }
+
+  private static String detectCommandName(final CommandAction action) {
+    Command command = action.getClass().getAnnotation(Command.class);
+    checkState(command != null, "Missing @Command annotation: %s", action.getClass());
+    return command.name();
+  }
+
+  private CommandAction createAction(final String className) throws ClassNotFoundException {
+    Class<?> type = Thread.currentThread().getContextClassLoader().loadClass(className);
+    return createAction(type);
   }
 
   @SuppressWarnings({"unchecked"})
-  private CommandAction createAction(final String className) throws ClassNotFoundException {
-    assert className != null;
-    Class<?> type = Thread.currentThread().getContextClassLoader().loadClass(className);
+  private CommandAction createAction(final Class<?> type) throws ClassNotFoundException {
     Iterator<BeanEntry<Annotation, ?>> iter = container.locate(Key.get((Class) type)).iterator();
     if (iter.hasNext()) {
       return (CommandAction) iter.next().getValue();

@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.MissingResourceException;
 
-import com.planet57.gshell.util.ComponentSupport;
+import org.sonatype.goodies.common.ComponentSupport;
 import com.planet57.gshell.util.io.PrintBuffer;
 import com.planet57.gshell.util.io.Closeables;
 
@@ -60,21 +60,15 @@ public class HelpContentLoaderImpl
 
     log.debug("Using resource: {}", resource);
 
-    BufferedReader input = new BufferedReader(new InputStreamReader(resource.openStream()));
-    PrintBuffer buff;
-    try {
-      buff = new PrintBuffer();
+    PrintBuffer buff = new PrintBuffer();
+    try (BufferedReader input = new BufferedReader(new InputStreamReader(resource.openStream()))) {
       String line;
-
       while ((line = input.readLine()) != null) {
         // Ignore lines starting with #, these are comments
         if (!line.startsWith("#")) {
           buff.println(line);
         }
       }
-    }
-    finally {
-      Closeables.close(input);
     }
 
     return buff.toString();
@@ -110,7 +104,7 @@ public class HelpContentLoaderImpl
     String country = locale.getCountry();
     String variant = locale.getVariant();
 
-    List<Locale> locales = new ArrayList<Locale>(4);
+    List<Locale> locales = new ArrayList<>(4);
 
     if (variant.length() > 0) {
       locales.add(locale);
@@ -151,15 +145,11 @@ public class HelpContentLoaderImpl
     }
 
     return buff.toString();
-
   }
 
   private String toResourceName(final String bundleName, final String suffix) {
     assert bundleName != null;
     assert suffix != null;
-
-    StringBuilder buff = new StringBuilder(bundleName.length() + 1 + suffix.length());
-    buff.append(bundleName.replace('.', '/')).append('.').append(suffix);
-    return buff.toString();
+    return bundleName.replace('.', '/') + '.' + suffix;
   }
 }

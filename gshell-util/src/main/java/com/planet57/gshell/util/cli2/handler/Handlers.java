@@ -38,8 +38,7 @@ public class Handlers
     }
     catch (NoSuchMethodException e) {
       throw new IllegalArgumentException(
-          "Handler is missing required constructor: public " + type.getName() + "(" + CliDescriptor.class.getName() +
-              ")");
+        String.format("Handler is missing required constructor: public %s(%s)", type.getName(), CliDescriptor.class.getName()));
     }
   }
 
@@ -55,7 +54,7 @@ public class Handlers
       if (Enum.class.isAssignableFrom(valueType)) {
         return new EnumHandler(desc);
       }
-      else if (boolean.class.isAssignableFrom(valueType) || Boolean.class.isAssignableFrom(valueType)) {
+      else if (valueType == boolean.class || valueType == Boolean.class) {
         return new BooleanHandler(desc);
       }
       else {

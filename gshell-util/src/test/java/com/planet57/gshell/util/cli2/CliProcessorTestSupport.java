@@ -17,13 +17,13 @@ package com.planet57.gshell.util.cli2;
 
 import org.junit.After;
 import org.junit.Before;
+import org.sonatype.goodies.testsupport.TestSupport;
 
 /**
  * Support for {@link CliProcessor} tests.
- *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public abstract class CliProcessorTestSupport
+  extends TestSupport
 {
   protected CliProcessor clp;
 

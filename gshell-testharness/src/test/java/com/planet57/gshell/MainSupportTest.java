@@ -16,59 +16,83 @@
 package com.planet57.gshell;
 
 import com.planet57.gshell.branding.Branding;
-import com.planet57.gshell.notification.ExitNotification;
+import com.planet57.gshell.execute.ExitNotification;
 import com.planet57.gshell.shell.Shell;
-import com.planet57.gshell.testharness.DummyShell;
 import com.planet57.gshell.testharness.TestBranding;
+import com.planet57.gshell.util.io.StreamJack;
+import com.planet57.gshell.util.io.StreamSet;
 import org.fusesource.jansi.Ansi;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.sonatype.goodies.testsupport.TestUtil;
+import org.sonatype.goodies.testsupport.TestSupport;
 
-import static org.junit.Assert.assertEquals;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
 
 /**
  * Tests for {@link MainSupport}.
- *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class MainSupportTest
+  extends TestSupport
 {
-  private final TestUtil util = new TestUtil(this);
-
-  private MockMain main;
+  private MockMain underTest;
 
   @Before
   public void setUp() throws Exception {
     Ansi.setEnabled(false);
-    main = new MockMain();
+    underTest = new MockMain();
   }
 
   @After
   public void tearDown() throws Exception {
-    main = null;
+    underTest = null;
   }
-
-  // FIXME: due to how MainSupport works to setup streams; these tests will spit out to system.out even if surefire configured to redirect
 
   @Test
   public void test_h() throws Exception {
-    main.boot("-h");
-    Assert.assertEquals(ExitNotification.DEFAULT_CODE, main.exitCode);
+    try {
+      underTest.boot("-h");
+    }
+    finally {
+      StreamJack.uninstall();
+    }
+
+    log(new String(underTest.out.toByteArray()));
+    assertThat(underTest.exitCode, is(ExitNotification.SUCCESS_CODE));
   }
 
   @Test
   public void test__help() throws Exception {
-    main.boot("--help");
-    assertEquals(ExitNotification.DEFAULT_CODE, main.exitCode);
+    try {
+      underTest.boot("--help");
+    }
+    finally {
+      StreamJack.uninstall();
+    }
+
+    log(new String(underTest.out.toByteArray()));
+    assertThat(underTest.exitCode, is(ExitNotification.SUCCESS_CODE));
   }
 
   private class MockMain
       extends MainSupport
   {
     public int exitCode;
+
+    public ByteArrayInputStream in = new ByteArrayInputStream(new byte[0]);
+
+    public ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+    @Override
+    protected StreamSet createStreamSet() {
+      return new StreamSet(in, new PrintStream(out, true));
+    }
 
     @Override
     protected Branding createBranding() {
@@ -77,7 +101,7 @@ public class MainSupportTest
 
     @Override
     protected Shell createShell() throws Exception {
-      return new DummyShell();
+      return mock(Shell.class);
     }
 
     @Override
@@ -85,5 +109,4 @@ public class MainSupportTest
       this.exitCode = code;
     }
   }
-
 }

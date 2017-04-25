@@ -20,11 +20,12 @@ import java.io.PrintStream;
 
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.util.io.StreamSet;
+import org.jline.terminal.Terminal;
 
 /**
  * Test {@link IO}.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ * @since 3.0
  */
 public class TestIO
     extends IO
@@ -33,13 +34,12 @@ public class TestIO
 
   private ByteArrayOutputStream error;
 
-  public TestIO() {
-    this(new ByteArrayOutputStream(), new ByteArrayOutputStream());
+  public TestIO(final Terminal terminal) {
+    this(new ByteArrayOutputStream(), new ByteArrayOutputStream(), terminal);
   }
 
-  private TestIO(ByteArrayOutputStream output, ByteArrayOutputStream error) {
-    super(new StreamSet(System.in, new PrintStream(output), new PrintStream(error)), true);
-
+  private TestIO(final ByteArrayOutputStream output, final ByteArrayOutputStream error, final Terminal terminal) {
+    super(new StreamSet(System.in, new PrintStream(output), new PrintStream(error)), terminal);
     this.output = output;
     this.error = error;
   }

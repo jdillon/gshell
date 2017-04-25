@@ -16,16 +16,16 @@
 package com.planet57.gshell.command.resolver;
 
 import org.junit.Test;
+import org.sonatype.goodies.testsupport.TestSupport;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 /**
  * Tests for {@link NodePath}.
- *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class NodePathTest
+  extends TestSupport
 {
   private void assertParent(final String expected, final String path) {
     assertEquals(expected, new NodePath(path).parent().toString());

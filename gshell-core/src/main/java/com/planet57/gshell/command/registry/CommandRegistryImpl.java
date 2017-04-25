@@ -26,12 +26,12 @@ import javax.inject.Singleton;
 
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.event.EventManager;
-import com.planet57.gshell.util.ComponentSupport;
+import org.sonatype.goodies.common.ComponentSupport;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * {@link CommandRegistry} component.
+ * Default {@link CommandRegistry}.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
@@ -42,7 +42,7 @@ public class CommandRegistryImpl
   extends ComponentSupport
   implements CommandRegistry
 {
-  private final Map<String, CommandAction> commands = new LinkedHashMap<String, CommandAction>();
+  private final Map<String, CommandAction> commands = new LinkedHashMap<>();
 
   private final EventManager events;
 
@@ -104,11 +104,6 @@ public class CommandRegistryImpl
     checkNotNull(name);
 
     return commands.containsKey(name);
-  }
-
-  @Override
-  public Collection<String> getCommandNames() {
-    return Collections.unmodifiableSet(commands.keySet());
   }
 
   @Override

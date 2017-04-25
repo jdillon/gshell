@@ -23,8 +23,6 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Some simple tests to validate basic functionality.
- *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class SimpleTest
     extends PreferenceProcessorTestSupport

@@ -23,12 +23,14 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-public abstract class LoggingComponentSupport
+public class LoggingComponentSupport
     implements LoggingComponent
 {
   private final String type;
 
   private final String name;
+
+  private Object target;
 
   public LoggingComponentSupport(final String type, final String name) {
     this.type = checkNotNull(type);
@@ -39,6 +41,11 @@ public abstract class LoggingComponentSupport
     this(type, DEFAULT_NAME);
   }
 
+  public LoggingComponentSupport(final Object target) {
+    this(target.getClass().getName());
+    this.target = target;
+  }
+
   @Override
   public String getType() {
     return type;
@@ -47,6 +54,11 @@ public abstract class LoggingComponentSupport
   @Override
   public String getName() {
     return name;
+  }
+
+  @Override
+  public Object getTarget() {
+    return target;
   }
 
   @Override

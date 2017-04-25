@@ -22,6 +22,7 @@ import java.io.PrintStream;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.sonatype.goodies.testsupport.TestSupport;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -29,10 +30,9 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the {@link StreamJack} class.
- *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class StreamJackTest
+  extends TestSupport
 {
   private ByteArrayOutputStream buff;
 

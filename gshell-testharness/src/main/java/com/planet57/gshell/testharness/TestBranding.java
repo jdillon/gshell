@@ -20,10 +20,12 @@ import com.planet57.gshell.branding.BrandingSupport;
 
 import java.io.File;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Test {@link Branding}.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ * @since 3.0
  */
 public class TestBranding
     extends BrandingSupport
@@ -31,8 +33,7 @@ public class TestBranding
   private File baseDir;
 
   public TestBranding(final File baseDir) {
-    assert baseDir != null;
-    this.baseDir = baseDir;
+    this.baseDir = checkNotNull(baseDir);
   }
 
   @Override

@@ -15,8 +15,10 @@
  */
 package com.planet57.gshell.console;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.planet57.gshell.util.Notification;
+import org.sonatype.goodies.common.ComponentSupport;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Encapsulates a console execute task.
@@ -25,15 +27,8 @@ import org.slf4j.LoggerFactory;
  * @since 2.0
  */
 public abstract class ConsoleTask
+  extends ComponentSupport
 {
-  protected static final Logger log = LoggerFactory.getLogger(ConsoleTask.class);
-
-  /**
-   * Holds the currently executing task for the thread.  To allow for edge cases where the
-   * originating thread is not the desired thread to interrupt/stop.
-   */
-  private static final InheritableThreadLocal<ConsoleTask> holder = new InheritableThreadLocal<ConsoleTask>();
-
   /**
    * The thread which is executing this task.
    */
@@ -48,6 +43,8 @@ public abstract class ConsoleTask
    * True if the task is stopping (ie. {@link #stop} was invoked).
    */
   private boolean stopping;
+
+  private String input;
 
   /**
    * True if the task is running (ie. {@link #execute} was invoked).
@@ -75,13 +72,15 @@ public abstract class ConsoleTask
   }
 
   /**
-   * Kill the tasks execute thread via {@link Thread#stop}.  Thread is given a {@link AbortTaskError}.
+   * Kill the tasks execute thread via {@link Thread#stop}.
+   *
+   * Thread is given an {@link AbortTaskNotification}.
    */
   @SuppressWarnings({"deprecation", "ThrowableInstanceNeverThrown"})
   public synchronized void abort() {
     if (running) {
       log.trace("Aborting");
-      thread.stop(new AbortTaskError());
+      thread.stop(new AbortTaskNotification());
     }
   }
 
@@ -93,12 +92,10 @@ public abstract class ConsoleTask
    * @throws Exception The console task failed.
    */
   public boolean execute(final String input) throws Exception {
-    ConsoleTask prevTask;
+    this.input = checkNotNull(input);
 
     synchronized (this) {
       log.trace("Running");
-      prevTask = holder.get();
-      holder.set(this);
       thread = Thread.currentThread();
       running = true;
     }
@@ -111,7 +108,6 @@ public abstract class ConsoleTask
         stopping = false;
         running = false;
         thread = null;
-        holder.set(prevTask);
         log.trace("Stopped");
       }
     }
@@ -133,10 +129,7 @@ public abstract class ConsoleTask
    * @param thread The new thread considered to be the tasks execute thread.
    */
   public void setExecuteThread(final Thread thread) {
-    if (thread == null) {
-      throw new IllegalArgumentException();
-    }
-    this.thread = thread;
+    this.thread = checkNotNull(thread);
   }
 
   /**
@@ -148,34 +141,25 @@ public abstract class ConsoleTask
     return thread;
   }
 
-  /**
-   * Get the currently running task.
-   *
-   * @param allowNull False to throw an {@link IllegalStateException} if there is not current task.
-   * @return The current task or null.
-   */
-  public static ConsoleTask get(final boolean allowNull) {
-    ConsoleTask task = holder.get();
-
-    if (!allowNull && task == null) {
-      throw new IllegalStateException("ConsoleTask not initialized for thread: " + Thread.currentThread());
-    }
-
-    return task;
+  @Override
+  public String toString() {
+    return "ConsoleTask{" +
+      "thread=" + thread +
+      ", running=" + running +
+      ", stopping=" + stopping +
+      ", input='" + input + '\'' +
+      '}';
   }
 
-  /**
-   * Get the currently running task.
-   */
-  public static ConsoleTask get() {
-    return get(false);
-  }
+  //
+  // Helpers
+  //
 
   /**
-   * Error thrown to tasks which are asked to {link #abort}.
+   * Thrown to tasks which are asked to {link #abort}.
    */
-  public static class AbortTaskError
-      extends Error
+  private static class AbortTaskNotification
+      extends Notification
   {
     private static final long serialVersionUID = 1;
   }

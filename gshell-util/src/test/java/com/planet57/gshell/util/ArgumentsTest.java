@@ -16,15 +16,15 @@
 package com.planet57.gshell.util;
 
 import org.junit.Test;
+import org.sonatype.goodies.testsupport.TestSupport;
 
 import static org.junit.Assert.assertEquals;
 
 /**
  * Tests for the {@link Arguments} class.
- *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class ArgumentsTest
+  extends TestSupport
 {
   @Test
   public void testShift() {

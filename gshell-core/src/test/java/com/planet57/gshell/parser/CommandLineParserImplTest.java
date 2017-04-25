@@ -15,46 +15,45 @@
  */
 package com.planet57.gshell.parser;
 
-import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.Module;
 import com.google.inject.Stage;
+import com.planet57.gshell.parser.impl.eval.Evaluator;
+import com.planet57.gshell.parser.impl.eval.RegexEvaluator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.sonatype.goodies.testsupport.TestSupport;
 
 import static org.junit.Assert.fail;
 
 /**
- * Unit tests for the {@link CommandLineParserImpl} class.
- *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ * Tests for {@link CommandLineParserImpl}.
  */
 public class CommandLineParserImplTest
+  extends TestSupport
 {
-  private CommandLineParser parser;
+  private CommandLineParser underTest;
 
   @Before
   public void setUp() throws Exception {
-    Injector injector = Guice.createInjector(Stage.DEVELOPMENT, new AbstractModule()
-    {
-      @Override
-      protected void configure() {
-        bind(CommandLineParser.class).to(CommandLineParserImpl.class);
-      }
+    Injector injector = Guice.createInjector(Stage.DEVELOPMENT, (Module) binder -> {
+      binder.bind(CommandLineParser.class).to(CommandLineParserImpl.class);
+      binder.bind(Evaluator.class).to(RegexEvaluator.class);
     });
-    parser = injector.getInstance(CommandLineParser.class);
+    underTest = injector.getInstance(CommandLineParser.class);
   }
 
   @After
   public void tearDown() {
-    parser = null;
+    underTest = null;
   }
 
   @Test
   public void testParseNull() throws Exception {
     try {
-      parser.parse(null);
+      underTest.parse(null);
       fail();
     }
     catch (NullPointerException expected) {

@@ -35,7 +35,5 @@ public interface CommandRegistry
 
   boolean containsCommand(String name);
 
-  Collection<String> getCommandNames();
-
   Collection<CommandAction> getCommands();
 }

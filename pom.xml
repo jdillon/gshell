@@ -24,7 +24,7 @@
   <parent>
     <groupId>com.planet57.buildsupport</groupId>
     <artifactId>public-parent</artifactId>
-    <version>1</version>
+    <version>2-SNAPSHOT</version>
     <relativePath/>
   </parent>
 
@@ -51,9 +51,14 @@
   <url>https://github.com/jdillon/gshell</url>
 
   <issueManagement>
-    <system>Github</system>
+    <system>github</system>
     <url>https://github.com/jdillon/gshell/issues</url>
   </issueManagement>
+
+  <ciManagement>
+    <system>travis</system>
+    <url>https://travis-ci.org/jdillon/gshell</url>
+  </ciManagement>
 
   <developers>
     <developer>
@@ -74,9 +79,11 @@
     <apache-maven.version>3.5.0</apache-maven.version>
     <sonatype-goodies.version>2.2.3</sonatype-goodies.version>
     <gossip.version>2.0.0</gossip.version>
+    <jline.version>3.2.0</jline.version>
+    <slf4j.version>1.7.25</slf4j.version>
 
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
 
   <modules>
@@ -98,6 +105,13 @@
         <groupId>org.sonatype.goodies</groupId>
         <artifactId>goodies-common</artifactId>
         <version>${sonatype-goodies.version}</version>
+        <exclusions>
+          <!-- avoid older version of gossip from leaking in; use in goodies-common is minimal limited to UnhandledThrowable -->
+          <exclusion>
+            <groupId>org.sonatype.gossip</groupId>
+            <artifactId>gossip-support</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
 
       <dependency>
@@ -116,6 +130,7 @@
         <groupId>org.sonatype.goodies</groupId>
         <artifactId>goodies-testsupport</artifactId>
         <version>${sonatype-goodies.version}</version>
+        <!-- this will include older gossip for TestSupport and TestTracer; but should be fine and won't impact general runtime -->
       </dependency>
 
       <dependency>
@@ -127,13 +142,19 @@
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-api</artifactId>
-        <version>1.7.25</version>
+        <version>${slf4j.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>jul-to-slf4j</artifactId>
+        <version>${slf4j.version}</version>
       </dependency>
 
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>jcl-over-slf4j</artifactId>
-        <version>1.7.25</version>
+        <version>${slf4j.version}</version>
       </dependency>
 
       <dependency>
@@ -184,27 +205,50 @@
         <version>20.0</version>
       </dependency>
 
-      <!--
-      FIXME: replace with jline2 or jline3
-      -->
       <dependency>
-        <groupId>org.sonatype.jline</groupId>
-        <artifactId>jline</artifactId>
-        <version>2.5</version>
+        <groupId>org.fusesource.jansi</groupId>
+        <artifactId>jansi</artifactId>
+        <version>1.15</version>
       </dependency>
 
       <dependency>
-        <groupId>commons-jexl</groupId>
-        <artifactId>commons-jexl</artifactId>
-        <version>1.1</version>
+        <groupId>org.jline</groupId>
+        <artifactId>jline-terminal</artifactId>
+        <version>${jline.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.jline</groupId>
+        <artifactId>jline-terminal-jansi</artifactId>
+        <version>${jline.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.jline</groupId>
+        <artifactId>jline-terminal-jna</artifactId>
+        <version>${jline.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.jline</groupId>
+        <artifactId>jline-reader</artifactId>
+        <version>${jline.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.jline</groupId>
+        <artifactId>jline-builtins</artifactId>
+        <version>${jline.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-jexl3</artifactId>
+        <version>3.1</version>
         <exclusions>
           <exclusion>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
           </exclusion>
         </exclusions>
       </dependency>
@@ -421,7 +465,7 @@
                   <version>[3.3,)</version>
                 </requireMavenVersion>
                 <requireJavaVersion>
-                  <version>[1.7,)</version>
+                  <version>[1.8,)</version>
                 </requireJavaVersion>
               </rules>
             </configuration>
@@ -464,7 +508,7 @@
             <configuration>
               <signature>
                 <groupId>org.codehaus.mojo.signature</groupId>
-                <artifactId>java17</artifactId>
+                <artifactId>java18</artifactId>
                 <version>1.0</version>
               </signature>
             </configuration>

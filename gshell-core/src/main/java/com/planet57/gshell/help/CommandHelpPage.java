@@ -17,10 +17,11 @@ package com.planet57.gshell.help;
 
 import java.io.PrintWriter;
 
+import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.resolver.Node;
 import com.planet57.gshell.command.CommandHelper;
-import com.planet57.gshell.shell.ShellHolder;
+import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.util.io.PrintBuffer;
 import com.planet57.gshell.util.cli2.CliProcessor;
 import com.planet57.gshell.util.cli2.HelpPrinter;
@@ -34,6 +35,7 @@ import org.codehaus.plexus.interpolation.PrefixedObjectValueSource;
 import org.codehaus.plexus.interpolation.PropertiesBasedValueSource;
 import org.codehaus.plexus.interpolation.StringSearchInterpolator;
 import org.fusesource.jansi.AnsiRenderer;
+import org.jline.terminal.Terminal;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -54,9 +56,8 @@ public class CommandHelpPage
   private final CommandAction command;
 
   public CommandHelpPage(final Node node, final HelpContentLoader loader) {
-    checkNotNull(node);
+    this.node = checkNotNull(node);
     checkArgument(!node.isGroup());
-    this.node = node;
     this.loader = checkNotNull(loader);
     this.command = node.getAction();
   }
@@ -87,11 +88,11 @@ public class CommandHelpPage
 
     private MessageSource messages;
 
-    public Helper() {
+    public Helper(final Terminal terminal, final Branding branding) {
       CommandHelper help = new CommandHelper();
       clp = help.createCliProcessor(command);
-      printer = new HelpPrinter(clp);
-      pp = CommandHelper.createPreferenceProcessor(command);
+      printer = new HelpPrinter(clp, terminal);
+      pp = CommandHelper.createPreferenceProcessor(command, branding);
     }
 
     private MessageSource getMessages() {
@@ -126,10 +127,6 @@ public class CommandHelpPage
       buff.format("@|bold %s|@", getMessages().format(name)).println();
       buff.println();
     }
-
-    //
-    // FIXME: The indent on the results for arguments+options is 2, not 4 (should be consistent)
-    //
 
     @SuppressWarnings("unused")
     public String getArguments() {
@@ -207,30 +204,23 @@ public class CommandHelpPage
   }
 
   @Override
-  public void render(final PrintWriter out) {
+  public void render(final Shell shell, final PrintWriter out) throws Exception {
+    checkNotNull(shell);
     checkNotNull(out);
 
-    //
-    // FIXME: Really need a little bit more of a help page language here to simplify the formatting of things
-    //
-
     Interpolator interp = new StringSearchInterpolator("@{", "}");
-    interp.addValueSource(new PrefixedObjectValueSource("command.", new Helper()));
-    interp.addValueSource(new PrefixedObjectValueSource("branding.", ShellHolder.get().getBranding()));
+    interp.addValueSource(new PrefixedObjectValueSource("command.", new Helper(shell.getIo().terminal, shell.getBranding())));
+    interp.addValueSource(new PrefixedObjectValueSource("branding.", shell.getBranding()));
     interp.addValueSource(new AbstractValueSource(false)
     {
+      @Override
       public Object getValue(final String expression) {
-        return ShellHolder.get().getVariables().get(expression);
+        return shell.getVariables().get(expression);
       }
     });
     interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));
 
-    try {
-      String text = loader.load(command.getClass().getName(), command.getClass().getClassLoader());
-      out.println(interp.interpolate(text));
-    }
-    catch (Exception e) {
-      throw new RuntimeException(e);
-    }
+    String text = loader.load(command.getClass().getName(), command.getClass().getClassLoader());
+    out.println(interp.interpolate(text));
   }
 }

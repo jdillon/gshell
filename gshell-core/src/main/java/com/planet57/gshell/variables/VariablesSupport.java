@@ -26,6 +26,7 @@ import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.util.converter.Converters;
 
 import javax.annotation.Nullable;
+import javax.inject.Inject;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -53,7 +54,7 @@ public class VariablesSupport
   }
 
   public VariablesSupport(final Variables parent) {
-    this(new LinkedHashMap<String, Object>(), parent);
+    this(new LinkedHashMap<>(), parent);
   }
 
   public VariablesSupport(final Map<String, Object> map) {
@@ -61,12 +62,13 @@ public class VariablesSupport
   }
 
   public VariablesSupport() {
-    this(new LinkedHashMap<String, Object>());
+    this(new LinkedHashMap<>());
   }
 
   /**
    * Informs variables to become event-aware and fire {@link VariableSetEvent} and {@link VariableUnsetEvent}.
    */
+  @Inject
   public void setEventManager(final EventManager eventManager) {
     this.eventManager = checkNotNull(eventManager);
   }
@@ -245,35 +247,38 @@ public class VariablesSupport
   }
 
   @Override
-  public Iterator<String> names() {
-    // Chain to parent iterator if we have a parent
-    return new Iterator<String>()
-    {
-      Iterator<String> iter = map.keySet().iterator();
+  public Iterable<String> names() {
+    return () -> {
+      // Chain to parent iterator if we have a parent
+      return new Iterator<String>()
+      {
+        Iterator<String> iter = map.keySet().iterator();
 
-      boolean more = parent() != null;
+        Variables parent = parent();
+        boolean more = parent != null;
 
-      @Override
-      public boolean hasNext() {
-        boolean next = iter.hasNext();
-        if (!next && more) {
-          iter = parent().names();
-          more = false;
-          next = hasNext();
+        @Override
+        public boolean hasNext() {
+          boolean next = iter.hasNext();
+          if (!next && more) {
+            iter = parent.names().iterator();
+            more = false;
+            next = hasNext();
+          }
+
+          return next;
         }
 
-        return next;
-      }
+        @Override
+        public String next() {
+          return iter.next();
+        }
 
-      @Override
-      public String next() {
-        return iter.next();
-      }
-
-      @Override
-      public void remove() {
-        throw new UnsupportedOperationException();
-      }
+        @Override
+        public void remove() {
+          throw new UnsupportedOperationException();
+        }
+      };
     };
   }
 
