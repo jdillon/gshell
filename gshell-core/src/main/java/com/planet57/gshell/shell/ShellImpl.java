@@ -25,7 +25,9 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import com.google.common.base.Strings;
 import com.planet57.gshell.branding.Branding;
+import com.planet57.gshell.branding.BrandingSupport;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.registry.CommandRegistrar;
 import com.planet57.gshell.console.Console;
@@ -202,71 +204,63 @@ public class ShellImpl
 
     log.debug("Starting interactive console; args: {}", Arrays.asList(args));
 
-    // FIXME: remove use of ShellHolder
-    final Shell lastShell = ShellHolder.set(this);
+    scriptLoader.loadInteractiveScripts(this);
 
-    try {
-      scriptLoader.loadInteractiveScripts(this);
+    // Setup 2 final refs to allow our executor to pass stuff back to us
+    final AtomicReference<ExitNotification> exitNotifHolder = new AtomicReference<>();
 
-      // Setup 2 final refs to allow our executor to pass stuff back to us
-      final AtomicReference<ExitNotification> exitNotifHolder = new AtomicReference<>();
-
-      Callable<ConsoleTask> taskFactory = () -> new ConsoleTask() {
-        @Override
-        public boolean doExecute(final String input) throws Exception {
-          try {
-            // result is saved to LAST_RESULT via the CommandExecutor
-            ShellImpl.this.execute(input);
-          } catch (ExitNotification n) {
-            exitNotifHolder.set(n);
-            return false;
-          }
-
-          return true;
+    Callable<ConsoleTask> taskFactory = () -> new ConsoleTask() {
+      @Override
+      public boolean doExecute(final String input) throws Exception {
+        try {
+          // result is saved to LAST_RESULT via the CommandExecutor
+          ShellImpl.this.execute(input);
         }
-      };
+        catch (ExitNotification n) {
+          exitNotifHolder.set(n);
+          return false;
+        }
 
-      File historyFile = new File(branding.getUserContextDir(), branding.getHistoryFileName());
-
-      LineReader lineReader = LineReaderBuilder.builder()
-        .terminal(io.terminal)
-        .completer(new LoggingCompleter(completer))
-        .history(history)
-        .variable(LineReader.HISTORY_FILE, historyFile)
-        .build();
-
-      Console console = new Console(lineReader, prompt, taskFactory, errorHandler);
-
-      renderWelcomeMessage(io);
-
-      // Check if there are args, and run them and then enter interactive
-      if (args.length != 0) {
-        execute(args);
+        return true;
       }
+    };
 
-      console.run();
+    File historyFile = new File(branding.getUserContextDir(), branding.getHistoryFileName());
 
-      renderGoodbyeMessage(io);
+    LineReader lineReader = LineReaderBuilder.builder()
+      .terminal(io.terminal)
+      .completer(new LoggingCompleter(completer))
+      .history(history)
+      .variable(LineReader.HISTORY_FILE, historyFile)
+      .build();
 
-      // If any exit notification occurred while running, then puke it up
-      ExitNotification n = exitNotifHolder.get();
-      if (n != null) {
-        throw n;
-      }
+    Console console = new Console(lineReader, prompt, taskFactory, errorHandler);
+
+    renderWelcomeMessage(io);
+
+    // Check if there are args, and run them and then enter interactive
+    if (args.length != 0) {
+      execute(args);
     }
-    finally {
-      // FIXME: remove use of ShellHolder
-      ShellHolder.set(lastShell);
+
+    console.run();
+
+    renderGoodbyeMessage(io);
+
+    // If any exit notification occurred while running, then puke it up
+    ExitNotification n = exitNotifHolder.get();
+    if (n != null) {
+      throw n;
     }
   }
 
-  /**
-   * Helper to optionally render a welcome or goodbye message.
-   */
-  private static void renderMessage(final IO io, @Nullable final String msg) {
-    assert io != null;
-    if (msg != null) {
-      io.out.println(msg);
+  private static void renderMessage(final IO io, @Nullable String message) {
+    if (message != null) {
+      // HACK: branding does not have easy access to Terminal; so allow a line to be rendered via replacement token
+      if (message.contains(BrandingSupport.LINE_TOKEN)) {
+        message = message.replace(BrandingSupport.LINE_TOKEN, Strings.repeat("-", io.terminal.getWidth() - 1));
+      }
+      io.out.println(message);
       io.out.flush();
     }
   }

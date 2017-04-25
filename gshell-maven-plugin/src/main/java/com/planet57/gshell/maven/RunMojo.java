@@ -63,6 +63,8 @@ public class RunMojo
     try {
       GuiceMainSupport main = new GuiceMainSupport()
       {
+        // FIXME: need to adjust for Branding; this presently ends up using the default from createBranding()
+
         @Override
         protected void configure(@Nonnull final List<Module> modules) {
           super.configure(modules);

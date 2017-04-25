@@ -46,10 +46,8 @@ public class BrandingImpl
   @Override
   public String getWelcomeMessage() {
     PrintBuffer buff = new PrintBuffer();
-    buff.println("\nType '@|bold help|@' for more information.");
-    buff.print(line());
-    buff.flush();
-
+    buff.format("%nType '@|bold help|@' for more information.%n");
+    buff.print(LINE_TOKEN);
     return buff.toString();
   }
 

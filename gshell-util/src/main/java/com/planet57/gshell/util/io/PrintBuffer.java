@@ -28,10 +28,11 @@ public class PrintBuffer
     extends PrintWriter
 {
   public PrintBuffer() {
-    super(new StringWriter(), true);
+    super(new StringWriter(), false);
   }
 
   public StringBuffer getBuffer() {
+    flush();
     return ((StringWriter) out).getBuffer();
   }
 

@@ -19,6 +19,8 @@ import java.io.File;
 
 import com.planet57.gshell.shell.Shell;
 
+import javax.annotation.Nullable;
+
 /**
  * Defines the basic elements for branding a shell.
  *
@@ -35,8 +37,10 @@ public interface Branding
 
   String getVersion();
 
+  @Nullable
   String getWelcomeMessage();
 
+  @Nullable
   String getGoodbyeMessage();
 
   String getPrompt();

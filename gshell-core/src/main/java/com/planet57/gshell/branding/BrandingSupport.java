@@ -20,9 +20,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.Properties;
 
-import com.google.common.base.Strings;
 import com.planet57.gshell.shell.Shell;
-import com.planet57.gshell.shell.ShellHolder;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 import com.planet57.gshell.util.io.PrintBuffer;
@@ -52,6 +50,13 @@ public class BrandingSupport
 {
   private final MessageSource messages = new ResourceBundleMessageSource()
       .add(false, getClass());
+
+  /**
+   * Render a terminal (width - 1) line for {@link #getGoodbyeMessage()} or {@link #getGoodbyeMessage()}.
+   *
+   * @since 3.0
+   */
+  public static final String LINE_TOKEN = "${LINE}";
 
   private final Properties props;
 
@@ -96,21 +101,11 @@ public class BrandingSupport
     return getProperties().getProperty(SHELL_VERSION);
   }
 
-  protected String line() {
-    // HACK: Branding isn't really a proper guice component; its needed to early, so we have to hack round some dependencies
-    int width = 79;
-    Shell shell = ShellHolder.get();
-    if (shell != null) {
-      width = shell.getIo().terminal.getWidth() - 1;
-    }
-    return Strings.repeat("-", width);
-  }
-
   @Override
   public String getWelcomeMessage() {
     PrintBuffer buff = new PrintBuffer();
-    buff.println(getDisplayName());
-    buff.print(line());
+    buff.format("%s%n", getDisplayName());
+    buff.print(LINE_TOKEN);
     return buff.toString();
   }
 
