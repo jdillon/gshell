@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.concurrent.Callable;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.annotation.Nullable;
@@ -44,10 +45,11 @@ import org.jline.reader.History;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 import org.jline.reader.impl.history.DefaultHistory;
+import org.sonatype.goodies.common.ComponentSupport;
 import org.sonatype.goodies.lifecycle.LifecycleManager;
-import org.sonatype.goodies.lifecycle.LifecycleSupport;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
 /**
  * Default {@link Shell} component.
@@ -57,7 +59,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 @Named
 public class ShellImpl
-  extends LifecycleSupport
+  extends ComponentSupport
   implements Shell
 {
   private final LifecycleManager lifecycles = new LifecycleManager();
@@ -111,19 +113,50 @@ public class ShellImpl
     this.scriptLoader = new ShellScriptLoader();
   }
 
+  // custom/simplified lifecycle so we can fire do-start and do-started
+  private final AtomicBoolean started = new AtomicBoolean(false);
+
   @Override
-  protected void doStart() throws Exception {
+  public void start() throws Exception {
+    synchronized (started) {
+      checkState(!started.get(), "Already started");
+      log.debug("Starting");
+      doStart();
+      started.set(true);
+      doStarted();
+      log.debug("Started");
+    }
+  }
+
+  @Override
+  public void stop() throws Exception {
+    synchronized (started) {
+      ensureStarted();
+      log.debug("Stopping");
+      doStop();
+      started.set(false);
+      log.debug("Stopped");
+    }
+  }
+
+  private void ensureStarted() {
+    synchronized (started) {
+      checkState(started.get(), "Not started");
+    }
+  }
+
+  private void doStart() throws Exception {
     lifecycles.start();
 
     // apply any branding customization
     branding.customize(this);
+  }
 
-    // Do this after we are marked as opened
+  private void doStarted() throws Exception {
     scriptLoader.loadProfileScripts(this);
   }
 
-  @Override
-  protected void doStop() throws Exception {
+  private void doStop() throws Exception {
     lifecycles.stop();
   }
 
@@ -145,11 +178,6 @@ public class ShellImpl
   @Override
   public History getHistory() {
     return history;
-  }
-
-  @Override
-  public boolean isInteractive() {
-    return true;
   }
 
   @Override
