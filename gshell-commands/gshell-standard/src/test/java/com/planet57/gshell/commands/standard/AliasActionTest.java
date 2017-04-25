@@ -15,7 +15,9 @@
  */
 package com.planet57.gshell.commands.standard;
 
+import com.planet57.gshell.alias.AliasRegistry;
 import com.planet57.gshell.testharness.CommandTestSupport;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -30,8 +32,17 @@ import static org.junit.Assert.assertTrue;
 public class AliasActionTest
     extends CommandTestSupport
 {
+  private AliasRegistry aliasRegistry;
+
   public AliasActionTest() {
     super(AliasAction.class);
+  }
+
+  @Override
+  @Before
+  public void setUp() throws Exception {
+    super.setUp();
+    aliasRegistry = injector.getInstance(AliasRegistry.class);
   }
 
   @Test

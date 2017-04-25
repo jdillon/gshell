@@ -78,15 +78,15 @@ public class SourceActionTest
 
   @Test
   public void test2() throws Exception {
-    assertFalse(vars.contains("foo"));
+    assertFalse(variables.contains("foo"));
 
     URL script = getClass().getResource("test2.tsh");
     assertNotNull(script);
     Object result = executeWithArgs(script.toExternalForm());
     assertEqualsSuccess(result);
 
-    assertTrue(vars.contains("foo"));
-    Object value = vars.get("foo");
+    assertTrue(variables.contains("foo"));
+    Object value = variables.get("foo");
     assertEquals(value, "bar");
   }
 }

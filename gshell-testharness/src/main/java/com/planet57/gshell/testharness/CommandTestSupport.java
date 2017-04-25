@@ -25,7 +25,6 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.Stage;
-import com.planet57.gshell.alias.AliasRegistry;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandAction;
@@ -85,17 +84,17 @@ public abstract class CommandTestSupport
 
   private BeanContainer container;
 
+  protected Injector injector;
+
   private Terminal terminal;
 
   private TestIO io;
 
   private Shell shell;
 
-  protected AliasRegistry aliasRegistry;
-
   protected CommandRegistry commandRegistry;
 
-  protected Variables vars;
+  protected Variables variables;
 
   protected final Map<String, Class> requiredCommands = new HashMap<>();
 
@@ -114,28 +113,27 @@ public abstract class CommandTestSupport
     // For simplicity of output verification disable ANSI
     Ansi.setEnabled(false);
 
-    container = new BeanContainer();
     terminal = TerminalBuilder.builder().dumb(true).build();
     io = new TestIO(terminal);
-    vars = new VariablesSupport();
+    variables = new VariablesSupport();
 
+    container = new BeanContainer();
     List<Module> modules = new ArrayList<>();
     modules.add(binder -> {
       binder.bind(BeanContainer.class).toInstance(container);
       binder.bind(LoggingSystem.class).to(TestLoggingSystem.class);
       binder.bind(Branding.class).toInstance(new TestBranding(util.resolveFile("target/shell-home")));
       binder.bind(IO.class).annotatedWith(named("main")).toInstance(io);
-      binder.bind(Variables.class).annotatedWith(named("main")).toInstance(vars);
+      binder.bind(Variables.class).annotatedWith(named("main")).toInstance(variables);
       binder.bind(Evaluator.class).to(RegexEvaluator.class);
     });
     configureModules(modules);
 
-    Injector injector = Guice.createInjector(Stage.DEVELOPMENT, new WireModule(modules));
+    injector = Guice.createInjector(Stage.DEVELOPMENT, new WireModule(modules));
     container.add(injector, 0);
 
     shell = injector.getInstance(ShellImpl.class);
-    vars = shell.getVariables();
-    aliasRegistry = injector.getInstance(AliasRegistry.class);
+    variables = shell.getVariables();
     commandRegistry = injector.getInstance(CommandRegistry.class);
 
     // TODO: disable meta-page discovery, and any other discovery?
@@ -165,8 +163,7 @@ public abstract class CommandTestSupport
   @After
   public void tearDown() throws Exception {
     commandRegistry = null;
-    aliasRegistry = null;
-    vars = null;
+    variables = null;
     io = null;
     if (terminal != null) {
       terminal.close();
@@ -180,6 +177,7 @@ public abstract class CommandTestSupport
       container.clear();
       container = null;
     }
+    injector = null;
   }
 
   protected Shell getShell() {
@@ -240,7 +238,7 @@ public abstract class CommandTestSupport
   //
 
   /**
-   * All commands should end registered with {@link CommandRegistry} component.
+   * All commands should be registered with {@link CommandRegistry} component.
    */
   @Test
   public void testRegistered() throws Exception {

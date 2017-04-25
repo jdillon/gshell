@@ -37,36 +37,36 @@ public class SetActionTest
 
   @Test
   public void testDefineVariable() throws Exception {
-    assertFalse(vars.contains("foo"));
+    assertFalse(variables.contains("foo"));
     Object result = executeWithArgs("foo bar");
     assertEqualsSuccess(result);
 
-    assertTrue(vars.contains("foo"));
-    Object value = vars.get("foo");
+    assertTrue(variables.contains("foo"));
+    Object value = variables.get("foo");
     assertEquals(value, "bar");
   }
 
   @Test
   public void testRedefineVariable() throws Exception {
     testDefineVariable();
-    assertTrue(vars.contains("foo"));
+    assertTrue(variables.contains("foo"));
 
     Object result = executeWithArgs("foo baz");
     assertEqualsSuccess(result);
 
-    assertTrue(vars.contains("foo"));
-    Object value = vars.get("foo");
+    assertTrue(variables.contains("foo"));
+    Object value = variables.get("foo");
     assertEquals(value, "baz");
   }
 
   @Test
   public void testDefineVariableWithExpression() throws Exception {
-    assertFalse(vars.contains("foo"));
+    assertFalse(variables.contains("foo"));
     Object result = executeWithArgs("foo ${shell.home}");
     assertEqualsSuccess(result);
 
-    assertTrue(vars.contains("foo"));
-    Object value = vars.get("foo");
-    Assert.assertEquals(value, vars.get("shell.home", String.class));
+    assertTrue(variables.contains("foo"));
+    Object value = variables.get("foo");
+    Assert.assertEquals(value, variables.get("shell.home", String.class));
   }
 }

@@ -76,7 +76,7 @@ public class RecallHistoryActionTest
 
     // Clear history and make sure there is no foo variable
     history.purge();
-    assertFalse(vars.contains("foo"));
+    assertFalse(variables.contains("foo"));
 
     // Then add 2 items, both setting foo
     history.add("set foo bar");
@@ -88,6 +88,6 @@ public class RecallHistoryActionTest
     assertEqualsSuccess(result);
 
     // Make sure it executed
-    assertEquals("bar", vars.get("foo"));
+    assertEquals("bar", variables.get("foo"));
   }
 }
