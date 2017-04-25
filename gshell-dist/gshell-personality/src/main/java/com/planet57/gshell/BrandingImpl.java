@@ -17,9 +17,9 @@ package com.planet57.gshell;
 
 import java.io.File;
 
+import com.planet57.gshell.branding.Asl2License;
 import com.planet57.gshell.branding.BrandingSupport;
 import com.planet57.gshell.branding.License;
-import com.planet57.gshell.branding.LicenseSupport;
 import com.planet57.gshell.util.io.PrintBuffer;
 import org.fusesource.jansi.Ansi;
 
@@ -79,6 +79,6 @@ public class BrandingImpl
 
   @Override
   public License getLicense() {
-    return new LicenseSupport("Apache License, Version 2.0", "http://www.apache.org/licenses/LICENSE-2.0.txt");
+    return new Asl2License();
   }
 }

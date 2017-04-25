@@ -18,10 +18,10 @@ package com.planet57.gshell.maven;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
+import com.planet57.gshell.branding.Asl2License;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.branding.BrandingSupport;
 import com.planet57.gshell.branding.License;
-import com.planet57.gshell.branding.LicenseSupport;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.execute.ExitNotification;
 import com.planet57.gshell.guice.BeanContainer;
@@ -99,6 +99,7 @@ public class RunMojo
 
     @Override
     public String getDisplayName() {
+      // TODO: expose for configuration
       return "@|bold GShell|@";
     }
 
@@ -109,22 +110,25 @@ public class RunMojo
 
     @Override
     public File getShellContextDir() {
+      // TODO: expose for configuration
       return project.getBasedir();
     }
 
     @Override
     public File getUserContextDir() {
+      // TODO: expose for configuration
       return resolveFile(new File(getUserHomeDir(), ".m2/gshell/" + getProgramName()));
     }
 
     @Override
     public License getLicense() {
-      // FIXME: could be pulled from project?
-      return new LicenseSupport("Apache License, Version 2.0", "http://www.apache.org/licenses/LICENSE-2.0.txt");
+      // TODO: expose for configuration?
+      return new Asl2License();
     }
 
     @Override
     public String getWelcomeMessage() {
+      // TODO: expose for configuration
       PrintBuffer buff = new PrintBuffer();
       buff.format("%nType '@|bold help|@' for more information.%n");
       buff.print(LINE_TOKEN);
@@ -133,6 +137,7 @@ public class RunMojo
 
     @Override
     public String getGoodbyeMessage() {
+      // TODO: expose for configuration
       return "@|green Goodbye!|@\n";
     }
   }
