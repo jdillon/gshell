@@ -58,7 +58,7 @@ import static com.google.inject.name.Names.named;
  */
 @Mojo(name="run", requiresProject=false)
 public class RunMojo
-    extends AbstractMojo
+  extends AbstractMojo
 {
   @Parameter(defaultValue = "${project}", readonly = true)
   MavenProject project;
@@ -75,6 +75,7 @@ public class RunMojo
   @Parameter
   boolean shellErrors = false;
 
+  @Override
   public void execute() throws MojoExecutionException, MojoFailureException {
     try {
       doExecute();
