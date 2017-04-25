@@ -462,6 +462,19 @@
           <artifactId>sisu-maven-plugin</artifactId>
           <version>0.3.3</version>
         </plugin>
+
+        <plugin>
+          <groupId>com.mycila</groupId>
+          <artifactId>license-maven-plugin</artifactId>
+          <configuration>
+            <excludes combine.children="append">
+              <!--
+              Thirdparty sources
+              -->
+              <exclude>gshell-util/src/main/java/org/apache/tools/ant/**</exclude>
+            </excludes>
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
 

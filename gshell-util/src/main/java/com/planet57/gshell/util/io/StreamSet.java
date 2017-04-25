@@ -34,9 +34,9 @@ public class StreamSet
   /**
    * Output stream type.
    */
-  public static enum OutputType
+  public enum OutputType
   {
-    OUT, ERR;
+    OUT, ERR
   }
 
   public final InputStream in;
