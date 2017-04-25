@@ -44,6 +44,7 @@ import org.eclipse.sisu.space.URLClassSpace;
 import org.eclipse.sisu.wire.WireModule;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
+import org.sonatype.goodies.lifecycle.Lifecycles;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -106,11 +107,13 @@ public class RunMojo
 
     @Override
     public File getShellHomeDir() {
+      // FIXME: this could be null; if not in a directory with a project
       return shellHome;
     }
 
     @Override
     public File getShellContextDir() {
+      // FIXME: this could be null; if not in a directory with a project
       // TODO: expose for configuration
       return project.getBasedir();
     }
@@ -144,10 +147,12 @@ public class RunMojo
   }
 
   private void doExecute() throws Exception {
+    // TODO: check if we can get a reference to the maven containers BeanLocator?
     final BeanContainer container = new BeanContainer();
     final Terminal terminal = TerminalBuilder.builder().build();
     final IO io = new IO(StreamSet.SYSTEM_FD, terminal);
     final Variables variables = new VariablesSupport();
+    // TODO: adapt variables to maven context
     variables.set(VariableNames.SHELL_ERRORS, shellErrors);
     final Branding branding = new BrandingImpl();
 
@@ -177,7 +182,9 @@ public class RunMojo
       // ignore
     }
     finally {
+      Lifecycles.stop(shell);
       io.flush();
+      terminal.close();
     }
   }
 }
