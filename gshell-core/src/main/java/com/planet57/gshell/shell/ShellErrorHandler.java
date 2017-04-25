@@ -83,22 +83,18 @@ public class ShellErrorHandler
       cause = error.getCause();
     }
 
-    Variables vars = variables.get();
+    Variables variables = this.variables.get();
 
     // Determine if the stack trace flag is set
-    Boolean showTrace = vars.get(VariableNames.SHELL_ERRORS, Boolean.class, false);
+    Boolean showTrace = variables.get(VariableNames.SHELL_ERRORS, Boolean.class, false);
     assert showTrace != null;
 
-    // FIXME: this presently omits showing anything (except via logging) when SHELL_ERRORS is false
-
-    if (showTrace) {
-      io.err.print(ansi().a(INTENSITY_BOLD).fg(RED).a(cause.getClass().getName()).reset());
-      if (cause.getMessage() != null) {
-        io.err.print(": ");
-        io.err.print(ansi().a(INTENSITY_BOLD).fg(RED).a(cause.getMessage()).reset());
-      }
-      io.err.println();
+    io.err.print(ansi().a(INTENSITY_BOLD).fg(RED).a(cause.getClass().getName()).reset());
+    if (cause.getMessage() != null) {
+      io.err.print(": ");
+      io.err.print(ansi().a(INTENSITY_BOLD).fg(RED).a(cause.getMessage()).reset());
     }
+    io.err.println();
 
     if (showTrace) {
       while (cause != null) {
