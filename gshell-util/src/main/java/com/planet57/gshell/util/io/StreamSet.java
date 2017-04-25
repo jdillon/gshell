@@ -23,6 +23,8 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * A set of input, output and error streams.
  *
@@ -46,13 +48,9 @@ public class StreamSet
   public final PrintStream err;
 
   public StreamSet(final InputStream in, final PrintStream out, final PrintStream err) {
-    assert in != null;
-    assert out != null;
-    assert err != null;
-
-    this.in = in;
-    this.out = out;
-    this.err = err;
+    this.in = checkNotNull(in);
+    this.out = checkNotNull(out);
+    this.err = checkNotNull(err);
   }
 
   public StreamSet(final InputStream in, final PrintStream out) {
@@ -68,7 +66,7 @@ public class StreamSet
   }
 
   public PrintStream getOutput(final OutputType type) {
-    assert type != null;
+    checkNotNull(type);
 
     switch (type) {
       case OUT:
