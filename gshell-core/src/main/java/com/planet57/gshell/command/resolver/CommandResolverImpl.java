@@ -63,6 +63,8 @@ public class CommandResolverImpl
     // Setup the tree
     root = new Node(Node.ROOT, new GroupAction(Node.ROOT));
 
+    // FIXME: this may need to be moved to lifecycle; also this probably shouldn't be done here; this is for testing purposes only IIRC
+
     // Add any pre-registered commands
     commands.getCommands().forEach(command -> root.add(command.getName(), command));
   }

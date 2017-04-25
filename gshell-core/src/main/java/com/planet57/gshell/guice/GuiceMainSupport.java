@@ -62,10 +62,7 @@ public abstract class GuiceMainSupport
     Injector injector = Guice.createInjector(new WireModule(modules));
     container.add(injector, 0);
 
-    ShellImpl shell = injector.getInstance(ShellImpl.class);
-    shell.start();
-
-    return shell;
+    return injector.getInstance(ShellImpl.class);
   }
 
   protected void configure(@Nonnull final List<Module> modules) {

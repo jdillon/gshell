@@ -22,6 +22,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.inject.Key;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandAction;
@@ -48,6 +49,10 @@ public class CommandRegistrarImpl
 
   private final CommandRegistry registry;
 
+  // HACK: problem introduce for testability with lifecycle
+  @VisibleForTesting
+  public boolean discoveryEnabled = true;
+
   @Inject
   public CommandRegistrarImpl(final BeanContainer container,
                               final CommandRegistry registry)
@@ -58,12 +63,14 @@ public class CommandRegistrarImpl
 
   @Override
   protected void doStart() throws Exception {
-    discoverCommands();
+    if (discoveryEnabled) {
+      discoverCommands();
+    }
   }
 
   @Override
   public void discoverCommands() throws Exception {
-    log.trace("Registering commands");
+    log.trace("Discovering commands");
 
     for (BeanEntry<?,CommandAction> entry : container.locate(Key.get(CommandAction.class, Command.class))) {
       log.trace("Registering command: {}", entry);

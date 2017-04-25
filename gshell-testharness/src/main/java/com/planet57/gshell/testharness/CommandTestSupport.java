@@ -30,9 +30,8 @@ import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.command.registry.CommandRegistrar;
+import com.planet57.gshell.command.registry.CommandRegistrarImpl;
 import com.planet57.gshell.command.registry.CommandRegistry;
-import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.guice.BeanContainer;
 import com.planet57.gshell.logging.LoggingSystem;
 import com.planet57.gshell.parser.impl.eval.Evaluator;
@@ -129,10 +128,11 @@ public abstract class CommandTestSupport
     Injector injector = Guice.createInjector(Stage.DEVELOPMENT, new WireModule(modules));
     container.add(injector, 0);
 
-    Lifecycles.start(injector.getInstance(EventManager.class));
-
-    CommandRegistrar registrar = injector.getInstance(CommandRegistrar.class);
+    // HACK: pre-register required commands for test; this needs to be done early due to lack of lifecycle on CommandResolverImpl and CommandRegistryImpl
+    CommandRegistrarImpl registrar = injector.getInstance(CommandRegistrarImpl.class);
+    registrar.discoveryEnabled = false;
     for (Map.Entry<String, Class> entry : requiredCommands.entrySet()) {
+      System.out.println(entry);
       registrar.registerCommand(entry.getKey(), entry.getValue().getName());
     }
 
@@ -140,6 +140,8 @@ public abstract class CommandTestSupport
     vars = shell.getVariables();
     aliasRegistry = injector.getInstance(AliasRegistry.class);
     commandRegistry = injector.getInstance(CommandRegistry.class);
+
+    shell.start();
   }
 
   protected void configureModules(final List<Module> modules) {
@@ -159,10 +161,9 @@ public abstract class CommandTestSupport
     vars = null;
     io = null;
     if (shell != null) {
-      shell.close();
+       Lifecycles.stop(shell);
     }
     shell = null;
-    requiredCommands.clear();
     if (container != null) {
       container.clear();
       container = null;

@@ -83,8 +83,6 @@ public class ShellImpl
 
   private final ShellScriptLoader scriptLoader;
 
-  private volatile boolean opened;
-
   @Inject
   public ShellImpl(final EventManager events,
                    final CommandRegistrar commandRegistrar,
@@ -118,6 +116,16 @@ public class ShellImpl
   protected void doStart() throws Exception {
     Lifecycles.start(events);
     Lifecycles.start(commandRegistrar);
+
+    branding.customize(this);
+
+    // Do this after we are marked as opened
+    scriptLoader.loadProfileScripts(this);
+  }
+
+  @Override
+  protected void doStop() throws Exception {
+    // TODO?
   }
 
   @Override
@@ -141,66 +149,32 @@ public class ShellImpl
   }
 
   @Override
-  public synchronized boolean isOpened() {
-    return opened;
-  }
-
-  @Override
-  public synchronized void close() {
-    // FIXME: this is pretty silly
-    opened = false;
-  }
-
-  private synchronized void ensureOpened() {
-    if (!opened) {
-      try {
-        open();
-      }
-      catch (Exception e) {
-        throw new RuntimeException(e);
-      }
-    }
-  }
-
-  private synchronized void open() throws Exception {
-    log.debug("Opening");
-
-    StreamJack.maybeInstall();
-    branding.customize(this);
-    opened = true;
-    log.debug("Opened");
-
-    // Do this after we are marked as opened
-    scriptLoader.loadProfileScripts(this);
-  }
-
-  @Override
   public boolean isInteractive() {
     return true;
   }
 
   @Override
   public Object execute(final CharSequence line) throws Exception {
-    ensureOpened();
+    ensureStarted();
     return executor.execute(this, String.valueOf(line));
   }
 
   @Override
   public Object execute(final CharSequence command, final Object[] args) throws Exception {
-    ensureOpened();
+    ensureStarted();
     return executor.execute(this, String.valueOf(command), args);
   }
 
   @Override
   public Object execute(final Object... args) throws Exception {
-    ensureOpened();
+    ensureStarted();
     return executor.execute(this, args);
   }
 
   @Override
   public void run(final Object... args) throws Exception {
     checkNotNull(args);
-    ensureOpened();
+    ensureStarted();
 
     log.debug("Starting interactive console; args: {}", Arrays.asList(args));
 
@@ -257,6 +231,7 @@ public class ShellImpl
   private static void renderMessage(final IO io, @Nullable String message) {
     if (message != null) {
       // HACK: branding does not have easy access to Terminal; so allow a line to be rendered via replacement token
+      // FIXME: This could be done in Branding.customize(Shell)
       if (message.contains(BrandingSupport.LINE_TOKEN)) {
         message = message.replace(BrandingSupport.LINE_TOKEN, Strings.repeat("-", io.terminal.getWidth() - 1));
       }

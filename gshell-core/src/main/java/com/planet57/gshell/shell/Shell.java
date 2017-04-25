@@ -38,10 +38,6 @@ public interface Shell
 
   History getHistory();
 
-  boolean isOpened();
-
-  void close();
-
   Object execute(CharSequence line) throws Exception;
 
   Object execute(CharSequence command, Object[] args) throws Exception;

@@ -48,6 +48,7 @@ import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 import org.slf4j.Logger;
 import org.slf4j.bridge.SLF4JBridgeHandler;
+import org.sonatype.goodies.lifecycle.Lifecycles;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -276,15 +277,20 @@ public abstract class MainSupport
       vars.set(VariableNames.SHELL_ERRORS, showErrorTraces);
 
       Shell shell = createShell();
-
-      if (command != null) {
-        result = shell.execute(command);
+      shell.start();
+      try {
+        if (command != null) {
+          result = shell.execute(command);
+        }
+        else if (appArgs != null) {
+          result = shell.execute(appArgs.toArray());
+        }
+        else {
+          shell.run();
+        }
       }
-      else if (appArgs != null) {
-        result = shell.execute(appArgs.toArray());
-      }
-      else {
-        shell.run();
+      finally {
+        Lifecycles.stop(shell);
       }
     }
     catch (ExitNotification n) {
@@ -292,6 +298,7 @@ public abstract class MainSupport
     }
     finally {
       io.flush();
+      terminal.close();
     }
 
     if (result == null) {
