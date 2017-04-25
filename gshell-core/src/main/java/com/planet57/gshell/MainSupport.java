@@ -205,7 +205,8 @@ public abstract class MainSupport
   }
 
   protected void configure(@Nonnull final List<Module> modules) {
-    modules.add(createSpaceModule());
+    URLClassSpace space = new URLClassSpace(getClass().getClassLoader());
+    modules.add(new SpaceModule(space, BeanScanning.INDEX));
     modules.add(binder -> {
       binder.bind(BeanContainer.class).toInstance(container);
 
@@ -214,11 +215,6 @@ public abstract class MainSupport
       binder.bind(Variables.class).annotatedWith(named("main")).toInstance(variables);
       binder.bind(Branding.class).toInstance(getBranding());
     });
-  }
-
-  protected SpaceModule createSpaceModule() {
-    URLClassSpace space = new URLClassSpace(getClass().getClassLoader());
-    return new SpaceModule(space, BeanScanning.INDEX);
   }
 
   public void boot(String... args) throws Exception {
