@@ -19,6 +19,8 @@
 
 GShell - A command-line shell framework.
 
+Its super awesome you'll love it.
+
 [![Build Status](https://travis-ci.org/jdillon/gshell.svg?branch=master)](https://travis-ci.org/jdillon/gshell)
 
 # License
