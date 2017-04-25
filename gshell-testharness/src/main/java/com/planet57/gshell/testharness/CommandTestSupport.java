@@ -77,7 +77,12 @@ public abstract class CommandTestSupport
 
   protected final TestUtil util = new TestUtil(getClass());
 
-  protected final String name;
+  /**
+   * The name of the command under-test.
+   *
+   * Used for default command tests.
+   */
+  private final String name;
 
   @Rule
   public final TestTracer tracer = new TestTracer(this);
@@ -146,7 +151,7 @@ public abstract class CommandTestSupport
 
     // register required commands
     for (Map.Entry<String, Class> entry : requiredCommands.entrySet()) {
-      registrar.registerCommand(entry.getKey(), entry.getValue().getName());
+      registrar.registerCommand(entry.getKey(), entry.getValue());
     }
   }
 
@@ -170,7 +175,7 @@ public abstract class CommandTestSupport
       terminal = null;
     }
     if (shell != null) {
-       Lifecycles.stop(shell);
+      Lifecycles.stop(shell);
       shell = null;
     }
     if (container != null) {

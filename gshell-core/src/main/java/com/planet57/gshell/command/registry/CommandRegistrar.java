@@ -15,6 +15,7 @@
  */
 package com.planet57.gshell.command.registry;
 
+import com.planet57.gshell.command.Command;
 import org.sonatype.goodies.lifecycle.Lifecycle;
 
 /**
@@ -26,9 +27,28 @@ import org.sonatype.goodies.lifecycle.Lifecycle;
 public interface CommandRegistrar
   extends Lifecycle
 {
+  /**
+   * Discovery commands.
+   */
   void discoverCommands() throws Exception;
 
+  /**
+   * Register a command by class-name.
+   */
   void registerCommand(String name, String type) throws Exception;
 
+  /**
+   * Register a command by class-name and detect its command-name via {@link Command#name()}.
+   */
   void registerCommand(String type) throws Exception;
+
+  /**
+   * Register a command by class.
+   */
+  void registerCommand(String name, Class type) throws Exception;
+
+  /**
+   * Register a command by class and detect its command-name via {@link Command#name()}.
+   */
+  void registerCommand(Class type) throws Exception;
 }

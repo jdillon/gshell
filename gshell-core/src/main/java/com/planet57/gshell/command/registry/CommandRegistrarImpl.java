@@ -102,17 +102,41 @@ public class CommandRegistrarImpl
     log.trace("Registering command: {}", className);
 
     CommandAction action = createAction(className);
+    String name = detectCommandName(action);
+    registry.registerCommand(name, action);
+  }
 
+  @Override
+  public void registerCommand(final String name, final Class type) throws Exception {
+    checkNotNull(name);
+    checkNotNull(type);
+
+    CommandAction action = createAction(type);
+    registry.registerCommand(name, action);
+  }
+
+  @Override
+  public void registerCommand(final Class type) throws Exception {
+    checkNotNull(type);
+
+    CommandAction action = createAction(type);
+    String name = detectCommandName(action);
+    registry.registerCommand(name, action);
+  }
+
+  private static String detectCommandName(final CommandAction action) {
     Command command = action.getClass().getAnnotation(Command.class);
-    checkState(command != null, "Missing @Command: %s", className);
+    checkState(command != null, "Missing @Command annotation: %s", action.getClass());
+    return command.name();
+  }
 
-    registry.registerCommand(command.name(), action);
+  private CommandAction createAction(final String className) throws ClassNotFoundException {
+    Class<?> type = Thread.currentThread().getContextClassLoader().loadClass(className);
+    return createAction(type);
   }
 
   @SuppressWarnings({"unchecked"})
-  private CommandAction createAction(final String className) throws ClassNotFoundException {
-    assert className != null;
-    Class<?> type = Thread.currentThread().getContextClassLoader().loadClass(className);
+  private CommandAction createAction(final Class<?> type) throws ClassNotFoundException {
     Iterator<BeanEntry<Annotation, ?>> iter = container.locate(Key.get((Class) type)).iterator();
     if (iter.hasNext()) {
       return (CommandAction) iter.next().getValue();
