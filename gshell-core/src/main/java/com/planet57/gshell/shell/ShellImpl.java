@@ -44,6 +44,7 @@ import org.jline.reader.History;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 import org.jline.reader.impl.history.DefaultHistory;
+import org.sonatype.goodies.lifecycle.LifecycleManager;
 import org.sonatype.goodies.lifecycle.LifecycleSupport;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -59,13 +60,11 @@ public class ShellImpl
   extends LifecycleSupport
   implements Shell
 {
-  private final EventManager events;
+  private final LifecycleManager lifecycles = new LifecycleManager();
 
   private final Branding branding;
 
   private final CommandExecutor executor;
-
-  private final CommandRegistrar commandRegistrar;
 
   private final IO io;
 
@@ -93,15 +92,17 @@ public class ShellImpl
                    final ConsoleErrorHandler errorHandler)
       throws IOException
   {
-    this.events = checkNotNull(events);
+    checkNotNull(events);
     this.executor = checkNotNull(executor);
-    this.commandRegistrar = checkNotNull(commandRegistrar);
+    checkNotNull(commandRegistrar);
     this.branding = checkNotNull(branding);
     this.io = checkNotNull(io);
     this.variables = checkNotNull(variables);
     this.completer = checkNotNull(completer);
     this.prompt = checkNotNull(prompt);
     this.errorHandler = checkNotNull(errorHandler);
+
+    lifecycles.add(events, commandRegistrar);
 
     // HACK: exposed here as some commands needs reference to this
     this.history = new DefaultHistory();
@@ -112,8 +113,7 @@ public class ShellImpl
 
   @Override
   protected void doStart() throws Exception {
-    events.start();
-    commandRegistrar.start();
+    lifecycles.start();
 
     // apply any branding customization
     branding.customize(this);
@@ -124,7 +124,7 @@ public class ShellImpl
 
   @Override
   protected void doStop() throws Exception {
-    // TODO?
+    lifecycles.stop();
   }
 
   @Override
