@@ -39,6 +39,10 @@ public abstract class LoggingCommandActionSupport
 
   protected LoggingSystem getLogging() {
     checkState(logging != null);
+
+    // complain if logging system is not supported; otherwise command results may be strangely empty
+    checkState(logging.isSupported(), "Logging system is not supported: %s", logging);
+
     return logging;
   }
 }

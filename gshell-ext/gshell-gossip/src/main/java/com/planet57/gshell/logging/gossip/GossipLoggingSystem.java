@@ -66,6 +66,11 @@ public class GossipLoggingSystem
     this.levels = Arrays.stream(Level.values()).collect(Collectors.toMap(level -> level.name().toUpperCase(Locale.US), LevelComponentImpl::new));
   }
 
+  @Override
+  public boolean isSupported() {
+    return true;
+  }
+
   //
   // LevelComponentImpl
   //

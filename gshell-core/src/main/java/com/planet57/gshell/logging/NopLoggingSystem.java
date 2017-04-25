@@ -32,6 +32,11 @@ public class NopLoggingSystem
     implements LoggingSystem
 {
   @Override
+  public boolean isSupported() {
+    return false;
+  }
+
+  @Override
   public LevelComponent getLevel(final String name) {
     return () -> null;
   }

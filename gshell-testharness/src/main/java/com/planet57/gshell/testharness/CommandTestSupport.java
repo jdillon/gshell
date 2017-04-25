@@ -33,6 +33,7 @@ import com.planet57.gshell.command.registry.CommandRegistrarImpl;
 import com.planet57.gshell.command.registry.CommandRegistry;
 import com.planet57.gshell.internal.BeanContainer;
 import com.planet57.gshell.logging.LoggingSystem;
+import com.planet57.gshell.logging.NopLoggingSystem;
 import com.planet57.gshell.parser.impl.eval.Evaluator;
 import com.planet57.gshell.parser.impl.eval.RegexEvaluator;
 import com.planet57.gshell.shell.Shell;
@@ -125,7 +126,7 @@ public abstract class CommandTestSupport
     List<Module> modules = new ArrayList<>();
     modules.add(binder -> {
       binder.bind(BeanContainer.class).toInstance(container);
-      binder.bind(LoggingSystem.class).to(TestLoggingSystem.class);
+      binder.bind(LoggingSystem.class).to(NopLoggingSystem.class);
       binder.bind(Branding.class).toInstance(new TestBranding(util.resolveFile("target/shell-home")));
       binder.bind(IO.class).annotatedWith(named("main")).toInstance(io);
       binder.bind(Variables.class).annotatedWith(named("main")).toInstance(variables);
