@@ -62,6 +62,8 @@ public class ExecuteAction
     IO io = context.getIo();
     Variables variables = context.getVariables();
 
+    // TODO: args may need special handling for ~/ as this won't translate to executable
+
     log.debug("Executing: {}", args);
 
     ProcessBuilder builder = new ProcessBuilder()
