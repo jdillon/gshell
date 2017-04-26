@@ -23,6 +23,7 @@ import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
+import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
 import org.apache.tools.ant.taskdefs.PumpStreamHandler;
@@ -30,6 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Execute system processes.
@@ -42,6 +44,13 @@ public class ExecuteAction
     extends CommandActionSupport
 {
   private final Logger log = LoggerFactory.getLogger(getClass());
+
+  @Nullable
+  @Option(name = "d", longName = "directory")
+  private File directory;
+
+  @Option(longName = "newenvironment")
+  private boolean newenvironment = false;
 
   @Argument(required = true)
   private List<String> args;
@@ -57,10 +66,19 @@ public class ExecuteAction
 
     ProcessBuilder builder = new ProcessBuilder()
       .command(args)
-      .directory(variables.get(VariableNames.SHELL_USER_DIR, File.class))
       .inheritIO();
 
-    // TODO: environment variables?
+    File dir = directory;
+    if (dir == null) {
+      dir = variables.get(VariableNames.SHELL_USER_DIR, File.class);
+    }
+    log.debug("Directory: {}", dir);
+    builder.directory(dir);
+
+    if (!newenvironment) {
+      log.debug("Propagating environment variables");
+      builder.environment().putAll(System.getenv());
+    }
 
     Process p = builder.start();
 
