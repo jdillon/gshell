@@ -15,6 +15,7 @@
  */
 package com.planet57.gshell.commands.shell;
 
+import java.io.File;
 import java.util.List;
 
 import com.planet57.gshell.command.Command;
@@ -22,6 +23,8 @@ import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
+import com.planet57.gshell.variables.VariableNames;
+import com.planet57.gshell.variables.Variables;
 import org.apache.tools.ant.taskdefs.PumpStreamHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,17 +46,21 @@ public class ExecuteAction
   @Argument(required = true)
   private List<String> args;
 
-  // TODO: Support setting the process directory and environment muck
   // TODO: Consider adapting more of ant exec to support more features?
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
+    Variables variables = context.getVariables();
 
-    ProcessBuilder builder = new ProcessBuilder(args)
-      .redirectInput(ProcessBuilder.Redirect.INHERIT);
+    log.debug("Executing: {}", args);
 
-    log.debug("Executing: {}", builder.command());
+    ProcessBuilder builder = new ProcessBuilder()
+      .command(args)
+      .directory(variables.get(VariableNames.SHELL_USER_DIR, File.class))
+      .inheritIO();
+
+    // TODO: environment variables?
 
     Process p = builder.start();
 
