@@ -17,6 +17,7 @@ package com.planet57.gshell.util.io;
 
 import com.google.common.io.Flushables;
 
+import javax.annotation.Nonnull;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -41,10 +42,13 @@ public class StreamSet
     OUT, ERR
   }
 
+  @Nonnull
   public final InputStream in;
 
+  @Nonnull
   public final PrintStream out;
 
+  @Nonnull
   public final PrintStream err;
 
   public StreamSet(final InputStream in, final PrintStream out, final PrintStream err) {
