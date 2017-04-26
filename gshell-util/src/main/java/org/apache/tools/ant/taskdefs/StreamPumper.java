@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+// copied from https://github.com/apache/ant/blob/master/src/main/org/apache/tools/ant/taskdefs/StreamPumper.java
 
 /**
  * Copies all data from an input stream to an output stream.

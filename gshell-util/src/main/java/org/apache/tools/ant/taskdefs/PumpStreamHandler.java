@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+// copied from: https://github.com/apache/ant/blob/master/src/main/org/apache/tools/ant/taskdefs/PumpStreamHandler.java
+
 /**
  * Copies standard output and error of subprocesses to standard output and
  * error of the parent process.
