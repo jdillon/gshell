@@ -71,6 +71,14 @@ public class StringsCompleter2
   }
 
   /**
+   * Add all strings to existing candidates.
+   */
+  public void addAll(final String... strings) {
+    checkNotNull(strings);
+    addAll(Arrays.asList(strings));
+  }
+
+  /**
    * Add a string to existing candidates.
    */
   public void add(final String string) {
