@@ -23,8 +23,6 @@ import org.sonatype.goodies.common.Time;
 
 import javax.annotation.Nonnull;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Sleep for a period.
  *

@@ -16,7 +16,6 @@
 package com.planet57.gshell.commands.shell;
 
 import java.io.File;
-import java.nio.file.Paths;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

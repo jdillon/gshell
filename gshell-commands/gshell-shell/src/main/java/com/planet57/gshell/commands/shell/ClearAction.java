@@ -23,8 +23,6 @@ import org.fusesource.jansi.Ansi;
 
 import javax.annotation.Nonnull;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Clear the screen.
  *
