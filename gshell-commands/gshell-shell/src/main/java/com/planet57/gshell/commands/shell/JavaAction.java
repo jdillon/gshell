@@ -23,12 +23,9 @@ import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
-
-import static com.google.common.base.Preconditions.checkNotNull;
+import javax.annotation.Nullable;
 
 /**
  * Execute a Java standard application.
@@ -44,8 +41,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class JavaAction
     extends CommandActionSupport
 {
-  private final Logger log = LoggerFactory.getLogger(getClass());
-
+  @Nullable
   @Option(name = "m", longName = "method")
   private String methodName = "main";
 

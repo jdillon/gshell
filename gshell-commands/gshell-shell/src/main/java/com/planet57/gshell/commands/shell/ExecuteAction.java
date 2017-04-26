@@ -27,8 +27,6 @@ import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
 import org.apache.tools.ant.taskdefs.PumpStreamHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -43,8 +41,6 @@ import javax.annotation.Nullable;
 public class ExecuteAction
     extends CommandActionSupport
 {
-  private final Logger log = LoggerFactory.getLogger(getClass());
-
   @Nullable
   @Option(name = "d", longName = "directory")
   private File directory;

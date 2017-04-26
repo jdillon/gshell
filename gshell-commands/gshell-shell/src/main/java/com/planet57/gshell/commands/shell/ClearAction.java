@@ -39,6 +39,7 @@ public class ClearAction
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
 
+    // TODO: must be some Terminal equiv of this?
     io.out.print(Ansi.ansi().eraseScreen(Ansi.Erase.ALL));
     io.out.flush();
 
