@@ -57,12 +57,12 @@ public class StreamSet
     this(in, out, out);
   }
 
-  public boolean isOutputCombined() {
-    return out == err;
-  }
-
   public InputStream getInput() {
     return in;
+  }
+
+  public boolean isOutputCombined() {
+    return out == err;
   }
 
   public PrintStream getOutput(final OutputType type) {
@@ -76,8 +76,8 @@ public class StreamSet
         return err;
     }
 
-    // Should never happen
-    throw new InternalError();
+    // unreachable
+    throw new Error();
   }
 
   public void flush() {
