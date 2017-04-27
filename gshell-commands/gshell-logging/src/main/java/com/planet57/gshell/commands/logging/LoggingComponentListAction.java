@@ -16,6 +16,7 @@
 package com.planet57.gshell.commands.logging;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
@@ -33,9 +34,11 @@ import com.planet57.gshell.util.cli2.Option;
 public class LoggingComponentListAction
   extends LoggingCommandActionSupport
 {
+  @Nullable
   @Option(name = "n", longName = "name")
   private String nameQuery;
 
+  @Nullable
   @Option(name = "t", longName = "type")
   private String typeQuery;
 

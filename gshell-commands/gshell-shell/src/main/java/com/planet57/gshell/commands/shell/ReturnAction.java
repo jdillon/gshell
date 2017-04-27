@@ -22,8 +22,6 @@ import com.planet57.gshell.util.cli2.Argument;
 
 import javax.annotation.Nonnull;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Set the return value.
  *

@@ -16,9 +16,9 @@
 package com.planet57.gshell.commands.shell;
 
 import java.io.File;
-import java.nio.file.Paths;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -45,6 +45,7 @@ public class LessAction
 {
   // TODO: expose more options; see Commands.less() in jline-builtins
 
+  @Nullable
   @Option(name = "n", longName = "line-numbers")
   private Boolean lineNumbers;
 

@@ -15,6 +15,7 @@
  */
 package com.planet57.gshell.commands.shell;
 
+import java.io.File;
 import java.util.List;
 
 import com.planet57.gshell.command.Command;
@@ -22,13 +23,13 @@ import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
-import com.planet57.gshell.util.io.PumpStreamHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.planet57.gshell.util.cli2.Option;
+import com.planet57.gshell.variables.VariableNames;
+import com.planet57.gshell.variables.Variables;
+import org.apache.tools.ant.taskdefs.PumpStreamHandler;
 
 import javax.annotation.Nonnull;
-
-import static com.google.common.base.Preconditions.checkNotNull;
+import javax.annotation.Nullable;
 
 /**
  * Execute system processes.
@@ -40,35 +41,60 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class ExecuteAction
     extends CommandActionSupport
 {
-  private final Logger log = LoggerFactory.getLogger(getClass());
+  @Nullable
+  @Option(name = "d", longName = "directory")
+  private File directory;
+
+  @Option(longName = "newenvironment")
+  private boolean newenvironment = false;
 
   @Argument(required = true)
   private List<String> args;
 
-  // TODO: Support setting the process directory and environment muck
+  // TODO: Consider adapting more of ant exec to support more features?
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
+    Variables variables = context.getVariables();
 
-    ProcessBuilder builder = new ProcessBuilder(args);
+    // TODO: args may need special handling for ~/ as this won't translate to executable
 
-    log.debug("Executing: {}", builder.command());
+    log.debug("Executing: {}", args);
+
+    ProcessBuilder builder = new ProcessBuilder()
+      .command(args)
+      .inheritIO();
+
+    File dir = directory;
+    if (dir == null) {
+      dir = variables.get(VariableNames.SHELL_USER_DIR, File.class);
+    }
+    log.debug("Directory: {}", dir);
+    builder.directory(dir);
+
+    if (!newenvironment) {
+      log.debug("Propagating environment variables");
+      builder.environment().putAll(System.getenv());
+    }
 
     Process p = builder.start();
 
-    PumpStreamHandler handler = new PumpStreamHandler(io.streams);
-    handler.attach(p);
+    PumpStreamHandler handler = new PumpStreamHandler(io.streams.out, io.streams.err);
+    handler.setProcessInputStream(p.getOutputStream());
+    handler.setProcessOutputStream(p.getInputStream());
+    handler.setProcessErrorStream(p.getErrorStream());
+
     handler.start();
 
     log.debug("Waiting for process to exit...");
 
-    int status = p.waitFor();
+    int exitCode = p.waitFor();
 
-    log.debug("Process exited w/status: {}", status);
+    log.debug("Process exited w/code: {}", exitCode);
 
     handler.stop();
 
-    return status;
+    return exitCode;
   }
 }

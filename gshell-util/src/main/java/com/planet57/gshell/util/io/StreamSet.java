@@ -17,11 +17,14 @@ package com.planet57.gshell.util.io;
 
 import com.google.common.io.Flushables;
 
+import javax.annotation.Nonnull;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * A set of input, output and error streams.
@@ -34,41 +37,40 @@ public class StreamSet
   /**
    * Output stream type.
    */
-  public static enum OutputType
+  public enum OutputType
   {
-    OUT, ERR;
+    OUT, ERR
   }
 
+  @Nonnull
   public final InputStream in;
 
+  @Nonnull
   public final PrintStream out;
 
+  @Nonnull
   public final PrintStream err;
 
   public StreamSet(final InputStream in, final PrintStream out, final PrintStream err) {
-    assert in != null;
-    assert out != null;
-    assert err != null;
-
-    this.in = in;
-    this.out = out;
-    this.err = err;
+    this.in = checkNotNull(in);
+    this.out = checkNotNull(out);
+    this.err = checkNotNull(err);
   }
 
   public StreamSet(final InputStream in, final PrintStream out) {
     this(in, out, out);
   }
 
-  public boolean isOutputCombined() {
-    return out == err;
-  }
-
   public InputStream getInput() {
     return in;
   }
 
+  public boolean isOutputCombined() {
+    return out == err;
+  }
+
   public PrintStream getOutput(final OutputType type) {
-    assert type != null;
+    checkNotNull(type);
 
     switch (type) {
       case OUT:
@@ -78,8 +80,8 @@ public class StreamSet
         return err;
     }
 
-    // Should never happen
-    throw new InternalError();
+    // unreachable
+    throw new Error();
   }
 
   public void flush() {

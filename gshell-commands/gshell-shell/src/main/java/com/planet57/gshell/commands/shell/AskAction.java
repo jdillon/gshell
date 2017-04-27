@@ -16,6 +16,7 @@
 package com.planet57.gshell.commands.shell;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
@@ -35,9 +36,11 @@ import org.jline.reader.LineReaderBuilder;
 public class AskAction
     extends CommandActionSupport
 {
+  @Nullable
   @Option(name = "m", longName = "mask")
   private Character mask;
 
+  @Nullable
   @Option(name = "v", longName = "variable")
   private String variable;
 

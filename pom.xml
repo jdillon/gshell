@@ -95,7 +95,7 @@
     <apache-maven.version>3.5.0</apache-maven.version>
     <sonatype-goodies.version>2.2.3</sonatype-goodies.version>
     <gossip.version>2.0.0</gossip.version>
-    <jline.version>3.2.0</jline.version>
+    <jline.version>3.3.0-SNAPSHOT</jline.version>
     <slf4j.version>1.7.25</slf4j.version>
 
     <maven.compiler.source>1.8</maven.compiler.source>
@@ -224,7 +224,7 @@
       <dependency>
         <groupId>org.fusesource.jansi</groupId>
         <artifactId>jansi</artifactId>
-        <version>1.15</version>
+        <version>1.16-SNAPSHOT</version>
       </dependency>
 
       <dependency>
@@ -461,6 +461,19 @@
           <groupId>org.eclipse.sisu</groupId>
           <artifactId>sisu-maven-plugin</artifactId>
           <version>0.3.3</version>
+        </plugin>
+
+        <plugin>
+          <groupId>com.mycila</groupId>
+          <artifactId>license-maven-plugin</artifactId>
+          <configuration>
+            <excludes combine.children="append">
+              <!--
+              Thirdparty sources
+              -->
+              <exclude>gshell-util/src/main/java/org/apache/tools/ant/**</exclude>
+            </excludes>
+          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>

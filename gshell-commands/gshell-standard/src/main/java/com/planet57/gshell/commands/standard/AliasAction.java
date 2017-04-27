@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -48,6 +49,7 @@ public class AliasAction
 {
   private final AliasRegistry aliasRegistry;
 
+  @Nullable
   @Argument(index = 0)
   private String name;
 

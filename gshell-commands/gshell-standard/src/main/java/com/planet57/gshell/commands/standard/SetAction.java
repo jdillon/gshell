@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Properties;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -63,9 +64,11 @@ public class SetAction
   @Option(name = "e", longName = "evaluate")
   private boolean evaluate;
 
+  @Nullable
   @Argument(index = 0)
   private String name;
 
+  @Nullable
   @Argument(index = 1)
   private List<String> values;
 

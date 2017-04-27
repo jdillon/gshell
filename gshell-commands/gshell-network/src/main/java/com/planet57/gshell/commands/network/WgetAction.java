@@ -34,6 +34,7 @@ import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.io.Closeables;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -50,6 +51,7 @@ public class WgetAction
   @Option(name = "v", longName = "verbose")
   private boolean verbose;
 
+  @Nullable
   @Option(name = "o", longName = "output-file")
   private File outputFile;
 

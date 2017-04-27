@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
@@ -37,9 +38,11 @@ import com.planet57.gshell.util.cli2.Option;
 public class LoggerListAction
   extends LoggingCommandActionSupport
 {
+  @Nullable
   @Option(name = "n", longName = "name")
   private String nameQuery;
 
+  @Nullable
   @Option(name = "l", longName = "level")
   private String levelQuery;
 

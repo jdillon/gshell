@@ -91,7 +91,7 @@ public class InfoAction
   private boolean pager = false;
 
   @Preference
-  @Argument()
+  @Argument
   private List<Section> sections;
 
   @Option(name = "a", longName = "all")

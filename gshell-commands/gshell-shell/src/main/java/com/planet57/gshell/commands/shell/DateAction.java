@@ -25,8 +25,6 @@ import com.planet57.gshell.command.CommandActionSupport;
 
 import javax.annotation.Nonnull;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Displays the current time and date.
  *

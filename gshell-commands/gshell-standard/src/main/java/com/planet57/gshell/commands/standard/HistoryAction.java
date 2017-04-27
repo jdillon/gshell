@@ -32,6 +32,7 @@ import org.jline.utils.AttributedStringBuilder;
 import org.jline.utils.AttributedStyle;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Display history.
@@ -52,7 +53,8 @@ public class HistoryAction
   @Option(name = "t", longName = "timestamps")
   private boolean timestamps;
 
-  @Argument()
+  @Nullable
+  @Argument
   private Integer last;
 
   @Override

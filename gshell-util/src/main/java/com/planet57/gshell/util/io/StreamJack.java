@@ -170,7 +170,7 @@ public class StreamJack
     ensureInstalled();
 
     if (log.isTraceEnabled()) {
-      log.trace("Registering: {} -> {}, {}, {}", new Object[]{Thread.currentThread(), in, out, err});
+      log.trace("Registering: {} -> {}, {}, {}", Thread.currentThread(), in, out, err);
     }
 
     StreamRegistration prev = registration(false);

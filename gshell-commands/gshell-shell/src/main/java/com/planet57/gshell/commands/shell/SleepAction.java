@@ -23,8 +23,6 @@ import org.sonatype.goodies.common.Time;
 
 import javax.annotation.Nonnull;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Sleep for a period.
  *
@@ -50,8 +48,13 @@ public class SleepAction
     try {
       time.sleep();
     }
-    catch (InterruptedException ignore) {
-      log.debug("Sleep was interrupted... :-(");
+    catch (InterruptedException e) {
+      if (log.isTraceEnabled()) {
+        log.trace("Sleep was interrupted", e);
+      }
+      else {
+        log.debug("Sleep was interrupted");
+      }
       return Result.FAILURE;
     }
 
