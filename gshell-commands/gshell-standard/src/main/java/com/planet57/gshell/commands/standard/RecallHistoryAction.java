@@ -24,8 +24,6 @@ import org.jline.reader.History;
 
 import javax.annotation.Nonnull;
 
-// TODO: this may no longer be required; jline3 appears to handle !<history-index> natively
-
 /**
  * Recall history.
  *
