@@ -54,6 +54,8 @@ public class PlexusRuntime
     this.classWorld = checkNotNull(classWorld);
   }
 
+  // TODO: consider exposing container for provider-based customization?
+
   private PlexusContainer createContainer() throws PlexusContainerException {
     ContainerConfiguration config = new DefaultContainerConfiguration()
         .setClassWorld(classWorld.get())
