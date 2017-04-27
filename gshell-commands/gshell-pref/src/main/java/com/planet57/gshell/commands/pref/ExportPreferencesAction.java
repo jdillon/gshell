@@ -31,6 +31,7 @@ import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.Preferences;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -49,6 +50,7 @@ public class ExportPreferencesAction
   @Option(name = "t", longName = "subtree")
   private boolean subTree;
 
+  @Nullable
   @Argument(index = 1)
   private File file;
 

@@ -18,6 +18,7 @@ package com.planet57.gshell.commands.file;
 import java.io.File;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -46,6 +47,7 @@ public class ChangeDirectoryAction
   @Option(name = "v", longName = "verbose")
   private boolean verbose;
 
+  @Nullable
   @Argument
   private String path;
 

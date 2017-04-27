@@ -62,13 +62,7 @@ public class DeleteFileAction
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
 
-    File file;
-    if (path == null) {
-      file = getFileSystem().getUserHomeDir();
-    }
-    else {
-      file = getFileSystem().resolveFile(path);
-    }
+    File file = getFileSystem().resolveFile(path);
 
     new FileAssert(file).exists();
 

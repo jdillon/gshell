@@ -42,7 +42,7 @@ public class EchoAction
   @Option(name = "n")
   private boolean noTrailingNewline;
 
-  @Argument()
+  @Argument
   private List<String> args;
 
   @Override
