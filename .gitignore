@@ -2,7 +2,7 @@ target
 .idea
 *.iml
 *.ipr
-/bin
 .classpath
 .project
 .settings
+build.rc
