@@ -444,9 +444,6 @@
             </dependency>
           </dependencies>
           <configuration>
-            <!--
-            Configure support for Groovy compilation.
-            -->
             <compilerId>groovy-eclipse-compiler</compilerId>
           </configuration>
         </plugin>
