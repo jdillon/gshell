@@ -28,7 +28,10 @@ import org.codehaus.plexus.logging.Logger;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.inject.Provider;
 import javax.inject.Singleton;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Provides access to Plexus components.
@@ -41,27 +44,19 @@ import javax.inject.Singleton;
 public class PlexusRuntime
   extends ComponentSupport
 {
-  @Nullable
-  private ClassWorld classWorld;
+  private final Provider<ClassWorld> classWorld;
 
+  @Nullable
   private PlexusContainer container;
 
   @Inject
-  public PlexusRuntime(@Nullable final ClassWorld classWorld) {
-    this.classWorld = classWorld;
-  }
-
-  public PlexusRuntime() {
-    this(null);
+  public PlexusRuntime(final Provider<ClassWorld> classWorld) {
+    this.classWorld = checkNotNull(classWorld);
   }
 
   private PlexusContainer createContainer() throws PlexusContainerException {
-    if (classWorld == null) {
-      classWorld = new ClassWorld("plexus.core", Thread.currentThread().getContextClassLoader());
-    }
-
     ContainerConfiguration config = new DefaultContainerConfiguration()
-        .setClassWorld(classWorld)
+        .setClassWorld(classWorld.get())
         .setName("plexus-runtime");
 
     DefaultPlexusContainer container = new DefaultPlexusContainer(config);
@@ -71,15 +66,11 @@ public class PlexusRuntime
     return container;
   }
 
-  @Nullable
-  public ClassWorld getClassWorld() {
-    return classWorld;
-  }
-
   public PlexusContainer getContainer() {
     if (container == null) {
       try {
         container = createContainer();
+        log.debug("Created container: {}", container);
       }
       catch (PlexusContainerException e) {
         throw new RuntimeException(e);
