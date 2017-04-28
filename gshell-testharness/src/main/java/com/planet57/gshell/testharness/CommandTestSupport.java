@@ -31,8 +31,6 @@ import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.registry.CommandRegistrarImpl;
 import com.planet57.gshell.command.registry.CommandRegistry;
 import com.planet57.gshell.internal.BeanContainer;
-import com.planet57.gshell.parser.impl.eval.Evaluator;
-import com.planet57.gshell.parser.impl.eval.RegexEvaluator;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.shell.ShellImpl;
 import com.planet57.gshell.variables.Variables;
@@ -58,7 +56,7 @@ import static com.google.inject.name.Names.named;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-// FIXME: Goodies TestSupport initMocks() is causing some issues in mvnsh; so don't use it for now
+// FIXME: Goodies TestSupport initMocks() is causing some issues in mvnsh
 
 /**
  * Support for testing {@link CommandAction} instances.
@@ -126,7 +124,6 @@ public abstract class CommandTestSupport
       binder.bind(Branding.class).toInstance(new TestBranding(util.resolveFile("target/shell-home")));
       binder.bind(IO.class).annotatedWith(named("main")).toInstance(io);
       binder.bind(Variables.class).annotatedWith(named("main")).toInstance(variables);
-      binder.bind(Evaluator.class).to(RegexEvaluator.class);
     });
     configureModules(modules);
 
