@@ -112,7 +112,8 @@
     <module>gshell-testsupport</module>
     <module>gshell-testharness</module>
     <module>gshell-bootstrap</module>
-    <module>gshell-dist</module>
+    <module>gshell-personality</module>
+    <module>gshell-assembly</module>
   </modules>
 
   <dependencyManagement>
@@ -411,13 +412,13 @@
       </dependency>
 
       <dependency>
-        <groupId>com.planet57.gshell.dist</groupId>
+        <groupId>com.planet57.gshell</groupId>
         <artifactId>gshell-personality</artifactId>
         <version>3.0.0-SNAPSHOT</version>
       </dependency>
 
       <dependency>
-        <groupId>com.planet57.gshell.dist</groupId>
+        <groupId>com.planet57.gshell</groupId>
         <artifactId>gshell-assembly</artifactId>
         <version>3.0.0-SNAPSHOT</version>
       </dependency>
