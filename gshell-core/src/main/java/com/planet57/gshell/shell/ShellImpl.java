@@ -187,12 +187,6 @@ public class ShellImpl
   }
 
   @Override
-  public Object execute(final CharSequence command, final Object[] args) throws Exception {
-    ensureStarted();
-    return executor.execute(this, String.valueOf(command), args);
-  }
-
-  @Override
   public Object execute(final Object... args) throws Exception {
     ensureStarted();
     return executor.execute(this, args);

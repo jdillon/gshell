@@ -40,8 +40,6 @@ public interface Shell
 
   Object execute(CharSequence line) throws Exception;
 
-  Object execute(CharSequence command, Object[] args) throws Exception;
-
   Object execute(Object... args) throws Exception;
 
   /**
