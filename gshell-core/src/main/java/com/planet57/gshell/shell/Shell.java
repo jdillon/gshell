@@ -40,14 +40,5 @@ public interface Shell
 
   Object execute(CharSequence line) throws Exception;
 
-  Object execute(Object... args) throws Exception;
-
-  /**
-   * Run the shell interactively.
-   *
-   * @param args The initial commands to execute interactively.
-   * @throws Exception                     Failed to execute commands.
-   * @throws UnsupportedOperationException The shell does not support interactive execution.
-   */
-  void run(Object... args) throws Exception;
+  void run() throws Exception;
 }

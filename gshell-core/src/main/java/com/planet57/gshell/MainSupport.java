@@ -61,6 +61,7 @@ import org.slf4j.Logger;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.inject.name.Names.named;
@@ -130,6 +131,7 @@ public abstract class MainSupport
     }
   }
 
+  @Nullable
   @Option(name = "c", longName = "command")
   private String command;
 
@@ -151,7 +153,7 @@ public abstract class MainSupport
     Ansi.setEnabled(flag);
   }
 
-  @Argument()
+  @Argument
   private List<String> appArgs = null;
 
   /**
@@ -304,7 +306,7 @@ public abstract class MainSupport
           result = shell.execute(command);
         }
         else if (appArgs != null) {
-          result = shell.execute(appArgs.toArray());
+          result = shell.execute(String.join(" ", appArgs));
         }
         else {
           shell.run();

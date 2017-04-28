@@ -17,7 +17,6 @@ package com.planet57.gshell.shell;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
@@ -187,17 +186,10 @@ public class ShellImpl
   }
 
   @Override
-  public Object execute(final Object... args) throws Exception {
-    ensureStarted();
-    return executor.execute(this, args);
-  }
-
-  @Override
-  public void run(final Object... args) throws Exception {
-    checkNotNull(args);
+  public void run() throws Exception {
     ensureStarted();
 
-    log.debug("Starting interactive console; args: {}", Arrays.asList(args));
+    log.debug("Starting interactive console");
 
     scriptLoader.loadInteractiveScripts(this);
 
@@ -232,11 +224,6 @@ public class ShellImpl
     Console console = new Console(lineReader, prompt, taskFactory, errorHandler);
 
     renderWelcomeMessage(io);
-
-    // Check if there are args, and run them and then enter interactive
-    if (args.length != 0) {
-      execute(args);
-    }
 
     console.run();
 
