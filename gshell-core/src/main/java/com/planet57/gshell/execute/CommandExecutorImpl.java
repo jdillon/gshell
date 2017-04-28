@@ -237,6 +237,10 @@ public class CommandExecutorImpl
       session.getVariables().put(name, variables.get(name))
     );
 
+    // FIXME: this doesn't appear to do the trick; because "echo" will resolve to function "echo" :-(
+    // disable trace output by default
+    session.put("echo", null);
+
     try {
       return session.execute(line);
     }
@@ -248,102 +252,4 @@ public class CommandExecutorImpl
       throw n;
     }
   }
-
-//  @Override
-//  @Nullable
-//  public Object execute(final Shell shell, final List<?> line) throws Exception {
-//    checkNotNull(shell);
-//    checkNotNull(line);
-//    checkArgument(line.size() > 0);
-//
-//    String command = String.valueOf(line.get(0));
-//    List<?> args = ImmutableList.copyOf(line.subList(1, line.size()));
-//    log.debug("Executing ({}): {}", command, args);
-//
-//    Stopwatch watch = Stopwatch.createStarted();
-//
-//    final CommandAction action = createAction(command);
-//    MDC.put(CommandAction.class.getName(), command);
-//
-//    final ClassLoader cl = Thread.currentThread().getContextClassLoader();
-//
-//    final IO io = shell.getIo();
-//
-//    StreamJack.maybeInstall(io.streams);
-//
-//    Object result = null;
-//    try {
-//      boolean execute = true;
-//
-//      // Process command preferences
-//      PreferenceProcessor pp = CommandHelper.createPreferenceProcessor(action, shell.getBranding());
-//      pp.process();
-//
-//      // Process command arguments unless marked as opaque
-//      if (!(action instanceof OpaqueArguments)) {
-//        CommandHelper help = new CommandHelper();
-//        CliProcessor clp = help.createCliProcessor(action);
-//        clp.process(args);
-//
-//        // Render command-line usage
-//        if (help.displayHelp) {
-//          io.out.println(CommandHelper.getDescription(action));
-//          io.out.println();
-//
-//          HelpPrinter printer = new HelpPrinter(clp, io.terminal);
-//          printer.printUsage(io.out, action.getSimpleName());
-//
-//          // Skip execution
-//          result = CommandAction.Result.SUCCESS;
-//          execute = false;
-//        }
-//      }
-//
-//      if (execute) {
-//        try {
-//          result = action.execute(new CommandContext()
-//          {
-//            @Override
-//            @Nonnull
-//            public Shell getShell() {
-//              return shell;
-//            }
-//
-//            @Override
-//            @Nonnull
-//            public List<?> getArguments() {
-//              return args;
-//            }
-//
-//            @Override
-//            @Nonnull
-//            public IO getIo() {
-//              return io;
-//            }
-//
-//            @Override
-//            @Nonnull
-//            public Variables getVariables() {
-//              return shell.getVariables();
-//            }
-//          });
-//        }
-//        catch (ResultNotification n) {
-//          result = n.getResult();
-//        }
-//      }
-//    }
-//    finally {
-//      io.flush();
-//      StreamJack.deregister();
-//      Thread.currentThread().setContextClassLoader(cl);
-//      MDC.remove(CommandAction.class.getName());
-//    }
-//
-//    shell.getVariables().set(VariableNames.LAST_RESULT, result);
-//
-//    log.debug("Result: {}; {}", result, watch);
-//
-//    return result;
-//  }
 }

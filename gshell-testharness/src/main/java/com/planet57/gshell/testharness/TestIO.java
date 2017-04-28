@@ -21,6 +21,7 @@ import java.io.PrintStream;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.util.io.StreamSet;
 import org.jline.terminal.Terminal;
+import org.slf4j.Logger;
 
 /**
  * Test {@link IO}.
@@ -58,5 +59,17 @@ public class TestIO
 
   public String getErrorString() {
     return new String(getError().toByteArray());
+  }
+
+  public void dump(final Logger logger) {
+    String out = getOutputString();
+    if (!out.trim().isEmpty()) {
+      logger.debug("OUT:\n{}", out);
+    }
+
+    String err = getErrorString();
+    if (!err.trim().isEmpty()) {
+      logger.debug("ERR:\n{}", err);
+    }
   }
 }

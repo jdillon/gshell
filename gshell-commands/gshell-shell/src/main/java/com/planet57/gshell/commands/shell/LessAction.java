@@ -22,6 +22,7 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import com.planet57.gshell.command.IO;
 import com.planet57.gshell.util.cli2.Option;
 import org.jline.builtins.Less;
 import org.jline.builtins.Source;
@@ -50,7 +51,8 @@ public class LessAction
   private Boolean lineNumbers;
 
   // TODO: leaving this as "source" for now, as this could be adapted to url or file/path
-  @Argument(required = true)
+  @Nullable
+  @Argument
   private File source;
 
   @Inject
@@ -61,13 +63,21 @@ public class LessAction
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
+    IO io = context.getIo();
     Less less = new Less(context.getIo().terminal);
 
     if (lineNumbers != null) {
       less.printLineNumbers = lineNumbers;
     }
 
-    Source input = new Source.PathSource(source.toPath(), source.getName());
+    // FIXME: this kinda breaks things, not sure why...
+    Source input;
+    if (source == null) {
+      input = new Source.StdInSource();
+    }
+    else {
+      input = new Source.PathSource(source.toPath(), source.getName());
+    }
     less.run(input);
 
     return Result.SUCCESS;

@@ -46,6 +46,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.sonatype.goodies.testsupport.TestTracer;
 import org.sonatype.goodies.testsupport.TestUtil;
@@ -71,6 +73,8 @@ public abstract class CommandTestSupport
   }
 
   protected final TestUtil util = new TestUtil(getClass());
+
+  protected final Logger log = LoggerFactory.getLogger(getClass());
 
   /**
    * The name of the command under-test.
@@ -197,7 +201,12 @@ public abstract class CommandTestSupport
    */
   protected Object executeLine(final String line) throws Exception {
     checkNotNull(line);
-    return getShell().execute(line);
+    try {
+      return getShell().execute(line);
+    }
+    finally {
+      io.dump(log);
+    }
   }
 
   /**
@@ -205,7 +214,13 @@ public abstract class CommandTestSupport
    */
   protected Object executeCommand(final String... args) throws Exception {
     checkNotNull(args);
-    return getShell().execute(name + " " + String.join(" ", args));
+
+    try {
+      return getShell().execute(name + " " + String.join(" ", args));
+    }
+    finally {
+      io.dump(log);
+    }
   }
 
   //
