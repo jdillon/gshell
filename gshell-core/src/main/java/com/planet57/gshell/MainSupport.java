@@ -305,7 +305,7 @@ public abstract class MainSupport
           result = shell.execute(command);
         }
         else if (appArgs != null) {
-          result = shell.execute(appArgs);
+          result = shell.execute(String.join(" ", appArgs));
         }
         else {
           shell.run();

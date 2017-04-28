@@ -81,22 +81,24 @@ public class ExecutingVisitor
   public Object visit(final ASTExpression node, final Object data) {
     assert node != null;
 
-    ExpressionState state = new ExpressionState(node);
-    node.childrenAccept(this, state);
+    throw new UnsupportedOperationException();
 
-    Object result;
-    try {
-      result = executor.execute(shell, state.getArguments());
-    }
-    catch (Exception e) {
-      throw new ErrorNotification("Shell execution failed; args: " + state.getArguments(), e);
-    }
-
-    List results = (List) data;
-    //noinspection unchecked
-    results.add(result);
-
-    return result;
+//    ExpressionState state = new ExpressionState(node);
+//    node.childrenAccept(this, state);
+//
+//    Object result;
+//    try {
+//      result = executor.execute(shell, state.getArguments());
+//    }
+//    catch (Exception e) {
+//      throw new ErrorNotification("Shell execution failed; args: " + state.getArguments(), e);
+//    }
+//
+//    List results = (List) data;
+//    //noinspection unchecked
+//    results.add(result);
+//
+//    return result;
   }
 
   @Override

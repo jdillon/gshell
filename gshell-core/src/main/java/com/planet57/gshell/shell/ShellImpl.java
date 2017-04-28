@@ -17,7 +17,6 @@ package com.planet57.gshell.shell;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
@@ -184,12 +183,6 @@ public class ShellImpl
   public Object execute(final CharSequence line) throws Exception {
     ensureStarted();
     return executor.execute(this, String.valueOf(line));
-  }
-
-  @Override
-  public Object execute(final List<String> line) throws Exception {
-    ensureStarted();
-    return executor.execute(this, line);
   }
 
   @Override

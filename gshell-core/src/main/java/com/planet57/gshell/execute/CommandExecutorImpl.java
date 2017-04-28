@@ -37,6 +37,10 @@ import com.planet57.gshell.command.CommandHelper;
 import com.planet57.gshell.parser.CommandLineParser;
 import com.planet57.gshell.parser.CommandLineParser.CommandLine;
 import com.planet57.gshell.shell.Shell;
+import org.apache.felix.gogo.runtime.CommandProcessorImpl;
+import org.apache.felix.gogo.runtime.CommandSessionImpl;
+import org.apache.felix.service.command.CommandSession;
+import org.apache.felix.service.command.Function;
 import org.sonatype.goodies.common.ComponentSupport;
 import com.planet57.gshell.util.cli2.CliProcessor;
 import com.planet57.gshell.util.cli2.HelpPrinter;
@@ -80,6 +84,147 @@ public class CommandExecutorImpl
     this.parser = checkNotNull(parser);
   }
 
+  @Nullable
+  private CommandAction createAction(final String name) {
+    assert name != null;
+    CommandAction action;
+    if (aliases.containsAlias(name)) {
+      try {
+        action = new AliasAction(name, aliases.getAlias(name));
+      }
+      catch (NoSuchAliasException e) {
+        // should never happen
+        throw new Error();
+      }
+    }
+    else {
+      Node node = resolver.resolve(name);
+      if (node == null) {
+        return null;
+      }
+      action = node.getAction();
+    }
+
+    if (action instanceof CommandAction.Prototype) {
+      return ((CommandAction.Prototype)action).create();
+    }
+    return action;
+  }
+
+  private CommandProcessorImpl commandProcessor = new CommandProcessorImpl()
+  {
+    @Override
+    protected Function getCommand(final String name, final Object path) {
+      CommandAction action = createAction(name);
+      if (action != null) {
+        return new CommandActionFunction(action);
+      }
+      return null;
+    }
+  };
+
+  private class CommandActionFunction
+    implements Function
+  {
+    private final CommandAction action;
+
+    public CommandActionFunction(final CommandAction action) {
+      this.action = checkNotNull(action);
+    }
+
+    @Override
+    public Object execute(final CommandSession session, final List<Object> arguments) throws Exception {
+      log.debug("Executing ({}): {}", action.getName(), arguments);
+
+      Stopwatch watch = Stopwatch.createStarted();
+
+      final ClassLoader cl = Thread.currentThread().getContextClassLoader();
+      final Shell shell = (Shell) session.get(".shell");
+      final IO io = shell.getIo();
+
+      // FIXME: this messes up output; resolve if/where this should be handled
+      // StreamJack.maybeInstall(io.streams);
+
+      Object result = null;
+      try {
+        boolean execute = true;
+
+        // Process command preferences
+        PreferenceProcessor pp = CommandHelper.createPreferenceProcessor(action, shell.getBranding());
+        pp.process();
+
+        // Process command arguments unless marked as opaque
+        if (!(action instanceof OpaqueArguments)) {
+          CommandHelper help = new CommandHelper();
+          CliProcessor clp = help.createCliProcessor(action);
+          clp.process(arguments);
+
+          // Render command-line usage
+          if (help.displayHelp) {
+            io.out.println(CommandHelper.getDescription(action));
+            io.out.println();
+
+            HelpPrinter printer = new HelpPrinter(clp, io.terminal);
+            printer.printUsage(io.out, action.getSimpleName());
+
+            // Skip execution
+            result = CommandAction.Result.SUCCESS;
+            execute = false;
+          }
+        }
+
+        if (execute) {
+          try {
+            result = action.execute(new CommandContext() {
+              @Override
+              @Nonnull
+              public Shell getShell() {
+                return shell;
+              }
+
+              @Override
+              @Nonnull
+              public List<?> getArguments() {
+                return arguments;
+              }
+
+              @Override
+              @Nonnull
+              public IO getIo() {
+                return io;
+              }
+
+              @Override
+              @Nonnull
+              public Variables getVariables() {
+                return shell.getVariables();
+              }
+            });
+          }
+          catch (ResultNotification n) {
+            result = n.getResult();
+          }
+          catch (Throwable t) {
+            // TODO: see if there is a more appropriate place for this; something may be gobbling exceptions in gogo as well
+            log.debug("Caught", t);
+            Throwables.propagateIfPossible(t, Exception.class, Error.class);
+            throw new RuntimeException(t);
+          }
+        }
+      }
+      finally {
+        io.flush();
+        // StreamJack.deregister();
+        Thread.currentThread().setContextClassLoader(cl);
+      }
+
+      shell.getVariables().set(VariableNames.LAST_RESULT, result);
+
+      log.debug("Result: {}; {}", result, watch);
+      return result;
+    }
+  }
+
   @Override
   @Nullable
   public Object execute(final Shell shell, final String line) throws Exception {
@@ -91,10 +236,17 @@ public class CommandExecutorImpl
       return null;
     }
 
-    CommandLine cl = parser.parse(line);
+    IO io = shell.getIo();
+    CommandSessionImpl session = commandProcessor.createSession(io.streams.in, io.streams.out, io.streams.err);
+    session.put(".shell", shell);
+
+    Variables variables = shell.getVariables();
+    variables.names().forEach(name ->
+      session.getVariables().put(name, variables.get(name))
+    );
 
     try {
-      return cl.execute(shell, this);
+      return session.execute(line);
     }
     catch (ErrorNotification n) {
       Throwable cause = n.getCause();
@@ -104,121 +256,101 @@ public class CommandExecutorImpl
     }
   }
 
-  private CommandAction createAction(final String name) throws NoSuchAliasException, NoSuchCommandException {
-    assert name != null;
-    CommandAction action;
-    if (aliases.containsAlias(name)) {
-      action = new AliasAction(name, aliases.getAlias(name));
-    }
-    else {
-      Node node = resolver.resolve(name);
-      if (node == null) {
-        throw new NoSuchCommandException(name);
-      }
-      action = node.getAction();
-    }
-
-    if (action instanceof CommandAction.Prototype) {
-      return ((CommandAction.Prototype)action).create();
-    }
-    return action;
-  }
-
-  @Override
-  @Nullable
-  public Object execute(final Shell shell, final List<?> line) throws Exception {
-    checkNotNull(shell);
-    checkNotNull(line);
-    checkArgument(line.size() > 0);
-
-    String command = String.valueOf(line.get(0));
-    List<?> args = ImmutableList.copyOf(line.subList(1, line.size()));
-    log.debug("Executing ({}): {}", command, args);
-
-    Stopwatch watch = Stopwatch.createStarted();
-
-    final CommandAction action = createAction(command);
-    MDC.put(CommandAction.class.getName(), command);
-
-    final ClassLoader cl = Thread.currentThread().getContextClassLoader();
-
-    final IO io = shell.getIo();
-
-    StreamJack.maybeInstall(io.streams);
-
-    Object result = null;
-    try {
-      boolean execute = true;
-
-      // Process command preferences
-      PreferenceProcessor pp = CommandHelper.createPreferenceProcessor(action, shell.getBranding());
-      pp.process();
-
-      // Process command arguments unless marked as opaque
-      if (!(action instanceof OpaqueArguments)) {
-        CommandHelper help = new CommandHelper();
-        CliProcessor clp = help.createCliProcessor(action);
-        clp.process(args);
-
-        // Render command-line usage
-        if (help.displayHelp) {
-          io.out.println(CommandHelper.getDescription(action));
-          io.out.println();
-
-          HelpPrinter printer = new HelpPrinter(clp, io.terminal);
-          printer.printUsage(io.out, action.getSimpleName());
-
-          // Skip execution
-          result = CommandAction.Result.SUCCESS;
-          execute = false;
-        }
-      }
-
-      if (execute) {
-        try {
-          result = action.execute(new CommandContext()
-          {
-            @Override
-            @Nonnull
-            public Shell getShell() {
-              return shell;
-            }
-
-            @Override
-            @Nonnull
-            public List<?> getArguments() {
-              return args;
-            }
-
-            @Override
-            @Nonnull
-            public IO getIo() {
-              return io;
-            }
-
-            @Override
-            @Nonnull
-            public Variables getVariables() {
-              return shell.getVariables();
-            }
-          });
-        }
-        catch (ResultNotification n) {
-          result = n.getResult();
-        }
-      }
-    }
-    finally {
-      io.flush();
-      StreamJack.deregister();
-      Thread.currentThread().setContextClassLoader(cl);
-      MDC.remove(CommandAction.class.getName());
-    }
-
-    shell.getVariables().set(VariableNames.LAST_RESULT, result);
-
-    log.debug("Result: {}; {}", result, watch);
-
-    return result;
-  }
+//  @Override
+//  @Nullable
+//  public Object execute(final Shell shell, final List<?> line) throws Exception {
+//    checkNotNull(shell);
+//    checkNotNull(line);
+//    checkArgument(line.size() > 0);
+//
+//    String command = String.valueOf(line.get(0));
+//    List<?> args = ImmutableList.copyOf(line.subList(1, line.size()));
+//    log.debug("Executing ({}): {}", command, args);
+//
+//    Stopwatch watch = Stopwatch.createStarted();
+//
+//    final CommandAction action = createAction(command);
+//    MDC.put(CommandAction.class.getName(), command);
+//
+//    final ClassLoader cl = Thread.currentThread().getContextClassLoader();
+//
+//    final IO io = shell.getIo();
+//
+//    StreamJack.maybeInstall(io.streams);
+//
+//    Object result = null;
+//    try {
+//      boolean execute = true;
+//
+//      // Process command preferences
+//      PreferenceProcessor pp = CommandHelper.createPreferenceProcessor(action, shell.getBranding());
+//      pp.process();
+//
+//      // Process command arguments unless marked as opaque
+//      if (!(action instanceof OpaqueArguments)) {
+//        CommandHelper help = new CommandHelper();
+//        CliProcessor clp = help.createCliProcessor(action);
+//        clp.process(args);
+//
+//        // Render command-line usage
+//        if (help.displayHelp) {
+//          io.out.println(CommandHelper.getDescription(action));
+//          io.out.println();
+//
+//          HelpPrinter printer = new HelpPrinter(clp, io.terminal);
+//          printer.printUsage(io.out, action.getSimpleName());
+//
+//          // Skip execution
+//          result = CommandAction.Result.SUCCESS;
+//          execute = false;
+//        }
+//      }
+//
+//      if (execute) {
+//        try {
+//          result = action.execute(new CommandContext()
+//          {
+//            @Override
+//            @Nonnull
+//            public Shell getShell() {
+//              return shell;
+//            }
+//
+//            @Override
+//            @Nonnull
+//            public List<?> getArguments() {
+//              return args;
+//            }
+//
+//            @Override
+//            @Nonnull
+//            public IO getIo() {
+//              return io;
+//            }
+//
+//            @Override
+//            @Nonnull
+//            public Variables getVariables() {
+//              return shell.getVariables();
+//            }
+//          });
+//        }
+//        catch (ResultNotification n) {
+//          result = n.getResult();
+//        }
+//      }
+//    }
+//    finally {
+//      io.flush();
+//      StreamJack.deregister();
+//      Thread.currentThread().setContextClassLoader(cl);
+//      MDC.remove(CommandAction.class.getName());
+//    }
+//
+//    shell.getVariables().set(VariableNames.LAST_RESULT, result);
+//
+//    log.debug("Result: {}; {}", result, watch);
+//
+//    return result;
+//  }
 }

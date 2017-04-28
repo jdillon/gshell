@@ -42,7 +42,5 @@ public interface Shell
 
   Object execute(CharSequence line) throws Exception;
 
-  Object execute(List<String> line) throws Exception;
-
   void run() throws Exception;
 }

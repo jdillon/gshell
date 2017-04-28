@@ -31,6 +31,6 @@ public interface CommandExecutor
   @Nullable
   Object execute(Shell shell, String line) throws Exception;
 
-  @Nullable
-  Object execute(Shell shell, List<?> line) throws Exception;
+//  @Nullable
+//  Object execute(Shell shell, List<?> line) throws Exception;
 }

@@ -26,6 +26,7 @@ import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -42,12 +43,15 @@ public class EchoAction
   @Option(name = "n")
   private boolean noTrailingNewline;
 
+  @Nullable
   @Argument
   private List<String> args;
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
+
+    log.debug("Echo: {}; omit-newline: {}", args, noTrailingNewline);
 
     if (args != null && !args.isEmpty()) {
       Iterator iter = args.iterator();

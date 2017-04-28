@@ -37,6 +37,7 @@ public final class ExitNotification
   public final int code;
 
   public ExitNotification(final int code) {
+    super(String.valueOf(code));
     this.code = code;
   }
 
