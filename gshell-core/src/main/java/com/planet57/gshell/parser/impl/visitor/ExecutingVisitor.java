@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.google.common.base.Joiner;
 import com.planet57.gshell.execute.CommandExecutor;
 import com.planet57.gshell.execute.ErrorNotification;
 import com.planet57.gshell.parser.impl.ASTCommandLine;
@@ -85,13 +84,12 @@ public class ExecutingVisitor
     ExpressionState state = new ExpressionState(node);
     node.childrenAccept(this, state);
 
-    List<Object> args = state.getArguments();
     Object result;
     try {
-      result = executor.execute(shell, args);
+      result = executor.execute(shell, state.getArguments());
     }
     catch (Exception e) {
-      throw new ErrorNotification("Shell execution failed; args=" + Joiner.on(", ").join(args), e);
+      throw new ErrorNotification("Shell execution failed; args: " + state.getArguments(), e);
     }
 
     List results = (List) data;
