@@ -86,16 +86,13 @@ public class ExecutingVisitor
     ExpressionState state = new ExpressionState(node);
     node.childrenAccept(this, state);
 
-    Object[] args = state.getArguments();
-    String path = String.valueOf(args[0]);
-    args = Arguments.shift(args);
-
+    List<Object> args = state.getArguments();
     Object result;
     try {
-      result = executor.execute(shell, path, args);
+      result = executor.execute(shell, args);
     }
     catch (Exception e) {
-      throw new ErrorNotification("Shell execution failed; path=" + path + "; args=" + Joiner.on(", ").join(args), e);
+      throw new ErrorNotification("Shell execution failed; args=" + Joiner.on(", ").join(args), e);
     }
 
     List results = (List) data;
@@ -187,10 +184,10 @@ public class ExecutingVisitor
       }
     }
 
-    public Object[] getArguments() {
+    public List<Object> getArguments() {
       // If there is something still on the buffer it is the last argument
       next();
-      return args.toArray();
+      return args;
     }
   }
 }

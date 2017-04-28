@@ -18,6 +18,7 @@ package com.planet57.gshell.execute;
 import com.planet57.gshell.shell.Shell;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 /**
  * Provides the ability to execute commands.
@@ -27,37 +28,9 @@ import javax.annotation.Nullable;
  */
 public interface CommandExecutor
 {
-  /**
-   * Execute a command-line, parsing out valid recognized syntax.
-   *
-   * @param shell The executing shell.
-   * @param line  Raw command-line to parse and execute.
-   * @return Command execution result.
-   * @throws Exception Command-line execution failed.
-   */
   @Nullable
   Object execute(Shell shell, String line) throws Exception;
 
-  /**
-   * Execute command name/path with the given arguments.
-   *
-   * @param shell   The executing shell.
-   * @param command Name of the command/path to execute.
-   * @param args    Command arguments.
-   * @return Command execution result.
-   * @throws Exception Command-line execution failed.
-   */
   @Nullable
-  Object execute(Shell shell, String command, Object[] args) throws Exception;
-
-  /**
-   * Execute a pre-processed command-line.
-   *
-   * @param shell The executing shell.
-   * @param args  Command arguments, first argument is expected to be the command/path to execute.
-   * @return Command execution result.
-   * @throws Exception Command-line execution failed.
-   */
-  @Nullable
-  Object execute(Shell shell, Object... args) throws Exception;
+  Object execute(Shell shell, List<Object> line) throws Exception;
 }

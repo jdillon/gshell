@@ -46,8 +46,9 @@ import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
 import org.slf4j.MDC;
 
-import java.util.Arrays;
+import java.util.List;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -103,15 +104,6 @@ public class CommandExecutorImpl
     }
   }
 
-  @Override
-  @Nullable
-  public Object execute(final Shell shell, final Object... args) throws Exception {
-    checkNotNull(shell);
-    checkNotNull(args);
-
-    return execute(shell, String.valueOf(args[0]), Arguments.shift(args));
-  }
-
   private CommandAction createAction(final String name) throws NoSuchAliasException, NoSuchCommandException {
     assert name != null;
     CommandAction action;
@@ -134,14 +126,14 @@ public class CommandExecutorImpl
 
   @Override
   @Nullable
-  public Object execute(final Shell shell, final String name, final Object[] args) throws Exception {
+  public Object execute(final Shell shell, final List<Object> line) throws Exception {
     checkNotNull(shell);
-    checkNotNull(name);
-    checkNotNull(args);
+    checkNotNull(line);
+    checkArgument(line.size() > 0);
 
-    if (log.isDebugEnabled()) {
-      log.debug("Executing ({}): {}", name, Arrays.asList(args));
-    }
+    String name = String.valueOf(line.get(0));
+    List<Object> args = line.subList(1, line.size());
+    log.debug("Executing ({}): {}", name, args);
 
     Stopwatch watch = Stopwatch.createStarted();
 
@@ -192,7 +184,7 @@ public class CommandExecutorImpl
             }
 
             @Override
-            public Object[] getArguments() {
+            public List<Object> getArguments() {
               return args;
             }
 

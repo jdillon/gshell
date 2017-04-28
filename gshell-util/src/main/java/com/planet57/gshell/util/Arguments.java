@@ -57,6 +57,10 @@ public class Arguments
     return strings;
   }
 
+  public static String[] toStringArray(final List<Object> args) {
+    return toStringArray(args.toArray());
+  }
+
   // adapted from org.apache.maven.cli.CleanArgument
 
   public static String[] clean(final String[] args) {

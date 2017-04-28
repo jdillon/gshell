@@ -23,6 +23,8 @@ import com.planet57.gshell.util.i18n.NopMessageSource;
 
 import javax.annotation.Nonnull;
 
+import java.util.List;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -59,8 +61,8 @@ public class AliasAction
     String alias = target;
 
     // Need to append any more arguments in the context
-    Object[] args = context.getArguments();
-    if (args.length > 0) {
+    List<Object> args = context.getArguments();
+    if (args.size() > 0) {
       alias = String.format("%s %s", target, Joiner.on(" ").join(args));
     }
 
