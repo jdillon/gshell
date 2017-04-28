@@ -30,6 +30,6 @@ public class SleepActionTest
 
   @Test
   public void testDefault() throws Exception {
-    executeWithArgs("1ms");
+    executeCommand("1ms");
   }
 }

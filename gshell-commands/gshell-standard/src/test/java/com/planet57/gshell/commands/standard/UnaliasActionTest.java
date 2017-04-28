@@ -41,13 +41,13 @@ public class UnaliasActionTest
   @Before
   public void setUp() throws Exception {
     super.setUp();
-    aliasRegistry = injector.getInstance(AliasRegistry.class);
+    aliasRegistry = lookup(AliasRegistry.class);
   }
 
   @Test
   public void testTooManyArguments() throws Exception {
     try {
-      executeWithArgs("1 2");
+      executeCommand("1 2");
       fail();
     }
     catch (Exception e) {
@@ -60,7 +60,7 @@ public class UnaliasActionTest
     assertFalse(aliasRegistry.containsAlias("foo"));
     aliasRegistry.registerAlias("foo", "bar");
 
-    Object result = executeWithArgs("foo");
+    Object result = executeCommand("foo");
     assertEqualsSuccess(result);
     assertFalse(aliasRegistry.containsAlias("foo"));
   }

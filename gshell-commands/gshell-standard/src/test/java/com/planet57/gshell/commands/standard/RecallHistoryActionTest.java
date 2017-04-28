@@ -45,7 +45,7 @@ public class RecallHistoryActionTest
   @Test
   public void testTooManyArguments() throws Exception {
     try {
-      executeWithArgs("1 2");
+      executeCommand("1 2");
       fail();
     }
     catch (Exception e) {
@@ -55,14 +55,14 @@ public class RecallHistoryActionTest
 
   @Test
   public void testIndexOutOfRange() throws Exception {
-    Object result = executeWithArgs(String.valueOf(Integer.MAX_VALUE));
+    Object result = executeCommand(String.valueOf(Integer.MAX_VALUE));
     assertEqualsFailure(result);
   }
 
   @Test
   public void testInvalidIndex() throws Exception {
     try {
-      executeWithArgs("foo");
+      executeCommand("foo");
       fail();
     }
     catch (ConversionException e) {
@@ -84,7 +84,7 @@ public class RecallHistoryActionTest
     assertEquals(2, getShell().getHistory().size());
 
     // Recall the first, which sets foo to bar
-    Object result = executeWithArgs("1");
+    Object result = executeCommand("1");
     assertEqualsSuccess(result);
 
     // Make sure it executed

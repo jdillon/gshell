@@ -38,7 +38,7 @@ public class SetActionTest
   @Test
   public void testDefineVariable() throws Exception {
     assertFalse(variables.contains("foo"));
-    Object result = executeWithArgs("foo bar");
+    Object result = executeCommand("foo bar");
     assertEqualsSuccess(result);
 
     assertTrue(variables.contains("foo"));
@@ -51,7 +51,7 @@ public class SetActionTest
     testDefineVariable();
     assertTrue(variables.contains("foo"));
 
-    Object result = executeWithArgs("foo baz");
+    Object result = executeCommand("foo baz");
     assertEqualsSuccess(result);
 
     assertTrue(variables.contains("foo"));
@@ -62,7 +62,7 @@ public class SetActionTest
   @Test
   public void testDefineVariableWithExpression() throws Exception {
     assertFalse(variables.contains("foo"));
-    Object result = executeWithArgs("foo ${shell.home}");
+    Object result = executeCommand("foo ${shell.home}");
     assertEqualsSuccess(result);
 
     assertTrue(variables.contains("foo"));

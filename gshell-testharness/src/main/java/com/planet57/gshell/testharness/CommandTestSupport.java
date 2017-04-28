@@ -86,7 +86,7 @@ public abstract class CommandTestSupport
 
   private BeanContainer container;
 
-  protected Injector injector;
+  private Injector injector;
 
   private Terminal terminal;
 
@@ -191,18 +191,24 @@ public abstract class CommandTestSupport
     return io;
   }
 
-  protected Object execute(final String line) throws Exception {
+  protected <T> T lookup(final Class<T> type) {
+    return injector.getInstance(type);
+  }
+
+  /**
+   * Execute a raw shell line.
+   */
+  protected Object executeLine(final String line) throws Exception {
     checkNotNull(line);
     return getShell().execute(line);
   }
 
-  protected Object execute(final String... args) throws Exception {
-    return execute(String.join(" ", args));
-  }
-
-  protected Object executeWithArgs(final String... args) throws Exception {
+  /**
+   * Execute command registered for the test.
+   */
+  protected Object executeCommand(final String... args) throws Exception {
     checkNotNull(args);
-    return execute(name + " " + String.join(" ", args));
+    return getShell().execute(name + " " + String.join(" ", args));
   }
 
   //
@@ -244,10 +250,10 @@ public abstract class CommandTestSupport
   public void testHelp() throws Exception {
     Object result;
 
-    result = executeWithArgs("--help");
+    result = executeCommand("--help");
     assertEqualsSuccess(result);
 
-    result = executeWithArgs("-h");
+    result = executeCommand("-h");
     assertEqualsSuccess(result);
   }
 }

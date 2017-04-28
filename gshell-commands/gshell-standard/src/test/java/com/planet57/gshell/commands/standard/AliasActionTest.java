@@ -42,14 +42,14 @@ public class AliasActionTest
   @Before
   public void setUp() throws Exception {
     super.setUp();
-    aliasRegistry = injector.getInstance(AliasRegistry.class);
+    aliasRegistry = lookup(AliasRegistry.class);
   }
 
   @Test
   public void testDefineAlias() throws Exception {
     assertFalse(aliasRegistry.containsAlias("foo"));
 
-    Object result = executeWithArgs("foo bar");
+    Object result = executeCommand("foo bar");
     assertEqualsSuccess(result);
 
     assertTrue(aliasRegistry.containsAlias("foo"));
@@ -63,7 +63,7 @@ public class AliasActionTest
     testDefineAlias();
     assertTrue(aliasRegistry.containsAlias("foo"));
 
-    Object result = executeWithArgs("foo baz");
+    Object result = executeCommand("foo baz");
     assertEqualsSuccess(result);
 
     assertTrue(aliasRegistry.containsAlias("foo"));
@@ -76,14 +76,14 @@ public class AliasActionTest
   public void testExecuteAlias() throws Exception {
     assertFalse(aliasRegistry.containsAlias("make-alias"));
 
-    Object result = executeWithArgs("make-alias alias");
+    Object result = executeCommand("make-alias alias");
     assertEqualsSuccess(result);
 
     assertTrue(aliasRegistry.containsAlias("make-alias"));
     String alias = aliasRegistry.getAlias(("make-alias"));
     assertEquals(alias, "alias");
 
-    result = execute("make-alias foo bar");
+    result = executeLine("make-alias foo bar");
     assertEqualsSuccess(result);
 
     assertTrue(aliasRegistry.containsAlias("foo"));

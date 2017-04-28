@@ -42,7 +42,7 @@ public class HistoryActionTest
   @Test
   public void testTooManyArguments() throws Exception {
     try {
-      executeWithArgs("1 2");
+      executeCommand("1 2");
       fail();
     }
     catch (Exception e) {
@@ -53,11 +53,11 @@ public class HistoryActionTest
   @Test
   public void testPurge() throws Exception {
     // Make sure there is going to be more than one item in history
-    execute("echo 1");
-    execute("echo 2");
+    executeLine("echo 1");
+    executeLine("echo 2");
 
     // Then purge and expect history to be empty
-    Object result = executeWithArgs("-p");
+    Object result = executeCommand("-p");
     assertEqualsSuccess(result);
 
     Assert.assertEquals(0, getShell().getHistory().size());
@@ -70,11 +70,11 @@ public class HistoryActionTest
 
     // Then seed 10 items
     for (int i = 0; i < 10; i++) {
-      execute("echo " + i);
+      executeLine("echo " + i);
     }
 
     // And then ask for the last 5
-    Object result = executeWithArgs("5");
+    Object result = executeCommand("5");
     assertEqualsSuccess(result);
 
     // TODO: Verify output
@@ -87,11 +87,11 @@ public class HistoryActionTest
 
     // Then seed 10 items
     for (int i = 0; i < 10; i++) {
-      execute("echo " + i);
+      executeLine("echo " + i);
     }
 
     // And then ask for the last 15
-    Object result = executeWithArgs("15");
+    Object result = executeCommand("15");
     assertEqualsSuccess(result);
 
     // TODO: Verify output

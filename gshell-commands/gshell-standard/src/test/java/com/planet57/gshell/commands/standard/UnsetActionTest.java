@@ -38,7 +38,7 @@ public class UnsetActionTest
   public void testUndefineVariable() throws Exception {
     variables.set("foo", "bar");
     assertTrue(variables.contains("foo"));
-    Object result = executeWithArgs("foo");
+    Object result = executeCommand("foo");
     assertEqualsSuccess(result);
     assertFalse(variables.contains("foo"));
   }
@@ -46,7 +46,7 @@ public class UnsetActionTest
   @Test
   public void testUndefineUndefinedVariable() throws Exception {
     assertFalse(variables.contains("foo"));
-    Object result = executeWithArgs("foo");
+    Object result = executeCommand("foo");
 
     // Unsetting undefined should not return any errors
     assertEqualsSuccess(result);

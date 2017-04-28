@@ -37,7 +37,7 @@ public class ExitActionTest
   @Test
   public void testTooManyArguments() throws Exception {
     try {
-      executeWithArgs("1 2");
+      executeCommand("1 2");
       fail();
     }
     catch (Exception e) {
@@ -48,7 +48,7 @@ public class ExitActionTest
   @Test
   public void testExitWithCode() throws Exception {
     try {
-      executeWithArgs("57");
+      executeCommand("57");
       fail();
     }
     catch (ExitNotification n) {
@@ -59,7 +59,7 @@ public class ExitActionTest
   @Test
   public void testExitWithInvalidCode() throws Exception {
     try {
-      executeWithArgs("foo");
+      executeCommand("foo");
       fail();
     }
     catch (Exception e) {

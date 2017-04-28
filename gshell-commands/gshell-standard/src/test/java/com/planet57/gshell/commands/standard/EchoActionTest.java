@@ -34,35 +34,35 @@ public class EchoActionTest
 
   @Test
   public void testEcho_a_b_c() throws Exception {
-    Object result = executeWithArgs("a b c");
+    Object result = executeCommand("a b c");
     assertEqualsSuccess(result);
     assertOutputEquals("a b c" + NEWLINE);
   }
 
   @Test
   public void testEcho_$shell_home() throws Exception {
-    Object result = executeWithArgs("${shell.home}");
+    Object result = executeCommand("${shell.home}");
     assertEqualsSuccess(result);
     assertOutputEquals(getShell().getVariables().get("shell.home") + NEWLINE);
   }
 
   @Test
   public void testEchoWithStop() throws Exception {
-    Object result = executeWithArgs("-- -D");
+    Object result = executeCommand("-- -D");
     assertEqualsSuccess(result);
     assertOutputEquals("-D" + NEWLINE);
   }
 
   @Test
   public void testEchoWithSpacePadding() throws Exception {
-    Object result = executeWithArgs("' foo '");
+    Object result = executeCommand("' foo '");
     assertEqualsSuccess(result);
     assertOutputEquals(" foo " + NEWLINE);
   }
 
   @Test
   public void testEchoNoNewline() throws Exception {
-    Object result = executeWithArgs("-n foo");
+    Object result = executeCommand("-n foo");
     assertEqualsSuccess(result);
     assertOutputEquals("foo");
   }

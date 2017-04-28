@@ -49,7 +49,7 @@ public class SourceActionTest
   @Test
   public void testTooManyArguments() throws Exception {
     try {
-      executeWithArgs("1 2");
+      executeCommand("1 2");
       fail();
     }
     catch (Exception e) {
@@ -60,7 +60,7 @@ public class SourceActionTest
   @Test
   public void testNoSuchFile() throws Exception {
     try {
-      executeWithArgs("no-such-file");
+      executeCommand("no-such-file");
       fail();
     }
     catch (FileNotFoundException e) {
@@ -72,7 +72,7 @@ public class SourceActionTest
   public void test1() throws Exception {
     URL script = getClass().getResource("test1.tsh");
     assertNotNull(script);
-    Object result = executeWithArgs(script.toExternalForm());
+    Object result = executeCommand(script.toExternalForm());
     assertEqualsSuccess(result);
   }
 
@@ -82,7 +82,7 @@ public class SourceActionTest
 
     URL script = getClass().getResource("test2.tsh");
     assertNotNull(script);
-    Object result = executeWithArgs(script.toExternalForm());
+    Object result = executeCommand(script.toExternalForm());
     assertEqualsSuccess(result);
 
     assertTrue(variables.contains("foo"));

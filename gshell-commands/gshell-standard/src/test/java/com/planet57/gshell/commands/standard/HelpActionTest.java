@@ -41,14 +41,14 @@ public class HelpActionTest
   @Before
   public void setUp() throws Exception {
     super.setUp();
-    aliasRegistry = injector.getInstance(AliasRegistry.class);
+    aliasRegistry = lookup(AliasRegistry.class);
   }
 
   @Test
   public void testHelpHelp() throws Exception {
     assertTrue(commandRegistry.containsCommand("help"));
     assertFalse(aliasRegistry.containsAlias("foo"));
-    Object result = executeWithArgs("help");
+    Object result = executeCommand("help");
     assertEqualsSuccess(result);
   }
 
@@ -56,7 +56,7 @@ public class HelpActionTest
   public void testHelpFoo() throws Exception {
     assertFalse(commandRegistry.containsCommand("foo"));
     assertFalse(aliasRegistry.containsAlias("foo"));
-    Object result = executeWithArgs("foo");
+    Object result = executeCommand("foo");
     assertEqualsFailure(result);
   }
 }
