@@ -30,12 +30,9 @@ import com.planet57.gshell.command.AliasAction;
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.command.registry.NoSuchCommandException;
 import com.planet57.gshell.command.resolver.CommandResolver;
 import com.planet57.gshell.command.resolver.Node;
 import com.planet57.gshell.command.CommandHelper;
-import com.planet57.gshell.parser.CommandLineParser;
-import com.planet57.gshell.parser.CommandLineParser.CommandLine;
 import com.planet57.gshell.shell.Shell;
 import org.apache.felix.gogo.runtime.CommandProcessorImpl;
 import org.apache.felix.gogo.runtime.CommandSessionImpl;
@@ -45,15 +42,12 @@ import org.sonatype.goodies.common.ComponentSupport;
 import com.planet57.gshell.util.cli2.CliProcessor;
 import com.planet57.gshell.util.cli2.HelpPrinter;
 import com.planet57.gshell.util.cli2.OpaqueArguments;
-import com.planet57.gshell.util.io.StreamJack;
 import com.planet57.gshell.util.pref.PreferenceProcessor;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
-import org.slf4j.MDC;
 
 import java.util.List;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -72,16 +66,12 @@ public class CommandExecutorImpl
 
   private final CommandResolver resolver;
 
-  private final CommandLineParser parser;
-
   @Inject
   public CommandExecutorImpl(final AliasRegistry aliases,
-                             final CommandResolver resolver,
-                             final CommandLineParser parser)
+                             final CommandResolver resolver)
   {
     this.aliases = checkNotNull(aliases);
     this.resolver = checkNotNull(resolver);
-    this.parser = checkNotNull(parser);
   }
 
   @Nullable
@@ -185,7 +175,8 @@ public class CommandExecutorImpl
               @Override
               @Nonnull
               public List<?> getArguments() {
-                return arguments;
+                // TODO: check what arguments is, maybe its immutable already?
+                return ImmutableList.copyOf(arguments);
               }
 
               @Override
@@ -240,6 +231,7 @@ public class CommandExecutorImpl
     CommandSessionImpl session = commandProcessor.createSession(io.streams.in, io.streams.out, io.streams.err);
     session.put(".shell", shell);
 
+    // HACK: stuff all variables into session, this is not ideal however
     Variables variables = shell.getVariables();
     variables.names().forEach(name ->
       session.getVariables().put(name, variables.get(name))
@@ -249,6 +241,7 @@ public class CommandExecutorImpl
       return session.execute(line);
     }
     catch (ErrorNotification n) {
+      // FIXME: this is left over from ExecutingVisitor and need to see how gogo may use/need this or drop it
       Throwable cause = n.getCause();
       Throwables.propagateIfPossible(cause, Exception.class, Error.class);
       // should normally never happen

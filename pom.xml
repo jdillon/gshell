@@ -451,12 +451,6 @@
         </plugin>
 
         <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>javacc-maven-plugin</artifactId>
-          <version>2.6</version>
-        </plugin>
-
-        <plugin>
           <groupId>org.eclipse.sisu</groupId>
           <artifactId>sisu-maven-plugin</artifactId>
           <version>0.3.3</version>
