@@ -246,7 +246,6 @@ public class ShellImpl
   private static void renderMessage(final IO io, @Nullable String message) {
     if (message != null) {
       // HACK: branding does not have easy access to Terminal; so allow a line to be rendered via replacement token
-      // FIXME: This could be done in Branding.customize(Shell)
       if (message.contains(BrandingSupport.LINE_TOKEN)) {
         message = message.replace(BrandingSupport.LINE_TOKEN, Strings.repeat("-", io.terminal.getWidth() - 1));
       }
