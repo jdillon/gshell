@@ -19,6 +19,8 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.Stage;
+import com.planet57.gshell.parser.impl.eval.Evaluator;
+import com.planet57.gshell.parser.impl.eval.RegexEvaluator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,6 +40,7 @@ public class CommandLineParserImplTest
   public void setUp() throws Exception {
     Injector injector = Guice.createInjector(Stage.DEVELOPMENT, (Module) binder -> {
       binder.bind(CommandLineParser.class).to(CommandLineParserImpl.class);
+      binder.bind(Evaluator.class).to(RegexEvaluator.class);
     });
     underTest = injector.getInstance(CommandLineParser.class);
   }
