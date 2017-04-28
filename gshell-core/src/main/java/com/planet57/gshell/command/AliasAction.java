@@ -61,7 +61,7 @@ public class AliasAction
     String alias = target;
 
     // Need to append any more arguments in the context
-    List<Object> args = context.getArguments();
+    List<?> args = context.getArguments();
     if (args.size() > 0) {
       alias = String.format("%s %s", target, Joiner.on(" ").join(args));
     }

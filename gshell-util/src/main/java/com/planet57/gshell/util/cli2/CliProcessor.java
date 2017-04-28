@@ -184,6 +184,18 @@ public class CliProcessor
   // Processing
   //
 
+  public void process(final List<?> args) throws Exception {
+    process(toStringArray(args));
+  }
+
+  private static String[] toStringArray(final List<?> args) {
+    checkNotNull(args);
+    String[] strings = new String[args.size()];
+    for (int i = 0; i < args.size(); i++) {
+      strings[i] = String.valueOf(args.get(i));
+    }
+    return strings;
+  }
 
   public void process(final String... args) throws Exception {
     checkNotNull(args);

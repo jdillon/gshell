@@ -43,7 +43,7 @@ public interface CommandContext
    * @return The command arguments; never null.
    */
   @Nonnull
-  List<Object> getArguments();
+  List<?> getArguments();
 
   /**
    * The input/output for the command.

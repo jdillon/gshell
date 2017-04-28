@@ -32,7 +32,6 @@ import com.planet57.gshell.parser.impl.ParserVisitor;
 import com.planet57.gshell.parser.impl.SimpleNode;
 import com.planet57.gshell.parser.impl.eval.Evaluator;
 import com.planet57.gshell.shell.Shell;
-import com.planet57.gshell.util.Arguments;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

@@ -22,6 +22,7 @@ import javax.inject.Singleton;
 
 import com.google.common.base.Stopwatch;
 import com.google.common.base.Throwables;
+import com.google.common.collect.ImmutableList;
 import com.planet57.gshell.alias.AliasRegistry;
 import com.planet57.gshell.alias.NoSuchAliasException;
 import com.planet57.gshell.command.AliasAction;
@@ -35,7 +36,6 @@ import com.planet57.gshell.command.CommandHelper;
 import com.planet57.gshell.parser.CommandLineParser;
 import com.planet57.gshell.parser.CommandLineParser.CommandLine;
 import com.planet57.gshell.shell.Shell;
-import com.planet57.gshell.util.Arguments;
 import org.sonatype.goodies.common.ComponentSupport;
 import com.planet57.gshell.util.cli2.CliProcessor;
 import com.planet57.gshell.util.cli2.HelpPrinter;
@@ -126,19 +126,19 @@ public class CommandExecutorImpl
 
   @Override
   @Nullable
-  public Object execute(final Shell shell, final List<Object> line) throws Exception {
+  public Object execute(final Shell shell, final List<?> line) throws Exception {
     checkNotNull(shell);
     checkNotNull(line);
     checkArgument(line.size() > 0);
 
-    String name = String.valueOf(line.get(0));
-    List<Object> args = line.subList(1, line.size());
-    log.debug("Executing ({}): {}", name, args);
+    String command = String.valueOf(line.get(0));
+    List<?> args = line.subList(1, line.size());
+    log.debug("Executing ({}): {}", command, args);
 
     Stopwatch watch = Stopwatch.createStarted();
 
-    final CommandAction action = createAction(name);
-    MDC.put(CommandAction.class.getName(), name);
+    final CommandAction action = createAction(command);
+    MDC.put(CommandAction.class.getName(), command);
 
     final ClassLoader cl = Thread.currentThread().getContextClassLoader();
 
@@ -158,7 +158,7 @@ public class CommandExecutorImpl
       if (!(action instanceof OpaqueArguments)) {
         CommandHelper help = new CommandHelper();
         CliProcessor clp = help.createCliProcessor(action);
-        clp.process(Arguments.toStringArray(args));
+        clp.process(args);
 
         // Render command-line usage
         if (help.displayHelp) {
@@ -184,8 +184,8 @@ public class CommandExecutorImpl
             }
 
             @Override
-            public List<Object> getArguments() {
-              return args;
+            public List<?> getArguments() {
+              return ImmutableList.copyOf(args);
             }
 
             @Override

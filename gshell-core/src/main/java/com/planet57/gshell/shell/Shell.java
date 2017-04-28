@@ -21,6 +21,8 @@ import com.planet57.gshell.variables.Variables;
 import org.jline.reader.History;
 import org.sonatype.goodies.lifecycle.Lifecycle;
 
+import java.util.List;
+
 /**
  * Provides access to execute commands.
  *
@@ -39,6 +41,8 @@ public interface Shell
   History getHistory();
 
   Object execute(CharSequence line) throws Exception;
+
+  Object execute(List<String> line) throws Exception;
 
   void run() throws Exception;
 }

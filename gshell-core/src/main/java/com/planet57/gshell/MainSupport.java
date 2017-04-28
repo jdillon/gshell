@@ -34,7 +34,6 @@ import com.planet57.gshell.internal.BeanContainer;
 import com.planet57.gshell.internal.ExitCodeDecoder;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.shell.ShellImpl;
-import com.planet57.gshell.util.Arguments;
 import com.planet57.gshell.util.NameValue;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.CliProcessor;
@@ -222,7 +221,7 @@ public abstract class MainSupport
   public void boot(String... args) throws Exception {
     checkNotNull(args);
 
-    args = Arguments.clean(args);
+    args = cleanArguments(args);
     log.debug("Booting w/args: {}", Arrays.asList(args));
 
     // Register default handler for uncaught exceptions
@@ -306,7 +305,7 @@ public abstract class MainSupport
           result = shell.execute(command);
         }
         else if (appArgs != null) {
-          result = shell.execute(String.join(" ", appArgs));
+          result = shell.execute(appArgs);
         }
         else {
           shell.run();
@@ -331,5 +330,80 @@ public abstract class MainSupport
     int code = ExitCodeDecoder.decode(result);
     codeRef.set(code);
     exit(code);
+  }
+
+  private static String[] cleanArguments(final String[] args) {
+    List<String> cleaned = new ArrayList<>();
+
+    StringBuilder currentArg = null;
+
+    for (int i = 0; i < args.length; i++) {
+      String arg = args[i];
+
+      boolean addedToBuffer = false;
+
+      if (arg.startsWith("\"")) {
+        // if we're in the process of building up another arg, push it and start over.
+        // this is for the case: "-Dfoo=bar "-Dfoo2=bar two" (note the first unterminated quote)
+        if (currentArg != null) {
+          cleaned.add(currentArg.toString());
+        }
+
+        // start building an argument here.
+        currentArg = new StringBuilder(arg.substring(1));
+        addedToBuffer = true;
+      }
+
+      // this has to be a separate "if" statement, to capture the case of: "-Dfoo=bar"
+      if (arg.endsWith("\"")) {
+        String cleanArgPart = arg.substring(0, arg.length() - 1);
+
+        // if we're building an argument, keep doing so.
+        if (currentArg != null) {
+          // if this is the case of "-Dfoo=bar", then we need to adjust the buffer.
+          if (addedToBuffer) {
+            currentArg.setLength(currentArg.length() - 1);
+          }
+          // otherwise, we trim the trailing " and append to the buffer.
+          else {
+            // TODO: introducing a space here...not sure what else to do but collapse whitespace
+            currentArg.append(' ').append(cleanArgPart);
+          }
+
+          cleaned.add(currentArg.toString());
+        }
+        else {
+          cleaned.add(cleanArgPart);
+        }
+
+        currentArg = null;
+
+        continue;
+      }
+
+      // if we haven't added this arg to the buffer, and we ARE building an argument
+      // buffer, then append it with a preceding space...again, not sure what else to
+      // do other than collapse whitespace.
+      // NOTE: The case of a trailing quote is handled by nullifying the arg buffer.
+      if (!addedToBuffer) {
+        if (currentArg != null) {
+          currentArg.append(' ').append(arg);
+        }
+        else {
+          cleaned.add(arg);
+        }
+      }
+    }
+
+    if (currentArg != null) {
+      cleaned.add(currentArg.toString());
+    }
+
+    if (cleaned.isEmpty()) {
+      return args;
+    }
+    else {
+      return cleaned.toArray(new String[cleaned.size()]);
+    }
   }
 }
