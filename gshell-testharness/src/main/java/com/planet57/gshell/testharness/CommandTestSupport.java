@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.common.base.Joiner;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
@@ -197,22 +196,13 @@ public abstract class CommandTestSupport
     return getShell().execute(line);
   }
 
-  protected Object execute() throws Exception {
-    return execute(name);
-  }
-
   protected Object execute(final String... args) throws Exception {
-    return execute(Joiner.on(" ").join(args));
-  }
-
-  protected Object executeWithArgs(final String args) throws Exception {
-    checkNotNull(args);
-    return execute(name, args);
+    return execute(String.join(" ", args));
   }
 
   protected Object executeWithArgs(final String... args) throws Exception {
     checkNotNull(args);
-    return execute(name, Joiner.on(" ").join(args));
+    return execute(name + " " + String.join(" ", args));
   }
 
   //
