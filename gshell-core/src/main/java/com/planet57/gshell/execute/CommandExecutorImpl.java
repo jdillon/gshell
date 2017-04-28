@@ -15,6 +15,7 @@
  */
 package com.planet57.gshell.execute;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -90,7 +91,6 @@ public class CommandExecutorImpl
       return null;
     }
 
-    // FIXME: remove use of ShellHolder
     CommandLine cl = parser.parse(line);
 
     try {
@@ -132,7 +132,7 @@ public class CommandExecutorImpl
     checkArgument(line.size() > 0);
 
     String command = String.valueOf(line.get(0));
-    List<?> args = line.subList(1, line.size());
+    List<?> args = ImmutableList.copyOf(line.subList(1, line.size()));
     log.debug("Executing ({}): {}", command, args);
 
     Stopwatch watch = Stopwatch.createStarted();
@@ -179,21 +179,25 @@ public class CommandExecutorImpl
           result = action.execute(new CommandContext()
           {
             @Override
+            @Nonnull
             public Shell getShell() {
               return shell;
             }
 
             @Override
+            @Nonnull
             public List<?> getArguments() {
-              return ImmutableList.copyOf(args);
+              return args;
             }
 
             @Override
+            @Nonnull
             public IO getIo() {
               return io;
             }
 
             @Override
+            @Nonnull
             public Variables getVariables() {
               return shell.getVariables();
             }
