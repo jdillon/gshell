@@ -67,8 +67,8 @@ public class ShellPrompt
 
         // HACK: Handled some magic with shell.user.dir~ (only if shell.user.dir exists)
         if (key.equals(SHELL_USER_DIR + "~") && vars.contains(SHELL_USER_DIR)) {
-          String home = vars.get(SHELL_USER_HOME, File.class).getAbsolutePath();
-          String current = vars.get(SHELL_USER_DIR, File.class).getAbsolutePath();
+          String home = vars.require(SHELL_USER_HOME, File.class).getAbsolutePath();
+          String current = vars.require(SHELL_USER_DIR, File.class).getAbsolutePath();
           if (current.startsWith(home)) {
             return "~" + current.substring(home.length(), current.length());
           }
@@ -79,8 +79,8 @@ public class ShellPrompt
 
         // HACK: Handled some magic with shell.user.dir~. (only if shell.user.dir exists). THis is similar to bash \w
         if (key.equals(SHELL_USER_DIR + "~.") && vars.contains(SHELL_USER_DIR)) {
-          String home = vars.get(SHELL_USER_HOME, File.class).getAbsolutePath();
-          File current = vars.get(SHELL_USER_DIR, File.class).getAbsoluteFile();
+          String home = vars.require(SHELL_USER_HOME, File.class).getAbsolutePath();
+          File current = vars.require(SHELL_USER_DIR, File.class).getAbsoluteFile();
           if (current.getAbsolutePath().equals(home)) {
             return "~";
           }
