@@ -15,12 +15,6 @@
 # limitations under the License.
 #
 
-QUOTED_ARGS=""
-while [ -n "$1" ] ; do
-    QUOTED_ARGS="$QUOTED_ARGS \"$1\""
-    shift
-done
-
 BOOTSCRIPT="$HOME/.gshell/gsh.boot"
 if [ -f "$BOOTSCRIPT" ] ; then
     . "$BOOTSCRIPT"
@@ -77,5 +71,5 @@ fi
 
 COMMAND=""
 
-exec "$JAVACMD" $JAVA_OPTS -jar "$BOOTJAR" $SHELL_OPTS $COMMAND $QUOTED_ARGS
+exec "$JAVACMD" $JAVA_OPTS -jar "$BOOTJAR" $SHELL_OPTS $COMMAND "$@"
 
