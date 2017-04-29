@@ -21,6 +21,7 @@ import com.planet57.gshell.command.AliasAction;
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.resolver.CommandResolver;
 import com.planet57.gshell.command.resolver.Node;
+import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.variables.VariableNames;
 import org.apache.felix.service.command.CommandSession;
 import org.apache.felix.service.command.CommandSessionListener;
@@ -59,7 +60,7 @@ public class CommandProcessorImpl
     {
       @Override
       public void beforeExecute(final CommandSession session, final CharSequence line) {
-        if (line.length() == 0) {
+        if (line.length() == 0 || !log.isTraceEnabled()) {
           return;
         }
 
@@ -71,7 +72,13 @@ public class CommandProcessorImpl
           idx.append(' ').append((char) ch).append("  ");
         });
 
-        log.debug("Execute: {}\n{}\n{}", line, hex, idx);
+        log.trace("Execute: {}\n{}\n{}", line, hex, idx);
+      }
+
+      private void setLastResult(final CommandSession session, final Object result) {
+        Shell shell = (Shell) session.get(CommandActionFunction.SHELL_VAR);
+        shell.getVariables().set(VariableNames.LAST_RESULT, result);
+        session.put(VariableNames.LAST_RESULT, result);
       }
 
       @Override
@@ -80,9 +87,11 @@ public class CommandProcessorImpl
           return;
         }
 
-        log.debug("Result: {}", String.valueOf(result));
+        if (log.isDebugEnabled()) {
+          log.debug("Result: {}", String.valueOf(result)); // result could be throwable
+        }
 
-        session.put(VariableNames.LAST_RESULT, result);
+        setLastResult(session, result);
       }
 
       @Override
@@ -93,7 +102,7 @@ public class CommandProcessorImpl
 
         log.debug("Exception", exception);
 
-        session.put(VariableNames.LAST_RESULT, exception);
+        setLastResult(session, exception);
       }
     });
   }
@@ -101,7 +110,7 @@ public class CommandProcessorImpl
   @Override
   protected Function getCommand(final String name, final Object path) {
     assert name != null;
-    // ignore path (ie. scope)
+    // ignore path (ie. gogo scope)
 
     CommandAction action = null;
     if (aliases.containsAlias(name)) {

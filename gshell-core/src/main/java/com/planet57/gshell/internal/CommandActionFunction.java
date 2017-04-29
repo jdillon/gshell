@@ -26,7 +26,6 @@ import com.planet57.gshell.util.cli2.CliProcessor;
 import com.planet57.gshell.util.cli2.HelpPrinter;
 import com.planet57.gshell.util.cli2.OpaqueArguments;
 import com.planet57.gshell.util.pref.PreferenceProcessor;
-import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
 import org.apache.felix.service.command.CommandSession;
 import org.apache.felix.service.command.Function;

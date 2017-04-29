@@ -26,7 +26,7 @@ import javax.inject.Named;
 import com.google.common.base.Strings;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.branding.BrandingSupport;
-import com.planet57.gshell.command.ExitNotification;
+import com.planet57.gshell.command.CommandAction.ExitNotification;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.registry.CommandRegistrar;
 import com.planet57.gshell.event.EventManager;

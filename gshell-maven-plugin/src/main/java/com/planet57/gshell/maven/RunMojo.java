@@ -23,7 +23,6 @@ import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.branding.BrandingSupport;
 import com.planet57.gshell.branding.License;
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.command.ExitNotification;
 import com.planet57.gshell.internal.BeanContainer;
 import com.planet57.gshell.shell.ShellImpl;
 import com.planet57.gshell.util.io.PrintBuffer;
@@ -174,9 +173,6 @@ public class RunMojo
     // FIXME: allow more options
     try {
       shell.run();
-    }
-    catch (ExitNotification e) {
-      // ignore
     }
     finally {
       shell.stop();

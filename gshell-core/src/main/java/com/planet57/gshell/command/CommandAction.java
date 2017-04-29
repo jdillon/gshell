@@ -61,6 +61,22 @@ public interface CommandAction
     FAILURE // 1
   }
 
+  class ExitNotification
+  {
+    public final int code;
+
+    public ExitNotification(final int code) {
+      this.code = code;
+    }
+
+    @Override
+    public String toString() {
+      return "ExitNotification{" +
+        "code=" + code +
+        '}';
+    }
+  }
+
   /**
    * Allows commands to be informed of their names at runtime.
    */

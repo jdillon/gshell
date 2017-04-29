@@ -15,8 +15,8 @@
  */
 package com.planet57.gshell.commands.standard
 
+import com.planet57.gshell.command.CommandAction
 import com.planet57.gshell.testharness.CommandTestSupport
-import com.planet57.gshell.command.ExitNotification
 import org.junit.Test
 
 import static org.junit.Assert.fail
@@ -34,7 +34,7 @@ class ExitActionTest
   @Test
   void 'exit with code'() {
     def result = executeCommand('57')
-    assert result instanceof ExitNotification
+    assert result instanceof CommandAction.ExitNotification
     assert result.code == 57
   }
 

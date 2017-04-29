@@ -18,7 +18,6 @@ package com.planet57.gshell;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.inject.Guice;
@@ -28,7 +27,6 @@ import com.planet57.gossip.Level;
 import com.planet57.gossip.Log;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.branding.BrandingSupport;
-import com.planet57.gshell.command.ExitNotification;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.internal.BeanContainer;
 import com.planet57.gshell.internal.ExitCodeDecoder;
@@ -160,6 +158,7 @@ public abstract class MainSupport
    */
   @VisibleForTesting
   protected void exit(final int code) {
+    log.debug("Existing with code: {}", code);
     io.flush();
     System.exit(code);
   }
@@ -258,18 +257,18 @@ public abstract class MainSupport
       else {
         io.err.println(e);
       }
-      exit(ExitNotification.FATAL_CODE);
+      exit(2);
     }
 
     if (help) {
       HelpPrinter printer = new HelpPrinter(clp, io.terminal);
       printer.printUsage(io.out, getBranding().getProgramName());
-      exit(ExitNotification.SUCCESS_CODE);
+      exit(0);
     }
 
     if (version) {
       io.out.format("%s %s", getBranding().getDisplayName(), getBranding().getVersion()).println();
-      exit(ExitNotification.SUCCESS_CODE);
+      exit(0);
     }
 
     // adapt JUL and force slf4j backend to initialize
@@ -279,21 +278,7 @@ public abstract class MainSupport
     // hijack streams
     StreamJack.maybeInstall(io.streams);
 
-    // Setup a reference for our exit code so our callback thread can tell if we've shutdown normally or not
-    final AtomicReference<Integer> codeRef = new AtomicReference<>();
     Object result = null;
-
-    Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-      if (codeRef.get() == null) {
-        // Give the user a warning when the JVM shutdown abnormally, normal shutdown
-        // will set an exit code through the proper channels
-
-        io.err.println();
-        io.err.println(messages.getMessage("warning.abnormalShutdown"));
-      }
-
-      io.flush();
-    }));
 
     try {
       variables.set(VariableNames.SHELL_ERRORS, showErrorTraces);
@@ -315,9 +300,6 @@ public abstract class MainSupport
         shell.stop();
       }
     }
-    catch (ExitNotification n) {
-      result = n.code;
-    }
     finally {
       io.flush();
       terminal.close();
@@ -327,9 +309,7 @@ public abstract class MainSupport
       result = variables.get(VariableNames.LAST_RESULT);
     }
 
-    int code = ExitCodeDecoder.decode(result);
-    codeRef.set(code);
-    exit(code);
+    exit(ExitCodeDecoder.decode(result));
   }
 
   private static String[] cleanArguments(final String[] args) {

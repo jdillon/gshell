@@ -16,7 +16,6 @@
 package com.planet57.gshell;
 
 import com.planet57.gshell.branding.Branding;
-import com.planet57.gshell.command.ExitNotification;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.testharness.TestBranding;
 import com.planet57.gshell.util.io.StreamJack;
@@ -64,7 +63,7 @@ public class MainSupportTest
     }
 
     log(new String(underTest.out.toByteArray()));
-    assertThat(underTest.exitCode, is(ExitNotification.SUCCESS_CODE));
+    assertThat(underTest.exitCode, is(0));
   }
 
   @Test
@@ -77,7 +76,7 @@ public class MainSupportTest
     }
 
     log(new String(underTest.out.toByteArray()));
-    assertThat(underTest.exitCode, is(ExitNotification.SUCCESS_CODE));
+    assertThat(underTest.exitCode, is(0));
   }
 
   private class MockMain

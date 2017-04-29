@@ -18,7 +18,6 @@ package com.planet57.gshell.commands.standard;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.CommandActionSupport;
-import com.planet57.gshell.command.ExitNotification;
 import com.planet57.gshell.util.cli2.Argument;
 
 import javax.annotation.Nonnull;
@@ -41,7 +40,6 @@ public class ExitAction
     log.debug("Exiting w/code: {}", exitCode);
 
     // Do not call System.exit(), ask the shell to exit instead.
-    // FIXME: hacking for gogo; which seems to not cope with throwable notifications presently
     return new ExitNotification(exitCode);
   }
 }
