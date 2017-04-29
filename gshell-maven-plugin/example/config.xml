@@ -61,12 +61,6 @@
 
           <dependency>
             <groupId>com.planet57.gshell.commands</groupId>
-            <artifactId>gshell-network</artifactId>
-            <version>${gshell.version}</version>
-          </dependency>
-
-          <dependency>
-            <groupId>com.planet57.gshell.commands</groupId>
             <artifactId>gshell-pref</artifactId>
             <version>${gshell.version}</version>
           </dependency>
