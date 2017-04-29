@@ -25,17 +25,18 @@ import org.sonatype.goodies.testsupport.TestSupport;
 public abstract class CliProcessorTestSupport
   extends TestSupport
 {
-  protected CliProcessor clp;
+  protected CliProcessor underTest;
 
   @Before
   public void setUp() {
-    clp = new CliProcessor();
-    clp.addBean(createBean());
+    System.setProperty("com.planet57.gossip.Log.threshold", "TRACE");
+    underTest = new CliProcessor();
+    underTest.addBean(createBean());
   }
 
   @After
   public void tearDown() {
-    clp = null;
+    underTest = null;
   }
 
   protected abstract Object createBean();

@@ -19,6 +19,7 @@ import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -199,9 +200,12 @@ public class CliProcessor
 
   public void process(final String... args) throws Exception {
     checkNotNull(args);
-    CliParser parser = flavor.create();
-    CommandLine cl;
+    log.debug("Processing: {}", Arrays.asList(args));
 
+    CliParser parser = flavor.create();
+    log.debug("Parser: {}", parser);
+
+    CommandLine cl;
     try {
       cl = parser.parse(createOptions(), args, stopAtNonOption);
     }
@@ -218,6 +222,8 @@ public class CliProcessor
 
     Set<CliDescriptor> present = new HashSet<>();
     boolean override = false;
+
+    log.debug("Parsed options: {}", Arrays.asList(cl.getOptions()));
 
     for (Object tmp : cl.getOptions()) {
       Opt opt = (Opt) tmp;

@@ -43,7 +43,7 @@ public class OverrideTest
 
   @Test
   public void testPresent() throws Exception {
-    clp.process("-h");
+    underTest.process("-h");
     assertTrue(bean.help);
   }
 }

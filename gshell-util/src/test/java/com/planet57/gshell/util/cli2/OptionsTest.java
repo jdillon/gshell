@@ -38,11 +38,18 @@ public class OptionsTest
     @Option(name = "v", optionalArg = true)
     Boolean verbose;
 
-    @Option(name = "s", optionalArg = false)
+    @Option(name = "s")
     String string;
 
-    @Option(name = "S", args = 2, optionalArg = false)
+    @Option(name = "S", args = 2)
     List<String> strings;
+
+    private boolean debug;
+
+    @Option(name = "d", longName = "debug", optionalArg = true)
+    private void setDebug(final boolean flag) {
+      debug = flag;
+    }
   }
 
   private Simple bean;
@@ -54,62 +61,71 @@ public class OptionsTest
 
   @Test
   public void testHelp() throws Exception {
-    clp.process("-h");
+    underTest.process("-h");
     assertTrue(bean.help);
   }
 
   @Test
   public void testHelp2() throws Exception {
-    clp.process("--help");
+    underTest.process("--help");
     assertTrue(bean.help);
   }
 
   @Test
   public void testVerbose() throws Exception {
-    clp.process("-v");
+    underTest.process("-v");
     assertTrue(bean.verbose);
   }
 
   @Test
   public void testVerbose2() throws Exception {
-    clp.process("-v", "false");
+    underTest.process("-v", "false");
     assertFalse(bean.verbose);
+  }
+
+  @Test
+  public void testDebug() throws Exception {
+    underTest.process("--debug");
+    assertTrue(bean.debug);
+  }
+
+  @Test
+  public void testDebugFalse() throws Exception {
+    underTest.process("--debug=false");
+    assertFalse(bean.debug);
+  }
+
+  @Test
+  public void testDebugTrue() throws Exception {
+    underTest.process("--debug=true");
+    assertTrue(bean.debug);
   }
 
   @Test
   public void testString() throws Exception {
     try {
-      clp.process("-s");
+      underTest.process("-s");
       fail();
     }
     catch (Exception e) {
       // ignore
     }
 
-    clp.process("-s", "foo");
+    underTest.process("-s", "foo");
     assertEquals("foo", bean.string);
   }
 
   @Test
   public void testStrings() throws Exception {
     try {
-      clp.process("-S");
+      underTest.process("-S");
       fail();
     }
     catch (Exception e) {
       // ignore
     }
 
-    //        TODO: Add validation to expected/actual arguments
-    //        try {
-    //            clp.process("-S foo");
-    //            fail();
-    //        }
-    //        catch (Exception e) {
-    //            // ignore
-    //        }
-
-    clp.process("-S", "foo", "bar");
+    underTest.process("-S", "foo", "bar");
     assertEquals("foo", bean.strings.get(0));
     assertEquals("bar", bean.strings.get(1));
   }
@@ -117,7 +133,7 @@ public class OptionsTest
   @Test
   public void testStrings2() throws Exception {
     try {
-      clp.process("-S", "foo", "bar", "baz");
+      underTest.process("-S", "foo", "bar", "baz");
       fail();
     }
     catch (Exception e) {

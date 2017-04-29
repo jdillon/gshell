@@ -51,7 +51,7 @@ public class SimpleTest
 
   @Test
   public void testName() throws Exception {
-    clp.process("-v");
+    underTest.process("-v");
 
     assertFalse(bean.help);
     assertTrue(bean.verbose);
@@ -59,7 +59,7 @@ public class SimpleTest
 
   @Test
   public void testName2() throws Exception {
-    clp.process("-h");
+    underTest.process("-h");
 
     assertTrue(bean.help);
     assertNull(bean.verbose);
@@ -67,7 +67,7 @@ public class SimpleTest
 
   @Test
   public void testLongName() throws Exception {
-    clp.process("--help");
+    underTest.process("--help");
 
     assertTrue(bean.help);
     assertNull(bean.verbose);
@@ -76,7 +76,7 @@ public class SimpleTest
   @Test
   public void testInvalidOption() throws Exception {
     try {
-      clp.process("-f");
+      underTest.process("-f");
       fail();
     }
     catch (Exception e) {
@@ -89,7 +89,7 @@ public class SimpleTest
 
   @Test
   public void testArg() throws Exception {
-    clp.process("foo");
+    underTest.process("foo");
 
     assertEquals(bean.arg1, "foo");
     assertFalse(bean.help);
@@ -99,7 +99,7 @@ public class SimpleTest
   @Test
   public void testTooManyArgs() throws Exception {
     try {
-      clp.process("foo", "bar", "baz");
+      underTest.process("foo", "bar", "baz");
       fail();
     }
     catch (Exception e) {

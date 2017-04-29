@@ -49,7 +49,7 @@ public class StopTest
 
   @Test
   public void testStopOption() throws Exception {
-    clp.process("-h", "--", "-v", "bar", "--baz");
+    underTest.process("-h", "--", "-v", "bar", "--baz");
     assertTrue(bean.help);
     assertEquals(3, bean.remaining.size());
     assertEquals("-v", bean.remaining.get(0));
@@ -59,8 +59,8 @@ public class StopTest
 
   @Test
   public void testStopAtNonOption() throws Exception {
-    clp.setStopAtNonOption(true);
-    clp.process("-h", "foo", "-v", "bar", "--baz");
+    underTest.setStopAtNonOption(true);
+    underTest.process("-h", "foo", "-v", "bar", "--baz");
     assertTrue(bean.help);
     assertEquals(4, bean.remaining.size());
     assertEquals("foo", bean.remaining.get(0));
