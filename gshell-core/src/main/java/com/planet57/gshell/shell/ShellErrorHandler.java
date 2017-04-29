@@ -83,6 +83,8 @@ public class ShellErrorHandler
     Boolean showTrace = variables.get(VariableNames.SHELL_ERRORS, Boolean.class, false);
     assert showTrace != null;
 
+    // TODO: use Throwables2.explain(), or mimic same style with ANSI support when showTrace == false
+
     io.err.print(ansi().a(INTENSITY_BOLD).fg(RED).a(cause.getClass().getName()).reset());
     if (cause.getMessage() != null) {
       io.err.print(": ");
