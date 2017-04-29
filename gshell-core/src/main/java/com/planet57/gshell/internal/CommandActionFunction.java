@@ -16,7 +16,6 @@
 package com.planet57.gshell.internal;
 
 import com.google.common.base.Stopwatch;
-import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableList;
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.CommandContext;
@@ -95,40 +94,31 @@ public class CommandActionFunction
       }
 
       if (execute) {
-        try {
-          result = action.execute(new CommandContext() {
-            @Override
-            @Nonnull
-            public Shell getShell() {
-              return shell;
-            }
+        result = action.execute(new CommandContext() {
+          @Override
+          @Nonnull
+          public Shell getShell() {
+            return shell;
+          }
 
-            @Override
-            @Nonnull
-            public List<?> getArguments() {
-              // TODO: check what arguments is, maybe its immutable already?
-              return ImmutableList.copyOf(arguments);
-            }
+          @Override
+          @Nonnull
+          public List<?> getArguments() {
+            return ImmutableList.copyOf(arguments);
+          }
 
-            @Override
-            @Nonnull
-            public IO getIo() {
-              return io;
-            }
+          @Override
+          @Nonnull
+          public IO getIo() {
+            return io;
+          }
 
-            @Override
-            @Nonnull
-            public Variables getVariables() {
-              return shell.getVariables();
-            }
-          });
-        }
-        catch (Throwable t) {
-          // TODO: see if there is a more appropriate place for this; something may be gobbling exceptions in gogo as well
-          log.debug("Caught", t);
-          Throwables.propagateIfPossible(t, Exception.class, Error.class);
-          throw new RuntimeException(t);
-        }
+          @Override
+          @Nonnull
+          public Variables getVariables() {
+            return shell.getVariables();
+          }
+        });
       }
     }
     finally {

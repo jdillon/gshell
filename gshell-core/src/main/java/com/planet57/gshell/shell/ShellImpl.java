@@ -198,7 +198,11 @@ public class ShellImpl
     // disable trace output by default
     session.put("echo", null);
 
-    return session.execute(line);
+    Object result = session.execute(line);
+
+    session.close();
+
+    return result;
   }
 
   @Override
@@ -219,7 +223,7 @@ public class ShellImpl
       .variable(LineReader.HISTORY_FILE, historyFile)
       .build();
 
-    renderWelcomeMessage(io);
+    renderMessage(io, branding.getWelcomeMessage());
 
     // prepare handling for CTRL-C
     Terminal terminal = lineReader.getTerminal();
@@ -245,7 +249,7 @@ public class ShellImpl
     }
     log.trace("Stopped");
 
-    renderGoodbyeMessage(io);
+    renderMessage(io, branding.getGoodbyeMessage());
   }
 
   private static void renderMessage(final IO io, @Nullable String message) {
@@ -259,28 +263,12 @@ public class ShellImpl
     }
   }
 
-  protected void renderWelcomeMessage(final IO io) {
-    renderMessage(io, branding.getWelcomeMessage());
-  }
-
-  protected void renderGoodbyeMessage(final IO io) {
-    renderMessage(io, branding.getGoodbyeMessage());
-  }
-
   //
   // HACK: merged console impl
   //
 
   private boolean work() throws Exception {
     String line = lineReader.readLine(prompt.prompt());
-
-    if (line != null) {
-      line = line.trim();
-    }
-
-    if (line == null || line.length() == 0) {
-      return true;
-    }
 
     // Build the task and execute it
     checkState(currentTask == null);

@@ -59,6 +59,10 @@ public class CommandProcessorImpl
     {
       @Override
       public void beforeExecute(final CommandSession session, final CharSequence line) {
+        if (line.length() == 0) {
+          return;
+        }
+
         StringBuilder hex = new StringBuilder();
         StringBuilder idx = new StringBuilder();
 
@@ -72,11 +76,19 @@ public class CommandProcessorImpl
 
       @Override
       public void afterExecute(final CommandSession session, final CharSequence line, final Object result) {
+        if (line.length() == 0) {
+          return;
+        }
+
         log.debug("Result: {}", String.valueOf(result));
       }
 
       @Override
       public void afterExecute(final CommandSession session, final CharSequence line, final Exception exception) {
+        if (line.length() == 0) {
+          return;
+        }
+
         log.debug("Exception", exception);
       }
     });
