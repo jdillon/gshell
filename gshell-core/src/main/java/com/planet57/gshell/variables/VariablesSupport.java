@@ -287,4 +287,9 @@ public class VariablesSupport
   public Variables parent() {
     return parent;
   }
+
+  @Override
+  public Map<String,Object> asMap() {
+    return map;
+  }
 }

@@ -17,6 +17,7 @@ package com.planet57.gshell.variables;
 
 import javax.annotation.Nullable;
 import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Provides a nested-namespace for command variables.
@@ -72,6 +73,11 @@ public interface Variables
 
   @Nullable
   Variables parent();
+
+  /**
+   * @since 3.0
+   */
+  Map<String,Object> asMap();
 
   /**
    * Throw to indicate that a variable change was attempted but the variable was not mutable.

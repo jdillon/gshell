@@ -30,6 +30,7 @@ import com.planet57.gshell.command.ExitNotification;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.registry.CommandRegistrar;
 import com.planet57.gshell.event.EventManager;
+import com.planet57.gshell.internal.CommandActionFunction;
 import com.planet57.gshell.util.jline.LoggingCompleter;
 import com.planet57.gshell.variables.Variables;
 import org.apache.felix.gogo.runtime.CommandProcessorImpl;
@@ -187,12 +188,10 @@ public class ShellImpl
     checkNotNull(line);
 
     CommandSessionImpl session = commandProcessor.createSession(io.streams.in, io.streams.out, io.streams.err);
-    session.put(".shell", this);
+    session.put(CommandActionFunction.SHELL_VAR, this);
 
     // HACK: stuff all variables into session, this is not ideal however
-    variables.names().forEach(name ->
-      session.getVariables().put(name, variables.get(name))
-    );
+    session.getVariables().putAll(variables.asMap());
 
     // FIXME: this doesn't appear to do the trick; because "echo" will resolve to function "echo" :-(
     // disable trace output by default

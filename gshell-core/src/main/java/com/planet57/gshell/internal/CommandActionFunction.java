@@ -46,6 +46,8 @@ public class CommandActionFunction
   extends ComponentSupport
   implements Function
 {
+  public static final String SHELL_VAR = ".shell";
+
   private final CommandAction action;
 
   public CommandActionFunction(final CommandAction action) {
@@ -59,7 +61,7 @@ public class CommandActionFunction
     Stopwatch watch = Stopwatch.createStarted();
 
     final ClassLoader cl = Thread.currentThread().getContextClassLoader();
-    final Shell shell = (Shell) session.get(".shell");
+    final Shell shell = (Shell) session.get(SHELL_VAR);
     final IO io = shell.getIo();
 
     // FIXME: this messes up output; resolve if/where this should be handled
