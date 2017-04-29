@@ -215,7 +215,7 @@ public class ShellImpl
     File historyFile = new File(branding.getUserContextDir(), branding.getHistoryFileName());
 
     lineReader = LineReaderBuilder.builder()
-      .appName("gshell")
+      .appName(branding.getProgramName())
       .terminal(io.terminal)
       .completer(new LoggingCompleter(completer))
       .history(history)
