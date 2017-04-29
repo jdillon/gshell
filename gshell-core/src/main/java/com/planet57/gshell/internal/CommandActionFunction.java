@@ -37,7 +37,7 @@ import java.util.List;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * ???
+ * GOGO {@link Function} adapting a {@link CommandAction}.
  *
  * @since 3.0
  */
