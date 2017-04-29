@@ -69,8 +69,6 @@ public class ShellImpl
 
   private final Branding branding;
 
-  // HACK: have to use impl here, as CommandProcessor does not expose enough api
-
   private final CommandProcessorImpl commandProcessor;
 
   private final IO io;
@@ -171,6 +169,11 @@ public class ShellImpl
 
   private void doStop() throws Exception {
     lifecycles.stop();
+    if (currentSession != null) {
+      currentSession.close();
+      currentSession = null;
+    }
+    lineReader = null;
   }
 
   @Override
@@ -223,7 +226,7 @@ public class ShellImpl
     lineReader = LineReaderBuilder.builder()
       .appName(branding.getProgramName())
       .terminal(terminal)
-      .parser(new Parser())
+      .parser(new Parser()) // install gogo-jline program accessible parser impl
       .completer(new LoggingCompleter(completer))
       .history(history)
       .variables(variables.asMap())
