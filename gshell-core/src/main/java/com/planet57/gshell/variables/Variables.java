@@ -50,7 +50,35 @@ public interface Variables
   @Nullable
   <T> T get(Class<T> type);
 
-  // FIXME: add non-nullable require() to get values
+  /**
+   * @since 3.0
+   */
+  Object require(String name);
+
+  /**
+   * @since 3.0
+   */
+  Object require(String name, Object defaultValue);
+
+  /**
+   * @since 3.0
+   */
+  <T> T require(String name, Class<T> type, T defaultValue);
+
+  /**
+   * @since 3.0
+   */
+  <T> T require(String name, Class<T> type);
+
+  /**
+   * @since 3.0
+   */
+  <T> T require(Class<T> type, T defaultValue);
+
+  /**
+   * @since 3.0
+   */
+  <T> T require(Class<T> type);
 
   void unset(String name);
 

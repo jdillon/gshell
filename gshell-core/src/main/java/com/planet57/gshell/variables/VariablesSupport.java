@@ -26,6 +26,7 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
 /**
  * Provides a nested-namespace for command variables.
@@ -82,7 +83,6 @@ public class VariablesSupport
   @Nullable
   public Object get(final String name) {
     checkNotNull(name);
-
     return map.get(name);
   }
 
@@ -92,11 +92,9 @@ public class VariablesSupport
   public <T> T get(final String name, final Class<T> type) {
     checkNotNull(type);
     Object value = get(name);
-
     if (value != null && !type.isAssignableFrom(value.getClass())) {
       value = Converters.getValue(type, value.toString());
     }
-
     return (T) value;
   }
 
@@ -131,8 +129,52 @@ public class VariablesSupport
     if (value == null) {
       return defaultValue;
     }
-
     return value;
+  }
+
+  @Override
+  public Object require(final String name) {
+    Object result = get(name);
+    checkState(result != null, "Missing variable: %s", name);
+    return result;
+  }
+
+  @Override
+  public Object require(final String name, final Object defaultValue) {
+    checkNotNull(defaultValue);
+    Object result = get(name, defaultValue);
+    checkState(result != null, "Missing variable: %s", name);
+    return result;
+  }
+
+  @Override
+  public <T> T require(final String name, final Class<T> type, final T defaultValue) {
+    checkNotNull(defaultValue);
+    T result = get(name, type, defaultValue);
+    checkState(result != null, "Missing variable: %s", name);
+    return result;
+  }
+
+  @Override
+  public <T> T require(final String name, final Class<T> type) {
+    T result = get(name, type);
+    checkState(result != null, "Missing variable: %s", name);
+    return result;
+  }
+
+  @Override
+  public <T> T require(final Class<T> type, final T defaultValue) {
+    checkNotNull(defaultValue);
+    T result = get(type, defaultValue);
+    checkState(result != null, "Missing variable: %s", type.getName());
+    return result;
+  }
+
+  @Override
+  public <T> T require(final Class<T> type) {
+    T result = get(type);
+    checkState(result != null, "Missing variable: %s", type.getName());
+    return result;
   }
 
   @Override
