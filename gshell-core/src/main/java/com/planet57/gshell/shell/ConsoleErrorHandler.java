@@ -23,11 +23,5 @@ package com.planet57.gshell.shell;
  */
 public interface ConsoleErrorHandler
 {
-  /**
-   * Called when an error occurs while executing a {@link ConsoleTask}.
-   *
-   * @param error The error which has occurred.
-   * @return {@code true} to allow the console to continue, {@code false} to abort it.
-   */
   boolean handleError(Throwable error);
 }

@@ -21,10 +21,6 @@ import com.planet57.gshell.command.AliasAction;
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.resolver.CommandResolver;
 import com.planet57.gshell.command.resolver.Node;
-import com.planet57.gshell.shell.Shell;
-import com.planet57.gshell.variables.VariableNames;
-import org.apache.felix.service.command.CommandSession;
-import org.apache.felix.service.command.CommandSessionListener;
 import org.apache.felix.service.command.Function;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,56 +51,6 @@ public class CommandProcessorImpl
   public CommandProcessorImpl(final AliasRegistry aliases, final CommandResolver resolver) {
     this.aliases = checkNotNull(aliases);
     this.resolver = checkNotNull(resolver);
-
-    addListener(new CommandSessionListener()
-    {
-      @Override
-      public void beforeExecute(final CommandSession session, final CharSequence line) {
-        if (line.length() == 0 || !log.isTraceEnabled()) {
-          return;
-        }
-
-        StringBuilder hex = new StringBuilder();
-        StringBuilder idx = new StringBuilder();
-
-        line.chars().forEach(ch -> {
-          hex.append('x').append(Integer.toHexString(ch)).append(' ');
-          idx.append(' ').append((char) ch).append("  ");
-        });
-
-        log.trace("Execute: {}\n{}\n{}", line, hex, idx);
-      }
-
-      private void setLastResult(final CommandSession session, final Object result) {
-        Shell shell = (Shell) session.get(CommandActionFunction.SHELL_VAR);
-        shell.getVariables().set(VariableNames.LAST_RESULT, result);
-        session.put(VariableNames.LAST_RESULT, result);
-      }
-
-      @Override
-      public void afterExecute(final CommandSession session, final CharSequence line, final Object result) {
-        if (line.length() == 0) {
-          return;
-        }
-
-        if (log.isDebugEnabled()) {
-          log.debug("Result: {}", String.valueOf(result)); // result could be throwable
-        }
-
-        setLastResult(session, result);
-      }
-
-      @Override
-      public void afterExecute(final CommandSession session, final CharSequence line, final Exception exception) {
-        if (line.length() == 0) {
-          return;
-        }
-
-        log.debug("Exception", exception);
-
-        setLastResult(session, exception);
-      }
-    });
   }
 
   @Override

@@ -32,13 +32,20 @@ import com.planet57.gshell.command.registry.CommandRegistrar;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.internal.CommandActionFunction;
 import com.planet57.gshell.util.jline.LoggingCompleter;
+import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
+import org.apache.felix.gogo.jline.ParsedLineImpl;
+import org.apache.felix.gogo.jline.Parser;
 import org.apache.felix.gogo.runtime.CommandProcessorImpl;
 import org.apache.felix.gogo.runtime.CommandSessionImpl;
+import org.apache.felix.service.command.CommandSession;
+import org.apache.felix.service.command.Job;
 import org.jline.reader.Completer;
+import org.jline.reader.EndOfFileException;
 import org.jline.reader.History;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
+import org.jline.reader.ParsedLine;
 import org.jline.reader.impl.history.DefaultHistory;
 import org.jline.terminal.Terminal;
 import org.sonatype.goodies.common.ComponentSupport;
@@ -80,9 +87,9 @@ public class ShellImpl
 
   private final ShellScriptLoader scriptLoader;
 
-  private LineReader lineReader;
+  private CommandSessionImpl currentSession;
 
-  private ConsoleTask currentTask;
+  private LineReader lineReader;
 
   @Inject
   public ShellImpl(final EventManager events,
@@ -155,6 +162,10 @@ public class ShellImpl
   }
 
   private void doStarted() throws Exception {
+    CommandSessionImpl session = commandProcessor.createSession(io.streams.in, io.streams.out, io.streams.err);
+    session.put(CommandActionFunction.SHELL_VAR, this);
+    currentSession = session;
+
     scriptLoader.loadProfileScripts(this);
   }
 
@@ -187,21 +198,13 @@ public class ShellImpl
     ensureStarted();
     checkNotNull(line);
 
-    CommandSessionImpl session = commandProcessor.createSession(io.streams.in, io.streams.out, io.streams.err);
-    session.put(CommandActionFunction.SHELL_VAR, this);
-
-    // HACK: stuff all variables into session, this is not ideal however
-    session.getVariables().putAll(variables.asMap());
+    CommandSessionImpl session = currentSession;
 
     // FIXME: this doesn't appear to do the trick; because "echo" will resolve to function "echo" :-(
     // disable trace output by default
     session.put("echo", null);
 
-    Object result = session.execute(line);
-
-    session.close();
-
-    return result;
+    return session.execute(line);
   }
 
   @Override
@@ -209,6 +212,8 @@ public class ShellImpl
     ensureStarted();
 
     log.debug("Starting interactive console");
+
+    CommandSessionImpl session = currentSession;
 
     scriptLoader.loadInteractiveScripts(this);
 
@@ -218,25 +223,47 @@ public class ShellImpl
     lineReader = LineReaderBuilder.builder()
       .appName(branding.getProgramName())
       .terminal(terminal)
+      .parser(new Parser())
       .completer(new LoggingCompleter(completer))
       .history(history)
+      .variables(variables.asMap())
       .variable(LineReader.HISTORY_FILE, historyFile)
       .build();
 
     renderMessage(io, branding.getWelcomeMessage());
 
     // prepare handling for CTRL-C
-    Terminal.SignalHandler intHandler = terminal.handle(Terminal.Signal.INT, s -> interruptTask());
+    Terminal.SignalHandler intHandler = terminal.handle(Terminal.Signal.INT, s -> {
+      Job current = session.foregroundJob();
+      if (current != null) {
+        log.debug("Interrupting task");
+        current.interrupt();
+      }
+    });
 
     log.trace("Running");
     boolean running = true;
     try {
       while (running) {
         try {
-          running = work();
+          String line = lineReader.readLine(prompt.prompt(), prompt.rprompt(), null, null);
+          if (log.isTraceEnabled()) {
+            traceLine(line);
+          }
+
+          ParsedLine parsedLine = lineReader.getParsedLine();
+          if (parsedLine == null) {
+            throw new EndOfFileException();
+          }
+
+          Object result = session.execute(((ParsedLineImpl) parsedLine).program());
+          setLastResult(session, result);
+
+          running = !(result instanceof ExitNotification);
         }
         catch (Throwable t) {
           log.trace("Work failed", t);
+          setLastResult(session, t);
           running = errorHandler.handleError(t);
         }
       }
@@ -249,6 +276,28 @@ public class ShellImpl
     renderMessage(io, branding.getGoodbyeMessage());
   }
 
+  private void traceLine(final String line) {
+    if (line.length() == 0 || !log.isTraceEnabled()) {
+      return;
+    }
+
+    StringBuilder hex = new StringBuilder();
+    StringBuilder idx = new StringBuilder();
+
+    line.chars().forEach(ch -> {
+      hex.append('x').append(Integer.toHexString(ch)).append(' ');
+      idx.append(' ').append((char) ch).append("  ");
+    });
+
+    log.trace("Read line: {}\n{}\n{}", line, hex, idx);
+  }
+
+  private static void setLastResult(final CommandSession session, final Object result) {
+    Shell shell = (Shell) session.get(CommandActionFunction.SHELL_VAR);
+    shell.getVariables().set(VariableNames.LAST_RESULT, result);
+    session.put(VariableNames.LAST_RESULT, result);
+  }
+
   private static void renderMessage(final IO io, @Nullable String message) {
     if (message != null) {
       // HACK: branding does not have easy access to Terminal; so allow a line to be rendered via replacement token
@@ -257,49 +306,6 @@ public class ShellImpl
       }
       io.out.println(message);
       io.out.flush();
-    }
-  }
-
-  private boolean work() throws Exception {
-    String line = lineReader.readLine(prompt.prompt(), prompt.rprompt(), null, null);
-
-    // Build the task and execute it
-    checkState(currentTask == null);
-    currentTask = new ConsoleTask() {
-      @Override
-      public boolean doExecute(final String input) throws Exception {
-        Object result = ShellImpl.this.execute(input);
-        // HACK: need to adjust result; pending more gogo investigation
-
-        // stop if exit-notification
-        return !(result instanceof ExitNotification);
-      }
-    };
-
-    try {
-      return currentTask.execute(line);
-    }
-    finally {
-      currentTask = null;
-    }
-  }
-
-  private void interruptTask() {
-    ConsoleTask task = currentTask;
-    if (task != null) {
-      synchronized (task) {
-        log.debug("Interrupting task");
-
-        if (task.isStopping()) {
-          task.abort();
-        }
-        else if (task.isRunning()) {
-          task.stop();
-        }
-      }
-    }
-    else {
-      log.debug("No task running to interrupt");
     }
   }
 }
