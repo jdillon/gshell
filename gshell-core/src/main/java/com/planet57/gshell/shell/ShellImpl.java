@@ -201,12 +201,9 @@ public class ShellImpl
     ensureStarted();
     checkNotNull(line);
 
+    // FIXME: this is likely not correct in terms of using gogo parser
+
     CommandSessionImpl session = currentSession;
-
-    // FIXME: this doesn't appear to do the trick; because "echo" will resolve to function "echo" :-(
-    // disable trace output by default
-    session.put("echo", null);
-
     return session.execute(line);
   }
 
