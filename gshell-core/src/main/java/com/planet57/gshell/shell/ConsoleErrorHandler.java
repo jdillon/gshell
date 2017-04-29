@@ -13,18 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.console;
+package com.planet57.gshell.shell;
 
 /**
- * Provides prompt customization.
+ * Provides error handling customization.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public interface ConsolePrompt
+public interface ConsoleErrorHandler
 {
   /**
-   * Render the prompt which the console should display for input.
+   * Called when an error occurs while executing a {@link ConsoleTask}.
+   *
+   * @param error The error which has occurred.
+   * @return {@code true} to allow the console to continue, {@code false} to abort it.
    */
-  String prompt();
+  boolean handleError(Throwable error);
 }

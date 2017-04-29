@@ -13,9 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.planet57.gshell.shell;
+
 /**
- * Interactive console framework.
+ * Provides prompt customization.
  *
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-package com.planet57.gshell.console;
+public interface ConsolePrompt
+{
+  /**
+   * Render the prompt which the console should display for input.
+   */
+  String prompt();
+}

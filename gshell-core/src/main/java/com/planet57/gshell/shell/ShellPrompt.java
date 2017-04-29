@@ -24,7 +24,6 @@ import javax.inject.Provider;
 import javax.inject.Singleton;
 
 import com.planet57.gshell.branding.Branding;
-import com.planet57.gshell.console.ConsolePrompt;
 import com.planet57.gshell.util.ReplacementParser;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;

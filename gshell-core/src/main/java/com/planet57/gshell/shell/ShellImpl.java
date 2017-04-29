@@ -26,16 +26,10 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.google.common.base.Strings;
-import com.google.common.base.Throwables;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.branding.BrandingSupport;
-import com.planet57.gshell.command.ErrorNotification;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.registry.CommandRegistrar;
-import com.planet57.gshell.console.Console;
-import com.planet57.gshell.console.ConsoleErrorHandler;
-import com.planet57.gshell.console.ConsolePrompt;
-import com.planet57.gshell.console.ConsoleTask;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.command.ExitNotification;
 import com.planet57.gshell.util.jline.LoggingCompleter;
@@ -207,16 +201,7 @@ public class ShellImpl
     // disable trace output by default
     session.put("echo", null);
 
-    try {
-      return session.execute(line);
-    }
-    catch (ErrorNotification n) {
-      // FIXME: this is left over from ExecutingVisitor and need to see how gogo may use/need this or drop it
-      Throwable cause = n.getCause();
-      Throwables.propagateIfPossible(cause, Exception.class, Error.class);
-      // should normally never happen
-      throw n;
-    }
+    return session.execute(line);
   }
 
   @Override
@@ -238,6 +223,7 @@ public class ShellImpl
           ShellImpl.this.execute(input);
         }
         catch (ExitNotification n) {
+          log.debug("Exit notification: {}", n);
           exitNotifHolder.set(n);
           return false;
         }

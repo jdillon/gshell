@@ -21,8 +21,6 @@ import javax.inject.Provider;
 import javax.inject.Singleton;
 
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.console.ConsoleErrorHandler;
-import com.planet57.gshell.command.ErrorNotification;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 import com.planet57.gshell.variables.VariableNames;
@@ -79,10 +77,6 @@ public class ShellErrorHandler
     assert error != null;
 
     Throwable cause = error;
-    if (error instanceof ErrorNotification) {
-      cause = error.getCause();
-    }
-
     Variables variables = this.variables.get();
 
     // Determine if the stack trace flag is set

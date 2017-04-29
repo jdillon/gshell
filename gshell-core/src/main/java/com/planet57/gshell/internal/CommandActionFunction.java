@@ -22,7 +22,6 @@ import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.CommandHelper;
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.command.ResultNotification;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.util.cli2.CliProcessor;
 import com.planet57.gshell.util.cli2.HelpPrinter;
@@ -123,9 +122,6 @@ public class CommandActionFunction
               return shell.getVariables();
             }
           });
-        }
-        catch (ResultNotification n) {
-          result = n.getResult();
         }
         catch (Throwable t) {
           // TODO: see if there is a more appropriate place for this; something may be gobbling exceptions in gogo as well
