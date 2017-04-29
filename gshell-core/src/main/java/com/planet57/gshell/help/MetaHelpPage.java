@@ -43,12 +43,13 @@ public class MetaHelpPage
 
   private final HelpContentLoader loader;
 
-  private ResourceBundle resources;
+  private final ResourceBundle resources;
 
   public MetaHelpPage(final String name, final String resource, final HelpContentLoader loader) {
     this.name = checkNotNull(name);
     this.resource = checkNotNull(resource);
     this.loader = checkNotNull(loader);
+    this.resources = ResourceBundle.getBundle(resource);
   }
 
   @Override
@@ -58,10 +59,6 @@ public class MetaHelpPage
 
   @Override
   public String getDescription() {
-    if (resources == null) {
-      resources = ResourceBundle.getBundle(resource);
-    }
-
     return resources.getString(CommandHelper.COMMAND_DESCRIPTION);
   }
 
