@@ -60,16 +60,16 @@ public class WgetAction
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
 
-    io.out.printf("Downloading: %s%n", source); // TODO: i18n
+    io.out.printf("Downloading: %s%n", source);
     if (verbose) {
       io.out.printf("Connecting to: %s:%s%n", source.getHost(),
-          source.getPort() != -1 ? source.getPort() : source.getDefaultPort()); // TODO: i18n
+          source.getPort() != -1 ? source.getPort() : source.getDefaultPort());
     }
 
     URLConnection conn = source.openConnection();
 
     if (verbose) {
-      io.out.printf("Length: %s [%s]%n", conn.getContentLength(), conn.getContentType()); // TODO: i18n
+      io.out.printf("Length: %s [%s]%n", conn.getContentLength(), conn.getContentType());
     }
 
     InputStream in = conn.getInputStream();
@@ -77,7 +77,7 @@ public class WgetAction
     OutputStream out;
     if (outputFile != null) {
       if (verbose) {
-        io.out.printf("Saving to file: %s%n", outputFile); // TODO: i18n
+        io.out.printf("Saving to file: %s%n", outputFile);
       }
       out = new BufferedOutputStream(new FileOutputStream(outputFile));
     }
@@ -90,7 +90,7 @@ public class WgetAction
     // if we write a file, close it then return the file
     if (outputFile != null) {
       Closeables.close(out);
-      io.out.printf("Saved %s [%s]%n", outputFile, outputFile.length()); // TODO: i18n
+      io.out.printf("Saved %s [%s]%n", outputFile, outputFile.length());
       return outputFile;
     }
 

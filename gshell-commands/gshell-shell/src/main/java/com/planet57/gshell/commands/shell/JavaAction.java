@@ -41,7 +41,6 @@ import javax.annotation.Nullable;
 public class JavaAction
     extends CommandActionSupport
 {
-  @Nullable
   @Option(name = "m", longName = "method")
   private String methodName = "main";
 
@@ -54,7 +53,7 @@ public class JavaAction
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     log.debug("Loading class: {}", className);
-    Class type = Thread.currentThread().getContextClassLoader().loadClass(className);
+    Class<?> type = Thread.currentThread().getContextClassLoader().loadClass(className);
     log.debug("Using type: {}", type);
 
     log.debug("Locating method: {}", methodName);

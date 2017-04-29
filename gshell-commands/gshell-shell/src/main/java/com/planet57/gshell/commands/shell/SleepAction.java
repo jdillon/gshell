@@ -47,6 +47,8 @@ public class SleepAction
 
     try {
       time.sleep();
+
+      log.debug("Awake now");
     }
     catch (InterruptedException e) {
       if (log.isTraceEnabled()) {
@@ -57,8 +59,6 @@ public class SleepAction
       }
       return Result.FAILURE;
     }
-
-    log.debug("Awake now");
 
     return Result.SUCCESS;
   }

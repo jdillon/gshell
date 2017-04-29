@@ -68,7 +68,7 @@ public class ExecuteAction
 
     File dir = directory;
     if (dir == null) {
-      dir = variables.get(VariableNames.SHELL_USER_DIR, File.class);
+      dir = variables.require(VariableNames.SHELL_USER_DIR, File.class);
     }
     log.debug("Directory: {}", dir);
     builder.directory(dir);
