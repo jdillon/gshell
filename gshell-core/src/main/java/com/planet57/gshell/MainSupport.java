@@ -140,12 +140,14 @@ public abstract class MainSupport
 
   @Option(name = "D", longName = "define")
   private void setVariable(final String input) {
+    log.debug("Set variable: {}", input);
     NameValue nv = NameValue.parse(input);
     variables.set(nv.name, nv.value);
   }
 
   @Option(name = "P", longName = "property")
   private void setSystemProperty(final String input) {
+    log.debug("Set system-property: {}", input);
     NameValue nv = NameValue.parse(input);
     System.setProperty(nv.name, nv.value);
   }
@@ -153,6 +155,7 @@ public abstract class MainSupport
   @Preference(name = "color")
   @Option(name = "C", longName = "color", optionalArg = true)
   private void enableAnsiColors(final Boolean flag) {
+    log.debug("Color: {}", flag);
     Ansi.setEnabled(flag);
   }
 
