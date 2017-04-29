@@ -25,8 +25,6 @@ import com.planet57.gshell.util.cli2.Option;
 
 import javax.annotation.Nonnull;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Displays the name of the current host.
  *

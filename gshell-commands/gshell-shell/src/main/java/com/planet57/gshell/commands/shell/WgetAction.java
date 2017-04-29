@@ -36,8 +36,6 @@ import com.planet57.gshell.util.io.Closeables;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Fetch a file from a URL.
  *
