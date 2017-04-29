@@ -144,7 +144,7 @@ public class CliProcessor
     }
 
     if (opt != null) {
-      log.trace("Discovered @Option for: {}", element);
+      log.trace("Discovered @Option for: {} -> {}", element, opt);
 
       OptionDescriptor desc = new OptionDescriptor(opt, SetterFactory.create(element, bean));
 
@@ -163,7 +163,7 @@ public class CliProcessor
       optionDescriptors.add(desc);
     }
     else if (arg != null) {
-      log.trace("Discovered @Argument for: {}", element);
+      log.trace("Discovered @Argument for: {} -> {}", element, arg);
 
       ArgumentDescriptor desc = new ArgumentDescriptor(arg, SetterFactory.create(element, bean));
       int index = arg.index();
@@ -186,11 +186,11 @@ public class CliProcessor
   //
 
   public void process(final List<?> args) throws Exception {
+    checkNotNull(args);
     process(toStringArray(args));
   }
 
   private static String[] toStringArray(final List<?> args) {
-    checkNotNull(args);
     String[] strings = new String[args.size()];
     for (int i = 0; i < args.size(); i++) {
       strings[i] = String.valueOf(args.get(i));
@@ -200,10 +200,12 @@ public class CliProcessor
 
   public void process(final String... args) throws Exception {
     checkNotNull(args);
-    log.debug("Processing: {}", Arrays.asList(args));
+    if (log.isTraceEnabled()) {
+      log.trace("Processing: {}", Arrays.asList(args));
+    }
 
     CliParser parser = flavor.create();
-    log.debug("Parser: {}", parser);
+    log.trace("Parser: {}", parser);
 
     CommandLine cl;
     try {
@@ -223,7 +225,9 @@ public class CliProcessor
     Set<CliDescriptor> present = new HashSet<>();
     boolean override = false;
 
-    log.debug("Parsed options: {}", Arrays.asList(cl.getOptions()));
+    if (log.isTraceEnabled()) {
+      log.trace("Parsed options: {}", Arrays.asList(cl.getOptions()));
+    }
 
     for (Object tmp : cl.getOptions()) {
       Opt opt = (Opt) tmp;
