@@ -214,9 +214,10 @@ public class ShellImpl
 
     File historyFile = new File(branding.getUserContextDir(), branding.getHistoryFileName());
 
+    Terminal terminal = io.terminal;
     lineReader = LineReaderBuilder.builder()
       .appName(branding.getProgramName())
-      .terminal(io.terminal)
+      .terminal(terminal)
       .completer(new LoggingCompleter(completer))
       .history(history)
       .variable(LineReader.HISTORY_FILE, historyFile)
@@ -225,10 +226,7 @@ public class ShellImpl
     renderMessage(io, branding.getWelcomeMessage());
 
     // prepare handling for CTRL-C
-    Terminal terminal = lineReader.getTerminal();
-    Terminal.SignalHandler intHandler = terminal.handle(Terminal.Signal.INT, s -> {
-      interruptTask();
-    });
+    Terminal.SignalHandler intHandler = terminal.handle(Terminal.Signal.INT, s -> interruptTask());
 
     log.trace("Running");
     boolean running = true;
@@ -261,10 +259,6 @@ public class ShellImpl
       io.out.flush();
     }
   }
-
-  //
-  // HACK: merged console impl
-  //
 
   private boolean work() throws Exception {
     String line = lineReader.readLine(prompt.prompt());
