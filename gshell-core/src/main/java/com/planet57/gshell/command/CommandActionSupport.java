@@ -27,8 +27,6 @@ import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 import org.jline.reader.Completer;
 
-import javax.annotation.Nullable;
-
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
@@ -46,7 +44,6 @@ public abstract class CommandActionSupport
 
   private MessageSource messages;
 
-  @Nullable
   private Completer completer = NullCompleter.INSTANCE;
 
   @Override
@@ -112,7 +109,7 @@ public abstract class CommandActionSupport
   }
 
   /**
-   * Install a raw completer.
+   * Install raw completer.
    *
    * @since 3.0
    */
@@ -123,7 +120,7 @@ public abstract class CommandActionSupport
   /**
    * Install argument completer for the given completers.
    *
-   * This will handle translating null members of completers into {@link NullCompleter#INSTANCE}.
+   * This will handle translating {@code null} members of completers into {@link NullCompleter#INSTANCE}.
    */
   protected void setCompleters(final Completer... completers) {
     checkNotNull(completers);
