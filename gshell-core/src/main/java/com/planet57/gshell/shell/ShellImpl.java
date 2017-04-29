@@ -79,6 +79,10 @@ public class ShellImpl
 
   private final ShellScriptLoader scriptLoader;
 
+  private LineReader lineReader;
+
+  private ConsoleTask currentTask;
+
   @Inject
   public ShellImpl(final EventManager events,
                    final CommandRegistrar commandRegistrar,
@@ -217,7 +221,29 @@ public class ShellImpl
 
     renderWelcomeMessage(io);
 
-    runConsole();
+    // prepare handling for CTRL-C
+    Terminal terminal = lineReader.getTerminal();
+    Terminal.SignalHandler intHandler = terminal.handle(Terminal.Signal.INT, s -> {
+      interruptTask();
+    });
+
+    log.trace("Running");
+    boolean running = true;
+    try {
+      while (running) {
+        try {
+          running = work();
+        }
+        catch (Throwable t) {
+          log.trace("Work failed", t);
+          running = errorHandler.handleError(t);
+        }
+      }
+    }
+    finally {
+      terminal.handle(Terminal.Signal.INT, intHandler);
+    }
+    log.trace("Stopped");
 
     renderGoodbyeMessage(io);
   }
@@ -245,44 +271,6 @@ public class ShellImpl
   // HACK: merged console impl
   //
 
-  private LineReader lineReader;
-
-  private volatile ConsoleTask currentTask;
-
-  private void runConsole() {
-    log.trace("Running");
-    boolean running = true;
-
-    // prepare handling for CTRL-C
-    Terminal terminal = lineReader.getTerminal();
-    Terminal.SignalHandler intHandler = terminal.handle(Terminal.Signal.INT, s -> {
-      interruptTask();
-    });
-
-    try {
-      while (running) {
-        try {
-          running = work();
-        }
-        catch (Throwable t) {
-          log.trace("Work failed", t);
-          running = errorHandler.handleError(t);
-        }
-      }
-    }
-    finally {
-      terminal.handle(Terminal.Signal.INT, intHandler);
-    }
-
-    log.trace("Stopped");
-  }
-
-  /**
-   * Read and execute a line.
-   *
-   * @return False to abort, true to continue running.
-   * @throws Exception Work failed.
-   */
   private boolean work() throws Exception {
     String line = lineReader.readLine(prompt.prompt());
 
@@ -315,14 +303,11 @@ public class ShellImpl
     }
   }
 
-  private boolean interruptTask() {
-    boolean interrupt = false;
-
+  private void interruptTask() {
     ConsoleTask task = currentTask;
     if (task != null) {
       synchronized (task) {
         log.debug("Interrupting task");
-        interrupt = true;
 
         if (task.isStopping()) {
           task.abort();
@@ -335,7 +320,5 @@ public class ShellImpl
     else {
       log.debug("No task running to interrupt");
     }
-
-    return interrupt;
   }
 }

@@ -72,6 +72,15 @@ public abstract class ConsoleTask
   }
 
   /**
+   * Thrown to tasks which are asked to {link #abort}.
+   */
+  private static class AbortTaskNotification
+    extends Notification
+  {
+    private static final long serialVersionUID = 1;
+  }
+
+  /**
    * Kill the tasks execute thread via {@link Thread#stop}.
    *
    * Thread is given an {@link AbortTaskNotification}.
@@ -122,25 +131,6 @@ public abstract class ConsoleTask
    */
   public abstract boolean doExecute(String input) throws Exception;
 
-  /**
-   * Set the execution thread of the current task.  This is used when asking
-   * the task to stop or abort.
-   *
-   * @param thread The new thread considered to be the tasks execute thread.
-   */
-  public void setExecuteThread(final Thread thread) {
-    this.thread = checkNotNull(thread);
-  }
-
-  /**
-   * Get the execution thread of the current task.
-   *
-   * @return The tasks execution thread.  Null only if the task has completed.
-   */
-  public Thread getExecuteThread() {
-    return thread;
-  }
-
   @Override
   public String toString() {
     return "ConsoleTask{" +
@@ -149,18 +139,5 @@ public abstract class ConsoleTask
       ", stopping=" + stopping +
       ", input='" + input + '\'' +
       '}';
-  }
-
-  //
-  // Helpers
-  //
-
-  /**
-   * Thrown to tasks which are asked to {link #abort}.
-   */
-  private static class AbortTaskNotification
-      extends Notification
-  {
-    private static final long serialVersionUID = 1;
   }
 }
