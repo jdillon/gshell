@@ -36,7 +36,7 @@ public interface Variables
   Object get(String name);
 
   @Nullable
-  Object get(String name, Object defaultValue);
+  Object get(String name, @Nullable Object defaultValue);
 
   @Nullable
   <T> T get(String name, Class<T> type, @Nullable T defaultValue);
