@@ -93,7 +93,7 @@ public class CommandHelpPage
       clp = help.createCliProcessor(command);
       printer = new HelpPrinter(clp, terminal);
 
-      PreferenceProcessor pp = new PreferenceProcessor();
+      pp = new PreferenceProcessor();
       pp.setBasePath(branding.getPreferencesBasePath());
       pp.addBean(command);
     }
