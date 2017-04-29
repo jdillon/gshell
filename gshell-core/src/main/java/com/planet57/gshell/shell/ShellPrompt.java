@@ -133,7 +133,8 @@ public class ShellPrompt
     return prompt;
   }
 
-  private String evaluate(final String expression) {
+  @Nullable
+  private String evaluate(@Nullable final String expression) {
     String prompt = null;
     if (expression != null) {
       prompt = parser.parse(expression);
