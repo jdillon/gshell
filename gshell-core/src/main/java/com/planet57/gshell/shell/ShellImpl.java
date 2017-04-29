@@ -180,13 +180,7 @@ public class ShellImpl
   @Override
   public Object execute(final CharSequence line) throws Exception {
     ensureStarted();
-
     checkNotNull(line);
-
-//    if (line.trim().length() == 0) {
-//      log.trace("Ignoring empty line");
-//      return null;
-//    }
 
     CommandSessionImpl session = commandProcessor.createSession(io.streams.in, io.streams.out, io.streams.err);
     session.put(".shell", this);
