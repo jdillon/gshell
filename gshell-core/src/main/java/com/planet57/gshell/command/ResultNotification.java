@@ -13,24 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.execute;
+package com.planet57.gshell.command;
 
-import com.planet57.gshell.shell.Shell;
+import com.planet57.gshell.util.Notification;
 
 import javax.annotation.Nullable;
-import java.util.List;
 
 /**
- * Provides the ability to execute commands.
+ * Allows command execution to stop early from notification instead of normal return value.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public interface CommandExecutor
+public class ResultNotification
+    extends Notification
 {
-  @Nullable
-  Object execute(Shell shell, String line) throws Exception;
+  private static final long serialVersionUID = 1;
 
-//  @Nullable
-//  Object execute(Shell shell, List<?> line) throws Exception;
+  @Nullable
+  private final Object result;
+
+  public ResultNotification(@Nullable final Object result) {
+    this.result = result;
+  }
+
+  public ResultNotification(final String msg, @Nullable final Object result) {
+    super(msg);
+    this.result = result;
+  }
+
+  @Nullable
+  public Object getResult() {
+    return result;
+  }
 }

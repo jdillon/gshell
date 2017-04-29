@@ -18,4 +18,4 @@
  *
  * @since 2.0
  */
-package com.planet57.gshell.execute;
+package com.planet57.gshell.command.execute;

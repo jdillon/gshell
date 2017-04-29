@@ -22,7 +22,7 @@ import javax.inject.Singleton;
 
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.console.ConsoleErrorHandler;
-import com.planet57.gshell.execute.ErrorNotification;
+import com.planet57.gshell.command.ErrorNotification;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 import com.planet57.gshell.variables.VariableNames;
