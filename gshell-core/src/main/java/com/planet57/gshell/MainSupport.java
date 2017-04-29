@@ -105,6 +105,7 @@ public abstract class MainSupport
    * Adjust the threshold of all logging.
    */
   private void setLoggingThreshold(final Level level) {
+    log.debug("Logging threshold: {}", level);
     setConsoleLoggingThreshold(level);
     System.setProperty("shell.logging.file.threshold", level.name());
     System.setProperty("shell.logging.root-level", level.name());
@@ -113,6 +114,7 @@ public abstract class MainSupport
   @Preference(name = "debug")
   @Option(name = "d", longName = "debug", optionalArg = true)
   private void setDebug(final boolean flag) {
+    log.debug("Debug: {}", flag);
     if (flag) {
       setLoggingThreshold(Level.DEBUG);
       showErrorTraces = true;
@@ -122,6 +124,7 @@ public abstract class MainSupport
   @Preference(name = "trace")
   @Option(name = "X", longName = "trace", optionalArg = true)
   private void setTrace(final boolean flag) {
+    log.debug("Trace: {}", flag);
     if (flag) {
       setLoggingThreshold(Level.TRACE);
       showErrorTraces = true;
@@ -151,6 +154,7 @@ public abstract class MainSupport
   }
 
   @Argument
+  @Nullable
   private List<String> appArgs = null;
 
   /**
