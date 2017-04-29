@@ -64,9 +64,6 @@ public class CommandActionFunction
     final Shell shell = (Shell) session.get(SHELL_VAR);
     final IO io = shell.getIo();
 
-    // FIXME: this messes up output; resolve if/where this should be handled
-    // StreamJack.maybeInstall(io.streams);
-
     Object result = null;
     try {
       boolean execute = true;
@@ -125,11 +122,8 @@ public class CommandActionFunction
     }
     finally {
       io.flush();
-      // StreamJack.deregister();
       Thread.currentThread().setContextClassLoader(cl);
     }
-
-    shell.getVariables().set(VariableNames.LAST_RESULT, result);
 
     log.debug("Result: {}; {}", result, watch);
     return result;

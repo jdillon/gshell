@@ -21,13 +21,13 @@ import com.planet57.gshell.command.AliasAction;
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.resolver.CommandResolver;
 import com.planet57.gshell.command.resolver.Node;
+import com.planet57.gshell.variables.VariableNames;
 import org.apache.felix.service.command.CommandSession;
 import org.apache.felix.service.command.CommandSessionListener;
 import org.apache.felix.service.command.Function;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -81,6 +81,8 @@ public class CommandProcessorImpl
         }
 
         log.debug("Result: {}", String.valueOf(result));
+
+        session.put(VariableNames.LAST_RESULT, result);
       }
 
       @Override
@@ -90,24 +92,18 @@ public class CommandProcessorImpl
         }
 
         log.debug("Exception", exception);
+
+        session.put(VariableNames.LAST_RESULT, exception);
       }
     });
   }
 
   @Override
   protected Function getCommand(final String name, final Object path) {
-    CommandAction action = createAction(name);
-    if (action != null) {
-      return new CommandActionFunction(action);
-    }
-    return null;
-  }
-
-  @Nullable
-  private CommandAction createAction(final String name) {
     assert name != null;
+    // ignore path (ie. scope)
 
-    CommandAction action;
+    CommandAction action = null;
     if (aliases.containsAlias(name)) {
       try {
         action = new AliasAction(name, aliases.getAlias(name));
@@ -119,15 +115,19 @@ public class CommandProcessorImpl
     }
     else {
       Node node = resolver.resolve(name);
-      if (node == null) {
-        return null;
+      if (node != null) {
+        action = node.getAction();
       }
-      action = node.getAction();
     }
 
-    if (action instanceof CommandAction.Prototype) {
-      return ((CommandAction.Prototype)action).create();
+    if (action != null) {
+      if (action instanceof CommandAction.Prototype) {
+        action = ((CommandAction.Prototype)action).create();
+      }
+
+      return new CommandActionFunction(action);
     }
-    return action;
+
+    return null;
   }
 }
