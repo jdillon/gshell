@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.command.execute;
+package com.planet57.gshell.internal;
 
 import com.google.common.base.Stopwatch;
 import com.google.common.base.Throwables;
@@ -44,7 +44,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @since 3.0
  */
-class CommandActionFunction
+public class CommandActionFunction
   extends ComponentSupport
   implements Function {
   private final CommandAction action;

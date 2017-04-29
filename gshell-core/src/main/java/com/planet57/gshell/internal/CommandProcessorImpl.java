@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.command.execute;
+package com.planet57.gshell.internal;
 
 import com.planet57.gshell.alias.AliasRegistry;
 import com.planet57.gshell.alias.NoSuchAliasException;
@@ -62,6 +62,7 @@ public class CommandProcessorImpl
   @Nullable
   private CommandAction createAction(final String name) {
     assert name != null;
+
     CommandAction action;
     if (aliases.containsAlias(name)) {
       try {

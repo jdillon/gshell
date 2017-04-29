@@ -26,8 +26,10 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.google.common.base.Strings;
+import com.google.common.base.Throwables;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.branding.BrandingSupport;
+import com.planet57.gshell.command.ErrorNotification;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.registry.CommandRegistrar;
 import com.planet57.gshell.console.Console;
@@ -35,10 +37,11 @@ import com.planet57.gshell.console.ConsoleErrorHandler;
 import com.planet57.gshell.console.ConsolePrompt;
 import com.planet57.gshell.console.ConsoleTask;
 import com.planet57.gshell.event.EventManager;
-import com.planet57.gshell.command.execute.CommandExecutor;
 import com.planet57.gshell.command.ExitNotification;
 import com.planet57.gshell.util.jline.LoggingCompleter;
 import com.planet57.gshell.variables.Variables;
+import org.apache.felix.gogo.runtime.CommandProcessorImpl;
+import org.apache.felix.gogo.runtime.CommandSessionImpl;
 import org.jline.reader.Completer;
 import org.jline.reader.History;
 import org.jline.reader.LineReader;
@@ -65,7 +68,9 @@ public class ShellImpl
 
   private final Branding branding;
 
-  private final CommandExecutor executor;
+  // HACK: have to use impl here, as CommandProcessor does not expose enough api
+
+  private final CommandProcessorImpl commandProcessor;
 
   private final IO io;
 
@@ -84,7 +89,7 @@ public class ShellImpl
   @Inject
   public ShellImpl(final EventManager events,
                    final CommandRegistrar commandRegistrar,
-                   final CommandExecutor executor,
+                   final CommandProcessorImpl commandProcessor,
                    final Branding branding,
                    @Named("main") final IO io,
                    @Named("main") final Variables variables,
@@ -94,7 +99,7 @@ public class ShellImpl
       throws IOException
   {
     checkNotNull(events);
-    this.executor = checkNotNull(executor);
+    this.commandProcessor = checkNotNull(commandProcessor);
     checkNotNull(commandRegistrar);
     this.branding = checkNotNull(branding);
     this.io = checkNotNull(io);
@@ -182,7 +187,36 @@ public class ShellImpl
   @Override
   public Object execute(final CharSequence line) throws Exception {
     ensureStarted();
-    return executor.execute(this, String.valueOf(line));
+
+    checkNotNull(line);
+
+//    if (line.trim().length() == 0) {
+//      log.trace("Ignoring empty line");
+//      return null;
+//    }
+
+    CommandSessionImpl session = commandProcessor.createSession(io.streams.in, io.streams.out, io.streams.err);
+    session.put(".shell", this);
+
+    // HACK: stuff all variables into session, this is not ideal however
+    variables.names().forEach(name ->
+      session.getVariables().put(name, variables.get(name))
+    );
+
+    // FIXME: this doesn't appear to do the trick; because "echo" will resolve to function "echo" :-(
+    // disable trace output by default
+    session.put("echo", null);
+
+    try {
+      return session.execute(line);
+    }
+    catch (ErrorNotification n) {
+      // FIXME: this is left over from ExecutingVisitor and need to see how gogo may use/need this or drop it
+      Throwable cause = n.getCause();
+      Throwables.propagateIfPossible(cause, Exception.class, Error.class);
+      // should normally never happen
+      throw n;
+    }
   }
 
   @Override
