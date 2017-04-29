@@ -46,7 +46,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class CommandActionFunction
   extends ComponentSupport
-  implements Function {
+  implements Function
+{
   private final CommandAction action;
 
   public CommandActionFunction(final CommandAction action) {
