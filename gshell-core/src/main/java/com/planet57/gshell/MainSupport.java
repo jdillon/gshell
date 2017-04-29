@@ -79,14 +79,6 @@ public abstract class MainSupport
     .add(false, getClass())
     .add(MainSupport.class);
 
-  // FIXME: avoid fields for IO/Variables; these exist only to configure binding
-
-  private IO io;
-
-  private Variables variables;
-
-  private Branding branding;
-
   @Option(name = "h", longName = "help", override = true)
   private boolean help;
 
@@ -138,6 +130,8 @@ public abstract class MainSupport
   @Option(name = "c", longName = "command")
   private String command;
 
+  private final Variables variables = new VariablesSupport();
+
   @Option(name = "D", longName = "define")
   private void setVariable(final String input) {
     log.debug("Set variable: {}", input);
@@ -164,72 +158,20 @@ public abstract class MainSupport
   private List<String> appArgs = null;
 
   /**
-   * Allow control of exit behavior.
-   */
-  @VisibleForTesting
-  protected void exit(final int code) {
-    log.debug("Existing with code: {}", code);
-    System.exit(code);
-  }
-
-  /**
-   * Branding is lazily-loaded.
-   *
-   * @see #createBranding()
-   */
-  protected Branding getBranding() {
-    if (branding == null) {
-      branding = createBranding();
-    }
-    return branding;
-  }
-
-  /**
    * Create a the {@link Branding} instance.
    *
-   * @see #getBranding()
+   * Branding is needed very early to allow customization of command-line processing.
    */
   protected Branding createBranding() {
     return new BrandingSupport();
   }
 
-  /**
-   * Create the {@link StreamSet} used to register.
-   */
-  @VisibleForTesting
-  protected StreamSet createStreamSet() {
-    return StreamSet.SYSTEM_FD;
-  }
-
-  private final BeanContainer container = new BeanContainer();
-
-  protected Shell createShell() throws Exception {
-    List<Module> modules = new ArrayList<>();
-    configure(modules);
-
-    Injector injector = Guice.createInjector(new WireModule(modules));
-    container.add(injector, 0);
-
-    return injector.getInstance(ShellImpl.class);
-  }
-
-  protected void configure(@Nonnull final List<Module> modules) {
-    URLClassSpace space = new URLClassSpace(getClass().getClassLoader());
-    modules.add(new SpaceModule(space, BeanScanning.INDEX));
-    modules.add(binder -> {
-      binder.bind(BeanContainer.class).toInstance(container);
-
-      // FIXME: due to ShellImpl being a Guice component, but there are not we have to bind these so they can be injected
-      binder.bind(IO.class).annotatedWith(named("main")).toInstance(io);
-      binder.bind(Variables.class).annotatedWith(named("main")).toInstance(variables);
-      binder.bind(Branding.class).toInstance(getBranding());
-    });
-  }
-
   public void boot(final String... args) throws Exception {
     checkNotNull(args);
 
-    log.debug("Booting w/args: {}", Arrays.asList(args));
+    if (log.isDebugEnabled()) {
+      log.debug("Booting w/args: {}", Arrays.asList(args));
+    }
 
     // Register default handler for uncaught exceptions
     Thread.setDefaultUncaughtExceptionHandler((thread, cause) -> log.warn("Unhandled exception occurred on thread: {}", thread, cause));
@@ -237,9 +179,12 @@ public abstract class MainSupport
     // Setup environment defaults
     setConsoleLoggingThreshold(Level.INFO);
 
+    // Prepare branding
+    Branding branding = createBranding();
+
     // Process preferences
     PreferenceProcessor pp = new PreferenceProcessor();
-    pp.setBasePath(getBranding().getPreferencesBasePath());
+    pp.setBasePath(branding.getPreferencesBasePath());
     pp.addBean(this);
     pp.process();
 
@@ -248,7 +193,6 @@ public abstract class MainSupport
     clp.addBean(this);
     clp.setMessages(messages);
     clp.setStopAtNonOption(true);
-
     try {
       clp.process(args);
     }
@@ -264,23 +208,19 @@ public abstract class MainSupport
     SLF4JBridgeHandler.removeHandlersForRootLogger();
     SLF4JBridgeHandler.install();
 
-    Terminal terminal = TerminalBuilder.builder()
-      .name(getBranding().getProgramName())
-      .system(true)
-      .nativeSignals(true)
-      .signalHandler(Terminal.SignalHandler.SIG_IGN)
-      .build();
-
-    io = new IO(createStreamSet(), terminal);
+    Terminal terminal = createTerminal(branding);
+    IO io = new IO(createStreamSet(), terminal);
 
     if (help) {
       HelpPrinter printer = new HelpPrinter(clp, terminal);
-      printer.printUsage(io.out, getBranding().getProgramName());
+      printer.printUsage(io.out, branding.getProgramName());
+      io.flush();
       exit(0);
     }
 
     if (version) {
-      io.out.format("%s %s%n", getBranding().getDisplayName(), getBranding().getVersion());
+      io.out.format("%s %s%n", branding.getDisplayName(), branding.getVersion());
+      io.flush();
       exit(0);
     }
 
@@ -289,10 +229,9 @@ public abstract class MainSupport
 
     Object result = null;
     try {
-      variables = new VariablesSupport();
       variables.set(VariableNames.SHELL_ERRORS, showErrorTraces);
 
-      Shell shell = createShell();
+      Shell shell = createShell(io, variables, branding);
       shell.start();
       try {
         if (command != null) {
@@ -319,5 +258,79 @@ public abstract class MainSupport
     }
 
     exit(ExitCodeDecoder.decode(result));
+  }
+
+  //
+  // Shell creation
+  //
+
+  private final BeanContainer container = new BeanContainer();
+
+  /**
+   * Create a new {@link Shell}.
+   */
+  @VisibleForTesting
+  protected Shell createShell(final IO io, final Variables variables, final Branding branding) throws Exception {
+    List<Module> modules = new ArrayList<>();
+
+    URLClassSpace space = new URLClassSpace(getClass().getClassLoader());
+    modules.add(new SpaceModule(space, BeanScanning.INDEX));
+
+    modules.add(binder -> {
+      binder.bind(BeanContainer.class).toInstance(container);
+
+      // FIXME: ShellImpl presently expects ctor injection of these
+      binder.bind(IO.class).annotatedWith(named("main")).toInstance(io);
+      binder.bind(Variables.class).annotatedWith(named("main")).toInstance(variables);
+      binder.bind(Branding.class).toInstance(branding);
+    });
+
+    configure(modules);
+
+    Injector injector = Guice.createInjector(new WireModule(modules));
+    container.add(injector, 0);
+
+    return injector.getInstance(ShellImpl.class);
+  }
+
+  /**
+   * Allow sub-class to customize container.
+   */
+  protected void configure(@Nonnull final List<Module> modules) {
+    // empty
+  }
+
+  //
+  // Helpers
+  //
+
+  /**
+   * Create the {@link Terminal}.
+   */
+  @VisibleForTesting
+  protected Terminal createTerminal(final Branding branding) throws Exception {
+    return TerminalBuilder.builder()
+      .name(branding.getProgramName())
+      .system(true)
+      .nativeSignals(true)
+      .signalHandler(Terminal.SignalHandler.SIG_IGN)
+      .build();
+  }
+
+  /**
+   * Create the {@link StreamSet} used to register.
+   */
+  @VisibleForTesting
+  protected StreamSet createStreamSet() {
+    return StreamSet.SYSTEM_FD;
+  }
+
+  /**
+   * Allow control of exit behavior.
+   */
+  @VisibleForTesting
+  protected void exit(final int code) {
+    log.debug("Existing with code: {}", code);
+    System.exit(code);
   }
 }

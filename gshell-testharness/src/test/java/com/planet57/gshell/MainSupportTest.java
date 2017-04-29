@@ -16,11 +16,15 @@
 package com.planet57.gshell;
 
 import com.planet57.gshell.branding.Branding;
+import com.planet57.gshell.command.IO;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.testharness.TestBranding;
 import com.planet57.gshell.util.io.StreamJack;
 import com.planet57.gshell.util.io.StreamSet;
+import com.planet57.gshell.variables.Variables;
 import org.fusesource.jansi.Ansi;
+import org.jline.terminal.Terminal;
+import org.jline.terminal.TerminalBuilder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -90,6 +94,11 @@ public class MainSupportTest
     public ByteArrayOutputStream out = new ByteArrayOutputStream();
 
     @Override
+    protected Terminal createTerminal(Branding branding) throws Exception {
+      return TerminalBuilder.builder().dumb(true).build();
+    }
+
+    @Override
     protected StreamSet createStreamSet() {
       return new StreamSet(in, new PrintStream(out, true));
     }
@@ -100,7 +109,7 @@ public class MainSupportTest
     }
 
     @Override
-    protected Shell createShell() throws Exception {
+    protected Shell createShell(IO io, Variables variables, Branding branding) throws Exception {
       return mock(Shell.class);
     }
 
