@@ -78,6 +78,7 @@ public class CommandHelpPage
   }
 
   // Public so that ObjectBasedValueSource can access (it really should set accessible so this is not needed)
+  @SuppressWarnings("unused")
   public class Helper
   {
     private final CliProcessor clp;
@@ -100,22 +101,18 @@ public class CommandHelpPage
       messages = new ResourceBundleMessageSource(getClass());
     }
 
-    @SuppressWarnings("unused")
     public String getName() {
       return command.getName();
     }
 
-    @SuppressWarnings("unused")
     public String getAbsoluteName() {
       return Node.ROOT + command.getName();
     }
 
-    @SuppressWarnings("unused")
     public String getSimpleName() {
       return command.getSimpleName();
     }
 
-    @SuppressWarnings("unused")
     public String getDescription() {
       return CommandHelper.getDescription(command);
     }
@@ -125,7 +122,6 @@ public class CommandHelpPage
       buff.println();
     }
 
-    @SuppressWarnings("unused")
     public String getArguments() {
       if (clp.getArgumentDescriptors().isEmpty()) {
         return "";
@@ -138,7 +134,6 @@ public class CommandHelpPage
       return buff.toString();
     }
 
-    @SuppressWarnings("unused")
     public String getOptions() {
       if (clp.getOptionDescriptors().isEmpty()) {
         return "";
@@ -151,7 +146,6 @@ public class CommandHelpPage
       return buff.toString();
     }
 
-    @SuppressWarnings("unused")
     public String getPreferences() {
       if (pp.getDescriptors().isEmpty()) {
         return "";
@@ -169,7 +163,6 @@ public class CommandHelpPage
       return buff.toString();
     }
 
-    @SuppressWarnings("unused")
     public String getDetails() {
       // This ugly muck adds a newline as needed if the last section was not empty
       // and the current section is not empty, so that the page looks correct.
