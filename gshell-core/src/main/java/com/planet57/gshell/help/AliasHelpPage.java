@@ -36,20 +36,13 @@ public class AliasHelpPage
 
   private final String alias;
 
-  private MessageSource messages;
+  private final MessageSource messages;
 
   public AliasHelpPage(final String name, final String alias) {
     this.name = checkNotNull(name);
     this.alias = checkNotNull(alias);
+    this.messages = new ResourceBundleMessageSource(getClass());
   }
-
-  private MessageSource getMessages() {
-    if (messages == null) {
-      messages = new ResourceBundleMessageSource(getClass());
-    }
-    return messages;
-  }
-
 
   @Override
   public String getName() {
@@ -58,14 +51,14 @@ public class AliasHelpPage
 
   @Override
   public String getDescription() {
-    return getMessages().format("alias-description", alias);
+    return messages.format("alias-description", alias);
   }
 
   @Override
   public void render(final Shell shell, final PrintWriter out) throws Exception {
     checkNotNull(shell);
     checkNotNull(out);
-    out.println(getMessages().format("alias-content", name, alias));
+    out.println(messages.format("alias-content", name, alias));
   }
 
   @Override

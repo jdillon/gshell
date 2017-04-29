@@ -38,19 +38,13 @@ public class GroupHelpPage
 
   private final HelpContentLoader loader;
 
-  private MessageSource messages;
+  private final MessageSource messages;
 
   public GroupHelpPage(final Node node, final HelpContentLoader loader) {
     this.node = checkNotNull(node);
     checkArgument(node.isGroup());
     this.loader = checkNotNull(loader);
-  }
-
-  private MessageSource getMessages() {
-    if (messages == null) {
-      messages = new ResourceBundleMessageSource(getClass());
-    }
-    return messages;
+    this.messages = new ResourceBundleMessageSource(getClass());
   }
 
   @Override
@@ -60,7 +54,7 @@ public class GroupHelpPage
 
   @Override
   public String getDescription() {
-    return getMessages().format("group-description", getName());
+    return messages.format("group-description", getName());
   }
 
   @Override
@@ -68,7 +62,7 @@ public class GroupHelpPage
     checkNotNull(shell);
     checkNotNull(out);
 
-    out.println(getMessages().format("group-content-header", getName()));
+    out.println(messages.format("group-content-header", getName()));
     HelpPageUtil.renderIndex(out, HelpPageUtil.pagesFor(node, loader));
   }
 

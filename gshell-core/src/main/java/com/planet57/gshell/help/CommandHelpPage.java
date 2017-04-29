@@ -86,7 +86,7 @@ public class CommandHelpPage
 
     private final PreferenceProcessor pp;
 
-    private MessageSource messages;
+    private final MessageSource messages;
 
     public Helper(final Terminal terminal, final Branding branding) {
       CommandHelper help = new CommandHelper();
@@ -96,14 +96,8 @@ public class CommandHelpPage
       pp = new PreferenceProcessor();
       pp.setBasePath(branding.getPreferencesBasePath());
       pp.addBean(command);
-    }
 
-    private MessageSource getMessages() {
-      if (messages == null) {
-        messages = new ResourceBundleMessageSource(getClass());
-      }
-
-      return messages;
+      messages = new ResourceBundleMessageSource(getClass());
     }
 
     @SuppressWarnings("unused")
@@ -127,7 +121,7 @@ public class CommandHelpPage
     }
 
     private void printHeader(final PrintBuffer buff, final String name) {
-      buff.format("@|bold %s|@", getMessages().format(name)).println();
+      buff.format("@|bold %s|@", messages.format(name)).println();
       buff.println();
     }
 
