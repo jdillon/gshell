@@ -18,7 +18,6 @@ package com.planet57.gshell.help;
 import java.io.PrintWriter;
 import java.util.ResourceBundle;
 
-import com.planet57.gshell.command.CommandHelper;
 import com.planet57.gshell.shell.Shell;
 import org.codehaus.plexus.interpolation.AbstractValueSource;
 import org.codehaus.plexus.interpolation.Interpolator;
@@ -59,7 +58,7 @@ public class MetaHelpPage
 
   @Override
   public String getDescription() {
-    return resources.getString(CommandHelper.COMMAND_DESCRIPTION);
+    return resources.getString("command.description");
   }
 
   @Override

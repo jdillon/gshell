@@ -32,12 +32,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class CommandHelper
 {
-  public static final String COMMAND_DOT = "command.";
-
-  public static final String COMMAND_NAME = "command.name";
-
-  public static final String COMMAND_DESCRIPTION = "command.description";
-
   @Option(name = "h", longName = "help", override = true)
   public boolean displayHelp;
 
@@ -61,7 +55,7 @@ public class CommandHelper
     clp.addBean(this);
 
     AggregateMessageSource messages = new AggregateMessageSource(command.getMessages(), this.getMessages());
-    clp.setMessages(new PrefixingMessageSource(messages, COMMAND_DOT));
+    clp.setMessages(new PrefixingMessageSource(messages, "command."));
 
     return clp;
   }
@@ -71,6 +65,6 @@ public class CommandHelper
    */
   public static String getDescription(final CommandAction command) {
     checkNotNull(command);
-    return command.getMessages().getMessage(COMMAND_DESCRIPTION);
+    return command.getMessages().getMessage("command.description");
   }
 }
