@@ -15,14 +15,12 @@
  */
 package com.planet57.gshell.command;
 
-import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.util.cli2.CliProcessor;
 import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.i18n.AggregateMessageSource;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.PrefixingMessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
-import com.planet57.gshell.util.pref.PreferenceProcessor;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -74,19 +72,5 @@ public class CommandHelper
   public static String getDescription(final CommandAction command) {
     checkNotNull(command);
     return command.getMessages().getMessage(COMMAND_DESCRIPTION);
-  }
-
-  /**
-   * Create a {@link PreferenceProcessor} for given action.
-   */
-  public static PreferenceProcessor createPreferenceProcessor(final CommandAction command, final Branding branding) {
-    checkNotNull(command);
-    checkNotNull(branding);
-
-    PreferenceProcessor pp = new PreferenceProcessor();
-    pp.setBasePath(branding.getPreferencesBasePath());
-    pp.addBean(command);
-
-    return pp;
   }
 }

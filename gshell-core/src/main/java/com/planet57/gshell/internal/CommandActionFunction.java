@@ -68,7 +68,9 @@ public class CommandActionFunction
       boolean execute = true;
 
       // Process command preferences
-      PreferenceProcessor pp = CommandHelper.createPreferenceProcessor(action, shell.getBranding());
+      PreferenceProcessor pp = PreferenceProcessor pp = new PreferenceProcessor();
+      pp.setBasePath(shell.getBranding().getPreferencesBasePath());
+      pp.addBean(action);
       pp.process();
 
       // Process command arguments unless marked as opaque
