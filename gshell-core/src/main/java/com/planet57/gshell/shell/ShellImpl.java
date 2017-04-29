@@ -249,11 +249,9 @@ public class ShellImpl
 
   private volatile ConsoleTask currentTask;
 
-  private volatile boolean running;
-
   private void runConsole() {
     log.trace("Running");
-    running = true;
+    boolean running = true;
 
     // prepare handling for CTRL-C
     Terminal terminal = lineReader.getTerminal();
@@ -288,10 +286,6 @@ public class ShellImpl
   private boolean work() throws Exception {
     String line = lineReader.readLine(prompt.prompt());
 
-    if (log.isTraceEnabled()) {
-      traceLine(line);
-    }
-
     if (line != null) {
       line = line.trim();
     }
@@ -319,25 +313,6 @@ public class ShellImpl
     finally {
       currentTask = null;
     }
-  }
-
-  /**
-   * Logs line with HEX details.
-   */
-  private void traceLine(@Nullable final String line) {
-    if (line == null) {
-      return;
-    }
-
-    StringBuilder hex = new StringBuilder();
-    StringBuilder idx = new StringBuilder();
-
-    for (byte b : line.getBytes()) {
-      hex.append('x').append(Integer.toHexString(b)).append(' ');
-      idx.append(' ').append((char) b).append("  ");
-    }
-
-    log.trace("Read line: {}\n{}\n{}", line, hex, idx);
   }
 
   private boolean interruptTask() {

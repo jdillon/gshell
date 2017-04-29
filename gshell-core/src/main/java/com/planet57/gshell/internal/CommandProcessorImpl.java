@@ -21,7 +21,11 @@ import com.planet57.gshell.command.AliasAction;
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.resolver.CommandResolver;
 import com.planet57.gshell.command.resolver.Node;
+import org.apache.felix.service.command.CommandSession;
+import org.apache.felix.service.command.CommandSessionListener;
 import org.apache.felix.service.command.Function;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -40,6 +44,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class CommandProcessorImpl
   extends org.apache.felix.gogo.runtime.CommandProcessorImpl
 {
+  private static final Logger log = LoggerFactory.getLogger(CommandProcessorImpl.class);
+
   private final AliasRegistry aliases;
 
   private final CommandResolver resolver;
@@ -48,6 +54,32 @@ public class CommandProcessorImpl
   public CommandProcessorImpl(final AliasRegistry aliases, final CommandResolver resolver) {
     this.aliases = checkNotNull(aliases);
     this.resolver = checkNotNull(resolver);
+
+    addListener(new CommandSessionListener()
+    {
+      @Override
+      public void beforeExecute(final CommandSession session, final CharSequence line) {
+        StringBuilder hex = new StringBuilder();
+        StringBuilder idx = new StringBuilder();
+
+        line.chars().forEach(ch -> {
+          hex.append('x').append(Integer.toHexString(ch)).append(' ');
+          idx.append(' ').append((char) ch).append("  ");
+        });
+
+        log.debug("Execute: {}\n{}\n{}", line, hex, idx);
+      }
+
+      @Override
+      public void afterExecute(final CommandSession session, final CharSequence line, final Object result) {
+        log.debug("Result: {}", String.valueOf(result));
+      }
+
+      @Override
+      public void afterExecute(final CommandSession session, final CharSequence line, final Exception exception) {
+        log.debug("Exception", exception);
+      }
+    });
   }
 
   @Override
