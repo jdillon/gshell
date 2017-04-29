@@ -51,16 +51,12 @@ public class MainSupportTest
   @After
   public void tearDown() throws Exception {
     underTest = null;
+    StreamJack.uninstall();
   }
 
   @Test
   public void test_h() throws Exception {
-    try {
-      underTest.boot("-h");
-    }
-    finally {
-      StreamJack.uninstall();
-    }
+    underTest.boot("-h");
 
     log(new String(underTest.out.toByteArray()));
     assertThat(underTest.exitCode, is(0));
@@ -68,15 +64,20 @@ public class MainSupportTest
 
   @Test
   public void test__help() throws Exception {
-    try {
-      underTest.boot("--help");
-    }
-    finally {
-      StreamJack.uninstall();
-    }
+    underTest.boot("--help");
 
     log(new String(underTest.out.toByteArray()));
     assertThat(underTest.exitCode, is(0));
+  }
+
+  @Test
+  public void test__debug() throws Exception {
+    underTest.boot("--debug");
+
+    log(new String(underTest.out.toByteArray()));
+    assertThat(underTest.exitCode, is(0));
+
+    assertThat(System.getProperty("shell.logging.console.threshold"), is("DEBUG"));
   }
 
   private class MockMain
