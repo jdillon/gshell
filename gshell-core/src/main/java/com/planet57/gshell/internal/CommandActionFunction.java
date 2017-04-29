@@ -123,16 +123,19 @@ public class CommandActionFunction
               return shell.getVariables();
             }
           });
-        } catch (ResultNotification n) {
+        }
+        catch (ResultNotification n) {
           result = n.getResult();
-        } catch (Throwable t) {
+        }
+        catch (Throwable t) {
           // TODO: see if there is a more appropriate place for this; something may be gobbling exceptions in gogo as well
           log.debug("Caught", t);
           Throwables.propagateIfPossible(t, Exception.class, Error.class);
           throw new RuntimeException(t);
         }
       }
-    } finally {
+    }
+    finally {
       io.flush();
       // StreamJack.deregister();
       Thread.currentThread().setContextClassLoader(cl);
