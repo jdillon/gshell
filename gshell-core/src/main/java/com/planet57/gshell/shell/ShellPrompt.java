@@ -18,6 +18,7 @@ package com.planet57.gshell.shell;
 import java.io.File;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
@@ -31,6 +32,7 @@ import org.fusesource.jansi.AnsiRenderer;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.planet57.gshell.variables.VariableNames.SHELL_PROMPT;
+import static com.planet57.gshell.variables.VariableNames.SHELL_RPROMPT;
 import static com.planet57.gshell.variables.VariableNames.SHELL_USER_DIR;
 import static com.planet57.gshell.variables.VariableNames.SHELL_USER_HOME;
 
@@ -101,14 +103,31 @@ public class ShellPrompt
     String pattern = variables.get().get(SHELL_PROMPT, String.class);
     String prompt = evaluate(pattern);
 
-    // Use a default prompt if we don't have anything here
     if (prompt == null) {
       prompt = evaluate(branding.getPrompt());
     }
 
-    // Encode ANSI muck if it looks like there are codes encoded, need to render here as the console uses raw streams
     if (AnsiRenderer.test(prompt)) {
       prompt = AnsiRenderer.render(prompt);
+    }
+
+    return prompt;
+  }
+
+  @Override
+  @Nullable
+  public String rprompt() {
+    String pattern = variables.get().get(SHELL_RPROMPT, String.class);
+    String prompt = evaluate(pattern);
+
+    if (prompt == null) {
+      prompt = evaluate(branding.getRightPrompt());
+    }
+
+    if (prompt != null) {
+      if (AnsiRenderer.test(prompt)) {
+        prompt = AnsiRenderer.render(prompt);
+      }
     }
 
     return prompt;

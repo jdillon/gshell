@@ -45,6 +45,12 @@ public interface Branding
 
   String getPrompt();
 
+  /**
+   * @since 3.0
+   */
+  @Nullable
+  String getRightPrompt();
+
   String getProfileScriptName();
 
   String getInteractiveScriptName();

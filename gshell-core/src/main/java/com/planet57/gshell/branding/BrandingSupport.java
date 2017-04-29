@@ -26,6 +26,8 @@ import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 import com.planet57.gshell.util.io.PrintBuffer;
 import com.planet57.gshell.variables.Variables;
 
+import javax.annotation.Nullable;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.planet57.gshell.command.resolver.Node.CURRENT;
 import static com.planet57.gshell.command.resolver.Node.PATH_SEPARATOR;
@@ -120,6 +122,12 @@ public class BrandingSupport
   @Override
   public String getPrompt() {
     return String.format("@|bold %s|@> ", getProgramName());
+  }
+
+  @Override
+  @Nullable
+  public String getRightPrompt() {
+    return null;
   }
 
   @Override

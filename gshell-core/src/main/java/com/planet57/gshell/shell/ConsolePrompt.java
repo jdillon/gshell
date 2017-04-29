@@ -15,6 +15,8 @@
  */
 package com.planet57.gshell.shell;
 
+import javax.annotation.Nullable;
+
 /**
  * Provides prompt customization.
  *
@@ -27,4 +29,10 @@ public interface ConsolePrompt
    * Render the prompt which the console should display for input.
    */
   String prompt();
+
+  /**
+   * @since 3.0
+   */
+  @Nullable
+  String rprompt();
 }

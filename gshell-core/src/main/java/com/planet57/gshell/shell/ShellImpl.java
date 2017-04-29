@@ -261,7 +261,7 @@ public class ShellImpl
   }
 
   private boolean work() throws Exception {
-    String line = lineReader.readLine(prompt.prompt());
+    String line = lineReader.readLine(prompt.prompt(), prompt.rprompt(), null, null);
 
     // Build the task and execute it
     checkState(currentTask == null);
