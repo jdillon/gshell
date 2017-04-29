@@ -16,7 +16,6 @@
 package com.planet57.gshell.variables;
 
 import javax.annotation.Nullable;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
