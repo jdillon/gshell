@@ -56,6 +56,7 @@ import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 import org.slf4j.Logger;
 import org.slf4j.bridge.SLF4JBridgeHandler;
+import org.sonatype.goodies.common.Throwables2;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -77,6 +78,8 @@ public abstract class MainSupport
   private final MessageSource messages = new ResourceBundleMessageSource()
     .add(false, getClass())
     .add(MainSupport.class);
+
+  // FIXME: avoid fields for IO/Variables; these exist only to configure binding
 
   private IO io;
 
@@ -163,7 +166,6 @@ public abstract class MainSupport
   @VisibleForTesting
   protected void exit(final int code) {
     log.debug("Existing with code: {}", code);
-    io.flush();
     System.exit(code);
   }
 
@@ -227,15 +229,7 @@ public abstract class MainSupport
     log.debug("Booting w/args: {}", Arrays.asList(args));
 
     // Register default handler for uncaught exceptions
-    Thread.setDefaultUncaughtExceptionHandler((thread, cause) -> log.warn("Unhandled exception occurred on thread: " + thread, cause));
-
-    Terminal terminal = TerminalBuilder.builder()
-      .system(true)
-      .nativeSignals(true)
-      .build();
-
-    io = new IO(createStreamSet(), terminal);
-    variables = new VariablesSupport();
+    Thread.setDefaultUncaughtExceptionHandler((thread, cause) -> log.warn("Unhandled exception occurred on thread: {}", thread, cause));
 
     // Setup environment defaults
     setConsoleLoggingThreshold(Level.INFO);
@@ -256,14 +250,25 @@ public abstract class MainSupport
       clp.process(args);
     }
     catch (Exception e) {
+      System.err.println(Throwables2.explain(e));
       if (showErrorTraces) {
-        e.printStackTrace(io.err);
-      }
-      else {
-        io.err.println(e);
+        e.printStackTrace(System.err);
       }
       exit(2);
     }
+
+    // adapt JUL
+    SLF4JBridgeHandler.removeHandlersForRootLogger();
+    SLF4JBridgeHandler.install();
+
+    Terminal terminal = TerminalBuilder.builder()
+      .name(getBranding().getProgramName())
+      .system(true)
+      .nativeSignals(true)
+      .signalHandler(Terminal.SignalHandler.SIG_IGN)
+      .build();
+
+    io = new IO(createStreamSet(), terminal);
 
     if (help) {
       HelpPrinter printer = new HelpPrinter(clp, terminal);
@@ -272,19 +277,16 @@ public abstract class MainSupport
     }
 
     if (version) {
-      io.out.format("%s %s", getBranding().getDisplayName(), getBranding().getVersion()).println();
+      io.out.format("%s %s%n", getBranding().getDisplayName(), getBranding().getVersion());
       exit(0);
     }
-
-    // adapt JUL
-    SLF4JBridgeHandler.removeHandlersForRootLogger();
-    SLF4JBridgeHandler.install();
 
     // hijack streams
     StreamJack.maybeInstall(io.streams);
 
     Object result = null;
     try {
+      variables = new VariablesSupport();
       variables.set(VariableNames.SHELL_ERRORS, showErrorTraces);
 
       Shell shell = createShell();
