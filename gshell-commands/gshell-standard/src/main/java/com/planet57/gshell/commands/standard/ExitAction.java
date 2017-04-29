@@ -23,8 +23,6 @@ import com.planet57.gshell.util.cli2.Argument;
 
 import javax.annotation.Nonnull;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Exit the current shell.
  *
@@ -43,6 +41,7 @@ public class ExitAction
     log.debug("Exiting w/code: {}", exitCode);
 
     // Do not call System.exit(), ask the shell to exit instead.
-    throw new ExitNotification(exitCode);
+    // FIXME: hacking for gogo; which seems to not cope with throwable notifications presently
+    return new ExitNotification(exitCode);
   }
 }

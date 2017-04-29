@@ -17,9 +17,7 @@ package com.planet57.gshell.shell;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -28,10 +26,10 @@ import javax.inject.Named;
 import com.google.common.base.Strings;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.branding.BrandingSupport;
+import com.planet57.gshell.command.ExitNotification;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.registry.CommandRegistrar;
 import com.planet57.gshell.event.EventManager;
-import com.planet57.gshell.command.ExitNotification;
 import com.planet57.gshell.util.jline.LoggingCompleter;
 import com.planet57.gshell.variables.Variables;
 import org.apache.felix.gogo.runtime.CommandProcessorImpl;
@@ -41,6 +39,7 @@ import org.jline.reader.History;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 import org.jline.reader.impl.history.DefaultHistory;
+import org.jline.terminal.Terminal;
 import org.sonatype.goodies.common.ComponentSupport;
 import org.sonatype.goodies.lifecycle.LifecycleManager;
 
@@ -212,48 +211,21 @@ public class ShellImpl
 
     scriptLoader.loadInteractiveScripts(this);
 
-    // Setup 2 final refs to allow our executor to pass stuff back to us
-    final AtomicReference<ExitNotification> exitNotifHolder = new AtomicReference<>();
-
-    Callable<ConsoleTask> taskFactory = () -> new ConsoleTask() {
-      @Override
-      public boolean doExecute(final String input) throws Exception {
-        try {
-          // result is saved to LAST_RESULT via the CommandExecutor
-          ShellImpl.this.execute(input);
-        }
-        catch (ExitNotification n) {
-          log.debug("Exit notification: {}", n);
-          exitNotifHolder.set(n);
-          return false;
-        }
-
-        return true;
-      }
-    };
-
     File historyFile = new File(branding.getUserContextDir(), branding.getHistoryFileName());
 
-    LineReader lineReader = LineReaderBuilder.builder()
+    lineReader = LineReaderBuilder.builder()
+      .appName("gshell")
       .terminal(io.terminal)
       .completer(new LoggingCompleter(completer))
       .history(history)
       .variable(LineReader.HISTORY_FILE, historyFile)
       .build();
 
-    Console console = new Console(lineReader, prompt, taskFactory, errorHandler);
-
     renderWelcomeMessage(io);
 
-    console.run();
+    runConsole();
 
     renderGoodbyeMessage(io);
-
-    // If any exit notification occurred while running, then puke it up
-    ExitNotification n = exitNotifHolder.get();
-    if (n != null) {
-      throw n;
-    }
   }
 
   private static void renderMessage(final IO io, @Nullable String message) {
@@ -273,5 +245,128 @@ public class ShellImpl
 
   protected void renderGoodbyeMessage(final IO io) {
     renderMessage(io, branding.getGoodbyeMessage());
+  }
+
+  //
+  // HACK: merged console impl
+  //
+
+  private LineReader lineReader;
+
+  private volatile ConsoleTask currentTask;
+
+  private volatile boolean running;
+
+  private void runConsole() {
+    log.trace("Running");
+    running = true;
+
+    // prepare handling for CTRL-C
+    Terminal terminal = lineReader.getTerminal();
+    Terminal.SignalHandler intHandler = terminal.handle(Terminal.Signal.INT, s -> {
+      interruptTask();
+    });
+
+    try {
+      while (running) {
+        try {
+          running = work();
+        }
+        catch (Throwable t) {
+          log.trace("Work failed", t);
+          running = errorHandler.handleError(t);
+        }
+      }
+    }
+    finally {
+      terminal.handle(Terminal.Signal.INT, intHandler);
+    }
+
+    log.trace("Stopped");
+  }
+
+  /**
+   * Read and execute a line.
+   *
+   * @return False to abort, true to continue running.
+   * @throws Exception Work failed.
+   */
+  private boolean work() throws Exception {
+    String line = lineReader.readLine(prompt.prompt());
+
+    if (log.isTraceEnabled()) {
+      traceLine(line);
+    }
+
+    if (line != null) {
+      line = line.trim();
+    }
+
+    if (line == null || line.length() == 0) {
+      return true;
+    }
+
+    // Build the task and execute it
+    checkState(currentTask == null);
+    currentTask = new ConsoleTask() {
+      @Override
+      public boolean doExecute(final String input) throws Exception {
+        Object result = ShellImpl.this.execute(input);
+        // HACK: need to adjust result; pending more gogo investigation
+
+        // stop if exit-notification
+        return !(result instanceof ExitNotification);
+      }
+    };
+
+    try {
+      return currentTask.execute(line);
+    }
+    finally {
+      currentTask = null;
+    }
+  }
+
+  /**
+   * Logs line with HEX details.
+   */
+  private void traceLine(@Nullable final String line) {
+    if (line == null) {
+      return;
+    }
+
+    StringBuilder hex = new StringBuilder();
+    StringBuilder idx = new StringBuilder();
+
+    for (byte b : line.getBytes()) {
+      hex.append('x').append(Integer.toHexString(b)).append(' ');
+      idx.append(' ').append((char) b).append("  ");
+    }
+
+    log.trace("Read line: {}\n{}\n{}", line, hex, idx);
+  }
+
+  private boolean interruptTask() {
+    boolean interrupt = false;
+
+    ConsoleTask task = currentTask;
+    if (task != null) {
+      synchronized (task) {
+        log.debug("Interrupting task");
+        interrupt = true;
+
+        if (task.isStopping()) {
+          task.abort();
+        }
+        else if (task.isRunning()) {
+          task.stop();
+        }
+      }
+    }
+    else {
+      log.debug("No task running to interrupt");
+    }
+
+    return interrupt;
   }
 }
