@@ -60,32 +60,10 @@ public interface Variables
 
   boolean contains(Class<?> type);
 
-  boolean isMutable(String name);
-
-  boolean isMutable(Class<?> type);
-
-  boolean isCloaked(String name);
-
-  boolean isCloaked(Class<?> type);
-
   Iterable<String> names();
-
-  @Nullable
-  Variables parent();
 
   /**
    * @since 3.0
    */
   Map<String,Object> asMap();
-
-  /**
-   * Throw to indicate that a variable change was attempted but the variable was not mutable.
-   */
-  class ImmutableVariableException
-      extends RuntimeException
-  {
-    public ImmutableVariableException(final String name) {
-      super(name);
-    }
-  }
 }
