@@ -33,14 +33,12 @@ import static com.planet57.gshell.variables.VariableNames.SHELL_USER_DIR;
 import static com.planet57.gshell.variables.VariableNames.SHELL_USER_HOME;
 
 /**
- * Shell {@link ConsolePrompt}, which determines the prompt from the
- * {@link VariableNames#SHELL_PROMPT} expression.
+ * Shell prompt, which determines the prompt from the {@link VariableNames#SHELL_PROMPT} expression.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 public class ShellPrompt
-    implements ConsolePrompt
 {
   // FIXME: could refactor to remove needing fields for Variables/Branding
 
@@ -91,7 +89,6 @@ public class ShellPrompt
     };
   }
 
-  @Override
   public String prompt() {
     String pattern = variables.get(SHELL_PROMPT, String.class);
     String prompt = evaluate(pattern);
@@ -107,7 +104,9 @@ public class ShellPrompt
     return prompt;
   }
 
-  @Override
+  /**
+   * @since 3.0
+   */
   @Nullable
   public String rprompt() {
     String pattern = variables.get(SHELL_RPROMPT, String.class);

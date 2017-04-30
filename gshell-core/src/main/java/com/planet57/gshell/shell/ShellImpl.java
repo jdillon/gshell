@@ -16,17 +16,14 @@
 package com.planet57.gshell.shell;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.inject.Provider;
 
 import com.google.common.base.Strings;
 import com.google.inject.assistedinject.Assisted;
-import com.google.inject.util.Providers;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.branding.BrandingSupport;
 import com.planet57.gshell.command.CommandAction.ExitNotification;
@@ -83,9 +80,9 @@ public class ShellImpl
 
   private final Completer completer;
 
-  private final ConsolePrompt prompt;
+  private final ShellPrompt prompt;
 
-  private final ConsoleErrorHandler errorHandler;
+  private final ShellErrorHandler errorHandler;
 
   private final ShellScriptLoader scriptLoader;
 

@@ -27,13 +27,12 @@ import static org.fusesource.jansi.Ansi.Color.RED;
 import static org.fusesource.jansi.Ansi.ansi;
 
 /**
- * Shell {@link ConsoleErrorHandler} which renders errors with ANSI codes.
+ * Shell error-handler which renders errors with ANSI codes.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 public class ShellErrorHandler
-    implements ConsoleErrorHandler
 {
   private enum Messages
   {
@@ -60,7 +59,6 @@ public class ShellErrorHandler
     this.variables = checkNotNull(variables);
   }
 
-  @Override
   public boolean handleError(final Throwable error) {
     checkNotNull(error);
     displayError(error);
