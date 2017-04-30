@@ -73,9 +73,7 @@ public class LessAction
 
     Source input;
     if (file == null) {
-      // FIXME: unsure which is more correct; both seem to be non-functional presently
-      input = new Source.StdInSource();
-      // input = new Source.InputStreamSource(io.streams.in, false, null);
+      input = new Source.InputStreamSource(io.streams.in, false, null);
     }
     else {
       input = new Source.PathSource(file.toPath(), file.getName());

@@ -25,10 +25,12 @@ import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.util.cli2.CliProcessor;
 import com.planet57.gshell.util.cli2.HelpPrinter;
 import com.planet57.gshell.util.cli2.OpaqueArguments;
+import com.planet57.gshell.util.io.StreamSet;
 import com.planet57.gshell.util.pref.PreferenceProcessor;
 import com.planet57.gshell.variables.Variables;
 import org.apache.felix.service.command.CommandSession;
 import org.apache.felix.service.command.Function;
+import org.jline.terminal.Terminal;
 import org.sonatype.goodies.common.ComponentSupport;
 
 import javax.annotation.Nonnull;
@@ -47,6 +49,8 @@ public class CommandActionFunction
 {
   public static final String SHELL_VAR = ".shell";
 
+  public static final String TERMINAL_VAR = ".terminal";
+
   private final CommandAction action;
 
   public CommandActionFunction(final CommandAction action) {
@@ -59,9 +63,14 @@ public class CommandActionFunction
 
     Stopwatch watch = Stopwatch.createStarted();
 
+    // capture TCCL to reset; in-case command alters this
     final ClassLoader cl = Thread.currentThread().getContextClassLoader();
+
     final Shell shell = (Shell) session.get(SHELL_VAR);
-    final IO io = shell.getIo();
+    final Terminal terminal = (Terminal) session.get(TERMINAL_VAR);
+
+    // re-create IO with current streams; which are adjusted by ThreadIO
+    final IO io = new IO(StreamSet.system(), terminal);
 
     Object result = null;
     try {

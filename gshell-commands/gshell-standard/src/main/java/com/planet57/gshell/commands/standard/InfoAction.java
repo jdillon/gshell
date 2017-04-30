@@ -33,6 +33,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import com.google.common.base.CharMatcher;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.branding.License;
 import com.planet57.gshell.command.Command;
@@ -117,7 +118,7 @@ public class InfoAction
     StringWriter buff = new StringWriter();
     PrintWriter writer = new PrintWriter(new AnsiRenderWriter(buff));
 
-    // TODO: i18n all this
+    // TODO: i18n
     for (Section section : sections) {
       switch (section) {
         case SHELL:
@@ -225,9 +226,12 @@ public class InfoAction
 
     writer.flush();
 
-    io.out.println(buff.toString());
+    // HACK: trip off any trailing whitespace
+    String info = CharMatcher.whitespace().trimTrailingFrom(buff.toString());
 
-    return Result.SUCCESS;
+    io.out.println(info);
+
+    return null;
   }
 
   private void printlnHeader(final PrintWriter writer, final String name) {

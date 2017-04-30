@@ -34,6 +34,10 @@ public interface Shell
 {
   Branding getBranding();
 
+  /**
+   * @deprecated Avoid; this adds complication with GOGO
+   */
+  @Deprecated
   IO getIo();
 
   Variables getVariables();

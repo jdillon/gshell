@@ -164,6 +164,7 @@ public class ShellImpl
 
     CommandSessionImpl session = commandProcessor.createSession(io.streams.in, io.streams.out, io.streams.err);
     session.put(CommandActionFunction.SHELL_VAR, this);
+    session.put(CommandActionFunction.TERMINAL_VAR, io.terminal);
 
     // FIXME: copy variables to session; can't presently provide the underlying map; this breaks dynamic variable setting
     session.getVariables().putAll(variables.asMap());

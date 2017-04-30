@@ -19,7 +19,6 @@ import com.planet57.gshell.util.i18n.MessageSource;
 import org.jline.reader.Completer;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 /**
  * Provides the user-action for a command.
@@ -45,9 +44,12 @@ public interface CommandAction
    */
   Object execute(@Nonnull CommandContext context) throws Exception;
 
+  // FIXME: remove Result; and simply return null for success and throw exception for failures
+
   /**
    * Enumeration for the basic return types of a command execution.
    */
+  @Deprecated
   enum Result
   {
     /**
@@ -61,6 +63,7 @@ public interface CommandAction
     FAILURE // 1
   }
 
+  // FIXME: Find a better name for this; to avoid confusion with Throwable Notification
   class ExitNotification
   {
     public final int code;
