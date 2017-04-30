@@ -15,9 +15,10 @@
  */
 package com.planet57.gshell.commands.standard
 
+import javax.inject.Inject
+
 import com.planet57.gshell.alias.AliasRegistry
 import com.planet57.gshell.testharness.CommandTestSupport
-import org.junit.Before
 import org.junit.Test
 
 import static org.junit.Assert.fail
@@ -28,17 +29,11 @@ import static org.junit.Assert.fail
 class UnaliasActionTest
     extends CommandTestSupport
 {
+  @Inject
   private AliasRegistry aliasRegistry
 
   UnaliasActionTest() {
     super(UnaliasAction.class)
-  }
-
-  @Override
-  @Before
-  void setUp() {
-    super.setUp()
-    aliasRegistry = lookup(AliasRegistry.class)
   }
 
   @Test

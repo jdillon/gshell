@@ -158,6 +158,9 @@ public abstract class CommandTestSupport
     for (Map.Entry<String, Class> entry : requiredCommands.entrySet()) {
       registrar.registerCommand(entry.getKey(), entry.getValue());
     }
+
+    // allow test to become aware of injection
+    injector.injectMembers(this);
   }
 
   protected void configureModules(final List<Module> modules) {
