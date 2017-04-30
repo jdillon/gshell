@@ -19,10 +19,6 @@ import java.io.File;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.inject.Provider;
-import javax.inject.Singleton;
 
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.util.ReplacementParser;
@@ -43,19 +39,18 @@ import static com.planet57.gshell.variables.VariableNames.SHELL_USER_HOME;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Named
-@Singleton
 public class ShellPrompt
     implements ConsolePrompt
 {
-  private final Provider<Variables> variables;
+  // FIXME: could refactor to remove needing fields for Variables/Branding
+
+  private final Variables variables;
 
   private final Branding branding;
 
   private final ReplacementParser parser;
 
-  @Inject
-  public ShellPrompt(final Provider<Variables> variables, final Branding branding) {
+  public ShellPrompt(final Variables variables, final Branding branding) {
     this.variables = checkNotNull(variables);
     this.branding = checkNotNull(branding);
 
@@ -63,12 +58,10 @@ public class ShellPrompt
     {
       @Override
       protected Object replace(@Nonnull final String key) {
-        Variables vars = variables.get();
-
         // HACK: Handled some magic with shell.user.dir~ (only if shell.user.dir exists)
-        if (key.equals(SHELL_USER_DIR + "~") && vars.contains(SHELL_USER_DIR)) {
-          String home = vars.require(SHELL_USER_HOME, File.class).getAbsolutePath();
-          String current = vars.require(SHELL_USER_DIR, File.class).getAbsolutePath();
+        if (key.equals(SHELL_USER_DIR + "~") && variables.contains(SHELL_USER_DIR)) {
+          String home = variables.require(SHELL_USER_HOME, File.class).getAbsolutePath();
+          String current = variables.require(SHELL_USER_DIR, File.class).getAbsolutePath();
           if (current.startsWith(home)) {
             return "~" + current.substring(home.length(), current.length());
           }
@@ -78,9 +71,9 @@ public class ShellPrompt
         }
 
         // HACK: Handled some magic with shell.user.dir~. (only if shell.user.dir exists). THis is similar to bash \w
-        if (key.equals(SHELL_USER_DIR + "~.") && vars.contains(SHELL_USER_DIR)) {
-          String home = vars.require(SHELL_USER_HOME, File.class).getAbsolutePath();
-          File current = vars.require(SHELL_USER_DIR, File.class).getAbsoluteFile();
+        if (key.equals(SHELL_USER_DIR + "~.") && variables.contains(SHELL_USER_DIR)) {
+          String home = variables.require(SHELL_USER_HOME, File.class).getAbsolutePath();
+          File current = variables.require(SHELL_USER_DIR, File.class).getAbsoluteFile();
           if (current.getAbsolutePath().equals(home)) {
             return "~";
           }
@@ -89,7 +82,7 @@ public class ShellPrompt
           }
         }
 
-        Object rep = vars.get(key);
+        Object rep = variables.get(key);
         if (rep == null) {
           rep = System.getProperty(key);
         }
@@ -100,7 +93,7 @@ public class ShellPrompt
 
   @Override
   public String prompt() {
-    String pattern = variables.get().get(SHELL_PROMPT, String.class);
+    String pattern = variables.get(SHELL_PROMPT, String.class);
     String prompt = evaluate(pattern);
 
     if (prompt == null) {
@@ -117,7 +110,7 @@ public class ShellPrompt
   @Override
   @Nullable
   public String rprompt() {
-    String pattern = variables.get().get(SHELL_RPROMPT, String.class);
+    String pattern = variables.get(SHELL_RPROMPT, String.class);
     String prompt = evaluate(pattern);
 
     if (prompt == null) {

@@ -23,8 +23,6 @@ import java.io.FileReader;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-// TODO: convert to guice component
-
 /**
  * Helper to load shell scripts.
  *

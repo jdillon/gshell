@@ -24,7 +24,8 @@ import com.planet57.gshell.branding.BrandingSupport;
 import com.planet57.gshell.branding.License;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.internal.BeanContainer;
-import com.planet57.gshell.shell.ShellImpl;
+import com.planet57.gshell.shell.Shell;
+import com.planet57.gshell.shell.ShellBuilder;
 import com.planet57.gshell.util.io.PrintBuffer;
 import com.planet57.gshell.util.io.StreamSet;
 import com.planet57.gshell.variables.VariableNames;
@@ -159,15 +160,17 @@ public class RunMojo
 
     modules.add(binder -> {
       binder.bind(BeanContainer.class).toInstance(container);
-      binder.bind(Branding.class).toInstance(branding);
-      binder.bind(IO.class).annotatedWith(named("main")).toInstance(io);
-      binder.bind(Variables.class).annotatedWith(named("main")).toInstance(variables);
     });
 
     Injector injector = Guice.createInjector(new WireModule(modules));
     container.add(injector, 0);
 
-    ShellImpl shell = injector.getInstance(ShellImpl.class);
+    Shell shell = injector.getInstance(ShellBuilder.class)
+      .branding(branding)
+      .io(io)
+      .variables(variables)
+      .build();
+
     shell.start();
 
     // FIXME: allow more options

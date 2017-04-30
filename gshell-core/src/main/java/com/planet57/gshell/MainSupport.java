@@ -31,7 +31,7 @@ import com.planet57.gshell.command.IO;
 import com.planet57.gshell.internal.BeanContainer;
 import com.planet57.gshell.internal.ExitCodeDecoder;
 import com.planet57.gshell.shell.Shell;
-import com.planet57.gshell.shell.ShellImpl;
+import com.planet57.gshell.shell.ShellBuilder;
 import com.planet57.gshell.util.NameValue;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.CliProcessor;
@@ -278,11 +278,6 @@ public abstract class MainSupport
 
     modules.add(binder -> {
       binder.bind(BeanContainer.class).toInstance(container);
-
-      // FIXME: ShellImpl presently expects ctor injection of these
-      binder.bind(IO.class).annotatedWith(named("main")).toInstance(io);
-      binder.bind(Variables.class).annotatedWith(named("main")).toInstance(variables);
-      binder.bind(Branding.class).toInstance(branding);
     });
 
     configure(modules);
@@ -290,7 +285,11 @@ public abstract class MainSupport
     Injector injector = Guice.createInjector(new WireModule(modules));
     container.add(injector, 0);
 
-    return injector.getInstance(ShellImpl.class);
+    return injector.getInstance(ShellBuilder.class)
+      .branding(branding)
+      .io(io)
+      .variables(variables)
+      .build();
   }
 
   /**

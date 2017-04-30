@@ -32,7 +32,7 @@ import com.planet57.gshell.command.registry.CommandRegistrarImpl;
 import com.planet57.gshell.command.registry.CommandRegistry;
 import com.planet57.gshell.internal.BeanContainer;
 import com.planet57.gshell.shell.Shell;
-import com.planet57.gshell.shell.ShellImpl;
+import com.planet57.gshell.shell.ShellBuilder;
 import com.planet57.gshell.variables.Variables;
 import com.planet57.gshell.variables.VariablesSupport;
 import org.eclipse.sisu.space.BeanScanning;
@@ -125,16 +125,18 @@ public abstract class CommandTestSupport
     List<Module> modules = new ArrayList<>();
     modules.add(binder -> {
       binder.bind(BeanContainer.class).toInstance(container);
-      binder.bind(Branding.class).toInstance(new TestBranding(util.resolveFile("target/shell-home")));
-      binder.bind(IO.class).annotatedWith(named("main")).toInstance(io);
-      binder.bind(Variables.class).annotatedWith(named("main")).toInstance(variables);
     });
     configureModules(modules);
 
     injector = Guice.createInjector(Stage.DEVELOPMENT, new WireModule(modules));
     container.add(injector, 0);
 
-    shell = injector.getInstance(ShellImpl.class);
+    shell = injector.getInstance(ShellBuilder.class)
+      .branding(new TestBranding(util.resolveFile("target/shell-home")))
+      .io(io)
+      .variables(variables)
+      .build();
+
     variables = shell.getVariables();
     commandRegistry = injector.getInstance(CommandRegistry.class);
 

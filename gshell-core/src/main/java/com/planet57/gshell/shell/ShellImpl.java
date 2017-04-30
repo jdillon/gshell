@@ -22,8 +22,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.inject.Provider;
 
 import com.google.common.base.Strings;
+import com.google.inject.assistedinject.Assisted;
+import com.google.inject.util.Providers;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.branding.BrandingSupport;
 import com.planet57.gshell.command.CommandAction.ExitNotification;
@@ -94,13 +97,10 @@ public class ShellImpl
   public ShellImpl(final EventManager events,
                    final CommandRegistrar commandRegistrar,
                    final CommandProcessorImpl commandProcessor,
-                   final Branding branding,
-                   @Named("main") final IO io,
-                   @Named("main") final Variables variables,
                    @Named("shell") final Completer completer,
-                   final ConsolePrompt prompt,
-                   final ConsoleErrorHandler errorHandler)
-      throws IOException
+                   @Assisted final Branding branding,
+                   @Assisted final IO io,
+                   @Assisted final Variables variables)
   {
     checkNotNull(events);
     this.commandProcessor = checkNotNull(commandProcessor);
@@ -109,8 +109,9 @@ public class ShellImpl
     this.io = checkNotNull(io);
     this.variables = checkNotNull(variables);
     this.completer = checkNotNull(completer);
-    this.prompt = checkNotNull(prompt);
-    this.errorHandler = checkNotNull(errorHandler);
+
+    this.prompt = new ShellPrompt(variables, branding);
+    this.errorHandler = new ShellErrorHandler(io, variables);
 
     lifecycles.add(events, commandRegistrar);
 

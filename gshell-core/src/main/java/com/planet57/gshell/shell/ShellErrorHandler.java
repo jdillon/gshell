@@ -15,11 +15,6 @@
  */
 package com.planet57.gshell.shell;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.inject.Provider;
-import javax.inject.Singleton;
-
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
@@ -37,8 +32,6 @@ import static org.fusesource.jansi.Ansi.ansi;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Named
-@Singleton
 public class ShellErrorHandler
     implements ConsoleErrorHandler
 {
@@ -56,12 +49,13 @@ public class ShellErrorHandler
     }
   }
 
+  // FIXME: could refactor to remove needing fields for IO/variables
+
   private final IO io;
 
-  private final Provider<Variables> variables;
+  private final Variables variables;
 
-  @Inject
-  public ShellErrorHandler(@Named("main") final IO io, final Provider<Variables> variables) {
+  public ShellErrorHandler(final IO io, final Variables variables) {
     this.io = checkNotNull(io);
     this.variables = checkNotNull(variables);
   }
@@ -77,11 +71,9 @@ public class ShellErrorHandler
     assert error != null;
 
     Throwable cause = error;
-    Variables variables = this.variables.get();
 
     // Determine if the stack trace flag is set
-    Boolean showTrace = variables.get(VariableNames.SHELL_ERRORS, Boolean.class, false);
-    assert showTrace != null;
+    Boolean showTrace = variables.require(VariableNames.SHELL_ERRORS, Boolean.class, false);
 
     // TODO: use Throwables2.explain(), or mimic same style with ANSI support when showTrace == false
 
