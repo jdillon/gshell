@@ -396,13 +396,19 @@
 
       <dependency>
         <groupId>com.planet57.gshell.ext</groupId>
-        <artifactId>gshell-groovyruntime</artifactId>
+        <artifactId>gshell-groovy</artifactId>
         <version>3.0.0-SNAPSHOT</version>
       </dependency>
 
       <dependency>
         <groupId>com.planet57.gshell.ext</groupId>
         <artifactId>gshell-logback</artifactId>
+        <version>3.0.0-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.planet57.gshell.commands</groupId>
+        <artifactId>gshell-script</artifactId>
         <version>3.0.0-SNAPSHOT</version>
       </dependency>
 

@@ -22,22 +22,13 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>com.planet57.gshell</groupId>
-    <artifactId>gshell</artifactId>
+    <groupId>com.planet57.gshell.commands</groupId>
+    <artifactId>gshell-commands</artifactId>
     <version>3.0.0-SNAPSHOT</version>
   </parent>
 
-  <groupId>com.planet57.gshell.ext</groupId>
-  <artifactId>gshell-ext</artifactId>
+  <artifactId>gshell-script</artifactId>
   <name>${project.groupId}:${project.artifactId}</name>
-  <packaging>pom</packaging>
-
-  <modules>
-    <module>gshell-gossip</module>
-    <module>gshell-groovy</module>
-    <module>gshell-logback</module>
-    <module>gshell-plexus</module>
-  </modules>
 
 </project>
 

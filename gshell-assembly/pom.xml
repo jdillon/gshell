@@ -73,6 +73,11 @@
 
     <dependency>
       <groupId>com.planet57.gshell.commands</groupId>
+      <artifactId>gshell-script</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.planet57.gshell.commands</groupId>
       <artifactId>gshell-pref</artifactId>
     </dependency>
   </dependencies>
