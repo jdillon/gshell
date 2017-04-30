@@ -48,8 +48,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.google.inject.name.Names.named;
-
 /**
  * Run shell.
  *

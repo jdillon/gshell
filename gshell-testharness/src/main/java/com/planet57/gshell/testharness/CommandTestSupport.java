@@ -54,7 +54,6 @@ import org.sonatype.goodies.testsupport.TestUtil;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
-import static com.google.inject.name.Names.named;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 

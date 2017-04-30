@@ -62,7 +62,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.inject.name.Names.named;
 
 /**
  * Support for booting shell applications.
