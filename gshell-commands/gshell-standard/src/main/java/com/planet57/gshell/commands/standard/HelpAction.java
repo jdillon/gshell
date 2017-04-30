@@ -15,7 +15,6 @@
  */
 package com.planet57.gshell.commands.standard;
 
-import java.io.StringWriter;
 import java.util.Collection;
 import java.util.function.Predicate;
 
@@ -36,11 +35,9 @@ import com.planet57.gshell.help.HelpPageUtil;
 import com.planet57.gshell.help.MetaHelpPage;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
-import com.planet57.gshell.util.jline.TerminalHelper;
 import com.planet57.gshell.util.predicate.TypePredicate;
 import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.Preferences;
-import org.fusesource.jansi.AnsiRenderWriter;
 import org.jline.reader.Completer;
 import org.jline.reader.impl.completer.AggregateCompleter;
 
@@ -58,10 +55,6 @@ public class HelpAction
     extends CommandActionSupport
 {
   private final HelpPageManager helpPages;
-
-  @Preference
-  @Option(longName = "pager", optionalArg = true)
-  private Boolean pager = false;
 
   // TODO: maybe use an enum here to say; --include groups,commands,aliases (exclude meta) etc...
 
@@ -138,17 +131,7 @@ public class HelpAction
       return Result.FAILURE;
     }
 
-    // render matched page; with pager or directly
-    if (pager) {
-      try (StringWriter writer = new StringWriter()) {
-        page.render(context.getShell(), new AnsiRenderWriter(writer));
-        writer.flush();
-        TerminalHelper.pageOutput(io.terminal, page.getName(), writer.toString());
-      }
-    }
-    else {
-      page.render(context.getShell(), io.out);
-    }
+    page.render(context.getShell(), io.out);
 
     return Result.SUCCESS;
   }

@@ -41,7 +41,6 @@ import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
-import com.planet57.gshell.util.jline.TerminalHelper;
 import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.Preferences;
 import org.fusesource.jansi.Ansi;
@@ -85,10 +84,6 @@ public class InfoAction
     OS,
     LICENSE,
   }
-
-  @Preference
-  @Option(longName = "pager", optionalArg = true)
-  private boolean pager = false;
 
   @Preference
   @Argument
@@ -230,12 +225,7 @@ public class InfoAction
 
     writer.flush();
 
-    if (pager) {
-      TerminalHelper.pageOutput(io.terminal, buff.toString());
-    }
-    else {
-      io.out.println(buff.toString());
-    }
+    io.out.println(buff.toString());
 
     return Result.SUCCESS;
   }
