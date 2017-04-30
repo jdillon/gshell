@@ -50,10 +50,11 @@ public class LessAction
   @Option(name = "n", longName = "line-numbers")
   private Boolean lineNumbers;
 
-  // TODO: leaving this as "source" for now, as this could be adapted to url or file/path
+  // TODO: consider exposing a file/url source adapter and converter
+
   @Nullable
   @Argument
-  private File source;
+  private File file;
 
   @Inject
   public void installCompleters(final @Named("file-name") Completer c1) {
@@ -70,13 +71,12 @@ public class LessAction
       less.printLineNumbers = lineNumbers;
     }
 
-    // FIXME: this kinda breaks things, not sure why...
     Source input;
-    if (source == null) {
-      input = new Source.StdInSource();
+    if (file == null) {
+      input = new Source.InputStreamSource(io.streams.in, false, null);
     }
     else {
-      input = new Source.PathSource(source.toPath(), source.getName());
+      input = new Source.PathSource(file.toPath(), file.getName());
     }
     less.run(input);
 
