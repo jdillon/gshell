@@ -16,6 +16,7 @@
 package com.planet57.gshell.commands.script
 
 import com.planet57.gshell.testharness.CommandTestSupport
+import com.planet57.gshell.util.cli2.ProcessingException
 import org.junit.Test
 
 /**
@@ -28,9 +29,16 @@ class ScriptActionTest
     super(ScriptAction.class)
   }
 
-  @Test(expected = Exception.class)
+  @Test(expected = ProcessingException.class)
   void 'language required'() {
     executeCommand('-e "57;"')
+  }
+
+  @Test(expected = IllegalStateException.class)
+  void 'only one source allowed'() {
+    executeCommand('-l javascript -e "57;" -u "http://localhost/script.js"')
+    executeCommand('-l javascript -e "57;" -f foo.js')
+    executeCommand('-l javascript -u "http://localhost/script.js" -f foo.js')
   }
 
   @Test
