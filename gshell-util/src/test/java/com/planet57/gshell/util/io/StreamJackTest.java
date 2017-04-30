@@ -160,12 +160,7 @@ public class StreamJackTest
 
     installOut();
 
-    Runnable task = new Runnable()
-    {
-      public void run() {
-        System.out.print("hijacked");
-      }
-    };
+    Runnable task = () -> System.out.print("hijacked");
 
     try {
       System.out.print("<");
