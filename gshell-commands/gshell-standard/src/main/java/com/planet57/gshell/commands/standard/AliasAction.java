@@ -49,11 +49,12 @@ public class AliasAction
 {
   private final AliasRegistry aliasRegistry;
 
-  @Nullable
   @Argument(index = 0)
+  @Nullable
   private String name;
 
   @Argument(index = 1)
+  @Nullable
   private List<String> target;
 
   @Inject
@@ -118,7 +119,7 @@ public class AliasAction
     IO io = context.getIo();
 
     if (target == null) {
-      io.err.printf(getMessages().format("error.missing-arg"), getMessages().getMessage("command.argument.target.token"));
+      io.err.printf(getMessages().format("error.missing-arg", getMessages().getMessage("command.argument.target.token")));
       io.err.println();
       return Result.FAILURE;
     }

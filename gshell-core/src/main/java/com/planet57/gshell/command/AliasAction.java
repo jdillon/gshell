@@ -60,7 +60,7 @@ public class AliasAction
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     String alias = target;
 
-    // Need to append any more arguments in the context
+    // append any additional arguments
     List<?> args = context.getArguments();
     if (args.size() > 0) {
       alias = String.format("%s %s", target, Joiner.on(" ").join(args));
