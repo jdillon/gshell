@@ -50,22 +50,19 @@ public class ShellErrorHandler
 
   // FIXME: could refactor to remove needing fields for IO/variables
 
-  private final IO io;
-
   private final Variables variables;
 
-  public ShellErrorHandler(final IO io, final Variables variables) {
-    this.io = checkNotNull(io);
+  public ShellErrorHandler(final Variables variables) {
     this.variables = checkNotNull(variables);
   }
 
-  public boolean handleError(final Throwable error) {
+  public boolean handleError(final IO io, final Throwable error) {
     checkNotNull(error);
-    displayError(error);
+    displayError(io, error);
     return true;
   }
 
-  private void displayError(final Throwable error) {
+  private void displayError(final IO io, final Throwable error) {
     assert error != null;
 
     Throwable cause = error;
