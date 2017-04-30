@@ -49,6 +49,8 @@ import org.jline.reader.LineReaderBuilder;
 import org.jline.reader.ParsedLine;
 import org.jline.reader.impl.history.DefaultHistory;
 import org.jline.terminal.Terminal;
+import org.jline.terminal.Terminal.Signal;
+import org.jline.terminal.Terminal.SignalHandler;
 import org.sonatype.goodies.common.ComponentSupport;
 import org.sonatype.goodies.lifecycle.LifecycleManager;
 
@@ -234,14 +236,25 @@ public class ShellImpl
 
     renderMessage(io, branding.getWelcomeMessage());
 
-    // prepare handling for CTRL-C
-    Terminal.SignalHandler intHandler = terminal.handle(Terminal.Signal.INT, s -> {
+    // handle CTRL-C
+    SignalHandler interruptHandler = terminal.handle(Signal.INT, s -> {
       Job current = session.foregroundJob();
       if (current != null) {
-        log.debug("Interrupting task");
+        log.debug("Interrupting task: {}", current);
         current.interrupt();
       }
     });
+
+    // handle CTRL-Z
+    SignalHandler suspendHandler = terminal.handle(Signal.TSTP, s -> {
+      Job current = session.foregroundJob();
+      if (current != null) {
+        log.debug("Suspending task: {}", current);
+        current.suspend();
+      }
+    });
+
+    // TODO: for proper CTRL-Z we need fg, bg and jobs commands; see gogo.jline.Builtin
 
     log.trace("Running");
     boolean running = true;
@@ -271,7 +284,8 @@ public class ShellImpl
       }
     }
     finally {
-      terminal.handle(Terminal.Signal.INT, intHandler);
+      terminal.handle(Signal.INT, interruptHandler);
+      terminal.handle(Signal.TSTP, suspendHandler);
     }
     log.trace("Stopped");
 
