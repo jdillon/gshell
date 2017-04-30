@@ -48,6 +48,9 @@ public class ShellErrorHandler
     }
   }
 
+  /**
+   * @since 3.0
+   */
   public boolean handleError(final Shell shell, final Throwable error) {
     checkNotNull(error);
     displayError(shell, error);

@@ -20,13 +20,11 @@ import java.io.File;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.util.ReplacementParser;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
 import org.fusesource.jansi.AnsiRenderer;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 import static com.planet57.gshell.variables.VariableNames.SHELL_PROMPT;
 import static com.planet57.gshell.variables.VariableNames.SHELL_RPROMPT;
 import static com.planet57.gshell.variables.VariableNames.SHELL_USER_DIR;
@@ -40,19 +38,12 @@ import static com.planet57.gshell.variables.VariableNames.SHELL_USER_HOME;
  */
 public class ShellPrompt
 {
-  // FIXME: could refactor to remove needing fields for Variables/Branding
+  // FIXME: this is totally inefficient, but reducing complexity and eventually gogo will handle this
 
-  private final Variables variables;
+  private ReplacementParser createParser(final Shell shell) {
+    Variables variables = shell.getVariables();
 
-  private final Branding branding;
-
-  private final ReplacementParser parser;
-
-  public ShellPrompt(final Variables variables, final Branding branding) {
-    this.variables = checkNotNull(variables);
-    this.branding = checkNotNull(branding);
-
-    parser = new ReplacementParser()
+    return new ReplacementParser()
     {
       @Override
       protected Object replace(@Nonnull final String key) {
@@ -89,12 +80,18 @@ public class ShellPrompt
     };
   }
 
-  public String prompt() {
+  /**
+   * @since 3.0
+   */
+  public String prompt(final Shell shell) {
+    Variables variables = shell.getVariables();
+    ReplacementParser parser = createParser(shell);
+
     String pattern = variables.get(SHELL_PROMPT, String.class);
-    String prompt = evaluate(pattern);
+    String prompt = evaluate(parser, pattern);
 
     if (prompt == null) {
-      prompt = evaluate(branding.getPrompt());
+      prompt = evaluate(parser, shell.getBranding().getPrompt());
     }
 
     if (AnsiRenderer.test(prompt)) {
@@ -108,12 +105,15 @@ public class ShellPrompt
    * @since 3.0
    */
   @Nullable
-  public String rprompt() {
+  public String rprompt(final Shell shell) {
+    Variables variables = shell.getVariables();
+    ReplacementParser parser = createParser(shell);
+
     String pattern = variables.get(SHELL_RPROMPT, String.class);
-    String prompt = evaluate(pattern);
+    String prompt = evaluate(parser, pattern);
 
     if (prompt == null) {
-      prompt = evaluate(branding.getRightPrompt());
+      prompt = evaluate(parser, shell.getBranding().getRightPrompt());
     }
 
     if (prompt != null) {
@@ -126,7 +126,7 @@ public class ShellPrompt
   }
 
   @Nullable
-  private String evaluate(@Nullable final String expression) {
+  private String evaluate(final ReplacementParser parser, @Nullable final String expression) {
     String prompt = null;
     if (expression != null) {
       prompt = parser.parse(expression);

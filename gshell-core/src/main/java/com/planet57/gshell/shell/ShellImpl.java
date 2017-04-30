@@ -107,7 +107,7 @@ public class ShellImpl
     this.variables = checkNotNull(variables);
     this.completer = checkNotNull(completer);
 
-    this.prompt = new ShellPrompt(variables, branding);
+    this.prompt = new ShellPrompt();
     this.errorHandler = new ShellErrorHandler();
 
     lifecycles.add(events, commandRegistrar);
@@ -250,7 +250,7 @@ public class ShellImpl
     try {
       while (running) {
         try {
-          String line = lineReader.readLine(prompt.prompt(), prompt.rprompt(), null, null);
+          String line = lineReader.readLine(prompt.prompt(this), prompt.rprompt(this), null, null);
           if (log.isTraceEnabled()) {
             traceLine(line);
           }
