@@ -28,7 +28,7 @@ class AliasActionTest
     extends CommandTestSupport
 {
   @Inject
-  private AliasRegistry aliasRegistry
+  AliasRegistry aliasRegistry
 
   AliasActionTest() {
     super(AliasAction.class)

@@ -29,10 +29,10 @@ class HelpActionTest
     extends CommandTestSupport
 {
   @Inject
-  private AliasRegistry aliasRegistry
+  AliasRegistry aliasRegistry
 
   @Inject
-  private CommandRegistry commandRegistry
+  CommandRegistry commandRegistry
 
   HelpActionTest() {
     super(HelpAction.class)

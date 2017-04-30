@@ -30,7 +30,7 @@ class UnaliasActionTest
     extends CommandTestSupport
 {
   @Inject
-  private AliasRegistry aliasRegistry
+  AliasRegistry aliasRegistry
 
   UnaliasActionTest() {
     super(UnaliasAction.class)
