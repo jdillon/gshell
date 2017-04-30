@@ -321,7 +321,7 @@ public abstract class MainSupport
       .name(branding.getProgramName())
       .system(true)
       .nativeSignals(true)
-      .signalHandler(Terminal.SignalHandler.SIG_IGN)
+      .signalHandler(Terminal.SignalHandler.SIG_IGN) // ignore signals by default
       .build();
   }
 
@@ -344,7 +344,7 @@ public abstract class MainSupport
         // ignore
       }
     };
-    return new StreamSet(in, out, out);
+    return new StreamSet(in, out);
   }
 
   /**
