@@ -18,6 +18,7 @@ package com.planet57.gshell.testharness;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
+import com.google.common.base.CharMatcher;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.util.io.StreamSet;
 import org.jline.terminal.Terminal;
@@ -64,12 +65,14 @@ public class TestIO
   public void dump(final Logger logger) {
     String out = getOutputString();
     if (!out.trim().isEmpty()) {
-      logger.debug("OUT:\n{}", out);
+      out = CharMatcher.whitespace().trimTrailingFrom(out);
+      logger.debug("OUT:\n-----8<-----\n{}\n----->8-----", out);
     }
 
     String err = getErrorString();
     if (!err.trim().isEmpty()) {
-      logger.debug("ERR:\n{}", err);
+      err = CharMatcher.whitespace().trimTrailingFrom(err);
+      logger.debug("ERR:\n-----8<-----\n{}\n----->8-----", err);
     }
   }
 }
