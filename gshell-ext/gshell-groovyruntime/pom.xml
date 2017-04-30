@@ -22,22 +22,25 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>com.planet57.gshell</groupId>
-    <artifactId>gshell</artifactId>
+    <groupId>com.planet57.gshell.ext</groupId>
+    <artifactId>gshell-ext</artifactId>
     <version>3.0.0-SNAPSHOT</version>
   </parent>
 
-  <groupId>com.planet57.gshell.ext</groupId>
-  <artifactId>gshell-ext</artifactId>
+  <artifactId>gshell-groovyruntime</artifactId>
   <name>${project.groupId}:${project.artifactId}</name>
-  <packaging>pom</packaging>
 
-  <modules>
-    <module>gshell-gossip</module>
-    <module>gshell-groovyruntime</module>
-    <module>gshell-logback</module>
-    <module>gshell-plexus</module>
-  </modules>
+  <dependencies>
+    <dependency>
+      <groupId>com.planet57.gshell</groupId>
+      <artifactId>gshell-core</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.codehaus.groovy</groupId>
+      <artifactId>groovy-all</artifactId>
+    </dependency>
+  </dependencies>
 
 </project>
 
