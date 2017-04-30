@@ -43,7 +43,7 @@ class ScriptActionTest
 
   @Test
   void 'evaluate javascript'() {
-    def result = executeCommand('-l javascript -e "57;"');
+    def result = executeCommand('-l javascript -e "57;"')
     assert result == 57
   }
 }
