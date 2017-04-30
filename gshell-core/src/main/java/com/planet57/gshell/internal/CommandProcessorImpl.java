@@ -88,6 +88,6 @@ public class CommandProcessorImpl
       return new CommandActionFunction(action);
     }
 
-    return null;
+    return super.getCommand(name, path);
   }
 }
