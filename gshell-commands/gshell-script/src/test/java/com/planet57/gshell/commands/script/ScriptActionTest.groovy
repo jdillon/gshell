@@ -46,4 +46,12 @@ class ScriptActionTest
     def result = executeCommand('-l javascript -e "57;"')
     assert result == 57
   }
+
+  @Test
+  void 'url javascript'() {
+    def url = getClass().getResource('test.js')
+    assert url != null
+    def result = executeCommand("-l javascript -u $url")
+    assert result == 57
+  }
 }
