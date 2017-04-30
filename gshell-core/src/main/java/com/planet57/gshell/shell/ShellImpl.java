@@ -74,13 +74,13 @@ public class ShellImpl
 
   private final CommandProcessorImpl commandProcessor;
 
-  private final History history;
-
   private final Completer completer;
 
   private final ShellPrompt prompt;
 
   private final ShellErrorHandler errorHandler;
+
+  private final History history;
 
   private final ShellScriptLoader scriptLoader;
 
