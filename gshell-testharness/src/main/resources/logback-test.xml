@@ -20,8 +20,7 @@
 
   <contextName>test</contextName>
 
-  <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
-    <target>System.out</target>
+  <appender name="console" class="com.planet57.gshell.testharness.SystemFdAppender">
     <encoder>
       <pattern>[%level] %logger{1} - %msg%n</pattern>
     </encoder>

@@ -33,6 +33,8 @@ import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.shell.ShellBuilder;
 import com.planet57.gshell.variables.Variables;
 import com.planet57.gshell.variables.VariablesSupport;
+import org.apache.felix.gogo.runtime.threadio.ThreadIOImpl;
+import org.apache.felix.service.threadio.ThreadIO;
 import org.eclipse.sisu.space.BeanScanning;
 import org.eclipse.sisu.space.SpaceModule;
 import org.eclipse.sisu.space.URLClassSpace;
@@ -89,7 +91,7 @@ public abstract class CommandTestSupport
 
   private Terminal terminal;
 
-  private TestIO io;
+  private BufferIO io;
 
   private Shell shell;
 
@@ -98,6 +100,8 @@ public abstract class CommandTestSupport
   private Variables variables;
 
   protected final Map<String, Class> requiredCommands = new HashMap<>();
+
+  private final ThreadIOImpl threadIO = new ThreadIOImpl();
 
   protected CommandTestSupport(final String name, final Class<?> type) {
     this.name = checkNotNull(name);
@@ -115,13 +119,14 @@ public abstract class CommandTestSupport
     Ansi.setEnabled(false);
 
     terminal = TerminalBuilder.builder().dumb(true).build();
-    io = new TestIO(terminal);
+    io = new BufferIO(terminal);
     variables = new VariablesSupport();
 
     container = new BeanContainer();
     List<Module> modules = new ArrayList<>();
     modules.add(binder -> {
       binder.bind(BeanContainer.class).toInstance(container);
+      binder.bind(ThreadIO.class).toInstance(threadIO);
     });
     configureModules(modules);
 
@@ -143,6 +148,7 @@ public abstract class CommandTestSupport
     CommandRegistrarImpl registrar = injector.getInstance(CommandRegistrarImpl.class);
     registrar.setDiscoveryEnabled(false);
 
+    threadIO.start();
     shell.start();
 
     // register required commands
@@ -163,21 +169,26 @@ public abstract class CommandTestSupport
 
   @After
   public void tearDown() throws Exception {
-    commandRegistry = null;
-    variables = null;
-    io = null;
-    if (terminal != null) {
-      terminal.close();
-      terminal = null;
-    }
+    threadIO.stop();
+
     if (shell != null) {
       shell.stop();
       shell = null;
     }
+
+    if (terminal != null) {
+      terminal.close();
+      terminal = null;
+    }
+
     if (container != null) {
       container.clear();
       container = null;
     }
+
+    commandRegistry = null;
+    variables = null;
+    io = null;
     injector = null;
   }
 
@@ -186,12 +197,13 @@ public abstract class CommandTestSupport
     return shell;
   }
 
-  protected TestIO getIo() {
+  protected BufferIO getIo() {
     checkState(io != null);
     return io;
   }
 
   protected <T> T lookup(final Class<T> type) {
+    checkState(injector != null);
     return injector.getInstance(type);
   }
 

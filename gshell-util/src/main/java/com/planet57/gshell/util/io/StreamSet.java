@@ -106,8 +106,9 @@ public class StreamSet
   }
 
   public String toString() {
-    return getClass().getSimpleName() + "{in=" + objectId(in) + ", out=" + objectId(out) + ", err=" + objectId(err) +
-        "}";
+    return String.format("%s{in=%s, out=%s, err=%s}",
+      getClass().getSimpleName(), objectId(in), objectId(out), objectId(err)
+    );
   }
 
   /**
@@ -139,5 +140,6 @@ public class StreamSet
   public static final StreamSet SYSTEM_FD = new StreamSet(
       new FileInputStream(FileDescriptor.in),
       new PrintStream(new FileOutputStream(FileDescriptor.out)),
-      new PrintStream(new FileOutputStream(FileDescriptor.err)));
+      new PrintStream(new FileOutputStream(FileDescriptor.err))
+  );
 }

@@ -19,7 +19,6 @@ import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.testharness.TestBranding;
-import com.planet57.gshell.util.io.StreamJack;
 import com.planet57.gshell.util.io.StreamSet;
 import com.planet57.gshell.variables.Variables;
 import org.fusesource.jansi.Ansi;
@@ -55,7 +54,6 @@ public class MainSupportTest
   @After
   public void tearDown() throws Exception {
     underTest = null;
-    StreamJack.uninstall();
   }
 
   @Test

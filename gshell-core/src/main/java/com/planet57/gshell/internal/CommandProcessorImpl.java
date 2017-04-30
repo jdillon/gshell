@@ -22,9 +22,11 @@ import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.resolver.CommandResolver;
 import com.planet57.gshell.command.resolver.Node;
 import org.apache.felix.service.command.Function;
+import org.apache.felix.service.threadio.ThreadIO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -48,7 +50,10 @@ public class CommandProcessorImpl
   private final CommandResolver resolver;
 
   @Inject
-  public CommandProcessorImpl(final AliasRegistry aliases, final CommandResolver resolver) {
+  public CommandProcessorImpl(@Nullable final ThreadIO threadIO, final AliasRegistry aliases, final CommandResolver resolver) {
+    super(threadIO);
+    log.debug("Thread-IO: {}", threadIO);
+
     this.aliases = checkNotNull(aliases);
     this.resolver = checkNotNull(resolver);
   }

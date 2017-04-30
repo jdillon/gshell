@@ -25,22 +25,22 @@ import org.jline.terminal.Terminal;
 import org.slf4j.Logger;
 
 /**
- * Test {@link IO}.
+ * Buffering {@link IO} to capture output for assertions.
  *
  * @since 3.0
  */
-public class TestIO
+public class BufferIO
     extends IO
 {
   private ByteArrayOutputStream output;
 
   private ByteArrayOutputStream error;
 
-  public TestIO(final Terminal terminal) {
+  public BufferIO(final Terminal terminal) {
     this(new ByteArrayOutputStream(), new ByteArrayOutputStream(), terminal);
   }
 
-  private TestIO(final ByteArrayOutputStream output, final ByteArrayOutputStream error, final Terminal terminal) {
+  private BufferIO(final ByteArrayOutputStream output, final ByteArrayOutputStream error, final Terminal terminal) {
     super(new StreamSet(System.in, new PrintStream(output), new PrintStream(error)), terminal);
     this.output = output;
     this.error = error;

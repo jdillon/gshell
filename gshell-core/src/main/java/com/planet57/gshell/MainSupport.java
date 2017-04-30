@@ -39,7 +39,6 @@ import com.planet57.gshell.util.cli2.HelpPrinter;
 import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
-import com.planet57.gshell.util.io.StreamJack;
 import com.planet57.gshell.util.io.StreamSet;
 import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.PreferenceProcessor;
@@ -47,6 +46,8 @@ import com.planet57.gshell.util.pref.Preferences;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
 import com.planet57.gshell.variables.VariablesSupport;
+import org.apache.felix.gogo.runtime.threadio.ThreadIOImpl;
+import org.apache.felix.service.threadio.ThreadIO;
 import org.eclipse.sisu.space.BeanScanning;
 import org.eclipse.sisu.space.SpaceModule;
 import org.eclipse.sisu.space.URLClassSpace;
@@ -77,6 +78,8 @@ public abstract class MainSupport
   private final MessageSource messages = new ResourceBundleMessageSource()
     .add(false, getClass())
     .add(MainSupport.class);
+
+  private final ThreadIOImpl threadIO = new ThreadIOImpl();
 
   @Option(name = "h", longName = "help", override = true)
   private boolean help;
@@ -223,8 +226,9 @@ public abstract class MainSupport
       exit(0);
     }
 
-    // hijack streams
-    StreamJack.maybeInstall(io.streams);
+    // install thread-IO handler
+    threadIO.start();
+    threadIO.setStreams(io.streams.in, io.streams.out, io.streams.err);
 
     Object result = null;
     try {
@@ -249,6 +253,7 @@ public abstract class MainSupport
     }
     finally {
       io.flush();
+      threadIO.stop();
       terminal.close();
     }
 
@@ -277,6 +282,7 @@ public abstract class MainSupport
 
     modules.add(binder -> {
       binder.bind(BeanContainer.class).toInstance(container);
+      binder.bind(ThreadIO.class).toInstance(threadIO);
     });
 
     configure(modules);
