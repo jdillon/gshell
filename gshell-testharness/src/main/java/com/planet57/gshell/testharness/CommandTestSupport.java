@@ -77,8 +77,6 @@ public abstract class CommandTestSupport
 
   /**
    * The name of the command under-test.
-   *
-   * Used for default command tests.
    */
   private final String name;
 
