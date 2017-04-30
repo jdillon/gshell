@@ -48,30 +48,24 @@ public class ShellErrorHandler
     }
   }
 
-  // FIXME: could refactor to remove needing fields for IO/variables
-
-  private final Variables variables;
-
-  public ShellErrorHandler(final Variables variables) {
-    this.variables = checkNotNull(variables);
-  }
-
-  public boolean handleError(final IO io, final Throwable error) {
+  public boolean handleError(final Shell shell, final Throwable error) {
     checkNotNull(error);
-    displayError(io, error);
+    displayError(shell, error);
     return true;
   }
 
-  private void displayError(final IO io, final Throwable error) {
+  private void displayError(final Shell shell, final Throwable error) {
     assert error != null;
 
-    Throwable cause = error;
+    IO io = shell.getIo();
+    Variables variables = shell.getVariables();
 
     // Determine if the stack trace flag is set
     Boolean showTrace = variables.require(VariableNames.SHELL_ERRORS, Boolean.class, false);
 
     // TODO: use Throwables2.explain(), or mimic same style with ANSI support when showTrace == false
 
+    Throwable cause = error;
     io.err.print(ansi().a(INTENSITY_BOLD).fg(RED).a(cause.getClass().getName()).reset());
     if (cause.getMessage() != null) {
       io.err.print(": ");

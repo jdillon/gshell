@@ -108,7 +108,7 @@ public class ShellImpl
     this.completer = checkNotNull(completer);
 
     this.prompt = new ShellPrompt(variables, branding);
-    this.errorHandler = new ShellErrorHandler(variables);
+    this.errorHandler = new ShellErrorHandler();
 
     lifecycles.add(events, commandRegistrar);
 
@@ -268,7 +268,7 @@ public class ShellImpl
         catch (Throwable t) {
           log.trace("Work failed", t);
           setLastResult(session, t);
-          running = errorHandler.handleError(io, t);
+          running = errorHandler.handleError(this, t);
         }
       }
     }
