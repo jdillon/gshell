@@ -148,6 +148,9 @@ public abstract class CommandTestSupport
     CommandRegistrarImpl registrar = injector.getInstance(CommandRegistrarImpl.class);
     registrar.setDiscoveryEnabled(false);
 
+    // force logging to resolve to specific stream and not re-resolve System.out
+    TargetConsoleAppender.setTarget(System.out);
+
     threadIO.start();
     shell.start();
 
