@@ -17,12 +17,13 @@ package com.planet57.gshell.commands.standard;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
 import org.jline.reader.History;
 
 import javax.annotation.Nonnull;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * Recall history.
@@ -39,14 +40,9 @@ public class RecallHistoryAction
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    IO io = context.getIo();
     History history = context.getShell().getHistory();
 
-    if (index < 1 || index > history.size()) {
-      io.err.println(getMessages().format("error.no-such-index", index));
-      return Result.FAILURE;
-    }
-
+    checkArgument(index > 0 && index <= history.size(), getMessages().format("error.no-such-index", index));
     String element = history.get(index - 1);
     log.debug("Recalling from history: {}", element);
 

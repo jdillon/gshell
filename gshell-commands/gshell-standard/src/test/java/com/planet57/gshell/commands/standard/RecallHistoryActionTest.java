@@ -56,8 +56,13 @@ public class RecallHistoryActionTest
 
   @Test
   public void testIndexOutOfRange() throws Exception {
-    Object result = executeCommand(String.valueOf(Integer.MAX_VALUE));
-    assertEqualsFailure(result);
+    try {
+      executeCommand(String.valueOf(Integer.MAX_VALUE));
+      fail();
+    }
+    catch (IllegalArgumentException e) {
+      // expected
+    }
   }
 
   @Test

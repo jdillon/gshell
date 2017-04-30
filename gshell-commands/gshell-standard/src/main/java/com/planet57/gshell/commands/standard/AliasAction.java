@@ -34,6 +34,7 @@ import com.planet57.gshell.util.cli2.CliProcessor;
 import com.planet57.gshell.util.cli2.CliProcessorAware;
 import org.jline.reader.Completer;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -116,13 +117,7 @@ public class AliasAction
   }
 
   private Object defineAlias(final CommandContext context) throws Exception {
-    IO io = context.getIo();
-
-    if (target == null) {
-      io.err.printf(getMessages().format("error.missing-arg", getMessages().getMessage("command.argument.target.token")));
-      io.err.println();
-      return Result.FAILURE;
-    }
+    checkArgument(target != null, getMessages().format("error.missing-arg", getMessages().getMessage("command.argument.target.token")));
 
     String alias = Joiner.on(" ").join(target);
     log.debug("Defining alias: {} -> {}", name, alias);

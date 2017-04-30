@@ -23,7 +23,6 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.google.common.base.Joiner;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
@@ -34,6 +33,7 @@ import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.variables.Variables;
 import org.jline.reader.Completer;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -58,12 +58,6 @@ public class SetAction
   @Option(name = "v", longName = "verbose")
   private boolean verbose;
 
-  /**
-   * @since 2.5.6
-   */
-  @Option(name = "e", longName = "evaluate")
-  private boolean evaluate;
-
   @Nullable
   @Argument(index = 0)
   private String name;
@@ -81,27 +75,14 @@ public class SetAction
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    IO io = context.getIo();
     MessageSource messages = getMessages();
 
     if (name == null) {
       return displayList(context);
     }
-    else if (values == null) {
-      io.err.println(getMessages().format("error.missing-arg", messages.getMessage("command.argument.values.token")));
-      return Result.FAILURE;
-    }
+    checkArgument(values != null, getMessages().format("error.missing-arg", messages.getMessage("command.argument.values.token")));
 
-    String value = Joiner.on(" ").join(values);
-
-    if (evaluate) {
-      Object result = context.getShell().execute(value);
-      if (result == null || result instanceof Result) {
-        io.err.println(messages.format("error.expression-did-not-return-a-value", value));
-        return Result.FAILURE;
-      }
-      value = result.toString();
-    }
+    String value = String.join(" ", values);
 
     switch (mode) {
       case PROPERTY:

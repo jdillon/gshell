@@ -69,7 +69,7 @@ public class UnaliasAction
       return Result.SUCCESS;
     }
     catch (NoSuchAliasException e) {
-      io.err.println(getMessages().format("error.alias-not-defined", name));
+      log.debug("Alias not defined: {}", name);
       return Result.FAILURE;
     }
   }
