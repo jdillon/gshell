@@ -54,4 +54,12 @@ class ScriptActionTest
     def result = executeCommand("-l javascript -u $url")
     assert result == 57
   }
+
+  @Test
+  void 'file javascript'() {
+    def url = util.resolveFile("src/test/resources/${getClass().package.name.replace('.', '/')}/test.js")
+    assert url != null
+    def result = executeCommand("-l javascript -f $url")
+    assert result == 57
+  }
 }
