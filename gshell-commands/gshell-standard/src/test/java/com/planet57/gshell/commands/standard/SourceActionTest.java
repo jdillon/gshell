@@ -19,6 +19,7 @@ import java.io.FileNotFoundException;
 import java.net.URL;
 
 import com.planet57.gshell.testharness.CommandTestSupport;
+import com.planet57.gshell.variables.Variables;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -78,6 +79,8 @@ public class SourceActionTest
 
   @Test
   public void test2() throws Exception {
+    Variables variables = getShell().getVariables();
+
     assertFalse(variables.contains("foo"));
 
     URL script = getClass().getResource("test2.tsh");

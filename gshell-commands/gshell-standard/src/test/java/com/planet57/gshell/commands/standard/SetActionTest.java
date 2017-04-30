@@ -16,6 +16,7 @@
 package com.planet57.gshell.commands.standard;
 
 import com.planet57.gshell.testharness.CommandTestSupport;
+import com.planet57.gshell.variables.Variables;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -37,6 +38,8 @@ public class SetActionTest
 
   @Test
   public void testDefineVariable() throws Exception {
+    Variables variables = getShell().getVariables();
+
     assertFalse(variables.contains("foo"));
     Object result = executeCommand("foo bar");
     assertEqualsSuccess(result);
@@ -48,6 +51,8 @@ public class SetActionTest
 
   @Test
   public void testRedefineVariable() throws Exception {
+    Variables variables = getShell().getVariables();
+
     testDefineVariable();
     assertTrue(variables.contains("foo"));
 
@@ -61,6 +66,8 @@ public class SetActionTest
 
   @Test
   public void testDefineVariableWithExpression() throws Exception {
+    Variables variables = getShell().getVariables();
+
     assertFalse(variables.contains("foo"));
     Object result = executeCommand("foo ${shell.home}");
     assertEqualsSuccess(result);

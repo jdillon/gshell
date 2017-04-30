@@ -16,6 +16,7 @@
 package com.planet57.gshell.commands.standard;
 
 import com.planet57.gshell.testharness.CommandTestSupport;
+import com.planet57.gshell.variables.Variables;
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
@@ -36,6 +37,8 @@ public class UnsetActionTest
 
   @Test
   public void testUndefineVariable() throws Exception {
+    Variables variables = getShell().getVariables();
+
     variables.set("foo", "bar");
     assertTrue(variables.contains("foo"));
     Object result = executeCommand("foo");
@@ -45,6 +48,8 @@ public class UnsetActionTest
 
   @Test
   public void testUndefineUndefinedVariable() throws Exception {
+    Variables variables = getShell().getVariables();
+
     assertFalse(variables.contains("foo"));
     Object result = executeCommand("foo");
 

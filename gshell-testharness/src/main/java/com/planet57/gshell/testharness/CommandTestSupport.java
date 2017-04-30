@@ -97,7 +97,7 @@ public abstract class CommandTestSupport
 
   protected CommandRegistry commandRegistry;
 
-  protected Variables variables;
+  private Variables variables;
 
   protected final Map<String, Class> requiredCommands = new HashMap<>();
 

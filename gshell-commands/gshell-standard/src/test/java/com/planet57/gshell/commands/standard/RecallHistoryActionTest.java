@@ -17,6 +17,7 @@ package com.planet57.gshell.commands.standard;
 
 import com.planet57.gshell.testharness.CommandTestSupport;
 import com.planet57.gshell.util.converter.ConversionException;
+import com.planet57.gshell.variables.Variables;
 import org.jline.reader.History;
 import org.junit.Test;
 
@@ -73,6 +74,7 @@ public class RecallHistoryActionTest
   @Test
   public void testRecallElement() throws Exception {
     History history = getShell().getHistory();
+    Variables variables = getShell().getVariables();
 
     // Clear history and make sure there is no foo variable
     history.purge();
