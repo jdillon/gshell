@@ -25,7 +25,7 @@ import javax.inject.Provider;
 import javax.inject.Singleton;
 
 import com.google.common.eventbus.Subscribe;
-import com.planet57.gshell.command.GroupAction;
+import com.planet57.gshell.command.ChangeGroupAction;
 import com.planet57.gshell.command.registry.CommandRegisteredEvent;
 import com.planet57.gshell.command.registry.CommandRemovedEvent;
 import com.planet57.gshell.event.EventAware;
@@ -54,7 +54,7 @@ public class CommandResolverImpl
   @Inject
   public CommandResolverImpl(final Provider<Variables> variables) {
     this.variables = checkNotNull(variables);
-    this.root = new Node(Node.ROOT, new GroupAction(Node.ROOT));
+    this.root = new Node(Node.ROOT, new ChangeGroupAction(Node.ROOT));
   }
 
   @Subscribe

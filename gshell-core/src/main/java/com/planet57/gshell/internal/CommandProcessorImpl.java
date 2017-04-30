@@ -17,7 +17,7 @@ package com.planet57.gshell.internal;
 
 import com.planet57.gshell.alias.AliasRegistry;
 import com.planet57.gshell.alias.NoSuchAliasException;
-import com.planet57.gshell.command.AliasAction;
+import com.planet57.gshell.command.ExecuteAliasAction;
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.resolver.CommandResolver;
 import com.planet57.gshell.command.resolver.Node;
@@ -66,7 +66,7 @@ public class CommandProcessorImpl
     CommandAction action = null;
     if (aliases.containsAlias(name)) {
       try {
-        action = new AliasAction(name, aliases.getAlias(name));
+        action = new ExecuteAliasAction(name, aliases.getAlias(name));
       }
       catch (NoSuchAliasException e) {
         // should never happen

@@ -15,35 +15,31 @@
  */
 package com.planet57.gshell.command;
 
-import com.google.common.base.Joiner;
+import com.planet57.gshell.command.resolver.NodePath;
 import org.sonatype.goodies.common.ComponentSupport;
 import com.planet57.gshell.util.cli2.OpaqueArguments;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.NopMessageSource;
+import com.planet57.gshell.variables.VariableNames;
 
 import javax.annotation.Nonnull;
-
-import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * {@link CommandAction} to execute an alias.
+ * {@link CommandAction} to change groups.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-public class AliasAction
+public class ChangeGroupAction
   extends ComponentSupport
   implements CommandAction, OpaqueArguments
 {
   private final String name;
 
-  private final String target;
-
-  public AliasAction(final String name, final String target) {
+  public ChangeGroupAction(final String name) {
     this.name = checkNotNull(name);
-    this.target = checkNotNull(target);
   }
 
   @Override
@@ -53,22 +49,15 @@ public class AliasAction
 
   @Override
   public String getSimpleName() {
-    return name;
+    return new NodePath(getName()).last();
   }
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    String alias = target;
+    log.debug("Changing group to: {}", name);
+    context.getVariables().set(VariableNames.SHELL_GROUP, name);
 
-    // append any additional arguments
-    List<?> args = context.getArguments();
-    if (args.size() > 0) {
-      alias = String.format("%s %s", target, Joiner.on(" ").join(args));
-    }
-
-    log.debug("Executing alias ({}) -> {}", getName(), alias);
-
-    return context.getShell().execute(alias);
+    return Result.SUCCESS;
   }
 
   @Override

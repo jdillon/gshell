@@ -21,7 +21,7 @@ import java.util.LinkedHashSet;
 import javax.annotation.Nullable;
 
 import com.planet57.gshell.command.CommandAction;
-import com.planet57.gshell.command.GroupAction;
+import com.planet57.gshell.command.ChangeGroupAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -98,7 +98,7 @@ public class Node
   }
 
   public boolean isGroup() {
-    return action instanceof GroupAction;
+    return action instanceof ChangeGroupAction;
   }
 
   public Node root() {
@@ -214,7 +214,7 @@ public class Node
           else {
             group = String.format("%s%s%s", current.getPath(), SEPARATOR, elements[i]);
           }
-          node = new Node(elements[i], new GroupAction(group), current);
+          node = new Node(elements[i], new ChangeGroupAction(group), current);
           current.children.add(node);
           log.trace("Added group node: {}", group);
         }
