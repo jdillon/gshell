@@ -15,6 +15,10 @@
  */
 package com.planet57.gshell;
 
+import java.io.FilterInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -211,7 +215,7 @@ public abstract class MainSupport
     SLF4JBridgeHandler.install();
 
     Terminal terminal = createTerminal(branding);
-    IO io = new IO(createStreamSet(), terminal);
+    IO io = new IO(createStreamSet(terminal), terminal);
 
     if (help) {
       HelpPrinter printer = new HelpPrinter(clp, terminal);
@@ -325,8 +329,22 @@ public abstract class MainSupport
    * Create the {@link StreamSet} used to register.
    */
   @VisibleForTesting
-  protected StreamSet createStreamSet() {
-    return StreamSet.SYSTEM_FD;
+  protected StreamSet createStreamSet(final Terminal terminal) {
+    InputStream in = new FilterInputStream(terminal.input())
+    {
+      @Override
+      public void close() throws IOException {
+        // ignore
+      }
+    };
+    PrintStream out = new PrintStream(terminal.output())
+    {
+      @Override
+      public void close() {
+        // ignore
+      }
+    };
+    return new StreamSet(in, out, out);
   }
 
   /**

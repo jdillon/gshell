@@ -36,6 +36,7 @@ import java.io.PrintStream;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Tests for {@link MainSupport}.
@@ -97,7 +98,7 @@ public class MainSupportTest
     }
 
     @Override
-    protected StreamSet createStreamSet() {
+    protected StreamSet createStreamSet(final Terminal terminal) {
       return new StreamSet(in, new PrintStream(out, true));
     }
 
@@ -107,8 +108,12 @@ public class MainSupportTest
     }
 
     @Override
-    protected Shell createShell(IO io, Variables variables, Branding branding) throws Exception {
-      return mock(Shell.class);
+    protected Shell createShell(final IO io, final Variables variables, final Branding branding) throws Exception {
+      Shell shell = mock(Shell.class);
+      when(shell.getIo()).thenReturn(io);
+      when(shell.getVariables()).thenReturn(variables);
+      when(shell.getBranding()).thenReturn(branding);
+      return shell;
     }
 
     @Override

@@ -167,12 +167,14 @@ public class ShellImpl
   }
 
   private void doStop() throws Exception {
-    lifecycles.stop();
     if (currentSession != null) {
       currentSession.close();
       currentSession = null;
     }
+
     lineReader = null;
+
+    lifecycles.stop();
   }
 
   @Override
