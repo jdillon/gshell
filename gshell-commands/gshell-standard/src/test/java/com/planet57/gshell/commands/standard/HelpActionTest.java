@@ -16,6 +16,7 @@
 package com.planet57.gshell.commands.standard;
 
 import com.planet57.gshell.alias.AliasRegistry;
+import com.planet57.gshell.command.registry.CommandRegistry;
 import com.planet57.gshell.testharness.CommandTestSupport;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,6 +34,8 @@ public class HelpActionTest
 {
   private AliasRegistry aliasRegistry;
 
+  private CommandRegistry commandRegistry;
+
   public HelpActionTest() {
     super(HelpAction.class);
   }
@@ -42,6 +45,7 @@ public class HelpActionTest
   public void setUp() throws Exception {
     super.setUp();
     aliasRegistry = lookup(AliasRegistry.class);
+    commandRegistry = lookup(CommandRegistry.class);
   }
 
   @Test

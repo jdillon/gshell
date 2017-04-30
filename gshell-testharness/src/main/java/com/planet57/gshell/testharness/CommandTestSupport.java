@@ -95,7 +95,7 @@ public abstract class CommandTestSupport
 
   private Shell shell;
 
-  protected CommandRegistry commandRegistry;
+  private CommandRegistry commandRegistry;
 
   private Variables variables;
 
