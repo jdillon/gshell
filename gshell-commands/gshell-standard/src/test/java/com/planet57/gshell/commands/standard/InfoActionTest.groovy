@@ -13,19 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.commands.standard;
+package com.planet57.gshell.commands.standard
 
-import com.planet57.gshell.testharness.CommandTestSupport;
+import com.planet57.gshell.testharness.CommandTestSupport
 
 /**
- * Tests for the {@link InfoAction}.
- *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ * Tests for {@link InfoAction}.
  */
-public class InfoActionTest
+class InfoActionTest
     extends CommandTestSupport
 {
-  public InfoActionTest() {
-    super(InfoAction.class);
+  InfoActionTest() {
+    super(InfoAction.class)
   }
 }

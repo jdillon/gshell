@@ -15,48 +15,40 @@
  */
 package com.planet57.gshell.commands.standard
 
-import com.planet57.gshell.command.CommandAction
 import com.planet57.gshell.testharness.CommandTestSupport
+import com.planet57.gshell.variables.Variables
 import org.junit.Test
 
-import static org.junit.Assert.fail
-
 /**
- * Tests for {@link ExitAction}.
+ * Tests for {@link UnsetAction}.
  */
-class ExitActionTest
+class UnsetActionTest
     extends CommandTestSupport
 {
-  ExitActionTest() {
-    super(ExitAction.class)
+  UnsetActionTest() {
+    super(UnsetAction.class)
   }
 
   @Test
-  void 'exit with code'() {
-    def result = executeCommand('57')
-    assert result instanceof CommandAction.ExitNotification
-    assert result.code == 57
+  void testUndefineVariable() {
+    Variables variables = shell.variables
+
+    variables.set('foo', 'bar')
+    assert variables.contains('foo')
+
+    Object result = executeCommand('foo')
+    assertEqualsSuccess(result)
+    assert !variables.contains('foo')
   }
 
   @Test
-  void 'too many arguments'() {
-    try {
-      executeCommand('1 2')
-      fail()
-    }
-    catch (Exception e) {
-      // expected
-    }
-  }
+  void testUndefineUndefinedVariable() {
+    Variables variables = shell.variables
 
-  @Test
-  void 'unparseable return code'() {
-    try {
-      executeCommand('foo')
-      fail()
-    }
-    catch (Exception e) {
-      // expected
-    }
+    assert !variables.contains('foo')
+    Object result = executeCommand('foo')
+
+    // Unset undefined should not return any errors
+    assertEqualsSuccess(result)
   }
 }

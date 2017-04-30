@@ -15,31 +15,34 @@
  */
 package com.planet57.gshell.commands.standard
 
-import com.planet57.gshell.command.CommandAction
+import com.planet57.gshell.alias.AliasRegistry
 import com.planet57.gshell.testharness.CommandTestSupport
+import org.junit.Before
 import org.junit.Test
 
 import static org.junit.Assert.fail
 
 /**
- * Tests for {@link ExitAction}.
+ * Tests for {@link UnaliasAction}.
  */
-class ExitActionTest
+class UnaliasActionTest
     extends CommandTestSupport
 {
-  ExitActionTest() {
-    super(ExitAction.class)
+  private AliasRegistry aliasRegistry
+
+  UnaliasActionTest() {
+    super(UnaliasAction.class)
+  }
+
+  @Override
+  @Before
+  void setUp() {
+    super.setUp()
+    aliasRegistry = lookup(AliasRegistry.class)
   }
 
   @Test
-  void 'exit with code'() {
-    def result = executeCommand('57')
-    assert result instanceof CommandAction.ExitNotification
-    assert result.code == 57
-  }
-
-  @Test
-  void 'too many arguments'() {
+  void testTooManyArguments() {
     try {
       executeCommand('1 2')
       fail()
@@ -50,13 +53,12 @@ class ExitActionTest
   }
 
   @Test
-  void 'unparseable return code'() {
-    try {
-      executeCommand('foo')
-      fail()
-    }
-    catch (Exception e) {
-      // expected
-    }
+  void testUndefineAlias() {
+    assert !aliasRegistry.containsAlias('foo')
+    aliasRegistry.registerAlias('foo', 'bar')
+
+    Object result = executeCommand('foo')
+    assertEqualsSuccess(result)
+    assert !aliasRegistry.containsAlias('foo')
   }
 }

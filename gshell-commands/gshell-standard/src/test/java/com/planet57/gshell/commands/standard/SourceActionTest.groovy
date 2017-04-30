@@ -15,31 +15,31 @@
  */
 package com.planet57.gshell.commands.standard
 
-import com.planet57.gshell.command.CommandAction
 import com.planet57.gshell.testharness.CommandTestSupport
+import com.planet57.gshell.variables.Variables
 import org.junit.Test
 
 import static org.junit.Assert.fail
 
 /**
- * Tests for {@link ExitAction}.
+ * Tests for {@link SourceAction}.
  */
-class ExitActionTest
+class SourceActionTest
     extends CommandTestSupport
 {
-  ExitActionTest() {
-    super(ExitAction.class)
+  SourceActionTest() {
+    super(SourceAction.class)
+  }
+
+  @Override
+  void setUp() {
+    requiredCommands.put('set', SetAction.class)
+    requiredCommands.put('echo', EchoAction.class)
+    super.setUp()
   }
 
   @Test
-  void 'exit with code'() {
-    def result = executeCommand('57')
-    assert result instanceof CommandAction.ExitNotification
-    assert result.code == 57
-  }
-
-  @Test
-  void 'too many arguments'() {
+  void testTooManyArguments() {
     try {
       executeCommand('1 2')
       fail()
@@ -50,13 +50,37 @@ class ExitActionTest
   }
 
   @Test
-  void 'unparseable return code'() {
+  void testNoSuchFile() {
     try {
-      executeCommand('foo')
+      executeCommand('no-such-file')
       fail()
     }
-    catch (Exception e) {
+    catch (FileNotFoundException e) {
       // expected
     }
+  }
+
+  @Test
+  void test1() {
+    URL script = getClass().getResource('test1.tsh')
+    assert script != null
+    Object result = executeCommand(script.toExternalForm())
+    assertEqualsSuccess(result)
+  }
+
+  @Test
+  void test2() {
+    Variables variables = shell.variables
+
+    assert !variables.contains('foo')
+
+    URL script = getClass().getResource('test2.tsh')
+    assert script != null
+    Object result = executeCommand(script.toExternalForm())
+    assertEqualsSuccess(result)
+
+    assert variables.contains('foo')
+    Object value = variables.get('foo')
+    assert value == 'bar'
   }
 }
