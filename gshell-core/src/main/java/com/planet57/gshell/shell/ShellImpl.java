@@ -68,13 +68,7 @@ public class ShellImpl
 {
   private final LifecycleManager lifecycles = new LifecycleManager();
 
-  private final Branding branding;
-
   private final CommandProcessorImpl commandProcessor;
-
-  private final IO io;
-
-  private final Variables variables;
 
   private final History history;
 
@@ -85,6 +79,12 @@ public class ShellImpl
   private final ShellErrorHandler errorHandler;
 
   private final ShellScriptLoader scriptLoader;
+
+  private final Branding branding;
+
+  private final IO io;
+
+  private final Variables variables;
 
   private CommandSessionImpl currentSession;
 
@@ -100,8 +100,8 @@ public class ShellImpl
                    @Assisted final Variables variables)
   {
     checkNotNull(events);
-    this.commandProcessor = checkNotNull(commandProcessor);
     checkNotNull(commandRegistrar);
+    this.commandProcessor = checkNotNull(commandProcessor);
     this.branding = checkNotNull(branding);
     this.io = checkNotNull(io);
     this.variables = checkNotNull(variables);
@@ -109,14 +109,10 @@ public class ShellImpl
 
     this.prompt = new ShellPrompt();
     this.errorHandler = new ShellErrorHandler();
+    this.history = new DefaultHistory();
+    this.scriptLoader = new ShellScriptLoader();
 
     lifecycles.add(events, commandRegistrar);
-
-    // HACK: exposed here as some commands needs reference to this
-    this.history = new DefaultHistory();
-
-    // FIXME: for now leave this as default non-configurable
-    this.scriptLoader = new ShellScriptLoader();
   }
 
   // custom/simplified lifecycle so we can fire do-start and do-started
