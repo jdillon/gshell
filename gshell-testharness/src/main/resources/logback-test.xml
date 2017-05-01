@@ -20,7 +20,7 @@
 
   <contextName>test</contextName>
 
-  <appender name="console" class="com.planet57.gshell.testharness.TargetConsoleAppender">
+  <appender name="console" class="com.planet57.gshell.logging.logback.TargetConsoleAppender">
     <encoder>
       <pattern>[%level] %logger{1} - %msg%n</pattern>
     </encoder>
