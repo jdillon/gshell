@@ -22,7 +22,6 @@ import java.util.List;
 import com.planet57.gshell.util.i18n.AggregateMessageSource;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
-import org.jline.terminal.Terminal;
 
 import javax.annotation.Nullable;
 
@@ -41,26 +40,20 @@ public class HelpPrinter
 
   private AggregateMessageSource messages = new AggregateMessageSource(new ResourceBundleMessageSource(getClass()));
 
-  private int terminalWidth;
+  private int maxWidth;
 
   private String prefix = "  ";
 
   private String separator = "    ";
 
-  public HelpPrinter(final CliProcessor processor, @Nullable final Terminal terminal) {
+  public HelpPrinter(final CliProcessor processor, final int maxWidth) {
     this.processor = checkNotNull(processor);
+    this.maxWidth = maxWidth > 0 ? maxWidth : 80;
 
     // Add messages from the processor
     MessageSource messages = processor.getMessages();
     if (messages != null) {
       addMessages(messages);
-    }
-
-    terminalWidth = terminal != null ? terminal.getWidth() : 80;
-
-    // HACK: adjust for mock
-    if (terminalWidth <= 0) {
-      terminalWidth = 80;
     }
   }
 
@@ -68,13 +61,13 @@ public class HelpPrinter
     this.messages.getSources().add(messages);
   }
 
-  public int getTerminalWidth() {
-    return terminalWidth;
+  public int getMaxWidth() {
+    return maxWidth;
   }
 
-  public void setTerminalWidth(final int terminalWidth) {
-    checkArgument(terminalWidth > 0);
-    this.terminalWidth = terminalWidth;
+  public void setMaxWidth(final int maxWidth) {
+    checkArgument(maxWidth > 0);
+    this.maxWidth = maxWidth;
   }
 
   public String getPrefix() {
@@ -196,7 +189,7 @@ public class HelpPrinter
     assert desc != null;
 
     int prefixSeparatorWidth = prefix.length() + separator.length();
-    int descriptionWidth = terminalWidth - len - prefixSeparatorWidth;
+    int descriptionWidth = maxWidth - len - prefixSeparatorWidth;
 
     String description = desc.renderHelpText(messages);
 

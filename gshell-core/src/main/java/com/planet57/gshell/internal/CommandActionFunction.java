@@ -97,7 +97,7 @@ public class CommandActionFunction
           io.out.println(CommandHelper.getDescription(action));
           io.out.println();
 
-          HelpPrinter printer = new HelpPrinter(clp, io.terminal);
+          HelpPrinter printer = new HelpPrinter(clp, io.terminal.getWidth());
           printer.printUsage(io.out, action.getSimpleName());
 
           // Skip execution

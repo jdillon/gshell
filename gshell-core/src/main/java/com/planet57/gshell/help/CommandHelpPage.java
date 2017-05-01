@@ -92,7 +92,7 @@ public class CommandHelpPage
     public Helper(final Terminal terminal, final Branding branding) {
       CommandHelper help = new CommandHelper();
       clp = help.createCliProcessor(command);
-      printer = new HelpPrinter(clp, terminal);
+      printer = new HelpPrinter(clp, terminal.getWidth());
 
       pp = new PreferenceProcessor();
       pp.setBasePath(branding.getPreferencesBasePath());

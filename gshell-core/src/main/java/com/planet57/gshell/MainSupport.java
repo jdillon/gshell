@@ -218,7 +218,7 @@ public abstract class MainSupport
     IO io = new IO(createStreamSet(terminal), terminal);
 
     if (help) {
-      HelpPrinter printer = new HelpPrinter(clp, terminal);
+      HelpPrinter printer = new HelpPrinter(clp, terminal.getWidth());
       printer.printUsage(io.out, branding.getProgramName());
       io.flush();
       exit(0);
