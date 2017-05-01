@@ -28,6 +28,8 @@ import com.planet57.gshell.util.cli2.OpaqueArguments;
 import com.planet57.gshell.util.io.StreamSet;
 import com.planet57.gshell.util.pref.PreferenceProcessor;
 import com.planet57.gshell.variables.Variables;
+import com.planet57.gshell.variables.VariablesSupport;
+import org.apache.felix.gogo.runtime.CommandSessionImpl;
 import org.apache.felix.service.command.CommandSession;
 import org.apache.felix.service.command.Function;
 import org.jline.terminal.Terminal;
@@ -75,6 +77,9 @@ public class CommandActionFunction
 
     // re-create IO with current streams; which are adjusted by ThreadIO
     final IO io = new IO(StreamSet.system(), terminal);
+
+    // re-create variables with session as basis
+    final Variables variables = new VariablesSupport(((CommandSessionImpl)session).getVariables());
 
     Object result = null;
     try {
@@ -128,7 +133,7 @@ public class CommandActionFunction
           @Override
           @Nonnull
           public Variables getVariables() {
-            return shell.getVariables();
+            return variables;
           }
         });
       }
