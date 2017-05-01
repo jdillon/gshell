@@ -89,10 +89,10 @@ public class CommandHelpPage
 
     private final MessageSource messages;
 
-    public Helper(final Terminal terminal, final Branding branding) {
+    public Helper(final Branding branding, final int maxWidth) {
       CommandHelper help = new CommandHelper();
       clp = help.createCliProcessor(command);
-      printer = new HelpPrinter(clp, terminal.getWidth());
+      printer = new HelpPrinter(clp, maxWidth);
 
       pp = new PreferenceProcessor();
       pp.setBasePath(branding.getPreferencesBasePath());
@@ -199,7 +199,7 @@ public class CommandHelpPage
     checkNotNull(out);
 
     Interpolator interp = new StringSearchInterpolator("@{", "}");
-    interp.addValueSource(new PrefixedObjectValueSource("command.", new Helper(shell.getIo().terminal, shell.getBranding())));
+    interp.addValueSource(new PrefixedObjectValueSource("command.", new Helper(shell.getBranding(), shell.getIo().terminal.getWidth())));
     interp.addValueSource(new PrefixedObjectValueSource("branding.", shell.getBranding()));
     interp.addValueSource(new AbstractValueSource(false)
     {
