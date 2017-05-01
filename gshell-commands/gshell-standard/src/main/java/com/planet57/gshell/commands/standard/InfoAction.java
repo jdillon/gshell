@@ -44,16 +44,11 @@ import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.Preferences;
-import org.fusesource.jansi.Ansi;
-import org.fusesource.jansi.AnsiRenderWriter;
 import org.jline.reader.impl.completer.EnumCompleter;
 
 import javax.annotation.Nonnull;
 
 import static com.planet57.gshell.commands.standard.InfoAction.Section.SHELL;
-import static org.fusesource.jansi.Ansi.Attribute.INTENSITY_BOLD;
-import static org.fusesource.jansi.Ansi.Color.GREEN;
-import static org.fusesource.jansi.Ansi.ansi;
 
 //
 // Based on info command from Apache Felix
@@ -116,7 +111,7 @@ public class InfoAction
     }
 
     StringWriter buff = new StringWriter();
-    PrintWriter writer = new PrintWriter(new AnsiRenderWriter(buff));
+    PrintWriter writer = io.out;
 
     // TODO: i18n
     for (Section section : sections) {
@@ -136,7 +131,6 @@ public class InfoAction
           println(writer, "Profile Script", branding.getProfileScriptName());
           println(writer, "Interactive Script", branding.getInteractiveScriptName());
           println(writer, "History File", branding.getHistoryFileName());
-          println(writer, "ANSI", Ansi.isEnabled());
           break;
 
         case TERMINAL: {
@@ -235,7 +229,7 @@ public class InfoAction
   }
 
   private void printlnHeader(final PrintWriter writer, final String name) {
-    writer.println(ansi().a(INTENSITY_BOLD).fg(GREEN).a(name).reset());
+    writer.format("@|bold,green %s|@%n", name);
   }
 
   private long getSunOsValueAsLong(final OperatingSystemMXBean os, final String name) throws Exception {
@@ -283,6 +277,6 @@ public class InfoAction
   }
 
   private void println(final PrintWriter writer, final String name, final Object value) {
-    writer.println(ansi().a("  ").a(INTENSITY_BOLD).a(name).reset().a(": ").a(value));
+    writer.format("  @|bold %s|@: %s%n", name, value);
   }
 }
