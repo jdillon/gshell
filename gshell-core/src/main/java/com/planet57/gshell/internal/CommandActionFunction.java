@@ -17,6 +17,7 @@ package com.planet57.gshell.internal;
 
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableList;
+import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.CommandHelper;
@@ -78,16 +79,14 @@ public class CommandActionFunction
     // re-create IO with current streams; which are adjusted by ThreadIO
     final IO io = new IO(StreamSet.system(), terminal);
 
-    // re-create variables with session as basis
-    final Variables variables = new VariablesSupport(((CommandSessionImpl)session).getVariables());
-
     Object result = null;
     try {
       boolean execute = true;
 
       // Process command preferences
+      Branding branding = shell.getBranding();
       PreferenceProcessor pp = new PreferenceProcessor();
-      pp.setBasePath(shell.getBranding().getPreferencesBasePath());
+      pp.setBasePath(branding.getPreferencesBasePath());
       pp.addBean(action);
       pp.process();
 
@@ -102,13 +101,19 @@ public class CommandActionFunction
           io.out.println(CommandHelper.getDescription(action));
           io.out.println();
 
-          HelpPrinter printer = new HelpPrinter(clp, io.terminal.getWidth());
+          HelpPrinter printer = new HelpPrinter(clp, terminal.getWidth());
           printer.printUsage(io.out, action.getSimpleName());
 
           // Skip execution
           execute = false;
         }
       }
+
+      // re-create variables with session as basis
+      final Variables variables = new VariablesSupport(((CommandSessionImpl)session).getVariables());
+
+      // wrap arguments into immutable for context
+      final List<Object> args = ImmutableList.copyOf(arguments);
 
       if (execute) {
         result = action.execute(new CommandContext()
@@ -122,7 +127,7 @@ public class CommandActionFunction
           @Override
           @Nonnull
           public List<?> getArguments() {
-            return ImmutableList.copyOf(arguments);
+            return args;
           }
 
           @Override
