@@ -76,10 +76,10 @@
       <artifactId>org.apache.felix.gogo.jline</artifactId>
     </dependency>
 
-    <!--<dependency>-->
-      <!--<groupId>org.apache.felix</groupId>-->
-      <!--<artifactId>org.apache.felix.gogo.jline</artifactId>-->
-    <!--</dependency>-->
+    <dependency>
+      <groupId>org.fusesource.jansi</groupId>
+      <artifactId>jansi</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>com.planet57.gshell</groupId>
