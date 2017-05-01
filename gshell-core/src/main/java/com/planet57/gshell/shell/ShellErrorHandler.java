@@ -15,9 +15,10 @@
  */
 package com.planet57.gshell.shell;
 
-import com.planet57.gshell.command.IO;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
+
+import java.io.PrintWriter;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -46,27 +47,28 @@ public class ShellErrorHandler
   /**
    * @since 3.0
    */
-  public boolean handleError(final IO io, final Throwable error, final boolean verbose) {
-    checkNotNull(io);
+  public boolean handleError(final PrintWriter out, final Throwable error, final boolean verbose) {
+    checkNotNull(out);
     checkNotNull(error);
-    displayError(io, error, verbose);
+    displayError(out, error, verbose);
     return true;
   }
 
-  private void displayError(final IO io, final Throwable error, final boolean verbose) {
+  private void displayError(final PrintWriter out, final Throwable error, final boolean verbose) {
     // TODO: use Throwables2.explain(), or mimic same style with ANSI support when showTrace == false
 
     Throwable cause = error;
-    io.err.format("@|bold,red %s|@", cause.getClass().getName());
+
+    out.format("@|bold,red %s|@", cause.getClass().getName());
     if (cause.getMessage() != null) {
-      io.err.format(": @|bold, red %s|@", cause.getMessage());
+      out.format(": @|bold, red %s|@", cause.getMessage());
     }
-    io.err.println();
+    out.println();
 
     if (verbose) {
       while (cause != null) {
         for (StackTraceElement e : cause.getStackTrace()) {
-          io.err.format("     @|bold %s|@ %s.%s (@|bold %s|@)%n",
+          out.format("     @|bold %s|@ %s.%s (@|bold %s|@)%n",
             Messages.ERROR_AT.format(),
             e.getClassName(),
             e.getMethodName(),
@@ -76,12 +78,12 @@ public class ShellErrorHandler
 
         cause = cause.getCause();
         if (cause != null) {
-          io.err.format("@|bold %s|@ %s%n", Messages.ERROR_CAUSED_BY.format(), cause.getClass().getName());
+          out.format("@|bold %s|@ %s%n", Messages.ERROR_CAUSED_BY.format(), cause.getClass().getName());
         }
       }
     }
 
-    io.err.flush();
+    out.flush();
   }
 
   private String getLocation(final StackTraceElement e) {

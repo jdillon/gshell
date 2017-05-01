@@ -16,7 +16,6 @@
 package com.planet57.gshell.shell;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nullable;
@@ -35,7 +34,6 @@ import com.planet57.gshell.internal.CommandActionFunction;
 import com.planet57.gshell.util.jline.LoggingCompleter;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
-import org.apache.felix.gogo.jline.Builtin;
 import org.apache.felix.gogo.jline.Expander;
 import org.apache.felix.gogo.jline.ParsedLineImpl;
 import org.apache.felix.gogo.jline.Parser;
@@ -303,7 +301,7 @@ public class ShellImpl
         catch (Throwable t) {
           log.trace("Work failed", t);
           setLastResult(session, t);
-          running = errorHandler.handleError(io, t, variables.require(VariableNames.SHELL_ERRORS, Boolean.class, true));
+          running = errorHandler.handleError(io.err, t, variables.require(VariableNames.SHELL_ERRORS, Boolean.class, true));
         }
       }
     }
