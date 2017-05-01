@@ -49,12 +49,12 @@ public class FileNameCompleter
 
   @Override
   protected Path getUserHome() {
-    return variables.get().get(SHELL_USER_HOME, Path.class);
+    return variables.get().require(SHELL_USER_HOME, Path.class);
   }
 
   @Override
   protected Path getUserDir() {
-    return variables.get().get(SHELL_USER_DIR, Path.class);
+    return variables.get().require(SHELL_USER_DIR, Path.class);
   }
 
   /**
