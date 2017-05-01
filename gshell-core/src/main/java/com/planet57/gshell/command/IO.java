@@ -76,7 +76,7 @@ public class IO
     this.in = new InputStreamReader(streams.in);
     this.out = new AnsiRenderWriter(new PrintWriter(streams.out, true));
 
-    /// Don't rewrite the error stream if we have the same stream for out and error
+    // Don't rewrite the error stream if we have the same stream for out and error
     if (streams.isOutputCombined()) {
       this.err = this.out;
     }
