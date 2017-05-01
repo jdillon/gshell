@@ -21,7 +21,6 @@ import com.planet57.gshell.branding.Asl2License;
 import com.planet57.gshell.branding.BrandingSupport;
 import com.planet57.gshell.branding.License;
 import com.planet57.gshell.util.io.PrintBuffer;
-import org.fusesource.jansi.Ansi;
 
 import static com.planet57.gshell.variables.VariableNames.SHELL_GROUP;
 import static com.planet57.gshell.variables.VariableNames.SHELL_USER_DIR;
@@ -48,7 +47,7 @@ public class BrandingImpl
   public String getWelcomeMessage() {
     PrintBuffer buff = new PrintBuffer();
     for (String line : BANNER) {
-      buff.println(Ansi.ansi().fg(Ansi.Color.CYAN).a(line).reset());
+      buff.format("@|cyan %s|@%n", line);
     }
     buff.println();
     buff.format("%s (%s)%n%n", getDisplayName(), getVersion());
