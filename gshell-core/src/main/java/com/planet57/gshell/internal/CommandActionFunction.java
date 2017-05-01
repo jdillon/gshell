@@ -111,7 +111,8 @@ public class CommandActionFunction
       }
 
       if (execute) {
-        result = action.execute(new CommandContext() {
+        result = action.execute(new CommandContext()
+        {
           @Override
           @Nonnull
           public Shell getShell() {

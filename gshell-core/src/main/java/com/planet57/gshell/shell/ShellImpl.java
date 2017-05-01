@@ -220,10 +220,16 @@ public class ShellImpl
     ensureStarted();
     checkNotNull(line);
 
-    // FIXME: this is likely not correct in terms of using gogo parser
-
     CommandSessionImpl session = currentSession;
-    return session.execute(line);
+
+    Object result = session.execute(line);
+    setLastResult(session, result);
+
+    // FIXME: copy session variables back to shell's variables
+    variables.asMap().clear();
+    variables.asMap().putAll(session.getVariables());
+
+    return result;
   }
 
   @Override
@@ -284,8 +290,6 @@ public class ShellImpl
       }
     });
 
-    // TODO: for proper CTRL-Z we need fg, bg and jobs commands; see gogo.jline.Builtin
-
     log.trace("Running");
     boolean running = true;
     try {
@@ -311,6 +315,10 @@ public class ShellImpl
           setLastResult(session, t);
           running = errorHandler.handleError(io.err, t, variables.require(VariableNames.SHELL_ERRORS, Boolean.class, true));
         }
+
+        // FIXME: copy session variables back to shell's variables
+        variables.asMap().clear();
+        variables.asMap().putAll(session.getVariables());
       }
     }
     finally {
@@ -381,19 +389,16 @@ public class ShellImpl
       value = branding.getPrompt();
     }
 
-    String prompt = null;
-    if (value != null) {
-      prompt = expand(session, value);
+    String prompt = expand(session, value);
 
-      // fail-safe prompt
-      if (prompt == null) {
-        prompt = String.format("%s> ", branding.getProgramName());
-      }
+    // fail-safe prompt
+    if (prompt == null) {
+      prompt = String.format("%s> ", branding.getProgramName());
+    }
 
-      // FIXME: may need to adjust ansi-renderer syntax or pre-render before expanding to avoid needing escapes
-      if (AnsiRenderer.test(prompt)) {
-        prompt = AnsiRenderer.render(prompt);
-      }
+    // FIXME: may need to adjust ansi-renderer syntax or pre-render before expanding to avoid needing escapes
+    if (AnsiRenderer.test(prompt)) {
+      prompt = AnsiRenderer.render(prompt);
     }
 
     return prompt;
@@ -406,14 +411,11 @@ public class ShellImpl
       value = branding.getRightPrompt();
     }
 
-    String prompt = null;
-    if (value != null) {
-      prompt = expand(session, value);
+    String prompt = expand(session, value);
 
-      // FIXME: may need to adjust ansi-renderer syntax or pre-render before expanding to avoid needing escapes
-      if (AnsiRenderer.test(prompt)) {
-        prompt = AnsiRenderer.render(prompt);
-      }
+    // FIXME: may need to adjust ansi-renderer syntax or pre-render before expanding to avoid needing escapes
+    if (AnsiRenderer.test(prompt)) {
+      prompt = AnsiRenderer.render(prompt);
     }
 
     return prompt;
