@@ -396,13 +396,6 @@ public class ShellImpl
     return prompt;
   }
 
-  /*
-  \#rprompt = { (new java.text.SimpleDateFormat \'$'\u001B\\[90m'\'HH:mm:ss) format (new Date) }
-  secondary-prompt-pattern = '%M%P > '
-  # could also be written
-  #  \#rprompt = { ${(qq)$(date)} }
-  */
-
   @Nullable
   private String rprompt(final CommandSessionImpl session) {
     Object value = session.get(SHELL_RPROMPT);
