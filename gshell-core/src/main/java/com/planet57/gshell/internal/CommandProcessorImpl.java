@@ -21,6 +21,7 @@ import com.planet57.gshell.command.ExecuteAliasAction;
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.resolver.CommandResolver;
 import com.planet57.gshell.command.resolver.Node;
+import org.apache.felix.service.command.CommandProcessor;
 import org.apache.felix.service.command.Function;
 import org.apache.felix.service.threadio.ThreadIO;
 import org.slf4j.Logger;
@@ -34,7 +35,7 @@ import javax.inject.Singleton;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * ???
+ * GShell adaption of GOGO {@link CommandProcessor}.
  *
  * @since 3.0
  */
