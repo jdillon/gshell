@@ -56,7 +56,6 @@ import org.eclipse.sisu.space.BeanScanning;
 import org.eclipse.sisu.space.SpaceModule;
 import org.eclipse.sisu.space.URLClassSpace;
 import org.eclipse.sisu.wire.WireModule;
-import org.fusesource.jansi.Ansi;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 import org.slf4j.Logger;
@@ -150,13 +149,6 @@ public abstract class MainSupport
     log.debug("Set system-property: {}", input);
     NameValue nv = NameValue.parse(input);
     System.setProperty(nv.name, nv.value);
-  }
-
-  @Preference(name = "color")
-  @Option(name = "C", longName = "color", optionalArg = true)
-  private void enableAnsiColors(final Boolean flag) {
-    log.debug("Color: {}", flag);
-    Ansi.setEnabled(flag);
   }
 
   @Argument

@@ -115,9 +115,6 @@ public abstract class CommandTestSupport
 
   @Before
   public void setUp() throws Exception {
-    // For simplicity of output verification disable ANSI
-    Ansi.setEnabled(false);
-
     terminal = TerminalBuilder.builder().dumb(true).build();
     io = new BufferIO(terminal);
     variables = new VariablesSupport();

@@ -21,7 +21,6 @@ import com.planet57.gshell.shell.Shell
 import com.planet57.gshell.testharness.TestBranding
 import com.planet57.gshell.util.io.StreamSet
 import com.planet57.gshell.variables.Variables
-import org.fusesource.jansi.Ansi
 import org.jline.terminal.Terminal
 import org.jline.terminal.TerminalBuilder
 import org.junit.After
@@ -41,7 +40,6 @@ class MainSupportTest
 
   @Before
   void setUp() {
-    Ansi.setEnabled(false)
     underTest = new MockMain()
   }
 
