@@ -40,6 +40,8 @@ import org.apache.felix.gogo.jline.Expander;
 import org.apache.felix.gogo.jline.Highlighter;
 import org.apache.felix.gogo.jline.ParsedLineImpl;
 import org.apache.felix.gogo.jline.Parser;
+import org.apache.felix.gogo.jline.Posix;
+import org.apache.felix.gogo.jline.Procedural;
 import org.apache.felix.gogo.runtime.Closure;
 import org.apache.felix.gogo.runtime.CommandSessionImpl;
 import org.apache.felix.service.command.CommandSession;
@@ -162,7 +164,15 @@ public class ShellImpl
 
   private void doStarted() throws Exception {
     // HACK: register some gogo functions
-    commandProcessor.registerFunction(new Builtin(),"jobs", "bg", "fg", "new");
+    commandProcessor.registerFunction(new Builtin(),
+      "jobs", "bg", "fg", "new", "type", "tac"
+    );
+    commandProcessor.registerFunction(new Posix(commandProcessor),
+      "cat", "wc", "grep", "head", "tail", "sort", "watch"
+    );
+    commandProcessor.registerFunction(new Procedural(),
+      "each", "if", "not", "throw", "try", "until", "while", "break", "continue"
+    );
 
     CommandSessionImpl session = commandProcessor.createSession(io.streams.in, io.streams.out, io.streams.err);
     session.put(CommandActionFunction.SHELL_VAR, this);
