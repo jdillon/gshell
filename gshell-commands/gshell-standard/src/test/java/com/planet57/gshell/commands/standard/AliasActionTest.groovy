@@ -35,7 +35,7 @@ class AliasActionTest
   }
 
   @Test
-  void testDefineAlias() {
+  void 'define alias'() {
     assert !aliasRegistry.containsAlias('foo')
 
     Object result = executeCommand('foo bar')
@@ -48,21 +48,30 @@ class AliasActionTest
   }
 
   @Test
-  void testRedefineAlias() {
-    testDefineAlias()
-    assert aliasRegistry.containsAlias('foo')
+  void 'redefine alias'() {
+    assert !aliasRegistry.containsAlias('foo')
 
-    Object result = executeCommand('foo baz')
+    Object result = executeCommand('foo bar')
     assert result == null
 
     assert aliasRegistry.containsAlias('foo')
 
     String alias = aliasRegistry.getAlias('foo')
+    assert alias == 'bar'
+
+    assert aliasRegistry.containsAlias('foo')
+
+    result = executeCommand('foo baz')
+    assert result == null
+
+    assert aliasRegistry.containsAlias('foo')
+
+    alias = aliasRegistry.getAlias('foo')
     assert alias == 'baz'
   }
 
   @Test
-  void testExecuteAlias() {
+  void 'execute alias'() {
     assert !aliasRegistry.containsAlias('make-alias')
 
     Object result = executeCommand('make-alias alias')

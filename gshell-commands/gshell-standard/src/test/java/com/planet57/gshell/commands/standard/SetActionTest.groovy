@@ -38,7 +38,7 @@ class SetActionTest
   }
 
   @Test
-  void testDefineVariable() {
+  void 'define variable'() {
     assert !variables.contains('foo')
     Object result = executeCommand('foo bar')
     assert result == null
@@ -49,20 +49,27 @@ class SetActionTest
   }
 
   @Test
-  void testRedefineVariable() {
-    testDefineVariable()
-    assert variables.contains('foo')
-
-    Object result = executeCommand('foo baz')
+  void 'redefine variable'() {
+    assert !variables.contains('foo')
+    Object result = executeCommand('foo bar')
     assert result == null
 
     assert variables.contains('foo')
     Object value = variables.get('foo')
+    assert value == 'bar'
+
+    assert variables.contains('foo')
+
+    result = executeCommand('foo baz')
+    assert result == null
+
+    assert variables.contains('foo')
+    value = variables.get('foo')
     assert value == 'baz'
   }
 
   @Test
-  void testDefineVariableWithExpression() {
+  void 'define variable with expression'() {
     assert !variables.contains('foo')
     Object result = executeCommand('foo ${shell.home}')
     assert result == null

@@ -31,35 +31,35 @@ class EchoActionTest
   private static final String NEWLINE = System.getProperty('line.separator')
 
   @Test
-  void testEcho_a_b_c() {
+  void 'echo a b c'() {
     Object result = executeCommand('a b c')
     assert result == null
     assertOutputEquals('a b c' + NEWLINE)
   }
 
   @Test
-  void testEcho_$shell_home() {
+  void 'echo variable'() {
     Object result = executeCommand('${shell.home}')
     assert result == null
     assertOutputEquals(shell.variables.get('shell.home', String.class) + NEWLINE)
   }
 
   @Test
-  void testEchoWithStop() {
+  void 'echo with stop'() {
     Object result = executeCommand('-- -D')
     assert result == null
     assertOutputEquals('-D' + NEWLINE)
   }
 
   @Test
-  void testEchoWithSpacePadding() {
+  void 'echo with padding'() {
     Object result = executeCommand("' foo '")
     assert result == null
     assertOutputEquals(' foo ' + NEWLINE)
   }
 
   @Test
-  void testEchoNoNewline() {
+  void 'echo omit newline'() {
     Object result = executeCommand('-n foo')
     assert result == null
     assertOutputEquals('foo')

@@ -16,6 +16,7 @@
 package com.planet57.gshell.commands.standard
 
 import com.planet57.gshell.testharness.CommandTestSupport
+import com.planet57.gshell.util.cli2.ProcessingException
 import com.planet57.gshell.util.converter.ConversionException
 import com.planet57.gshell.variables.Variables
 import org.jline.reader.History
@@ -39,37 +40,19 @@ class RecallHistoryActionTest
     super.setUp()
   }
 
-  @Test
-  void testTooManyArguments() {
-    try {
-      executeCommand('1 2')
-      fail()
-    }
-    catch (Exception e) {
-      // expected
-    }
+  @Test(expected = ProcessingException.class)
+  void 'too many arguments'() {
+    executeCommand('1 2')
   }
 
-  @Test
-  void testIndexOutOfRange() {
-    try {
-      executeCommand(Integer.MAX_VALUE as String)
-      fail()
-    }
-    catch (IllegalArgumentException e) {
-      // expected
-    }
+  @Test(expected = IllegalArgumentException.class)
+  void 'index out of range'() {
+    executeCommand(Integer.MAX_VALUE as String)
   }
 
-  @Test
-  void testInvalidIndex() {
-    try {
-      executeCommand('foo')
-      fail()
-    }
-    catch (ConversionException e) {
-      // expected
-    }
+  @Test(expected = ConversionException.class)
+  void 'invalid index'() {
+    executeCommand('foo')
   }
 
   @Test

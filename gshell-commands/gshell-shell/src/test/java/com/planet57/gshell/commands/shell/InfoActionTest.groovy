@@ -13,23 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.commands.shell;
+package com.planet57.gshell.commands.shell
 
-import com.planet57.gshell.testharness.CommandTestSupport;
-import org.junit.Test;
+import com.planet57.gshell.testharness.CommandTestSupport
 
 /**
- * Tests for {@link SleepAction}.
+ * Tests for {@link AskAction}.
  */
-public class SleepActionTest
+class InfoActionTest
     extends CommandTestSupport
 {
-  public SleepActionTest() {
-    super(SleepAction.class);
-  }
-
-  @Test
-  public void testDefault() throws Exception {
-    executeCommand("1ms");
+  InfoActionTest() {
+    super(AskAction.class)
   }
 }

@@ -17,9 +17,8 @@ package com.planet57.gshell.commands.standard
 
 import com.planet57.gshell.command.CommandAction
 import com.planet57.gshell.testharness.CommandTestSupport
+import com.planet57.gshell.util.cli2.ProcessingException
 import org.junit.Test
-
-import static org.junit.Assert.fail
 
 /**
  * Tests for {@link ExitAction}.
@@ -38,25 +37,13 @@ class ExitActionTest
     assert result.code == 57
   }
 
-  @Test
+  @Test(expected = ProcessingException.class)
   void 'too many arguments'() {
-    try {
-      executeCommand('1 2')
-      fail()
-    }
-    catch (Exception e) {
-      // expected
-    }
+    executeCommand('1 2')
   }
 
-  @Test
+  @Test(expected = Exception.class)
   void 'unparseable return code'() {
-    try {
-      executeCommand('foo')
-      fail()
-    }
-    catch (Exception e) {
-      // expected
-    }
+    executeCommand('foo')
   }
 }

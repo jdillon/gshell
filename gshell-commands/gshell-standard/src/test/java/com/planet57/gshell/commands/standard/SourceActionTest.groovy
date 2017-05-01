@@ -16,6 +16,7 @@
 package com.planet57.gshell.commands.standard
 
 import com.planet57.gshell.testharness.CommandTestSupport
+import com.planet57.gshell.util.cli2.ProcessingException
 import com.planet57.gshell.variables.Variables
 import org.junit.Test
 
@@ -38,30 +39,18 @@ class SourceActionTest
     super.setUp()
   }
 
-  @Test
-  void testTooManyArguments() {
-    try {
-      executeCommand('1 2')
-      fail()
-    }
-    catch (Exception e) {
-      // expected
-    }
+  @Test(expected = ProcessingException.class)
+  void 'too many argument'() {
+    executeCommand('1 2')
+  }
+
+  @Test(expected = FileNotFoundException.class)
+  void 'no such file'() {
+    executeCommand('no-such-file')
   }
 
   @Test
-  void testNoSuchFile() {
-    try {
-      executeCommand('no-such-file')
-      fail()
-    }
-    catch (FileNotFoundException e) {
-      // expected
-    }
-  }
-
-  @Test
-  void test1() {
+  void 'source script'() {
     URL script = getClass().getResource('test1.tsh')
     assert script != null
     Object result = executeCommand(script.toExternalForm())
@@ -69,9 +58,8 @@ class SourceActionTest
   }
 
   @Test
-  void test2() {
+  void 'source script setting variable'() {
     Variables variables = shell.variables
-
     assert !variables.contains('foo')
 
     URL script = getClass().getResource('test2.tsh')

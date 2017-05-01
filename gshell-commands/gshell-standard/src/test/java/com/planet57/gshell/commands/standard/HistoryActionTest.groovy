@@ -37,7 +37,7 @@ class HistoryActionTest
   }
 
   @Test
-  void testTooManyArguments() {
+  void 'too many arguments'() {
     try {
       executeCommand('1 2')
       fail()
@@ -48,7 +48,7 @@ class HistoryActionTest
   }
 
   @Test
-  void testPurge() {
+  void purge() {
     // Make sure there is going to be more than one item in history
     executeLine('echo 1')
     executeLine('echo 2')
@@ -61,9 +61,9 @@ class HistoryActionTest
   }
 
   @Test
-  void testListSubset() {
+  void 'list subset'() {
     // first purge
-    testPurge()
+    purge()
 
     // Then seed 10 items
     10.times {
@@ -78,9 +78,9 @@ class HistoryActionTest
   }
 
   @Test
-  void testListOverset() {
+  void 'list overset'() {
     // first purge
-    testPurge()
+    purge()
 
     // Then seed 10 items
     10.times {

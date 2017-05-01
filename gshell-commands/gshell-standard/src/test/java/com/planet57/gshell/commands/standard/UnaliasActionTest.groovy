@@ -19,9 +19,8 @@ import javax.inject.Inject
 
 import com.planet57.gshell.alias.AliasRegistry
 import com.planet57.gshell.testharness.CommandTestSupport
+import com.planet57.gshell.util.cli2.ProcessingException
 import org.junit.Test
-
-import static org.junit.Assert.fail
 
 /**
  * Tests for {@link UnaliasAction}.
@@ -36,19 +35,13 @@ class UnaliasActionTest
     super(UnaliasAction.class)
   }
 
-  @Test
-  void testTooManyArguments() {
-    try {
-      executeCommand('1 2')
-      fail()
-    }
-    catch (Exception e) {
-      // expected
-    }
+  @Test(expected = ProcessingException.class)
+  void 'too many arguments'() {
+    executeCommand('1 2')
   }
 
   @Test
-  void testUndefineAlias() {
+  void 'undefine alias'() {
     assert !aliasRegistry.containsAlias('foo')
     aliasRegistry.registerAlias('foo', 'bar')
 

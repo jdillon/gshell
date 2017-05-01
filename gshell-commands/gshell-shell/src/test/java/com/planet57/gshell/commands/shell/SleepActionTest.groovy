@@ -13,40 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.commands.standard
+package com.planet57.gshell.commands.shell
 
 import com.planet57.gshell.testharness.CommandTestSupport
-import com.planet57.gshell.variables.Variables
 import org.junit.Test
 
 /**
- * Tests for {@link UnsetAction}.
+ * Tests for {@link SleepAction}.
  */
-class UnsetActionTest
+class SleepActionTest
     extends CommandTestSupport
 {
-  UnsetActionTest() {
-    super(UnsetAction.class)
+  SleepActionTest() {
+    super(SleepAction.class)
   }
 
   @Test
-  void 'undefine variable'() {
-    Variables variables = shell.variables
-
-    variables.set('foo', 'bar')
-    assert variables.contains('foo')
-
-    Object result = executeCommand('foo')
-    assert result == null
-    assert !variables.contains('foo')
-  }
-
-  @Test
-  void 'undefine undefined variable'() {
-    Variables variables = shell.variables
-
-    assert !variables.contains('foo')
-    Object result = executeCommand('foo')
-    assert result == null
+  void testDefault() {
+    executeCommand('1ms')
   }
 }
