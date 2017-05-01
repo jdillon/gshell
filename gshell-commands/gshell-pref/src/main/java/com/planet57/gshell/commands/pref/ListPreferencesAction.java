@@ -24,11 +24,6 @@ import com.planet57.gshell.util.pref.Preferences;
 
 import javax.annotation.Nonnull;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-import static org.fusesource.jansi.Ansi.Attribute.INTENSITY_BOLD;
-import static org.fusesource.jansi.Ansi.Color.GREEN;
-import static org.fusesource.jansi.Ansi.ansi;
-
 /**
  * List preferences.
  *
@@ -56,11 +51,12 @@ public class ListPreferencesAction
   }
 
   private void list(final IO io, final java.util.prefs.Preferences node) throws Exception {
-    io.out.println(ansi().fg(GREEN).a(node.absolutePath()).reset());
+    io.out.format("|@green %s|@", node.absolutePath());
 
     for (String key : node.keys()) {
-      io.out.printf("  %s: %s%n", ansi().a(INTENSITY_BOLD).a(key).reset(), node.get(key, null));
+      io.out.format("  @|bold %s|@: %s%n", key, node.get(key, null));
     }
+
     if (recursive) {
       for (String name : node.childrenNames()) {
         list(io, node.node(name));

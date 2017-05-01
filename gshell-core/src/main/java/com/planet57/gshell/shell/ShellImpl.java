@@ -43,6 +43,7 @@ import org.apache.felix.gogo.runtime.CommandProcessorImpl;
 import org.apache.felix.gogo.runtime.CommandSessionImpl;
 import org.apache.felix.service.command.CommandSession;
 import org.apache.felix.service.command.Job;
+import org.fusesource.jansi.AnsiRenderer;
 import org.jline.reader.Completer;
 import org.jline.reader.EndOfFileException;
 import org.jline.reader.History;
@@ -274,7 +275,17 @@ public class ShellImpl
     try {
       while (running) {
         try {
-          String line = lineReader.readLine(prompt.prompt(this), prompt.rprompt(this), null, null);
+          // make prompts text-ansi-aware
+          String prompt = this.prompt.prompt(this);
+          if (AnsiRenderer.test(prompt)) {
+            prompt = AnsiRenderer.render(prompt);
+          }
+          String rprompt = this.prompt.rprompt(this);
+          if (AnsiRenderer.test(rprompt)) {
+            rprompt = AnsiRenderer.render(rprompt);
+          }
+
+          String line = lineReader.readLine(prompt, rprompt, null, null);
           if (log.isTraceEnabled()) {
             traceLine(line);
           }

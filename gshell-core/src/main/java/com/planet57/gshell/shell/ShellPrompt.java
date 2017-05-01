@@ -23,7 +23,6 @@ import javax.annotation.Nullable;
 import com.planet57.gshell.util.ReplacementParser;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
-import org.fusesource.jansi.AnsiRenderer;
 
 import static com.planet57.gshell.variables.VariableNames.SHELL_PROMPT;
 import static com.planet57.gshell.variables.VariableNames.SHELL_RPROMPT;
@@ -93,11 +92,6 @@ public class ShellPrompt
     if (prompt == null) {
       prompt = evaluate(parser, shell.getBranding().getPrompt());
     }
-
-    if (AnsiRenderer.test(prompt)) {
-      prompt = AnsiRenderer.render(prompt);
-    }
-
     return prompt;
   }
 
@@ -115,13 +109,6 @@ public class ShellPrompt
     if (prompt == null) {
       prompt = evaluate(parser, shell.getBranding().getRightPrompt());
     }
-
-    if (prompt != null) {
-      if (AnsiRenderer.test(prompt)) {
-        prompt = AnsiRenderer.render(prompt);
-      }
-    }
-
     return prompt;
   }
 

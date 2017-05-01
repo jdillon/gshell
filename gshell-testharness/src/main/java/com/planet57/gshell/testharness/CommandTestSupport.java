@@ -40,7 +40,6 @@ import org.eclipse.sisu.space.BeanScanning;
 import org.eclipse.sisu.space.SpaceModule;
 import org.eclipse.sisu.space.URLClassSpace;
 import org.eclipse.sisu.wire.WireModule;
-import org.fusesource.jansi.Ansi;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 import org.junit.After;
