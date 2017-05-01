@@ -32,6 +32,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import java.util.Arrays;
+
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -90,5 +93,17 @@ public class CommandProcessorImpl
     }
 
     return super.getCommand(name, path);
+  }
+
+  // TODO: consider how we want to generally cope with functions and the registry
+
+  public void registerFunction(final Object target, final String... functions) {
+    checkNotNull(target);
+    checkNotNull(functions);
+    checkArgument(functions.length > 0);
+
+    Arrays.stream(functions).forEach(function -> {
+      addCommand(null, target, function);
+    });
   }
 }

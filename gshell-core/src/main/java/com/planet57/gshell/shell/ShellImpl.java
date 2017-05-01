@@ -16,7 +16,6 @@
 package com.planet57.gshell.shell;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nullable;
@@ -32,6 +31,7 @@ import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.registry.CommandRegistrar;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.internal.CommandActionFunction;
+import com.planet57.gshell.internal.CommandProcessorImpl;
 import com.planet57.gshell.util.jline.LoggingCompleter;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
@@ -41,7 +41,6 @@ import org.apache.felix.gogo.jline.Highlighter;
 import org.apache.felix.gogo.jline.ParsedLineImpl;
 import org.apache.felix.gogo.jline.Parser;
 import org.apache.felix.gogo.runtime.Closure;
-import org.apache.felix.gogo.runtime.CommandProcessorImpl;
 import org.apache.felix.gogo.runtime.CommandSessionImpl;
 import org.apache.felix.service.command.CommandSession;
 import org.apache.felix.service.command.Job;
@@ -162,8 +161,8 @@ public class ShellImpl
   }
 
   private void doStarted() throws Exception {
-    // HACK: install some gogo-jline commands
-    register(commandProcessor, new Builtin(), "jobs", "bg", "fg", "new");
+    // HACK: register some gogo functions
+    commandProcessor.registerFunction(new Builtin(),"jobs", "bg", "fg", "new");
 
     CommandSessionImpl session = commandProcessor.createSession(io.streams.in, io.streams.out, io.streams.err);
     session.put(CommandActionFunction.SHELL_VAR, this);
@@ -175,13 +174,6 @@ public class ShellImpl
     currentSession = session;
 
     scriptLoader.loadProfileScripts(this);
-  }
-
-  // HACK: install gogo functions
-  private static void register(final CommandProcessorImpl commandProcessor, final Object target, final String... functions) {
-    Arrays.stream(functions).forEach(function -> {
-      commandProcessor.addCommand("gogo", target, function);
-    });
   }
 
   private void doStop() throws Exception {
