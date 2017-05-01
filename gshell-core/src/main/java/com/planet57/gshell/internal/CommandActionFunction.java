@@ -37,6 +37,7 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
 /**
  * GOGO {@link Function} adapting a {@link CommandAction}.
@@ -67,7 +68,10 @@ public class CommandActionFunction
     final ClassLoader cl = Thread.currentThread().getContextClassLoader();
 
     final Shell shell = (Shell) session.get(SHELL_VAR);
+    checkState(shell != null);
+
     final Terminal terminal = (Terminal) session.get(TERMINAL_VAR);
+    checkState(terminal != null);
 
     // re-create IO with current streams; which are adjusted by ThreadIO
     final IO io = new IO(StreamSet.system(), terminal);
