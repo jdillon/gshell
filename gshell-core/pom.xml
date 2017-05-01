@@ -77,11 +77,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.fusesource.jansi</groupId>
-      <artifactId>jansi</artifactId>
-    </dependency>
-
-    <dependency>
       <groupId>com.planet57.gshell</groupId>
       <artifactId>gshell-testsupport</artifactId>
       <scope>test</scope>
