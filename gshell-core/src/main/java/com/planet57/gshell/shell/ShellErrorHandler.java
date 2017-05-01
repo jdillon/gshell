@@ -20,9 +20,6 @@ import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.fusesource.jansi.Ansi.Attribute.INTENSITY_BOLD;
-import static org.fusesource.jansi.Ansi.Color.RED;
-import static org.fusesource.jansi.Ansi.ansi;
 
 /**
  * Shell error-handler which renders errors with ANSI codes.
@@ -60,32 +57,26 @@ public class ShellErrorHandler
     // TODO: use Throwables2.explain(), or mimic same style with ANSI support when showTrace == false
 
     Throwable cause = error;
-    io.err.print(ansi().a(INTENSITY_BOLD).fg(RED).a(cause.getClass().getName()).reset());
+    io.err.format("@|bold,red %s|@", cause.getClass().getName());
     if (cause.getMessage() != null) {
-      io.err.print(": ");
-      io.err.print(ansi().a(INTENSITY_BOLD).fg(RED).a(cause.getMessage()).reset());
+      io.err.format(": @|bold, red %s|@", cause.getMessage());
     }
     io.err.println();
 
     if (verbose) {
       while (cause != null) {
         for (StackTraceElement e : cause.getStackTrace()) {
-          io.err.print("    ");
-          io.err.print(ansi().a(INTENSITY_BOLD).a(Messages.ERROR_AT.format()).reset().a(" ").a(e.getClassName()).a(".")
-              .a(e.getMethodName()));
-          io.err.print(ansi().a(" (").a(INTENSITY_BOLD).a(getLocation(e)).reset().a(")"));
-          io.err.println();
+          io.err.format("     @|bold %s|@ %s.%s (@|bold %s|@)%n",
+            Messages.ERROR_AT.format(),
+            e.getClassName(),
+            e.getMethodName(),
+            getLocation(e)
+          );
         }
 
         cause = cause.getCause();
         if (cause != null) {
-          io.err.print(ansi().a(INTENSITY_BOLD).a(Messages.ERROR_CAUSED_BY.format()).reset().a(" ")
-              .a(cause.getClass().getName()));
-          if (cause.getMessage() != null) {
-            io.err.print(": ");
-            io.err.print(ansi().a(INTENSITY_BOLD).fg(RED).a(cause.getMessage()).reset());
-          }
-          io.err.println();
+          io.err.format("@|bold %s|@ %s%n", Messages.ERROR_CAUSED_BY.format(), cause.getClass().getName());
         }
       }
     }
