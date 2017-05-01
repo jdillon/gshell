@@ -18,8 +18,6 @@ package com.planet57.gshell.shell;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
-import com.planet57.gshell.variables.VariableNames;
-import com.planet57.gshell.variables.Variables;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.fusesource.jansi.Ansi.Attribute.INTENSITY_BOLD;
@@ -51,21 +49,14 @@ public class ShellErrorHandler
   /**
    * @since 3.0
    */
-  public boolean handleError(final Shell shell, final Throwable error) {
+  public boolean handleError(final IO io, final Throwable error, final boolean verbose) {
+    checkNotNull(io);
     checkNotNull(error);
-    displayError(shell, error);
+    displayError(io, error, verbose);
     return true;
   }
 
-  private void displayError(final Shell shell, final Throwable error) {
-    assert error != null;
-
-    IO io = shell.getIo();
-    Variables variables = shell.getVariables();
-
-    // Determine if the stack trace flag is set
-    Boolean showTrace = variables.require(VariableNames.SHELL_ERRORS, Boolean.class, false);
-
+  private void displayError(final IO io, final Throwable error, final boolean verbose) {
     // TODO: use Throwables2.explain(), or mimic same style with ANSI support when showTrace == false
 
     Throwable cause = error;
@@ -76,7 +67,7 @@ public class ShellErrorHandler
     }
     io.err.println();
 
-    if (showTrace) {
+    if (verbose) {
       while (cause != null) {
         for (StackTraceElement e : cause.getStackTrace()) {
           io.err.print("    ");

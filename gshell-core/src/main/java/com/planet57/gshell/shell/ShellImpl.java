@@ -292,7 +292,7 @@ public class ShellImpl
         catch (Throwable t) {
           log.trace("Work failed", t);
           setLastResult(session, t);
-          running = errorHandler.handleError(this, t);
+          running = errorHandler.handleError(io, t, variables.require(VariableNames.SHELL_ERRORS, Boolean.class, true));
         }
       }
     }
