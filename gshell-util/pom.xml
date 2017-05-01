@@ -82,6 +82,11 @@
     </dependency>
 
     <dependency>
+      <groupId>org.sonatype.goodies</groupId>
+      <artifactId>goodies-i18n</artifactId>
+    </dependency>
+
+    <dependency>
       <groupId>com.planet57.gshell</groupId>
       <artifactId>gshell-testsupport</artifactId>
       <scope>test</scope>

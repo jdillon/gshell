@@ -16,11 +16,12 @@
 package com.planet57.gshell.util.setter;
 
 import java.lang.reflect.AccessibleObject;
+import java.lang.reflect.Method;
 
 import com.planet57.gossip.Log;
-import com.planet57.gshell.util.i18n.MessageSource;
-import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 import org.slf4j.Logger;
+import org.sonatype.goodies.i18n.I18N;
+import org.sonatype.goodies.i18n.MessageBundle;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -33,6 +34,18 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public abstract class SetterSupport
     implements Setter
 {
+  protected interface Messages
+    extends MessageBundle
+  {
+    @DefaultMessage("Method %s takes more than one parameter")
+    String ILLEGAL_METHOD_SIGNATURE(Method method);
+
+    @DefaultMessage("Field of type %s is not supported")
+    String ILLEGAL_FIELD_SIGNATURE(Class<?> type);
+  }
+
+  protected static final Messages messages = I18N.create(Messages.class);
+
   protected final Logger log = Log.getLogger(getClass());
 
   private final AccessibleObject accessible;
@@ -53,7 +66,7 @@ public abstract class SetterSupport
   }
 
   public void set(final Object value) {
-    log.trace("Setting '{}' on: {}, using: {}", new Object[]{value, bean, accessible});
+    log.trace("Setting '{}' on: {}, using: {}", value, bean, accessible);
 
     try {
       doSet(value);
@@ -72,16 +85,4 @@ public abstract class SetterSupport
   }
 
   protected abstract void doSet(Object value) throws IllegalAccessException;
-
-  protected enum Messages
-  {
-    ILLEGAL_METHOD_SIGNATURE,
-    ILLEGAL_FIELD_SIGNATURE;
-
-    private final MessageSource messages = new ResourceBundleMessageSource(SetterSupport.class);
-
-    String format(final Object... args) {
-      return messages.format(name(), args);
-    }
-  }
 }

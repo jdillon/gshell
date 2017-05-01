@@ -37,7 +37,7 @@ public class CollectionFieldSetter
     super(field, bean);
 
     if (!Collection.class.isAssignableFrom(field.getType())) {
-      throw new IllegalArgumentException(Messages.ILLEGAL_FIELD_SIGNATURE.format(field.getType()));
+      throw new IllegalArgumentException(messages.ILLEGAL_FIELD_SIGNATURE(field.getType()));
     }
   }
 
