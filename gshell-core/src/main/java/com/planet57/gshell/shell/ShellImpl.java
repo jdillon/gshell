@@ -35,6 +35,7 @@ import com.planet57.gshell.util.jline.LoggingCompleter;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
 import org.apache.felix.gogo.jline.Expander;
+import org.apache.felix.gogo.jline.Highlighter;
 import org.apache.felix.gogo.jline.ParsedLineImpl;
 import org.apache.felix.gogo.jline.Parser;
 import org.apache.felix.gogo.runtime.CommandProcessorImpl;
@@ -241,6 +242,7 @@ public class ShellImpl
       .parser(new Parser()) // install gogo-jline program accessible parser impl
       .expander(new Expander(session))
       .completer(new LoggingCompleter(completer))
+      .highlighter(new Highlighter(session))
       .history(history)
       .variables(session.getVariables())
       .variable(LineReader.HISTORY_FILE, historyFile)
@@ -273,7 +275,7 @@ public class ShellImpl
     try {
       while (running) {
         try {
-          // make prompts text-ansi-aware
+          // make prompts ansi-aware; line-reader doesn't write these to ansi-renderer-enabled streams
           String prompt = this.prompt.prompt(this);
           if (AnsiRenderer.test(prompt)) {
             prompt = AnsiRenderer.render(prompt);
