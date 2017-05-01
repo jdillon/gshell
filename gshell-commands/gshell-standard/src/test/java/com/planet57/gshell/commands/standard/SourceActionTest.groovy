@@ -65,7 +65,7 @@ class SourceActionTest
     URL script = getClass().getResource('test1.tsh')
     assert script != null
     Object result = executeCommand(script.toExternalForm())
-    assertEqualsSuccess(result)
+    assert result == null
   }
 
   @Test
@@ -77,7 +77,7 @@ class SourceActionTest
     URL script = getClass().getResource('test2.tsh')
     assert script != null
     Object result = executeCommand(script.toExternalForm())
-    assertEqualsSuccess(result)
+    assert result == null
 
     assert variables.contains('foo')
     Object value = variables.get('foo')

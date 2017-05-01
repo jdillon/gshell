@@ -55,6 +55,7 @@ import org.sonatype.goodies.testsupport.TestUtil;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 // FIXME: Goodies TestSupport initMocks() is causing some issues in mvnsh
@@ -242,14 +243,6 @@ public abstract class CommandTestSupport
   // Assertion helpers
   //
 
-  protected void assertEqualsSuccess(final Object result) {
-    assertThat(result, is(CommandAction.Result.SUCCESS));
-  }
-
-  protected void assertEqualsFailure(final Object result) {
-    assertThat(result, is(CommandAction.Result.FAILURE));
-  }
-
   protected void assertOutputEquals(final String expected) {
     assertThat(getIo().getOutputString(), is(expected));
   }
@@ -278,9 +271,9 @@ public abstract class CommandTestSupport
     Object result;
 
     result = executeCommand("--help");
-    assertEqualsSuccess(result);
+    assertThat(result, nullValue());
 
     result = executeCommand("-h");
-    assertEqualsSuccess(result);
+    assertThat(result, nullValue());
   }
 }

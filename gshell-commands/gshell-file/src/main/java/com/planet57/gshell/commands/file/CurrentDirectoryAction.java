@@ -43,6 +43,6 @@ public class CurrentDirectoryAction
 
     io.out.println(dir.getPath());
 
-    return Result.SUCCESS;
+    return null;
   }
 }

@@ -97,7 +97,7 @@ public class SetAction
         break;
     }
 
-    return Result.SUCCESS;
+    return null;
   }
 
   private Object displayList(final CommandContext context) throws Exception {
@@ -137,6 +137,6 @@ public class SetAction
     // force RAW stream to flush
     io.streams.out.flush();
 
-    return Result.SUCCESS;
+    return null;
   }
 }

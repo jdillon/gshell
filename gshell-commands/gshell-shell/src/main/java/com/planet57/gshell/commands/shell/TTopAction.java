@@ -39,6 +39,6 @@ public class TTopAction
     TTop ttop = new TTop(context.getIo().terminal);
     ttop.run();
 
-    return Result.SUCCESS;
+    return null;
   }
 }

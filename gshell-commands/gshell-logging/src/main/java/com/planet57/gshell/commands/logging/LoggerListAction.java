@@ -67,6 +67,6 @@ public class LoggerListAction
       }
     }
 
-    return Result.SUCCESS;
+    return null;
   }
 }

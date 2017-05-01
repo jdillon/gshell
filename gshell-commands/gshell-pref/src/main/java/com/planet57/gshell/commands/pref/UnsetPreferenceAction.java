@@ -46,6 +46,6 @@ public class UnsetPreferenceAction
     prefs.remove(key);
     prefs.sync();
 
-    return Result.SUCCESS;
+    return null;
   }
 }

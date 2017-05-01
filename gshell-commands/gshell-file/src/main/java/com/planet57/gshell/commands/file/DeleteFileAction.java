@@ -60,8 +60,6 @@ public class DeleteFileAction
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    IO io = context.getIo();
-
     File file = getFileSystem().resolveFile(path);
 
     new FileAssert(file).exists();
@@ -75,11 +73,10 @@ public class DeleteFileAction
       log.debug("Deleting file: {}", file);
       new FileAssert(file).isFile();
       if (!file.delete()) {
-        io.err.println(getMessages().format("error.delete-failed", file));
-        return Result.FAILURE;
+        throw new RuntimeException(getMessages().format("error.delete-failed", file));
       }
     }
 
-    return Result.SUCCESS;
+    return null;
   }
 }

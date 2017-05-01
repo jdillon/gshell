@@ -57,9 +57,9 @@ public class SleepAction
       else {
         log.debug("Sleep was interrupted");
       }
-      return Result.FAILURE;
+      return 1;
     }
 
-    return Result.SUCCESS;
+    return null;
   }
 }

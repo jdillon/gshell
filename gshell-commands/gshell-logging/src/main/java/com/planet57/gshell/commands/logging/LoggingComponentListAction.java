@@ -59,6 +59,6 @@ public class LoggingComponentListAction
       }
     }
 
-    return Result.SUCCESS;
+    return null;
   }
 }

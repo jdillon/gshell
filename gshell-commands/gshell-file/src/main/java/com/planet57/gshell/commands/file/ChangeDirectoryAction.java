@@ -78,6 +78,6 @@ public class ChangeDirectoryAction
       io.out.println(file.getPath());
     }
 
-    return Result.SUCCESS;
+    return null;
   }
 }

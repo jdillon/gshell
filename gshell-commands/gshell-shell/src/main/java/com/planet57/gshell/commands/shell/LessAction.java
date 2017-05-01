@@ -80,6 +80,6 @@ public class LessAction
     }
     less.run(input);
 
-    return Result.SUCCESS;
+    return null;
   }
 }

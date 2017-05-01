@@ -40,6 +40,6 @@ public class LoggerLevelsAction
       io.out.println(level);
     }
 
-    return Result.SUCCESS;
+    return null;
   }
 }

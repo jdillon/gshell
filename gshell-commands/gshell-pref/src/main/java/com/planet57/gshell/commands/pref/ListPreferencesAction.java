@@ -52,7 +52,7 @@ public class ListPreferencesAction
 
     node().sync();
 
-    return Result.SUCCESS;
+    return null;
   }
 
   private void list(final IO io, final java.util.prefs.Preferences node) throws Exception {

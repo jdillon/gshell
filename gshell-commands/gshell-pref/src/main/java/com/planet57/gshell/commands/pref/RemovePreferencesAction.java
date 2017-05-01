@@ -52,6 +52,6 @@ public class RemovePreferencesAction
       prefs.removeNode();
     }
 
-    return Result.SUCCESS;
+    return null;
   }
 }

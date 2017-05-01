@@ -56,8 +56,7 @@ public class ChangeGroupAction
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     log.debug("Changing group to: {}", name);
     context.getVariables().set(VariableNames.SHELL_GROUP, name);
-
-    return Result.SUCCESS;
+    return null;
   }
 
   @Override

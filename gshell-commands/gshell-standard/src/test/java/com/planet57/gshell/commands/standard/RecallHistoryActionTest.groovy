@@ -88,7 +88,7 @@ class RecallHistoryActionTest
 
     // Recall the first, which sets foo to bar
     Object result = executeCommand('1')
-    assertEqualsSuccess(result)
+    assert result == null
 
     // Make sure it executed
     assert variables.get('foo') == 'bar'

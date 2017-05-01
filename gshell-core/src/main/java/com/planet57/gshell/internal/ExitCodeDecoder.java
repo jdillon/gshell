@@ -16,7 +16,6 @@
 package com.planet57.gshell.internal;
 
 import com.planet57.gossip.Log;
-import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.CommandAction.ExitNotification;
 import org.slf4j.Logger;
 
@@ -34,10 +33,7 @@ public class ExitCodeDecoder
   public static int decode(@Nullable final Object result) {
     log.debug("Decoding: {}", result);
 
-    if (result instanceof CommandAction.Result) {
-      return ((CommandAction.Result) result).ordinal();
-    }
-    else if (result instanceof ExitNotification) {
+    if (result instanceof ExitNotification) {
       return ((ExitNotification)result).code;
     }
     else if (result instanceof Number) {

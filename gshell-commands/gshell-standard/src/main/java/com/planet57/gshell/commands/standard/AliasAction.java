@@ -113,7 +113,7 @@ public class AliasAction
       }
     }
 
-    return Result.SUCCESS;
+    return null;
   }
 
   private Object defineAlias(final CommandContext context) throws Exception {
@@ -124,6 +124,6 @@ public class AliasAction
 
     aliasRegistry.registerAlias(name, alias);
 
-    return Result.SUCCESS;
+    return null;
   }
 }

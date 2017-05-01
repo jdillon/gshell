@@ -37,7 +37,7 @@ class UnsetActionTest
     assert variables.contains('foo')
 
     Object result = executeCommand('foo')
-    assertEqualsSuccess(result)
+    assert result == null
     assert !variables.contains('foo')
   }
 
@@ -47,8 +47,6 @@ class UnsetActionTest
 
     assert !variables.contains('foo')
     Object result = executeCommand('foo')
-
-    // Unset undefined should not return any errors
-    assertEqualsSuccess(result)
+    assert result == null
   }
 }

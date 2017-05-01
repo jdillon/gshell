@@ -65,12 +65,11 @@ public class UnaliasAction
 
     try {
       aliasRegistry.removeAlias(name);
-
-      return Result.SUCCESS;
     }
     catch (NoSuchAliasException e) {
       log.debug("Alias not defined: {}", name);
-      return Result.FAILURE;
     }
+
+    return null;
   }
 }

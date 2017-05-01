@@ -44,6 +44,6 @@ public class SetPreferenceAction
     node().put(key, value);
     node().sync();
 
-    return Result.SUCCESS;
+    return null;
   }
 }

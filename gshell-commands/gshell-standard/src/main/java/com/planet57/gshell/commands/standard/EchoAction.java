@@ -68,6 +68,6 @@ public class EchoAction
       io.out.println();
     }
 
-    return Result.SUCCESS;
+    return null;
   }
 }

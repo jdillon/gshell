@@ -55,7 +55,7 @@ class HistoryActionTest
 
     // Then purge and expect history to be empty
     Object result = executeCommand('-p')
-    assertEqualsSuccess(result)
+    assert result == null
 
     assert shell.history.empty
   }
@@ -72,7 +72,7 @@ class HistoryActionTest
 
     // And then ask for the last 5
     Object result = executeCommand('5')
-    assertEqualsSuccess(result)
+    assert result == null
 
     // TODO: Verify output
   }
@@ -89,7 +89,7 @@ class HistoryActionTest
 
     // And then ask for the last 15
     Object result = executeCommand('15')
-    assertEqualsSuccess(result)
+    assert result == null
 
     // TODO: Verify output
   }

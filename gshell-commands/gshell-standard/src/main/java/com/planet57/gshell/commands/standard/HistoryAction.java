@@ -64,12 +64,12 @@ public class HistoryAction
     if (purge) {
       history.purge();
       log.debug("History purged");
-      return Result.SUCCESS;
+      return null;
     }
     else if (save) {
       history.save();
       log.debug("History saved");
-      return Result.SUCCESS;
+      return null;
     }
 
     return displayEntries(context);
@@ -89,7 +89,7 @@ public class HistoryAction
       renderEntry(io, entries.next());
     }
 
-    return Result.SUCCESS;
+    return null;
   }
 
   private void renderEntry(final IO io, final History.Entry entry) {

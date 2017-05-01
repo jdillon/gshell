@@ -60,6 +60,6 @@ public class LoggerSetLevelAction
 
     log.debug("Set logger {} level to: {}", logger, level);
 
-    return Result.SUCCESS;
+    return null;
   }
 }

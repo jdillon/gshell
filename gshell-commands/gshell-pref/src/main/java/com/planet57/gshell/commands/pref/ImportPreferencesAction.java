@@ -59,6 +59,6 @@ public class ImportPreferencesAction
       Closeables.close(in);
     }
 
-    return Result.SUCCESS;
+    return null;
   }
 }

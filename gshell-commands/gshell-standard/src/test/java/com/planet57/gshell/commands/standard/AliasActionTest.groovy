@@ -39,7 +39,7 @@ class AliasActionTest
     assert !aliasRegistry.containsAlias('foo')
 
     Object result = executeCommand('foo bar')
-    assertEqualsSuccess(result)
+    assert result == null
 
     assert aliasRegistry.containsAlias('foo')
 
@@ -53,7 +53,7 @@ class AliasActionTest
     assert aliasRegistry.containsAlias('foo')
 
     Object result = executeCommand('foo baz')
-    assertEqualsSuccess(result)
+    assert result == null
 
     assert aliasRegistry.containsAlias('foo')
 
@@ -66,14 +66,14 @@ class AliasActionTest
     assert !aliasRegistry.containsAlias('make-alias')
 
     Object result = executeCommand('make-alias alias')
-    assertEqualsSuccess(result)
+    assert result == null;
 
     assert aliasRegistry.containsAlias('make-alias')
     String alias = aliasRegistry.getAlias(('make-alias'))
     assert alias == 'alias'
 
     result = executeLine('make-alias foo bar')
-    assertEqualsSuccess(result)
+    assert result == null
 
     assert aliasRegistry.containsAlias('foo')
     alias = aliasRegistry.getAlias('foo')

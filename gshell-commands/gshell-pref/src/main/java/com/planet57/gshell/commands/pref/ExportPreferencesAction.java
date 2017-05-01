@@ -84,6 +84,6 @@ public class ExportPreferencesAction
 
     prefs.sync();
 
-    return Result.SUCCESS;
+    return null;
   }
 }

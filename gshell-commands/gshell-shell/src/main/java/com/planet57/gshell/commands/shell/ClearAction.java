@@ -44,6 +44,6 @@ public class ClearAction
       io.terminal.flush();
     }
 
-    return Result.SUCCESS;
+    return null;
   }
 }

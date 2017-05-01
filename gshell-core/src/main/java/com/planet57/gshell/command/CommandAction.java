@@ -44,25 +44,6 @@ public interface CommandAction
    */
   Object execute(@Nonnull CommandContext context) throws Exception;
 
-  // FIXME: remove Result; and simply return null for success and throw exception for failures
-
-  /**
-   * Enumeration for the basic return types of a command execution.
-   */
-  @Deprecated
-  enum Result
-  {
-    /**
-     * The command execution was successful.
-     */
-    SUCCESS, // 0
-
-    /**
-     * The command execution failed.
-     */
-    FAILURE // 1
-  }
-
   // FIXME: Find a better name for this; to avoid confusion with Throwable Notification
   class ExitNotification
   {

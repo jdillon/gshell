@@ -53,7 +53,7 @@ class UnaliasActionTest
     aliasRegistry.registerAlias('foo', 'bar')
 
     Object result = executeCommand('foo')
-    assertEqualsSuccess(result)
+    assert result == null
     assert !aliasRegistry.containsAlias('foo')
   }
 }

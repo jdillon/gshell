@@ -39,6 +39,6 @@ public class DateAction
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
     io.out.println(DateFormat.getInstance().format(new Date()));
-    return Result.SUCCESS;
+    return null;
   }
 }

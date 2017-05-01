@@ -101,7 +101,6 @@ public class CommandActionFunction
           printer.printUsage(io.out, action.getSimpleName());
 
           // Skip execution
-          result = CommandAction.Result.SUCCESS;
           execute = false;
         }
       }

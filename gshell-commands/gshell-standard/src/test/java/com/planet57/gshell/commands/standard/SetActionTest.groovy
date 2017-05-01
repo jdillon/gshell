@@ -41,7 +41,7 @@ class SetActionTest
   void testDefineVariable() {
     assert !variables.contains('foo')
     Object result = executeCommand('foo bar')
-    assertEqualsSuccess(result)
+    assert result == null
 
     assert variables.contains('foo')
     Object value = variables.get('foo')
@@ -54,7 +54,7 @@ class SetActionTest
     assert variables.contains('foo')
 
     Object result = executeCommand('foo baz')
-    assertEqualsSuccess(result)
+    assert result == null
 
     assert variables.contains('foo')
     Object value = variables.get('foo')
@@ -65,7 +65,7 @@ class SetActionTest
   void testDefineVariableWithExpression() {
     assert !variables.contains('foo')
     Object result = executeCommand('foo ${shell.home}')
-    assertEqualsSuccess(result)
+    assert result == null
 
     assert variables.contains('foo')
     Object value = variables.get('foo')

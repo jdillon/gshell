@@ -81,7 +81,7 @@ public class SourceAction
       Closeables.close(reader);
     }
 
-    return Result.SUCCESS;
+    return null;
   }
 
   private BufferedReader openReader(final Object source) throws IOException {

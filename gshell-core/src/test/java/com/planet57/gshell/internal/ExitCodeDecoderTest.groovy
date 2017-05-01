@@ -27,12 +27,6 @@ class ExitCodeDecoderTest
   extends TestSupport
 {
   @Test
-  void 'decode result'() {
-    assert ExitCodeDecoder.decode(CommandAction.Result.SUCCESS) == CommandAction.Result.SUCCESS.ordinal()
-    assert ExitCodeDecoder.decode(CommandAction.Result.FAILURE) == CommandAction.Result.FAILURE.ordinal()
-  }
-
-  @Test
   void 'decode number'() {
     assert ExitCodeDecoder.decode(1) == 1
   }

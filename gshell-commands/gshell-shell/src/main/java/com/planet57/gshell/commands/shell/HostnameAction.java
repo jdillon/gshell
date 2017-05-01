@@ -48,6 +48,6 @@ public class HostnameAction
       io.out.println(localhost.getHostAddress());
     }
 
-    return Result.SUCCESS;
+    return null;
   }
 }

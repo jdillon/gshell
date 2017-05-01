@@ -43,14 +43,13 @@ class HelpActionTest
     assert commandRegistry.containsCommand('help')
     assert !aliasRegistry.containsAlias('foo')
     Object result = executeCommand('help')
-    assertEqualsSuccess(result)
+    assert result == null
   }
 
-  @Test
+  @Test(expected = Exception.class)
   void testHelpFoo() {
     assert !commandRegistry.containsCommand('foo')
     assert !aliasRegistry.containsAlias('foo')
-    Object result = executeCommand('foo')
-    assertEqualsFailure(result)
+    executeCommand('foo')
   }
 }

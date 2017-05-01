@@ -84,6 +84,6 @@ public class CopyAction
       }
     }
 
-    return Result.SUCCESS;
+    return null;
   }
 }

@@ -33,35 +33,35 @@ class EchoActionTest
   @Test
   void testEcho_a_b_c() {
     Object result = executeCommand('a b c')
-    assertEqualsSuccess(result)
+    assert result == null
     assertOutputEquals('a b c' + NEWLINE)
   }
 
   @Test
   void testEcho_$shell_home() {
     Object result = executeCommand('${shell.home}')
-    assertEqualsSuccess(result)
+    assert result == null
     assertOutputEquals(shell.variables.get('shell.home', String.class) + NEWLINE)
   }
 
   @Test
   void testEchoWithStop() {
     Object result = executeCommand('-- -D')
-    assertEqualsSuccess(result)
+    assert result == null
     assertOutputEquals('-D' + NEWLINE)
   }
 
   @Test
   void testEchoWithSpacePadding() {
     Object result = executeCommand("' foo '")
-    assertEqualsSuccess(result)
+    assert result == null
     assertOutputEquals(' foo ' + NEWLINE)
   }
 
   @Test
   void testEchoNoNewline() {
     Object result = executeCommand('-n foo')
-    assertEqualsSuccess(result)
+    assert result == null
     assertOutputEquals('foo')
   }
 }

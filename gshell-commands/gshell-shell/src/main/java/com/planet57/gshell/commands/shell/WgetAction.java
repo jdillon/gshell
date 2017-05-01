@@ -96,6 +96,6 @@ public class WgetAction
 
     // else flush the stream and say we did good
     Flushables.flushQuietly(out);
-    return Result.SUCCESS;
+    return null;
   }
 }

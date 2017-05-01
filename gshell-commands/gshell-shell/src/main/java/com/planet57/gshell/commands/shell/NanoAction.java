@@ -61,6 +61,6 @@ public class NanoAction
     nano.open(files);
     nano.run();
 
-    return Result.SUCCESS;
+    return null;
   }
 }

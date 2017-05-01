@@ -42,6 +42,7 @@ import org.jline.reader.Completer;
 import org.jline.reader.impl.completer.AggregateCompleter;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
 /**
  * Display help pages.
@@ -101,7 +102,7 @@ public class HelpAction
     // If there is no argument given, display all help pages in context
     if (name == null) {
       displayAvailable(context);
-      return Result.SUCCESS;
+      return null;
     }
 
     // First try a direct match
@@ -121,19 +122,16 @@ public class HelpAction
         // else show matching pages
         io.out.println(getMessages().format("info.matching-pages"));
         HelpPageUtil.renderIndex(io.out, pages);
-        return Result.SUCCESS;
+        return null;
       }
     }
 
     // if not page matched, complain
-    if (page == null) {
-      io.err.println(getMessages().format("error.help-not-found", name));
-      return Result.FAILURE;
-    }
+    checkState(page != null, getMessages().format("error.help-not-found", name));
 
     page.render(context.getShell(), io.out);
 
-    return Result.SUCCESS;
+    return null;
   }
 
   private void displayAvailable(final CommandContext context) {

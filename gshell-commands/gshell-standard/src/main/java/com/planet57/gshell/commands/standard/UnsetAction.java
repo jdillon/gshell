@@ -72,7 +72,7 @@ public class UnsetAction
       }
     }
 
-    return Result.SUCCESS;
+    return null;
   }
 
   private void unsetProperty(final String name) {

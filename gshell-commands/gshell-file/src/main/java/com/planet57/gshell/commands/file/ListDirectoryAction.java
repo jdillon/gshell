@@ -83,7 +83,7 @@ public class ListDirectoryAction
       io.out.println(file.getPath());
     }
 
-    return Result.SUCCESS;
+    return null;
   }
 
   private void listChildren(final IO io, final File dir) throws Exception {

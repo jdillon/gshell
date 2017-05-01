@@ -59,10 +59,9 @@ public class CreateDirectoryAction
     new FileAssert(file).exists(false).isFile(false);
 
     if (!file.mkdirs()) {
-      io.err.println(getMessages().format("error.create-failed", file));
-      return Result.FAILURE;
+      throw new RuntimeException(getMessages().format("error.create-failed", file));
     }
 
-    return Result.SUCCESS;
+    return null;
   }
 }
