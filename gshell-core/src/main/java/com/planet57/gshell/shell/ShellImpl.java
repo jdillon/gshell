@@ -360,15 +360,17 @@ public class ShellImpl
   //
 
   @Nullable
-  private String expand(final CommandSessionImpl session, final Object value) {
-    try {
-      Object result = org.apache.felix.gogo.runtime.Expander.expand(value.toString(), new Closure(session, null, null));
-      if (result != null) {
-        return result.toString();
+  private String expand(final CommandSessionImpl session, @Nullable final Object value) {
+    if (value != null) {
+      try {
+        Object result = org.apache.felix.gogo.runtime.Expander.expand(value.toString(), new Closure(session, null, null));
+        if (result != null) {
+          return result.toString();
+        }
       }
-    }
-    catch (Exception e) {
-      log.warn("Failed to expand: {}", value, e);
+      catch (Exception e) {
+        log.warn("Failed to expand: {}", value, e);
+      }
     }
     return null;
   }
@@ -382,8 +384,9 @@ public class ShellImpl
     String prompt = null;
     if (value != null) {
       prompt = expand(session, value);
+
+      // fail-safe prompt
       if (prompt == null) {
-        // fail-safe prompt
         prompt = String.format("%s> ", branding.getProgramName());
       }
 
