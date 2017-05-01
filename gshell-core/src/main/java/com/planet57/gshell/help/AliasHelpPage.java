@@ -18,8 +18,8 @@ package com.planet57.gshell.help;
 import java.io.PrintWriter;
 
 import com.planet57.gshell.shell.Shell;
-import com.planet57.gshell.util.i18n.MessageSource;
-import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
+import org.sonatype.goodies.i18n.I18N;
+import org.sonatype.goodies.i18n.MessageBundle;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -32,16 +32,25 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class AliasHelpPage
     implements HelpPage
 {
+  private interface Messages
+    extends MessageBundle
+  {
+    @DefaultMessage("Alias to: @|bold %s|@")
+    String description(String target);
+
+    @DefaultMessage("The @|bold %s|@ command is an alias to: @|bold %s|@")
+    String content(String name, String target);
+  }
+
+  private static final Messages messages = I18N.create(Messages.class);
+
   private final String name;
 
   private final String alias;
 
-  private final MessageSource messages;
-
   public AliasHelpPage(final String name, final String alias) {
     this.name = checkNotNull(name);
     this.alias = checkNotNull(alias);
-    this.messages = new ResourceBundleMessageSource(getClass());
   }
 
   @Override
@@ -51,14 +60,14 @@ public class AliasHelpPage
 
   @Override
   public String getDescription() {
-    return messages.format("alias-description", alias);
+    return messages.description(alias);
   }
 
   @Override
   public void render(final Shell shell, final PrintWriter out) throws Exception {
     checkNotNull(shell);
     checkNotNull(out);
-    out.println(messages.format("alias-content", name, alias));
+    out.println(messages.content(name, alias));
   }
 
   @Override

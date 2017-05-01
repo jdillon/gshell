@@ -25,8 +25,6 @@ import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.util.io.PrintBuffer;
 import com.planet57.gshell.util.cli2.CliProcessor;
 import com.planet57.gshell.util.cli2.HelpPrinter;
-import com.planet57.gshell.util.i18n.MessageSource;
-import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 import com.planet57.gshell.util.pref.PreferenceDescriptor;
 import com.planet57.gshell.util.pref.PreferenceProcessor;
 import com.planet57.gshell.variables.Variables;
@@ -36,6 +34,8 @@ import org.codehaus.plexus.interpolation.PrefixedObjectValueSource;
 import org.codehaus.plexus.interpolation.PropertiesBasedValueSource;
 import org.codehaus.plexus.interpolation.StringSearchInterpolator;
 import org.jline.terminal.Terminal;
+import org.sonatype.goodies.i18n.I18N;
+import org.sonatype.goodies.i18n.MessageBundle;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -49,6 +49,21 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class CommandHelpPage
     implements HelpPage
 {
+  private interface Messages
+    extends MessageBundle
+  {
+    @DefaultMessage("ARGUMENTS")
+    String arguments();
+
+    @DefaultMessage("OPTIONS")
+    String options();
+
+    @DefaultMessage("PREFERENCES")
+    String preferences();
+  }
+
+  private static final Messages messages = I18N.create(Messages.class);
+
   private final Node node;
 
   private final HelpContentLoader loader;
@@ -87,8 +102,6 @@ public class CommandHelpPage
 
     private final PreferenceProcessor pp;
 
-    private final MessageSource messages;
-
     public Helper(final Branding branding, final int maxWidth) {
       CommandHelper help = new CommandHelper();
       clp = help.createCliProcessor(command);
@@ -97,8 +110,6 @@ public class CommandHelpPage
       pp = new PreferenceProcessor();
       pp.setBasePath(branding.getPreferencesBasePath());
       pp.addBean(command);
-
-      messages = new ResourceBundleMessageSource(getClass());
     }
 
     public String getName() {
@@ -118,7 +129,7 @@ public class CommandHelpPage
     }
 
     private void printHeader(final PrintBuffer buff, final String name) {
-      buff.format("@|bold %s|@", messages.format(name)).println();
+      buff.format("@|bold %s|@%n", name);
       buff.println();
     }
 
@@ -128,7 +139,7 @@ public class CommandHelpPage
       }
 
       PrintBuffer buff = new PrintBuffer();
-      printHeader(buff, "section.arguments");
+      printHeader(buff, CommandHelpPage.messages.arguments());
       printer.printArguments(buff, clp.getArgumentDescriptors());
 
       return buff.toString();
@@ -140,7 +151,7 @@ public class CommandHelpPage
       }
 
       PrintBuffer buff = new PrintBuffer();
-      printHeader(buff, "section.options");
+      printHeader(buff, CommandHelpPage.messages.options());
       printer.printOptions(buff, clp.getOptionDescriptors());
 
       return buff.toString();
@@ -152,7 +163,7 @@ public class CommandHelpPage
       }
 
       PrintBuffer buff = new PrintBuffer();
-      printHeader(buff, "section.preferences");
+      printHeader(buff, CommandHelpPage.messages.preferences());
 
       for (PreferenceDescriptor pd : pp.getDescriptors()) {
         String text = String.format("    %s @|bold %s|@ (%s)",

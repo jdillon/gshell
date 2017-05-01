@@ -152,6 +152,12 @@
 
       <dependency>
         <groupId>org.sonatype.goodies</groupId>
+        <artifactId>goodies-i18n</artifactId>
+        <version>${sonatype-goodies.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.sonatype.goodies</groupId>
         <artifactId>goodies-testharness</artifactId>
         <version>${sonatype-goodies.version}</version>
       </dependency>

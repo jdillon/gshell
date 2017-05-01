@@ -19,8 +19,8 @@ import java.io.PrintWriter;
 
 import com.planet57.gshell.command.resolver.Node;
 import com.planet57.gshell.shell.Shell;
-import com.planet57.gshell.util.i18n.MessageSource;
-import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
+import org.sonatype.goodies.i18n.I18N;
+import org.sonatype.goodies.i18n.MessageBundle;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -34,17 +34,26 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class GroupHelpPage
     implements HelpPage
 {
+  private interface Messages
+    extends MessageBundle
+  {
+    @DefaultMessage("Command group: @|bold %s|@")
+    String description(String name);
+
+    @DefaultMessage("Help pages in group @|bold %s|@:")
+    String header(String name);
+  }
+
+  private static final Messages messages = I18N.create(Messages.class);
+
   private final Node node;
 
   private final HelpContentLoader loader;
-
-  private final MessageSource messages;
 
   public GroupHelpPage(final Node node, final HelpContentLoader loader) {
     this.node = checkNotNull(node);
     checkArgument(node.isGroup());
     this.loader = checkNotNull(loader);
-    this.messages = new ResourceBundleMessageSource(getClass());
   }
 
   @Override
@@ -54,7 +63,7 @@ public class GroupHelpPage
 
   @Override
   public String getDescription() {
-    return messages.format("group-description", getName());
+    return messages.description(getName());
   }
 
   @Override
@@ -62,7 +71,7 @@ public class GroupHelpPage
     checkNotNull(shell);
     checkNotNull(out);
 
-    out.println(messages.format("group-content-header", getName()));
+    out.println(messages.header(getName()));
     HelpPageUtil.renderIndex(out, HelpPageUtil.pagesFor(node, loader));
   }
 

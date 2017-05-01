@@ -15,8 +15,8 @@
  */
 package com.planet57.gshell.shell;
 
-import com.planet57.gshell.util.i18n.MessageSource;
-import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
+import org.sonatype.goodies.i18n.I18N;
+import org.sonatype.goodies.i18n.MessageBundle;
 
 import java.io.PrintWriter;
 
@@ -30,19 +30,23 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class ShellErrorHandler
 {
-  private enum Messages
+  private interface Messages
+    extends MessageBundle
   {
-    ERROR_AT,
-    ERROR_CAUSED_BY,
-    ERROR_LOCATION_NATIVE,
-    ERROR_LOCATION_UNKNOWN;
+    @DefaultMessage("at")
+    String at();
 
-    private static final MessageSource messages = new ResourceBundleMessageSource(ShellErrorHandler.class);
+    @DefaultMessage("Caused by")
+    String causedBy();
 
-    String format(final Object... args) {
-      return messages.format(name(), args);
-    }
+    @DefaultMessage("Native Method")
+    String locationNative();
+
+    @DefaultMessage("Unknown Source")
+    String locationUnknown();
   }
+
+  private static final Messages messages = I18N.create(Messages.class);
 
   /**
    * @since 3.0
@@ -69,7 +73,7 @@ public class ShellErrorHandler
       while (cause != null) {
         for (StackTraceElement e : cause.getStackTrace()) {
           out.format("     @|bold %s|@ %s.%s (@|bold %s|@)%n",
-            Messages.ERROR_AT.format(),
+            messages.at(),
             e.getClassName(),
             e.getMethodName(),
             getLocation(e)
@@ -78,7 +82,7 @@ public class ShellErrorHandler
 
         cause = cause.getCause();
         if (cause != null) {
-          out.format("@|bold %s|@ %s%n", Messages.ERROR_CAUSED_BY.format(), cause.getClass().getName());
+          out.format("@|bold %s|@ %s%n", messages.causedBy(), cause.getClass().getName());
         }
       }
     }
@@ -90,10 +94,10 @@ public class ShellErrorHandler
     assert e != null;
 
     if (e.isNativeMethod()) {
-      return Messages.ERROR_LOCATION_NATIVE.format();
+      return messages.locationNative();
     }
     else if (e.getFileName() == null) {
-      return Messages.ERROR_LOCATION_UNKNOWN.format();
+      return messages.locationUnknown();
     }
     else if (e.getLineNumber() >= 0) {
       return String.format("%s:%s", e.getFileName(), e.getLineNumber());
