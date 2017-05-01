@@ -34,8 +34,6 @@ import org.codehaus.plexus.interpolation.Interpolator;
 import org.codehaus.plexus.interpolation.PrefixedObjectValueSource;
 import org.codehaus.plexus.interpolation.PropertiesBasedValueSource;
 import org.codehaus.plexus.interpolation.StringSearchInterpolator;
-import org.fusesource.jansi.AnsiRenderer;
-import org.jline.terminal.Terminal;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -157,7 +155,7 @@ public class CommandHelpPage
       for (PreferenceDescriptor pd : pp.getDescriptors()) {
         String text = String.format("    %s @|bold %s|@ (%s)",
             pd.getPreferences().absolutePath(), pd.getId(), pd.getSetter().getType().getSimpleName());
-        buff.println(AnsiRenderer.render(text));
+        buff.println(text);
       }
 
       return buff.toString();
