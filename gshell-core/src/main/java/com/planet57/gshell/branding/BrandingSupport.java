@@ -21,8 +21,6 @@ import java.net.URI;
 import java.util.Properties;
 
 import com.planet57.gshell.shell.Shell;
-import com.planet57.gshell.util.i18n.MessageSource;
-import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 import com.planet57.gshell.util.io.PrintBuffer;
 import com.planet57.gshell.variables.Variables;
 
@@ -50,8 +48,6 @@ import static com.planet57.gshell.variables.VariableNames.SHELL_VERSION;
 public class BrandingSupport
     implements Branding
 {
-  private MessageSource messages;
-
   /**
    * Render a terminal (width - 1) line for {@link #getGoodbyeMessage()} or {@link #getGoodbyeMessage()}.
    *
@@ -72,14 +68,6 @@ public class BrandingSupport
 
   public BrandingSupport() {
     this(null);
-  }
-
-  protected MessageSource getMessages() {
-    if (messages == null) {
-      messages = new ResourceBundleMessageSource()
-        .add(false, getClass());
-    }
-    return messages;
   }
 
   protected Properties getProperties() {

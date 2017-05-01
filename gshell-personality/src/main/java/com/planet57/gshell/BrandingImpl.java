@@ -60,12 +60,12 @@ public class BrandingImpl
 
   @Override
   public String getDisplayName() {
-    return getMessages().format("displayName");
+    return "@|bold GShell|@";
   }
 
   @Override
   public String getGoodbyeMessage() {
-    return getMessages().format("goodbye");
+    return "@|green Goodbye!|@";
   }
 
   @Override
