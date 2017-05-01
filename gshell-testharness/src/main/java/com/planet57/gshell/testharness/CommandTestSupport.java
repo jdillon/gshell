@@ -29,6 +29,7 @@ import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.registry.CommandRegistrarImpl;
 import com.planet57.gshell.command.registry.CommandRegistry;
 import com.planet57.gshell.internal.BeanContainer;
+import com.planet57.gshell.logging.logback.TargetConsoleAppender;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.shell.ShellBuilder;
 import com.planet57.gshell.variables.Variables;

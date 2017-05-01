@@ -13,17 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.testharness;
+package com.planet57.gshell.logging.logback;
 
-import ch.qos.logback.core.OutputStreamAppender;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import ch.qos.logback.core.ConsoleAppender;
+import ch.qos.logback.core.OutputStreamAppender;
 
 /**
  * Re-targatable console appender.
+ *
+ * This allows re-targeting the console appender, and avoid re-resolving the target stream on each append.
+ *
+ * Default {@link ConsoleAppender} will re-resolve the stream on each append, which causes problems for ThreadIO-based applications where this value changes.
  *
  * @since 3.0
  */
@@ -32,7 +37,7 @@ public class TargetConsoleAppender<E>
 {
   private static volatile OutputStream target = System.out;
   
-  private static class DelegateOutputStream
+  private static class TargetOutputStream
     extends OutputStream
   {
     @Override
@@ -63,7 +68,7 @@ public class TargetConsoleAppender<E>
   
   @Override
   public void start() {
-    setOutputStream(new DelegateOutputStream());
+    setOutputStream(new TargetOutputStream());
     super.start();
   }
   
