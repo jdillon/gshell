@@ -61,6 +61,9 @@ public class BufferIO
     return new String(getError().toByteArray());
   }
 
+  /**
+   * Dump output streams to logging.
+   */
   public void dump(final Logger logger) {
     String out = getOutputString();
     if (!out.trim().isEmpty()) {
