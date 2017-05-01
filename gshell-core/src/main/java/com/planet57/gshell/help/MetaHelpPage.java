@@ -18,7 +18,9 @@ package com.planet57.gshell.help;
 import java.io.PrintWriter;
 import java.util.ResourceBundle;
 
+import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.shell.Shell;
+import com.planet57.gshell.variables.Variables;
 import org.codehaus.plexus.interpolation.AbstractValueSource;
 import org.codehaus.plexus.interpolation.Interpolator;
 import org.codehaus.plexus.interpolation.PrefixedObjectValueSource;
@@ -66,14 +68,17 @@ public class MetaHelpPage
     checkNotNull(shell);
     checkNotNull(out);
 
+    final Branding branding = shell.getBranding();
+    final Variables variables = shell.getVariables();
+
     Interpolator interp = new StringSearchInterpolator("@{", "}");
     interp.addValueSource(new PrefixedObjectValueSource("command.", this));
-    interp.addValueSource(new PrefixedObjectValueSource("branding.", shell.getBranding()));
+    interp.addValueSource(new PrefixedObjectValueSource("branding.", branding));
     interp.addValueSource(new AbstractValueSource(false)
     {
       @Override
       public Object getValue(final String expression) {
-        return shell.getVariables().get(expression);
+        return variables.get(expression);
       }
     });
     interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));

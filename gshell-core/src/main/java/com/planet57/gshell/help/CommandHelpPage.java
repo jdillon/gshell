@@ -29,11 +29,13 @@ import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 import com.planet57.gshell.util.pref.PreferenceDescriptor;
 import com.planet57.gshell.util.pref.PreferenceProcessor;
+import com.planet57.gshell.variables.Variables;
 import org.codehaus.plexus.interpolation.AbstractValueSource;
 import org.codehaus.plexus.interpolation.Interpolator;
 import org.codehaus.plexus.interpolation.PrefixedObjectValueSource;
 import org.codehaus.plexus.interpolation.PropertiesBasedValueSource;
 import org.codehaus.plexus.interpolation.StringSearchInterpolator;
+import org.jline.terminal.Terminal;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -196,14 +198,18 @@ public class CommandHelpPage
     checkNotNull(shell);
     checkNotNull(out);
 
+    final Branding branding = shell.getBranding();
+    final Terminal terminal = shell.getTerminal();
+    final Variables variables = shell.getVariables();
+
     Interpolator interp = new StringSearchInterpolator("@{", "}");
-    interp.addValueSource(new PrefixedObjectValueSource("command.", new Helper(shell.getBranding(), shell.getTerminal().getWidth())));
-    interp.addValueSource(new PrefixedObjectValueSource("branding.", shell.getBranding()));
+    interp.addValueSource(new PrefixedObjectValueSource("command.", new Helper(branding, terminal.getWidth())));
+    interp.addValueSource(new PrefixedObjectValueSource("branding.", branding));
     interp.addValueSource(new AbstractValueSource(false)
     {
       @Override
       public Object getValue(final String expression) {
-        return shell.getVariables().get(expression);
+        return variables.get(expression);
       }
     });
     interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));
