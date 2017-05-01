@@ -38,6 +38,7 @@ import org.apache.felix.gogo.jline.Expander;
 import org.apache.felix.gogo.jline.Highlighter;
 import org.apache.felix.gogo.jline.ParsedLineImpl;
 import org.apache.felix.gogo.jline.Parser;
+import org.apache.felix.gogo.runtime.Closure;
 import org.apache.felix.gogo.runtime.CommandProcessorImpl;
 import org.apache.felix.gogo.runtime.CommandSessionImpl;
 import org.apache.felix.service.command.CommandSession;
@@ -59,6 +60,8 @@ import org.sonatype.goodies.lifecycle.LifecycleManager;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
+import static com.planet57.gshell.variables.VariableNames.SHELL_PROMPT;
+import static com.planet57.gshell.variables.VariableNames.SHELL_RPROMPT;
 
 /**
  * Default {@link Shell} component.
@@ -76,8 +79,6 @@ public class ShellImpl
   private final CommandProcessorImpl commandProcessor;
 
   private final Completer completer;
-
-  private final ShellPrompt prompt;
 
   private final ShellErrorHandler errorHandler;
 
@@ -112,7 +113,6 @@ public class ShellImpl
     this.variables = checkNotNull(variables);
     this.completer = checkNotNull(completer);
 
-    this.prompt = new ShellPrompt();
     this.errorHandler = new ShellErrorHandler();
     this.history = new DefaultHistory();
     this.scriptLoader = new ShellScriptLoader();
@@ -289,17 +289,7 @@ public class ShellImpl
     try {
       while (running) {
         try {
-          // make prompts ansi-aware; line-reader doesn't write these to ansi-renderer-enabled streams
-          String prompt = this.prompt.prompt(this);
-          if (AnsiRenderer.test(prompt)) {
-            prompt = AnsiRenderer.render(prompt);
-          }
-          String rprompt = this.prompt.rprompt(this);
-          if (AnsiRenderer.test(rprompt)) {
-            rprompt = AnsiRenderer.render(rprompt);
-          }
-
-          String line = lineReader.readLine(prompt, rprompt, null, null);
+          String line = lineReader.readLine(prompt(session), rprompt(session), null, null);
           if (log.isTraceEnabled()) {
             traceLine(line);
           }
@@ -361,5 +351,65 @@ public class ShellImpl
       io.out.println(message);
       io.out.flush();
     }
+  }
+
+  //
+  // Prompts
+  //
+
+  @Nullable
+  private String expand(final CommandSessionImpl session, final Object value) {
+    try {
+      Object result = org.apache.felix.gogo.runtime.Expander.expand(value.toString(), new Closure(session, null, null));
+      if (result != null) {
+        return result.toString();
+      }
+    }
+    catch (Exception e) {
+      log.warn("Failed to expand: {}", value, e);
+    }
+    return null;
+  }
+
+  private String prompt(final CommandSessionImpl session) {
+    Object value = session.get(SHELL_PROMPT);
+    if (value == null) {
+      value = branding.getPrompt();
+    }
+
+    String prompt = null;
+    if (value != null) {
+      prompt = expand(session, value);
+      if (prompt == null) {
+        // fail-safe prompt
+        prompt = String.format("%s> ", branding.getProgramName());
+      }
+
+      // FIXME: may need to adjust ansi-renderer syntax or pre-render before expanding to avoid needing escapes
+      if (AnsiRenderer.test(prompt)) {
+        prompt = AnsiRenderer.render(prompt);
+      }
+    }
+
+    return prompt;
+  }
+  @Nullable
+  private String rprompt(final CommandSessionImpl session) {
+    Object value = session.get(SHELL_RPROMPT);
+    if (value == null) {
+      value = branding.getRightPrompt();
+    }
+
+    String prompt = null;
+    if (value != null) {
+      prompt = expand(session, value);
+
+      // FIXME: may need to adjust ansi-renderer syntax or pre-render before expanding to avoid needing escapes
+      if (AnsiRenderer.test(prompt)) {
+        prompt = AnsiRenderer.render(prompt);
+      }
+    }
+
+    return prompt;
   }
 }
