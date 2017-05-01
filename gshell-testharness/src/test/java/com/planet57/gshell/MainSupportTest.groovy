@@ -86,7 +86,7 @@ class MainSupportTest
     ByteArrayOutputStream out = new ByteArrayOutputStream()
 
     @Override
-    protected Terminal createTerminal(Branding branding) {
+    protected Terminal createTerminal(final Branding branding) {
       return TerminalBuilder.builder().dumb(true).build()
     }
 
