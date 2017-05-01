@@ -199,7 +199,7 @@ public class CommandHelpPage
     checkNotNull(out);
 
     Interpolator interp = new StringSearchInterpolator("@{", "}");
-    interp.addValueSource(new PrefixedObjectValueSource("command.", new Helper(shell.getBranding(), shell.getIo().terminal.getWidth())));
+    interp.addValueSource(new PrefixedObjectValueSource("command.", new Helper(shell.getBranding(), shell.getTerminal().getWidth())));
     interp.addValueSource(new PrefixedObjectValueSource("branding.", shell.getBranding()));
     interp.addValueSource(new AbstractValueSource(false)
     {

@@ -198,8 +198,8 @@ public class ShellImpl
   }
 
   @Override
-  public IO getIo() {
-    return io;
+  public Terminal getTerminal() {
+    return io.terminal;
   }
 
   @Override

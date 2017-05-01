@@ -16,12 +16,10 @@
 package com.planet57.gshell.shell;
 
 import com.planet57.gshell.branding.Branding;
-import com.planet57.gshell.command.IO;
 import com.planet57.gshell.variables.Variables;
 import org.jline.reader.History;
+import org.jline.terminal.Terminal;
 import org.sonatype.goodies.lifecycle.Lifecycle;
-
-import java.util.List;
 
 /**
  * Provides access to execute commands.
@@ -35,10 +33,9 @@ public interface Shell
   Branding getBranding();
 
   /**
-   * @deprecated Avoid; this adds complication with GOGO
+   * @since 3.0
    */
-  @Deprecated
-  IO getIo();
+  Terminal getTerminal();
 
   Variables getVariables();
 
