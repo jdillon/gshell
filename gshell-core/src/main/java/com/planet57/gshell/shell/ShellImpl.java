@@ -259,6 +259,9 @@ public class ShellImpl
       .variable(LineReader.HISTORY_FILE, historyFile)
       .build();
 
+    // automatically freshen line; this handles redrawing the line on CTRL-C
+    lineReader.setOpt(LineReader.Option.AUTO_FRESH_LINE);
+
     renderMessage(io, branding.getWelcomeMessage());
 
     // handle CTRL-C
