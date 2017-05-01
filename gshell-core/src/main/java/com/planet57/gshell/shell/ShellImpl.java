@@ -53,6 +53,7 @@ import org.jline.reader.impl.history.DefaultHistory;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.Terminal.Signal;
 import org.jline.terminal.Terminal.SignalHandler;
+import org.jline.utils.InfoCmp;
 import org.sonatype.goodies.common.ComponentSupport;
 import org.sonatype.goodies.lifecycle.LifecycleManager;
 
@@ -236,6 +237,16 @@ public class ShellImpl
     File historyFile = new File(branding.getUserContextDir(), branding.getHistoryFileName());
 
     Terminal terminal = io.terminal;
+
+    // HACK: testing adjustment to highlighter colors; pending letting users configure this via profile/rc
+    int maxColors = terminal.getNumericCapability(InfoCmp.Capability.max_colors);
+    if (maxColors >= 256) {
+      session.put("HIGHLIGHTER_COLORS","rs=35:st=32:nu=32:co=32:va=36:vn=36:fu=1;38;5;69:bf=1;38;5;197:re=90");
+    }
+    else {
+      session.put("HIGHLIGHTER_COLORS","rs=35:st=32:nu=32:co=32:va=36:vn=36:fu=94:bf=91:re=90");
+    }
+
     lineReader = LineReaderBuilder.builder()
       .appName(branding.getProgramName())
       .terminal(terminal)
