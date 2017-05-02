@@ -48,6 +48,7 @@ import com.planet57.gshell.util.pref.Preferences;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
 import com.planet57.gshell.variables.VariablesSupport;
+import org.apache.commons.cli.ParseException;
 import org.apache.felix.gogo.runtime.threadio.ThreadIOImpl;
 import org.apache.felix.service.threadio.ThreadIO;
 import org.eclipse.sisu.space.BeanScanning;
@@ -59,7 +60,6 @@ import org.jline.terminal.TerminalBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.bridge.SLF4JBridgeHandler;
-import org.sonatype.goodies.common.Throwables2;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -161,14 +161,13 @@ public abstract class MainSupport
     CliProcessor clp = new CliProcessor();
     clp.addBean(this);
     clp.setStopAtNonOption(true);
+
+    // cope with cli exceptions; which are expected
     try {
-      clp.process(args);
+        clp.process(args);
     }
-    catch (Exception e) {
-      System.err.println(Throwables2.explain(e));
-      if (showErrorTraces) {
-        e.printStackTrace(System.err);
-      }
+    catch (ParseException e) {
+      e.printStackTrace(System.err);
       exit(2);
     }
 
