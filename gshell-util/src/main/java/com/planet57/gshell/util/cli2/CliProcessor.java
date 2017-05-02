@@ -29,7 +29,6 @@ import com.planet57.gshell.util.IllegalAnnotationError;
 import com.planet57.gshell.util.cli2.handler.Handler;
 import com.planet57.gshell.util.cli2.handler.Handlers;
 import com.planet57.gshell.util.i18n.MessageSource;
-import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 import com.planet57.gshell.util.setter.SetterFactory;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.MissingArgumentException;
@@ -38,6 +37,8 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.UnrecognizedOptionException;
 import org.slf4j.Logger;
+import org.sonatype.goodies.i18n.I18N;
+import org.sonatype.goodies.i18n.MessageBundle;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -49,6 +50,30 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class CliProcessor
 {
+  private interface Messages
+    extends MessageBundle
+  {
+    @DefaultMessage("Option '%s' takes an operand: %s")
+    String MISSING_OPERAND(String option, String operand);
+
+    @DefaultMessage("'%s' is not a valid option")
+    String UNDEFINED_OPTION(String option);
+
+    @DefaultMessage("No argument is allowed: %s")
+    String NO_ARGUMENT_ALLOWED(String value);
+
+    @DefaultMessage("Option '%s' is required")
+    String REQUIRED_OPTION_MISSING(List<?> option);
+
+    @DefaultMessage("Argument '%s' is required")
+    String REQUIRED_ARGUMENT_MISSING(String argument);
+
+    @DefaultMessage("Too many arguments: %s")
+    String TOO_MANY_ARGUMENTS(String argument);
+  }
+
+  private static final Messages messages = I18N.create(Messages.class);
+
   private static final Logger log = Log.getLogger(CliProcessor.class);
 
   private final List<OptionDescriptor> optionDescriptors = new ArrayList<>();
@@ -57,7 +82,7 @@ public class CliProcessor
 
   private boolean stopAtNonOption;
 
-  private MessageSource messages;
+  private MessageSource userMessages;
 
   // TODO: change to Flavor.DEFAULT; but have to sort out control/handling of required-options which are delayed for Option.override handling
   private CliParser.Flavor flavor = CliParser.Flavor.POSIX;
@@ -75,11 +100,11 @@ public class CliProcessor
   }
 
   public MessageSource getMessages() {
-    return messages;
+    return userMessages;
   }
 
   public void setMessages(final MessageSource messages) {
-    this.messages = messages;
+    this.userMessages = messages;
   }
 
   public CliParser.Flavor getFlavor() {
@@ -212,11 +237,11 @@ public class CliProcessor
       cl = parser.parse(createOptions(), args, stopAtNonOption);
     }
     catch (UnrecognizedOptionException e) {
-      throw new ProcessingException(Messages.UNDEFINED_OPTION.format(e.getOption()));
+      throw new ProcessingException(messages.UNDEFINED_OPTION(e.getOption()));
     }
     catch (MissingArgumentException e) {
       OptionDescriptor desc = ((Opt) e.getOption()).getDescriptor();
-      throw new ProcessingException(Messages.MISSING_OPERAND.format(desc.getSyntax(), desc.renderToken(messages)));
+      throw new ProcessingException(messages.MISSING_OPERAND(desc.getSyntax(), desc.renderToken(userMessages)));
     }
     catch (ParseException e) {
       throw new ProcessingException(e);
@@ -265,7 +290,7 @@ public class CliProcessor
       // Check if we allow an argument or we have overflowed
       if (i >= argumentDescriptors.size()) {
         throw new ProcessingException(argumentDescriptors.size() == 0 ?
-            Messages.NO_ARGUMENT_ALLOWED.format(arg) : Messages.TOO_MANY_ARGUMENTS.format(arg));
+            messages.NO_ARGUMENT_ALLOWED(arg) : messages.TOO_MANY_ARGUMENTS(arg));
       }
 
       ArgumentDescriptor desc = argumentDescriptors.get(i);
@@ -287,12 +312,12 @@ public class CliProcessor
         parser.ensureRequiredOptionsPresent();
       }
       catch (MissingOptionException e) {
-        throw new ProcessingException(Messages.REQUIRED_OPTION_MISSING.format(e.getMissingOptions()));
+        throw new ProcessingException(messages.REQUIRED_OPTION_MISSING(e.getMissingOptions()));
       }
 
       for (ArgumentDescriptor arg : argumentDescriptors) {
         if (arg.isRequired() && !present.contains(arg)) {
-          throw new ProcessingException(Messages.REQUIRED_ARGUMENT_MISSING.format(arg.renderToken(messages)));
+          throw new ProcessingException(messages.REQUIRED_ARGUMENT_MISSING(arg.renderToken(userMessages)));
         }
       }
     }
@@ -329,22 +354,6 @@ public class CliProcessor
 
     public OptionDescriptor getDescriptor() {
       return desc;
-    }
-  }
-
-  private enum Messages
-  {
-    MISSING_OPERAND,
-    UNDEFINED_OPTION,
-    NO_ARGUMENT_ALLOWED,
-    REQUIRED_OPTION_MISSING,
-    TOO_MANY_ARGUMENTS,
-    REQUIRED_ARGUMENT_MISSING;
-
-    private final MessageSource messages = new ResourceBundleMessageSource(CliProcessor.class);
-
-    String format(final Object... args) {
-      return messages.format(name(), args);
     }
   }
 }

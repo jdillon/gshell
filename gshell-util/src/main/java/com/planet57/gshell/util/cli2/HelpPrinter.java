@@ -21,7 +21,8 @@ import java.util.List;
 
 import com.planet57.gshell.util.i18n.AggregateMessageSource;
 import com.planet57.gshell.util.i18n.MessageSource;
-import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
+import org.sonatype.goodies.i18n.I18N;
+import org.sonatype.goodies.i18n.MessageBundle;
 
 import javax.annotation.Nullable;
 
@@ -36,9 +37,30 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class HelpPrinter
 {
+  private interface Messages
+    extends MessageBundle
+  {
+    @DefaultMessage("@|bold syntax|@: %s")
+    String syntax(String name);
+
+    @DefaultMessage("%s [options]")
+    String syntaxHasOptions(String syntax);
+
+    @DefaultMessage("%s [arguments]")
+    String syntaxHasArguments(String syntax);
+
+    @DefaultMessage("@|bold arguments|@:")
+    String argumentsHeader();
+
+    @DefaultMessage("@|bold options|@:")
+    String optionsHeader();
+  }
+
+  private static final Messages messages = I18N.create(Messages.class);
+
   private final CliProcessor processor;
 
-  private AggregateMessageSource messages = new AggregateMessageSource(new ResourceBundleMessageSource(getClass()));
+  private AggregateMessageSource userMessages = new AggregateMessageSource();
 
   private int maxWidth;
 
@@ -58,7 +80,7 @@ public class HelpPrinter
   }
 
   public void addMessages(final MessageSource messages) {
-    this.messages.getSources().add(messages);
+    this.userMessages.getSources().add(messages);
   }
 
   public int getMaxWidth() {
@@ -96,12 +118,12 @@ public class HelpPrinter
     options.addAll(processor.getOptionDescriptors());
 
     if (name != null) {
-      String syntax = messages.format("syntax", name);
+      String syntax = messages.syntax(name);
       if (!options.isEmpty()) {
-        syntax = messages.format("syntax.hasOptions", syntax);
+        syntax = messages.syntaxHasOptions(syntax);
       }
       if (!arguments.isEmpty()) {
-        syntax = messages.format("syntax.hasArguments", syntax);
+        syntax = messages.syntaxHasArguments(syntax);
       }
       out.println(syntax);
       out.println();
@@ -111,27 +133,23 @@ public class HelpPrinter
     int len = 0;
 
     for (ArgumentDescriptor arg : arguments) {
-      len = Math.max(len, arg.renderSyntax(messages).length());
+      len = Math.max(len, arg.renderSyntax(userMessages).length());
     }
 
     for (OptionDescriptor opt : options) {
-      len = Math.max(len, opt.renderSyntax(messages).length());
+      len = Math.max(len, opt.renderSyntax(userMessages).length());
     }
 
     // And then render the handler usage
     if (!arguments.isEmpty()) {
-      out.println(messages.getMessage("arguments.header"));
-
+      out.println(messages.argumentsHeader());
       printArguments(out, arguments, len);
-
       out.println();
     }
 
     if (!options.isEmpty()) {
-      out.println(messages.getMessage("options.header"));
-
+      out.println(messages.optionsHeader());
       printOptions(out, options, len);
-
       out.println();
     }
 
@@ -153,7 +171,7 @@ public class HelpPrinter
   public void printArguments(final PrintWriter out, final List<ArgumentDescriptor> arguments) {
     int len = 0;
     for (ArgumentDescriptor arg : arguments) {
-      len = Math.max(len, arg.renderSyntax(messages).length());
+      len = Math.max(len, arg.renderSyntax(userMessages).length());
     }
 
     printArguments(out, arguments, len);
@@ -174,7 +192,7 @@ public class HelpPrinter
   public void printOptions(final PrintWriter out, final List<OptionDescriptor> options) {
     int len = 0;
     for (OptionDescriptor opt : options) {
-      len = Math.max(len, opt.renderSyntax(messages).length());
+      len = Math.max(len, opt.renderSyntax(userMessages).length());
     }
 
     printOptions(out, options, len);
@@ -191,10 +209,10 @@ public class HelpPrinter
     int prefixSeparatorWidth = prefix.length() + separator.length();
     int descriptionWidth = maxWidth - len - prefixSeparatorWidth;
 
-    String description = desc.renderHelpText(messages);
+    String description = desc.renderHelpText(userMessages);
 
     // Render the prefix and syntax
-    String syntax = desc.renderSyntax(messages);
+    String syntax = desc.renderSyntax(userMessages);
     out.print(prefix);
     out.print(syntax);
 
