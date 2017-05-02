@@ -42,7 +42,7 @@ import javax.annotation.Nullable;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.3
  */
-@Command(name = "wget")
+@Command(name = "wget", description = "Fetch a file from a URL.")
 public class WgetAction
     extends CommandActionSupport
 {
@@ -50,10 +50,10 @@ public class WgetAction
   private boolean verbose;
 
   @Nullable
-  @Option(name = "o", longName = "output-file")
+  @Option(name = "o", longName = "output-file", description = "Save to FILE", token = "FILE")
   private File outputFile;
 
-  @Argument(required = true)
+  @Argument(required = true, description = "The URL to fetch", token = "URL")
   private URL source;
 
   @Override

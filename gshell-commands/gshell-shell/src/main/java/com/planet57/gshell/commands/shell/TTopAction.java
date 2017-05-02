@@ -28,7 +28,7 @@ import com.planet57.gshell.command.CommandContext;
  *
  * @since 3.0
  */
-@Command(name = "ttop")
+@Command(name = "ttop", description = "Display and update sorted information about threads.")
 public class TTopAction
     extends CommandActionSupport
 {

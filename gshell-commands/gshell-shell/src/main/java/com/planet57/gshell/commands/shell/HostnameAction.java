@@ -31,11 +31,11 @@ import javax.annotation.Nonnull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "hostname")
+@Command(name = "hostname", description = "Displays the name of the current host.")
 public class HostnameAction
     extends CommandActionSupport
 {
-  @Option(name = "v", longName = "verbose")
+  @Option(name = "v", longName = "verbose", description = "Enable verbose output")
   private boolean verbose;
 
   @Override

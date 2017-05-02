@@ -40,20 +40,20 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @since 3.0
  */
-@Command(name = "less")
+@Command(name = "less", description = "Source pager.")
 public class LessAction
     extends CommandActionSupport
 {
   // TODO: expose more options; see Commands.less() in jline-builtins
 
   @Nullable
-  @Option(name = "n", longName = "line-numbers")
+  @Option(name = "n", longName = "line-numbers", description = "Display line numbers for each line")
   private Boolean lineNumbers;
 
   // TODO: consider exposing a file/url source adapter and converter
 
   @Nullable
-  @Argument
+  @Argument(description = "File to display", token = "FILE")
   private File file;
 
   @Inject

@@ -39,11 +39,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @since 3.0
  */
-@Command(name = "nano")
+@Command(name = "nano", description = "File editor.")
 public class NanoAction
     extends CommandActionSupport
 {
-  @Argument(required = true)
+  @Argument(required = true, description = "One or more files to open for edit", token = "FILES")
   private List<String> files;
 
   @Inject

@@ -37,18 +37,18 @@ import javax.annotation.Nullable;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "exec")
+@Command(name = "exec", description = "Execute system processes.")
 public class ExecuteAction
     extends CommandActionSupport
 {
   @Nullable
-  @Option(name = "d", longName = "directory")
+  @Option(name = "d", longName = "directory", description = "Directory to execute command", token = "DIR")
   private File directory;
 
-  @Option(longName = "newenvironment")
+  @Option(longName = "newenvironment", description = "Do not propagate environment variables")
   private boolean newenvironment = false;
 
-  @Argument(required = true)
+  @Argument(required = true, description = "Process arguments", token = "ARGUMENTS")
   private List<String> args;
 
   // TODO: Consider adapting more of ant exec to support more features?
