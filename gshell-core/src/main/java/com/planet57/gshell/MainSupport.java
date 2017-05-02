@@ -85,7 +85,7 @@ public abstract class MainSupport
   private boolean version;
 
   @Preference
-  @Option(name = "e", longName = "errors", description = "Produce detailed exceptions", optionalArg = true)
+  @Option(name = "e", longName = "errors", description = "Produce detailed exceptions")
   private boolean showErrorTraces = false;
 
   /**
@@ -106,7 +106,7 @@ public abstract class MainSupport
   }
 
   @Preference(name = "debug")
-  @Option(name = "d", longName = "debug", description = "Enable debug output", optionalArg = true)
+  @Option(name = "d", longName = "debug", description = "Enable debug output")
   private void setDebug(final boolean flag) {
     log.debug("Debug: {}", flag);
     if (flag) {
@@ -116,7 +116,7 @@ public abstract class MainSupport
   }
 
   @Preference(name = "trace")
-  @Option(name = "X", longName = "trace", description = "Enable trace output", optionalArg = true)
+  @Option(name = "X", longName = "trace", description = "Enable trace output")
   private void setTrace(final boolean flag) {
     log.debug("Trace: {}", flag);
     if (flag) {
@@ -148,15 +148,6 @@ public abstract class MainSupport
   @Argument(description = "Command expression to execute", token = "EXPR")
   @Nullable
   private List<String> appArgs = null;
-
-  /**
-   * Create a the {@link Branding} instance.
-   *
-   * Branding is needed very early to allow customization of command-line processing.
-   */
-  protected Branding createBranding() {
-    return new BrandingSupport();
-  }
 
   public void boot(final String... args) throws Exception {
     checkNotNull(args);
@@ -195,12 +186,7 @@ public abstract class MainSupport
       exit(2);
     }
 
-    // FIXME: need to revisit bootstrap logging; as loaded-classes could impact the functionality of --debug/--trace
-    // FIXME: ... if they use logging too early :-\
-
-    // adapt JUL
-    SLF4JBridgeHandler.removeHandlersForRootLogger();
-    SLF4JBridgeHandler.install();
+    setupLogging();
 
     Terminal terminal = createTerminal(branding);
     IO io = new IO(createStreamSet(terminal), terminal);
@@ -260,6 +246,21 @@ public abstract class MainSupport
   // Shell creation
   //
 
+  /**
+   * Create a the {@link Branding} instance.
+   *
+   * Branding is needed very early to allow customization of command-line processing.
+   */
+  protected Branding createBranding() {
+    return new BrandingSupport();
+  }
+
+  protected void setupLogging() {
+    // adapt JUL
+    SLF4JBridgeHandler.removeHandlersForRootLogger();
+    SLF4JBridgeHandler.install();
+  }
+
   private final BeanContainer container = new BeanContainer();
 
   /**
@@ -267,6 +268,8 @@ public abstract class MainSupport
    */
   @VisibleForTesting
   protected Shell createShell(final IO io, final Variables variables, final Branding branding) throws Exception {
+    log.debug("Creating shell instance");
+
     List<Module> modules = new ArrayList<>();
 
     URLClassSpace space = new URLClassSpace(getClass().getClassLoader());

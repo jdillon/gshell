@@ -21,6 +21,7 @@ import com.google.inject.Module;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.logging.LoggingSystem;
 import com.planet57.gshell.logging.logback.LogbackLoggingSystem;
+import com.planet57.gshell.logging.logback.TargetConsoleAppender;
 
 import javax.annotation.Nonnull;
 
@@ -36,6 +37,15 @@ public class Main
   @Override
   protected Branding createBranding() {
     return new BrandingImpl();
+  }
+
+  /**
+   * Force logback to use current {@link System#out} reference before they are adapted by ThreadIO.
+   */
+  @Override
+  protected void setupLogging() {
+    TargetConsoleAppender.setTarget(System.out);
+    super.setupLogging();
   }
 
   @Override

@@ -16,15 +16,11 @@
 package com.planet57.gshell;
 
 import java.io.File;
-import java.util.Date;
 
 import com.planet57.gshell.branding.Asl2License;
 import com.planet57.gshell.branding.BrandingSupport;
 import com.planet57.gshell.branding.License;
 import com.planet57.gshell.util.io.PrintBuffer;
-import org.apache.felix.gogo.jline.Shell;
-import org.jline.utils.AttributedStringBuilder;
-import org.jline.utils.AttributedStyle;
 
 import javax.annotation.Nullable;
 
@@ -89,7 +85,7 @@ public class BrandingImpl
   @Override
   public String getRightPrompt() {
     // FIXME: may need to adjust ansi-renderer syntax or pre-render before expanding to avoid needing escapes
-     return "\\@\\|intensity_faint $(date)\\|\\@";
+    return "\\@\\|intensity_faint $(date)\\|\\@";
   }
 
   @Override
