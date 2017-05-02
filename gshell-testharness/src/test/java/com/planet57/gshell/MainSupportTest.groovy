@@ -15,6 +15,7 @@
  */
 package com.planet57.gshell
 
+import com.google.common.base.CharMatcher
 import com.planet57.gshell.branding.Branding
 import com.planet57.gshell.command.IO
 import com.planet57.gshell.shell.Shell
@@ -53,9 +54,7 @@ class MainSupportTest
   void 'option -h'() {
     underTest.boot('-h')
 
-    log(new String(underTest.out.toByteArray()))
     assert underTest.exitCode == 0
-
     assert outAsString().contains('testsh [options] [arguments]')
   }
 
@@ -63,9 +62,7 @@ class MainSupportTest
   void 'option --help'() {
     underTest.boot('--help')
 
-    log(new String(underTest.out.toByteArray()))
     assert underTest.exitCode == 0
-
     assert outAsString().contains('testsh [options] [arguments]')
   }
 
@@ -73,9 +70,7 @@ class MainSupportTest
   void 'option --debug'() {
     underTest.boot('--debug')
 
-    log(new String(underTest.out.toByteArray()))
     assert underTest.exitCode == 0
-
     assert System.getProperty('shell.logging.console.threshold') == 'DEBUG'
 
     // TODO: verify logging was actually enabled; presently due to use of same logging system in embedded mode this is not possible
@@ -86,7 +81,8 @@ class MainSupportTest
   }
 
   void dump() {
-    println "----8<----\n${outAsString()}\n---->8----"
+    def out = CharMatcher.whitespace().trimTrailingFrom(outAsString())
+    println "----8<----\n${out}\n---->8----"
   }
 
   private class MockMain
