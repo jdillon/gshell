@@ -36,4 +36,9 @@ public class ShellFilesHelpPage
   public ShellFilesHelpPage(final HelpContentLoader loader) {
     super("shell-files", "com.planet57.gshell.commands.standard.help.shell-files", loader);
   }
+
+  @Override
+  public String getDescription() {
+    return "Shell configuration files overview.";
+  }
 }

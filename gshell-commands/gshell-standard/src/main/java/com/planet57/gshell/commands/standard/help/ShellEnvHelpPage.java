@@ -36,4 +36,9 @@ public class ShellEnvHelpPage
   public ShellEnvHelpPage(final HelpContentLoader loader) {
     super("shell-env", "com.planet57.gshell.commands.standard.help.shell-env", loader);
   }
+
+  @Override
+  public String getDescription() {
+    return "Shell environment overview.";
+  }
 }
