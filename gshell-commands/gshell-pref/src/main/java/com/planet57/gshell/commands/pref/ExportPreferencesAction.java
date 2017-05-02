@@ -41,17 +41,17 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "pref/export")
+@Command(name = "pref/export", description = "Export preferences.")
 @Preferences(path = "commands/pref/export")
 public class ExportPreferencesAction
     extends PreferenceNodeActionSupport
 {
   @Preference
-  @Option(name = "t", longName = "subtree")
+  @Option(name = "t", longName = "subtree", description = "Include sub-tree preferences")
   private boolean subTree;
 
   @Nullable
-  @Argument(index = 1)
+  @Argument(index = 1, description = "Preferences export file", token = "FILE")
   private File file;
 
   @Override

@@ -30,19 +30,19 @@ import com.planet57.gshell.util.cli2.Option;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Command(name = "logging/components")
+@Command(name = "logging/components", description = "List logging components.")
 public class LoggingComponentListAction
   extends LoggingCommandActionSupport
 {
   @Nullable
-  @Option(name = "n", longName = "name")
+  @Option(name = "n", longName = "name", description = "Include components matching NAME", token = "NAME")
   private String nameQuery;
 
   @Nullable
-  @Option(name = "t", longName = "type")
+  @Option(name = "t", longName = "type", description = "Include components matching TYPE", token = "TYPE")
   private String typeQuery;
 
-  @Option(name = "v", longName = "verbose")
+  @Option(name = "v", longName = "verbose", description = "Display verbose details")
   private boolean verbose;
 
   @Override

@@ -29,7 +29,7 @@ import com.planet57.gshell.util.cli2.Option;
 public abstract class PreferenceActionSupport
     extends CommandActionSupport
 {
-  @Option(name = "s", longName = "system")
+  @Option(name = "s", longName = "system", description = "Use system preferences")
   private boolean system;
 
   protected Preferences root() {

@@ -28,7 +28,7 @@ import com.planet57.gshell.util.cli2.Argument;
 public abstract class PreferenceNodeActionSupport
     extends PreferenceActionSupport
 {
-  @Argument(index = 0, required = true)
+  @Argument(index = 0, required = true, description = "Preference path", token = "PATH")
   private String path;
 
   protected Preferences node() throws Exception {
