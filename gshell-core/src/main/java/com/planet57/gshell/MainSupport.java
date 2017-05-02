@@ -284,15 +284,8 @@ public abstract class MainSupport
       .build();
   }
 
-  /**
-   * Allow sub-class to customize container.
-   */
-  protected void configure(@Nonnull final List<Module> modules) {
-    // empty
-  }
-
   //
-  // Helpers
+  // Extension helpers
   //
 
   /**
@@ -328,6 +321,13 @@ public abstract class MainSupport
       }
     };
     return new StreamSet(in, out);
+  }
+
+  /**
+   * Allow sub-class to customize container.
+   */
+  protected void configure(@Nonnull final List<Module> modules) {
+    // empty
   }
 
   /**
