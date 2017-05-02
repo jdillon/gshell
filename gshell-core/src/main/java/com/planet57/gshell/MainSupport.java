@@ -86,7 +86,7 @@ public abstract class MainSupport
 
   @Preference
   @Option(name = "e", longName = "errors", description = "Produce detailed exceptions")
-  private boolean showErrorTraces = false;
+  private boolean showErrorTraces;
 
   /**
    * Adjust the threshold of the {@code console} appender.
@@ -147,7 +147,7 @@ public abstract class MainSupport
 
   @Argument(description = "Command expression to execute", token = "EXPR")
   @Nullable
-  private List<String> appArgs = null;
+  private List<String> appArgs;
 
   public void boot(final String... args) throws Exception {
     checkNotNull(args);
