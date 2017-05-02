@@ -15,7 +15,6 @@
  */
 package com.planet57.gshell.command;
 
-import com.planet57.gshell.util.i18n.MessageSource;
 import org.jline.reader.Completer;
 
 import javax.annotation.Nonnull;
@@ -32,8 +31,6 @@ public interface CommandAction
   String getName();
 
   String getSimpleName();
-
-  MessageSource getMessages();
 
   /**
    * Execute the command action.

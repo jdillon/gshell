@@ -58,9 +58,4 @@ public class ChangeGroupAction
     context.getVariables().set(VariableNames.SHELL_GROUP, name);
     return null;
   }
-
-  @Override
-  public MessageSource getMessages() {
-    return NopMessageSource.INSTANCE;
-  }
 }

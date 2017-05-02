@@ -29,9 +29,10 @@ import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
-import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.variables.Variables;
 import org.jline.reader.Completer;
+import org.sonatype.goodies.i18n.I18N;
+import org.sonatype.goodies.i18n.MessageBundle;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -46,6 +47,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class SetAction
     extends CommandActionSupport
 {
+  private interface Messages
+    extends MessageBundle
+  {
+    @DefaultMessage("Missing required argument: %s")
+    String missingArgument(final String name);
+  }
+
+  private static final Messages messages = I18N.create(Messages.class);
+
   enum Mode
   {
     VARIABLE,
@@ -75,12 +85,10 @@ public class SetAction
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    MessageSource messages = getMessages();
-
     if (name == null) {
       return displayList(context);
     }
-    checkArgument(values != null, getMessages().format("error.missing-arg", messages.getMessage("command.argument.values.token")));
+    checkArgument(values != null, messages.missingArgument("VALUE"));
 
     String value = String.join(" ", values);
 

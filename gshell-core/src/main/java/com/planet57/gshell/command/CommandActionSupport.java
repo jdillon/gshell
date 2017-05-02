@@ -16,15 +16,12 @@
 package com.planet57.gshell.command;
 
 import java.util.Arrays;
-import java.util.MissingResourceException;
 import java.util.stream.Collectors;
 
 import com.planet57.gshell.command.resolver.NodePath;
 import org.jline.reader.impl.completer.ArgumentCompleter;
 import org.jline.reader.impl.completer.NullCompleter;
 import org.sonatype.goodies.common.ComponentSupport;
-import com.planet57.gshell.util.i18n.MessageSource;
-import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 import org.jline.reader.Completer;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -41,8 +38,6 @@ public abstract class CommandActionSupport
   implements CommandAction, CommandAction.NameAware, CommandAction.Prototype, CommandAction.Completable
 {
   private String name;
-
-  private MessageSource messages;
 
   private Completer completer = NullCompleter.INSTANCE;
 
@@ -64,40 +59,6 @@ public abstract class CommandActionSupport
   @Override
   public String getSimpleName() {
     return new NodePath(getName()).last();
-  }
-
-  @Override
-  public MessageSource getMessages() {
-    if (messages == null) {
-      try {
-        messages = createMessages();
-      }
-      catch (MissingResourceException e) {
-        log.warn("Missing resources", e);
-
-        messages = new MessageSource()
-        {
-          @Override
-          public String getMessage(final String code) {
-            return code;
-          }
-
-          @Override
-          public String format(final String code, final Object... args) {
-            return code;
-          }
-        };
-      }
-    }
-
-    return messages;
-  }
-
-  /**
-   * @since 2.4
-   */
-  protected ResourceBundleMessageSource createMessages() {
-    return new ResourceBundleMessageSource(getClass());
   }
 
   /**

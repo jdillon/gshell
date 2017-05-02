@@ -40,6 +40,8 @@ import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.Preferences;
 import org.jline.reader.Completer;
 import org.jline.reader.impl.completer.AggregateCompleter;
+import org.sonatype.goodies.i18n.I18N;
+import org.sonatype.goodies.i18n.MessageBundle;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
@@ -55,6 +57,21 @@ import static com.google.common.base.Preconditions.checkState;
 public class HelpAction
     extends CommandActionSupport
 {
+  private interface Messages
+    extends MessageBundle
+  {
+    @DefaultMessage("Available pages:")
+    String availablePages();
+
+    @DefaultMessage("Matching pages:")
+    String matchingPages();
+
+    @DefaultMessage("No help page available for @|bold %s|@.  Try @|bold help|@ for a list of available pages.")
+    String helpNotFound(String page);
+  }
+
+  private static final Messages messages = I18N.create(Messages.class);
+
   private final HelpPageManager helpPages;
 
   // TODO: maybe use an enum here to say; --include groups,commands,aliases (exclude meta) etc...
@@ -120,14 +137,14 @@ public class HelpAction
       }
       else if (pages.size() > 1) {
         // else show matching pages
-        io.out.println(getMessages().format("info.matching-pages"));
+        io.out.println(messages.matchingPages());
         HelpPageUtil.renderIndex(io.out, pages);
         return null;
       }
     }
 
     // if not page matched, complain
-    checkState(page != null, getMessages().format("error.help-not-found", name));
+    checkState(page != null, messages.helpNotFound(name));
 
     page.render(context.getShell(), io.out);
 
@@ -137,7 +154,7 @@ public class HelpAction
   private void displayAvailable(final CommandContext context) {
     Collection<HelpPage> pages = helpPages.getPages(query(helpPage -> true));
     IO io = context.getIo();
-    io.out.println(getMessages().format("info.available-pages"));
+    io.out.println(messages.availablePages());
     HelpPageUtil.renderIndex(io.out, pages);
   }
 

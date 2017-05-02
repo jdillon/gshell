@@ -17,13 +17,7 @@ package com.planet57.gshell.command;
 
 import com.planet57.gshell.util.cli2.CliProcessor;
 import com.planet57.gshell.util.cli2.Option;
-import com.planet57.gshell.util.i18n.AggregateMessageSource;
-import com.planet57.gshell.util.i18n.MessageSource;
-import com.planet57.gshell.util.i18n.PrefixingMessageSource;
-import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
-
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.planet57.gshell.util.AnnotationDescriptor.UNINITIALIZED_STRING;
 
 /**
  * Command helper.
@@ -36,8 +30,6 @@ public class CommandHelper
   @Option(name = "h", longName = "help", description = "Display usage", override = true)
   public boolean displayHelp;
 
-  private MessageSource messages;
-
   /**
    * Construct a {@link CliProcessor} for given action.
    */
@@ -48,9 +40,6 @@ public class CommandHelper
     clp.addBean(command);
     clp.addBean(this);
 
-    AggregateMessageSource messages = new AggregateMessageSource(command.getMessages());
-    clp.setMessages(new PrefixingMessageSource(messages, "command."));
-
     return clp;
   }
 
@@ -59,18 +48,7 @@ public class CommandHelper
    */
   public static String getDescription(final CommandAction action) {
     checkNotNull(action);
-
-    // HACK: temporary adjust for description or previous behavior
-
-    String description = null;
     Command command = action.getClass().getAnnotation(Command.class);
-    if (command != null) {
-      description = command.description();
-      if (UNINITIALIZED_STRING.equals(description)) {
-        description = action.getMessages().getMessage("command.description");
-      }
-    }
-
-    return description;
+    return command.description();
   }
 }

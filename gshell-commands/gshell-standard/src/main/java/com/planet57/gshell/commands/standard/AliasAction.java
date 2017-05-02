@@ -33,6 +33,8 @@ import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.CliProcessor;
 import com.planet57.gshell.util.cli2.CliProcessorAware;
 import org.jline.reader.Completer;
+import org.sonatype.goodies.i18n.I18N;
+import org.sonatype.goodies.i18n.MessageBundle;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -48,6 +50,24 @@ public class AliasAction
     extends CommandActionSupport
     implements CliProcessorAware
 {
+  private interface Messages
+    extends MessageBundle
+  {
+    @DefaultMessage("No aliases have been defined")
+    String noAliases();
+
+    @DefaultMessage("Defined aliases:")
+    String definedAliases();
+
+    @DefaultMessage("Alias to: @|bold %s|@")
+    String aliasTarget(String target);
+
+    @DefaultMessage("Missing argument: %s")
+    String missinArgument(String name);
+  }
+
+  private static final Messages messages = I18N.create(Messages.class);
+
   private final AliasRegistry aliasRegistry;
 
   @Nullable
@@ -92,7 +112,7 @@ public class AliasAction
     Map<String, String> aliases = aliasRegistry.getAliases();
 
     if (aliases.isEmpty()) {
-      io.out.println(getMessages().format("info.no-aliases"));
+      io.out.println(messages.noAliases());
     }
     else {
       // Determine the maximum name length
@@ -103,13 +123,13 @@ public class AliasAction
         }
       }
 
-      io.out.println(getMessages().format("info.defined-aliases"));
+      io.out.println(messages.definedAliases());
       String nameFormat = "%-" + maxNameLen + 's';
 
       for (Map.Entry<String, String> entry : aliases.entrySet()) {
         String formattedName = String.format(nameFormat, entry.getKey());
         io.out.format("  @|bold %s|@ ", formattedName);
-        io.out.println(getMessages().format("info.alias-to", entry.getValue()));
+        io.out.println(messages.aliasTarget(entry.getValue()));
       }
     }
 
@@ -117,7 +137,7 @@ public class AliasAction
   }
 
   private Object defineAlias(final CommandContext context) throws Exception {
-    checkArgument(target != null, getMessages().format("error.missing-arg", getMessages().getMessage("command.argument.target.token")));
+    checkArgument(target != null, messages.missinArgument("TARGET"));
 
     String alias = Joiner.on(" ").join(target);
     log.debug("Defining alias: {} -> {}", name, alias);

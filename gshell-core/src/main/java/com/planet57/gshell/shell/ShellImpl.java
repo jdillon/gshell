@@ -312,11 +312,16 @@ public class ShellImpl
 
           running = !(result instanceof ExitNotification);
         }
-        catch (Throwable t) {
-          log.trace("Work failed", t);
-          setLastResult(session, t);
-          running = errorHandler.handleError(io.err, t, variables.require(VariableNames.SHELL_ERRORS, Boolean.class, true));
+        catch (Exception e) {
+          log.trace("Work failed", e);
+          setLastResult(session, e);
+          running = errorHandler.handleError(io.err, e, variables.require(VariableNames.SHELL_ERRORS, Boolean.class, true));
         }
+
+        // TODO: is this the best place for this?
+        waitForJobCompletion(session);
+
+        // TODO: investigate jline.Shell handling of UserInterruptException and EndOfFileException here
 
         // FIXME: copy session variables back to shell's variables
         variables.asMap().clear();
@@ -330,6 +335,24 @@ public class ShellImpl
     log.trace("Stopped");
 
     renderMessage(io, branding.getGoodbyeMessage());
+  }
+
+  @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
+  private void waitForJobCompletion(final CommandSessionImpl session) throws InterruptedException {
+    while (true) {
+      Job job = session.foregroundJob();
+      if (job != null) {
+        log.debug("Waiting for job completion: {}", job);
+        synchronized (job) {
+          if (job.status() == Job.Status.Foreground) {
+            job.wait();
+          }
+        }
+      }
+      else {
+        break;
+      }
+    }
   }
 
   private void traceLine(final String line) {
