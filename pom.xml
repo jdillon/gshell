@@ -492,6 +492,10 @@
           <configuration>
             <excludes combine.children="append">
               <!--
+              Assembly resources
+              -->
+              <exclude>gshell-assembly/src/main/resources/**</exclude>
+              <!--
               Thirdparty sources
               -->
               <exclude>gshell-util/src/main/java/org/apache/tools/ant/**</exclude>
