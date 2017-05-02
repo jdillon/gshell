@@ -31,10 +31,9 @@ import com.planet57.gshell.command.IO;
 import com.planet57.gshell.util.io.FileAssert;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
+import com.planet57.gshell.util.io.PrintBuffer;
 import com.planet57.gshell.util.jline.TerminalHelper;
 import org.jline.reader.Completer;
-import org.jline.utils.AttributedStringBuilder;
-import org.jline.utils.AttributedStyle;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -131,33 +130,24 @@ public class ListDirectoryAction
     }
   }
 
-  // TODO: sort out some sort of scheme where this can be made configurable
-
   private String render(final File file) {
     String name = file.getName();
 
-    AttributedStringBuilder buff = new AttributedStringBuilder();
+    PrintBuffer buff = new PrintBuffer();
     if (file.isDirectory()) {
-      buff.style(AttributedStyle.DEFAULT.foreground(AttributedStyle.BLUE));
-      buff.append(name);
-      buff.append(File.separator);
-      buff.style(AttributedStyle.DEFAULT);
+      buff.format("@|blue %s%s|@", name, File.separator);
     }
     else if (file.canExecute()) {
-      buff.style(AttributedStyle.DEFAULT.foreground(AttributedStyle.GREEN));
-      buff.append(name);
-      buff.style(AttributedStyle.DEFAULT);
+      buff.format("@|green %s|@", name);
     }
     else if (file.isHidden()) {
-      buff.style(AttributedStyle.DEFAULT.faint());
-      buff.append(name);
-      buff.style(AttributedStyle.DEFAULT);
+      buff.format("@|intensity_faint %s|@", name);
     }
     else {
       // not styled
       return name;
     }
 
-    return buff.toAnsi();
+    return buff.toString();
   }
 }

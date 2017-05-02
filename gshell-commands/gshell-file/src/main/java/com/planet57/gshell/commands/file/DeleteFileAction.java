@@ -73,7 +73,7 @@ public class DeleteFileAction
       log.debug("Deleting file: {}", file);
       new FileAssert(file).isFile();
       if (!file.delete()) {
-        throw new RuntimeException(getMessages().format("error.delete-failed", file));
+        throw new RuntimeException(String.format("Failed to remove file: %s", file));
       }
     }
 

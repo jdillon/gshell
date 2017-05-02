@@ -59,7 +59,7 @@ public class CreateDirectoryAction
     new FileAssert(file).exists(false).isFile(false);
 
     if (!file.mkdirs()) {
-      throw new RuntimeException(getMessages().format("error.create-failed", file));
+      throw new RuntimeException(String.format("Failed to create directory: %s", file));
     }
 
     return null;

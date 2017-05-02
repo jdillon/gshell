@@ -57,7 +57,7 @@ public class DeleteDirectoryAction
     new FileAssert(file).exists().isDirectory();
 
     if (!file.delete()) {
-      throw new RuntimeException(getMessages().format("error.delete-failed", file));
+      throw new RuntimeException(String.format("Failed to remove directory: %s", file));
     }
 
     return null;

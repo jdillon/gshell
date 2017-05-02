@@ -16,7 +16,6 @@
 package com.planet57.gshell.help;
 
 import java.io.PrintWriter;
-import java.util.ResourceBundle;
 
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.shell.Shell;
@@ -35,7 +34,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-public class MetaHelpPage
+public abstract class MetaHelpPage
     implements HelpPage
 {
   private final String name;
@@ -44,13 +43,10 @@ public class MetaHelpPage
 
   private final HelpContentLoader loader;
 
-  private final ResourceBundle resources;
-
   public MetaHelpPage(final String name, final String resource, final HelpContentLoader loader) {
     this.name = checkNotNull(name);
     this.resource = checkNotNull(resource);
     this.loader = checkNotNull(loader);
-    this.resources = ResourceBundle.getBundle(resource);
   }
 
   @Override
@@ -59,9 +55,7 @@ public class MetaHelpPage
   }
 
   @Override
-  public String getDescription() {
-    return resources.getString("command.description");
-  }
+  public abstract String getDescription();
 
   @Override
   public void render(final Shell shell, final PrintWriter out) throws Exception {
