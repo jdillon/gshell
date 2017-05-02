@@ -138,6 +138,10 @@ public abstract class MainSupport
   @Nullable
   private List<String> appArgs;
 
+  //
+  // Boot
+  //
+
   public void boot(final String... args) throws Exception {
     checkNotNull(args);
 
@@ -284,8 +288,15 @@ public abstract class MainSupport
       .build();
   }
 
+  /**
+   * Allow sub-class to customize container.
+   */
+  protected void configure(@Nonnull final List<Module> modules) {
+    // empty
+  }
+
   //
-  // Extension helpers
+  // Helpers
   //
 
   /**
@@ -321,13 +332,6 @@ public abstract class MainSupport
       }
     };
     return new StreamSet(in, out);
-  }
-
-  /**
-   * Allow sub-class to customize container.
-   */
-  protected void configure(@Nonnull final List<Module> modules) {
-    // empty
   }
 
   /**
