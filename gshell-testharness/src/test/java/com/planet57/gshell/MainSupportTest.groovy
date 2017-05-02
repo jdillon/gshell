@@ -45,33 +45,46 @@ class MainSupportTest
 
   @After
   void tearDown() {
+    dump()
     underTest = null
   }
 
   @Test
-  void test_h() {
+  void 'option -h'() {
     underTest.boot('-h')
 
     log(new String(underTest.out.toByteArray()))
     assert underTest.exitCode == 0
+
+    assert outAsString().contains('testsh [options] [arguments]')
   }
 
   @Test
-  void test__help() {
+  void 'option --help'() {
     underTest.boot('--help')
 
     log(new String(underTest.out.toByteArray()))
     assert underTest.exitCode == 0
+
+    assert outAsString().contains('testsh [options] [arguments]')
   }
 
   @Test
-  void test__debug() {
+  void 'option --debug'() {
     underTest.boot('--debug')
 
     log(new String(underTest.out.toByteArray()))
     assert underTest.exitCode == 0
 
     assert System.getProperty('shell.logging.console.threshold') == 'DEBUG'
+  }
+
+  String outAsString() {
+    return new String(underTest.out.toByteArray())
+  }
+
+  void dump() {
+    println "----8<----\n${outAsString()}\n---->8----"
   }
 
   private class MockMain
