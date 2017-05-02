@@ -54,13 +54,13 @@ public class BrandingImpl
     buff.println();
     buff.format("%s (%s)%n%n", getDisplayName(), getVersion());
     buff.println("Type '@|bold help|@' for more information.");
-    buff.print(LINE_TOKEN);
+    buff.format("@|intensity_faint %s|@", LINE_TOKEN);
     return buff.toString();
   }
 
   @Override
   public String getDisplayName() {
-    return "@|bold GShell|@";
+    return "@|cyan GShell|@";
   }
 
   @Override
@@ -72,8 +72,6 @@ public class BrandingImpl
   public File getUserContextDir() {
     return resolveFile(new File(getUserHomeDir(), ".gshell"));
   }
-
-  // FIXME: these prompts can/do cause strange expander errors
 
   @Override
   public String getPrompt() {
