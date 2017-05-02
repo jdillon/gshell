@@ -68,18 +68,18 @@ public class ShellCompleter
     }
     else {
       String command = line.words().get(0);
-      log.debug("Command: {}", command);
+      log.trace("Command: {}", command);
 
       // resolve node for command, this should be non-null?
       Node node = commandResolver.resolve(command);
-      log.debug("Node: {}", node);
+      log.trace("Node: {}", node);
 
       if (node != null) {
         CommandAction action = node.getAction();
 
         if (action instanceof CommandAction.Completable) {
           Completer completer = ((CommandAction.Completable)action).getCompleter();
-          log.debug("Completer: {}", completer);
+          log.trace("Completer: {}", completer);
 
           // HACK: complexity here to re-use ArgumentCompleter; not terribly efficient
           ParsedLine arguments = extractCommandArguments(line);
@@ -95,8 +95,8 @@ public class ShellCompleter
    * Helper to log {@link ParsedLine} details.
    */
   private void explain(final String message, final ParsedLine line) {
-    // HACK: ParsedLine has no sane toString(); render all its details to logging
-    log.debug("{}: line={}, words={}, word-index: {}, word-cursor: {}, cursor: {}",
+    // ParsedLine has no sane toString(); render all its details to logging
+    log.trace("{}: line={}, words={}, word-index: {}, word-cursor: {}, cursor: {}",
       message,
       line.line(),
       line.words(),
