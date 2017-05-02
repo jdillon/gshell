@@ -92,7 +92,7 @@ class MainSupportTest
   private class MockMain
       extends MainSupport
   {
-    int exitCode
+    Integer exitCode
 
     ByteArrayInputStream input = new ByteArrayInputStream(new byte[0])
 
@@ -119,7 +119,7 @@ class MainSupportTest
     }
 
     @Override
-    protected void exit(int code) {
+    protected void exit(final int code) {
       this.exitCode = code
     }
   }
