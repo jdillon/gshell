@@ -57,6 +57,7 @@ import org.eclipse.sisu.wire.WireModule;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.sonatype.goodies.common.Throwables2;
 
@@ -244,8 +245,13 @@ public abstract class MainSupport
    * Setup logging environment.
    */
   protected void setupLogging(final Level level) {
+    // install JUL adapter
     SLF4JBridgeHandler.removeHandlersForRootLogger();
     SLF4JBridgeHandler.install();
+
+    // conifgure gossip bootstrap loggers with target factory
+    Log.configure(LoggerFactory.getILoggerFactory());
+    log.debug("Logging setup");
   }
 
   /**

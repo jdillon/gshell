@@ -47,11 +47,21 @@ public class Main
   protected void setupLogging(final Level level) {
     TargetConsoleAppender.setTarget(System.out);
 
-    System.setProperty("shell.logging.console.threshold", level.name());
-    System.setProperty("shell.logging.file.threshold", level.name());
-    System.setProperty("shell.logging.root-level", level.name());
+    // adapt configuration properties for logging unless already set
+    maybeSetProperty("shell.logging.console.threshold", level.name());
+    maybeSetProperty("shell.logging.file.threshold", level.name());
+    maybeSetProperty("shell.logging.root-level", level.name());
 
     super.setupLogging(level);
+  }
+
+  /**
+   * Helper to only set a property if not already set.
+   */
+  private void maybeSetProperty(final String name, final String value) {
+    if (System.getProperty(name) == null) {
+      System.setProperty(name, value);
+    }
   }
 
   @Override
