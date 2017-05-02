@@ -23,6 +23,8 @@ import java.lang.annotation.Target;
 
 import javax.inject.Qualifier;
 
+import static com.planet57.gshell.util.AnnotationDescriptor.UNINITIALIZED_STRING;
+
 /**
  * Marker for commands.
  *
@@ -36,4 +38,9 @@ import javax.inject.Qualifier;
 public @interface Command
 {
   String name();
+
+  /**
+   * @since 3.0
+   */
+  String description() default UNINITIALIZED_STRING;
 }

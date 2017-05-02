@@ -43,19 +43,19 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Command(name = "alias")
+@Command(name = "alias", description = "Define an alias or list defined aliases.")
 public class AliasAction
     extends CommandActionSupport
     implements CliProcessorAware
 {
   private final AliasRegistry aliasRegistry;
 
-  @Argument(index = 0)
   @Nullable
+  @Argument(index = 0, description = "Name of the alias to define", token = "NAME")
   private String name;
 
-  @Argument(index = 1)
   @Nullable
+  @Argument(index = 1, description = "Target command to be aliased as NAME", token = "TARGET")
   private List<String> target;
 
   @Inject

@@ -37,14 +37,14 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Command(name = "unset")
+@Command(name = "unset", description = "Unset a variable or property.")
 public class UnsetAction
     extends CommandActionSupport
 {
-  @Option(name = "m", longName = "mode")
+  @Option(name = "m", longName = "mode", description = "Unset mode", token = "MODE")
   private SetAction.Mode mode = SetAction.Mode.VARIABLE;
 
-  @Argument(required = true)
+  @Argument(required = true, description = "Variable name", token = "NAME")
   private List<String> args;
 
   @Inject

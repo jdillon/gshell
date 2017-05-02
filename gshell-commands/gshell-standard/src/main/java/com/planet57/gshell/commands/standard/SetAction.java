@@ -42,7 +42,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Command(name = "set")
+@Command(name = "set", description = "Set a variable or property.")
 public class SetAction
     extends CommandActionSupport
 {
@@ -52,18 +52,18 @@ public class SetAction
     PROPERTY
   }
 
-  @Option(name = "m", longName = "mode")
+  @Option(name = "m", longName = "mode", description = "Set mode", token = "MODE")
   private Mode mode = Mode.VARIABLE;
 
-  @Option(name = "v", longName = "verbose")
+  @Option(name = "v", longName = "verbose", description = "Enable verbose output")
   private boolean verbose;
 
   @Nullable
-  @Argument(index = 0)
+  @Argument(index = 0, description = "Variable or property name", token = "NAME")
   private String name;
 
   @Nullable
-  @Argument(index = 1)
+  @Argument(index = 1, description = "Variable or property value or expression to evaluate", token = "VALUE")
   private List<String> values;
 
   @Inject

@@ -60,7 +60,7 @@ import static com.planet57.gshell.commands.standard.InfoAction.Section.SHELL;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Command(name = "info")
+@Command(name = "info", description = "Display information about the shell and environment.")
 @Preferences(path = "commands/info")
 public class InfoAction
     extends CommandActionSupport
@@ -82,10 +82,10 @@ public class InfoAction
   }
 
   @Preference
-  @Argument
+  @Argument(description = "Display information about specific sections", token = "(section)*")
   private List<Section> sections;
 
-  @Option(name = "a", longName = "all")
+  @Option(name = "a", longName = "all", description = "Display all sections")
   private boolean all;
 
   public InfoAction() {

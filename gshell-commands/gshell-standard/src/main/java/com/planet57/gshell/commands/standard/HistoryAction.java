@@ -40,21 +40,21 @@ import javax.annotation.Nullable;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Command(name = "history")
+@Command(name = "history", description = "Display history.")
 public class HistoryAction
     extends CommandActionSupport
 {
-  @Option(name = "p", longName = "purge")
+  @Option(name = "p", longName = "purge", description = "Purge the shell history")
   private boolean purge;
 
-  @Option(name = "s", longName = "save")
+  @Option(name = "s", longName = "save", description = "Save shell history")
   private boolean save;
 
-  @Option(name = "t", longName = "timestamps")
+  @Option(name = "t", longName = "timestamps", description = "Display timestamps")
   private boolean timestamps;
 
+  @Argument(description = "Display the last N entries", token = "N")
   @Nullable
-  @Argument
   private Integer last;
 
   @Override

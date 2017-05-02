@@ -41,8 +41,6 @@ import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.CliProcessor;
 import com.planet57.gshell.util.cli2.HelpPrinter;
 import com.planet57.gshell.util.cli2.Option;
-import com.planet57.gshell.util.i18n.MessageSource;
-import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 import com.planet57.gshell.util.io.StreamSet;
 import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.PreferenceProcessor;
@@ -78,13 +76,9 @@ public abstract class MainSupport
 {
   private final Logger log = Log.getLogger(getClass());
 
-  private final MessageSource messages = new ResourceBundleMessageSource()
-    .add(false, getClass())
-    .add(MainSupport.class);
-
   private final ThreadIOImpl threadIO = new ThreadIOImpl();
 
-  @Option(name = "h", longName = "help", description = "Display this help message", override = true)
+  @Option(name = "h", longName = "help", description = "Display usage", override = true)
   private boolean help;
 
   @Option(name = "V", longName = "version", description = "Display program version", override = true)
@@ -189,7 +183,6 @@ public abstract class MainSupport
     // Process command line options & arguments
     CliProcessor clp = new CliProcessor();
     clp.addBean(this);
-    clp.setMessages(messages);
     clp.setStopAtNonOption(true);
     try {
       clp.process(args);

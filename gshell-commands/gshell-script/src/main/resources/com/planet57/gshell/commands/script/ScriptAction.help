@@ -14,4 +14,16 @@
 # limitations under the License.
 #
 
-command.option.displayHelp=Display usage
+@|bold NAME|@
+
+    @{command.name} - @{command.description}
+
+@|bold SYNOPSIS|@
+
+    @|bold @{command.name}|@ [options]
+
+@|bold DESCRIPTION|@
+
+    Execute a script.
+
+@{command.details}

@@ -45,7 +45,7 @@ import static com.google.common.base.Preconditions.checkState;
  *
  * @since 3.0
  */
-@Command(name = "script")
+@Command(name = "script", description = "Execute a script.")
 @Preferences(path = "commands/script")
 public class ScriptAction
     extends CommandActionSupport
@@ -54,22 +54,22 @@ public class ScriptAction
   private ScriptManager scriptManager;
 
   @Preference
-  @Option(name = "l", longName = "language", required = true)
+  @Option(name = "l", longName = "language", description = "Script language", token = "LANG", required = true)
   private String language;
 
-  @Option(name = "f", longName = "file")
+  @Option(name = "f", longName = "file", description = "Script file", token = "FILE")
   @Nullable
   private File file;
 
-  @Option(name = "u", longName = "url")
+  @Option(name = "u", longName = "url", description = "Script URL", token = "URL")
   @Nullable
   private URL url;
 
-  @Option(name = "e", longName = "expression")
+  @Option(name = "e", longName = "expression", description = "Script expression", token = "EXPR")
   @Nullable
   private String expression;
 
-  @Argument
+  @Argument(description = "Additional script arguments", token = "ARGS")
   @Nullable
   private List<String> args;
 

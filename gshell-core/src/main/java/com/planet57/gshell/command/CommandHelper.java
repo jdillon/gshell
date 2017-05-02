@@ -23,6 +23,7 @@ import com.planet57.gshell.util.i18n.PrefixingMessageSource;
 import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.planet57.gshell.util.AnnotationDescriptor.UNINITIALIZED_STRING;
 
 /**
  * Command helper.
@@ -32,17 +33,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class CommandHelper
 {
-  @Option(name = "h", longName = "help", override = true)
+  @Option(name = "h", longName = "help", description = "Display usage", override = true)
   public boolean displayHelp;
 
   private MessageSource messages;
-
-  private MessageSource getMessages() {
-    if (messages == null) {
-      messages = new ResourceBundleMessageSource(getClass());
-    }
-    return messages;
-  }
 
   /**
    * Construct a {@link CliProcessor} for given action.
@@ -54,7 +48,7 @@ public class CommandHelper
     clp.addBean(command);
     clp.addBean(this);
 
-    AggregateMessageSource messages = new AggregateMessageSource(command.getMessages(), this.getMessages());
+    AggregateMessageSource messages = new AggregateMessageSource(command.getMessages());
     clp.setMessages(new PrefixingMessageSource(messages, "command."));
 
     return clp;
@@ -63,8 +57,20 @@ public class CommandHelper
   /**
    * Get the description for a given action.
    */
-  public static String getDescription(final CommandAction command) {
-    checkNotNull(command);
-    return command.getMessages().getMessage("command.description");
+  public static String getDescription(final CommandAction action) {
+    checkNotNull(action);
+
+    // HACK: temporary adjust for description or previous behavior
+
+    String description = null;
+    Command command = action.getClass().getAnnotation(Command.class);
+    if (command != null) {
+      description = command.description();
+      if (UNINITIALIZED_STRING.equals(description)) {
+        description = action.getMessages().getMessage("command.description");
+      }
+    }
+
+    return description;
   }
 }

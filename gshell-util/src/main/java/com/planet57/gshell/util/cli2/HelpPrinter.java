@@ -133,14 +133,14 @@ public class HelpPrinter
     int len = 0;
 
     for (ArgumentDescriptor arg : arguments) {
-      len = Math.max(len, arg.renderSyntax(userMessages).length());
+      len = Math.max(len, arg.renderSyntax().length());
     }
 
     for (OptionDescriptor opt : options) {
-      len = Math.max(len, opt.renderSyntax(userMessages).length());
+      len = Math.max(len, opt.renderSyntax().length());
     }
 
-    // And then render the handler usage
+    // And then render usage
     if (!arguments.isEmpty()) {
       out.println(messages.argumentsHeader());
       printArguments(out, arguments, len);
@@ -171,7 +171,7 @@ public class HelpPrinter
   public void printArguments(final PrintWriter out, final List<ArgumentDescriptor> arguments) {
     int len = 0;
     for (ArgumentDescriptor arg : arguments) {
-      len = Math.max(len, arg.renderSyntax(userMessages).length());
+      len = Math.max(len, arg.renderSyntax().length());
     }
 
     printArguments(out, arguments, len);
@@ -192,14 +192,10 @@ public class HelpPrinter
   public void printOptions(final PrintWriter out, final List<OptionDescriptor> options) {
     int len = 0;
     for (OptionDescriptor opt : options) {
-      len = Math.max(len, opt.renderSyntax(userMessages).length());
+      len = Math.max(len, opt.renderSyntax().length());
     }
 
     printOptions(out, options, len);
-  }
-
-  public void printUsage(final PrintWriter writer) {
-    printUsage(writer, null);
   }
 
   private void printDescriptor(final PrintWriter out, final CliDescriptor desc, final int len) {
@@ -209,10 +205,10 @@ public class HelpPrinter
     int prefixSeparatorWidth = prefix.length() + separator.length();
     int descriptionWidth = maxWidth - len - prefixSeparatorWidth;
 
-    String description = desc.renderHelpText(userMessages);
+    String description = desc.getDescription();
 
     // Render the prefix and syntax
-    String syntax = desc.renderSyntax(userMessages);
+    String syntax = desc.renderSyntax();
     out.print(prefix);
     out.print(syntax);
 

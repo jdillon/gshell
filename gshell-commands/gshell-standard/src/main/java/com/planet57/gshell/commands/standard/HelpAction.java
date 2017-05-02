@@ -50,7 +50,7 @@ import static com.google.common.base.Preconditions.checkState;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Command(name = "help")
+@Command(name = "help", description = "Display help pages.")
 @Preferences(path = "commands/help")
 public class HelpAction
     extends CommandActionSupport
@@ -60,26 +60,26 @@ public class HelpAction
   // TODO: maybe use an enum here to say; --include groups,commands,aliases (exclude meta) etc...
 
   @Preference
-  @Option(name = "c", longName = "include-commands", optionalArg = true)
+  @Option(name = "c", longName = "include-commands", description = "Include command pages", optionalArg = true)
   private Boolean includeCommands = true;
 
   @Preference
-  @Option(name = "a", longName = "include-aliases", optionalArg = true)
+  @Option(name = "a", longName = "include-aliases", description = "Include alias pages", optionalArg = true)
   private Boolean includeAliases = true;
 
   @Preference
-  @Option(name = "g", longName = "include-groups", optionalArg = true)
+  @Option(name = "g", longName = "include-groups", description = "Include group pages", optionalArg = true)
   private Boolean includeGroups = true;
 
   @Preference
-  @Option(name = "m", longName = "include-meta", optionalArg = true)
+  @Option(name = "m", longName = "include-meta", description = "Include meta pages", optionalArg = true)
   private Boolean includeMeta = true;
 
   @Preference
-  @Option(name = "A", longName = "include-all", optionalArg = true)
+  @Option(name = "A", longName = "include-all", description = "Include all pages", optionalArg = true)
   private Boolean includeAll;
 
-  @Argument
+  @Argument(description = "Display the help page for NAME or list pages matching NAME", token = "NAME")
   private String name;
 
   @Inject

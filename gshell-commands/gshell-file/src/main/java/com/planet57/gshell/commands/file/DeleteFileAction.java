@@ -38,17 +38,17 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "rm")
+@Command(name = "rm", description = "Remove a file.")
 public class DeleteFileAction
     extends FileCommandActionSupport
 {
-  @Argument(required = true)
+  @Argument(required = true, description = "The path of the file remove", token = "PATH")
   private String path;
 
   /**
    * @since 3.0
    */
-  @Option(name = "r", longName = "recursive")
+  @Option(name = "r", longName = "recursive", description = "Remove directories and their contents recursively")
   private boolean recursive;
 
   @Inject

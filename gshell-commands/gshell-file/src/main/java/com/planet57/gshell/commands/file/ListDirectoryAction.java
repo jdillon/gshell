@@ -44,21 +44,21 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "ls")
+@Command(name = "ls", description = "List the contents of a file or directory.")
 public class ListDirectoryAction
   extends FileCommandActionSupport
 {
   @Nullable
-  @Argument
+  @Argument(description = "The file or directory path to list.", token = "PATH")
   private String path;
 
-  @Option(name = "l", longName = "long")
+  @Option(name = "l", longName = "long", description = "List in long format")
   private boolean longList;
 
-  @Option(name = "a", longName = "all")
+  @Option(name = "a", longName = "all", description = "Include hidden files")
   private boolean includeHidden;
 
-  @Option(name = "r", longName = "recursive")
+  @Option(name = "r", longName = "recursive", description = "List the contents of directories recursively")
   private boolean recursive;
 
   @Inject

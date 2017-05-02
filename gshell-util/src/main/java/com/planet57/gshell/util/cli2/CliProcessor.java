@@ -241,7 +241,7 @@ public class CliProcessor
     }
     catch (MissingArgumentException e) {
       OptionDescriptor desc = ((Opt) e.getOption()).getDescriptor();
-      throw new ProcessingException(messages.MISSING_OPERAND(desc.getSyntax(), desc.renderToken(userMessages)));
+      throw new ProcessingException(messages.MISSING_OPERAND(desc.getSyntax(), desc.getToken()));
     }
     catch (ParseException e) {
       throw new ProcessingException(e);
@@ -317,7 +317,7 @@ public class CliProcessor
 
       for (ArgumentDescriptor arg : argumentDescriptors) {
         if (arg.isRequired() && !present.contains(arg)) {
-          throw new ProcessingException(messages.REQUIRED_ARGUMENT_MISSING(arg.renderToken(userMessages)));
+          throw new ProcessingException(messages.REQUIRED_ARGUMENT_MISSING(arg.getToken()));
         }
       }
     }

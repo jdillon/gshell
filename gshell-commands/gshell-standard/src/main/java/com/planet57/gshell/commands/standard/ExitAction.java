@@ -28,11 +28,11 @@ import javax.annotation.Nonnull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Command(name = "exit")
+@Command(name = "exit", description = "Exit the current shell.")
 public class ExitAction
     extends CommandActionSupport
 {
-  @Argument
+  @Argument(description = "Exit code", token = "CODE")
   private int exitCode = 0;
 
   @Override

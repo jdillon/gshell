@@ -36,14 +36,14 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:olamy@apache.org">Olivier Lamy</a>
  * @since 2.6.3
  */
-@Command(name = "cp")
+@Command(name = "cp", description = "Copy command.")
 public class CopyAction
     extends FileCommandActionSupport
 {
-  @Argument(required = true, index = 0)
+  @Argument(required = true, index = 0, description = "The path to the file or directory to copy", token = "SOURCE")
   private String source;
 
-  @Argument(required = true, index = 1)
+  @Argument(required = true, index = 1, description = "The path to the target file or directory", token = "TARGET")
   private String target;
 
   @Option(name = "r", longName = "recursive")

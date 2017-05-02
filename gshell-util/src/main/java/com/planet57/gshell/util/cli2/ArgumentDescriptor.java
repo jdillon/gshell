@@ -46,7 +46,7 @@ public class ArgumentDescriptor
   @Override
   public String getSyntax() {
     String tmp = getToken();
-    if (tmp != null && tmp.length() != 0) {
+    if (!UNINITIALIZED_STRING.equals(tmp) && tmp.length() != 0) {
       return tmp;
     }
 

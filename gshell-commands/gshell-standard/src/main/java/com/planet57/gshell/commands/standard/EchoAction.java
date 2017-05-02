@@ -36,15 +36,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Command(name = "echo")
+@Command(name = "echo", description = "Print arguments to standard output.")
 public class EchoAction
     extends CommandActionSupport
 {
-  @Option(name = "n")
+  @Option(name = "n", description = "Do not print the trailing newline character")
   private boolean noTrailingNewline;
 
   @Nullable
-  @Argument
+  @Argument(description = "Arguments")
   private List<String> args;
 
   @Override

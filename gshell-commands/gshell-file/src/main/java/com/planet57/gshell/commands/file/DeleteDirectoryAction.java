@@ -36,11 +36,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "rmdir")
+@Command(name = "rmdir", description = "Remove a directory.")
 public class DeleteDirectoryAction
     extends FileCommandActionSupport
 {
-  @Argument(required = true)
+  @Argument(required = true, description = "The path of the directory remove", token = "PATH")
   private String path;
 
   @Inject
