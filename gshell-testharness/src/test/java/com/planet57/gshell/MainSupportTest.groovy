@@ -77,6 +77,8 @@ class MainSupportTest
     assert underTest.exitCode == 0
 
     assert System.getProperty('shell.logging.console.threshold') == 'DEBUG'
+
+    // TODO: verify logging was actually enabled; presently due to use of same logging system in embedded mode this is not possible
   }
 
   String outAsString() {
