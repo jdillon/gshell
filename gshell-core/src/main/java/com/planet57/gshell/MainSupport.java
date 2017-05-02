@@ -189,7 +189,7 @@ public abstract class MainSupport
       exit(0);
     }
 
-    // install thread-IO handler
+    // install thread-IO handler and attach streams
     threadIO.start();
     threadIO.setStreams(io.streams.in, io.streams.out, io.streams.err);
 
