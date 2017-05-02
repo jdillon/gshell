@@ -195,7 +195,8 @@ public abstract class MainSupport
       exit(2);
     }
 
-    // FIXME: due to changes to use I18N we have a premature logging configuration
+    // FIXME: need to revisit bootstrap logging; as loaded-classes could impact the functionality of --debug/--trace
+    // FIXME: ... if they use logging too early :-\
 
     // adapt JUL
     SLF4JBridgeHandler.removeHandlersForRootLogger();

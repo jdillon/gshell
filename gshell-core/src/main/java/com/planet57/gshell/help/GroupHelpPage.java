@@ -19,8 +19,8 @@ import java.io.PrintWriter;
 
 import com.planet57.gshell.command.resolver.Node;
 import com.planet57.gshell.shell.Shell;
-import org.sonatype.goodies.i18n.I18N;
-import org.sonatype.goodies.i18n.MessageBundle;
+import com.planet57.gshell.util.i18n.I18N;
+import com.planet57.gshell.util.i18n.MessageBundle;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;

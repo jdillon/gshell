@@ -15,8 +15,8 @@
  */
 package com.planet57.gshell.shell;
 
-import org.sonatype.goodies.i18n.I18N;
-import org.sonatype.goodies.i18n.MessageBundle;
+import com.planet57.gshell.util.i18n.I18N;
+import com.planet57.gshell.util.i18n.MessageBundle;
 
 import java.io.PrintWriter;
 
