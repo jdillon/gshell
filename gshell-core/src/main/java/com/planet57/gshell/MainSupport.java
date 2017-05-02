@@ -106,7 +106,7 @@ public abstract class MainSupport
   }
 
   @Preference(name = "debug")
-  @Option(name = "d", longName = "debug", description = "Enable DEBUG output", optionalArg = true)
+  @Option(name = "d", longName = "debug", description = "Enable debug output", optionalArg = true)
   private void setDebug(final boolean flag) {
     log.debug("Debug: {}", flag);
     if (flag) {
@@ -116,7 +116,7 @@ public abstract class MainSupport
   }
 
   @Preference(name = "trace")
-  @Option(name = "X", longName = "trace", description = "Enable TRACE output", optionalArg = true)
+  @Option(name = "X", longName = "trace", description = "Enable trace output", optionalArg = true)
   private void setTrace(final boolean flag) {
     log.debug("Trace: {}", flag);
     if (flag) {
@@ -126,7 +126,7 @@ public abstract class MainSupport
   }
 
   @Nullable
-  @Option(name = "c", longName = "command", description = "Execute COMMAND-LINE", token = "COMMAND")
+  @Option(name = "c", longName = "command", description = "Execute COMMAND", token = "COMMAND")
   private String command;
 
   private final Variables variables = new VariablesSupport();
