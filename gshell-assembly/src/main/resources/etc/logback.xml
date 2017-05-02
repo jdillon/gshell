@@ -29,7 +29,7 @@
       <pattern>${shell.logging.console.pattern:-[%level] %logger{1} - %msg%n}</pattern>
     </encoder>
     <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-      <level>${shell.logging.console.threshold}</level>
+      <level>${shell.logging.console.threshold:-INFO}</level>
     </filter>
   </appender>
 
@@ -40,7 +40,7 @@
       <pattern>${shell.logging.file.pattern:-%date %level [%thread%X{DC}] %logger - %msg%n}</pattern>
     </encoder>
     <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-      <level>${shell.logging.file.threshold}</level>
+      <level>${shell.logging.file.threshold:-INFO}</level>
     </filter>
   </appender>
 

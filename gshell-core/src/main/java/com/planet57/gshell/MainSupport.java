@@ -89,7 +89,8 @@ public abstract class MainSupport
   @Option(name = "e", longName = "errors", description = "Produce detailed exceptions")
   private boolean showErrorTraces;
 
-  private Level loggingLevel = Level.INFO;
+  @Nullable
+  private Level loggingLevel;
 
   @Preference(name = "debug")
   @Option(name = "d", longName = "debug", description = "Enable debug output")
@@ -244,14 +245,14 @@ public abstract class MainSupport
   /**
    * Setup logging environment.
    */
-  protected void setupLogging(final Level level) {
+  protected void setupLogging(@Nullable final Level level) {
     // install JUL adapter
     SLF4JBridgeHandler.removeHandlersForRootLogger();
     SLF4JBridgeHandler.install();
 
     // conifgure gossip bootstrap loggers with target factory
     Log.configure(LoggerFactory.getILoggerFactory());
-    log.debug("Logging setup");
+    log.debug("Logging setup; level: {}", level);
   }
 
   /**

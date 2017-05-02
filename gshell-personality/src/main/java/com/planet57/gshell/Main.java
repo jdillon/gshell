@@ -25,6 +25,7 @@ import com.planet57.gshell.logging.logback.LogbackLoggingSystem;
 import com.planet57.gshell.logging.logback.TargetConsoleAppender;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Command-line bootstrap for GShell (<tt>gsh</tt>).
@@ -44,13 +45,15 @@ public class Main
    * Force logback to use current {@link System#out} reference before they are adapted by ThreadIO.
    */
   @Override
-  protected void setupLogging(final Level level) {
+  protected void setupLogging(@Nullable final Level level) {
     TargetConsoleAppender.setTarget(System.out);
 
     // adapt configuration properties for logging unless already set
-    maybeSetProperty("shell.logging.console.threshold", level.name());
-    maybeSetProperty("shell.logging.file.threshold", level.name());
-    maybeSetProperty("shell.logging.root-level", level.name());
+    if (level != null) {
+      maybeSetProperty("shell.logging.console.threshold", level.name());
+      maybeSetProperty("shell.logging.file.threshold", level.name());
+      maybeSetProperty("shell.logging.root-level", level.name());
+    }
 
     super.setupLogging(level);
   }
