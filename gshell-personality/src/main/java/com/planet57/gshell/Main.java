@@ -18,6 +18,7 @@ package com.planet57.gshell;
 import java.util.List;
 
 import com.google.inject.Module;
+import com.planet57.gossip.Level;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.logging.LoggingSystem;
 import com.planet57.gshell.logging.logback.LogbackLoggingSystem;
@@ -43,9 +44,14 @@ public class Main
    * Force logback to use current {@link System#out} reference before they are adapted by ThreadIO.
    */
   @Override
-  protected void setupLogging() {
+  protected void setupLogging(final Level level) {
     TargetConsoleAppender.setTarget(System.out);
-    super.setupLogging();
+
+    System.setProperty("shell.logging.console.threshold", level.name());
+    System.setProperty("shell.logging.file.threshold", level.name());
+    System.setProperty("shell.logging.root-level", level.name());
+
+    super.setupLogging(level);
   }
 
   @Override

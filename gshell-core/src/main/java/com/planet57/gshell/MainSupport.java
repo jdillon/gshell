@@ -88,29 +88,15 @@ public abstract class MainSupport
   @Option(name = "e", longName = "errors", description = "Produce detailed exceptions")
   private boolean showErrorTraces;
 
-  /**
-   * Adjust the threshold of the {@code console} appender.
-   */
-  private void setConsoleLoggingThreshold(final Level level) {
-    System.setProperty("shell.logging.console.threshold", level.name());
-  }
-
-  /**
-   * Adjust the threshold of all logging.
-   */
-  private void setLoggingThreshold(final Level level) {
-    log.debug("Logging threshold: {}", level);
-    setConsoleLoggingThreshold(level);
-    System.setProperty("shell.logging.file.threshold", level.name());
-    System.setProperty("shell.logging.root-level", level.name());
-  }
+  private Level loggingLevel = Level.INFO;
 
   @Preference(name = "debug")
   @Option(name = "d", longName = "debug", description = "Enable debug output")
   private void setDebug(final boolean flag) {
     log.debug("Debug: {}", flag);
     if (flag) {
-      setLoggingThreshold(Level.DEBUG);
+      loggingLevel = Level.DEBUG;
+      // imply --errors
       showErrorTraces = true;
     }
   }
@@ -120,7 +106,8 @@ public abstract class MainSupport
   private void setTrace(final boolean flag) {
     log.debug("Trace: {}", flag);
     if (flag) {
-      setLoggingThreshold(Level.TRACE);
+      loggingLevel = Level.TRACE;
+      // imply --errors
       showErrorTraces = true;
     }
   }
@@ -159,9 +146,6 @@ public abstract class MainSupport
     // Register default handler for uncaught exceptions
     Thread.setDefaultUncaughtExceptionHandler((thread, cause) -> log.warn("Unhandled exception occurred on thread: {}", thread, cause));
 
-    // Setup environment defaults
-    setConsoleLoggingThreshold(Level.INFO);
-
     // Prepare branding
     Branding branding = createBranding();
 
@@ -186,7 +170,8 @@ public abstract class MainSupport
       exit(2);
     }
 
-    setupLogging();
+    // once options are processed setup logging environment
+    setupLogging(loggingLevel);
 
     Terminal terminal = createTerminal(branding);
     IO io = new IO(createStreamSet(terminal), terminal);
@@ -255,13 +240,13 @@ public abstract class MainSupport
     return new BrandingSupport();
   }
 
-  protected void setupLogging() {
-    // adapt JUL
+  /**
+   * Setup logging environment.
+   */
+  protected void setupLogging(final Level level) {
     SLF4JBridgeHandler.removeHandlersForRootLogger();
     SLF4JBridgeHandler.install();
   }
-
-  private final BeanContainer container = new BeanContainer();
 
   /**
    * Create a new {@link Shell}.
@@ -275,6 +260,7 @@ public abstract class MainSupport
     URLClassSpace space = new URLClassSpace(getClass().getClassLoader());
     modules.add(new SpaceModule(space, BeanScanning.INDEX));
 
+    final BeanContainer container = new BeanContainer();
     modules.add(binder -> {
       binder.bind(BeanContainer.class).toInstance(container);
       binder.bind(ThreadIO.class).toInstance(threadIO);

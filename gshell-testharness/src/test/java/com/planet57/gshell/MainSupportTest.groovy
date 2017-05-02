@@ -16,6 +16,7 @@
 package com.planet57.gshell
 
 import com.google.common.base.CharMatcher
+import com.planet57.gossip.Level
 import com.planet57.gshell.branding.Branding
 import com.planet57.gshell.command.IO
 import com.planet57.gshell.shell.Shell
@@ -71,7 +72,7 @@ class MainSupportTest
     underTest.boot('--debug')
 
     assert underTest.exitCode == 0
-    assert System.getProperty('shell.logging.console.threshold') == 'DEBUG'
+    assert underTest.loggingLevel == Level.DEBUG
 
     // TODO: verify logging was actually enabled; presently due to use of same logging system in embedded mode this is not possible
   }
@@ -90,9 +91,22 @@ class MainSupportTest
   {
     Integer exitCode
 
+    Level loggingLevel
+
     ByteArrayInputStream input = new ByteArrayInputStream(new byte[0])
 
     ByteArrayOutputStream out = new ByteArrayOutputStream()
+
+    @Override
+    protected Branding createBranding() {
+      return new TestBranding(util.resolveFile('target/shell-home'))
+    }
+
+    @Override
+    protected void setupLogging(final Level level) {
+      loggingLevel = level;
+      super.setupLogging(level);
+    }
 
     @Override
     protected Terminal createTerminal(final Branding branding) {
@@ -102,11 +116,6 @@ class MainSupportTest
     @Override
     protected StreamSet createStreamSet(final Terminal terminal) {
       return new StreamSet(input, new PrintStream(out, true))
-    }
-
-    @Override
-    protected Branding createBranding() {
-      return new TestBranding(util.resolveFile('target/shell-home'))
     }
 
     @Override
