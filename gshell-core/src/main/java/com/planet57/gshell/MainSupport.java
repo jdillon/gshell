@@ -195,6 +195,8 @@ public abstract class MainSupport
       exit(2);
     }
 
+    // FIXME: due to changes to use I18N we have a premature logging configuration
+
     // adapt JUL
     SLF4JBridgeHandler.removeHandlersForRootLogger();
     SLF4JBridgeHandler.install();
