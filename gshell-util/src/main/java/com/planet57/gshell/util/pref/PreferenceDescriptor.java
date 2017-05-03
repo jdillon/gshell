@@ -64,7 +64,7 @@ public class PreferenceDescriptor
     this.system = pref.system();
 
     // On IBM JDK, the value passed is null instead of the default value, so fix it in case
-    this.type = pref.type() != null ? pref.type() : UNINITIALIZED_CLASS;
+    this.type = pref.type() != null ? pref.type() : UninitializedClass.class;
 
     // Handle "" = null, since default values in annotations cannot be set to null
     if (pref.path() != null && pref.path().length() == 0) {
@@ -112,7 +112,7 @@ public class PreferenceDescriptor
 
   public Class getType() {
     Class type = this.type;
-    if (type == UNINITIALIZED_CLASS) {
+    if (type == UninitializedClass.class) {
       type = getSetter().getBean().getClass();
     }
     return type;

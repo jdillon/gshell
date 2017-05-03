@@ -15,6 +15,8 @@
  */
 package com.planet57.gshell.util.i18n;
 
+import com.google.common.annotations.VisibleForTesting;
+
 /**
  * Nop {@link MessageSource}.
  *
@@ -25,15 +27,16 @@ public class NopMessageSource
 {
   public static final NopMessageSource INSTANCE = new NopMessageSource();
 
-  // TODO: should this instead throw new ResourceNotFoundException(code)?
+  @VisibleForTesting
+  static final String MISSING_MESSAGE_FORMAT = "ERROR_MISSING_MESSAGE[%s]"; //NON-NLS
 
   @Override
   public String getMessage(final String code) {
-    return code;
+    return String.format(MISSING_MESSAGE_FORMAT, code);
   }
 
   @Override
   public String format(final String code, final Object... args) {
-    return code;
+    return String.format(MISSING_MESSAGE_FORMAT, code);
   }
 }

@@ -40,7 +40,7 @@ public class ResourceBundleMessageSource
 {
   private static final Logger log = Log.getLogger(ResourceBundleMessageSource.class);
 
-  private final List<ResourceBundle> bundles = new LinkedList<ResourceBundle>();
+  private final List<ResourceBundle> bundles = new LinkedList<>();
 
   private final Locale locale;
 

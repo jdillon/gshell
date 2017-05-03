@@ -20,6 +20,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import static com.planet57.gshell.util.AnnotationDescriptor.UninitializedClass;
+
 /**
  * Configures a field or method for processing as a preference.
  *
@@ -32,11 +34,9 @@ public @interface Preference
 {
   String name() default "";
 
-  Class<?> type() default Void.class; // UNINITIALIZED_CLASS;
+  Class<?> type() default UninitializedClass.class;
 
   String path() default "";
 
   boolean system() default false;
-
-  // TODO: Consider adding listener support
 }

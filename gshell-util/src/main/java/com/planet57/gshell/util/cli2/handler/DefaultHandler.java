@@ -17,6 +17,8 @@ package com.planet57.gshell.util.cli2.handler;
 
 import com.planet57.gshell.util.cli2.CliDescriptor;
 import com.planet57.gshell.util.converter.Converter;
+import com.planet57.gshell.util.i18n.I18N;
+import com.planet57.gshell.util.i18n.MessageBundle;
 
 /**
  * Handler which uses a {@link Converter} to coerce types.
@@ -27,6 +29,15 @@ import com.planet57.gshell.util.converter.Converter;
 public class DefaultHandler
     extends Handler
 {
+  private interface Messages
+    extends MessageBundle
+  {
+    @DefaultMessage("VAL")
+    String defaultToken();
+  }
+
+  private static Messages messages = I18N.create(Messages.class);
+
   public DefaultHandler(final CliDescriptor desc) {
     super(desc);
   }
@@ -38,6 +49,6 @@ public class DefaultHandler
 
   @Override
   public String getDefaultToken() {
-    return "VAL"; // TODO: i18n
+    return messages.defaultToken();
   }
 }

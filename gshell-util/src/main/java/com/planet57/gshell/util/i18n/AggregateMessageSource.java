@@ -35,7 +35,7 @@ public class AggregateMessageSource
 {
   private static final Logger log = Log.getLogger(AggregateMessageSource.class);
 
-  private final List<MessageSource> sources = new LinkedList<MessageSource>();
+  private final List<MessageSource> sources = new LinkedList<>();
 
   public AggregateMessageSource(final List<MessageSource> sources) {
     checkNotNull(sources);

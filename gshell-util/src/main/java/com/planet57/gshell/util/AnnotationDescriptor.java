@@ -27,5 +27,11 @@ public abstract class AnnotationDescriptor
 
   public static final char UNINITIALIZED_CHAR = '\u0000';
 
-  public static final Class UNINITIALIZED_CLASS = Void.class;
+  /**
+   * @since 3.0
+   */
+  public static final class UninitializedClass
+  {
+    // empty
+  }
 }
