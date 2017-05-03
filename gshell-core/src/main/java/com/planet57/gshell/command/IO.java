@@ -86,7 +86,7 @@ public class IO
   }
 
   /**
-   * Flush both output streams.
+   * Flush output streams.
    */
   public void flush() {
     Flushables.flushQuietly(out);
@@ -96,6 +96,6 @@ public class IO
       Flushables.flushQuietly(err);
     }
 
-    // TODO: terminal.flush()?
+    terminal.flush();
   }
 }
