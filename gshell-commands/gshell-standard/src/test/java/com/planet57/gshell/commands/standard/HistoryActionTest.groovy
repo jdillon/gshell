@@ -16,9 +16,8 @@
 package com.planet57.gshell.commands.standard
 
 import com.planet57.gshell.testharness.CommandTestSupport
+import com.planet57.gshell.util.cli2.ProcessingException
 import org.junit.Test
-
-import static org.junit.Assert.fail
 
 /**
  * Tests for {@link HistoryAction}.
@@ -36,15 +35,9 @@ class HistoryActionTest
     super.setUp()
   }
 
-  @Test
+  @Test(expected = ProcessingException.class)
   void 'too many arguments'() {
-    try {
-      executeCommand('1 2')
-      fail()
-    }
-    catch (Exception e) {
-      // expected
-    }
+    executeCommand('1 2')
   }
 
   @Test
@@ -54,9 +47,7 @@ class HistoryActionTest
     executeLine('echo 2')
 
     // Then purge and expect history to be empty
-    Object result = executeCommand('-p')
-    assert result == null
-
+    assert executeCommand('-p') == null
     assert shell.history.empty
   }
 
@@ -71,10 +62,7 @@ class HistoryActionTest
     }
 
     // And then ask for the last 5
-    Object result = executeCommand('5')
-    assert result == null
-
-    // TODO: Verify output
+    assert executeCommand('5') == null
   }
 
   @Test
@@ -88,9 +76,6 @@ class HistoryActionTest
     }
 
     // And then ask for the last 15
-    Object result = executeCommand('15')
-    assert result == null
-
-    // TODO: Verify output
+    assert executeCommand('15') == null
   }
 }

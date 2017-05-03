@@ -64,7 +64,7 @@ public class ExportPreferencesAction
       out = io.streams.out;
     }
     else {
-      io.out.printf("Exporting preferences to: %s%%s", file); // TODO: i18n
+      io.out.printf("Exporting preferences to: %s%n", file); // TODO: i18n
       out = new BufferedOutputStream(new FileOutputStream(file));
     }
 
