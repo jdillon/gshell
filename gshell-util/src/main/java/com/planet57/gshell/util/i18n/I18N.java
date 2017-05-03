@@ -46,7 +46,7 @@ public class I18N
   static final String MISSING_MESSAGE_FORMAT = "ERROR_MISSING_MESSAGE[%s]"; //NON-NLS
 
   private I18N() {
-    super();
+    // empty
   }
 
   /**

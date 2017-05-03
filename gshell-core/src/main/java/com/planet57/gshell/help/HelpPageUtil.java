@@ -32,6 +32,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class HelpPageUtil
 {
+  private HelpPageUtil() {
+    // empty
+  }
+
   /**
    * Render a column-formatted index of help pages.
    */

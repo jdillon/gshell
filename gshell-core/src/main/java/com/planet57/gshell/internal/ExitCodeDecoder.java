@@ -30,6 +30,10 @@ public class ExitCodeDecoder
 {
   private static final Logger log = Log.getLogger(ExitCodeDecoder.class);
 
+  private ExitCodeDecoder() {
+    // empty
+  }
+
   public static int decode(@Nullable final Object result) {
     log.debug("Decoding: {}", result);
 
