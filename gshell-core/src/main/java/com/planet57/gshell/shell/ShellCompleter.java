@@ -119,6 +119,8 @@ public class ShellCompleter
     // rebuild that list sans the first argument
     String rawLine = line.line();
 
+    // FIXME: this isn't correct; fails w/there are no more arguments with java.lang.StringIndexOutOfBoundsException
+
     return new DefaultParser.ArgumentList(
       rawLine.substring(remove.length() + 1, rawLine.length()),
       words,
