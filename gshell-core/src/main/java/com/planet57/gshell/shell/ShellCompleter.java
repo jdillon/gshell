@@ -17,6 +17,7 @@ package com.planet57.gshell.shell;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -115,18 +116,20 @@ public class ShellCompleter
     // copy the list, so we can mutate and pop the first item off
     LinkedList<String> words = Lists.newLinkedList(line.words());
     String remove = words.pop();
-
-    // rebuild that list sans the first argument
     String rawLine = line.line();
 
-    // FIXME: this isn't correct; fails w/there are no more arguments with java.lang.StringIndexOutOfBoundsException
-
-    return new DefaultParser.ArgumentList(
-      rawLine.substring(remove.length() + 1, rawLine.length()),
-      words,
-      line.wordIndex() - 1,
-      line.wordCursor(),
-      line.cursor() - remove.length() + 1
-    );
+    // rebuild that list sans the first argument
+    if (remove.length() > rawLine.length()) {
+      return new DefaultParser.ArgumentList(
+        rawLine.substring(remove.length() + 1, rawLine.length()),
+        words,
+        line.wordIndex() - 1,
+        line.wordCursor(),
+        line.cursor() - remove.length() + 1
+      );
+    }
+    else {
+      return new DefaultParser.ArgumentList("", Collections.emptyList(), 0, 0, 0);
+    }
   }
 }
