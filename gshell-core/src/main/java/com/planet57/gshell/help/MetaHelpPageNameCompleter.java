@@ -21,6 +21,7 @@ import javax.inject.Singleton;
 
 import com.google.common.eventbus.Subscribe;
 import com.planet57.gshell.event.EventAware;
+import com.planet57.gshell.util.jline.Candidates;
 import com.planet57.gshell.util.jline.DynamicCompleter;
 import com.planet57.gshell.util.jline.StringsCompleter2;
 import org.jline.reader.Candidate;
@@ -29,6 +30,7 @@ import org.jline.reader.Completer;
 import java.util.Collection;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.planet57.gshell.util.jline.Candidates.candidate;
 
 /**
  * {@link Completer} for meta help page names.
@@ -54,7 +56,7 @@ public class MetaHelpPageNameCompleter
 
   @Override
   protected void init() {
-    helpPages.getMetaPages().forEach(page -> delegate.add(page.getName()));
+    helpPages.getMetaPages().forEach(this::add);
   }
 
   @Override
@@ -64,6 +66,11 @@ public class MetaHelpPageNameCompleter
 
   @Subscribe
   void on(final MetaHelpPageAddedEvent event) {
-    delegate.add(event.getPage().getName());
+    add(event.getPage());
+  }
+
+  private void add(final HelpPage page) {
+    String name = page.getName();
+    delegate.add(name, candidate(name, page.getDescription()));
   }
 }

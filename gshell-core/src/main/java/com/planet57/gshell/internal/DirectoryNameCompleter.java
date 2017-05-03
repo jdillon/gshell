@@ -23,13 +23,14 @@ import javax.inject.Named;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 
-import com.planet57.gshell.util.jline.StringsCompleter2;
 import org.jline.reader.Candidate;
 import org.jline.reader.Completer;
 
 import com.planet57.gshell.variables.Variables;
 import org.jline.reader.LineReader;
 import org.jline.reader.ParsedLine;
+
+import static com.planet57.gshell.util.jline.Candidates.candidate;
 
 /**
  * {@link Completer} for directory names.
@@ -51,8 +52,8 @@ public class DirectoryNameCompleter
     super.complete(reader, commandLine, candidates);
 
     // HACK: make directory completion aware of ./ and ../; this won't resolve to other members however
-    candidates.add(StringsCompleter2.candidate("./"));
-    candidates.add(StringsCompleter2.candidate("../"));
+    candidates.add(candidate("./"));
+    candidates.add(candidate("../"));
   }
 
   @Override
