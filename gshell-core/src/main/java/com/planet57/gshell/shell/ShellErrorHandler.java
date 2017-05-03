@@ -65,7 +65,7 @@ public class ShellErrorHandler
 
     out.format("@|bold,red %s|@", cause.getClass().getName());
     if (cause.getMessage() != null) {
-      out.format(": @|bold, red %s|@", cause.getMessage());
+      out.format(": @|bold,red %s|@", cause.getMessage());
     }
     out.println();
 
