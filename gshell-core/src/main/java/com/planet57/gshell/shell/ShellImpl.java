@@ -23,7 +23,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.google.common.base.Strings;
-import com.google.inject.assistedinject.Assisted;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.branding.BrandingSupport;
 import com.planet57.gshell.command.CommandAction.ExitNotification;
@@ -89,11 +88,11 @@ public class ShellImpl
 
   private final ShellScriptLoader scriptLoader;
 
-  private final Branding branding;
+  private IO io;
 
-  private final IO io;
+  private Variables variables;
 
-  private final Variables variables;
+  private Branding branding;
 
   private CommandSessionImpl currentSession;
 
@@ -103,17 +102,11 @@ public class ShellImpl
   public ShellImpl(final EventManager events,
                    final CommandRegistrar commandRegistrar,
                    final CommandProcessorImpl commandProcessor,
-                   @Named("shell") final Completer completer,
-                   @Assisted final Branding branding,
-                   @Assisted final IO io,
-                   @Assisted final Variables variables)
+                   @Named("shell") final Completer completer)
   {
     checkNotNull(events);
     checkNotNull(commandRegistrar);
     this.commandProcessor = checkNotNull(commandProcessor);
-    this.branding = checkNotNull(branding);
-    this.io = checkNotNull(io);
-    this.variables = checkNotNull(variables);
     this.completer = checkNotNull(completer);
 
     this.errorHandler = new ShellErrorHandler();
@@ -121,6 +114,15 @@ public class ShellImpl
     this.scriptLoader = new ShellScriptLoader();
 
     lifecycles.add(events, commandRegistrar);
+  }
+
+  /**
+   * Initialize runtime state; must be called before {@link #start()}.
+   */
+  public void init(final IO io, final Variables variables, final Branding branding) {
+    this.io = checkNotNull(io);
+    this.variables = checkNotNull(variables);
+    this.branding = checkNotNull(branding);
   }
 
   // custom/simplified lifecycle so we can fire do-start and do-started
@@ -156,6 +158,10 @@ public class ShellImpl
   }
 
   private void doStart() throws Exception {
+    checkState(io != null);
+    checkState(variables != null);
+    checkState(branding != null);
+
     lifecycles.start();
 
     // apply any branding customization

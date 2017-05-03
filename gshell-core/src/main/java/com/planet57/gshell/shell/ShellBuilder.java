@@ -40,7 +40,7 @@ public class ShellBuilder
   // HACK: using private injection for now; pending refactor
 
   @Inject
-  private ShellFactory shellFactory;
+  private Provider<ShellImpl> shellFactory;
 
   private Branding branding;
 
@@ -94,6 +94,8 @@ public class ShellBuilder
     // HACK: expose for provider access
     variablesProvider.set(variables);
 
-    return shellFactory.create(io, variables, branding);
+    ShellImpl shell = shellFactory.get();
+    shell.init(io, variables, branding);
+    return shell;
   }
 }

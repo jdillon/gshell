@@ -226,12 +226,7 @@
       <dependency>
         <groupId>com.google.inject</groupId>
         <artifactId>guice</artifactId>
-        <version>4.0</version>
-      </dependency>
-
-      <dependency>
-        <groupId>com.google.inject.extensions</groupId>
-        <artifactId>guice-assistedinject</artifactId>
+        <classifier>no_aop</classifier>
         <version>4.0</version>
       </dependency>
 
