@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.MissingResourceException;
 
-import com.google.common.base.CharMatcher;
 import org.sonatype.goodies.common.ComponentSupport;
 import com.planet57.gshell.util.io.PrintBuffer;
 
