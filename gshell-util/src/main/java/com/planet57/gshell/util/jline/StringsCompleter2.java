@@ -94,6 +94,9 @@ public class StringsCompleter2
     candidates.remove(string);
   }
 
+  /**
+   * Add string with specific completer.
+   */
   public void add(final String string, final Candidate candidate) {
     checkNotNull(string);
     checkNotNull(candidate);

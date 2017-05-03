@@ -30,6 +30,7 @@ import org.jline.reader.Completer;
 import java.util.Collection;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.planet57.gshell.util.jline.Candidates.candidate;
 
 /**
  * {@link Completer} for command names.
@@ -57,8 +58,7 @@ public class CommandNameCompleter
   protected void init() {
     commands.getCommands().forEach(command -> {
       String name = command.getName();
-      String description = CommandHelper.getDescription(command);
-      delegate.add(name, new Candidate(name, name, null, description, null, null, true));
+      delegate.add(name, candidate(name, CommandHelper.getDescription(command)));
     });
   }
 
@@ -69,7 +69,8 @@ public class CommandNameCompleter
 
   @Subscribe
   void on(final CommandRegisteredEvent event) {
-    delegate.add(event.getName());
+    String name = event.getName();
+    delegate.add(name, candidate(name, CommandHelper.getDescription(event.getCommand())));
   }
 
   @Subscribe
