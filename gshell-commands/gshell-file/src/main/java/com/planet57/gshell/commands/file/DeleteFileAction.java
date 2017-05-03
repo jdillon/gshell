@@ -23,12 +23,11 @@ import javax.inject.Named;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.IO;
 import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.io.FileAssert;
 import com.planet57.gshell.util.cli2.Argument;
+import org.apache.commons.io.FileUtils;
 import org.jline.reader.Completer;
-import org.codehaus.plexus.util.FileUtils;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
