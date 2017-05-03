@@ -372,8 +372,6 @@ public class ShellImpl
   }
 
   private static void setLastResult(final CommandSession session, final Object result) {
-    Shell shell = (Shell) session.get(CommandActionFunction.SHELL_VAR);
-    shell.getVariables().set(VariableNames.LAST_RESULT, result);
     session.put(VariableNames.LAST_RESULT, result);
   }
 
