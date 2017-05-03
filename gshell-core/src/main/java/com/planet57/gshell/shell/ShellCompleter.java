@@ -118,6 +118,7 @@ public class ShellCompleter
 
     // rebuild that list sans the first argument
     String rawLine = line.line();
+
     return new DefaultParser.ArgumentList(
       rawLine.substring(remove.length() + 1, rawLine.length()),
       words,

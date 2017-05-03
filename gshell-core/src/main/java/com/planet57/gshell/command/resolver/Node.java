@@ -22,6 +22,7 @@ import javax.annotation.Nullable;
 
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.ChangeGroupAction;
+import com.planet57.gshell.command.CommandHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,7 +54,7 @@ public class Node
 
   private final Node parent;
 
-  private final Collection<Node> children = new LinkedHashSet<Node>();
+  private final Collection<Node> children = new LinkedHashSet<>();
 
   public Node(final String name, final CommandAction action, @Nullable final Node parent) {
     this.name = checkNotNull(name);
@@ -67,6 +68,10 @@ public class Node
 
   public String getName() {
     return name;
+  }
+
+  public String getDescription() {
+    return CommandHelper.getDescription(action);
   }
 
   // FIXME: This should return a NodePath

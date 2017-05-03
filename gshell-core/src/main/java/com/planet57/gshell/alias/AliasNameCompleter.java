@@ -29,10 +29,10 @@ import org.jline.reader.Completer;
 import java.util.Collection;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.planet57.gshell.util.jline.Candidates.candidate;
 
 /**
  * {@link Completer} for alias names.
- * Keeps up to date automatically by handling alias-related events.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
@@ -52,11 +52,11 @@ public class AliasNameCompleter
     this.aliases = checkNotNull(aliases);
   }
 
-  // maintain alias-names to complete; from initial aliases and any alias changes
-
   @Override
   protected void init() {
-    delegate.set(aliases.getAliases().keySet());
+    aliases.getAliases().forEach((name, target) -> {
+      delegate.add(name, candidate(name, target));
+    });
   }
 
   @Override
@@ -66,7 +66,8 @@ public class AliasNameCompleter
 
   @Subscribe
   void on(final AliasRegisteredEvent event) {
-    delegate.add(event.getName());
+    String name = event.getName();
+    delegate.add(name, candidate(name, event.getAlias()));
   }
 
   @Subscribe

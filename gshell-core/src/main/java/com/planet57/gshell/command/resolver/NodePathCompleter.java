@@ -16,17 +16,14 @@
 package com.planet57.gshell.command.resolver;
 
 import org.sonatype.goodies.common.ComponentSupport;
-import com.planet57.gshell.util.jline.StringsCompleter2;
 import org.jline.reader.Candidate;
 import org.jline.reader.Completer;
 import org.jline.reader.LineReader;
 import org.jline.reader.ParsedLine;
 
 import java.util.Collection;
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -34,6 +31,7 @@ import javax.inject.Singleton;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.planet57.gshell.command.resolver.Node.SEPARATOR;
+import static com.planet57.gshell.util.jline.Candidates.candidate;
 
 /**
  * {@link Completer} for node path names.
@@ -75,33 +73,27 @@ public class NodePathCompleter
       log.trace("Matched: {}", node);
     }
 
-    Set<String> strings = new LinkedHashSet<>();
-
     // append all matching nodes
-    matches.forEach(node -> appendNode(strings, node));
+    matches.forEach(node -> appendNode(candidates, node));
 
-    log.trace("Candidates: {}", strings);
-
-    // construct candidates from matches
-    strings.forEach(string -> {
-      candidates.add(StringsCompleter2.candidate(string));
-    });
+    log.trace("Candidates: {}", candidates);
   }
 
-  private static void appendNode(final Collection<String> strings, final Node node) {
+  private static void appendNode(final Collection<Candidate> candidates, final Node node) {
     if (node.isRoot()) {
-      appendChildren(strings, node);
+      appendChildren(candidates, node);
     }
     else if (node.isGroup()) {
-      strings.add(node.getName() + SEPARATOR);
-      appendChildren(strings, node);
+      String name = node.getName() + SEPARATOR;
+      candidates.add(candidate(name, node.getDescription()));
+      appendChildren(candidates, node);
     }
     else {
-      strings.add(node.getName());
+      candidates.add(candidate(node.getName(), node.getDescription()));
     }
   }
 
-  private static void appendChildren(final Collection<String> strings, final Node parent) {
+  private static void appendChildren(final Collection<Candidate> candidates, final Node parent) {
     assert parent.isGroup();
 
     // prefix children with ${parent.name} + SEPARATOR; unless root
@@ -109,11 +101,11 @@ public class NodePathCompleter
 
     parent.children().forEach(child -> {
       if (child.isGroup()) {
-        strings.add(prefix + child.getName() + SEPARATOR);
-        appendChildren(strings, child);
+        candidates.add(candidate(prefix + child.getName() + SEPARATOR, child.getDescription()));
+        appendChildren(candidates, child);
       }
       else {
-        strings.add(prefix + child.getName());
+        candidates.add(candidate(prefix + child.getName(), child.getDescription()));
       }
     });
   }
