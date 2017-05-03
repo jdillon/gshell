@@ -39,7 +39,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @since 3.0
  */
-@Command(name = "nano", description = "File editor.")
+@Command(name = "nano", description = "File editor")
 public class NanoAction
     extends CommandActionSupport
 {

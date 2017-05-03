@@ -36,7 +36,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:olamy@apache.org">Olivier Lamy</a>
  * @since 2.6.3
  */
-@Command(name = "cp", description = "Copy command.")
+@Command(name = "cp", description = "Copy files")
 public class CopyAction
     extends FileCommandActionSupport
 {

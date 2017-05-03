@@ -43,7 +43,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "ls", description = "List the contents of a file or directory.")
+@Command(name = "ls", description = "List the contents of a file or directory")
 public class ListDirectoryAction
   extends FileCommandActionSupport
 {

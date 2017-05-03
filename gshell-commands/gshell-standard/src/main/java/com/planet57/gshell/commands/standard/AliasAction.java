@@ -45,7 +45,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Command(name = "alias", description = "Define an alias or list defined aliases.")
+@Command(name = "alias", description = "Define an alias or list defined aliases")
 public class AliasAction
     extends CommandActionSupport
     implements CliProcessorAware

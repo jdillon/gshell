@@ -40,7 +40,7 @@ import static com.planet57.gshell.variables.VariableNames.SHELL_USER_DIR;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "cd", description = "Changes the current directory.")
+@Command(name = "cd", description = "Changes the current directory")
 public class ChangeDirectoryAction
     extends FileCommandActionSupport
 {

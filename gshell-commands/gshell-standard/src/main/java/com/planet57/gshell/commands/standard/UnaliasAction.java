@@ -36,7 +36,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Command(name = "unalias", description = "Undefine an alias.")
+@Command(name = "unalias", description = "Undefine an alias")
 public class UnaliasAction
     extends CommandActionSupport
 {

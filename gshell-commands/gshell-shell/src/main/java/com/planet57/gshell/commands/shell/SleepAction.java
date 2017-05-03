@@ -29,7 +29,7 @@ import javax.annotation.Nonnull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "sleep", description = "Sleep for a period.")
+@Command(name = "sleep", description = "Sleep for a period")
 public class SleepAction
     extends CommandActionSupport
 {

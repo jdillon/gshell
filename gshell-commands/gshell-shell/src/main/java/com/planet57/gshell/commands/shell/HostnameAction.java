@@ -31,7 +31,7 @@ import javax.annotation.Nonnull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "hostname", description = "Displays the name of the current host.")
+@Command(name = "hostname", description = "Displays the name of the current host")
 public class HostnameAction
     extends CommandActionSupport
 {

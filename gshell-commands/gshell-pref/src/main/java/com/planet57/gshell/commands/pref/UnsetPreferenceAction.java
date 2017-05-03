@@ -31,7 +31,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "pref/unset", description = "Unset a preference.")
+@Command(name = "pref/unset", description = "Unset a preference")
 public class UnsetPreferenceAction
     extends PreferenceNodeActionSupport
 {

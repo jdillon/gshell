@@ -28,7 +28,7 @@ import javax.annotation.Nonnull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "fail", description = "Fail with an exception.")
+@Command(name = "fail", description = "Fail with an exception")
 public class FailAction
     extends CommandActionSupport
 {

@@ -28,7 +28,7 @@ import com.planet57.gshell.logging.LevelComponent;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Command(name = "logging/levels", description = "List valid logger levels.")
+@Command(name = "logging/levels", description = "List logger levels")
 public class LoggerLevelsAction
   extends LoggingCommandActionSupport
 {

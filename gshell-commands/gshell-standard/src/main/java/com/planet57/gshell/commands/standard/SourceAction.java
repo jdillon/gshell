@@ -44,7 +44,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Command(name = "source", description = "Execute commands from a source into the current shell.")
+@Command(name = "source", description = "Execute commands from a source into the current shell")
 public class SourceAction
     extends CommandActionSupport
 {

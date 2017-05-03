@@ -60,7 +60,7 @@ import static com.planet57.gshell.commands.standard.InfoAction.Section.SHELL;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Command(name = "info", description = "Display information about the shell and environment.")
+@Command(name = "info", description = "Display information about the shell and environment")
 @Preferences(path = "commands/info")
 public class InfoAction
     extends CommandActionSupport

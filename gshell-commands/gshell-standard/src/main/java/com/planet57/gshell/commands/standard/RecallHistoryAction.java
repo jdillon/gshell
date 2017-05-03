@@ -33,7 +33,7 @@ import static com.google.common.base.Preconditions.checkArgument;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Command(name = "recall", description = "Recall an item from history.")
+@Command(name = "recall", description = "Recall an item from history")
 public class RecallHistoryAction
     extends CommandActionSupport
 {

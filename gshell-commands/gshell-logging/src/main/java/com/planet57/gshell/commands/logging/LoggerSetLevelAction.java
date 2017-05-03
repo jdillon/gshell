@@ -35,7 +35,7 @@ import com.planet57.gshell.util.cli2.Argument;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Command(name = "logging/logger", description = "Set the level of a logger.")
+@Command(name = "logging/logger", description = "Set the level of a logger")
 public class LoggerSetLevelAction
   extends LoggingCommandActionSupport
 {

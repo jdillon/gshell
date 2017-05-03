@@ -30,7 +30,7 @@ import javax.annotation.Nonnull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "pref/list", description = "List preferences.")
+@Command(name = "pref/list", description = "List preferences")
 @Preferences(path = "commands/pref/list")
 public class ListPreferencesAction
     extends PreferenceNodeActionSupport

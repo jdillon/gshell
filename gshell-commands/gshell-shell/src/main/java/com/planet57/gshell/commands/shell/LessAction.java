@@ -40,7 +40,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @since 3.0
  */
-@Command(name = "less", description = "Source pager.")
+@Command(name = "less", description = "Source pager")
 public class LessAction
     extends CommandActionSupport
 {

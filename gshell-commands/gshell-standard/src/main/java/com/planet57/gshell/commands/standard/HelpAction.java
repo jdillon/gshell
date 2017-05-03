@@ -52,7 +52,7 @@ import static com.google.common.base.Preconditions.checkState;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Command(name = "help", description = "Display help pages.")
+@Command(name = "help", description = "Display help pages")
 @Preferences(path = "commands/help")
 public class HelpAction
     extends CommandActionSupport

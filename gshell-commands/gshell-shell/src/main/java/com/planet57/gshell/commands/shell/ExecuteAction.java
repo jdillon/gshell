@@ -37,7 +37,7 @@ import javax.annotation.Nullable;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "exec", description = "Execute system processes.")
+@Command(name = "exec", description = "Execute system processes")
 public class ExecuteAction
     extends CommandActionSupport
 {

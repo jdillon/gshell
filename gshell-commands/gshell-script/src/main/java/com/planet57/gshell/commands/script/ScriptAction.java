@@ -45,7 +45,7 @@ import static com.google.common.base.Preconditions.checkState;
  *
  * @since 3.0
  */
-@Command(name = "script", description = "Execute a script.")
+@Command(name = "script", description = "Execute a script")
 @Preferences(path = "commands/script")
 public class ScriptAction
     extends CommandActionSupport

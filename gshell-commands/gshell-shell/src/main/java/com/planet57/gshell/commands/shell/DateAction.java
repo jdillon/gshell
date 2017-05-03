@@ -31,7 +31,7 @@ import javax.annotation.Nonnull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "date", description = "Displays the current time and date.")
+@Command(name = "date", description = "Displays the current time and date")
 public class DateAction
     extends CommandActionSupport
 {
