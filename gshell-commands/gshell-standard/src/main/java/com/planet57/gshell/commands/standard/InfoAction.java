@@ -42,6 +42,8 @@ import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
+import com.planet57.gshell.util.i18n.I18N;
+import com.planet57.gshell.util.i18n.MessageBundle;
 import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.Preferences;
 import org.jline.reader.impl.completer.EnumCompleter;
@@ -68,6 +70,36 @@ public class InfoAction
   private static final NumberFormat FMTI = new DecimalFormat("###,###", new DecimalFormatSymbols(Locale.ENGLISH));
 
   private static final NumberFormat FMTD = new DecimalFormat("###,##0.000", new DecimalFormatSymbols(Locale.ENGLISH));
+
+  private interface Messages
+    extends MessageBundle
+  {
+    @DefaultMessage("Shell")
+    String headerShell();
+
+    @DefaultMessage("Terminal")
+    String headerTerminal();
+
+    @DefaultMessage("JVM")
+    String headerJvm();
+
+    @DefaultMessage("Threads")
+    String headerThreads();
+
+    @DefaultMessage("Memory")
+    String headerMemory();
+
+    @DefaultMessage("Classes")
+    String headerClasses();
+
+    @DefaultMessage("Operating System")
+    String headerOs();
+
+    @DefaultMessage("License")
+    String headerLicense();
+  }
+
+  private static Messages messages = I18N.create(Messages.class);
 
   public enum Section
   {
@@ -117,7 +149,7 @@ public class InfoAction
     for (Section section : sections) {
       switch (section) {
         case SHELL:
-          printlnHeader(writer, "Shell");
+          printlnHeader(writer, messages.headerShell());
           println(writer, "Display Name", branding.getDisplayName());
           println(writer, "Program Name", branding.getProgramName());
           println(writer, "License", branding.getLicense());
@@ -134,7 +166,7 @@ public class InfoAction
           break;
 
         case TERMINAL: {
-          printlnHeader(writer, "Terminal");
+          printlnHeader(writer, messages.headerTerminal());
           println(writer, "Name", io.terminal.getName());
           println(writer, "Type", io.terminal.getType());
           println(writer, "Echo", io.terminal.echo());
@@ -146,7 +178,7 @@ public class InfoAction
         }
 
         case JVM:
-          printlnHeader(writer, "JVM");
+          printlnHeader(writer, messages.headerJvm());
           println(writer, "Java Virtual Machine", runtime.getVmName() + " version " + runtime.getVmVersion());
           println(writer, "Vendor", runtime.getVmVendor());
           println(writer, "Uptime", printDuration(runtime.getUptime()));
@@ -161,7 +193,7 @@ public class InfoAction
           break;
 
         case THREADS:
-          printlnHeader(writer, "Threads");
+          printlnHeader(writer, messages.headerThreads());
           println(writer, "Live threads", Integer.toString(threads.getThreadCount()));
           println(writer, "Daemon threads", Integer.toString(threads.getDaemonThreadCount()));
           println(writer, "Peak", Integer.toString(threads.getPeakThreadCount()));
@@ -169,7 +201,7 @@ public class InfoAction
           break;
 
         case MEMORY:
-          printlnHeader(writer, "Memory");
+          printlnHeader(writer, messages.headerMemory());
           println(writer, "Current heap size", printSizeInKb(mem.getHeapMemoryUsage().getUsed()));
           println(writer, "Maximum heap size", printSizeInKb(mem.getHeapMemoryUsage().getMax()));
           println(writer, "Committed heap size", printSizeInKb(mem.getHeapMemoryUsage().getCommitted()));
@@ -182,14 +214,14 @@ public class InfoAction
           break;
 
         case CLASSES:
-          printlnHeader(writer, "Classes");
+          printlnHeader(writer, messages.headerClasses());
           println(writer, "Current classes loaded", printLong(cl.getLoadedClassCount()));
           println(writer, "Total classes loaded", printLong(cl.getTotalLoadedClassCount()));
           println(writer, "Total classes unloaded", printLong(cl.getUnloadedClassCount()));
           break;
 
         case OS:
-          printlnHeader(writer, "Operating system");
+          printlnHeader(writer, messages.headerOs());
           println(writer, "Name", os.getName() + " version " + os.getVersion());
           println(writer, "Architecture", os.getArch());
           println(writer, "Processors", Integer.toString(os.getAvailableProcessors()));
@@ -208,7 +240,7 @@ public class InfoAction
 
         case LICENSE:
           License lic = branding.getLicense();
-          printlnHeader(writer, "License");
+          printlnHeader(writer, messages.headerLicense());
           println(writer, "Name", lic.getName());
           println(writer, "URL", lic.getUrl());
           writer.println("----8<----");
