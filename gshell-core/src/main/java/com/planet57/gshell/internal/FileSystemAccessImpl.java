@@ -27,6 +27,7 @@ import javax.inject.Singleton;
 import com.planet57.gshell.util.OperatingSystem;
 import com.planet57.gshell.util.io.FileSystemAccess;
 import com.planet57.gshell.variables.Variables;
+import org.apache.commons.io.FileUtils;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.planet57.gshell.variables.VariableNames.SHELL_HOME;
@@ -139,5 +140,44 @@ public class FileSystemAccessImpl
     }
 
     return false;
+  }
+
+  @Override
+  public void mkdir(final File dir) throws IOException {
+    checkNotNull(dir);
+    FileUtils.forceMkdir(dir);
+  }
+
+  @Override
+  public void deleteDirectory(final File dir) throws IOException {
+    checkNotNull(dir);
+    FileUtils.deleteDirectory(dir);
+  }
+
+  @Override
+  public void deleteFile(final File file) throws IOException {
+    checkNotNull(file);
+    FileUtils.forceDelete(file);
+  }
+
+  @Override
+  public void copyFile(final File source, final File target) throws IOException {
+    checkNotNull(source);
+    checkNotNull(target);
+    FileUtils.copyFile(source, target);
+  }
+
+  @Override
+  public void copyDirectory(final File source, final File target) throws IOException {
+    checkNotNull(source);
+    checkNotNull(target);
+    FileUtils.copyDirectory(source, target);
+  }
+
+  @Override
+  public void copyToDirectory(final File source, final File target) throws IOException {
+    checkNotNull(source);
+    checkNotNull(target);
+    FileUtils.copyFileToDirectory(source, target);
   }
 }

@@ -40,7 +40,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * List the contents of a file or directory.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Command(name = "ls", description = "List the contents of a file or directory")
@@ -61,7 +60,7 @@ public class ListDirectoryAction
   private boolean recursive;
 
   @Inject
-  public ListDirectoryAction installCompleters(final @Named("file-name") Completer c1) {
+  public ListDirectoryAction installCompleters(@Named("file-name") final Completer c1) {
     checkNotNull(c1);
     setCompleters(c1, null);
     return this;
@@ -122,9 +121,7 @@ public class ListDirectoryAction
 
     if (!dirs.isEmpty()) {
       for (File subDir : dirs) {
-        io.out.println();
-        io.out.print(subDir.getName());
-        io.out.print(":");
+        io.out.format("%n%s:", subDir.getName());
         listChildren(io, subDir);
       }
     }

@@ -25,15 +25,13 @@ import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
-import org.apache.commons.io.FileUtils;
 import org.jline.reader.Completer;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Copy file or directory
+ * Copy file or directory.
  *
- * @author <a href="mailto:olamy@apache.org">Olivier Lamy</a>
  * @since 2.6.3
  */
 @Command(name = "cp", description = "Copy files")
@@ -50,7 +48,7 @@ public class CopyAction
   private boolean recursive;
 
   @Inject
-  public CopyAction installCompleters(final @Named("file-name") Completer c1) {
+  public CopyAction installCompleters(@Named("file-name") final Completer c1) {
     checkNotNull(c1);
     // Add completer for source and target
     setCompleters(c1, c1, null);
@@ -66,10 +64,10 @@ public class CopyAction
       // for cp -r /tmp/foo /home : we must create first the directory /home/foo
       targetFile = new File(targetFile, sourceFile.getName());
       if (!targetFile.exists()) {
-        targetFile.mkdirs();
+        getFileSystem().mkdir(targetFile);
       }
       if (recursive) {
-        FileUtils.copyDirectory(sourceFile, targetFile);
+        getFileSystem().copyDirectory(sourceFile, targetFile);
       }
       else {
         throw new RuntimeException("--recursive not specified; omitting directory: " + sourceFile);
@@ -77,10 +75,10 @@ public class CopyAction
     }
     else {
       if (targetFile.isDirectory()) {
-        FileUtils.copyFileToDirectory(sourceFile, targetFile);
+        getFileSystem().copyToDirectory(sourceFile, targetFile);
       }
       else {
-        FileUtils.copyFile(sourceFile, targetFile);
+        getFileSystem().copyFile(sourceFile, targetFile);
       }
     }
 

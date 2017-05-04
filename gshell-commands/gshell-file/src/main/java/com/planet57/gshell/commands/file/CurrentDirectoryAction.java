@@ -27,7 +27,6 @@ import com.planet57.gshell.util.io.FileAssert;
 /**
  * Displays the current directory.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Command(name = "pwd", description = "Displays the current directory")

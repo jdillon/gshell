@@ -35,7 +35,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Changes the current directory.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Command(name = "cd", description = "Changes the current directory")
@@ -50,7 +49,7 @@ public class ChangeDirectoryAction
   private String path;
 
   @Inject
-  public ChangeDirectoryAction installCompleters(final @Named("directory-name") Completer c1) {
+  public ChangeDirectoryAction installCompleters(@Named("directory-name") final Completer c1) {
     checkNotNull(c1);
     setCompleters(c1, null);
     return this;
@@ -69,9 +68,7 @@ public class ChangeDirectoryAction
     }
 
     new FileAssert(file).exists().isDirectory();
-
     getFileSystem().setUserDir(file);
-
     if (verbose) {
       io.out.println(file.getPath());
     }
