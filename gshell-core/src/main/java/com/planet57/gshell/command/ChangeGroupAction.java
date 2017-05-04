@@ -58,4 +58,11 @@ public class ChangeGroupAction
     context.getVariables().set(VariableNames.SHELL_GROUP, name);
     return null;
   }
+
+  @Override
+  public String toString() {
+    return "ChangeGroupAction{" +
+      "name='" + name + '\'' +
+      '}';
+  }
 }

@@ -70,4 +70,12 @@ public class ExecuteAliasAction
 
     return context.getShell().execute(alias);
   }
+
+  @Override
+  public String toString() {
+    return "ExecuteAliasAction{" +
+      "name='" + name + '\'' +
+      ", target='" + target + '\'' +
+      '}';
+  }
 }

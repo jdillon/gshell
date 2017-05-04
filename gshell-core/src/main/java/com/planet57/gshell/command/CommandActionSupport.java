@@ -103,4 +103,11 @@ public abstract class CommandActionSupport
       throw new InternalError();
     }
   }
+
+  @Override
+  public String toString() {
+    return "CommandActionSupport{" +
+      "name='" + name + '\'' +
+      '}';
+  }
 }

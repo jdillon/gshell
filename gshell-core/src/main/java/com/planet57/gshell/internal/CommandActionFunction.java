@@ -152,4 +152,11 @@ public class CommandActionFunction
     log.debug("Result: {}; {}", result, watch);
     return result;
   }
+
+  @Override
+  public String toString() {
+    return "CommandActionFunction{" +
+      "action=" + action.getName() +
+      '}';
+  }
 }
