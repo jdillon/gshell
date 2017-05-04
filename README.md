@@ -36,12 +36,11 @@ Check out and build:
 
     git clone git://github.com/jdillon/gshell.git
     cd gshell
-    ./mvnw install
+    ./build rebuild
 
 After this completes, you can unzip the assembly and launch the shell:
 
-    unzip -d target gshell-dist/gshell-assembly/target/gshell-*-bin.zip
-    ./target/gshell-*/bin/gsh
+    ./build run
 
 Use the 'help' command for further assistance.
 
