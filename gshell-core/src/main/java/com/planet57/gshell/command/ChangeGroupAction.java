@@ -18,11 +18,10 @@ package com.planet57.gshell.command;
 import com.planet57.gshell.command.resolver.NodePath;
 import org.sonatype.goodies.common.ComponentSupport;
 import com.planet57.gshell.util.cli2.OpaqueArguments;
-import com.planet57.gshell.util.i18n.MessageSource;
-import com.planet57.gshell.util.i18n.NopMessageSource;
 import com.planet57.gshell.variables.VariableNames;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -50,6 +49,12 @@ public class ChangeGroupAction
   @Override
   public String getSimpleName() {
     return new NodePath(getName()).last();
+  }
+
+  @Nullable
+  @Override
+  public String getDescription() {
+    return null;
   }
 
   @Override

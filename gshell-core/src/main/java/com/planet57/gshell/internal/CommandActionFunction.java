@@ -97,7 +97,7 @@ public class CommandActionFunction
 
         // Render command-line usage
         if (help.displayHelp) {
-          io.out.println(CommandHelper.getDescription(action));
+          io.out.println(action.getDescription());
           io.out.println();
 
           HelpPrinter printer = new HelpPrinter(clp, terminal.getWidth());

@@ -84,7 +84,7 @@ public class CommandHelpPage
 
   @Override
   public String getDescription() {
-    return CommandHelper.getDescription(node.getAction());
+    return node.getAction().getDescription();
   }
 
   @Override
@@ -125,7 +125,7 @@ public class CommandHelpPage
     }
 
     public String getDescription() {
-      return CommandHelper.getDescription(command);
+      return command.getDescription();
     }
 
     private void printHeader(final PrintBuffer buff, final String name) {

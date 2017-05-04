@@ -18,10 +18,9 @@ package com.planet57.gshell.command;
 import com.google.common.base.Joiner;
 import org.sonatype.goodies.common.ComponentSupport;
 import com.planet57.gshell.util.cli2.OpaqueArguments;
-import com.planet57.gshell.util.i18n.MessageSource;
-import com.planet57.gshell.util.i18n.NopMessageSource;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.List;
 
@@ -54,6 +53,12 @@ public class ExecuteAliasAction
   @Override
   public String getSimpleName() {
     return name;
+  }
+
+  @Nullable
+  @Override
+  public String getDescription() {
+    return null;
   }
 
   @Override

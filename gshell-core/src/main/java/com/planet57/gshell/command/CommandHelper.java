@@ -18,8 +18,6 @@ package com.planet57.gshell.command;
 import com.planet57.gshell.util.cli2.CliProcessor;
 import com.planet57.gshell.util.cli2.Option;
 
-import javax.annotation.Nullable;
-
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -44,18 +42,5 @@ public class CommandHelper
     clp.addBean(this);
 
     return clp;
-  }
-
-  /**
-   * Get the description for a given action.
-   */
-  @Nullable
-  public static String getDescription(final CommandAction action) {
-    checkNotNull(action);
-    Command command = action.getClass().getAnnotation(Command.class);
-    if (command != null) {
-      return command.description();
-    }
-    return null;
   }
 }

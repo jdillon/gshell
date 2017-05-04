@@ -18,6 +18,7 @@ package com.planet57.gshell.command;
 import org.jline.reader.Completer;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Provides the user-action for a command.
@@ -31,6 +32,12 @@ public interface CommandAction
   String getName();
 
   String getSimpleName();
+
+  /**
+   * @since 3.0
+   */
+  @Nullable
+  String getDescription();
 
   /**
    * Execute the command action.

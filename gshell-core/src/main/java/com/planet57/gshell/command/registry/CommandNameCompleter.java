@@ -20,7 +20,6 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import com.google.common.eventbus.Subscribe;
-import com.planet57.gshell.command.CommandHelper;
 import com.planet57.gshell.event.EventAware;
 import com.planet57.gshell.util.jline.DynamicCompleter;
 import com.planet57.gshell.util.jline.StringsCompleter2;
@@ -56,9 +55,9 @@ public class CommandNameCompleter
 
   @Override
   protected void init() {
-    commands.getCommands().forEach(command -> {
-      String name = command.getName();
-      delegate.add(name, candidate(name, CommandHelper.getDescription(command)));
+    commands.getCommands().forEach(action -> {
+      String name = action.getName();
+      delegate.add(name, candidate(name, action.getDescription()));
     });
   }
 
@@ -70,7 +69,7 @@ public class CommandNameCompleter
   @Subscribe
   void on(final CommandRegisteredEvent event) {
     String name = event.getName();
-    delegate.add(name, candidate(name, CommandHelper.getDescription(event.getCommand())));
+    delegate.add(name, candidate(name, event.getCommand().getDescription()));
   }
 
   @Subscribe
