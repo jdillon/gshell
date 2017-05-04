@@ -16,7 +16,6 @@
 package com.planet57.gshell.internal;
 
 import com.google.common.base.Stopwatch;
-import com.google.common.collect.ImmutableList;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.CommandContext;
@@ -112,9 +111,6 @@ public class CommandActionFunction
       // re-create variables with session as basis
       final Variables variables = new VariablesSupport(((CommandSessionImpl)session).getVariables());
 
-      // wrap arguments into immutable for context
-      final List<Object> args = ImmutableList.copyOf(arguments);
-
       if (execute) {
         result = action.execute(new CommandContext()
         {
@@ -127,7 +123,7 @@ public class CommandActionFunction
           @Override
           @Nonnull
           public List<?> getArguments() {
-            return args;
+            return arguments;
           }
 
           @Override
