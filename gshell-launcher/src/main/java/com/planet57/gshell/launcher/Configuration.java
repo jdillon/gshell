@@ -87,17 +87,8 @@ public class Configuration
   private void mergeProperties(final Properties props, final URL url) throws IOException {
     Log.debug("Merging properties from: ", url);
 
-    InputStream input = url.openStream();
-    try {
+    try (InputStream input = url.openStream()) {
       props.load(input);
-    }
-    finally {
-      try {
-        input.close();
-      }
-      catch (Exception e) {
-        // ignore
-      }
     }
   }
 
