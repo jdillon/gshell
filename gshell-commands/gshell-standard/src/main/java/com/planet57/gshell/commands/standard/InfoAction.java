@@ -285,8 +285,7 @@ public class InfoAction
     uptime /= 60;
     if (uptime < 60) {
       long minutes = (long) uptime;
-      String s = FMTI.format(minutes) + (minutes > 1 ? " minutes" : " minute");
-      return s;
+      return FMTI.format(minutes) + (minutes > 1 ? " minutes" : " minute");
     }
     uptime /= 60;
     if (uptime < 24) {
