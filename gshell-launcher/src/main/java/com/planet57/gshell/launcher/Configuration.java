@@ -176,10 +176,6 @@ public class Configuration
     return value;
   }
 
-  //
-  // TODO: Support loading classpath from properties file
-  //
-
   public List<URL> getClassPath() throws Exception {
     ensureConfigured();
     List<URL> classPath = new ArrayList<>();
