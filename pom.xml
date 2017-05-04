@@ -60,13 +60,25 @@
     <url>https://travis-ci.org/jdillon/gshell</url>
   </ciManagement>
 
-  <!--
-  TODO: remove once parent is released.
-  -->
   <repositories>
+    <!--
+    TODO: remove once parent is released.
+    -->
     <repository>
       <id>ossrh</id>
       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+
+    <repository>
+      <id>apache-snapshots</id>
+      <name>Apache Snapshots</name>
+      <url>https://repository.apache.org/content/groups/snapshots</url>
       <releases>
         <enabled>false</enabled>
       </releases>
@@ -97,6 +109,7 @@
     <gossip.version>2.0.0</gossip.version>
     <jline.version>3.3.0-SNAPSHOT</jline.version>
     <slf4j.version>1.7.25</slf4j.version>
+    <felix-gogo.version>1.0.5-SNAPSHOT</felix-gogo.version>
 
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
@@ -195,7 +208,7 @@
       <dependency>
         <groupId>ch.qos.logback</groupId>
         <artifactId>logback-classic</artifactId>
-        <version>1.1.11</version>
+        <version>1.2.3</version>
       </dependency>
 
       <dependency>
@@ -213,6 +226,7 @@
       <dependency>
         <groupId>com.google.inject</groupId>
         <artifactId>guice</artifactId>
+        <classifier>no_aop</classifier>
         <version>4.0</version>
       </dependency>
 
@@ -259,15 +273,15 @@
       </dependency>
 
       <dependency>
-        <groupId>org.apache.commons</groupId>
-        <artifactId>commons-jexl3</artifactId>
-        <version>3.1</version>
-        <exclusions>
-          <exclusion>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-          </exclusion>
-        </exclusions>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>org.apache.felix.gogo.runtime</artifactId>
+        <version>${felix-gogo.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>org.apache.felix.gogo.jline</artifactId>
+        <version>${felix-gogo.version}</version>
       </dependency>
 
       <dependency>
@@ -277,15 +291,15 @@
       </dependency>
 
       <dependency>
-        <groupId>org.codehaus.plexus</groupId>
-        <artifactId>plexus-interpolation</artifactId>
-        <version>1.24</version>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>2.5</version>
       </dependency>
 
       <dependency>
         <groupId>org.codehaus.plexus</groupId>
-        <artifactId>plexus-utils</artifactId>
-        <version>3.0.24</version>
+        <artifactId>plexus-interpolation</artifactId>
+        <version>1.24</version>
       </dependency>
 
       <dependency>
@@ -304,6 +318,12 @@
         <groupId>org.apache.maven.plugin-tools</groupId>
         <artifactId>maven-plugin-annotations</artifactId>
         <version>3.5</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.codehaus.groovy</groupId>
+        <artifactId>groovy</artifactId>
+        <version>2.4.4</version>
       </dependency>
 
       <dependency>
@@ -371,7 +391,19 @@
 
       <dependency>
         <groupId>com.planet57.gshell.ext</groupId>
+        <artifactId>gshell-groovy</artifactId>
+        <version>3.0.0-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.planet57.gshell.ext</groupId>
         <artifactId>gshell-logback</artifactId>
+        <version>3.0.0-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.planet57.gshell.commands</groupId>
+        <artifactId>gshell-script</artifactId>
         <version>3.0.0-SNAPSHOT</version>
       </dependency>
 
@@ -401,12 +433,6 @@
 
       <dependency>
         <groupId>com.planet57.gshell.commands</groupId>
-        <artifactId>gshell-network</artifactId>
-        <version>3.0.0-SNAPSHOT</version>
-      </dependency>
-
-      <dependency>
-        <groupId>com.planet57.gshell.commands</groupId>
         <artifactId>gshell-file</artifactId>
         <version>3.0.0-SNAPSHOT</version>
       </dependency>
@@ -431,7 +457,6 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.6.1</version>
           <dependencies>
             <dependency>
               <groupId>org.codehaus.groovy</groupId>
@@ -450,22 +475,14 @@
         </plugin>
 
         <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>javacc-maven-plugin</artifactId>
-          <version>2.6</version>
-        </plugin>
-
-        <plugin>
-          <groupId>org.eclipse.sisu</groupId>
-          <artifactId>sisu-maven-plugin</artifactId>
-          <version>0.3.3</version>
-        </plugin>
-
-        <plugin>
           <groupId>com.mycila</groupId>
           <artifactId>license-maven-plugin</artifactId>
           <configuration>
             <excludes combine.children="append">
+              <!--
+              Assembly resources
+              -->
+              <exclude>gshell-assembly/src/main/resources/**</exclude>
               <!--
               Thirdparty sources
               -->

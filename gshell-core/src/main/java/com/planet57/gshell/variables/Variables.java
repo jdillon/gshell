@@ -16,7 +16,7 @@
 package com.planet57.gshell.variables;
 
 import javax.annotation.Nullable;
-import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Provides a nested-namespace for command variables.
@@ -36,7 +36,7 @@ public interface Variables
   Object get(String name);
 
   @Nullable
-  Object get(String name, Object defaultValue);
+  Object get(String name, @Nullable Object defaultValue);
 
   @Nullable
   <T> T get(String name, Class<T> type, @Nullable T defaultValue);
@@ -50,7 +50,35 @@ public interface Variables
   @Nullable
   <T> T get(Class<T> type);
 
-  // FIXME: add non-nullable require() to get values
+  /**
+   * @since 3.0
+   */
+  Object require(String name);
+
+  /**
+   * @since 3.0
+   */
+  Object require(String name, Object defaultValue);
+
+  /**
+   * @since 3.0
+   */
+  <T> T require(String name, Class<T> type, T defaultValue);
+
+  /**
+   * @since 3.0
+   */
+  <T> T require(String name, Class<T> type);
+
+  /**
+   * @since 3.0
+   */
+  <T> T require(Class<T> type, T defaultValue);
+
+  /**
+   * @since 3.0
+   */
+  <T> T require(Class<T> type);
 
   void unset(String name);
 
@@ -60,27 +88,10 @@ public interface Variables
 
   boolean contains(Class<?> type);
 
-  boolean isMutable(String name);
-
-  boolean isMutable(Class<?> type);
-
-  boolean isCloaked(String name);
-
-  boolean isCloaked(Class<?> type);
-
   Iterable<String> names();
 
-  @Nullable
-  Variables parent();
-
   /**
-   * Throw to indicate that a variable change was attempted but the variable was not mutable.
+   * @since 3.0
    */
-  class ImmutableVariableException
-      extends RuntimeException
-  {
-    public ImmutableVariableException(final String name) {
-      super(name);
-    }
-  }
+  Map<String,Object> asMap();
 }

@@ -24,11 +24,9 @@ import org.sonatype.goodies.testsupport.TestSupport;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 /**
  * Tests for {@link VariablesSupport}.
@@ -38,12 +36,9 @@ public class VariablesSupportTest
 {
   private VariablesSupport underTest;
 
-  private VariablesSupport parent;
-
   @Before
   public void setUp() {
     underTest = new VariablesSupport();
-    parent = new VariablesSupport();
   }
 
   @Test
@@ -60,57 +55,6 @@ public class VariablesSupportTest
 
     String str = underTest.names().iterator().next();
     assertEquals(name, str);
-  }
-
-  @Test
-  public void testSetAsImmutable() throws Exception {
-    String name = "a";
-    Object value = new Object();
-
-    assertTrue(underTest.isMutable(name));
-    underTest.set(name, value, false);
-    assertFalse(underTest.isMutable(name));
-
-    try {
-      underTest.set(name, value);
-      fail("Set an immutable variable");
-    }
-    catch (Variables.ImmutableVariableException expected) {
-      // ignore
-    }
-  }
-
-  @Test
-  public void testSetAsImmutableInParent() throws Exception {
-    Variables vars = new VariablesSupport(parent);
-    String name = "a";
-    Object value = new Object();
-
-    parent.set(name, value, false);
-    assertFalse(parent.isMutable(name));
-    assertFalse(vars.isMutable(name));
-
-    try {
-      vars.set(name, value);
-      fail("Set an immutable variable");
-    }
-    catch (Variables.ImmutableVariableException expected) {
-      // ignore
-    }
-  }
-
-  @Test
-  public void testSetParentFromChild() throws Exception {
-    Variables vars = new VariablesSupport(parent);
-    String name = "a";
-    Object value = new Object();
-
-    // Make sure we can add to parent's scope from child
-    vars.parent().set(name, value);
-    assertEquals(value, parent.get(name));
-
-    // Make sure the iter sees it
-    assertTrue(vars.names().iterator().hasNext());
   }
 
   @Test
@@ -136,85 +80,6 @@ public class VariablesSupportTest
 
     Object obj2 = underTest.get(name, value);
     assertSame(value, obj2);
-  }
-
-  @Test
-  public void testGetCloaked() throws Exception {
-    Variables vars = new VariablesSupport(parent);
-    String name = "a";
-    Object value = new Object();
-
-    parent.set(name, value);
-    Object obj1 = vars.get(name);
-    assertEquals(value, obj1);
-
-    Object value2 = new Object();
-    vars.set(name, value2);
-
-    Object obj2 = vars.get(name);
-    assertSame(value2, obj2);
-    assertNotSame(value, obj2);
-  }
-
-  @Test
-  public void testUnsetAsImmutable() throws Exception {
-    String name = "a";
-    Object value = new Object();
-
-    assertTrue(underTest.isMutable(name));
-    underTest.set(name, value, false);
-    assertFalse(underTest.isMutable(name));
-
-    try {
-      underTest.unset(name);
-      fail("Unset an immutable variable");
-    }
-    catch (Variables.ImmutableVariableException expected) {
-      // ignore
-    }
-  }
-
-  @Test
-  public void testUnsetAsImmutableInParent() throws Exception {
-    Variables vars = new VariablesSupport(parent);
-    String name = "a";
-    Object value = new Object();
-
-    parent.set(name, value, false);
-    assertFalse(parent.isMutable(name));
-    assertFalse(vars.isMutable(name));
-
-    try {
-      vars.unset(name);
-      fail("Unset an immutable variable");
-    }
-    catch (Variables.ImmutableVariableException expected) {
-      // ignore
-    }
-  }
-
-  @Test
-  public void testCloaking() throws Exception {
-    Variables vars = new VariablesSupport(parent);
-    String name = "a";
-    Object value = new Object();
-
-    parent.set(name, value);
-    assertFalse(parent.isCloaked(name));
-    assertFalse(vars.isCloaked(name));
-
-    vars.set(name, new Object());
-    assertTrue(vars.isCloaked(name));
-  }
-
-  @Test
-  public void testParent() throws Exception {
-    assertNull(parent.parent());
-
-    Variables vars = new VariablesSupport(parent);
-    assertNotNull(vars.parent());
-
-    assertEquals(parent, vars.parent());
   }
 
   @Test

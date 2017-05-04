@@ -113,6 +113,6 @@ public final class Launcher
       return method;
     }
 
-    throw new NoSuchMethodException("public static void main(String[] args) in " + type); // TODO: i18n
+    throw new NoSuchMethodException("public static void main(String[] args) in " + type);
   }
 }

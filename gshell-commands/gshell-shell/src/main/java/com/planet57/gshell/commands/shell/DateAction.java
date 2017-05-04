@@ -31,16 +31,14 @@ import javax.annotation.Nonnull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "date")
+@Command(name = "date", description = "Displays the current time and date")
 public class DateAction
     extends CommandActionSupport
 {
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
-
     io.out.println(DateFormat.getInstance().format(new Date()));
-
-    return Result.SUCCESS;
+    return null;
   }
 }

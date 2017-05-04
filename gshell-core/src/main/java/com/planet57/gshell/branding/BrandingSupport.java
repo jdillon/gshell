@@ -21,10 +21,10 @@ import java.net.URI;
 import java.util.Properties;
 
 import com.planet57.gshell.shell.Shell;
-import com.planet57.gshell.util.i18n.MessageSource;
-import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 import com.planet57.gshell.util.io.PrintBuffer;
 import com.planet57.gshell.variables.Variables;
+
+import javax.annotation.Nullable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.planet57.gshell.command.resolver.Node.CURRENT;
@@ -48,8 +48,6 @@ import static com.planet57.gshell.variables.VariableNames.SHELL_VERSION;
 public class BrandingSupport
     implements Branding
 {
-  private MessageSource messages;
-
   /**
    * Render a terminal (width - 1) line for {@link #getGoodbyeMessage()} or {@link #getGoodbyeMessage()}.
    *
@@ -70,14 +68,6 @@ public class BrandingSupport
 
   public BrandingSupport() {
     this(null);
-  }
-
-  protected MessageSource getMessages() {
-    if (messages == null) {
-      messages = new ResourceBundleMessageSource()
-        .add(false, getClass());
-    }
-    return messages;
   }
 
   protected Properties getProperties() {
@@ -119,7 +109,14 @@ public class BrandingSupport
 
   @Override
   public String getPrompt() {
-    return String.format("@|bold %s|@> ", getProgramName());
+    // FIXME: may need to adjust ansi-renderer syntax or pre-render before expanding to avoid needing escapes
+    return String.format("\\@\\|bold %s\\|\\@> ", getProgramName());
+  }
+
+  @Override
+  @Nullable
+  public String getRightPrompt() {
+    return null;
   }
 
   @Override

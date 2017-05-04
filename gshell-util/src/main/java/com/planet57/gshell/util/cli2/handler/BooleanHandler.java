@@ -17,6 +17,8 @@ package com.planet57.gshell.util.cli2.handler;
 
 import com.planet57.gshell.util.cli2.CliDescriptor;
 import com.planet57.gshell.util.cli2.OptionDescriptor;
+import com.planet57.gshell.util.i18n.I18N;
+import com.planet57.gshell.util.i18n.MessageBundle;
 
 /**
  * Handler for boolean types.
@@ -27,6 +29,15 @@ import com.planet57.gshell.util.cli2.OptionDescriptor;
 public class BooleanHandler
     extends Handler
 {
+  private interface Messages
+    extends MessageBundle
+  {
+    @DefaultMessage("FLAG")
+    String defaultToken();
+  }
+
+  private static Messages messages = I18N.create(Messages.class);
+
   public BooleanHandler(final CliDescriptor desc) {
     super(desc);
   }
@@ -50,7 +61,7 @@ public class BooleanHandler
   @Override
   public String getDefaultToken() {
     if (getDescriptor().isArgument() || ((OptionDescriptor) getDescriptor()).getArgs() > 0) {
-      return "FLAG"; // TODO: i18n
+      return messages.defaultToken();
     }
 
     return null;

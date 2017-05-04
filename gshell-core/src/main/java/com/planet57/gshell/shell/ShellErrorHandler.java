@@ -15,121 +15,89 @@
  */
 package com.planet57.gshell.shell;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.inject.Provider;
-import javax.inject.Singleton;
+import com.planet57.gshell.util.i18n.I18N;
+import com.planet57.gshell.util.i18n.MessageBundle;
 
-import com.planet57.gshell.command.IO;
-import com.planet57.gshell.console.ConsoleErrorHandler;
-import com.planet57.gshell.execute.ErrorNotification;
-import com.planet57.gshell.util.i18n.MessageSource;
-import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
-import com.planet57.gshell.variables.VariableNames;
-import com.planet57.gshell.variables.Variables;
+import java.io.PrintWriter;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.fusesource.jansi.Ansi.Attribute.INTENSITY_BOLD;
-import static org.fusesource.jansi.Ansi.Color.RED;
-import static org.fusesource.jansi.Ansi.ansi;
 
 /**
- * Shell {@link ConsoleErrorHandler} which renders errors with ANSI codes.
+ * Shell error-handler which renders errors with ANSI codes.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Named
-@Singleton
 public class ShellErrorHandler
-    implements ConsoleErrorHandler
 {
-  private enum Messages
+  private interface Messages
+    extends MessageBundle
   {
-    ERROR_AT,
-    ERROR_CAUSED_BY,
-    ERROR_LOCATION_NATIVE,
-    ERROR_LOCATION_UNKNOWN;
+    @DefaultMessage("at")
+    String at();
 
-    private static final MessageSource messages = new ResourceBundleMessageSource(ShellErrorHandler.class);
+    @DefaultMessage("Caused by")
+    String causedBy();
 
-    String format(final Object... args) {
-      return messages.format(name(), args);
-    }
+    @DefaultMessage("Native Method")
+    String locationNative();
+
+    @DefaultMessage("Unknown Source")
+    String locationUnknown();
   }
 
-  private final IO io;
+  private static final Messages messages = I18N.create(Messages.class);
 
-  private final Provider<Variables> variables;
-
-  @Inject
-  public ShellErrorHandler(@Named("main") final IO io, final Provider<Variables> variables) {
-    this.io = checkNotNull(io);
-    this.variables = checkNotNull(variables);
-  }
-
-  @Override
-  public boolean handleError(final Throwable error) {
+  /**
+   * @since 3.0
+   */
+  public boolean handleError(final PrintWriter out, final Throwable error, final boolean verbose) {
+    checkNotNull(out);
     checkNotNull(error);
-    displayError(error);
+    displayError(out, error, verbose);
     return true;
   }
 
-  private void displayError(final Throwable error) {
-    assert error != null;
+  private void displayError(final PrintWriter out, final Throwable error, final boolean verbose) {
+    // TODO: use Throwables2.explain(), or mimic same style with ANSI support when showTrace == false
 
     Throwable cause = error;
-    if (error instanceof ErrorNotification) {
-      cause = error.getCause();
-    }
 
-    Variables variables = this.variables.get();
-
-    // Determine if the stack trace flag is set
-    Boolean showTrace = variables.get(VariableNames.SHELL_ERRORS, Boolean.class, false);
-    assert showTrace != null;
-
-    io.err.print(ansi().a(INTENSITY_BOLD).fg(RED).a(cause.getClass().getName()).reset());
+    out.format("@|bold,red %s|@", cause.getClass().getName());
     if (cause.getMessage() != null) {
-      io.err.print(": ");
-      io.err.print(ansi().a(INTENSITY_BOLD).fg(RED).a(cause.getMessage()).reset());
+      out.format(": @|bold,red %s|@", cause.getMessage());
     }
-    io.err.println();
+    out.println();
 
-    if (showTrace) {
+    if (verbose) {
       while (cause != null) {
         for (StackTraceElement e : cause.getStackTrace()) {
-          io.err.print("    ");
-          io.err.print(ansi().a(INTENSITY_BOLD).a(Messages.ERROR_AT.format()).reset().a(" ").a(e.getClassName()).a(".")
-              .a(e.getMethodName()));
-          io.err.print(ansi().a(" (").a(INTENSITY_BOLD).a(getLocation(e)).reset().a(")"));
-          io.err.println();
+          out.format("     @|bold %s|@ %s.%s (@|bold %s|@)%n",
+            messages.at(),
+            e.getClassName(),
+            e.getMethodName(),
+            getLocation(e)
+          );
         }
 
         cause = cause.getCause();
         if (cause != null) {
-          io.err.print(ansi().a(INTENSITY_BOLD).a(Messages.ERROR_CAUSED_BY.format()).reset().a(" ")
-              .a(cause.getClass().getName()));
-          if (cause.getMessage() != null) {
-            io.err.print(": ");
-            io.err.print(ansi().a(INTENSITY_BOLD).fg(RED).a(cause.getMessage()).reset());
-          }
-          io.err.println();
+          out.format("@|bold %s|@ %s%n", messages.causedBy(), cause.getClass().getName());
         }
       }
     }
 
-    io.err.flush();
+    out.flush();
   }
 
   private String getLocation(final StackTraceElement e) {
     assert e != null;
 
     if (e.isNativeMethod()) {
-      return Messages.ERROR_LOCATION_NATIVE.format();
+      return messages.locationNative();
     }
     else if (e.getFileName() == null) {
-      return Messages.ERROR_LOCATION_UNKNOWN.format();
+      return messages.locationUnknown();
     }
     else if (e.getLineNumber() >= 0) {
       return String.format("%s:%s", e.getFileName(), e.getLineNumber());

@@ -34,19 +34,19 @@ import com.planet57.gshell.util.cli2.Option;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Command(name = "logging/loggers")
+@Command(name = "logging/loggers", description = "List loggers")
 public class LoggerListAction
   extends LoggingCommandActionSupport
 {
   @Nullable
-  @Option(name = "n", longName = "name")
+  @Option(name = "n", longName = "name", description = "Include loggers matching NAME", token = "NAME")
   private String nameQuery;
 
   @Nullable
-  @Option(name = "l", longName = "level")
+  @Option(name = "l", longName = "level", description = "Include loggers matching LEVEL", token = "LEVEL")
   private String levelQuery;
 
-  @Option(name = "a", longName = "all")
+  @Option(name = "a", longName = "all", description = "Include loggers with no level directly configured")
   private boolean all;
 
   @Override
@@ -67,6 +67,6 @@ public class LoggerListAction
       }
     }
 
-    return Result.SUCCESS;
+    return null;
   }
 }

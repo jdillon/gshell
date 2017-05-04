@@ -54,7 +54,7 @@ public class OptionDescriptor
       args = spec.args();
     }
     else {
-      if (type == Void.class) {
+      if (type == UninitializedClass.class) {
         args = 0;
       }
       else if (type == boolean.class || type == Boolean.class) {

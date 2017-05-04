@@ -19,7 +19,8 @@ import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.CommandActionSupport;
-import org.fusesource.jansi.Ansi;
+import org.apache.felix.service.command.Process;
+import org.jline.utils.InfoCmp;
 
 import javax.annotation.Nonnull;
 
@@ -29,7 +30,7 @@ import javax.annotation.Nonnull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "clear")
+@Command(name = "clear", description = "Clear the screen")
 public class ClearAction
     extends CommandActionSupport
 {
@@ -37,10 +38,12 @@ public class ClearAction
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
 
-    // TODO: must be some Terminal equiv of this?
-    io.out.print(Ansi.ansi().eraseScreen(Ansi.Erase.ALL));
-    io.out.flush();
+    Process process = Process.Utils.current();
+    if (process.isTty(1)) {
+      io.terminal.puts(InfoCmp.Capability.clear_screen);
+      io.terminal.flush();
+    }
 
-    return Result.SUCCESS;
+    return null;
   }
 }

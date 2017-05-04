@@ -19,6 +19,7 @@ import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.variables.Variables;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 
 /**
  * Provides commands with the context of it's execution.
@@ -42,7 +43,7 @@ public interface CommandContext
    * @return The command arguments; never null.
    */
   @Nonnull
-  Object[] getArguments();
+  List<?> getArguments();
 
   /**
    * The input/output for the command.

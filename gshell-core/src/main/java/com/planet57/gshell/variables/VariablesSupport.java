@@ -15,11 +15,8 @@
  */
 package com.planet57.gshell.variables;
 
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 
 import com.planet57.gshell.event.EventAware;
 import com.planet57.gshell.event.EventManager;
@@ -29,6 +26,7 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
 /**
  * Provides a nested-namespace for command variables.
@@ -41,24 +39,10 @@ public class VariablesSupport
 {
   private final Map<String, Object> map;
 
-  @Nullable
-  private final Variables parent;
-
-  private final Set<String> immutables = new HashSet<>();
-
   private EventManager eventManager;
 
-  public VariablesSupport(final Map<String, Object> map, @Nullable final Variables parent) {
-    this.map = checkNotNull(map);
-    this.parent = parent;
-  }
-
-  public VariablesSupport(final Variables parent) {
-    this(new LinkedHashMap<>(), parent);
-  }
-
   public VariablesSupport(final Map<String, Object> map) {
-    this(map, null);
+    this.map = checkNotNull(map);
   }
 
   public VariablesSupport() {
@@ -81,13 +65,8 @@ public class VariablesSupport
   @Override
   public void set(final String name, @Nullable final Object value, boolean mutable) {
     checkNotNull(name);
-    ensureMutable(name);
 
     Object previous = map.put(name, value);
-
-    if (!mutable) {
-      immutables.add(name);
-    }
 
     if (eventManager != null) {
       eventManager.publish(new VariableSetEvent(name, previous));
@@ -104,13 +83,7 @@ public class VariablesSupport
   @Nullable
   public Object get(final String name) {
     checkNotNull(name);
-
-    Object value = map.get(name);
-    if (value == null && parent != null) {
-      value = parent.get(name);
-    }
-
-    return value;
+    return map.get(name);
   }
 
   @Override
@@ -119,11 +92,9 @@ public class VariablesSupport
   public <T> T get(final String name, final Class<T> type) {
     checkNotNull(type);
     Object value = get(name);
-
     if (value != null && !type.isAssignableFrom(value.getClass())) {
       value = Converters.getValue(type, value.toString());
     }
-
     return (T) value;
   }
 
@@ -158,15 +129,57 @@ public class VariablesSupport
     if (value == null) {
       return defaultValue;
     }
-
     return value;
+  }
+
+  @Override
+  public Object require(final String name) {
+    Object result = get(name);
+    checkState(result != null, "Missing variable: %s", name);
+    return result;
+  }
+
+  @Override
+  public Object require(final String name, final Object defaultValue) {
+    checkNotNull(defaultValue);
+    Object result = get(name, defaultValue);
+    checkState(result != null, "Missing variable: %s", name);
+    return result;
+  }
+
+  @Override
+  public <T> T require(final String name, final Class<T> type, final T defaultValue) {
+    checkNotNull(defaultValue);
+    T result = get(name, type, defaultValue);
+    checkState(result != null, "Missing variable: %s", name);
+    return result;
+  }
+
+  @Override
+  public <T> T require(final String name, final Class<T> type) {
+    T result = get(name, type);
+    checkState(result != null, "Missing variable: %s", name);
+    return result;
+  }
+
+  @Override
+  public <T> T require(final Class<T> type, final T defaultValue) {
+    checkNotNull(defaultValue);
+    T result = get(type, defaultValue);
+    checkState(result != null, "Missing variable: %s", type.getName());
+    return result;
+  }
+
+  @Override
+  public <T> T require(final Class<T> type) {
+    T result = get(type);
+    checkState(result != null, "Missing variable: %s", type.getName());
+    return result;
   }
 
   @Override
   public void unset(final String name) {
     checkNotNull(name);
-    ensureMutable(name);
-
     map.remove(name);
 
     if (eventManager != null) {
@@ -193,98 +206,12 @@ public class VariablesSupport
   }
 
   @Override
-  public boolean isMutable(final String name) {
-    checkNotNull(name);
-    boolean mutable = true;
-
-    // First ask out parent if there is one, if they are immutable, then so are we
-    if (parent != null) {
-      mutable = parent.isMutable(name);
-    }
-
-    if (mutable) {
-      mutable = !immutables.contains(name);
-    }
-
-    return mutable;
-  }
-
-  @Override
-  public boolean isMutable(final Class<?> type) {
-    checkNotNull(type);
-    return isMutable(type.getName());
-  }
-
-  private void ensureMutable(final String name) {
-    assert name != null;
-
-    if (!isMutable(name)) {
-      throw new ImmutableVariableException(name);
-    }
-  }
-
-  @Override
-  public boolean isCloaked(final String name) {
-    checkNotNull(name);
-    int count = 0;
-
-    Variables vars = this;
-    while (vars != null && count < 2) {
-      if (vars.contains(name)) {
-        count++;
-      }
-
-      vars = vars.parent();
-    }
-
-    return count > 1;
-  }
-
-  @Override
-  public boolean isCloaked(final Class<?> type) {
-    checkNotNull(type);
-    return isCloaked(type.getName());
-  }
-
-  @Override
   public Iterable<String> names() {
-    return () -> {
-      // Chain to parent iterator if we have a parent
-      return new Iterator<String>()
-      {
-        Iterator<String> iter = map.keySet().iterator();
-
-        Variables parent = parent();
-        boolean more = parent != null;
-
-        @Override
-        public boolean hasNext() {
-          boolean next = iter.hasNext();
-          if (!next && more) {
-            iter = parent.names().iterator();
-            more = false;
-            next = hasNext();
-          }
-
-          return next;
-        }
-
-        @Override
-        public String next() {
-          return iter.next();
-        }
-
-        @Override
-        public void remove() {
-          throw new UnsupportedOperationException();
-        }
-      };
-    };
+    return map.keySet();
   }
 
   @Override
-  @Nullable
-  public Variables parent() {
-    return parent;
+  public Map<String,Object> asMap() {
+    return map;
   }
 }

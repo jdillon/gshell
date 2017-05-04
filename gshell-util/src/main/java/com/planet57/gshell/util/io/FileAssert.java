@@ -17,8 +17,8 @@ package com.planet57.gshell.util.io;
 
 import java.io.File;
 
-import com.planet57.gshell.util.i18n.MessageSource;
-import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
+import com.planet57.gshell.util.i18n.I18N;
+import com.planet57.gshell.util.i18n.MessageBundle;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -30,31 +30,59 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class FileAssert
 {
-  private enum Messages
+  private interface Messages
+    extends MessageBundle
   {
-    NOT_FOUND,
-    EXISTS,
-    NOT_FILE,
-    IS_FILE,
-    NOT_DIRECTORY,
-    IS_DIRECTORY,
-    NOT_READABLE,
-    IS_READABLE,
-    NOT_WRITABLE,
-    IS_WRITABLE,
-    NOT_HIDDEN,
-    IS_HIDDEN,
-    NOT_EXECUTABLE,
-    IS_EXECUTABLE,
-    NOT_ABSOLUTE,
-    IS_ABSOLUTE;
+    @DefaultMessage("File not found: %s")
+    String NOT_FOUND(File file);
 
-    private static final MessageSource MESSAGES = new ResourceBundleMessageSource(FileAssert.class);
+    @DefaultMessage("File exists: %s")
+    String EXISTS(File file);
 
-    String format(final Object... args) {
-      return MESSAGES.format(name(), args);
-    }
+    @DefaultMessage("Not a file: %s")
+    String NOT_FILE(File file);
+
+    @DefaultMessage("Is a file: %s")
+    String IS_FILE(File file);
+
+    @DefaultMessage("File is not a directory: %s")
+    String NOT_DIRECTORY(File file);
+
+    @DefaultMessage("File is s a directory: %s")
+    String IS_DIRECTORY(File file);
+
+    @DefaultMessage("File is not readable: %s")
+    String NOT_READABLE(File file);
+
+    @DefaultMessage("File is readable: %s")
+    String IS_READABLE(File file);
+
+    @DefaultMessage("File is not writable %s")
+    String NOT_WRITABLE(File file);
+
+    @DefaultMessage("File is s writable: %s")
+    String IS_WRITABLE(File file);
+
+    @DefaultMessage("File is not hidden: %s")
+    String NOT_HIDDEN(File file);
+
+    @DefaultMessage("File is hidden: %s")
+    String IS_HIDDEN(File file);
+
+    @DefaultMessage("File is not executable: %s")
+    String NOT_EXECUTABLE(File file);
+
+    @DefaultMessage("File is executable: %s")
+    String IS_EXECUTABLE(File file);
+
+    @DefaultMessage("File is not absolute: %s")
+    String NOT_ABSOLUTE(File file);
+
+    @DefaultMessage("File is absolute: %s")
+    String IS_ABSOLUTE(File file);
   }
+
+  private static final Messages messages = I18N.create(Messages.class);
 
   private final File file;
 
@@ -69,10 +97,10 @@ public class FileAssert
   public FileAssert exists(final boolean flag) {
     if (getFile().exists() != flag) {
       if (flag) {
-        throw new AssertionException(Messages.NOT_FOUND.format(getFile()));
+        throw new AssertionException(messages.NOT_FOUND(getFile()));
       }
       else {
-        throw new AssertionException(Messages.EXISTS.format(getFile()));
+        throw new AssertionException(messages.EXISTS(getFile()));
       }
     }
     return this;
@@ -85,10 +113,10 @@ public class FileAssert
   public FileAssert isFile(final boolean flag) {
     if (getFile().isFile() != flag) {
       if (flag) {
-        throw new AssertionException(Messages.NOT_FILE.format(getFile()));
+        throw new AssertionException(messages.NOT_FILE(getFile()));
       }
       else {
-        throw new AssertionException(Messages.IS_FILE.format(getFile()));
+        throw new AssertionException(messages.IS_FILE(getFile()));
       }
     }
     return this;
@@ -101,10 +129,10 @@ public class FileAssert
   public FileAssert isDirectory(final boolean flag) {
     if (getFile().isDirectory() != flag) {
       if (flag) {
-        throw new AssertionException(Messages.NOT_DIRECTORY.format(getFile()));
+        throw new AssertionException(messages.NOT_DIRECTORY(getFile()));
       }
       else {
-        throw new AssertionException(Messages.IS_DIRECTORY.format(getFile()));
+        throw new AssertionException(messages.IS_DIRECTORY(getFile()));
       }
     }
     return this;
@@ -117,10 +145,10 @@ public class FileAssert
   public FileAssert isReadable(final boolean flag) {
     if (getFile().canRead() != flag) {
       if (flag) {
-        throw new AssertionException(Messages.NOT_READABLE.format(getFile()));
+        throw new AssertionException(messages.NOT_READABLE(getFile()));
       }
       else {
-        throw new AssertionException(Messages.IS_READABLE.format(getFile()));
+        throw new AssertionException(messages.IS_READABLE(getFile()));
       }
     }
     return this;
@@ -133,10 +161,10 @@ public class FileAssert
   public FileAssert isWritable(final boolean flag) {
     if (getFile().canWrite() != flag) {
       if (flag) {
-        throw new AssertionException(Messages.NOT_WRITABLE.format(getFile()));
+        throw new AssertionException(messages.NOT_WRITABLE(getFile()));
       }
       else {
-        throw new AssertionException(Messages.IS_WRITABLE.format(getFile()));
+        throw new AssertionException(messages.IS_WRITABLE(getFile()));
       }
     }
     return this;
@@ -149,10 +177,10 @@ public class FileAssert
   public FileAssert isHidden(final boolean flag) {
     if (getFile().isHidden() != flag) {
       if (flag) {
-        throw new AssertionException(Messages.NOT_HIDDEN.format(getFile()));
+        throw new AssertionException(messages.NOT_HIDDEN(getFile()));
       }
       else {
-        throw new AssertionException(Messages.IS_HIDDEN.format(getFile()));
+        throw new AssertionException(messages.IS_HIDDEN(getFile()));
       }
     }
     return this;
@@ -165,10 +193,10 @@ public class FileAssert
   public FileAssert isExecutable(final boolean flag) {
       if (getFile().canExecute() != flag) {
           if (flag) {
-              throw new AssertionException(Messages.NOT_EXECUTABLE.format(getFile()));
+              throw new AssertionException(messages.NOT_EXECUTABLE(getFile()));
           }
           else {
-              throw new AssertionException(Messages.IS_EXECUTABLE.format(getFile()));
+              throw new AssertionException(messages.IS_EXECUTABLE(getFile()));
           }
       }
       return this;
@@ -181,10 +209,10 @@ public class FileAssert
   public FileAssert isAbsolute(final boolean flag) {
     if (getFile().isAbsolute() != flag) {
       if (flag) {
-        throw new AssertionException(Messages.NOT_ABSOLUTE.format(getFile()));
+        throw new AssertionException(messages.NOT_ABSOLUTE(getFile()));
       }
       else {
-        throw new AssertionException(Messages.IS_ABSOLUTE.format(getFile()));
+        throw new AssertionException(messages.IS_ABSOLUTE(getFile()));
       }
     }
     return this;

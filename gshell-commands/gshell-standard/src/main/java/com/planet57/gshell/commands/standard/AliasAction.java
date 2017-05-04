@@ -33,7 +33,10 @@ import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.CliProcessor;
 import com.planet57.gshell.util.cli2.CliProcessorAware;
 import org.jline.reader.Completer;
+import com.planet57.gshell.util.i18n.I18N;
+import com.planet57.gshell.util.i18n.MessageBundle;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -42,18 +45,37 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Command(name = "alias")
+@Command(name = "alias", description = "Define an alias or list defined aliases")
 public class AliasAction
     extends CommandActionSupport
     implements CliProcessorAware
 {
+  private interface Messages
+    extends MessageBundle
+  {
+    @DefaultMessage("No aliases have been defined")
+    String noAliases();
+
+    @DefaultMessage("Defined aliases:")
+    String definedAliases();
+
+    @DefaultMessage("Alias to: @|bold %s|@")
+    String aliasTarget(String target);
+
+    @DefaultMessage("Missing argument: %s")
+    String missinArgument(String name);
+  }
+
+  private static final Messages messages = I18N.create(Messages.class);
+
   private final AliasRegistry aliasRegistry;
 
   @Nullable
-  @Argument(index = 0)
+  @Argument(index = 0, description = "Name of the alias to define", token = "NAME")
   private String name;
 
-  @Argument(index = 1)
+  @Nullable
+  @Argument(index = 1, description = "Target command to be aliased as NAME", token = "TARGET")
   private List<String> target;
 
   @Inject
@@ -90,7 +112,7 @@ public class AliasAction
     Map<String, String> aliases = aliasRegistry.getAliases();
 
     if (aliases.isEmpty()) {
-      io.out.println(getMessages().format("info.no-aliases"));
+      io.out.println(messages.noAliases());
     }
     else {
       // Determine the maximum name length
@@ -101,33 +123,27 @@ public class AliasAction
         }
       }
 
-      io.out.println(getMessages().format("info.defined-aliases"));
+      io.out.println(messages.definedAliases());
       String nameFormat = "%-" + maxNameLen + 's';
 
       for (Map.Entry<String, String> entry : aliases.entrySet()) {
         String formattedName = String.format(nameFormat, entry.getKey());
         io.out.format("  @|bold %s|@ ", formattedName);
-        io.out.println(getMessages().format("info.alias-to", entry.getValue()));
+        io.out.println(messages.aliasTarget(entry.getValue()));
       }
     }
 
-    return Result.SUCCESS;
+    return null;
   }
 
   private Object defineAlias(final CommandContext context) throws Exception {
-    IO io = context.getIo();
-
-    if (target == null) {
-      io.err.printf(getMessages().format("error.missing-arg"), getMessages().getMessage("command.argument.target.token"));
-      io.err.println();
-      return Result.FAILURE;
-    }
+    checkArgument(target != null, messages.missinArgument("TARGET"));
 
     String alias = Joiner.on(" ").join(target);
     log.debug("Defining alias: {} -> {}", name, alias);
 
     aliasRegistry.registerAlias(name, alias);
 
-    return Result.SUCCESS;
+    return null;
   }
 }

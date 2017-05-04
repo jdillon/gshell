@@ -20,46 +20,45 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.common.base.Joiner;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.Stage;
-import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandAction;
-import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.registry.CommandRegistrarImpl;
 import com.planet57.gshell.command.registry.CommandRegistry;
 import com.planet57.gshell.internal.BeanContainer;
-import com.planet57.gshell.parser.impl.eval.Evaluator;
-import com.planet57.gshell.parser.impl.eval.RegexEvaluator;
+import com.planet57.gshell.logging.logback.TargetConsoleAppender;
 import com.planet57.gshell.shell.Shell;
-import com.planet57.gshell.shell.ShellImpl;
+import com.planet57.gshell.shell.ShellBuilder;
 import com.planet57.gshell.variables.Variables;
 import com.planet57.gshell.variables.VariablesSupport;
+import org.apache.felix.gogo.runtime.threadio.ThreadIOImpl;
+import org.apache.felix.service.threadio.ThreadIO;
 import org.eclipse.sisu.space.BeanScanning;
 import org.eclipse.sisu.space.SpaceModule;
 import org.eclipse.sisu.space.URLClassSpace;
 import org.eclipse.sisu.wire.WireModule;
-import org.fusesource.jansi.Ansi;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.sonatype.goodies.testsupport.TestTracer;
 import org.sonatype.goodies.testsupport.TestUtil;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
-import static com.google.inject.name.Names.named;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
-// FIXME: Goodies TestSupport initMocks() is causing some issues in mvnsh; so don't use it for now
+// FIXME: Goodies TestSupport initMocks() is causing some issues in mvnsh
 
 /**
  * Support for testing {@link CommandAction} instances.
@@ -75,10 +74,10 @@ public abstract class CommandTestSupport
 
   protected final TestUtil util = new TestUtil(getClass());
 
+  protected final Logger log = LoggerFactory.getLogger(getClass());
+
   /**
    * The name of the command under-test.
-   *
-   * Used for default command tests.
    */
   private final String name;
 
@@ -87,19 +86,21 @@ public abstract class CommandTestSupport
 
   private BeanContainer container;
 
-  protected Injector injector;
+  private Injector injector;
 
   private Terminal terminal;
 
-  private TestIO io;
+  private BufferIO io;
 
   private Shell shell;
 
-  protected CommandRegistry commandRegistry;
+  private CommandRegistry commandRegistry;
 
-  protected Variables variables;
+  private Variables variables;
 
   protected final Map<String, Class> requiredCommands = new HashMap<>();
+
+  private final ThreadIOImpl threadIO = new ThreadIOImpl();
 
   protected CommandTestSupport(final String name, final Class<?> type) {
     this.name = checkNotNull(name);
@@ -113,28 +114,27 @@ public abstract class CommandTestSupport
 
   @Before
   public void setUp() throws Exception {
-    // For simplicity of output verification disable ANSI
-    Ansi.setEnabled(false);
-
     terminal = TerminalBuilder.builder().dumb(true).build();
-    io = new TestIO(terminal);
+    io = new BufferIO(terminal);
     variables = new VariablesSupport();
 
     container = new BeanContainer();
     List<Module> modules = new ArrayList<>();
     modules.add(binder -> {
       binder.bind(BeanContainer.class).toInstance(container);
-      binder.bind(Branding.class).toInstance(new TestBranding(util.resolveFile("target/shell-home")));
-      binder.bind(IO.class).annotatedWith(named("main")).toInstance(io);
-      binder.bind(Variables.class).annotatedWith(named("main")).toInstance(variables);
-      binder.bind(Evaluator.class).to(RegexEvaluator.class);
+      binder.bind(ThreadIO.class).toInstance(threadIO);
     });
     configureModules(modules);
 
     injector = Guice.createInjector(Stage.DEVELOPMENT, new WireModule(modules));
     container.add(injector, 0);
 
-    shell = injector.getInstance(ShellImpl.class);
+    shell = injector.getInstance(ShellBuilder.class)
+      .branding(new TestBranding(util.resolveFile("target/shell-home")))
+      .io(io)
+      .variables(variables)
+      .build();
+
     variables = shell.getVariables();
     commandRegistry = injector.getInstance(CommandRegistry.class);
 
@@ -144,12 +144,19 @@ public abstract class CommandTestSupport
     CommandRegistrarImpl registrar = injector.getInstance(CommandRegistrarImpl.class);
     registrar.setDiscoveryEnabled(false);
 
+    // force logging to resolve to specific stream and not re-resolve System.out
+    TargetConsoleAppender.setTarget(System.out);
+
+    threadIO.start();
     shell.start();
 
     // register required commands
     for (Map.Entry<String, Class> entry : requiredCommands.entrySet()) {
       registrar.registerCommand(entry.getKey(), entry.getValue());
     }
+
+    // allow test to become aware of injection
+    injector.injectMembers(this);
   }
 
   protected void configureModules(final List<Module> modules) {
@@ -164,21 +171,26 @@ public abstract class CommandTestSupport
 
   @After
   public void tearDown() throws Exception {
-    commandRegistry = null;
-    variables = null;
-    io = null;
-    if (terminal != null) {
-      terminal.close();
-      terminal = null;
-    }
+    threadIO.stop();
+
     if (shell != null) {
       shell.stop();
       shell = null;
     }
+
+    if (terminal != null) {
+      terminal.close();
+      terminal = null;
+    }
+
     if (container != null) {
       container.clear();
       container = null;
     }
+
+    commandRegistry = null;
+    variables = null;
+    io = null;
     injector = null;
   }
 
@@ -187,45 +199,46 @@ public abstract class CommandTestSupport
     return shell;
   }
 
-  protected TestIO getIo() {
+  protected BufferIO getIo() {
     checkState(io != null);
     return io;
   }
 
-  protected Object execute(final String line) throws Exception {
+  protected <T> T lookup(final Class<T> type) {
+    checkState(injector != null);
+    return injector.getInstance(type);
+  }
+
+  /**
+   * Execute a raw shell line.
+   */
+  protected Object executeLine(final String line) throws Exception {
     checkNotNull(line);
-    return getShell().execute(line);
+    try {
+      return getShell().execute(line);
+    }
+    finally {
+      io.dump(log);
+    }
   }
 
-  protected Object execute() throws Exception {
-    return execute(name);
-  }
-
-  protected Object execute(final String... args) throws Exception {
-    return execute(Joiner.on(" ").join(args));
-  }
-
-  protected Object executeWithArgs(final String args) throws Exception {
+  /**
+   * Execute command registered for the test.
+   */
+  protected Object executeCommand(final String... args) throws Exception {
     checkNotNull(args);
-    return execute(name, args);
-  }
 
-  protected Object executeWithArgs(final String... args) throws Exception {
-    checkNotNull(args);
-    return execute(name, Joiner.on(" ").join(args));
+    try {
+      return getShell().execute(name + " " + String.join(" ", args));
+    }
+    finally {
+      io.dump(log);
+    }
   }
 
   //
   // Assertion helpers
   //
-
-  protected void assertEqualsSuccess(final Object result) {
-    assertThat(result, is(CommandAction.Result.SUCCESS));
-  }
-
-  protected void assertEqualsFailure(final Object result) {
-    assertThat(result, is(CommandAction.Result.FAILURE));
-  }
 
   protected void assertOutputEquals(final String expected) {
     assertThat(getIo().getOutputString(), is(expected));
@@ -254,10 +267,10 @@ public abstract class CommandTestSupport
   public void testHelp() throws Exception {
     Object result;
 
-    result = executeWithArgs("--help");
-    assertEqualsSuccess(result);
+    result = executeCommand("--help");
+    assertThat(result, nullValue());
 
-    result = executeWithArgs("-h");
-    assertEqualsSuccess(result);
+    result = executeCommand("-h");
+    assertThat(result, nullValue());
   }
 }

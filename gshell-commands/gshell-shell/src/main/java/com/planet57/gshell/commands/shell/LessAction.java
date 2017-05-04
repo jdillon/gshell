@@ -22,6 +22,7 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import com.planet57.gshell.command.IO;
 import com.planet57.gshell.util.cli2.Option;
 import org.jline.builtins.Less;
 import org.jline.builtins.Source;
@@ -39,19 +40,21 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @since 3.0
  */
-@Command(name = "less")
+@Command(name = "less", description = "Source pager")
 public class LessAction
     extends CommandActionSupport
 {
   // TODO: expose more options; see Commands.less() in jline-builtins
 
   @Nullable
-  @Option(name = "n", longName = "line-numbers")
+  @Option(name = "n", longName = "line-numbers", description = "Display line numbers for each line")
   private Boolean lineNumbers;
 
-  // TODO: leaving this as "source" for now, as this could be adapted to url or file/path
-  @Argument(required = true)
-  private File source;
+  // TODO: consider exposing a file/url source adapter and converter
+
+  @Nullable
+  @Argument(description = "File to display", token = "FILE")
+  private File file;
 
   @Inject
   public void installCompleters(final @Named("file-name") Completer c1) {
@@ -61,15 +64,22 @@ public class LessAction
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    Less less = new Less(context.getIo().terminal);
+    IO io = context.getIo();
+    Less less = new Less(io.terminal);
 
     if (lineNumbers != null) {
       less.printLineNumbers = lineNumbers;
     }
 
-    Source input = new Source.PathSource(source.toPath(), source.getName());
+    Source input;
+    if (file == null) {
+      input = new Source.InputStreamSource(io.streams.in, false, null);
+    }
+    else {
+      input = new Source.PathSource(file.toPath(), file.getName());
+    }
     less.run(input);
 
-    return Result.SUCCESS;
+    return null;
   }
 }

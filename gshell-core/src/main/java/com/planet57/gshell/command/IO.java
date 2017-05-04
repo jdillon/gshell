@@ -16,14 +16,11 @@
 package com.planet57.gshell.command;
 
 import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.Reader;
 
 import com.google.common.io.Flushables;
 import com.planet57.gshell.util.io.StreamSet;
-import org.fusesource.jansi.Ansi;
-import org.fusesource.jansi.AnsiConsole;
 import org.fusesource.jansi.AnsiRenderWriter;
 import org.jline.terminal.Terminal;
 
@@ -72,38 +69,24 @@ public class IO
   public final PrintWriter err;
 
   public IO(final StreamSet streams, final Terminal terminal) {
-    this.streams = ansiStreams(checkNotNull(streams));
+    this.streams = checkNotNull(streams);
     this.terminal = checkNotNull(terminal);
 
     // prepare stream references
-    this.in = new InputStreamReader(this.streams.in);
-    this.out = new AnsiRenderWriter(new PrintWriter(this.streams.out, true));
+    this.in = new InputStreamReader(streams.in);
+    this.out = new AnsiRenderWriter(new PrintWriter(streams.out, true));
 
-    /// Don't rewrite the error stream if we have the same stream for out and error
+    // Don't rewrite the error stream if we have the same stream for out and error
     if (streams.isOutputCombined()) {
       this.err = this.out;
     }
     else {
-      this.err = new AnsiRenderWriter(new PrintWriter(this.streams.err, true));
+      this.err = new AnsiRenderWriter(new PrintWriter(streams.err, true));
     }
   }
 
   /**
-   * Adapt {@link StreamSet} to be ANSI-aware if configured.
-   */
-  private static StreamSet ansiStreams(@Nonnull final StreamSet streams) {
-    if (Ansi.isEnabled()) {
-      return new StreamSet(
-        streams.in,
-        new PrintStream(AnsiConsole.wrapOutputStream(streams.out), true),
-        new PrintStream(AnsiConsole.wrapOutputStream(streams.err), true)
-      );
-    }
-    return streams;
-  }
-
-  /**
-   * Flush both output streams.
+   * Flush output streams.
    */
   public void flush() {
     Flushables.flushQuietly(out);
@@ -113,6 +96,6 @@ public class IO
       Flushables.flushQuietly(err);
     }
 
-    // TODO: terminal.flush()?
+    terminal.flush();
   }
 }

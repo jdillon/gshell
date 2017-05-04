@@ -68,12 +68,12 @@
 
     <dependency>
       <groupId>com.planet57.gshell.commands</groupId>
-      <artifactId>gshell-network</artifactId>
+      <artifactId>gshell-shell</artifactId>
     </dependency>
 
     <dependency>
       <groupId>com.planet57.gshell.commands</groupId>
-      <artifactId>gshell-shell</artifactId>
+      <artifactId>gshell-script</artifactId>
     </dependency>
 
     <dependency>

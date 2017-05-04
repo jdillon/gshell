@@ -36,11 +36,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "rmdir")
+@Command(name = "rmdir", description = "Remove a directory")
 public class DeleteDirectoryAction
     extends FileCommandActionSupport
 {
-  @Argument(required = true)
+  @Argument(required = true, description = "The path of the directory remove", token = "PATH")
   private String path;
 
   @Inject
@@ -52,17 +52,14 @@ public class DeleteDirectoryAction
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    IO io = context.getIo();
-
     File file = getFileSystem().resolveFile(path);
 
     new FileAssert(file).exists().isDirectory();
 
     if (!file.delete()) {
-      io.err.println(getMessages().format("error.delete-failed", file));
-      return Result.FAILURE;
+      throw new RuntimeException(String.format("Failed to remove directory: %s", file));
     }
 
-    return Result.SUCCESS;
+    return null;
   }
 }

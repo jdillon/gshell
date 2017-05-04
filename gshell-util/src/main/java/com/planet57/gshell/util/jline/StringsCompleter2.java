@@ -19,7 +19,6 @@ import org.jline.reader.Candidate;
 import org.jline.reader.Completer;
 import org.jline.reader.LineReader;
 import org.jline.reader.ParsedLine;
-import org.jline.utils.AttributedString;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -28,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.planet57.gshell.util.jline.Candidates.candidate;
 
 /**
  * Customized strings completer which provides mutable candidates.
@@ -95,6 +95,15 @@ public class StringsCompleter2
   }
 
   /**
+   * Add string with specific completer.
+   */
+  public void add(final String string, final Candidate candidate) {
+    checkNotNull(string);
+    checkNotNull(candidate);
+    candidates.put(string, candidate);
+  }
+
+  /**
    * Returns all configured candidate strings.
    */
   public Collection<String> getStrings() {
@@ -112,18 +121,5 @@ public class StringsCompleter2
   public void complete(final LineReader reader, final ParsedLine commandLine, final List<Candidate> candidates) {
     checkNotNull(candidates);
     candidates.addAll(getCandidates());
-  }
-
-  //
-  // Helpers
-  //
-
-  /**
-   * Returns an ANSI-enabled candidate for given string.
-   */
-  public static Candidate candidate(final String value) {
-    checkNotNull(value);
-    // display is allowed to have ANSI, but value is stripped
-    return new Candidate(AttributedString.stripAnsi(value), value, null, null, null, null, true);
   }
 }

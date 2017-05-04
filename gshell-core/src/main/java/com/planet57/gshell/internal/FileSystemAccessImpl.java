@@ -53,7 +53,7 @@ public class FileSystemAccessImpl
   @Override
   public File resolveDir(final String name) throws IOException {
     checkNotNull(name);
-    return variables.get().get(name, File.class).getCanonicalFile();
+    return variables.get().require(name, File.class).getCanonicalFile();
   }
 
   @Override

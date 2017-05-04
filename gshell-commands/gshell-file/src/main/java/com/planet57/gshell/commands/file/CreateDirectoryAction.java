@@ -36,11 +36,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "mkdir")
+@Command(name = "mkdir", description = "Create a directory")
 public class CreateDirectoryAction
     extends FileCommandActionSupport
 {
-  @Argument(required = true)
+  @Argument(required = true, description = "The path of the directory create", token = "PATH")
   private String path;
 
   @Inject
@@ -59,10 +59,9 @@ public class CreateDirectoryAction
     new FileAssert(file).exists(false).isFile(false);
 
     if (!file.mkdirs()) {
-      io.err.println(getMessages().format("error.create-failed", file));
-      return Result.FAILURE;
+      throw new RuntimeException(String.format("Failed to create directory: %s", file));
     }
 
-    return Result.SUCCESS;
+    return null;
   }
 }

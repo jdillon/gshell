@@ -21,7 +21,8 @@ import com.planet57.gshell.branding.Asl2License;
 import com.planet57.gshell.branding.BrandingSupport;
 import com.planet57.gshell.branding.License;
 import com.planet57.gshell.util.io.PrintBuffer;
-import org.fusesource.jansi.Ansi;
+
+import javax.annotation.Nullable;
 
 import static com.planet57.gshell.variables.VariableNames.SHELL_GROUP;
 import static com.planet57.gshell.variables.VariableNames.SHELL_USER_DIR;
@@ -48,23 +49,23 @@ public class BrandingImpl
   public String getWelcomeMessage() {
     PrintBuffer buff = new PrintBuffer();
     for (String line : BANNER) {
-      buff.println(Ansi.ansi().fg(Ansi.Color.CYAN).a(line).reset());
+      buff.format("@|cyan %s|@%n", line);
     }
     buff.println();
     buff.format("%s (%s)%n%n", getDisplayName(), getVersion());
     buff.println("Type '@|bold help|@' for more information.");
-    buff.print(LINE_TOKEN);
+    buff.format("@|intensity_faint %s|@", LINE_TOKEN);
     return buff.toString();
   }
 
   @Override
   public String getDisplayName() {
-    return getMessages().format("displayName");
+    return "@|cyan GShell|@";
   }
 
   @Override
   public String getGoodbyeMessage() {
-    return getMessages().format("goodbye");
+    return "@|green Goodbye!|@";
   }
 
   @Override
@@ -74,7 +75,15 @@ public class BrandingImpl
 
   @Override
   public String getPrompt() {
-    return String.format("@|bold %s|@(${%s}):${%s}> ", getProgramName(), SHELL_GROUP, SHELL_USER_DIR + "~.");
+    // FIXME: may need to adjust ansi-renderer syntax or pre-render before expanding to avoid needing escapes
+    return String.format("\\@\\|bold %s\\|\\@\\(${%s}\\):${%s}> ", getProgramName(), SHELL_GROUP, SHELL_USER_DIR);
+  }
+
+  @Nullable
+  @Override
+  public String getRightPrompt() {
+    // FIXME: may need to adjust ansi-renderer syntax or pre-render before expanding to avoid needing escapes
+    return "\\@\\|intensity_faint $(date)\\|\\@";
   }
 
   @Override

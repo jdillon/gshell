@@ -260,8 +260,6 @@ public class StreamJack
     restore(StreamSet.system());
   }
 
-  // TODO: Do we need to perform any sync muck here?
-
   /**
    * Delegates write calls to the currently registered output stream.
    */

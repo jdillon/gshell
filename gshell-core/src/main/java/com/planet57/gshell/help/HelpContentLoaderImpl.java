@@ -26,7 +26,6 @@ import java.util.MissingResourceException;
 
 import org.sonatype.goodies.common.ComponentSupport;
 import com.planet57.gshell.util.io.PrintBuffer;
-import com.planet57.gshell.util.io.Closeables;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -71,7 +70,7 @@ public class HelpContentLoaderImpl
       }
     }
 
-    return buff.toString();
+    return buff.toString().trim();
   }
 
   private URL findResource(final String name, final Locale locale, final ClassLoader loader) {

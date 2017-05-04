@@ -26,6 +26,7 @@ import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -35,19 +36,22 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Command(name = "echo")
+@Command(name = "echo", description = "Print arguments to standard output")
 public class EchoAction
     extends CommandActionSupport
 {
-  @Option(name = "n")
+  @Option(name = "n", description = "Do not print the trailing newline character")
   private boolean noTrailingNewline;
 
-  @Argument
+  @Nullable
+  @Argument(description = "Arguments")
   private List<String> args;
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
+
+    log.debug("Echo: {}; omit-newline: {}", args, noTrailingNewline);
 
     if (args != null && !args.isEmpty()) {
       Iterator iter = args.iterator();
@@ -64,6 +68,6 @@ public class EchoAction
       io.out.println();
     }
 
-    return Result.SUCCESS;
+    return null;
   }
 }

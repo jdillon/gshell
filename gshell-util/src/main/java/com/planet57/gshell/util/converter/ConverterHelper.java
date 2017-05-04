@@ -31,6 +31,10 @@ import java.util.List;
  */
 public class ConverterHelper
 {
+  private ConverterHelper() {
+    // empty
+  }
+
   public static boolean hasDefaultConstructor(final Class type) {
     if (!Modifier.isPublic(type.getModifiers())) {
       return false;

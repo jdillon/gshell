@@ -40,6 +40,11 @@
       <groupId>com.planet57.gshell</groupId>
       <artifactId>gshell-core</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>com.planet57.gshell.ext</groupId>
+      <artifactId>gshell-logback</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

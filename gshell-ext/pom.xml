@@ -34,6 +34,7 @@
 
   <modules>
     <module>gshell-gossip</module>
+    <module>gshell-groovy</module>
     <module>gshell-logback</module>
     <module>gshell-plexus</module>
   </modules>

@@ -16,18 +16,13 @@
 package com.planet57.gshell.command;
 
 import java.util.Arrays;
-import java.util.MissingResourceException;
 import java.util.stream.Collectors;
 
 import com.planet57.gshell.command.resolver.NodePath;
 import org.jline.reader.impl.completer.ArgumentCompleter;
 import org.jline.reader.impl.completer.NullCompleter;
 import org.sonatype.goodies.common.ComponentSupport;
-import com.planet57.gshell.util.i18n.MessageSource;
-import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 import org.jline.reader.Completer;
-
-import javax.annotation.Nullable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
@@ -44,9 +39,6 @@ public abstract class CommandActionSupport
 {
   private String name;
 
-  private MessageSource messages;
-
-  @Nullable
   private Completer completer = NullCompleter.INSTANCE;
 
   @Override
@@ -69,40 +61,6 @@ public abstract class CommandActionSupport
     return new NodePath(getName()).last();
   }
 
-  @Override
-  public MessageSource getMessages() {
-    if (messages == null) {
-      try {
-        messages = createMessages();
-      }
-      catch (MissingResourceException e) {
-        log.warn("Missing resources", e);
-
-        messages = new MessageSource()
-        {
-          @Override
-          public String getMessage(final String code) {
-            return code;
-          }
-
-          @Override
-          public String format(final String code, final Object... args) {
-            return code;
-          }
-        };
-      }
-    }
-
-    return messages;
-  }
-
-  /**
-   * @since 2.4
-   */
-  protected ResourceBundleMessageSource createMessages() {
-    return new ResourceBundleMessageSource(getClass());
-  }
-
   /**
    * @see CommandAction.Completable
    */
@@ -112,7 +70,7 @@ public abstract class CommandActionSupport
   }
 
   /**
-   * Install a raw completer.
+   * Install raw completer.
    *
    * @since 3.0
    */
@@ -123,7 +81,7 @@ public abstract class CommandActionSupport
   /**
    * Install argument completer for the given completers.
    *
-   * This will handle translating null members of completers into {@link NullCompleter#INSTANCE}.
+   * This will handle translating {@code null} members of completers into {@link NullCompleter#INSTANCE}.
    */
   protected void setCompleters(final Completer... completers) {
     checkNotNull(completers);
@@ -144,5 +102,12 @@ public abstract class CommandActionSupport
     catch (CloneNotSupportedException e) {
       throw new InternalError();
     }
+  }
+
+  @Override
+  public String toString() {
+    return "CommandActionSupport{" +
+      "name='" + name + '\'' +
+      '}';
   }
 }

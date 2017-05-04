@@ -16,9 +16,9 @@
 package com.planet57.gshell.shell;
 
 import com.planet57.gshell.branding.Branding;
-import com.planet57.gshell.command.IO;
 import com.planet57.gshell.variables.Variables;
 import org.jline.reader.History;
+import org.jline.terminal.Terminal;
 import org.sonatype.goodies.lifecycle.Lifecycle;
 
 /**
@@ -32,7 +32,10 @@ public interface Shell
 {
   Branding getBranding();
 
-  IO getIo();
+  /**
+   * @since 3.0
+   */
+  Terminal getTerminal();
 
   Variables getVariables();
 
@@ -40,16 +43,5 @@ public interface Shell
 
   Object execute(CharSequence line) throws Exception;
 
-  Object execute(CharSequence command, Object[] args) throws Exception;
-
-  Object execute(Object... args) throws Exception;
-
-  /**
-   * Run the shell interactively.
-   *
-   * @param args The initial commands to execute interactively.
-   * @throws Exception                     Failed to execute commands.
-   * @throws UnsupportedOperationException The shell does not support interactive execution.
-   */
-  void run(Object... args) throws Exception;
+  void run() throws Exception;
 }

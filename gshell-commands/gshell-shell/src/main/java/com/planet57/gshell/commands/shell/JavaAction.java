@@ -37,24 +37,23 @@ import javax.annotation.Nullable;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "java")
+@Command(name = "java", description = "Execute a Java standard application")
 public class JavaAction
     extends CommandActionSupport
 {
-  @Nullable
-  @Option(name = "m", longName = "method")
+  @Option(name = "m", longName = "method", description = "Invoke a named method", token = "METHOD")
   private String methodName = "main";
 
-  @Argument(index = 0, required = true)
+  @Argument(index = 0, required = true, description = "The name of the class to invoke", token = "CLASSNAME")
   private String className;
 
-  @Argument(index = 1)
+  @Argument(index = 1, description = "Arguments to pass to the METHOD of CLASSNAME", token = "ARGS")
   private List<String> args;
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     log.debug("Loading class: {}", className);
-    Class type = Thread.currentThread().getContextClassLoader().loadClass(className);
+    Class<?> type = Thread.currentThread().getContextClassLoader().loadClass(className);
     log.debug("Using type: {}", type);
 
     log.debug("Locating method: {}", methodName);

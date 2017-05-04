@@ -25,17 +25,17 @@ import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.util.io.PrintBuffer;
 import com.planet57.gshell.util.cli2.CliProcessor;
 import com.planet57.gshell.util.cli2.HelpPrinter;
-import com.planet57.gshell.util.i18n.MessageSource;
-import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
 import com.planet57.gshell.util.pref.PreferenceDescriptor;
 import com.planet57.gshell.util.pref.PreferenceProcessor;
+import com.planet57.gshell.variables.Variables;
 import org.codehaus.plexus.interpolation.AbstractValueSource;
 import org.codehaus.plexus.interpolation.Interpolator;
 import org.codehaus.plexus.interpolation.PrefixedObjectValueSource;
 import org.codehaus.plexus.interpolation.PropertiesBasedValueSource;
 import org.codehaus.plexus.interpolation.StringSearchInterpolator;
-import org.fusesource.jansi.AnsiRenderer;
 import org.jline.terminal.Terminal;
+import com.planet57.gshell.util.i18n.I18N;
+import com.planet57.gshell.util.i18n.MessageBundle;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -49,6 +49,21 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class CommandHelpPage
     implements HelpPage
 {
+  private interface Messages
+    extends MessageBundle
+  {
+    @DefaultMessage("ARGUMENTS")
+    String arguments();
+
+    @DefaultMessage("OPTIONS")
+    String options();
+
+    @DefaultMessage("PREFERENCES")
+    String preferences();
+  }
+
+  private static final Messages messages = I18N.create(Messages.class);
+
   private final Node node;
 
   private final HelpContentLoader loader;
@@ -78,6 +93,7 @@ public class CommandHelpPage
   }
 
   // Public so that ObjectBasedValueSource can access (it really should set accessible so this is not needed)
+  @SuppressWarnings("unused")
   public class Helper
   {
     private final CliProcessor clp;
@@ -86,93 +102,78 @@ public class CommandHelpPage
 
     private final PreferenceProcessor pp;
 
-    private MessageSource messages;
-
-    public Helper(final Terminal terminal, final Branding branding) {
+    public Helper(final Branding branding, final int maxWidth) {
       CommandHelper help = new CommandHelper();
       clp = help.createCliProcessor(command);
-      printer = new HelpPrinter(clp, terminal);
-      pp = CommandHelper.createPreferenceProcessor(command, branding);
+      printer = new HelpPrinter(clp, maxWidth);
+
+      pp = new PreferenceProcessor();
+      pp.setBasePath(branding.getPreferencesBasePath());
+      pp.addBean(command);
     }
 
-    private MessageSource getMessages() {
-      if (messages == null) {
-        messages = new ResourceBundleMessageSource(getClass());
-      }
-
-      return messages;
-    }
-
-    @SuppressWarnings("unused")
     public String getName() {
       return command.getName();
     }
 
-    @SuppressWarnings("unused")
     public String getAbsoluteName() {
       return Node.ROOT + command.getName();
     }
 
-    @SuppressWarnings("unused")
     public String getSimpleName() {
       return command.getSimpleName();
     }
 
-    @SuppressWarnings("unused")
     public String getDescription() {
       return CommandHelper.getDescription(command);
     }
 
     private void printHeader(final PrintBuffer buff, final String name) {
-      buff.format("@|bold %s|@", getMessages().format(name)).println();
+      buff.format("@|bold %s|@%n", name);
       buff.println();
     }
 
-    @SuppressWarnings("unused")
     public String getArguments() {
       if (clp.getArgumentDescriptors().isEmpty()) {
         return "";
       }
 
       PrintBuffer buff = new PrintBuffer();
-      printHeader(buff, "section.arguments");
+      printHeader(buff, CommandHelpPage.messages.arguments());
       printer.printArguments(buff, clp.getArgumentDescriptors());
 
       return buff.toString();
     }
 
-    @SuppressWarnings("unused")
     public String getOptions() {
       if (clp.getOptionDescriptors().isEmpty()) {
         return "";
       }
 
       PrintBuffer buff = new PrintBuffer();
-      printHeader(buff, "section.options");
+      printHeader(buff, CommandHelpPage.messages.options());
       printer.printOptions(buff, clp.getOptionDescriptors());
 
       return buff.toString();
     }
 
-    @SuppressWarnings("unused")
     public String getPreferences() {
       if (pp.getDescriptors().isEmpty()) {
         return "";
       }
 
       PrintBuffer buff = new PrintBuffer();
-      printHeader(buff, "section.preferences");
+      printHeader(buff, CommandHelpPage.messages.preferences());
 
       for (PreferenceDescriptor pd : pp.getDescriptors()) {
         String text = String.format("    %s @|bold %s|@ (%s)",
             pd.getPreferences().absolutePath(), pd.getId(), pd.getSetter().getType().getSimpleName());
-        buff.println(AnsiRenderer.render(text));
+        buff.println(text);
       }
 
       return buff.toString();
     }
 
-    @SuppressWarnings("unused")
     public String getDetails() {
       // This ugly muck adds a newline as needed if the last section was not empty
       // and the current section is not empty, so that the page looks correct.
@@ -208,14 +209,18 @@ public class CommandHelpPage
     checkNotNull(shell);
     checkNotNull(out);
 
+    final Branding branding = shell.getBranding();
+    final Terminal terminal = shell.getTerminal();
+    final Variables variables = shell.getVariables();
+
     Interpolator interp = new StringSearchInterpolator("@{", "}");
-    interp.addValueSource(new PrefixedObjectValueSource("command.", new Helper(shell.getIo().terminal, shell.getBranding())));
-    interp.addValueSource(new PrefixedObjectValueSource("branding.", shell.getBranding()));
+    interp.addValueSource(new PrefixedObjectValueSource("command.", new Helper(branding, terminal.getWidth())));
+    interp.addValueSource(new PrefixedObjectValueSource("branding.", branding));
     interp.addValueSource(new AbstractValueSource(false)
     {
       @Override
       public Object getValue(final String expression) {
-        return shell.getVariables().get(expression);
+        return variables.get(expression);
       }
     });
     interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));

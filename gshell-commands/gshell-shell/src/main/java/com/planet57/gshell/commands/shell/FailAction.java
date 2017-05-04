@@ -28,11 +28,11 @@ import javax.annotation.Nonnull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "fail")
+@Command(name = "fail", description = "Fail with an exception")
 public class FailAction
     extends CommandActionSupport
 {
-  @Argument
+  @Argument(description = "Failure message", token = "TEXT")
   private String message = "Failed";
 
   @Override

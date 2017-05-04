@@ -31,10 +31,9 @@ import com.planet57.gshell.command.IO;
 import com.planet57.gshell.util.io.FileAssert;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
+import com.planet57.gshell.util.io.PrintBuffer;
 import com.planet57.gshell.util.jline.TerminalHelper;
 import org.jline.reader.Completer;
-import org.jline.utils.AttributedStringBuilder;
-import org.jline.utils.AttributedStyle;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -44,21 +43,21 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "ls")
+@Command(name = "ls", description = "List the contents of a file or directory")
 public class ListDirectoryAction
   extends FileCommandActionSupport
 {
   @Nullable
-  @Argument
+  @Argument(description = "The file or directory path to list.", token = "PATH")
   private String path;
 
-  @Option(name = "l", longName = "long")
+  @Option(name = "l", longName = "long", description = "List in long format")
   private boolean longList;
 
-  @Option(name = "a", longName = "all")
+  @Option(name = "a", longName = "all", description = "Include hidden files")
   private boolean includeHidden;
 
-  @Option(name = "r", longName = "recursive")
+  @Option(name = "r", longName = "recursive", description = "List the contents of directories recursively")
   private boolean recursive;
 
   @Inject
@@ -83,7 +82,7 @@ public class ListDirectoryAction
       io.out.println(file.getPath());
     }
 
-    return Result.SUCCESS;
+    return null;
   }
 
   private void listChildren(final IO io, final File dir) throws Exception {
@@ -131,33 +130,24 @@ public class ListDirectoryAction
     }
   }
 
-  // TODO: sort out some sort of scheme where this can be made configurable
-
   private String render(final File file) {
     String name = file.getName();
 
-    AttributedStringBuilder buff = new AttributedStringBuilder();
+    PrintBuffer buff = new PrintBuffer();
     if (file.isDirectory()) {
-      buff.style(AttributedStyle.DEFAULT.foreground(AttributedStyle.BLUE));
-      buff.append(name);
-      buff.append(File.separator);
-      buff.style(AttributedStyle.DEFAULT);
+      buff.format("@|blue %s%s|@", name, File.separator);
     }
     else if (file.canExecute()) {
-      buff.style(AttributedStyle.DEFAULT.foreground(AttributedStyle.GREEN));
-      buff.append(name);
-      buff.style(AttributedStyle.DEFAULT);
+      buff.format("@|green %s|@", name);
     }
     else if (file.isHidden()) {
-      buff.style(AttributedStyle.DEFAULT.faint());
-      buff.append(name);
-      buff.style(AttributedStyle.DEFAULT);
+      buff.format("@|intensity_faint %s|@", name);
     }
     else {
       // not styled
       return name;
     }
 
-    return buff.toAnsi();
+    return buff.toString();
   }
 }

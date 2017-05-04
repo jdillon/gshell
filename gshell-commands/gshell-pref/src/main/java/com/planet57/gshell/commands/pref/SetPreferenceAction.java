@@ -29,14 +29,14 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "pref/set")
+@Command(name = "pref/set", description = "Set a preference")
 public class SetPreferenceAction
     extends PreferenceNodeActionSupport
 {
-  @Argument(index = 1, required = true)
+  @Argument(index = 1, required = true, description = "Preference key", token = "KEY")
   private String key;
 
-  @Argument(index = 2, required = true)
+  @Argument(index = 2, required = true, description = "Preference value", token = "VALUE")
   private String value;
 
   @Override
@@ -44,6 +44,6 @@ public class SetPreferenceAction
     node().put(key, value);
     node().sync();
 
-    return Result.SUCCESS;
+    return null;
   }
 }

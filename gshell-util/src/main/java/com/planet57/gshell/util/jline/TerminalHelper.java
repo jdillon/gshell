@@ -36,6 +36,10 @@ import java.util.stream.Stream;
  */
 public class TerminalHelper
 {
+  private TerminalHelper() {
+    // empty
+  }
+
   // Adapted from: https://github.com/apache/felix/blob/trunk/gogo/jline/src/main/java/org/apache/felix/gogo/jline/Posix.java
 
   public static void printColumns(final Terminal terminal, final PrintWriter out, final Stream<String> values, final boolean horizontal) {

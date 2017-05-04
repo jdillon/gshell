@@ -51,7 +51,8 @@ public class LoggingCompleter
     catch (Exception e) {
       // FIXME: this is required in part due to: https://github.com/jline/jline3/issues/115
       log.warn("Completer failed", e);
-      throw Throwables.propagate(e);
+      Throwables.propagateIfPossible(e, RuntimeException.class);
+      throw new RuntimeException(e);
     }
   }
 }

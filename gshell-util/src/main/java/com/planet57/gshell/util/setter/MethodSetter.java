@@ -36,7 +36,7 @@ public class MethodSetter
     this.method = checkNotNull(method);
 
     if (method.getParameterTypes().length != 1) {
-      throw new IllegalArgumentException(Messages.ILLEGAL_METHOD_SIGNATURE.format(method));
+      throw new IllegalArgumentException(messages.ILLEGAL_METHOD_SIGNATURE(method));
     }
   }
 

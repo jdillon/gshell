@@ -40,7 +40,7 @@ import static com.planet57.gshell.variables.VariableNames.SHELL_USER_DIR;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "cd")
+@Command(name = "cd", description = "Changes the current directory")
 public class ChangeDirectoryAction
     extends FileCommandActionSupport
 {
@@ -48,7 +48,7 @@ public class ChangeDirectoryAction
   private boolean verbose;
 
   @Nullable
-  @Argument
+  @Argument(description = "The path of the directory to change to", token = "PATH")
   private String path;
 
   @Inject
@@ -78,6 +78,6 @@ public class ChangeDirectoryAction
       io.out.println(file.getPath());
     }
 
-    return Result.SUCCESS;
+    return null;
   }
 }

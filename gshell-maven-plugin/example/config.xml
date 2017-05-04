@@ -55,19 +55,7 @@
 
           <dependency>
             <groupId>com.planet57.gshell.commands</groupId>
-            <artifactId>gshell-jetty</artifactId>
-            <version>${gshell.version}</version>
-          </dependency>
-
-          <dependency>
-            <groupId>com.planet57.gshell.commands</groupId>
             <artifactId>gshell-logging</artifactId>
-            <version>${gshell.version}</version>
-          </dependency>
-
-          <dependency>
-            <groupId>com.planet57.gshell.commands</groupId>
-            <artifactId>gshell-network</artifactId>
             <version>${gshell.version}</version>
           </dependency>
 

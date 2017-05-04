@@ -36,13 +36,13 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Command(name = "unalias")
+@Command(name = "unalias", description = "Undefine an alias")
 public class UnaliasAction
     extends CommandActionSupport
 {
   private final AliasRegistry aliasRegistry;
 
-  @Argument(index = 0, required = true)
+  @Argument(index = 0, required = true, description = "Name of the alias to undefine.", token = "NAME")
   private String name;
 
   @Inject
@@ -65,12 +65,11 @@ public class UnaliasAction
 
     try {
       aliasRegistry.removeAlias(name);
-
-      return Result.SUCCESS;
     }
     catch (NoSuchAliasException e) {
-      io.err.println(getMessages().format("error.alias-not-defined", name));
-      return Result.FAILURE;
+      log.debug("Alias not defined: {}", name);
     }
+
+    return null;
   }
 }

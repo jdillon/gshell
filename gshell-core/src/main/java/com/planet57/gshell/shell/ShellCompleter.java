@@ -17,6 +17,7 @@ package com.planet57.gshell.shell;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -68,18 +69,18 @@ public class ShellCompleter
     }
     else {
       String command = line.words().get(0);
-      log.debug("Command: {}", command);
+      log.trace("Command: {}", command);
 
       // resolve node for command, this should be non-null?
       Node node = commandResolver.resolve(command);
-      log.debug("Node: {}", node);
+      log.trace("Node: {}", node);
 
       if (node != null) {
         CommandAction action = node.getAction();
 
         if (action instanceof CommandAction.Completable) {
           Completer completer = ((CommandAction.Completable)action).getCompleter();
-          log.debug("Completer: {}", completer);
+          log.trace("Completer: {}", completer);
 
           // HACK: complexity here to re-use ArgumentCompleter; not terribly efficient
           ParsedLine arguments = extractCommandArguments(line);
@@ -95,8 +96,8 @@ public class ShellCompleter
    * Helper to log {@link ParsedLine} details.
    */
   private void explain(final String message, final ParsedLine line) {
-    // HACK: ParsedLine has no sane toString(); render all its details to logging
-    log.debug("{}: line={}, words={}, word-index: {}, word-cursor: {}, cursor: {}",
+    // ParsedLine has no sane toString(); render all its details to logging
+    log.trace("{}: line={}, words={}, word-index: {}, word-cursor: {}, cursor: {}",
       message,
       line.line(),
       line.words(),
@@ -115,15 +116,20 @@ public class ShellCompleter
     // copy the list, so we can mutate and pop the first item off
     LinkedList<String> words = Lists.newLinkedList(line.words());
     String remove = words.pop();
+    String rawLine = line.line();
 
     // rebuild that list sans the first argument
-    String rawLine = line.line();
-    return new DefaultParser.ArgumentList(
-      rawLine.substring(remove.length() + 1, rawLine.length()),
-      words,
-      line.wordIndex() - 1,
-      line.wordCursor(),
-      line.cursor() - remove.length() + 1
-    );
+    if (remove.length() > rawLine.length()) {
+      return new DefaultParser.ArgumentList(
+        rawLine.substring(remove.length() + 1, rawLine.length()),
+        words,
+        line.wordIndex() - 1,
+        line.wordCursor(),
+        line.cursor() - remove.length() + 1
+      );
+    }
+    else {
+      return new DefaultParser.ArgumentList("", Collections.emptyList(), 0, 0, 0);
+    }
   }
 }

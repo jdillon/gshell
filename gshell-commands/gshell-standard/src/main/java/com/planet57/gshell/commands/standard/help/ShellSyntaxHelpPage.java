@@ -36,4 +36,9 @@ public class ShellSyntaxHelpPage
   public ShellSyntaxHelpPage(final HelpContentLoader loader) {
     super("shell-syntax", "com.planet57.gshell.commands.standard.help.shell-syntax", loader);
   }
+
+  @Override
+  public String getDescription() {
+    return "Shell syntax overview.";
+  }
 }

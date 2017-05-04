@@ -32,19 +32,19 @@ import org.jline.reader.LineReaderBuilder;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "ask")
+@Command(name = "ask", description = "Ask for some input")
 public class AskAction
     extends CommandActionSupport
 {
   @Nullable
-  @Option(name = "m", longName = "mask")
+  @Option(name = "m", longName = "mask", description = "Input mask character", token = "CHAR")
   private Character mask;
 
   @Nullable
-  @Option(name = "v", longName = "variable")
+  @Option(name = "v", longName = "variable", description = "Set result to input", token = "NAME")
   private String variable;
 
-  @Argument(required = true)
+  @Argument(required = true, description = "Input prompt", token = "PROMPT")
   private String prompt;
 
   @Override

@@ -33,6 +33,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import com.google.common.base.CharMatcher;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.branding.License;
 import com.planet57.gshell.command.Command;
@@ -41,19 +42,13 @@ import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
-import com.planet57.gshell.util.jline.TerminalHelper;
+import com.planet57.gshell.util.i18n.I18N;
+import com.planet57.gshell.util.i18n.MessageBundle;
 import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.Preferences;
-import org.fusesource.jansi.Ansi;
-import org.fusesource.jansi.AnsiRenderWriter;
 import org.jline.reader.impl.completer.EnumCompleter;
 
 import javax.annotation.Nonnull;
-
-import static com.planet57.gshell.commands.standard.InfoAction.Section.SHELL;
-import static org.fusesource.jansi.Ansi.Attribute.INTENSITY_BOLD;
-import static org.fusesource.jansi.Ansi.Color.GREEN;
-import static org.fusesource.jansi.Ansi.ansi;
 
 //
 // Based on info command from Apache Felix
@@ -65,7 +60,7 @@ import static org.fusesource.jansi.Ansi.ansi;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Command(name = "info")
+@Command(name = "info", description = "Display information about the shell and environment")
 @Preferences(path = "commands/info")
 public class InfoAction
     extends CommandActionSupport
@@ -73,6 +68,36 @@ public class InfoAction
   private static final NumberFormat FMTI = new DecimalFormat("###,###", new DecimalFormatSymbols(Locale.ENGLISH));
 
   private static final NumberFormat FMTD = new DecimalFormat("###,##0.000", new DecimalFormatSymbols(Locale.ENGLISH));
+
+  private interface Messages
+    extends MessageBundle
+  {
+    @DefaultMessage("Shell")
+    String headerShell();
+
+    @DefaultMessage("Terminal")
+    String headerTerminal();
+
+    @DefaultMessage("JVM")
+    String headerJvm();
+
+    @DefaultMessage("Threads")
+    String headerThreads();
+
+    @DefaultMessage("Memory")
+    String headerMemory();
+
+    @DefaultMessage("Classes")
+    String headerClasses();
+
+    @DefaultMessage("Operating System")
+    String headerOs();
+
+    @DefaultMessage("License")
+    String headerLicense();
+  }
+
+  private static Messages messages = I18N.create(Messages.class);
 
   public enum Section
   {
@@ -87,14 +112,10 @@ public class InfoAction
   }
 
   @Preference
-  @Option(longName = "pager", optionalArg = true)
-  private boolean pager = false;
-
-  @Preference
-  @Argument
+  @Argument(description = "Display information about specific sections", token = "(section)*")
   private List<Section> sections;
 
-  @Option(name = "a", longName = "all")
+  @Option(name = "a", longName = "all", description = "Display all sections")
   private boolean all;
 
   public InfoAction() {
@@ -116,17 +137,17 @@ public class InfoAction
     }
 
     if (sections == null) {
-      sections = Collections.singletonList(SHELL);
+      sections = Collections.singletonList(Section.SHELL);
     }
 
     StringWriter buff = new StringWriter();
-    PrintWriter writer = new PrintWriter(new AnsiRenderWriter(buff));
+    PrintWriter writer = io.out;
 
-    // TODO: i18n all this
+    // TODO: i18n
     for (Section section : sections) {
       switch (section) {
         case SHELL:
-          printlnHeader(writer, "Shell");
+          printlnHeader(writer, messages.headerShell());
           println(writer, "Display Name", branding.getDisplayName());
           println(writer, "Program Name", branding.getProgramName());
           println(writer, "License", branding.getLicense());
@@ -140,11 +161,10 @@ public class InfoAction
           println(writer, "Profile Script", branding.getProfileScriptName());
           println(writer, "Interactive Script", branding.getInteractiveScriptName());
           println(writer, "History File", branding.getHistoryFileName());
-          println(writer, "ANSI", Ansi.isEnabled());
           break;
 
         case TERMINAL: {
-          printlnHeader(writer, "Terminal");
+          printlnHeader(writer, messages.headerTerminal());
           println(writer, "Name", io.terminal.getName());
           println(writer, "Type", io.terminal.getType());
           println(writer, "Echo", io.terminal.echo());
@@ -156,7 +176,7 @@ public class InfoAction
         }
 
         case JVM:
-          printlnHeader(writer, "JVM");
+          printlnHeader(writer, messages.headerJvm());
           println(writer, "Java Virtual Machine", runtime.getVmName() + " version " + runtime.getVmVersion());
           println(writer, "Vendor", runtime.getVmVendor());
           println(writer, "Uptime", printDuration(runtime.getUptime()));
@@ -171,7 +191,7 @@ public class InfoAction
           break;
 
         case THREADS:
-          printlnHeader(writer, "Threads");
+          printlnHeader(writer, messages.headerThreads());
           println(writer, "Live threads", Integer.toString(threads.getThreadCount()));
           println(writer, "Daemon threads", Integer.toString(threads.getDaemonThreadCount()));
           println(writer, "Peak", Integer.toString(threads.getPeakThreadCount()));
@@ -179,7 +199,7 @@ public class InfoAction
           break;
 
         case MEMORY:
-          printlnHeader(writer, "Memory");
+          printlnHeader(writer, messages.headerMemory());
           println(writer, "Current heap size", printSizeInKb(mem.getHeapMemoryUsage().getUsed()));
           println(writer, "Maximum heap size", printSizeInKb(mem.getHeapMemoryUsage().getMax()));
           println(writer, "Committed heap size", printSizeInKb(mem.getHeapMemoryUsage().getCommitted()));
@@ -192,14 +212,14 @@ public class InfoAction
           break;
 
         case CLASSES:
-          printlnHeader(writer, "Classes");
+          printlnHeader(writer, messages.headerClasses());
           println(writer, "Current classes loaded", printLong(cl.getLoadedClassCount()));
           println(writer, "Total classes loaded", printLong(cl.getTotalLoadedClassCount()));
           println(writer, "Total classes unloaded", printLong(cl.getUnloadedClassCount()));
           break;
 
         case OS:
-          printlnHeader(writer, "Operating system");
+          printlnHeader(writer, messages.headerOs());
           println(writer, "Name", os.getName() + " version " + os.getVersion());
           println(writer, "Architecture", os.getArch());
           println(writer, "Processors", Integer.toString(os.getAvailableProcessors()));
@@ -218,7 +238,7 @@ public class InfoAction
 
         case LICENSE:
           License lic = branding.getLicense();
-          printlnHeader(writer, "License");
+          printlnHeader(writer, messages.headerLicense());
           println(writer, "Name", lic.getName());
           println(writer, "URL", lic.getUrl());
           writer.println("----8<----");
@@ -230,18 +250,16 @@ public class InfoAction
 
     writer.flush();
 
-    if (pager) {
-      TerminalHelper.pageOutput(io.terminal, buff.toString());
-    }
-    else {
-      io.out.println(buff.toString());
-    }
+    // HACK: trip off any trailing whitespace
+    String info = CharMatcher.whitespace().trimTrailingFrom(buff.toString());
 
-    return Result.SUCCESS;
+    io.out.println(info);
+
+    return null;
   }
 
   private void printlnHeader(final PrintWriter writer, final String name) {
-    writer.println(ansi().a(INTENSITY_BOLD).fg(GREEN).a(name).reset());
+    writer.format("@|bold,green %s|@%n", name);
   }
 
   private long getSunOsValueAsLong(final OperatingSystemMXBean os, final String name) throws Exception {
@@ -265,8 +283,7 @@ public class InfoAction
     uptime /= 60;
     if (uptime < 60) {
       long minutes = (long) uptime;
-      String s = FMTI.format(minutes) + (minutes > 1 ? " minutes" : " minute");
-      return s;
+      return FMTI.format(minutes) + (minutes > 1 ? " minutes" : " minute");
     }
     uptime /= 60;
     if (uptime < 24) {
@@ -289,6 +306,6 @@ public class InfoAction
   }
 
   private void println(final PrintWriter writer, final String name, final Object value) {
-    writer.println(ansi().a("  ").a(INTENSITY_BOLD).a(name).reset().a(": ").a(value));
+    writer.format("  @|bold %s|@: %s%n", name, value);
   }
 }

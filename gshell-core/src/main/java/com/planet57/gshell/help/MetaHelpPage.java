@@ -16,10 +16,10 @@
 package com.planet57.gshell.help;
 
 import java.io.PrintWriter;
-import java.util.ResourceBundle;
 
-import com.planet57.gshell.command.CommandHelper;
+import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.shell.Shell;
+import com.planet57.gshell.variables.Variables;
 import org.codehaus.plexus.interpolation.AbstractValueSource;
 import org.codehaus.plexus.interpolation.Interpolator;
 import org.codehaus.plexus.interpolation.PrefixedObjectValueSource;
@@ -34,7 +34,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-public class MetaHelpPage
+public abstract class MetaHelpPage
     implements HelpPage
 {
   private final String name;
@@ -42,8 +42,6 @@ public class MetaHelpPage
   private final String resource;
 
   private final HelpContentLoader loader;
-
-  private ResourceBundle resources;
 
   public MetaHelpPage(final String name, final String resource, final HelpContentLoader loader) {
     this.name = checkNotNull(name);
@@ -57,27 +55,24 @@ public class MetaHelpPage
   }
 
   @Override
-  public String getDescription() {
-    if (resources == null) {
-      resources = ResourceBundle.getBundle(resource);
-    }
-
-    return resources.getString(CommandHelper.COMMAND_DESCRIPTION);
-  }
+  public abstract String getDescription();
 
   @Override
   public void render(final Shell shell, final PrintWriter out) throws Exception {
     checkNotNull(shell);
     checkNotNull(out);
 
+    final Branding branding = shell.getBranding();
+    final Variables variables = shell.getVariables();
+
     Interpolator interp = new StringSearchInterpolator("@{", "}");
     interp.addValueSource(new PrefixedObjectValueSource("command.", this));
-    interp.addValueSource(new PrefixedObjectValueSource("branding.", shell.getBranding()));
+    interp.addValueSource(new PrefixedObjectValueSource("branding.", branding));
     interp.addValueSource(new AbstractValueSource(false)
     {
       @Override
       public Object getValue(final String expression) {
-        return shell.getVariables().get(expression);
+        return variables.get(expression);
       }
     });
     interp.addValueSource(new PropertiesBasedValueSource(System.getProperties()));

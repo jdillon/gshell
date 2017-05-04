@@ -29,11 +29,11 @@ import javax.annotation.Nonnull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "sleep")
+@Command(name = "sleep", description = "Sleep for a period")
 public class SleepAction
     extends CommandActionSupport
 {
-  @Argument(required = true)
+  @Argument(required = true, description = "Time to sleep", token = "TIME")
   private Time time;
 
   @Override
@@ -47,6 +47,8 @@ public class SleepAction
 
     try {
       time.sleep();
+
+      log.debug("Awake now");
     }
     catch (InterruptedException e) {
       if (log.isTraceEnabled()) {
@@ -55,11 +57,9 @@ public class SleepAction
       else {
         log.debug("Sleep was interrupted");
       }
-      return Result.FAILURE;
+      return 1;
     }
 
-    log.debug("Awake now");
-
-    return Result.SUCCESS;
+    return null;
   }
 }

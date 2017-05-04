@@ -25,8 +25,8 @@ import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
+import org.apache.commons.io.FileUtils;
 import org.jline.reader.Completer;
-import org.codehaus.plexus.util.FileUtils;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -36,14 +36,14 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:olamy@apache.org">Olivier Lamy</a>
  * @since 2.6.3
  */
-@Command(name = "cp")
+@Command(name = "cp", description = "Copy files")
 public class CopyAction
     extends FileCommandActionSupport
 {
-  @Argument(required = true, index = 0)
+  @Argument(required = true, index = 0, description = "The path to the file or directory to copy", token = "SOURCE")
   private String source;
 
-  @Argument(required = true, index = 1)
+  @Argument(required = true, index = 1, description = "The path to the target file or directory", token = "TARGET")
   private String target;
 
   @Option(name = "r", longName = "recursive")
@@ -69,10 +69,10 @@ public class CopyAction
         targetFile.mkdirs();
       }
       if (recursive) {
-        FileUtils.copyDirectoryStructure(sourceFile, targetFile);
+        FileUtils.copyDirectory(sourceFile, targetFile);
       }
       else {
-        FileUtils.copyDirectory(sourceFile, targetFile);
+        throw new RuntimeException("--recursive not specified; omitting directory: " + sourceFile);
       }
     }
     else {
@@ -84,6 +84,6 @@ public class CopyAction
       }
     }
 
-    return Result.SUCCESS;
+    return null;
   }
 }

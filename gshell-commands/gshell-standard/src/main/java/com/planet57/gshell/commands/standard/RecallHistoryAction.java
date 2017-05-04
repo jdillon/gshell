@@ -17,12 +17,15 @@ package com.planet57.gshell.commands.standard;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
 import org.jline.reader.History;
+import com.planet57.gshell.util.i18n.I18N;
+import com.planet57.gshell.util.i18n.MessageBundle;
 
 import javax.annotation.Nonnull;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * Recall history.
@@ -30,23 +33,30 @@ import javax.annotation.Nonnull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Command(name = "recall")
+@Command(name = "recall", description = "Recall an item from history")
 public class RecallHistoryAction
     extends CommandActionSupport
 {
-  @Argument(required = true)
+  private interface Messages
+    extends MessageBundle
+  {
+    @DefaultMessage("No such history index: %d")
+    String missingIndex(int index);
+  }
+
+  private static final Messages messages = I18N.create(Messages.class);
+
+  /*
+  No such history index: %d
+   */
+  @Argument(required = true, description = "Index of item to recall.", token = "INDEX")
   private int index;
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    IO io = context.getIo();
     History history = context.getShell().getHistory();
 
-    if (index < 1 || index > history.size()) {
-      io.err.println(getMessages().format("error.no-such-index", index));
-      return Result.FAILURE;
-    }
-
+    checkArgument(index > 0 && index <= history.size(), messages.missingIndex(index));
     String element = history.get(index - 1);
     log.debug("Recalling from history: {}", element);
 

@@ -23,17 +23,18 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.google.common.base.Joiner;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
-import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.variables.Variables;
 import org.jline.reader.Completer;
+import com.planet57.gshell.util.i18n.I18N;
+import com.planet57.gshell.util.i18n.MessageBundle;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -42,34 +43,37 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Command(name = "set")
+@Command(name = "set", description = "Set a variable or property")
 public class SetAction
     extends CommandActionSupport
 {
+  private interface Messages
+    extends MessageBundle
+  {
+    @DefaultMessage("Missing required argument: %s")
+    String missingArgument(final String name);
+  }
+
+  private static final Messages messages = I18N.create(Messages.class);
+
   enum Mode
   {
     VARIABLE,
     PROPERTY
   }
 
-  @Option(name = "m", longName = "mode")
+  @Option(name = "m", longName = "mode", description = "Set mode", token = "MODE")
   private Mode mode = Mode.VARIABLE;
 
-  @Option(name = "v", longName = "verbose")
+  @Option(name = "v", longName = "verbose", description = "Enable verbose output")
   private boolean verbose;
 
-  /**
-   * @since 2.5.6
-   */
-  @Option(name = "e", longName = "evaluate")
-  private boolean evaluate;
-
   @Nullable
-  @Argument(index = 0)
+  @Argument(index = 0, description = "Variable or property name", token = "NAME")
   private String name;
 
   @Nullable
-  @Argument(index = 1)
+  @Argument(index = 1, description = "Variable or property value or expression to evaluate", token = "VALUE")
   private List<String> values;
 
   @Inject
@@ -81,27 +85,12 @@ public class SetAction
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    IO io = context.getIo();
-    MessageSource messages = getMessages();
-
     if (name == null) {
       return displayList(context);
     }
-    else if (values == null) {
-      io.err.println(getMessages().format("error.missing-arg", messages.getMessage("command.argument.values.token")));
-      return Result.FAILURE;
-    }
+    checkArgument(values != null, messages.missingArgument("VALUE"));
 
-    String value = Joiner.on(" ").join(values);
-
-    if (evaluate) {
-      Object result = context.getShell().execute(value);
-      if (result == null || result instanceof Result) {
-        io.err.println(messages.format("error.expression-did-not-return-a-value", value));
-        return Result.FAILURE;
-      }
-      value = result.toString();
-    }
+    String value = String.join(" ", values);
 
     switch (mode) {
       case PROPERTY:
@@ -116,7 +105,7 @@ public class SetAction
         break;
     }
 
-    return Result.SUCCESS;
+    return null;
   }
 
   private Object displayList(final CommandContext context) throws Exception {
@@ -156,6 +145,6 @@ public class SetAction
     // force RAW stream to flush
     io.streams.out.flush();
 
-    return Result.SUCCESS;
+    return null;
   }
 }

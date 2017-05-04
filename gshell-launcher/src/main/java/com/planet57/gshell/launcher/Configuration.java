@@ -17,7 +17,6 @@ package com.planet57.gshell.launcher;
 
 import javax.annotation.Nullable;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -71,14 +70,14 @@ public class Configuration
     URL defaults = getClass().getResource(DEFAULT_PROPERTIES);
     if (defaults == null) {
       // Should never happen
-      throw new Error("Missing resource: " + DEFAULT_PROPERTIES); // TODO: i18n
+      throw new RuntimeException("Missing resource: " + DEFAULT_PROPERTIES);
     }
     mergeProperties(props, defaults);
 
     URL bootstrap = getClass().getClassLoader().getResource(BOOTSTRAP_PROPERTIES);
     if (bootstrap == null) {
       // Happens when assembly forgets to install the bootstrap properties file
-      throw new Error("Missing resource: " + BOOTSTRAP_PROPERTIES); // TODO: i18n
+      throw new RuntimeException("Missing resource: " + BOOTSTRAP_PROPERTIES);
     }
     mergeProperties(props, bootstrap);
 
@@ -88,17 +87,8 @@ public class Configuration
   private void mergeProperties(final Properties props, final URL url) throws IOException {
     Log.debug("Merging properties from: ", url);
 
-    InputStream input = url.openStream();
-    try {
+    try (InputStream input = url.openStream()) {
       props.load(input);
-    }
-    finally {
-      try {
-        input.close();
-      }
-      catch (Exception e) {
-        // ignore
-      }
     }
   }
 
@@ -126,13 +116,11 @@ public class Configuration
     }
 
     requireProperty(SHELL_MAIN);
-    requireProperty(SHELL_PROGRAM);
-    requireProperty(SHELL_VERSION);
 
     // Export some configuration
     setSystemProperty(SHELL_HOME, getPropertyAsFile(SHELL_HOME).getAbsolutePath());
-    setSystemProperty(SHELL_PROGRAM, getProperty(SHELL_PROGRAM));
-    setSystemProperty(SHELL_VERSION, getProperty(SHELL_VERSION));
+    setSystemProperty(SHELL_PROGRAM, requireProperty(SHELL_PROGRAM));
+    setSystemProperty(SHELL_VERSION, requireProperty(SHELL_VERSION));
   }
 
   private void setSystemProperty(final String name, final String value) {
@@ -151,13 +139,15 @@ public class Configuration
   /**
    * Get the value of a property, checking system properties, then configuration properties and evaluating the result.
    */
+  @Nullable
   private String getProperty(final String name) {
     assert name != null;
     ensureConfigured();
     return evaluate(System.getProperty(name, props.getProperty(name)));
   }
 
-  private String evaluate(String input) {
+  @Nullable
+  private String evaluate(@Nullable String input) {
     if (input != null) {
       Matcher matcher = PATTERN.matcher(input);
 
@@ -173,25 +163,18 @@ public class Configuration
     return input;
   }
 
-  @Nullable
   private File getPropertyAsFile(final String name) {
-    String path = getProperty(name);
-    if (path != null) {
-      return new File(path).getAbsoluteFile();
-    }
-    return null;
+    String path = requireProperty(name);
+    return new File(path).getAbsoluteFile();
   }
 
-  private void requireProperty(final String name) {
+  private String requireProperty(final String name) {
     String value = getProperty(name);
     if (value == null) {
-      throw new Error("Missing required property: " + name); // TODO: i18n
+      throw new RuntimeException("Missing required property: " + name);
     }
+    return value;
   }
-
-  //
-  // TODO: Support loading classpath from properties file
-  //
 
   public List<URL> getClassPath() throws Exception {
     ensureConfigured();
@@ -203,18 +186,15 @@ public class Configuration
 
     Log.debug("Finding jars under: ", dir);
 
-    File[] files = dir.listFiles(new FileFilter()
-    {
-      public boolean accept(final File file) {
-        assert file != null;
-        String name = file.getName().toLowerCase();
-        return !name.equals(BOOTSTRAP_JAR) && file.isFile() && name.endsWith(".jar");
+    File[] files = dir.listFiles(file -> {
+      assert file != null;
+      String name = file.getName().toLowerCase();
+      return !name.equals(BOOTSTRAP_JAR) && file.isFile() && name.endsWith(".jar");
 
-      }
     });
 
     if (files == null) {
-      throw new Error("No jars found under: " + dir); // TODO: i18n
+      throw new RuntimeException("No jars found under: " + dir);
     }
 
     for (File file : files) {
@@ -225,7 +205,7 @@ public class Configuration
   }
 
   public String getMainClass() {
-    return getProperty(SHELL_MAIN);
+    return requireProperty(SHELL_MAIN);
   }
 
   public int getSuccessExitCode() {

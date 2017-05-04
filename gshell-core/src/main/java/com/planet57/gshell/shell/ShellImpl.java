@@ -16,11 +16,7 @@
 package com.planet57.gshell.shell;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -29,27 +25,45 @@ import javax.inject.Named;
 import com.google.common.base.Strings;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.branding.BrandingSupport;
+import com.planet57.gshell.command.CommandAction.ExitNotification;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.registry.CommandRegistrar;
-import com.planet57.gshell.console.Console;
-import com.planet57.gshell.console.ConsoleErrorHandler;
-import com.planet57.gshell.console.ConsolePrompt;
-import com.planet57.gshell.console.ConsoleTask;
 import com.planet57.gshell.event.EventManager;
-import com.planet57.gshell.execute.CommandExecutor;
-import com.planet57.gshell.execute.ExitNotification;
+import com.planet57.gshell.internal.CommandActionFunction;
+import com.planet57.gshell.internal.CommandProcessorImpl;
 import com.planet57.gshell.util.jline.LoggingCompleter;
+import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
+import org.apache.felix.gogo.jline.Builtin;
+import org.apache.felix.gogo.jline.Expander;
+import org.apache.felix.gogo.jline.Highlighter;
+import org.apache.felix.gogo.jline.ParsedLineImpl;
+import org.apache.felix.gogo.jline.Parser;
+import org.apache.felix.gogo.jline.Posix;
+import org.apache.felix.gogo.jline.Procedural;
+import org.apache.felix.gogo.runtime.Closure;
+import org.apache.felix.gogo.runtime.CommandSessionImpl;
+import org.apache.felix.service.command.CommandSession;
+import org.apache.felix.service.command.Job;
+import org.fusesource.jansi.AnsiRenderer;
 import org.jline.reader.Completer;
+import org.jline.reader.EndOfFileException;
 import org.jline.reader.History;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
+import org.jline.reader.ParsedLine;
 import org.jline.reader.impl.history.DefaultHistory;
+import org.jline.terminal.Terminal;
+import org.jline.terminal.Terminal.Signal;
+import org.jline.terminal.Terminal.SignalHandler;
+import org.jline.utils.InfoCmp;
 import org.sonatype.goodies.common.ComponentSupport;
 import org.sonatype.goodies.lifecycle.LifecycleManager;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
+import static com.planet57.gshell.variables.VariableNames.SHELL_PROMPT;
+import static com.planet57.gshell.variables.VariableNames.SHELL_RPROMPT;
 
 /**
  * Default {@link Shell} component.
@@ -64,53 +78,51 @@ public class ShellImpl
 {
   private final LifecycleManager lifecycles = new LifecycleManager();
 
-  private final Branding branding;
-
-  private final CommandExecutor executor;
-
-  private final IO io;
-
-  private final Variables variables;
-
-  private final History history;
+  private final CommandProcessorImpl commandProcessor;
 
   private final Completer completer;
 
-  private final ConsolePrompt prompt;
+  private final ShellErrorHandler errorHandler;
 
-  private final ConsoleErrorHandler errorHandler;
+  private final History history;
 
   private final ShellScriptLoader scriptLoader;
+
+  private IO io;
+
+  private Variables variables;
+
+  private Branding branding;
+
+  private CommandSessionImpl currentSession;
+
+  private LineReader lineReader;
 
   @Inject
   public ShellImpl(final EventManager events,
                    final CommandRegistrar commandRegistrar,
-                   final CommandExecutor executor,
-                   final Branding branding,
-                   @Named("main") final IO io,
-                   @Named("main") final Variables variables,
-                   @Named("shell") final Completer completer,
-                   final ConsolePrompt prompt,
-                   final ConsoleErrorHandler errorHandler)
-      throws IOException
+                   final CommandProcessorImpl commandProcessor,
+                   @Named("shell") final Completer completer)
   {
     checkNotNull(events);
-    this.executor = checkNotNull(executor);
     checkNotNull(commandRegistrar);
-    this.branding = checkNotNull(branding);
-    this.io = checkNotNull(io);
-    this.variables = checkNotNull(variables);
+    this.commandProcessor = checkNotNull(commandProcessor);
     this.completer = checkNotNull(completer);
-    this.prompt = checkNotNull(prompt);
-    this.errorHandler = checkNotNull(errorHandler);
+
+    this.errorHandler = new ShellErrorHandler();
+    this.history = new DefaultHistory();
+    this.scriptLoader = new ShellScriptLoader();
 
     lifecycles.add(events, commandRegistrar);
+  }
 
-    // HACK: exposed here as some commands needs reference to this
-    this.history = new DefaultHistory();
-
-    // FIXME: for now leave this as default non-configurable
-    this.scriptLoader = new ShellScriptLoader();
+  /**
+   * Initialize runtime state; must be called before {@link #start()}.
+   */
+  public void init(final IO io, final Variables variables, final Branding branding) {
+    this.io = checkNotNull(io);
+    this.variables = checkNotNull(variables);
+    this.branding = checkNotNull(branding);
   }
 
   // custom/simplified lifecycle so we can fire do-start and do-started
@@ -146,6 +158,10 @@ public class ShellImpl
   }
 
   private void doStart() throws Exception {
+    checkState(io != null);
+    checkState(variables != null);
+    checkState(branding != null);
+
     lifecycles.start();
 
     // apply any branding customization
@@ -153,10 +169,37 @@ public class ShellImpl
   }
 
   private void doStarted() throws Exception {
+    // HACK: register some gogo functions
+    commandProcessor.registerFunction(new Builtin(),
+      "jobs", "bg", "fg", "new", "type", "tac"
+    );
+    commandProcessor.registerFunction(new Posix(commandProcessor),
+      "cat", "wc", "grep", "head", "tail", "sort", "watch"
+    );
+    commandProcessor.registerFunction(new Procedural(),
+      "each", "if", "not", "throw", "try", "until", "while", "break", "continue"
+    );
+
+    CommandSessionImpl session = commandProcessor.createSession(io.streams.in, io.streams.out, io.streams.err);
+    session.put(CommandActionFunction.SHELL_VAR, this);
+    session.put(CommandActionFunction.TERMINAL_VAR, io.terminal);
+
+    // FIXME: copy variables to session; can't presently provide the underlying map; this breaks dynamic variable setting
+    session.getVariables().putAll(variables.asMap());
+
+    currentSession = session;
+
     scriptLoader.loadProfileScripts(this);
   }
 
   private void doStop() throws Exception {
+    if (currentSession != null) {
+      currentSession.close();
+      currentSession = null;
+    }
+
+    lineReader = null;
+
     lifecycles.stop();
   }
 
@@ -166,8 +209,8 @@ public class ShellImpl
   }
 
   @Override
-  public IO getIo() {
-    return io;
+  public Terminal getTerminal() {
+    return io.terminal;
   }
 
   @Override
@@ -183,82 +226,164 @@ public class ShellImpl
   @Override
   public Object execute(final CharSequence line) throws Exception {
     ensureStarted();
-    return executor.execute(this, String.valueOf(line));
+    checkNotNull(line);
+
+    CommandSessionImpl session = currentSession;
+
+    Object result = session.execute(line);
+    setLastResult(session, result);
+
+    // FIXME: copy session variables back to shell's variables
+    variables.asMap().clear();
+    variables.asMap().putAll(session.getVariables());
+
+    return result;
   }
 
   @Override
-  public Object execute(final CharSequence command, final Object[] args) throws Exception {
-    ensureStarted();
-    return executor.execute(this, String.valueOf(command), args);
-  }
-
-  @Override
-  public Object execute(final Object... args) throws Exception {
-    ensureStarted();
-    return executor.execute(this, args);
-  }
-
-  @Override
-  public void run(final Object... args) throws Exception {
-    checkNotNull(args);
+  public void run() throws Exception {
     ensureStarted();
 
-    log.debug("Starting interactive console; args: {}", Arrays.asList(args));
+    log.debug("Starting interactive console");
+
+    CommandSessionImpl session = currentSession;
 
     scriptLoader.loadInteractiveScripts(this);
 
-    // Setup 2 final refs to allow our executor to pass stuff back to us
-    final AtomicReference<ExitNotification> exitNotifHolder = new AtomicReference<>();
-
-    Callable<ConsoleTask> taskFactory = () -> new ConsoleTask() {
-      @Override
-      public boolean doExecute(final String input) throws Exception {
-        try {
-          // result is saved to LAST_RESULT via the CommandExecutor
-          ShellImpl.this.execute(input);
-        }
-        catch (ExitNotification n) {
-          exitNotifHolder.set(n);
-          return false;
-        }
-
-        return true;
-      }
-    };
-
     File historyFile = new File(branding.getUserContextDir(), branding.getHistoryFileName());
 
-    LineReader lineReader = LineReaderBuilder.builder()
-      .terminal(io.terminal)
+    Terminal terminal = io.terminal;
+
+    // HACK: testing adjustment to highlighter colors; pending letting users configure this via profile/rc
+    int maxColors = terminal.getNumericCapability(InfoCmp.Capability.max_colors);
+    if (maxColors >= 256) {
+      session.put("HIGHLIGHTER_COLORS","rs=35:st=32:nu=32:co=32:va=36:vn=36:fu=1;38;5;69:bf=1;38;5;197:re=90");
+    }
+    else {
+      session.put("HIGHLIGHTER_COLORS","rs=35:st=32:nu=32:co=32:va=36:vn=36:fu=94:bf=91:re=90");
+    }
+
+    lineReader = LineReaderBuilder.builder()
+      .appName(branding.getProgramName())
+      .terminal(terminal)
+      .parser(new Parser()) // install gogo-jline program accessible parser impl
+      .expander(new Expander(session))
       .completer(new LoggingCompleter(completer))
+      .highlighter(new Highlighter(session))
       .history(history)
+      .variables(session.getVariables())
       .variable(LineReader.HISTORY_FILE, historyFile)
       .build();
 
-    Console console = new Console(lineReader, prompt, taskFactory, errorHandler);
+    // automatically freshen line; this handles redrawing the line on CTRL-C
+    lineReader.setOpt(LineReader.Option.AUTO_FRESH_LINE);
 
-    renderWelcomeMessage(io);
+    renderMessage(io, branding.getWelcomeMessage());
 
-    // Check if there are args, and run them and then enter interactive
-    if (args.length != 0) {
-      execute(args);
+    // handle CTRL-C
+    SignalHandler interruptHandler = terminal.handle(Signal.INT, s -> {
+      Job current = session.foregroundJob();
+      if (current != null) {
+        log.debug("Interrupting task: {}", current);
+        current.interrupt();
+      }
+    });
+
+    // handle CTRL-Z
+    SignalHandler suspendHandler = terminal.handle(Signal.TSTP, s -> {
+      Job current = session.foregroundJob();
+      if (current != null) {
+        log.debug("Suspending task: {}", current);
+        current.suspend();
+      }
+    });
+
+    log.trace("Running");
+    boolean running = true;
+    try {
+      while (running) {
+        try {
+          String line = lineReader.readLine(prompt(session), rprompt(session), null, null);
+          if (log.isTraceEnabled()) {
+            traceLine(line);
+          }
+
+          ParsedLine parsedLine = lineReader.getParsedLine();
+          if (parsedLine == null) {
+            throw new EndOfFileException();
+          }
+
+          Object result = session.execute(((ParsedLineImpl) parsedLine).program());
+          setLastResult(session, result);
+
+          running = !(result instanceof ExitNotification);
+        }
+        catch (Exception e) {
+          log.trace("Work failed", e);
+          setLastResult(session, e);
+          running = errorHandler.handleError(io.err, e, variables.require(VariableNames.SHELL_ERRORS, Boolean.class, true));
+        }
+
+        // TODO: is this the best place for this?
+        waitForJobCompletion(session);
+
+        // TODO: investigate jline.Shell handling of UserInterruptException and EndOfFileException here
+
+        // FIXME: copy session variables back to shell's variables
+        variables.asMap().clear();
+        variables.asMap().putAll(session.getVariables());
+      }
+    }
+    finally {
+      terminal.handle(Signal.INT, interruptHandler);
+      terminal.handle(Signal.TSTP, suspendHandler);
+    }
+    log.trace("Stopped");
+
+    renderMessage(io, branding.getGoodbyeMessage());
+  }
+
+  @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
+  private void waitForJobCompletion(final CommandSessionImpl session) throws InterruptedException {
+    while (true) {
+      Job job = session.foregroundJob();
+      if (job != null) {
+        log.debug("Waiting for job completion: {}", job);
+        synchronized (job) {
+          if (job.status() == Job.Status.Foreground) {
+            job.wait();
+          }
+        }
+      }
+      else {
+        break;
+      }
+    }
+  }
+
+  private void traceLine(final String line) {
+    if (line.length() == 0 || !log.isTraceEnabled()) {
+      return;
     }
 
-    console.run();
+    StringBuilder hex = new StringBuilder();
+    StringBuilder idx = new StringBuilder();
 
-    renderGoodbyeMessage(io);
+    line.chars().forEach(ch -> {
+      hex.append('x').append(Integer.toHexString(ch)).append(' ');
+      idx.append(' ').append((char) ch).append("  ");
+    });
 
-    // If any exit notification occurred while running, then puke it up
-    ExitNotification n = exitNotifHolder.get();
-    if (n != null) {
-      throw n;
-    }
+    log.trace("Read line: {}\n{}\n{}", line, hex, idx);
+  }
+
+  private static void setLastResult(final CommandSession session, final Object result) {
+    session.put(VariableNames.LAST_RESULT, result);
   }
 
   private static void renderMessage(final IO io, @Nullable String message) {
     if (message != null) {
       // HACK: branding does not have easy access to Terminal; so allow a line to be rendered via replacement token
-      // FIXME: This could be done in Branding.customize(Shell)
       if (message.contains(BrandingSupport.LINE_TOKEN)) {
         message = message.replace(BrandingSupport.LINE_TOKEN, Strings.repeat("-", io.terminal.getWidth() - 1));
       }
@@ -267,11 +392,61 @@ public class ShellImpl
     }
   }
 
-  protected void renderWelcomeMessage(final IO io) {
-    renderMessage(io, branding.getWelcomeMessage());
+  //
+  // Prompts
+  //
+
+  @Nullable
+  private String expand(final CommandSessionImpl session, @Nullable final Object value) {
+    if (value != null) {
+      try {
+        Object result = org.apache.felix.gogo.runtime.Expander.expand(value.toString(), new Closure(session, null, null));
+        if (result != null) {
+          return result.toString();
+        }
+      }
+      catch (Exception e) {
+        log.warn("Failed to expand: {}", value, e);
+      }
+    }
+    return null;
   }
 
-  protected void renderGoodbyeMessage(final IO io) {
-    renderMessage(io, branding.getGoodbyeMessage());
+  private String prompt(final CommandSessionImpl session) {
+    Object value = session.get(SHELL_PROMPT);
+    if (value == null) {
+      value = branding.getPrompt();
+    }
+
+    String prompt = expand(session, value);
+
+    // fail-safe prompt
+    if (prompt == null) {
+      prompt = String.format("%s> ", branding.getProgramName());
+    }
+
+    // FIXME: may need to adjust ansi-renderer syntax or pre-render before expanding to avoid needing escapes
+    if (AnsiRenderer.test(prompt)) {
+      prompt = AnsiRenderer.render(prompt);
+    }
+
+    return prompt;
+  }
+
+  @Nullable
+  private String rprompt(final CommandSessionImpl session) {
+    Object value = session.get(SHELL_RPROMPT);
+    if (value == null) {
+      value = branding.getRightPrompt();
+    }
+
+    String prompt = expand(session, value);
+
+    // FIXME: may need to adjust ansi-renderer syntax or pre-render before expanding to avoid needing escapes
+    if (AnsiRenderer.test(prompt)) {
+      prompt = AnsiRenderer.render(prompt);
+    }
+
+    return prompt;
   }
 }

@@ -36,4 +36,9 @@ public class ShellNavigationHelpPage
   public ShellNavigationHelpPage(final HelpContentLoader loader) {
     super("shell-navigation", "com.planet57.gshell.commands.standard.help.shell-navigation", loader);
   }
+
+  @Override
+  public String getDescription() {
+    return "Shell navigation overview.";
+  }
 }

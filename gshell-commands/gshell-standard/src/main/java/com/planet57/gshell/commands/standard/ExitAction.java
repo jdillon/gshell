@@ -18,12 +18,9 @@ package com.planet57.gshell.commands.standard;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.CommandActionSupport;
-import com.planet57.gshell.execute.ExitNotification;
 import com.planet57.gshell.util.cli2.Argument;
 
 import javax.annotation.Nonnull;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Exit the current shell.
@@ -31,11 +28,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-@Command(name = "exit")
+@Command(name = "exit", description = "Exit the current shell")
 public class ExitAction
     extends CommandActionSupport
 {
-  @Argument
+  @Argument(description = "Exit code", token = "CODE")
   private int exitCode = 0;
 
   @Override
@@ -43,6 +40,6 @@ public class ExitAction
     log.debug("Exiting w/code: {}", exitCode);
 
     // Do not call System.exit(), ask the shell to exit instead.
-    throw new ExitNotification(exitCode);
+    return new ExitNotification(exitCode);
   }
 }

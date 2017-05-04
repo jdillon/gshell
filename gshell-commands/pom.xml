@@ -47,11 +47,9 @@
 
   <modules>
     <module>gshell-file</module>
-    <module>gshell-groovy</module>
-    <module>gshell-jetty</module>
     <module>gshell-logging</module>
-    <module>gshell-network</module>
     <module>gshell-pref</module>
+    <module>gshell-script</module>
     <module>gshell-shell</module>
     <module>gshell-standard</module>
   </modules>

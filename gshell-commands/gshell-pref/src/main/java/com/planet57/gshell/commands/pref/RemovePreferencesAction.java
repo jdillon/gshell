@@ -31,11 +31,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "pref/remove")
+@Command(name = "pref/remove", description = "Remove preferences")
 public class RemovePreferencesAction
     extends PreferenceNodeActionSupport
 {
-  @Option(name = "r", longName = "tree")
+  @Option(name = "r", longName = "tree", description = "Remove tree")
   private boolean tree;
 
   @Override
@@ -52,6 +52,6 @@ public class RemovePreferencesAction
       prefs.removeNode();
     }
 
-    return Result.SUCCESS;
+    return null;
   }
 }

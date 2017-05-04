@@ -23,9 +23,9 @@ import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.branding.BrandingSupport;
 import com.planet57.gshell.branding.License;
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.execute.ExitNotification;
 import com.planet57.gshell.internal.BeanContainer;
-import com.planet57.gshell.shell.ShellImpl;
+import com.planet57.gshell.shell.Shell;
+import com.planet57.gshell.shell.ShellBuilder;
 import com.planet57.gshell.util.io.PrintBuffer;
 import com.planet57.gshell.util.io.StreamSet;
 import com.planet57.gshell.variables.VariableNames;
@@ -47,8 +47,6 @@ import org.jline.terminal.TerminalBuilder;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.google.inject.name.Names.named;
 
 /**
  * Run shell.
@@ -160,23 +158,22 @@ public class RunMojo
 
     modules.add(binder -> {
       binder.bind(BeanContainer.class).toInstance(container);
-      binder.bind(Branding.class).toInstance(branding);
-      binder.bind(IO.class).annotatedWith(named("main")).toInstance(io);
-      binder.bind(Variables.class).annotatedWith(named("main")).toInstance(variables);
     });
 
     Injector injector = Guice.createInjector(new WireModule(modules));
     container.add(injector, 0);
 
-    ShellImpl shell = injector.getInstance(ShellImpl.class);
+    Shell shell = injector.getInstance(ShellBuilder.class)
+      .branding(branding)
+      .io(io)
+      .variables(variables)
+      .build();
+
     shell.start();
 
     // FIXME: allow more options
     try {
       shell.run();
-    }
-    catch (ExitNotification e) {
-      // ignore
     }
     finally {
       shell.stop();

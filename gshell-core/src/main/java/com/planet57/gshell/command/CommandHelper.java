@@ -15,14 +15,10 @@
  */
 package com.planet57.gshell.command;
 
-import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.util.cli2.CliProcessor;
 import com.planet57.gshell.util.cli2.Option;
-import com.planet57.gshell.util.i18n.AggregateMessageSource;
-import com.planet57.gshell.util.i18n.MessageSource;
-import com.planet57.gshell.util.i18n.PrefixingMessageSource;
-import com.planet57.gshell.util.i18n.ResourceBundleMessageSource;
-import com.planet57.gshell.util.pref.PreferenceProcessor;
+
+import javax.annotation.Nullable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -34,23 +30,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class CommandHelper
 {
-  public static final String COMMAND_DOT = "command.";
-
-  public static final String COMMAND_NAME = "command.name";
-
-  public static final String COMMAND_DESCRIPTION = "command.description";
-
-  @Option(name = "h", longName = "help", override = true)
+  @Option(name = "h", longName = "help", description = "Display usage", override = true)
   public boolean displayHelp;
-
-  private MessageSource messages;
-
-  private MessageSource getMessages() {
-    if (messages == null) {
-      messages = new ResourceBundleMessageSource(getClass());
-    }
-    return messages;
-  }
 
   /**
    * Construct a {@link CliProcessor} for given action.
@@ -62,31 +43,19 @@ public class CommandHelper
     clp.addBean(command);
     clp.addBean(this);
 
-    AggregateMessageSource messages = new AggregateMessageSource(command.getMessages(), this.getMessages());
-    clp.setMessages(new PrefixingMessageSource(messages, COMMAND_DOT));
-
     return clp;
   }
 
   /**
    * Get the description for a given action.
    */
-  public static String getDescription(final CommandAction command) {
-    checkNotNull(command);
-    return command.getMessages().getMessage(COMMAND_DESCRIPTION);
-  }
-
-  /**
-   * Create a {@link PreferenceProcessor} for given action.
-   */
-  public static PreferenceProcessor createPreferenceProcessor(final CommandAction command, final Branding branding) {
-    checkNotNull(command);
-    checkNotNull(branding);
-
-    PreferenceProcessor pp = new PreferenceProcessor();
-    pp.setBasePath(branding.getPreferencesBasePath());
-    pp.addBean(command);
-
-    return pp;
+  @Nullable
+  public static String getDescription(final CommandAction action) {
+    checkNotNull(action);
+    Command command = action.getClass().getAnnotation(Command.class);
+    if (command != null) {
+      return command.description();
+    }
+    return null;
   }
 }

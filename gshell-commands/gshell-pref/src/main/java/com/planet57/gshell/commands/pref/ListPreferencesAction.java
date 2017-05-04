@@ -24,24 +24,19 @@ import com.planet57.gshell.util.pref.Preferences;
 
 import javax.annotation.Nonnull;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-import static org.fusesource.jansi.Ansi.Attribute.INTENSITY_BOLD;
-import static org.fusesource.jansi.Ansi.Color.GREEN;
-import static org.fusesource.jansi.Ansi.ansi;
-
 /**
  * List preferences.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "pref/list")
+@Command(name = "pref/list", description = "List preferences")
 @Preferences(path = "commands/pref/list")
 public class ListPreferencesAction
     extends PreferenceNodeActionSupport
 {
   @Preference
-  @Option(name = "r", longName = "recursive")
+  @Option(name = "r", longName = "recursive", description = "Recursively list preferences")
   private boolean recursive;
 
   @Override
@@ -52,15 +47,16 @@ public class ListPreferencesAction
 
     node().sync();
 
-    return Result.SUCCESS;
+    return null;
   }
 
   private void list(final IO io, final java.util.prefs.Preferences node) throws Exception {
-    io.out.println(ansi().fg(GREEN).a(node.absolutePath()).reset());
+    io.out.format("@|green %s|@%n", node.absolutePath());
 
     for (String key : node.keys()) {
-      io.out.printf("  %s: %s%n", ansi().a(INTENSITY_BOLD).a(key).reset(), node.get(key, null));
+      io.out.format("  @|bold %s|@: %s%n", key, node.get(key, null));
     }
+
     if (recursive) {
       for (String name : node.childrenNames()) {
         list(io, node.node(name));

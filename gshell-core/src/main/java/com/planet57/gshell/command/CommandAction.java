@@ -15,11 +15,9 @@
  */
 package com.planet57.gshell.command;
 
-import com.planet57.gshell.util.i18n.MessageSource;
 import org.jline.reader.Completer;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 /**
  * Provides the user-action for a command.
@@ -34,8 +32,6 @@ public interface CommandAction
 
   String getSimpleName();
 
-  MessageSource getMessages();
-
   /**
    * Execute the command action.
    *
@@ -45,20 +41,21 @@ public interface CommandAction
    */
   Object execute(@Nonnull CommandContext context) throws Exception;
 
-  /**
-   * Enumeration for the basic return types of a command execution.
-   */
-  enum Result
+  // FIXME: Find a better name for this; to avoid confusion with Throwable Notification
+  class ExitNotification
   {
-    /**
-     * The command execution was successful.
-     */
-    SUCCESS, // 0
+    public final int code;
 
-    /**
-     * The command execution failed.
-     */
-    FAILURE // 1
+    public ExitNotification(final int code) {
+      this.code = code;
+    }
+
+    @Override
+    public String toString() {
+      return "ExitNotification{" +
+        "code=" + code +
+        '}';
+    }
   }
 
   /**

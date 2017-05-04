@@ -18,9 +18,9 @@ package com.planet57.gshell.util.cli2;
 import com.planet57.gshell.util.AnnotationDescriptor;
 import com.planet57.gshell.util.cli2.handler.Handler;
 import com.planet57.gshell.util.cli2.handler.Handlers;
-import com.planet57.gshell.util.i18n.MessageSource;
-import com.planet57.gshell.util.i18n.ResourceNotFoundException;
 import com.planet57.gshell.util.setter.Setter;
+
+import javax.annotation.Nullable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -41,8 +41,6 @@ public abstract class CliDescriptor
 
   private final String description;
 
-  //    private final String defaultValue;
-
   private final Class handlerType;
 
   private Handler handler;
@@ -53,27 +51,21 @@ public abstract class CliDescriptor
 
     if (spec instanceof Option) {
       Option opt = (Option) spec;
-      token = UNINITIALIZED_STRING.equals(opt.token()) ? null : opt.token();
+      token = opt.token();
       required = opt.required();
-      description = UNINITIALIZED_STRING.equals(opt.description()) ? null : opt.description();
-      //            defaultValue = UNINITIALIZED_STRING.equals(opt.defaultValue()) ? null : opt.defaultValue();
+      description = opt.description();
       handlerType = Handler.class == opt.handler() ? null : opt.handler();
     }
     else if (spec instanceof Argument) {
       Argument arg = (Argument) spec;
-      token = UNINITIALIZED_STRING.equals(arg.token()) ? null : arg.token();
+      token = arg.token();
       required = arg.required();
-      description = UNINITIALIZED_STRING.equals(arg.description()) ? null : arg.description();
-      //            defaultValue = UNINITIALIZED_STRING.equals(arg.defaultValue()) ? null : arg.defaultValue();
+      description = arg.description();
       handlerType = Handler.class == arg.handler() ? null : arg.handler();
     }
     else {
       throw new IllegalArgumentException("Invalid spec: " + spec);
     }
-  }
-
-  public String getId() {
-    return setter.getName();
   }
 
   public Setter getSetter() {
@@ -88,21 +80,19 @@ public abstract class CliDescriptor
     return setter.getBean().getClass();
   }
 
+  @Nullable
   public String getToken() {
-    return token;
+    return !UNINITIALIZED_STRING.equals(token) ? token : null;
   }
 
   public boolean isRequired() {
     return required;
   }
 
+  @Nullable
   public String getDescription() {
-    return description;
+    return !UNINITIALIZED_STRING.equals(description) ? description: null;
   }
-
-  //    public String getDefaultValue() {
-  //        return defaultValue;
-  //    }
 
   public Class getHandlerType() {
     return handlerType;
@@ -123,31 +113,12 @@ public abstract class CliDescriptor
     return this instanceof OptionDescriptor;
   }
 
-  public String getMessageCode() {
-    if (isArgument()) {
-      return String.format("argument.%s", getId());
-    }
-    else {
-      return String.format("option.%s", getId());
-    }
-  }
-
-  public String getTokenCode() {
-    if (isArgument()) {
-      return String.format("argument.%s.token", getId());
-    }
-    else {
-      return String.format("option.%s.token", getId());
-    }
-  }
-
   public abstract String getSyntax();
 
-  public String renderSyntax(final MessageSource messages) {
+  public String renderSyntax() {
     String str = isArgument() ? "" : getSyntax();
-    String token = renderToken(messages);
 
-    if (token != null) {
+    if (!UNINITIALIZED_STRING.equals(token)) {
       if (str.length() > 0) {
         str += " ";
       }
@@ -155,65 +126,5 @@ public abstract class CliDescriptor
     }
 
     return str;
-  }
-
-  public String renderToken(final MessageSource messages) {
-    // messages may be null
-
-    String token = getToken();
-
-    // If we have i18n messages for the command, then try to resolve the token further
-    if (messages != null) {
-      String code = token;
-
-      // If there is no coded, then generate one
-      if (code == null) {
-        code = getTokenCode();
-      }
-
-      // Resolve the text in the message source
-      try {
-        token = messages.getMessage(code);
-      }
-      catch (ResourceNotFoundException e) {
-        // Just use the code as the message
-      }
-    }
-
-    if (token == null) {
-      token = getHandler().getDefaultToken();
-    }
-
-    if (isOption() && ((OptionDescriptor) this).isArgumentOptional() || isArgument() && !isRequired()) {
-      return String.format("[%s]", token);
-    }
-
-    return token;
-  }
-
-  public String renderHelpText(final MessageSource messages) {
-    // messages may be null
-
-    String message = getDescription();
-
-    // If we have i18n messages for the command, then try to resolve the message further using the message as the code
-    if (messages != null) {
-      String code = message;
-
-      // If there is no code, then generate one
-      if (code == null) {
-        code = getMessageCode();
-      }
-
-      // Resolve the text in the message source
-      try {
-        message = messages.getMessage(code);
-      }
-      catch (ResourceNotFoundException e) {
-        // Just use the code as the message
-      }
-    }
-
-    return message;
   }
 }

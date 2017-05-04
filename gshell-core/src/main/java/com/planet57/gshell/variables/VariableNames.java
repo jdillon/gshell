@@ -35,6 +35,11 @@ public interface VariableNames
 
   String SHELL_PROMPT = "shell.prompt";
 
+  /**
+   * @since 3.0
+   */
+  String SHELL_RPROMPT = "shell.rprompt";
+
   String SHELL_ERRORS = "shell.errors";
 
   /**
@@ -47,5 +52,5 @@ public interface VariableNames
    */
   String SHELL_GROUP_PATH = "shell.group.path";
 
-  String LAST_RESULT = "_";
+  String LAST_RESULT = "shell.result";
 }

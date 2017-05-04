@@ -30,7 +30,7 @@ import com.planet57.gshell.util.io.FileAssert;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-@Command(name = "pwd")
+@Command(name = "pwd", description = "Displays the current directory")
 public class CurrentDirectoryAction
     extends FileCommandActionSupport
 {
@@ -43,6 +43,6 @@ public class CurrentDirectoryAction
 
     io.out.println(dir.getPath());
 
-    return Result.SUCCESS;
+    return null;
   }
 }

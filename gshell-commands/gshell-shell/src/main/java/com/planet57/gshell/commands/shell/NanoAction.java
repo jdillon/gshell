@@ -39,11 +39,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @since 3.0
  */
-@Command(name = "nano")
+@Command(name = "nano", description = "File editor")
 public class NanoAction
     extends CommandActionSupport
 {
-  @Argument(required = true)
+  @Argument(required = true, description = "One or more files to open for edit", token = "FILES")
   private List<String> files;
 
   @Inject
@@ -55,13 +55,12 @@ public class NanoAction
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     Variables variables = context.getVariables();
-    File currentDir = variables.get(VariableNames.SHELL_USER_DIR, File.class);
-    assert currentDir != null;
+    File currentDir = variables.require(VariableNames.SHELL_USER_DIR, File.class);
 
     Nano nano = new Nano(context.getIo().terminal, currentDir);
     nano.open(files);
     nano.run();
 
-    return Result.SUCCESS;
+    return null;
   }
 }

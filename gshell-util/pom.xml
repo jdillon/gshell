@@ -57,11 +57,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.fusesource.jansi</groupId>
-      <artifactId>jansi</artifactId>
-    </dependency>
-
-    <dependency>
       <groupId>org.jline</groupId>
       <artifactId>jline-reader</artifactId>
     </dependency>
@@ -69,6 +64,11 @@
     <dependency>
       <groupId>org.jline</groupId>
       <artifactId>jline-builtins</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.fusesource.jansi</groupId>
+      <artifactId>jansi</artifactId>
     </dependency>
 
     <dependency>
