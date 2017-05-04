@@ -62,10 +62,20 @@ public class CommandProcessorImpl
     this.resolver = checkNotNull(resolver);
   }
 
+  @Nullable
   @Override
-  protected Function getCommand(final String name, final Object path) {
+  protected Function getCommand(String name, @Nullable final Object path) {
     assert name != null;
-    // ignore path (ie. gogo scope)
+
+    // gogo commands resolve with "*:" syntax; if colon missing skip
+    int colon = name.indexOf(':');
+    if (colon < 0) {
+      return null;
+    }
+
+    // strip off colon for resolution of gshell commands
+    name = name.substring(colon + 1);
+    log.debug("Lookup command; name={}, path={}", name, path);
 
     CommandAction action = null;
     if (aliases.containsAlias(name)) {
