@@ -147,7 +147,7 @@ public class Configuration
   }
 
   @Nullable
-  private String evaluate(String input) {
+  private String evaluate(@Nullable String input) {
     if (input != null) {
       Matcher matcher = PATTERN.matcher(input);
 
