@@ -50,8 +50,6 @@ import org.jline.reader.impl.completer.EnumCompleter;
 
 import javax.annotation.Nonnull;
 
-import static com.planet57.gshell.commands.standard.InfoAction.Section.SHELL;
-
 //
 // Based on info command from Apache Felix
 //
@@ -139,7 +137,7 @@ public class InfoAction
     }
 
     if (sections == null) {
-      sections = Collections.singletonList(SHELL);
+      sections = Collections.singletonList(Section.SHELL);
     }
 
     StringWriter buff = new StringWriter();
