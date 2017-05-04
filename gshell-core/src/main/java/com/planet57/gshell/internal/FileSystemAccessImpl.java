@@ -69,6 +69,9 @@ public class FileSystemAccessImpl
   @Override
   public void setUserDir(final File dir) {
     variables.get().set(SHELL_USER_DIR, dir.getPath());
+
+    // HACK: adjust to user.dir; for better general compatibility may want to put on the shell.* versions of thsese?
+    System.setProperty("user.dir", dir.getPath());
   }
 
   @Override
