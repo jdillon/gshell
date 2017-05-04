@@ -32,6 +32,11 @@ public interface FileSystemAccess
 
   File getUserDir() throws IOException;
 
+  /**
+   * @since 3.0
+   */
+  void setUserDir(final File dir);
+
   File getUserHomeDir() throws IOException;
 
   File resolveFile(File baseDir, final String path) throws IOException;

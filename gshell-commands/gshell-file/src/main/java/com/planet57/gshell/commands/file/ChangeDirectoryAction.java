@@ -28,11 +28,9 @@ import com.planet57.gshell.command.IO;
 import com.planet57.gshell.util.io.FileAssert;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
-import com.planet57.gshell.variables.Variables;
 import org.jline.reader.Completer;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.planet57.gshell.variables.VariableNames.SHELL_USER_DIR;
 
 /**
  * Changes the current directory.
@@ -61,7 +59,6 @@ public class ChangeDirectoryAction
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
-    Variables vars = context.getVariables();
 
     File file;
     if (path == null) {
@@ -73,7 +70,8 @@ public class ChangeDirectoryAction
 
     new FileAssert(file).exists().isDirectory();
 
-    vars.set(SHELL_USER_DIR, file.getPath());
+    getFileSystem().setUserDir(file);
+
     if (verbose) {
       io.out.println(file.getPath());
     }

@@ -67,6 +67,11 @@ public class FileSystemAccessImpl
   }
 
   @Override
+  public void setUserDir(final File dir) {
+    variables.get().set(SHELL_USER_DIR, dir.getPath());
+  }
+
+  @Override
   public File getUserHomeDir() throws IOException {
     return resolveDir(SHELL_USER_HOME);
   }
