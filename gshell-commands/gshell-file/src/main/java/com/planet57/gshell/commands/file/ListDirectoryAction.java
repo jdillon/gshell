@@ -31,6 +31,7 @@ import com.planet57.gshell.command.IO;
 import com.planet57.gshell.util.io.FileAssert;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
+import com.planet57.gshell.util.io.FileSystemAccess;
 import com.planet57.gshell.util.io.PrintBuffer;
 import com.planet57.gshell.util.jline.TerminalHelper;
 import org.jline.reader.Completer;
@@ -69,13 +70,14 @@ public class ListDirectoryAction
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
+    FileSystemAccess fs = getFileSystem();
 
-    File file = getFileSystem().resolveFile(path);
+    File file = fs.resolveFile(path);
 
     new FileAssert(file).exists();
 
     if (file.isDirectory()) {
-      listChildren(io, file);
+      listChildren(fs, io, file);
     }
     else {
       io.out.println(file.getPath());
@@ -84,7 +86,7 @@ public class ListDirectoryAction
     return null;
   }
 
-  private void listChildren(final IO io, final File dir) throws Exception {
+  private void listChildren(final FileSystemAccess fs, final IO io, final File dir) throws Exception {
     File[] files;
 
     if (includeHidden) {
@@ -102,7 +104,7 @@ public class ListDirectoryAction
     List<File> dirs = new LinkedList<>();
 
     for (File file : files) {
-      if (getFileSystem().hasChildren(file)) {
+      if (fs.hasChildren(file)) {
         if (recursive) {
           dirs.add(file);
         }
@@ -115,19 +117,20 @@ public class ListDirectoryAction
       for (CharSequence name : names) {
         io.out.println(name);
       }
-    } else {
+    }
+    else {
       TerminalHelper.printColumns(io.terminal, io.out, names.stream(), true);
     }
 
     if (!dirs.isEmpty()) {
       for (File subDir : dirs) {
         io.out.format("%n%s:", subDir.getName());
-        listChildren(io, subDir);
+        listChildren(fs, io, subDir);
       }
     }
   }
 
-  private String render(final File file) {
+  private static String render(final File file) {
     String name = file.getName();
 
     PrintBuffer buff = new PrintBuffer();

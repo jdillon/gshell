@@ -25,6 +25,7 @@ import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
+import com.planet57.gshell.util.io.FileSystemAccess;
 import org.jline.reader.Completer;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -57,17 +58,18 @@ public class CopyAction
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    File sourceFile = getFileSystem().resolveFile(source);
-    File targetFile = getFileSystem().resolveFile(target);
+    FileSystemAccess fs = getFileSystem();
+    File sourceFile = fs.resolveFile(source);
+    File targetFile = fs.resolveFile(target);
 
     if (sourceFile.isDirectory()) {
       // for cp -r /tmp/foo /home : we must create first the directory /home/foo
       targetFile = new File(targetFile, sourceFile.getName());
       if (!targetFile.exists()) {
-        getFileSystem().mkdir(targetFile);
+        fs.mkdir(targetFile);
       }
       if (recursive) {
-        getFileSystem().copyDirectory(sourceFile, targetFile);
+        fs.copyDirectory(sourceFile, targetFile);
       }
       else {
         throw new RuntimeException("--recursive not specified; omitting directory: " + sourceFile);
@@ -75,10 +77,10 @@ public class CopyAction
     }
     else {
       if (targetFile.isDirectory()) {
-        getFileSystem().copyToDirectory(sourceFile, targetFile);
+        fs.copyToDirectory(sourceFile, targetFile);
       }
       else {
-        getFileSystem().copyFile(sourceFile, targetFile);
+        fs.copyFile(sourceFile, targetFile);
       }
     }
 

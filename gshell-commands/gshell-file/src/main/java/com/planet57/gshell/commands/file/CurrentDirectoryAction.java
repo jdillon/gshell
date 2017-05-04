@@ -23,6 +23,7 @@ import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.util.io.FileAssert;
+import com.planet57.gshell.util.io.FileSystemAccess;
 
 /**
  * Displays the current directory.
@@ -36,12 +37,11 @@ public class CurrentDirectoryAction
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
+    FileSystemAccess fs = getFileSystem();
 
-    File dir = getFileSystem().getUserDir();
+    File dir = fs.getUserDir();
     new FileAssert(dir).exists().isDirectory();
-
     io.out.println(dir.getPath());
-
     return null;
   }
 }

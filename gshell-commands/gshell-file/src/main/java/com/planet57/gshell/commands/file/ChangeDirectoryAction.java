@@ -28,6 +28,7 @@ import com.planet57.gshell.command.IO;
 import com.planet57.gshell.util.io.FileAssert;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
+import com.planet57.gshell.util.io.FileSystemAccess;
 import org.jline.reader.Completer;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -58,17 +59,18 @@ public class ChangeDirectoryAction
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
+    FileSystemAccess fs = getFileSystem();
 
     File file;
     if (path == null) {
-      file = getFileSystem().getUserHomeDir();
+      file = fs.getUserHomeDir();
     }
     else {
-      file = getFileSystem().resolveFile(path);
+      file = fs.resolveFile(path);
     }
 
     new FileAssert(file).exists().isDirectory();
-    getFileSystem().setUserDir(file);
+    fs.setUserDir(file);
     if (verbose) {
       io.out.println(file.getPath());
     }

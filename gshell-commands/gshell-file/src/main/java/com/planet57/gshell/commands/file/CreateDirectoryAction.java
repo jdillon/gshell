@@ -25,6 +25,7 @@ import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.util.io.FileAssert;
 import com.planet57.gshell.util.cli2.Argument;
+import com.planet57.gshell.util.io.FileSystemAccess;
 import org.jline.reader.Completer;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -50,9 +51,10 @@ public class CreateDirectoryAction
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    File file = getFileSystem().resolveFile(path);
+    FileSystemAccess fs = getFileSystem();
+    File file = fs.resolveFile(path);
     new FileAssert(file).exists(false).isFile(false);
-    getFileSystem().mkdir(file);
+    fs.mkdir(file);
     return null;
   }
 }

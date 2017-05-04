@@ -26,6 +26,7 @@ import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.io.FileAssert;
 import com.planet57.gshell.util.cli2.Argument;
+import com.planet57.gshell.util.io.FileSystemAccess;
 import org.jline.reader.Completer;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -57,19 +58,20 @@ public class DeleteFileAction
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    File file = getFileSystem().resolveFile(path);
+    FileSystemAccess fs = getFileSystem();
+    File file = fs.resolveFile(path);
 
     new FileAssert(file).exists();
 
     if (recursive) {
       log.debug("Deleting directory: {}", file);
       new FileAssert((file)).isDirectory();
-      getFileSystem().deleteDirectory(file);
+      fs.deleteDirectory(file);
     }
     else {
       log.debug("Deleting file: {}", file);
       new FileAssert(file).isFile();
-      getFileSystem().deleteFile(file);
+      fs.deleteFile(file);
     }
 
     return null;
