@@ -14,50 +14,50 @@
 # limitations under the License.
 #
 
-    Variables can be referenced using ${variable} syntax.
+Variables can be referenced using ${variable} syntax.
 
 @|bold QUOTING|@
 
-    Single quotes are opaque.
+  Single quotes are opaque.
 
-    Example:
+  Example:
 
-        set foo bar
-        echo '${foo}'
+    set foo bar
+    echo '${foo}'
 
-    Result:
+  Result:
 
-        ${foo}
+    ${foo}
 
-    Double quotes are evaluated using variable expansion.
+  Double quotes are evaluated using variable expansion.
 
-    Example:
+  Example:
 
-        set foo bar
-        echo "${foo}"
+    set foo bar
+    echo "${foo}"
 
-    Result:
+  Result:
 
-        bar
+    bar
 
-    Single or double quotes may be escaped with a preceding '\' char.
+  Single or double quotes may be escaped with a preceding '\' char.
 
 @|bold COMMENTS|@
 
-    A line that begins with '#' is considered to be a comment; all
-    content until a new-line is ignored.
+  A line that begins with '#' is considered to be a comment; all
+  content until a new-line is ignored.
 
 @|bold COMPOUND COMMANDS|@
 
-    Multiple commands can be executed on the same line by separating each
-    command (and it's options and arguments) with ';':
+  Multiple commands can be executed on the same line by separating each
+  command (and it's options and arguments) with ';':
 
-        command; [command; ...]
+    command; [command; ...]
 
-    Example:
+  Example:
 
-        echo -n "hi"; echo " there"
+    echo -n "hi"; echo " there"
 
-    Result:
+  Result:
 
-        hi there
+    hi there
