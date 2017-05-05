@@ -18,6 +18,9 @@ package com.planet57.gshell.commands.standard
 import com.planet57.gshell.testharness.CommandTestSupport
 import org.junit.Test
 
+import static org.hamcrest.Matchers.is
+import static org.junit.Assert.assertThat
+
 /**
  * Tests for {@link EchoAction}.
  */
@@ -29,6 +32,10 @@ class EchoActionTest
   }
 
   private static final String NEWLINE = System.getProperty('line.separator')
+
+  private void assertOutputEquals(final String expected) {
+    assertThat(io.outputString, is(expected));
+  }
 
   @Test
   void 'echo a b c'() {

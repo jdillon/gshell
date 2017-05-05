@@ -237,18 +237,6 @@ public abstract class CommandTestSupport
   }
 
   //
-  // Assertion helpers
-  //
-
-  protected void assertOutputEquals(final String expected) {
-    assertThat(getIo().getOutputString(), is(expected));
-  }
-
-  protected void assertErrorOutputEquals(final String expected) {
-    assertThat(getIo().getErrorString(), is(expected));
-  }
-
-  //
   // Default tests for all commands
   //
 
