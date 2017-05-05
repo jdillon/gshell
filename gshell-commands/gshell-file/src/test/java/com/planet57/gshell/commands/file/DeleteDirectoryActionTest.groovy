@@ -26,4 +26,6 @@ class DeleteDirectoryActionTest
   DeleteDirectoryActionTest() {
     super(DeleteDirectoryAction.class)
   }
+
+  // FIXME: add tests
 }

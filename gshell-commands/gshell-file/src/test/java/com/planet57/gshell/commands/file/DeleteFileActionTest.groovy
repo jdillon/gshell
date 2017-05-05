@@ -26,4 +26,6 @@ class DeleteFileActionTest
   DeleteFileActionTest() {
     super(DeleteFileAction.class)
   }
+
+  // FIXME: add tests
 }

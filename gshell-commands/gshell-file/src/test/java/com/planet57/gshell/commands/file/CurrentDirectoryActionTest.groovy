@@ -26,4 +26,6 @@ class CurrentDirectoryActionTest
   CurrentDirectoryActionTest() {
     super(CurrentDirectoryAction.class)
   }
+
+  // FIXME: add tests
 }
