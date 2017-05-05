@@ -282,6 +282,13 @@
         <groupId>org.apache.felix</groupId>
         <artifactId>org.apache.felix.gogo.jline</artifactId>
         <version>${felix-gogo.version}</version>
+        <exclusions>
+          <!-- exclude jline uber-jar; we pull in whats needed -->
+          <exclusion>
+            <groupId>org.jline</groupId>
+            <artifactId>jline</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
 
       <dependency>
