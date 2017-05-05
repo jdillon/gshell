@@ -26,15 +26,14 @@ import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
+import com.planet57.gshell.util.i18n.I18N;
+import com.planet57.gshell.util.i18n.MessageBundle;
 import com.planet57.gshell.util.io.Closeables;
 import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.Preferences;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Export preference nodes to a file.
  *
@@ -46,6 +45,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class ExportPreferencesAction
     extends PreferenceNodeActionSupport
 {
+  private interface Messages
+    extends MessageBundle
+  {
+    @DefaultMessage("Exporting preferences to: %s")
+    String exportingTo(File file);
+  }
+
+  private static final Messages messages = I18N.create(Messages.class);
+
   @Preference
   @Option(name = "t", longName = "subtree", description = "Include sub-tree preferences")
   private boolean subTree;
@@ -64,7 +72,7 @@ public class ExportPreferencesAction
       out = io.streams.out;
     }
     else {
-      io.out.printf("Exporting preferences to: %s%n", file); // TODO: i18n
+      io.out.println(messages.exportingTo(file));
       out = new BufferedOutputStream(new FileOutputStream(file));
     }
 

@@ -42,11 +42,8 @@ public class ListPreferencesAction
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
-
     list(io, node());
-
     node().sync();
-
     return null;
   }
 

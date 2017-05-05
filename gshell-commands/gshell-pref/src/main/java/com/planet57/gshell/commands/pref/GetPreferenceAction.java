@@ -42,7 +42,6 @@ public class GetPreferenceAction
     IO io = context.getIo();
 
     log.debug("Getting preference: {}", key);
-
     Object value = node().get(key, null);
     io.out.println(value);
 
