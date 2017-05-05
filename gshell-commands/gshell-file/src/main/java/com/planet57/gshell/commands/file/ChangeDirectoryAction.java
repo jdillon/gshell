@@ -72,7 +72,7 @@ public class ChangeDirectoryAction
     new FileAssert(file).exists().isDirectory();
     fs.setUserDir(file);
     if (verbose) {
-      io.out.println(file.getPath());
+      io.println(file.getPath());
     }
 
     return null;

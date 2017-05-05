@@ -62,7 +62,7 @@ public class LoggerListAction
         LoggerComponent logger = getLogging().getLogger(name);
         if (all || logger.getLevel() != null &&
             (levelQuery == null || logger.getLevel().toString().contains(levelQuery.toUpperCase()))) {
-          io.out.printf("%s: %s%n", logger.getName(), logger.getLevel());
+          io.format("%s: %s%n", logger.getName(), logger.getLevel());
         }
       }
     }

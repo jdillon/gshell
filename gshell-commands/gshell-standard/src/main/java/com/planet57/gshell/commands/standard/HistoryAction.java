@@ -108,6 +108,6 @@ public class HistoryAction
     buff.style(AttributedStyle.DEFAULT);
     buff.append("  ").append(entry.line());
 
-    io.out.println(buff.toAnsi(io.terminal));
+    io.println(buff.toAnsi(io.terminal));
   }
 }

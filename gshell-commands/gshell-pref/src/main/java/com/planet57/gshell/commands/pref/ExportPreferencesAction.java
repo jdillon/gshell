@@ -72,7 +72,7 @@ public class ExportPreferencesAction
       out = io.streams.out;
     }
     else {
-      io.out.println(messages.exportingTo(file));
+      io.println(messages.exportingTo(file));
       out = new BufferedOutputStream(new FileOutputStream(file));
     }
 

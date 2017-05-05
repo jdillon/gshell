@@ -37,7 +37,7 @@ public class LoggerLevelsAction
     IO io = context.getIo();
 
     for (LevelComponent level : getLogging().getLevels()) {
-      io.out.println(level);
+      io.println(level);
     }
 
     return null;

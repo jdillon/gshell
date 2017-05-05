@@ -80,7 +80,7 @@ public class ListDirectoryAction
       listChildren(fs, io, file);
     }
     else {
-      io.out.println(file.getPath());
+      io.println(file.getPath());
     }
 
     return null;
@@ -115,7 +115,7 @@ public class ListDirectoryAction
 
     if (longList) {
       for (CharSequence name : names) {
-        io.out.println(name);
+        io.println(name);
       }
     }
     else {
@@ -124,7 +124,7 @@ public class ListDirectoryAction
 
     if (!dirs.isEmpty()) {
       for (File subDir : dirs) {
-        io.out.format("%n%s:", subDir.getName());
+        io.format("%n%s:", subDir.getName());
         listChildren(fs, io, subDir);
       }
     }

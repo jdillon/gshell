@@ -41,7 +41,7 @@ public class CurrentDirectoryAction
 
     File dir = fs.getUserDir();
     new FileAssert(dir).exists().isDirectory();
-    io.out.println(dir.getPath());
+    io.println(dir.getPath());
     return null;
   }
 }

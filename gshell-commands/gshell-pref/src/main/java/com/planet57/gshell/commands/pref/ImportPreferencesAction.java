@@ -55,7 +55,7 @@ public class ImportPreferencesAction
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
-    io.out.println(messages.importingFrom(source));
+    io.println(messages.importingFrom(source));
 
     try (InputStream in = new BufferedInputStream(new FileInputStream(source))) {
       Preferences.importPreferences(in);

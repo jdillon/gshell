@@ -189,7 +189,7 @@ public abstract class MainSupport
     }
 
     if (version) {
-      io.out.format("%s %s%n", branding.getDisplayName(), branding.getVersion());
+      io.format("%s %s%n", branding.getDisplayName(), branding.getVersion());
       io.flush();
       exit(0);
     }
