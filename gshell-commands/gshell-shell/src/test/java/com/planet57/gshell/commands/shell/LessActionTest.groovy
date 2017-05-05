@@ -26,4 +26,6 @@ class LessActionTest
   LessActionTest() {
     super(LessAction.class)
   }
+
+  // FIXME: add tests
 }

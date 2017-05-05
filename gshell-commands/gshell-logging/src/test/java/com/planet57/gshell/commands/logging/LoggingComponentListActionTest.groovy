@@ -26,4 +26,6 @@ class LoggingComponentListActionTest
   LoggingComponentListActionTest() {
     super(LoggingComponentListAction.class)
   }
+
+  // FIXME: add tests
 }

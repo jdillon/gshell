@@ -26,4 +26,6 @@ class ExportPreferencesActionTest
   ExportPreferencesActionTest() {
     super(ExportPreferencesAction.class)
   }
+
+  // FIXME: add tests
 }

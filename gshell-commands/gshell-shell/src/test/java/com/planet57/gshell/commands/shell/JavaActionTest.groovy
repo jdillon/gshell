@@ -26,4 +26,6 @@ class JavaActionTest
   JavaActionTest() {
     super(JavaAction.class)
   }
+
+  // FIXME: add tests
 }

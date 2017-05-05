@@ -26,4 +26,6 @@ class ImportPreferencesActionTest
   ImportPreferencesActionTest() {
     super(ImportPreferencesAction.class)
   }
+
+  // FIXME: add tests
 }

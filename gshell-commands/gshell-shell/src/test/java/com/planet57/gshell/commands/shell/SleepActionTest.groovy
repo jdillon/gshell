@@ -30,6 +30,6 @@ class SleepActionTest
 
   @Test
   void testDefault() {
-    executeCommand('1ms')
+    assert executeCommand('1ms') == null
   }
 }

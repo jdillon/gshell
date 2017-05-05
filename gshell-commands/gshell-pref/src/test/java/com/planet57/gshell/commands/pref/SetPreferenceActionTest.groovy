@@ -26,4 +26,6 @@ class SetPreferenceActionTest
   SetPreferenceActionTest() {
     super(SetPreferenceAction.class)
   }
+
+  // FIXME: add tests
 }

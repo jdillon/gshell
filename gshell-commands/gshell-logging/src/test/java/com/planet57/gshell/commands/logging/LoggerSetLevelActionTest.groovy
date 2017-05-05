@@ -26,4 +26,6 @@ class LoggerSetLevelActionTest
   LoggerSetLevelActionTest() {
     super(LoggerSetLevelAction.class)
   }
+
+  // FIXME: add tests
 }

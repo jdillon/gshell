@@ -26,4 +26,6 @@ class LoggerListActionTest
   LoggerListActionTest() {
     super(LoggerListAction.class)
   }
+
+  // FIXME: add tests
 }

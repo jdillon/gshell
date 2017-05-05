@@ -26,4 +26,6 @@ class HostnameActionTest
   HostnameActionTest() {
     super(HostnameAction.class)
   }
+
+  // FIXME: add tests
 }

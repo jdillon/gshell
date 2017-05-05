@@ -26,4 +26,6 @@ class UnsetPreferenceActionTest
   UnsetPreferenceActionTest() {
     super(UnsetPreferenceAction.class)
   }
+
+  // FIXME: add tests
 }

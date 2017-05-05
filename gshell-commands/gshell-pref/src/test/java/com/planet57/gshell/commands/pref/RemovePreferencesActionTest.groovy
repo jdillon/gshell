@@ -26,4 +26,6 @@ class RemovePreferencesActionTest
   RemovePreferencesActionTest() {
     super(RemovePreferencesAction.class)
   }
+
+  // FIXME: add tests
 }

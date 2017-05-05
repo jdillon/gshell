@@ -26,4 +26,6 @@ class ListPreferencesActionTest
   ListPreferencesActionTest() {
     super(ListPreferencesAction.class)
   }
+
+  // FIXME: add tests
 }
