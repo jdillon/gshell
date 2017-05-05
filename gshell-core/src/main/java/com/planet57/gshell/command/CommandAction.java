@@ -16,6 +16,7 @@
 package com.planet57.gshell.command;
 
 import org.jline.reader.Completer;
+import org.sonatype.goodies.common.Notification;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -48,8 +49,8 @@ public interface CommandAction
    */
   Object execute(@Nonnull CommandContext context) throws Exception;
 
-  // FIXME: Find a better name for this; to avoid confusion with Throwable Notification
   class ExitNotification
+    extends Notification
   {
     public final int code;
 

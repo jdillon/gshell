@@ -137,7 +137,7 @@ public class CommandRegistrarImpl
 
   @SuppressWarnings({"unchecked"})
   private CommandAction createAction(final Class<?> type) throws ClassNotFoundException {
-    Iterator<BeanEntry<Annotation, ?>> iter = container.locate(Key.get((Class) type)).iterator();
+    Iterator<BeanEntry<Annotation, ?>> iter = container.locate((Class)type).iterator();
     if (iter.hasNext()) {
       return (CommandAction) iter.next().getValue();
     }

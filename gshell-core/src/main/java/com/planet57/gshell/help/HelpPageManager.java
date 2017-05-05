@@ -15,6 +15,8 @@
  */
 package com.planet57.gshell.help;
 
+import org.sonatype.goodies.lifecycle.Lifecycle;
+
 import java.util.Collection;
 import java.util.function.Predicate;
 
@@ -25,6 +27,7 @@ import java.util.function.Predicate;
  * @since 2.5
  */
 public interface HelpPageManager
+  extends Lifecycle
 {
   HelpPage getPage(String name);
 

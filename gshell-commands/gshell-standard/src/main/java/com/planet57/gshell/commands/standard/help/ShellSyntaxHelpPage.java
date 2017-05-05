@@ -39,6 +39,6 @@ public class ShellSyntaxHelpPage
 
   @Override
   public String getDescription() {
-    return "Shell syntax overview.";
+    return "Shell syntax overview";
   }
 }

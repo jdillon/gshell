@@ -28,6 +28,7 @@ import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.registry.CommandRegistrarImpl;
 import com.planet57.gshell.command.registry.CommandRegistry;
+import com.planet57.gshell.help.HelpPageManagerImpl;
 import com.planet57.gshell.internal.BeanContainer;
 import com.planet57.gshell.logging.logback.TargetConsoleAppender;
 import com.planet57.gshell.shell.Shell;
@@ -138,11 +139,13 @@ public abstract class CommandTestSupport
     variables = shell.getVariables();
     commandRegistry = injector.getInstance(CommandRegistry.class);
 
-    // TODO: disable meta-page discovery, and any other discovery?
-
     // disable default command discovery
     CommandRegistrarImpl registrar = injector.getInstance(CommandRegistrarImpl.class);
     registrar.setDiscoveryEnabled(false);
+
+    // disable default help-page discovery
+    HelpPageManagerImpl helpPageManager = injector.getInstance(HelpPageManagerImpl.class);
+    helpPageManager.setDiscoveryEnabled(false);
 
     // force logging to resolve to specific stream and not re-resolve System.out
     TargetConsoleAppender.setTarget(System.out);
