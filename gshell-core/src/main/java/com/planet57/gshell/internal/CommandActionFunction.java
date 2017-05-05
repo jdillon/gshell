@@ -18,6 +18,7 @@ package com.planet57.gshell.internal;
 import com.google.common.base.Stopwatch;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.command.CommandAction;
+import com.planet57.gshell.command.CommandAction.Prototype;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.CommandHelper;
 import com.planet57.gshell.command.IO;
@@ -57,7 +58,15 @@ public class CommandActionFunction
   private final CommandAction action;
 
   public CommandActionFunction(final CommandAction action) {
-    this.action = checkNotNull(action);
+    checkNotNull(action);
+
+    // create copies for actions that implement prototype pattern
+    if (action instanceof Prototype) {
+      this.action = ((Prototype) action).create();
+    }
+    else {
+      this.action = action;
+    }
   }
 
   @Override

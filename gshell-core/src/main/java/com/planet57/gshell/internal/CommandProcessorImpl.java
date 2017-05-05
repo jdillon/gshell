@@ -84,19 +84,21 @@ public class CommandProcessorImpl
 
   @Nullable
   private CommandAction lookupAction(final String name) {
-    log.debug("Lookup action: {}");
+    log.debug("Lookup action: {}", name);
 
     CommandAction action = null;
-    if (aliases.containsAlias(name)) {
-      try {
-        action = new ExecuteAliasAction(name, aliases.getAlias(name));
-      }
-      catch (NoSuchAliasException e) {
-        // should never happen
-        throw new Error();
-      }
+
+    // first attempt to resolve alias
+    try {
+      String target = aliases.getAlias(name);
+      action = new ExecuteAliasAction(name, target);
     }
-    else {
+    catch (NoSuchAliasException e) {
+      // ignore
+    }
+
+    // then attempt to resolve node
+    if (action == null) {
       Node node = resolver.resolve(name);
       if (node != null) {
         action = node.getAction();
