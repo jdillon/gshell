@@ -22,8 +22,6 @@ import com.planet57.gshell.variables.Variables
 import org.jline.reader.History
 import org.junit.Test
 
-import static org.junit.Assert.fail
-
 /**
  * Tests for {@link RecallHistoryAction}.
  */

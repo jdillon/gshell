@@ -38,54 +38,40 @@ class AliasActionTest
   void 'define alias'() {
     assert !aliasRegistry.containsAlias('foo')
 
-    Object result = executeCommand('foo bar')
-    assert result == null
+    assert executeCommand('foo bar') == null
 
     assert aliasRegistry.containsAlias('foo')
-
-    String alias = aliasRegistry.getAlias('foo')
-    assert alias == 'bar'
+    assert aliasRegistry.getAlias('foo') == 'bar'
   }
 
   @Test
   void 'redefine alias'() {
     assert !aliasRegistry.containsAlias('foo')
 
-    Object result = executeCommand('foo bar')
-    assert result == null
+    assert executeCommand('foo bar') == null
 
     assert aliasRegistry.containsAlias('foo')
-
-    String alias = aliasRegistry.getAlias('foo')
-    assert alias == 'bar'
-
+    assert aliasRegistry.getAlias('foo') == 'bar'
     assert aliasRegistry.containsAlias('foo')
 
-    result = executeCommand('foo baz')
-    assert result == null
+    assert executeCommand('foo baz') == null
 
     assert aliasRegistry.containsAlias('foo')
-
-    alias = aliasRegistry.getAlias('foo')
-    assert alias == 'baz'
+    assert aliasRegistry.getAlias('foo') == 'baz'
   }
 
   @Test
   void 'execute alias'() {
     assert !aliasRegistry.containsAlias('make-alias')
 
-    Object result = executeCommand('make-alias alias')
-    assert result == null;
+    assert executeCommand('make-alias alias') == null
 
     assert aliasRegistry.containsAlias('make-alias')
-    String alias = aliasRegistry.getAlias(('make-alias'))
-    assert alias == 'alias'
+    assert aliasRegistry.getAlias('make-alias') == 'alias'
 
-    result = executeLine('make-alias foo bar')
-    assert result == null
+    assert executeLine('make-alias foo bar') == null
 
     assert aliasRegistry.containsAlias('foo')
-    alias = aliasRegistry.getAlias('foo')
-    assert alias == 'bar'
+    assert aliasRegistry.getAlias('foo') == 'bar'
   }
 }
