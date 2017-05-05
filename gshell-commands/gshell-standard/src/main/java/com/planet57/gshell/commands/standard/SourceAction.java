@@ -33,7 +33,6 @@ import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.util.io.FileAssert;
 import com.planet57.gshell.util.cli2.Argument;
-import com.planet57.gshell.util.io.Closeables;
 import org.jline.reader.Completer;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -70,15 +69,11 @@ public class SourceAction
       url = new File(path).toURI().toURL();
     }
 
-    BufferedReader reader = openReader(url);
-    try {
+    try (BufferedReader reader = openReader(url)) {
       String line;
       while ((line = reader.readLine()) != null) {
         shell.execute(line);
       }
-    }
-    finally {
-      Closeables.close(reader);
     }
 
     return null;

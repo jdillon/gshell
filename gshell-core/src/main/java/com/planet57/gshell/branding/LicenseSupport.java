@@ -22,7 +22,6 @@ import java.io.StringWriter;
 import java.net.URI;
 
 import com.google.common.io.CharStreams;
-import com.planet57.gshell.util.io.Closeables;
 
 import javax.annotation.Nullable;
 
@@ -70,12 +69,8 @@ public class LicenseSupport
     }
 
     StringWriter buff = new StringWriter();
-    InputStream input = uri.toURL().openStream();
-    try {
+    try (InputStream input = uri.toURL().openStream()) {
       CharStreams.copy(new InputStreamReader(input), buff);
-    }
-    finally {
-      Closeables.close(input);
     }
     return buff.toString();
   }
