@@ -46,9 +46,6 @@ public class RecallHistoryAction
 
   private static final Messages messages = I18N.create(Messages.class);
 
-  /*
-  No such history index: %d
-   */
   @Argument(required = true, description = "Index of item to recall.", token = "INDEX")
   private int index;
 

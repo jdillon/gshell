@@ -43,7 +43,7 @@ public class FailAction
   private static class FailException
       extends Exception
   {
-    public FailException(final String message) {
+    FailException(final String message) {
       super(message);
     }
   }
