@@ -26,6 +26,7 @@ import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.io.FileSystemAccess;
+import com.planet57.gshell.util.jline.Complete;
 import org.jline.reader.Completer;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -40,9 +41,11 @@ public class CopyAction
     extends FileCommandActionSupport
 {
   @Argument(required = true, index = 0, description = "The path to the file or directory to copy", token = "SOURCE")
+  @Complete("file-name")
   private String source;
 
   @Argument(required = true, index = 1, description = "The path to the target file or directory", token = "TARGET")
+  @Complete("file-name")
   private String target;
 
   @Option(name = "r", longName = "recursive")

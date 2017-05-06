@@ -33,6 +33,7 @@ import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.io.FileSystemAccess;
 import com.planet57.gshell.util.io.PrintBuffer;
+import com.planet57.gshell.util.jline.Complete;
 import com.planet57.gshell.util.jline.TerminalHelper;
 import org.jline.reader.Completer;
 
@@ -49,6 +50,7 @@ public class ListDirectoryAction
 {
   @Nullable
   @Argument(description = "The file or directory path to list.", token = "PATH")
+  @Complete("file-name")
   private String path;
 
   @Option(name = "l", longName = "long", description = "List in long format")

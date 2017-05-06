@@ -29,6 +29,7 @@ import com.planet57.gshell.util.io.FileAssert;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.io.FileSystemAccess;
+import com.planet57.gshell.util.jline.Complete;
 import org.jline.reader.Completer;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -47,6 +48,7 @@ public class ChangeDirectoryAction
 
   @Nullable
   @Argument(description = "The path of the directory to change to", token = "PATH")
+  @Complete("directory-name")
   private String path;
 
   @Inject

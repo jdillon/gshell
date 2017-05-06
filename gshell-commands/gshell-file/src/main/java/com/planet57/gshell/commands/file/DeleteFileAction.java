@@ -27,6 +27,7 @@ import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.io.FileAssert;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.io.FileSystemAccess;
+import com.planet57.gshell.util.jline.Complete;
 import org.jline.reader.Completer;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -41,6 +42,7 @@ public class DeleteFileAction
     extends FileCommandActionSupport
 {
   @Argument(required = true, description = "The path of the file remove", token = "PATH")
+  @Complete("file-name")
   private String path;
 
   /**

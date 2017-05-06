@@ -60,6 +60,4 @@ public @interface Option
   boolean override() default false;
 
   Class<? extends Handler> handler() default DefaultHandler.class;
-
-  // TODO: Add completer; could also introduce another annotation for this
 }
