@@ -42,6 +42,8 @@ public class RemovePreferencesAction
 
     log.debug("Removing preferences: {}", prefs);
 
+    // FIXME: this doesn't seem to actually do what was intended and leaves the node around, and maybe even confusing the clear vs. removeNode semantics
+
     if (tree) {
       prefs.clear();
       prefs.sync();
