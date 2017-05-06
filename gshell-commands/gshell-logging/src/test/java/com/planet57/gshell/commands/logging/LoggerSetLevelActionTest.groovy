@@ -31,5 +31,8 @@ class LoggerSetLevelActionTest
   void 'set level'() {
     assert executeCommand(LOGGER, 'TRACE') == null
     assert loggingSystem.getLogger(LOGGER).level.name == 'TRACE'
+
+    assert executeCommand(LOGGER, 'INFO') == null
+    assert loggingSystem.getLogger(LOGGER).level.name == 'INFO'
   }
 }
