@@ -15,13 +15,11 @@
  */
 package com.planet57.gshell.commands.pref
 
-import com.planet57.gshell.testharness.CommandTestSupport
-
 /**
  * Tests for {@link ImportPreferencesAction}.
  */
 class ImportPreferencesActionTest
-    extends CommandTestSupport
+    extends PreferenceActionTestSupport
 {
   ImportPreferencesActionTest() {
     super(ImportPreferencesAction.class)

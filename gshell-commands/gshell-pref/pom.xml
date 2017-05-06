@@ -30,5 +30,29 @@
   <artifactId>gshell-pref</artifactId>
   <name>${project.groupId}:${project.artifactId}</name>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.sonatype.goodies</groupId>
+      <artifactId>goodies-prefs</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <configuration>
+            <systemPropertyVariables>
+              <!-- FIXME: this should not mutate system when run via maven; but otherwise will not use MemoryPreferences -->
+              <java.util.prefs.PreferencesFactory>org.sonatype.goodies.prefs.memory.MemoryPreferencesFactory</java.util.prefs.PreferencesFactory>
+            </systemPropertyVariables>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
 </project>
 

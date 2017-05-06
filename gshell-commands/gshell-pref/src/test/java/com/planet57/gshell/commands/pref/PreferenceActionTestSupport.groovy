@@ -15,15 +15,31 @@
  */
 package com.planet57.gshell.commands.pref
 
+import java.util.prefs.Preferences
+
+import com.planet57.gshell.testharness.CommandTestSupport
+import org.junit.Test
+
 /**
- * Tests for {@link UnsetPreferenceAction}.
+ * Support for preference action tests.
  */
-class UnsetPreferenceActionTest
-    extends PreferenceActionTestSupport
+abstract class PreferenceActionTestSupport
+    extends CommandTestSupport
 {
-  UnsetPreferenceActionTest() {
-    super(UnsetPreferenceAction.class)
+  /**
+   * Preferences path for tests to use.
+   */
+  protected final String PATH = this.class.package.name.replace('.', '/')
+
+  PreferenceActionTestSupport(final Class<?> type) {
+    super(type)
   }
 
-  // FIXME: add tests
+  protected Preferences userRoot() {
+    return Preferences.userRoot()
+  }
+
+  protected Preferences systemRoot() {
+    return Preferences.systemRoot()
+  }
 }

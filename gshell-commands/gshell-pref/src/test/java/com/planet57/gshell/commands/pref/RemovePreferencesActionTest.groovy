@@ -15,13 +15,11 @@
  */
 package com.planet57.gshell.commands.pref
 
-import com.planet57.gshell.testharness.CommandTestSupport
-
 /**
  * Tests for {@link RemovePreferencesAction}.
  */
 class RemovePreferencesActionTest
-    extends CommandTestSupport
+    extends PreferenceActionTestSupport
 {
   RemovePreferencesActionTest() {
     super(RemovePreferencesAction.class)
