@@ -29,10 +29,12 @@ abstract class PreferenceActionTestSupport
     System.setProperty('java.util.prefs.PreferencesFactory', 'org.sonatype.goodies.prefs.memory.MemoryPreferencesFactory')
   }
 
+  protected final String ID = "test-${System.currentTimeMillis()}"
+
   /**
    * Preferences path for tests to use.
    */
-  protected final String PATH = "/test/test-${System.currentTimeMillis()}/${this.class.package.name.replace('.', '/')}"
+  protected final String PATH = "/test/${ID}/${this.class.package.name.replace('.', '/')}"
 
   PreferenceActionTestSupport(final Class<?> type) {
     super(type)

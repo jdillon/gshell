@@ -15,6 +15,8 @@
  */
 package com.planet57.gshell.commands.pref
 
+import org.junit.Test
+
 /**
  * Tests for {@link ImportPreferencesAction}.
  */
@@ -25,5 +27,44 @@ class ImportPreferencesActionTest
     super(ImportPreferencesAction.class)
   }
 
-  // FIXME: add tests
+  @Test
+  void 'import user preferences'() {
+    def file = util.createTempFile()
+    file.text = """<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE preferences SYSTEM "http://java.sun.com/dtd/preferences.dtd">
+<preferences EXTERNAL_XML_VERSION="1.0">
+  <root type="user">
+    <map/>
+    <node name="test">
+      <map/>
+      <node name="${ID}">
+        <map/>
+        <node name="com">
+          <map/>
+          <node name="planet57">
+            <map/>
+            <node name="gshell">
+              <map/>
+              <node name="commands">
+                <map/>
+                <node name="pref">
+                  <map>
+                    <entry key="foo" value="bar"/>
+                  </map>
+                </node>
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+  </root>
+</preferences>
+"""
+    assert executeCommand(file.absolutePath) == null
+
+    def root = userRoot()
+    def node = root.node(PATH)
+    assert node.get('foo', null) == 'bar'
+  }
 }
