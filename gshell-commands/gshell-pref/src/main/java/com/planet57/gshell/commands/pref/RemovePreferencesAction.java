@@ -23,8 +23,6 @@ import com.planet57.gshell.util.cli2.Option;
 
 import javax.annotation.Nonnull;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Remove a tree of preferences.
  *
