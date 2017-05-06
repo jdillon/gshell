@@ -19,6 +19,8 @@ import com.planet57.gshell.commands.shell.FailAction.FailException
 import com.planet57.gshell.testharness.CommandTestSupport
 import org.junit.Test
 
+import static org.junit.Assert.fail
+
 /**
  * Tests for {@link FailAction}.
  */
@@ -30,7 +32,7 @@ class FailActionTest
   }
 
   @Test(expected = FailException.class)
-  void 'fail'() {
+  void 'fail with default-message'() {
     executeCommand()
   }
 
