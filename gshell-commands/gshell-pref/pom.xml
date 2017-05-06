@@ -46,7 +46,6 @@
           <artifactId>maven-surefire-plugin</artifactId>
           <configuration>
             <systemPropertyVariables>
-              <!-- FIXME: this should not mutate system when run via maven; but otherwise will not use MemoryPreferences -->
               <java.util.prefs.PreferencesFactory>org.sonatype.goodies.prefs.memory.MemoryPreferencesFactory</java.util.prefs.PreferencesFactory>
             </systemPropertyVariables>
           </configuration>
@@ -54,5 +53,6 @@
       </plugins>
     </pluginManagement>
   </build>
+  
 </project>
 

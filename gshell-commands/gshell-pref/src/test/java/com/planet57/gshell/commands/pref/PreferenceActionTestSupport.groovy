@@ -18,7 +18,6 @@ package com.planet57.gshell.commands.pref
 import java.util.prefs.Preferences
 
 import com.planet57.gshell.testharness.CommandTestSupport
-import org.junit.Test
 
 /**
  * Support for preference action tests.
@@ -26,10 +25,14 @@ import org.junit.Test
 abstract class PreferenceActionTestSupport
     extends CommandTestSupport
 {
+  static {
+    System.setProperty('java.util.prefs.PreferencesFactory', 'org.sonatype.goodies.prefs.memory.MemoryPreferencesFactory')
+  }
+
   /**
    * Preferences path for tests to use.
    */
-  protected final String PATH = this.class.package.name.replace('.', '/')
+  protected final String PATH = "/test/test-${System.currentTimeMillis()}/${this.class.package.name.replace('.', '/')}"
 
   PreferenceActionTestSupport(final Class<?> type) {
     super(type)
