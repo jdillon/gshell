@@ -16,6 +16,7 @@
 package com.planet57.gshell.commands.shell
 
 import com.planet57.gshell.testharness.CommandTestSupport
+import org.junit.Test
 
 /**
  * Tests for {@link JavaAction}.
@@ -27,5 +28,15 @@ class JavaActionTest
     super(JavaAction.class)
   }
 
-  // FIXME: add tests
+  @Test
+  void 'run program'() {
+    assert executeCommand(Program.class.name) == null
+    assert io.outputString.contains('test: []')
+  }
+
+  @Test
+  void 'run program with arguments'() {
+    assert executeCommand(Program.class.name, 'foo', 'bar') == null
+    assert io.outputString.contains('test: [foo, bar]')
+  }
 }

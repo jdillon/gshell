@@ -16,6 +16,7 @@
 package com.planet57.gshell.commands.shell
 
 import com.planet57.gshell.testharness.CommandTestSupport
+import org.junit.Test
 
 /**
  * Tests for {@link HostnameAction}.
@@ -27,5 +28,19 @@ class HostnameActionTest
     super(HostnameAction.class)
   }
 
-  // FIXME: add tests
+  @Test
+  void 'displays host-name'() {
+    assert executeCommand() == null
+    assert io.outputString.contains(InetAddress.localHost.hostName)
+  }
+
+  @Test
+  void 'displays host-address'() {
+    assert executeCommand('-v') == null
+    io.outputString.with {
+      def address = InetAddress.localHost
+      assert contains(address.hostName)
+      assert contains(address.hostAddress)
+    }
+  }
 }
