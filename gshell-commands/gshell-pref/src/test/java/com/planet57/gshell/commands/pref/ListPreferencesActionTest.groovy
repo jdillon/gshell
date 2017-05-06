@@ -15,6 +15,8 @@
  */
 package com.planet57.gshell.commands.pref
 
+import org.junit.Test
+
 /**
  * Tests for {@link ListPreferencesAction}.
  */
@@ -25,5 +27,17 @@ class ListPreferencesActionTest
     super(ListPreferencesAction.class)
   }
 
-  // FIXME: add tests
+  @Test
+  void 'list user preference'() {
+    def root = userRoot()
+    def node = root.node(PATH)
+    node.put('foo', 'bar')
+    node.sync()
+
+    assert executeCommand('-r', PATH) == null
+
+    assert io.outputString == """/test/${ID}/com/planet57/gshell/commands/pref
+  foo: bar
+"""
+  }
 }
