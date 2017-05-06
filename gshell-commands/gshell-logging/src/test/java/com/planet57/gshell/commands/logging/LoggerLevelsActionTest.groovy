@@ -15,6 +15,8 @@
  */
 package com.planet57.gshell.commands.logging
 
+import org.junit.Test
+
 /**
  * Tests for {@link LoggerLevelsAction}.
  */
@@ -25,5 +27,13 @@ class LoggerLevelsActionTest
     super(LoggerLevelsAction.class)
   }
 
-  // FIXME: add tests; highly dependent on logging impl; need to customize for these tests
+  @Test
+  void 'list levels'() {
+    assert executeCommand() == null
+    def output = io.outputString
+
+    loggingSystem.levels.each { level ->
+      assert output.contains(level.name)
+    }
+  }
 }
