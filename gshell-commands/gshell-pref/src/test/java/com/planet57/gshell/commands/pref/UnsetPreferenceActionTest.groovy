@@ -15,6 +15,8 @@
  */
 package com.planet57.gshell.commands.pref
 
+import org.junit.Test
+
 /**
  * Tests for {@link UnsetPreferenceAction}.
  */
@@ -25,5 +27,25 @@ class UnsetPreferenceActionTest
     super(UnsetPreferenceAction.class)
   }
 
-  // FIXME: add tests
+  @Test
+  void 'unset user preference'() {
+    def root = userRoot()
+    def node = root.node(PATH)
+    node.put('foo', 'bar')
+    node.sync()
+
+    assert executeCommand(PATH, 'foo') == null
+    assert node.get('foo', null) == null
+  }
+
+  @Test
+  void 'unset system preference'() {
+    def root = systemRoot()
+    def node = root.node(PATH)
+    node.put('foo', 'bar')
+    node.sync()
+
+    assert executeCommand('-s', PATH, 'foo') == null
+    assert node.get('foo', null) == null
+  }
 }
