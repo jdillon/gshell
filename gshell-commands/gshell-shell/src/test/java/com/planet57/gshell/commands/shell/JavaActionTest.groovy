@@ -39,4 +39,10 @@ class JavaActionTest
     assert executeCommand(Program.class.name, 'foo', 'bar') == null
     assert io.outputString.contains('test: [foo, bar]')
   }
+
+  @Test
+  void 'run program with return-value'() {
+    assert executeCommand('-m', 'returnsValue', Program.class.name) == 57
+    assert io.outputString.contains('test: []')
+  }
 }

@@ -10,4 +10,9 @@ public class Program
   public static void main(final String[] args) {
     System.out.println("test: " + Arrays.asList(args));
   }
+
+  public static int returnsValue(final String[] args) {
+    System.out.println("test: " + Arrays.asList(args));
+    return 57;
+  }
 }
