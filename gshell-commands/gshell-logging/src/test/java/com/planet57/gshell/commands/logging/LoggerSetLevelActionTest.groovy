@@ -15,17 +15,21 @@
  */
 package com.planet57.gshell.commands.logging
 
-import com.planet57.gshell.testharness.CommandTestSupport
+import org.junit.Test
 
 /**
  * Tests for {@link LoggerSetLevelAction}.
  */
 class LoggerSetLevelActionTest
-    extends CommandTestSupport
+    extends LoggingActionTestSupport
 {
   LoggerSetLevelActionTest() {
     super(LoggerSetLevelAction.class)
   }
 
-  // FIXME: add tests
+  @Test
+  void 'set level'() {
+    assert executeCommand(LOGGER, 'TRACE') == null
+    assert loggingSystem.getLogger(LOGGER).level.name == 'TRACE'
+  }
 }

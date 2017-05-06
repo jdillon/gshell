@@ -15,13 +15,11 @@
  */
 package com.planet57.gshell.commands.logging
 
-import com.planet57.gshell.testharness.CommandTestSupport
-
 /**
  * Tests for {@link LoggerLevelsAction}.
  */
 class LoggerLevelsActionTest
-    extends CommandTestSupport
+    extends LoggingActionTestSupport
 {
   LoggerLevelsActionTest() {
     super(LoggerLevelsAction.class)

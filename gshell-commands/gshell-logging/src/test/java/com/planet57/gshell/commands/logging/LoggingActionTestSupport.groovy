@@ -15,15 +15,23 @@
  */
 package com.planet57.gshell.commands.logging
 
-/**
- * Tests for {@link LoggingComponentListAction}.
- */
-class LoggingComponentListActionTest
-    extends LoggingActionTestSupport
-{
-  LoggingComponentListActionTest() {
-    super(LoggingComponentListAction.class)
-  }
+import javax.inject.Inject
 
-  // FIXME: add tests
+import com.planet57.gshell.logging.LoggingSystem
+import com.planet57.gshell.testharness.CommandTestSupport
+
+/**
+ * Support for logging command action tests.
+ */
+abstract class LoggingActionTestSupport
+    extends CommandTestSupport
+{
+  @Inject
+  protected LoggingSystem loggingSystem
+
+  protected final String LOGGER = "test.${getClass().name}"
+
+  protected LoggingActionTestSupport(final Class<?> type) {
+    super(type)
+  }
 }
