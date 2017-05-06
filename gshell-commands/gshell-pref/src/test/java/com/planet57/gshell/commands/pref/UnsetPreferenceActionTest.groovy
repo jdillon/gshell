@@ -15,15 +15,37 @@
  */
 package com.planet57.gshell.commands.pref
 
-import com.planet57.gshell.testharness.CommandTestSupport
+import org.junit.Test
 
 /**
  * Tests for {@link UnsetPreferenceAction}.
  */
 class UnsetPreferenceActionTest
-    extends CommandTestSupport
+    extends PreferenceActionTestSupport
 {
   UnsetPreferenceActionTest() {
     super(UnsetPreferenceAction.class)
+  }
+
+  @Test
+  void 'unset user preference'() {
+    def root = userRoot()
+    def node = root.node(PATH)
+    node.put('foo', 'bar')
+    node.sync()
+
+    assert executeCommand(PATH, 'foo') == null
+    assert node.get('foo', null) == null
+  }
+
+  @Test
+  void 'unset system preference'() {
+    def root = systemRoot()
+    def node = root.node(PATH)
+    node.put('foo', 'bar')
+    node.sync()
+
+    assert executeCommand('-s', PATH, 'foo') == null
+    assert node.get('foo', null) == null
   }
 }

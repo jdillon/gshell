@@ -137,7 +137,7 @@ public class HelpAction
       }
       else if (pages.size() > 1) {
         // else show matching pages
-        io.out.println(messages.matchingPages());
+        io.println(messages.matchingPages());
         HelpPageUtil.renderIndex(io.out, pages);
         return null;
       }
@@ -154,7 +154,7 @@ public class HelpAction
   private void displayAvailable(final CommandContext context) {
     Collection<HelpPage> pages = helpPages.getPages(query(helpPage -> true));
     IO io = context.getIo();
-    io.out.println(messages.availablePages());
+    io.println(messages.availablePages());
     HelpPageUtil.renderIndex(io.out, pages);
   }
 

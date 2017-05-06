@@ -29,6 +29,7 @@ import com.planet57.gshell.command.CommandAction.ExitNotification;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.command.registry.CommandRegistrar;
 import com.planet57.gshell.event.EventManager;
+import com.planet57.gshell.help.HelpPageManager;
 import com.planet57.gshell.internal.CommandActionFunction;
 import com.planet57.gshell.internal.CommandProcessorImpl;
 import com.planet57.gshell.util.jline.LoggingCompleter;
@@ -101,11 +102,14 @@ public class ShellImpl
   @Inject
   public ShellImpl(final EventManager events,
                    final CommandRegistrar commandRegistrar,
+                   final HelpPageManager helpPageManager,
                    final CommandProcessorImpl commandProcessor,
                    @Named("shell") final Completer completer)
   {
     checkNotNull(events);
     checkNotNull(commandRegistrar);
+    checkNotNull(helpPageManager);
+
     this.commandProcessor = checkNotNull(commandProcessor);
     this.completer = checkNotNull(completer);
 
@@ -113,7 +117,7 @@ public class ShellImpl
     this.history = new DefaultHistory();
     this.scriptLoader = new ShellScriptLoader();
 
-    lifecycles.add(events, commandRegistrar);
+    lifecycles.add(events, commandRegistrar, helpPageManager);
   }
 
   /**

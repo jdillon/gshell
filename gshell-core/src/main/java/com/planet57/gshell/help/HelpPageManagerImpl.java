@@ -26,6 +26,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.inject.Key;
 import com.planet57.gshell.alias.AliasRegistry;
 import com.planet57.gshell.alias.NoSuchAliasException;
@@ -33,7 +34,7 @@ import com.planet57.gshell.command.resolver.CommandResolver;
 import com.planet57.gshell.command.resolver.Node;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.internal.BeanContainer;
-import org.sonatype.goodies.common.ComponentSupport;
+import org.sonatype.goodies.lifecycle.LifecycleSupport;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -46,7 +47,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Named
 @Singleton
 public class HelpPageManagerImpl
-  extends ComponentSupport
+  extends LifecycleSupport
   implements HelpPageManager
 {
   private final BeanContainer container;
@@ -61,6 +62,8 @@ public class HelpPageManagerImpl
 
   private final Map<String, MetaHelpPage> metaPages = new LinkedHashMap<>();
 
+  private boolean discoveryEnabled = true;
+
   @Inject
   public HelpPageManagerImpl(final BeanContainer container,
                              final EventManager events,
@@ -73,20 +76,34 @@ public class HelpPageManagerImpl
     this.aliases = checkNotNull(aliases);
     this.resolver = checkNotNull(resolver);
     this.loader = checkNotNull(loader);
+  }
 
-    // FIXME: move to lifecycle; and allow disabling
-    discoverMetaPages();
+  /**
+   * Exposed to allow help-page discovery to be disabled for testing.
+   */
+  @VisibleForTesting
+  public void setDiscoveryEnabled(final boolean discoveryEnabled) {
+    log.debug("Discovery enabled: {}", discoveryEnabled);
+    this.discoveryEnabled = discoveryEnabled;
+  }
+
+  @Override
+  protected void doStart() throws Exception {
+    if (discoveryEnabled) {
+      discoverMetaPages();
+    }
   }
 
   private void discoverMetaPages() {
     log.trace("Discovering meta-pages");
 
-    container.locate(Key.get(MetaHelpPage.class)).forEach(entry -> addMetaPage(entry.getValue()));
+    container.locate(MetaHelpPage.class).forEach(entry -> addMetaPageInternal(entry.getValue()));
   }
 
   @Override
   public HelpPage getPage(final String name) {
-    assert name != null;
+    checkNotNull(name);
+    ensureStarted();
 
     if (aliases.containsAlias(name)) {
       try {
@@ -112,11 +129,13 @@ public class HelpPageManagerImpl
   @Override
   public Collection<HelpPage> getPages(final Predicate<HelpPage> query) {
     checkNotNull(query);
+    ensureStarted();
     return getPages().stream().filter(query).collect(Collectors.toList());
   }
 
   @Override
   public Collection<HelpPage> getPages() {
+    ensureStarted();
     Map<String, HelpPage> pages = new TreeMap<>();
 
     // Add aliases
@@ -147,7 +166,15 @@ public class HelpPageManagerImpl
   @Override
   public void addMetaPage(final MetaHelpPage page) {
     checkNotNull(page);
+    ensureStarted();
 
+    addMetaPageInternal(page);
+  }
+
+  /**
+   * Exposed for discovery; which is before lifecycle has been started.
+   */
+  private void addMetaPageInternal(final MetaHelpPage page) {
     log.debug("Adding meta-page: {}", page);
     metaPages.put(page.getName(), page);
     events.publish(new MetaHelpPageAddedEvent(page));
@@ -155,6 +182,7 @@ public class HelpPageManagerImpl
 
   @Override
   public Collection<MetaHelpPage> getMetaPages() {
+    ensureStarted();
     return metaPages.values();
   }
 }

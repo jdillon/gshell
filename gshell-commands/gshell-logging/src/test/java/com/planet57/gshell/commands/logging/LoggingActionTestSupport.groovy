@@ -13,19 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.commands.shell
+package com.planet57.gshell.commands.logging
 
+import javax.inject.Inject
+
+import com.planet57.gshell.logging.LoggingSystem
 import com.planet57.gshell.testharness.CommandTestSupport
 
 /**
- * Tests for {@link DateAction}.
+ * Support for logging command action tests.
  */
-class DateActionTest
+abstract class LoggingActionTestSupport
     extends CommandTestSupport
 {
-  DateActionTest() {
-    super(DateAction.class)
-  }
+  @Inject
+  protected LoggingSystem loggingSystem
 
-  // FIXME: add tests
+  protected final String LOGGER = "test.${getClass().name}"
+
+  protected LoggingActionTestSupport(final Class<?> type) {
+    super(type)
+  }
 }

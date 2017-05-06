@@ -16,9 +16,9 @@
 package com.planet57.gshell.internal;
 
 import com.google.common.base.Stopwatch;
-import com.google.common.collect.ImmutableList;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.command.CommandAction;
+import com.planet57.gshell.command.CommandAction.Prototype;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.CommandHelper;
 import com.planet57.gshell.command.IO;
@@ -58,7 +58,15 @@ public class CommandActionFunction
   private final CommandAction action;
 
   public CommandActionFunction(final CommandAction action) {
-    this.action = checkNotNull(action);
+    checkNotNull(action);
+
+    // create copies for actions that implement prototype pattern
+    if (action instanceof Prototype) {
+      this.action = ((Prototype) action).create();
+    }
+    else {
+      this.action = action;
+    }
   }
 
   @Override
@@ -98,9 +106,7 @@ public class CommandActionFunction
 
         // Render command-line usage
         if (help.displayHelp) {
-          io.out.println(CommandHelper.getDescription(action));
-          io.out.println();
-
+          io.format("%s%n%n", action.getDescription());
           HelpPrinter printer = new HelpPrinter(clp, terminal.getWidth());
           printer.printUsage(io.out, action.getSimpleName());
 
@@ -111,9 +117,6 @@ public class CommandActionFunction
 
       // re-create variables with session as basis
       final Variables variables = new VariablesSupport(((CommandSessionImpl)session).getVariables());
-
-      // wrap arguments into immutable for context
-      final List<Object> args = ImmutableList.copyOf(arguments);
 
       if (execute) {
         result = action.execute(new CommandContext()
@@ -127,7 +130,7 @@ public class CommandActionFunction
           @Override
           @Nonnull
           public List<?> getArguments() {
-            return args;
+            return arguments;
           }
 
           @Override

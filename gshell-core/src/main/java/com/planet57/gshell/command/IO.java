@@ -98,4 +98,57 @@ public class IO
 
     terminal.flush();
   }
+
+  //
+  // Output helpers; by default everything should use {@link #out}.
+  //
+
+  /**
+   * @since 3.0
+   */
+  public void print(final String string) {
+    out.print(string);
+  }
+
+  /**
+   * @since 3.0
+   */
+  public void print(final Object obj) {
+    out.print(obj);
+  }
+
+  /**
+   * @since 3.0
+   */
+  public void println() {
+    out.println();
+  }
+
+  /**
+   * @since 3.0
+   */
+  public void println(final String string) {
+    out.println(string);
+  }
+
+  /**
+   * @since 3.0
+   */
+  public void println(final Object obj) {
+    out.println(obj);
+  }
+
+  /**
+   * @since 3.0
+   */
+  public PrintWriter format(final String format, final Object... args) {
+    return out.format(format, args);
+  }
+
+  /**
+   * @since 3.0
+   */
+  public PrintWriter append(final CharSequence string) {
+    return out.append(string);
+  }
 }

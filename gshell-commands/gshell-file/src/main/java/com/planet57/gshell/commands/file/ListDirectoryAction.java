@@ -31,6 +31,7 @@ import com.planet57.gshell.command.IO;
 import com.planet57.gshell.util.io.FileAssert;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
+import com.planet57.gshell.util.io.FileSystemAccess;
 import com.planet57.gshell.util.io.PrintBuffer;
 import com.planet57.gshell.util.jline.TerminalHelper;
 import org.jline.reader.Completer;
@@ -40,7 +41,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * List the contents of a file or directory.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Command(name = "ls", description = "List the contents of a file or directory")
@@ -61,7 +61,7 @@ public class ListDirectoryAction
   private boolean recursive;
 
   @Inject
-  public ListDirectoryAction installCompleters(final @Named("file-name") Completer c1) {
+  public ListDirectoryAction installCompleters(@Named("file-name") final Completer c1) {
     checkNotNull(c1);
     setCompleters(c1, null);
     return this;
@@ -70,22 +70,23 @@ public class ListDirectoryAction
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
+    FileSystemAccess fs = getFileSystem();
 
-    File file = getFileSystem().resolveFile(path);
+    File file = fs.resolveFile(path);
 
     new FileAssert(file).exists();
 
     if (file.isDirectory()) {
-      listChildren(io, file);
+      listChildren(fs, io, file);
     }
     else {
-      io.out.println(file.getPath());
+      io.println(file.getPath());
     }
 
     return null;
   }
 
-  private void listChildren(final IO io, final File dir) throws Exception {
+  private void listChildren(final FileSystemAccess fs, final IO io, final File dir) throws Exception {
     File[] files;
 
     if (includeHidden) {
@@ -103,7 +104,7 @@ public class ListDirectoryAction
     List<File> dirs = new LinkedList<>();
 
     for (File file : files) {
-      if (getFileSystem().hasChildren(file)) {
+      if (fs.hasChildren(file)) {
         if (recursive) {
           dirs.add(file);
         }
@@ -114,23 +115,22 @@ public class ListDirectoryAction
 
     if (longList) {
       for (CharSequence name : names) {
-        io.out.println(name);
+        io.println(name);
       }
-    } else {
+    }
+    else {
       TerminalHelper.printColumns(io.terminal, io.out, names.stream(), true);
     }
 
     if (!dirs.isEmpty()) {
       for (File subDir : dirs) {
-        io.out.println();
-        io.out.print(subDir.getName());
-        io.out.print(":");
-        listChildren(io, subDir);
+        io.format("%n%s:", subDir.getName());
+        listChildren(fs, io, subDir);
       }
     }
   }
 
-  private String render(final File file) {
+  private static String render(final File file) {
     String name = file.getName();
 
     PrintBuffer buff = new PrintBuffer();

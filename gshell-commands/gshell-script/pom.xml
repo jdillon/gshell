@@ -30,5 +30,13 @@
   <artifactId>gshell-script</artifactId>
   <name>${project.groupId}:${project.artifactId}</name>
 
+  <dependencies>
+    <dependency>
+      <groupId>com.planet57.gshell.ext</groupId>
+      <artifactId>gshell-groovy</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
 </project>
 

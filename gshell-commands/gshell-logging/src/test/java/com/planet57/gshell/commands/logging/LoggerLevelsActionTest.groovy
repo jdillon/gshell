@@ -15,15 +15,25 @@
  */
 package com.planet57.gshell.commands.logging
 
-import com.planet57.gshell.testharness.CommandTestSupport
+import org.junit.Test
 
 /**
  * Tests for {@link LoggerLevelsAction}.
  */
 class LoggerLevelsActionTest
-    extends CommandTestSupport
+    extends LoggingActionTestSupport
 {
   LoggerLevelsActionTest() {
     super(LoggerLevelsAction.class)
+  }
+
+  @Test
+  void 'list levels'() {
+    assert executeCommand() == null
+    def output = io.outputString
+
+    loggingSystem.levels.each { level ->
+      assert output.contains(level.name)
+    }
   }
 }

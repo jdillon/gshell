@@ -16,8 +16,10 @@
 package com.planet57.gshell.command;
 
 import org.jline.reader.Completer;
+import org.sonatype.goodies.common.Notification;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Provides the user-action for a command.
@@ -33,6 +35,12 @@ public interface CommandAction
   String getSimpleName();
 
   /**
+   * @since 3.0
+   */
+  @Nullable
+  String getDescription();
+
+  /**
    * Execute the command action.
    *
    * @param context The execution context of the command.
@@ -41,8 +49,8 @@ public interface CommandAction
    */
   Object execute(@Nonnull CommandContext context) throws Exception;
 
-  // FIXME: Find a better name for this; to avoid confusion with Throwable Notification
   class ExitNotification
+    extends Notification
   {
     public final int code;
 

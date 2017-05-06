@@ -32,36 +32,31 @@ class EchoActionTest
 
   @Test
   void 'echo a b c'() {
-    Object result = executeCommand('a b c')
-    assert result == null
-    assertOutputEquals('a b c' + NEWLINE)
+    assert executeCommand('a b c') == null
+    assert io.outputString == 'a b c' + NEWLINE
   }
 
   @Test
   void 'echo variable'() {
-    Object result = executeCommand('${shell.home}')
-    assert result == null
-    assertOutputEquals(shell.variables.get('shell.home', String.class) + NEWLINE)
+    assert executeCommand('${shell.home}') == null
+    assert io.outputString == shell.variables.get('shell.home', String.class) + NEWLINE
   }
 
   @Test
   void 'echo with stop'() {
-    Object result = executeCommand('-- -D')
-    assert result == null
-    assertOutputEquals('-D' + NEWLINE)
+    assert executeCommand('-- -D') == null
+    assert io.outputString == '-D' + NEWLINE
   }
 
   @Test
   void 'echo with padding'() {
-    Object result = executeCommand("' foo '")
-    assert result == null
-    assertOutputEquals(' foo ' + NEWLINE)
+    assert executeCommand("' foo '") == null
+    assert io.outputString == ' foo ' + NEWLINE
   }
 
   @Test
   void 'echo omit newline'() {
-    Object result = executeCommand('-n foo')
-    assert result == null
-    assertOutputEquals('foo')
+    assert executeCommand('-n foo') == null
+    assert io.outputString == 'foo'
   }
 }

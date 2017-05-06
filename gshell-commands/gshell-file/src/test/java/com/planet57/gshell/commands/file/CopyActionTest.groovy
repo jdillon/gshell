@@ -26,4 +26,6 @@ class CopyActionTest
   CopyActionTest() {
     super(CopyAction.class)
   }
+
+  // FIXME: add tests
 }

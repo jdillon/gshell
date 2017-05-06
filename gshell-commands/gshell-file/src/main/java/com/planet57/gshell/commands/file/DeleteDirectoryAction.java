@@ -23,9 +23,9 @@ import javax.inject.Named;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.IO;
 import com.planet57.gshell.util.io.FileAssert;
 import com.planet57.gshell.util.cli2.Argument;
+import com.planet57.gshell.util.io.FileSystemAccess;
 import org.jline.reader.Completer;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -33,7 +33,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Remove a directory.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Command(name = "rmdir", description = "Remove a directory")
@@ -44,7 +43,7 @@ public class DeleteDirectoryAction
   private String path;
 
   @Inject
-  public DeleteDirectoryAction installCompleters(final @Named("file-name") Completer c1) {
+  public DeleteDirectoryAction installCompleters(@Named("file-name") final Completer c1) {
     checkNotNull(c1);
     setCompleters(c1, null);
     return this;
@@ -52,14 +51,10 @@ public class DeleteDirectoryAction
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    File file = getFileSystem().resolveFile(path);
-
+    FileSystemAccess fs = getFileSystem();
+    File file = fs.resolveFile(path);
     new FileAssert(file).exists().isDirectory();
-
-    if (!file.delete()) {
-      throw new RuntimeException(String.format("Failed to remove directory: %s", file));
-    }
-
+    fs.deleteDirectory(file);
     return null;
   }
 }

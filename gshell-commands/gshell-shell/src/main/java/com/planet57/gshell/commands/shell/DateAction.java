@@ -38,7 +38,7 @@ public class DateAction
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
-    io.out.println(DateFormat.getInstance().format(new Date()));
+    io.println(DateFormat.getInstance().format(new Date()));
     return null;
   }
 }

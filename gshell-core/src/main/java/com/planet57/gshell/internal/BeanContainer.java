@@ -49,7 +49,13 @@ public class BeanContainer
   }
 
   public <Q extends Annotation, T> Iterable<? extends BeanEntry<Q, T>> locate(final Key<T> key) {
+    checkNotNull(key);
     return beanLocator.locate(key);
+  }
+
+  public <Q extends Annotation, T> Iterable<? extends BeanEntry<Q, T>> locate(final Class<T> type) {
+    checkNotNull(type);
+    return beanLocator.locate(Key.get(type));
   }
 
   public <Q extends Annotation, T, W> void watch(final Key<T> key, Mediator<Q, T, W> mediator, final W watcher) {

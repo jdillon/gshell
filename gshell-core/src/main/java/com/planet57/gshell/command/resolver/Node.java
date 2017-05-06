@@ -71,7 +71,7 @@ public class Node
   }
 
   public String getDescription() {
-    return CommandHelper.getDescription(action);
+    return action.getDescription();
   }
 
   // FIXME: This should return a NodePath

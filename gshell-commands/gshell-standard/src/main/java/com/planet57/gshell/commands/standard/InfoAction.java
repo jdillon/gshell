@@ -253,7 +253,7 @@ public class InfoAction
     // HACK: trip off any trailing whitespace
     String info = CharMatcher.whitespace().trimTrailingFrom(buff.toString());
 
-    io.out.println(info);
+    io.println(info);
 
     return null;
   }

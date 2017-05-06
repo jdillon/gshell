@@ -20,8 +20,6 @@ import com.planet57.gshell.util.cli2.ProcessingException
 import com.planet57.gshell.variables.Variables
 import org.junit.Test
 
-import static org.junit.Assert.fail
-
 /**
  * Tests for {@link SourceAction}.
  */
@@ -53,8 +51,7 @@ class SourceActionTest
   void 'source script'() {
     URL script = getClass().getResource('test1.tsh')
     assert script != null
-    Object result = executeCommand(script.toExternalForm())
-    assert result == null
+    assert executeCommand(script.toExternalForm()) == null
   }
 
   @Test
@@ -64,11 +61,9 @@ class SourceActionTest
 
     URL script = getClass().getResource('test2.tsh')
     assert script != null
-    Object result = executeCommand(script.toExternalForm())
-    assert result == null
+    assert executeCommand(script.toExternalForm()) == null
 
     assert variables.contains('foo')
-    Object value = variables.get('foo')
-    assert value == 'bar'
+    assert variables.get('foo') == 'bar'
   }
 }

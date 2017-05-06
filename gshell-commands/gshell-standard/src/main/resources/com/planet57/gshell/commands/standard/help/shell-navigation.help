@@ -14,55 +14,55 @@
 # limitations under the License.
 #
 
-    The shell supports command @|underline groups|@.  This is a facility to
-    organize similar commands into a tree-like structure.
+The shell supports command @|underline groups|@.  This is a facility to
+organize similar commands into a tree-like structure.
 
 @|bold SPECIAL NAMES|@
 
-    To help navigate in the tree of commands, there are a few special names:
+  To help navigate in the tree of commands, there are a few special names:
 
-    @|underline .|@
+  @|underline .|@
 
-        This refers to the current group.
+    This refers to the current group.
 
-    @|underline ..|@
+  @|underline ..|@
 
-        This refers to the parent of the current group.
+    This refers to the parent of the current group.
 
-    @|underline /|@
+  @|underline /|@
 
-        This refers to the root group.
+    This refers to the root group.
 
 @|bold CHANGING GROUPS|@
 
-    To change the current group to another group, simply execute the command
-    for the desired group name.
+  To change the current group to another group, simply execute the command
+  for the desired group name.
 
-    To change to the @|bold pref|@ group from root:
+  To change to the @|bold pref|@ group from root:
 
-        pref
+    pref
 
-    To change to the @|bold pref|@ from anywhere:
+  To change to the @|bold pref|@ from anywhere:
 
-        /pref
+    /pref
 
-    To change to the parent of the current group:
+  To change to the parent of the current group:
 
-        ..
+    ..
 
 @|bold GROUP HELP|@
 
-    When asked for the help or a group, the list of commands and nested groups
-    is displayed.
+  When asked for the help or a group, the list of commands and nested groups
+  is displayed.
 
-    To list the commands in the current group:
+  To list the commands in the current group:
 
-        help .
+    help .
 
-    To list the commands in the parent group:
+  To list the commands in the parent group:
 
-        help ..
+    help ..
 
-    To list the commands at the root:
+  To list the commands at the root:
 
-        help /
+    help /

@@ -52,9 +52,9 @@ public class LoggingComponentListAction
     for (LoggingComponent component : getLogging().getComponents()) {
       if ((typeQuery == null || component.getType().contains(typeQuery)) &&
           (nameQuery == null || component.getName().contains(nameQuery))) {
-        io.out.println(component);
+        io.println(component);
         if (verbose) {
-          io.out.printf("  %s%n", component.getTarget());
+          io.format("  %s%n", component.getTarget());
         }
       }
     }

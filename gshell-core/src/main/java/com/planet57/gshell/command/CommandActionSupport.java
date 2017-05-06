@@ -24,6 +24,8 @@ import org.jline.reader.impl.completer.NullCompleter;
 import org.sonatype.goodies.common.ComponentSupport;
 import org.jline.reader.Completer;
 
+import javax.annotation.Nullable;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
@@ -59,6 +61,16 @@ public abstract class CommandActionSupport
   @Override
   public String getSimpleName() {
     return new NodePath(getName()).last();
+  }
+
+  @Nullable
+  @Override
+  public String getDescription() {
+    Command command = getClass().getAnnotation(Command.class);
+    if (command != null) {
+      return command.description();
+    }
+    return null;
   }
 
   /**

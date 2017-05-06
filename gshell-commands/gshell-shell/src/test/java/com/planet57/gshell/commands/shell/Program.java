@@ -13,19 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.commands.shell
+package com.planet57.gshell.commands.shell;
 
-import com.planet57.gshell.testharness.CommandTestSupport
+import java.util.Arrays;
 
 /**
- * Tests for {@link DateAction}.
+ * Helper program for testing {@link JavaAction}.
  */
-class DateActionTest
-    extends CommandTestSupport
+public class Program
 {
-  DateActionTest() {
-    super(DateAction.class)
+  public static void main(final String[] args) {
+    System.out.println("test: " + Arrays.asList(args));
   }
 
-  // FIXME: add tests
+  public static int returnsValue(final String[] args) {
+    System.out.println("test: " + Arrays.asList(args));
+    return 57;
+  }
 }

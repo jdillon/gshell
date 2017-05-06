@@ -32,6 +32,11 @@ public interface FileSystemAccess
 
   File getUserDir() throws IOException;
 
+  /**
+   * @since 3.0
+   */
+  void setUserDir(final File dir);
+
   File getUserHomeDir() throws IOException;
 
   File resolveFile(File baseDir, final String path) throws IOException;
@@ -39,4 +44,34 @@ public interface FileSystemAccess
   File resolveFile(final String path) throws IOException;
 
   boolean hasChildren(final File file);
+
+  /**
+   * @since 3.0
+   */
+  void mkdir(final File dir) throws IOException;
+
+  /**
+   * @since 3.0
+   */
+  void deleteDirectory(final File dir) throws IOException;
+
+  /**
+   * @since 3.0
+   */
+  void deleteFile(final File file) throws IOException;
+
+  /**
+   * @since 3.0
+   */
+  void copyFile(final File source, final File target) throws IOException;
+
+  /**
+   * @since 3.0
+   */
+  void copyDirectory(final File source, final File target) throws IOException;
+
+  /**
+   * @since 3.0
+   */
+  void copyToDirectory(final File source, final File target) throws IOException;
 }

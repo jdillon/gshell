@@ -26,7 +26,7 @@ import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.io.FileAssert;
 import com.planet57.gshell.util.cli2.Argument;
-import org.apache.commons.io.FileUtils;
+import com.planet57.gshell.util.io.FileSystemAccess;
 import org.jline.reader.Completer;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -34,7 +34,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Remove a file.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Command(name = "rm", description = "Remove a file")
@@ -51,7 +50,7 @@ public class DeleteFileAction
   private boolean recursive;
 
   @Inject
-  public DeleteFileAction installCompleters(final @Named("file-name") Completer c1) {
+  public DeleteFileAction installCompleters(@Named("file-name") final Completer c1) {
     checkNotNull(c1);
     setCompleters(c1, null);
     return this;
@@ -59,21 +58,20 @@ public class DeleteFileAction
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    File file = getFileSystem().resolveFile(path);
+    FileSystemAccess fs = getFileSystem();
+    File file = fs.resolveFile(path);
 
     new FileAssert(file).exists();
 
     if (recursive) {
       log.debug("Deleting directory: {}", file);
       new FileAssert((file)).isDirectory();
-      FileUtils.deleteDirectory(file);
+      fs.deleteDirectory(file);
     }
     else {
       log.debug("Deleting file: {}", file);
       new FileAssert(file).isFile();
-      if (!file.delete()) {
-        throw new RuntimeException(String.format("Failed to remove file: %s", file));
-      }
+      fs.deleteFile(file);
     }
 
     return null;

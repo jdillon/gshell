@@ -13,36 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.commands.shell
+package com.planet57.gshell.commands.pref
+
+import java.util.prefs.Preferences
 
 import com.planet57.gshell.testharness.CommandTestSupport
-import org.junit.Test
 
 /**
- * Tests for {@link JavaAction}.
+ * Support for preference action tests.
  */
-class JavaActionTest
+abstract class PreferenceActionTestSupport
     extends CommandTestSupport
 {
-  JavaActionTest() {
-    super(JavaAction.class)
+  static {
+    System.setProperty('java.util.prefs.PreferencesFactory', 'org.sonatype.goodies.prefs.memory.MemoryPreferencesFactory')
   }
 
-  @Test
-  void 'run program'() {
-    assert executeCommand(Program.class.name) == null
-    assert io.outputString.contains('test: []')
+  protected final String ID = "test-${System.currentTimeMillis()}"
+
+  /**
+   * Preferences path for tests to use.
+   */
+  protected final String PATH = "/test/${ID}/${this.class.package.name.replace('.', '/')}"
+
+  PreferenceActionTestSupport(final Class<?> type) {
+    super(type)
   }
 
-  @Test
-  void 'run program with arguments'() {
-    assert executeCommand(Program.class.name, 'foo', 'bar') == null
-    assert io.outputString.contains('test: [foo, bar]')
+  protected Preferences userRoot() {
+    return Preferences.userRoot()
   }
 
-  @Test
-  void 'run program with return-value'() {
-    assert executeCommand('-m', 'returnsValue', Program.class.name) == 57
-    assert io.outputString.contains('test: []')
+  protected Preferences systemRoot() {
+    return Preferences.systemRoot()
   }
 }

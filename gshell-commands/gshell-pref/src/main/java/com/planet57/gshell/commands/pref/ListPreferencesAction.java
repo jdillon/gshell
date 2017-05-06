@@ -42,19 +42,16 @@ public class ListPreferencesAction
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
-
     list(io, node());
-
     node().sync();
-
     return null;
   }
 
   private void list(final IO io, final java.util.prefs.Preferences node) throws Exception {
-    io.out.format("@|green %s|@%n", node.absolutePath());
+    io.format("@|green %s|@%n", node.absolutePath());
 
     for (String key : node.keys()) {
-      io.out.format("  @|bold %s|@: %s%n", key, node.get(key, null));
+      io.format("  @|bold %s|@: %s%n", key, node.get(key, null));
     }
 
     if (recursive) {

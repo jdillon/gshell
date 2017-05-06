@@ -47,23 +47,36 @@ public class JavaAction
   @Argument(index = 0, required = true, description = "The name of the class to invoke", token = "CLASSNAME")
   private String className;
 
+  @Nullable
   @Argument(index = 1, description = "Arguments to pass to the METHOD of CLASSNAME", token = "ARGS")
   private List<String> args;
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    log.debug("Loading class: {}", className);
+    log.debug("Class-name: {}", className);
+    log.debug("Method-name: {}", methodName);
+
     Class<?> type = Thread.currentThread().getContextClassLoader().loadClass(className);
     log.debug("Using type: {}", type);
 
-    log.debug("Locating method: {}", methodName);
     Method method = type.getMethod(methodName, String[].class);
     log.debug("Using method: {}", method);
 
     log.debug("Invoking w/arguments: {}", args);
-    Object result = method.invoke(null, args);
+    Object result = method.invoke(null, new Object[] { convert(args) });
     log.debug("Result: {}", result);
 
+    return result;
+  }
+
+  private static String[] convert(@Nullable final List<?> source) {
+    if (source == null) {
+      return new String[0];
+    }
+    String[] result = new String[source.size()];
+    for (int i = 0; i < source.size(); i++) {
+      result[i] = String.valueOf(source.get(i));
+    }
     return result;
   }
 }

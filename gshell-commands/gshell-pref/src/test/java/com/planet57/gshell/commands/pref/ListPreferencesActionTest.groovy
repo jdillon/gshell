@@ -15,15 +15,29 @@
  */
 package com.planet57.gshell.commands.pref
 
-import com.planet57.gshell.testharness.CommandTestSupport
+import org.junit.Test
 
 /**
  * Tests for {@link ListPreferencesAction}.
  */
 class ListPreferencesActionTest
-    extends CommandTestSupport
+    extends PreferenceActionTestSupport
 {
   ListPreferencesActionTest() {
     super(ListPreferencesAction.class)
+  }
+
+  @Test
+  void 'list user preference'() {
+    def root = userRoot()
+    def node = root.node(PATH)
+    node.put('foo', 'bar')
+    node.sync()
+
+    assert executeCommand('-r', PATH) == null
+
+    assert io.outputString == """/test/${ID}/com/planet57/gshell/commands/pref
+  foo: bar
+"""
   }
 }

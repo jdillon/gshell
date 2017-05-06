@@ -15,6 +15,7 @@
  */
 package com.planet57.gshell.commands.shell;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.CommandActionSupport;
@@ -40,10 +41,11 @@ public class FailAction
     throw new FailException(message);
   }
 
-  private static class FailException
+  @VisibleForTesting
+  static class FailException
       extends Exception
   {
-    public FailException(final String message) {
+    FailException(final String message) {
       super(message);
     }
   }

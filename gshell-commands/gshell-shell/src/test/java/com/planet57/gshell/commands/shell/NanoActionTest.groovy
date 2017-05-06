@@ -26,4 +26,6 @@ class NanoActionTest
   NanoActionTest() {
     super(NanoAction.class)
   }
+
+  // FIXME: add tests
 }

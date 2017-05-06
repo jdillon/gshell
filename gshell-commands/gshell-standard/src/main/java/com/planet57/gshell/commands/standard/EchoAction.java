@@ -57,15 +57,15 @@ public class EchoAction
       Iterator iter = args.iterator();
 
       while (iter.hasNext()) {
-        io.out.print(iter.next());
+        io.print(iter.next());
         if (iter.hasNext()) {
-          io.out.print(" ");
+          io.print(" ");
         }
       }
     }
 
     if (!noTrailingNewline) {
-      io.out.println();
+      io.println();
     }
 
     return null;

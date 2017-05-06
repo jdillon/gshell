@@ -43,9 +43,9 @@ public class HostnameAction
     IO io = context.getIo();
 
     InetAddress localhost = InetAddress.getLocalHost();
-    io.out.println(localhost.getHostName());
+    io.println(localhost.getHostName());
     if (verbose) {
-      io.out.println(localhost.getHostAddress());
+      io.println(localhost.getHostAddress());
     }
 
     return null;

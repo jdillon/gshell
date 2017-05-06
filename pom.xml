@@ -152,15 +152,15 @@
 
       <dependency>
         <groupId>org.sonatype.goodies</groupId>
-        <artifactId>goodies-testharness</artifactId>
+        <artifactId>goodies-testsupport</artifactId>
         <version>${sonatype-goodies.version}</version>
+        <!-- includes older gossip for TestSupport and TestTracer; but should be fine and won't impact general runtime -->
       </dependency>
 
       <dependency>
         <groupId>org.sonatype.goodies</groupId>
-        <artifactId>goodies-testsupport</artifactId>
+        <artifactId>goodies-prefs</artifactId>
         <version>${sonatype-goodies.version}</version>
-        <!-- this will include older gossip for TestSupport and TestTracer; but should be fine and won't impact general runtime -->
       </dependency>
 
       <dependency>
@@ -282,6 +282,13 @@
         <groupId>org.apache.felix</groupId>
         <artifactId>org.apache.felix.gogo.jline</artifactId>
         <version>${felix-gogo.version}</version>
+        <exclusions>
+          <!-- exclude jline uber-jar; we pull in whats needed -->
+          <exclusion>
+            <groupId>org.jline</groupId>
+            <artifactId>jline</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
 
       <dependency>

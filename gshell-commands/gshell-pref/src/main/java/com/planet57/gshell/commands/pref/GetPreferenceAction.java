@@ -22,8 +22,6 @@ import com.planet57.gshell.util.cli2.Argument;
 
 import javax.annotation.Nonnull;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Get a preference value.
  *
@@ -42,9 +40,8 @@ public class GetPreferenceAction
     IO io = context.getIo();
 
     log.debug("Getting preference: {}", key);
-
     Object value = node().get(key, null);
-    io.out.println(value);
+    io.println(value);
 
     return value;
   }

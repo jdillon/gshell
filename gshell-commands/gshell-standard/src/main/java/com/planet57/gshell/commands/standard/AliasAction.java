@@ -112,7 +112,7 @@ public class AliasAction
     Map<String, String> aliases = aliasRegistry.getAliases();
 
     if (aliases.isEmpty()) {
-      io.out.println(messages.noAliases());
+      io.println(messages.noAliases());
     }
     else {
       // Determine the maximum name length
@@ -123,13 +123,13 @@ public class AliasAction
         }
       }
 
-      io.out.println(messages.definedAliases());
+      io.println(messages.definedAliases());
       String nameFormat = "%-" + maxNameLen + 's';
 
       for (Map.Entry<String, String> entry : aliases.entrySet()) {
         String formattedName = String.format(nameFormat, entry.getKey());
-        io.out.format("  @|bold %s|@ ", formattedName);
-        io.out.println(messages.aliasTarget(entry.getValue()));
+        io.format("  @|bold %s|@ ", formattedName);
+        io.println(messages.aliasTarget(entry.getValue()));
       }
     }
 

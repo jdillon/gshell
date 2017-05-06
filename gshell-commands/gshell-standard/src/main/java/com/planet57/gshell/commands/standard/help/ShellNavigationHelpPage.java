@@ -39,6 +39,6 @@ public class ShellNavigationHelpPage
 
   @Override
   public String getDescription() {
-    return "Shell navigation overview.";
+    return "Shell navigation overview";
   }
 }

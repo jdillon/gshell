@@ -15,17 +15,35 @@
  */
 package com.planet57.gshell.commands.shell
 
+import com.planet57.gshell.commands.shell.FailAction.FailException
 import com.planet57.gshell.testharness.CommandTestSupport
+import org.junit.Test
+
+import static org.junit.Assert.fail
 
 /**
- * Tests for {@link DateAction}.
+ * Tests for {@link FailAction}.
  */
-class DateActionTest
+class FailActionTest
     extends CommandTestSupport
 {
-  DateActionTest() {
-    super(DateAction.class)
+  FailActionTest() {
+    super(FailAction.class)
   }
 
-  // FIXME: add tests
+  @Test(expected = FailException.class)
+  void 'fail with default-message'() {
+    executeCommand()
+  }
+
+  @Test
+  void 'fail with message'() {
+    try {
+      executeCommand('foo')
+      fail()
+    }
+    catch (FailException e) {
+      assert e.message == 'foo'
+    }
+  }
 }

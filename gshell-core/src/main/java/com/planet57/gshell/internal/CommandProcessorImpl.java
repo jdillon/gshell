@@ -62,37 +62,50 @@ public class CommandProcessorImpl
     this.resolver = checkNotNull(resolver);
   }
 
+  @Nullable
   @Override
-  protected Function getCommand(final String name, final Object path) {
+  protected Function getCommand(final String name, @Nullable final Object path) {
     assert name != null;
-    // ignore path (ie. gogo scope)
+
+    // gogo commands resolve with "*:" syntax; if colon missing skip
+    int colon = name.indexOf(':');
+    if (colon < 0) {
+      return null;
+    }
+
+    // strip off colon for resolution of gshell command actions
+    CommandAction action = lookupAction(name.substring(colon + 1));
+    if (action != null) {
+      return new CommandActionFunction(action);
+    }
+
+    return super.getCommand(name, path);
+  }
+
+  @Nullable
+  private CommandAction lookupAction(final String name) {
+    log.debug("Lookup action: {}", name);
 
     CommandAction action = null;
-    if (aliases.containsAlias(name)) {
-      try {
-        action = new ExecuteAliasAction(name, aliases.getAlias(name));
-      }
-      catch (NoSuchAliasException e) {
-        // should never happen
-        throw new Error();
-      }
+
+    // first attempt to resolve alias
+    try {
+      String target = aliases.getAlias(name);
+      action = new ExecuteAliasAction(name, target);
     }
-    else {
+    catch (NoSuchAliasException e) {
+      // ignore
+    }
+
+    // then attempt to resolve node
+    if (action == null) {
       Node node = resolver.resolve(name);
       if (node != null) {
         action = node.getAction();
       }
     }
 
-    if (action != null) {
-      if (action instanceof CommandAction.Prototype) {
-        action = ((CommandAction.Prototype)action).create();
-      }
-
-      return new CommandActionFunction(action);
-    }
-
-    return super.getCommand(name, path);
+    return action;
   }
 
   // TODO: consider how we want to generally cope with functions and the registry
