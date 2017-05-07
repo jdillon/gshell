@@ -18,8 +18,6 @@ package com.planet57.gshell.commands.file;
 import java.io.File;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.inject.Named;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
@@ -27,9 +25,6 @@ import com.planet57.gshell.util.io.FileAssert;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.io.FileSystemAccess;
 import com.planet57.gshell.util.jline.Complete;
-import org.jline.reader.Completer;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Remove a directory.
@@ -43,13 +38,6 @@ public class DeleteDirectoryAction
   @Argument(required = true, description = "The path of the directory remove", token = "PATH")
   @Complete("directory-name")
   private String path;
-
-  @Inject
-  public DeleteDirectoryAction installCompleters(@Named("file-name") final Completer c1) {
-    checkNotNull(c1);
-    setCompleters(c1, null);
-    return this;
-  }
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {

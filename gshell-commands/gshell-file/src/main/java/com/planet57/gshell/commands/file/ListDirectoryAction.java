@@ -22,8 +22,6 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.inject.Inject;
-import javax.inject.Named;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
@@ -35,9 +33,6 @@ import com.planet57.gshell.util.io.FileSystemAccess;
 import com.planet57.gshell.util.io.PrintBuffer;
 import com.planet57.gshell.util.jline.Complete;
 import com.planet57.gshell.util.jline.TerminalHelper;
-import org.jline.reader.Completer;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * List the contents of a file or directory.
@@ -61,13 +56,6 @@ public class ListDirectoryAction
 
   @Option(name = "r", longName = "recursive", description = "List the contents of directories recursively")
   private boolean recursive;
-
-  @Inject
-  public ListDirectoryAction installCompleters(@Named("file-name") final Completer c1) {
-    checkNotNull(c1);
-    setCompleters(c1, null);
-    return this;
-  }
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {

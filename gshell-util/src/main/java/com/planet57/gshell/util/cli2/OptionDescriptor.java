@@ -117,4 +117,11 @@ public class OptionDescriptor
     }
     throw new Error();
   }
+
+  @Override
+  public String toString() {
+    return "OptionDescriptor{" +
+      "spec=" + spec +
+      '}';
+  }
 }

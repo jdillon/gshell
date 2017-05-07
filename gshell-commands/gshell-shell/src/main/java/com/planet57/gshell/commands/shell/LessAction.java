@@ -19,11 +19,10 @@ import java.io.File;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.inject.Inject;
-import javax.inject.Named;
 
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.util.cli2.Option;
+import com.planet57.gshell.util.jline.Complete;
 import org.jline.builtins.Less;
 import org.jline.builtins.Source;
 
@@ -31,9 +30,6 @@ import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.util.cli2.Argument;
-import org.jline.reader.Completer;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Less action.
@@ -54,13 +50,8 @@ public class LessAction
 
   @Nullable
   @Argument(description = "File to display", token = "FILE")
+  @Complete("file-name")
   private File file;
-
-  @Inject
-  public void installCompleters(final @Named("file-name") Completer c1) {
-    checkNotNull(c1);
-    setCompleters(c1);
-  }
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {

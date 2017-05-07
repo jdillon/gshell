@@ -19,9 +19,8 @@ import java.io.File;
 import java.util.List;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.inject.Named;
 
+import com.planet57.gshell.util.jline.Complete;
 import org.jline.builtins.Nano;
 
 import com.planet57.gshell.command.Command;
@@ -30,9 +29,6 @@ import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
-import org.jline.reader.Completer;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Nano action.
@@ -44,13 +40,8 @@ public class NanoAction
     extends CommandActionSupport
 {
   @Argument(required = true, description = "One or more files to open for edit", token = "FILES")
+  @Complete("file-name")
   private List<String> files;
-
-  @Inject
-  public void installCompleters(final @Named("file-name") Completer c1) {
-    checkNotNull(c1);
-    setCompleters(c1);
-  }
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {

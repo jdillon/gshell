@@ -15,16 +15,25 @@
  */
 package com.planet57.gshell.command;
 
+import java.lang.reflect.AccessibleObject;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.planet57.gshell.command.resolver.NodePath;
+import com.planet57.gshell.util.cli2.ArgumentDescriptor;
+import com.planet57.gshell.util.cli2.CliProcessor;
+import com.planet57.gshell.util.jline.Complete;
 import org.jline.reader.impl.completer.ArgumentCompleter;
 import org.jline.reader.impl.completer.NullCompleter;
 import org.sonatype.goodies.common.ComponentSupport;
 import org.jline.reader.Completer;
 
 import javax.annotation.Nullable;
+import javax.inject.Inject;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
@@ -85,11 +94,58 @@ public abstract class CommandActionSupport
     return completer;
   }
 
+  @Inject
+  private Map<String,Completer> namedCompleters;
+
   /**
    * @since 3.0
    */
   protected Completer discoverCompleter() {
-    return NullCompleter.INSTANCE;
+    log.debug("Discovering completer");
+
+    // TODO: Could probably use CliProcessorAware to avoid re-creating this
+    CliProcessor cli = new CliProcessor();
+    cli.addBean(this);
+
+    List<ArgumentDescriptor> argumentDescriptors = cli.getArgumentDescriptors();
+    Collections.sort(argumentDescriptors);
+
+    if (log.isDebugEnabled()) {
+      log.debug("Argument descriptors:");
+      argumentDescriptors.forEach(descriptor -> log.debug("  {}", descriptor));
+    }
+
+    List<Completer> completers = new LinkedList<>();
+
+    // attempt to resolve @Complete on each argument
+    argumentDescriptors.forEach(descriptor -> {
+      AccessibleObject accessible = descriptor.getSetter().getAccessible();
+      if (accessible != null) {
+        Complete complete = accessible.getAnnotation(Complete.class);
+        if (complete != null) {
+          Completer completer = namedCompleters.get(complete.value());
+          checkState(completer != null, "Missing named completer: %s", complete.value());
+          completers.add(completer);
+        }
+      }
+    });
+
+    // short-circuit if no completers detected
+    if (completers.isEmpty()) {
+      return NullCompleter.INSTANCE;
+    }
+
+    if (log.isDebugEnabled()) {
+      log.debug("Discovered completers:");
+      completers.forEach(completer -> {
+        log.debug("  {}", completer);
+      });
+    }
+
+    // automatically add terminal completer
+    completers.add(null);
+
+    return new ArgumentCompleter(completers);
   }
 
   /**

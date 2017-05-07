@@ -23,6 +23,8 @@ import org.slf4j.Logger;
 import com.planet57.gshell.util.i18n.I18N;
 import com.planet57.gshell.util.i18n.MessageBundle;
 
+import javax.annotation.Nonnull;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -57,6 +59,8 @@ public abstract class SetterSupport
     this.bean = checkNotNull(bean);
   }
 
+  @Override
+  @Nonnull
   public AccessibleObject getAccessible() {
     return accessible;
   }

@@ -18,8 +18,6 @@ package com.planet57.gshell.commands.file;
 import java.io.File;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.inject.Named;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
@@ -27,9 +25,6 @@ import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.io.FileSystemAccess;
 import com.planet57.gshell.util.jline.Complete;
-import org.jline.reader.Completer;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Copy file or directory.
@@ -50,14 +45,6 @@ public class CopyAction
 
   @Option(name = "r", longName = "recursive")
   private boolean recursive;
-
-  @Inject
-  public CopyAction installCompleters(@Named("file-name") final Completer c1) {
-    checkNotNull(c1);
-    // Add completer for source and target
-    setCompleters(c1, c1, null);
-    return this;
-  }
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {

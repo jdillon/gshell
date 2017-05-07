@@ -17,6 +17,8 @@ package com.planet57.gshell.util.cli2;
 
 import com.planet57.gshell.util.setter.Setter;
 
+import javax.annotation.Nonnull;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -27,6 +29,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class ArgumentDescriptor
     extends CliDescriptor
+    implements Comparable<ArgumentDescriptor>
 {
   private final Argument spec;
 
@@ -51,5 +54,17 @@ public class ArgumentDescriptor
     }
 
     return "ARG";
+  }
+
+  @Override
+  public int compareTo(@Nonnull final ArgumentDescriptor descriptor) {
+    return Integer.compare(spec.index(), descriptor.spec.index());
+  }
+
+  @Override
+  public String toString() {
+    return "ArgumentDescriptor{" +
+      "spec=" + spec +
+      '}';
   }
 }
