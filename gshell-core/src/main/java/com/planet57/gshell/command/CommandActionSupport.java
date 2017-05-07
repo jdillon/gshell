@@ -16,12 +16,10 @@
 package com.planet57.gshell.command;
 
 import java.lang.reflect.AccessibleObject;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import com.planet57.gshell.command.resolver.NodePath;
 import com.planet57.gshell.util.cli2.ArgumentDescriptor;
@@ -143,19 +141,6 @@ public abstract class CommandActionSupport
     }
 
     return new ArgumentCompleter(completers);
-  }
-
-  /**
-   * Install argument completer for the given completers.
-   *
-   * This will handle translating {@code null} members of completers into {@link NullCompleter#INSTANCE}.
-   */
-  protected void setCompleters(final Completer... completers) {
-    checkNotNull(completers);
-    completer = new ArgumentCompleter(
-      // translate null to NullCompleter.INSTANCE
-      Arrays.stream(completers).map(it -> it == null ? NullCompleter.INSTANCE : it).collect(Collectors.toList())
-    );
   }
 
   /**
