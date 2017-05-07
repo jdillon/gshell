@@ -142,9 +142,6 @@ public abstract class CommandActionSupport
       });
     }
 
-    // automatically add terminal completer
-    completers.add(null);
-
     return new ArgumentCompleter(completers);
   }
 
