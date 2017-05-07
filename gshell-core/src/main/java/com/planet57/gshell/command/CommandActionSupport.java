@@ -41,7 +41,8 @@ public abstract class CommandActionSupport
 {
   private String name;
 
-  private Completer completer = NullCompleter.INSTANCE;
+  @Nullable
+  private Completer completer;
 
   @Override
   public String getName() {
@@ -78,16 +79,17 @@ public abstract class CommandActionSupport
    */
   @Override
   public Completer getCompleter() {
+    if (completer == null) {
+      completer = discoverCompleter();
+    }
     return completer;
   }
 
   /**
-   * Install raw completer.
-   *
    * @since 3.0
    */
-  protected void setCompleter(final Completer completer) {
-    this.completer = checkNotNull(completer);
+  protected Completer discoverCompleter() {
+    return NullCompleter.INSTANCE;
   }
 
   /**
@@ -118,7 +120,7 @@ public abstract class CommandActionSupport
 
   @Override
   public String toString() {
-    return "CommandActionSupport{" +
+    return getClass().getSimpleName() + "{" +
       "name='" + name + '\'' +
       '}';
   }

@@ -79,7 +79,7 @@ public abstract class SetterSupport
         doSet(value);
       }
       catch (IllegalAccessException e) {
-        throw new IllegalAccessError(e.getMessage());
+        throw new IllegalAccessError(e.toString());
       }
     }
   }
