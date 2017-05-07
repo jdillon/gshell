@@ -93,6 +93,9 @@ public abstract class CommandActionSupport
     return completer;
   }
 
+  /**
+   * All named completer instances registered with the container.  This is a dynamic sisu map.
+   */
   @Inject
   private Map<String,Completer> namedCompleters;
 
