@@ -147,7 +147,12 @@ public abstract class CommandActionSupport
       });
     }
 
-    return new ArgumentCompleter(completers);
+    // append terminal completer for strict
+    completers.add(NullCompleter.INSTANCE);
+
+    ArgumentCompleter completer = new ArgumentCompleter(completers);
+    completer.setStrict(true);
+    return completer;
   }
 
   /**
