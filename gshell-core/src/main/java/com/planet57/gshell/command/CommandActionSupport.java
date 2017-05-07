@@ -30,6 +30,7 @@ import org.jline.reader.impl.completer.NullCompleter;
 import org.sonatype.goodies.common.ComponentSupport;
 import org.jline.reader.Completer;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
@@ -96,8 +97,11 @@ public abstract class CommandActionSupport
   private Map<String,Completer> namedCompleters;
 
   /**
+   * Discover the completer for the command.
+   *
    * @since 3.0
    */
+  @Nonnull
   protected Completer discoverCompleter() {
     log.debug("Discovering completer");
 
