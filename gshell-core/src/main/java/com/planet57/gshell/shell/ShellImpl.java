@@ -128,6 +128,9 @@ public class ShellImpl
     this.io = checkNotNull(io);
     this.variables = checkNotNull(variables);
     this.branding = checkNotNull(branding);
+
+    // HACK: more variables shenanigans
+    VariablesProvider.set(variables);
   }
 
   // custom/simplified lifecycle so we can fire do-start and do-started

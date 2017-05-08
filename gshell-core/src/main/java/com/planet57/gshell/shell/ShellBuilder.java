@@ -17,7 +17,6 @@ package com.planet57.gshell.shell;
 
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.command.IO;
-import com.planet57.gshell.internal.VariablesProvider;
 import com.planet57.gshell.variables.Variables;
 import org.sonatype.goodies.common.ComponentSupport;
 
@@ -62,17 +61,10 @@ public class ShellBuilder
     return this;
   }
 
-
-  @Inject
-  private VariablesProvider variablesProvider;
-
   public Shell build() {
     checkState(branding != null);
     checkState(io != null);
     checkState(variables != null);
-
-    // HACK: expose for provider access
-    variablesProvider.set(variables);
 
     ShellImpl shell = shellFactory.get();
     shell.init(io, variables, branding);
