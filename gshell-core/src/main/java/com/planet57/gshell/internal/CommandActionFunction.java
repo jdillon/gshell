@@ -71,6 +71,10 @@ public class CommandActionFunction
 
   @Override
   public Object execute(final CommandSession session, final List<Object> arguments) throws Exception {
+    return doExecute((CommandSessionImpl)session, arguments);
+  }
+
+  private Object doExecute(final CommandSessionImpl session, final List<Object> arguments) throws Exception {
     log.debug("Executing ({}): {}", action.getName(), arguments);
 
     Stopwatch watch = Stopwatch.createStarted();
@@ -116,7 +120,7 @@ public class CommandActionFunction
       }
 
       // HACK: re-create variables with session as basis
-      final Variables variables = new VariablesSupport(((CommandSessionImpl)session).getVariables());
+      final Variables variables = new VariablesSupport(session.getVariables());
       VariablesProvider.set(variables);
 
       if (execute) {
@@ -126,6 +130,12 @@ public class CommandActionFunction
           @Nonnull
           public Shell getShell() {
             return shell;
+          }
+
+          @Nonnull
+          @Override
+          public CommandSessionImpl getSession() {
+            return session;
           }
 
           @Override

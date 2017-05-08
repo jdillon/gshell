@@ -333,7 +333,7 @@ public class ShellImpl
           running = errorHandler.handleError(io.err, e, variables.require(VariableNames.SHELL_ERRORS, Boolean.class, true));
         }
 
-        // TODO: is this the best place for this?
+        // TODO: is this the best place for this?  verify this actually does what its supposed to do
         waitForJobCompletion(session);
 
         // TODO: investigate jline.Shell handling of UserInterruptException and EndOfFileException here
