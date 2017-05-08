@@ -126,8 +126,8 @@ public class CommandActionFunction
       if (execute) {
         result = action.execute(new CommandContext()
         {
-          @Override
           @Nonnull
+          @Override
           public Shell getShell() {
             return shell;
           }
@@ -138,20 +138,20 @@ public class CommandActionFunction
             return session;
           }
 
-          @Override
           @Nonnull
+          @Override
           public List<?> getArguments() {
             return arguments;
           }
 
-          @Override
           @Nonnull
+          @Override
           public IO getIo() {
             return io;
           }
 
-          @Override
           @Nonnull
+          @Override
           public Variables getVariables() {
             return variables;
           }
