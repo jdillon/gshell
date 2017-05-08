@@ -115,8 +115,9 @@ public class CommandActionFunction
         }
       }
 
-      // re-create variables with session as basis
+      // HACK: re-create variables with session as basis
       final Variables variables = new VariablesSupport(((CommandSessionImpl)session).getVariables());
+      VariablesProvider.set(variables);
 
       if (execute) {
         result = action.execute(new CommandContext()

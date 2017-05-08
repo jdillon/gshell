@@ -32,6 +32,7 @@ import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.help.HelpPageManager;
 import com.planet57.gshell.internal.CommandActionFunction;
 import com.planet57.gshell.internal.CommandProcessorImpl;
+import com.planet57.gshell.internal.VariablesProvider;
 import com.planet57.gshell.util.jline.LoggingCompleter;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
@@ -240,6 +241,7 @@ public class ShellImpl
     // FIXME: copy session variables back to shell's variables
     variables.asMap().clear();
     variables.asMap().putAll(session.getVariables());
+    VariablesProvider.set(variables);
 
     return result;
   }
@@ -336,6 +338,7 @@ public class ShellImpl
         // FIXME: copy session variables back to shell's variables
         variables.asMap().clear();
         variables.asMap().putAll(session.getVariables());
+        VariablesProvider.set(variables);
       }
     }
     finally {

@@ -17,15 +17,14 @@ package com.planet57.gshell.shell;
 
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.command.IO;
+import com.planet57.gshell.internal.VariablesProvider;
 import com.planet57.gshell.variables.Variables;
 import org.sonatype.goodies.common.ComponentSupport;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
-import javax.inject.Singleton;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
 /**
@@ -63,25 +62,6 @@ public class ShellBuilder
     return this;
   }
 
-  // FIXME: need to cope with injected Provider<Variables>; CommandResolverImpl maybe others?
-
-  @Named
-  @Singleton
-  public static class VariablesProvider
-    implements Provider<Variables>
-  {
-    private Variables variables;
-
-    public void set(final Variables variables) {
-      this.variables = checkNotNull(variables);
-    }
-
-    @Override
-    public Variables get() {
-      checkState(variables != null);
-      return variables;
-    }
-  }
 
   @Inject
   private VariablesProvider variablesProvider;
