@@ -45,4 +45,19 @@ class CopyActionTest
     assert target.exists()
     assert source.text == target.text
   }
+
+  @Test
+  void 'copy file to directory'() {
+    File source = util.createTempFile('source.txt')
+    source.text = System.currentTimeMillis() as String
+
+    File dir = util.createTempDir('copy')
+    assert dir.exists()
+
+    assert executeCommand(source.path, dir.path) == null
+
+    File target = new File(dir, source.name)
+    assert target.exists()
+    assert source.text == target.text
+  }
 }
