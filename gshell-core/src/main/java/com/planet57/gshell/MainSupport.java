@@ -146,7 +146,7 @@ public abstract class MainSupport
     checkNotNull(args);
 
     if (log.isDebugEnabled()) {
-      log.debug("Booting w/args: {}", Arrays.asList(args));
+      log.debug("Booting w/args: {}", Arrays.toString(args));
     }
 
     // Register default handler for uncaught exceptions

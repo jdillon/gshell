@@ -68,7 +68,7 @@ public final class Launcher
 
     Thread.currentThread().setContextClassLoader(cl);
 
-    Log.debug("Invoking: ", method, ", with args: ", Arrays.asList(args));
+    Log.debug("Invoking: ", method, ", with args: ", Arrays.toString(args));
 
     try {
       method.invoke(null, new Object[]{args});

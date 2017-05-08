@@ -23,11 +23,11 @@ import java.util.Arrays;
 public class Program
 {
   public static void main(final String[] args) {
-    System.out.println("test: " + Arrays.asList(args));
+    System.out.println("test: " + Arrays.toString(args));
   }
 
   public static int returnsValue(final String[] args) {
-    System.out.println("test: " + Arrays.asList(args));
+    System.out.println("test: " + Arrays.toString(args));
     return 57;
   }
 }
