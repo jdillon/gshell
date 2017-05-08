@@ -11,6 +11,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
 // HACK: need to adjust how variables and session work;  resolver, file-system-access and completers all depend on Variables
+// CommandResolverImpl
+// DirectionNameCompleter
+// FileNameCompleter
+// FileSystemAccessImpl
+// VariableNameCompleter
 
 /**
  * ???
