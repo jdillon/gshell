@@ -16,6 +16,7 @@
 package com.planet57.gshell.commands.file
 
 import com.planet57.gshell.testharness.CommandTestSupport
+import org.junit.Test
 
 /**
  * Tests for {@link CreateDirectoryAction}.
@@ -27,5 +28,11 @@ class CreateDirectoryActionTest
     super(CreateDirectoryAction.class)
   }
 
-  // FIXME: add tests
+  @Test
+  void 'create directory'() {
+    File dir = new File(util.createTempDir('create-directory'), 'new-dir')
+    assert !dir.exists()
+    assert executeCommand(dir.path) == null
+    assert dir.exists()
+  }
 }
