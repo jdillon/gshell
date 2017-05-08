@@ -3,7 +3,6 @@ package com.planet57.gshell.internal;
 import com.planet57.gshell.variables.Variables;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonatype.goodies.common.ComponentSupport;
 
 import javax.inject.Named;
 import javax.inject.Provider;
@@ -34,6 +33,13 @@ public class VariablesProvider
 
   @Override
   public Variables get() {
+    // TODO: this doesn't work with completers, which do not yet have a current job
+//    Job job = Job.Utils.current();
+//    checkState(job != null);
+//
+//    CommandSessionImpl session = (CommandSessionImpl) job.session();
+//    return new VariablesSupport(session.getVariables());
+
     Variables variables = holder.get();
     checkState(variables != null);
     return variables;
