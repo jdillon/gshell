@@ -69,4 +69,11 @@ public class MethodSetter
       throw new Error(t);
     }
   }
+
+  @Override
+  public String toString() {
+    return "MethodSetter{" +
+      "method=" + method +
+      '}';
+  }
 }

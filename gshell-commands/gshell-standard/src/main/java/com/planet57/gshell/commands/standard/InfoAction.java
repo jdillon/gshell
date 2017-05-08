@@ -46,7 +46,6 @@ import com.planet57.gshell.util.i18n.I18N;
 import com.planet57.gshell.util.i18n.MessageBundle;
 import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.Preferences;
-import org.jline.reader.impl.completer.EnumCompleter;
 
 import javax.annotation.Nonnull;
 
@@ -117,10 +116,6 @@ public class InfoAction
 
   @Option(name = "a", longName = "all", description = "Display all sections")
   private boolean all;
-
-  public InfoAction() {
-    this.setCompleters(new EnumCompleter(Section.class));
-  }
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {

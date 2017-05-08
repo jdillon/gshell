@@ -50,4 +50,11 @@ public class FieldSetter
   protected void doSet(final Object value) throws IllegalAccessException {
     field.set(getBean(), value);
   }
+
+  @Override
+  public String toString() {
+    return "FieldSetter{" +
+      "field=" + field +
+      '}';
+  }
 }

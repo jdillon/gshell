@@ -18,18 +18,14 @@ package com.planet57.gshell.commands.standard;
 import java.util.List;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.inject.Named;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
+import com.planet57.gshell.util.jline.Complete;
 import com.planet57.gshell.variables.Variables;
-import org.jline.reader.Completer;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Unset a variable or property.
@@ -45,14 +41,8 @@ public class UnsetAction
   private SetAction.Mode mode = SetAction.Mode.VARIABLE;
 
   @Argument(required = true, description = "Variable name", token = "NAME")
+  @Complete("variable-name")
   private List<String> args;
-
-  @Inject
-  public UnsetAction installCompleters(@Named("variable-name") final Completer c1) {
-    checkNotNull(c1);
-    setCompleters(c1, null);
-    return this;
-  }
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {

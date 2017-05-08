@@ -23,9 +23,7 @@ import org.sonatype.goodies.common.ComponentSupport;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
-import javax.inject.Singleton;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
 /**
@@ -63,36 +61,10 @@ public class ShellBuilder
     return this;
   }
 
-  // FIXME: need to cope with injected Provider<Variables>; CommandResolverImpl maybe others?
-
-  @Named
-  @Singleton
-  public static class VariablesProvider
-    implements Provider<Variables>
-  {
-    private Variables variables;
-
-    public void set(final Variables variables) {
-      this.variables = checkNotNull(variables);
-    }
-
-    @Override
-    public Variables get() {
-      checkState(variables != null);
-      return variables;
-    }
-  }
-
-  @Inject
-  private VariablesProvider variablesProvider;
-
   public Shell build() {
     checkState(branding != null);
     checkState(io != null);
     checkState(variables != null);
-
-    // HACK: expose for provider access
-    variablesProvider.set(variables);
 
     ShellImpl shell = shellFactory.get();
     shell.init(io, variables, branding);

@@ -24,8 +24,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.inject.Named;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
@@ -33,9 +31,7 @@ import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.util.io.FileAssert;
 import com.planet57.gshell.util.cli2.Argument;
-import org.jline.reader.Completer;
-
-import static com.google.common.base.Preconditions.checkNotNull;
+import com.planet57.gshell.util.jline.Complete;
 
 /**
  * Read and execute commands from a file in the current shell.
@@ -48,14 +44,8 @@ public class SourceAction
     extends CommandActionSupport
 {
   @Argument(required = true, description = "Path to file or URL to be sourced", token = "PATH")
+  @Complete("file-name")
   private String path;
-
-  @Inject
-  public SourceAction installCompleters(final @Named("file-name") Completer c1) {
-    checkNotNull(c1);
-    setCompleters(c1, null);
-    return this;
-  }
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {

@@ -21,7 +21,6 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import com.google.common.base.Joiner;
 import com.planet57.gshell.alias.AliasRegistry;
@@ -32,7 +31,7 @@ import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.CliProcessor;
 import com.planet57.gshell.util.cli2.CliProcessorAware;
-import org.jline.reader.Completer;
+import com.planet57.gshell.util.jline.Complete;
 import com.planet57.gshell.util.i18n.I18N;
 import com.planet57.gshell.util.i18n.MessageBundle;
 
@@ -72,6 +71,7 @@ public class AliasAction
 
   @Nullable
   @Argument(index = 0, description = "Name of the alias to define", token = "NAME")
+  @Complete("alias-name")
   private String name;
 
   @Nullable
@@ -81,13 +81,6 @@ public class AliasAction
   @Inject
   public AliasAction(final AliasRegistry aliasRegistry) {
     this.aliasRegistry = checkNotNull(aliasRegistry);
-  }
-
-  @Inject
-  public AliasAction installCompleters(@Named("alias-name") final Completer c1) {
-    checkNotNull(c1);
-    setCompleters(c1, null);
-    return this;
   }
 
   public void setProcessor(final CliProcessor processor) {

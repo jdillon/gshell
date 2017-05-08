@@ -17,6 +17,7 @@ package com.planet57.gshell.command;
 
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.variables.Variables;
+import org.apache.felix.gogo.runtime.CommandSessionImpl;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -36,6 +37,12 @@ public interface CommandContext
    */
   @Nonnull
   Shell getShell();
+
+  /**
+   * @since 3.0
+   */
+  @Nonnull
+  CommandSessionImpl getSession();
 
   /**
    * Provides access to the arguments to the command.

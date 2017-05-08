@@ -15,16 +15,24 @@
  */
 package com.planet57.gshell.command;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
+import java.lang.reflect.AccessibleObject;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import com.planet57.gshell.command.resolver.NodePath;
+import com.planet57.gshell.util.cli2.ArgumentDescriptor;
+import com.planet57.gshell.util.cli2.CliProcessor;
+import com.planet57.gshell.util.jline.Complete;
 import org.jline.reader.impl.completer.ArgumentCompleter;
 import org.jline.reader.impl.completer.NullCompleter;
 import org.sonatype.goodies.common.ComponentSupport;
 import org.jline.reader.Completer;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.inject.Inject;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
@@ -41,7 +49,8 @@ public abstract class CommandActionSupport
 {
   private String name;
 
-  private Completer completer = NullCompleter.INSTANCE;
+  @Nullable
+  private Completer completer;
 
   @Override
   public String getName() {
@@ -78,29 +87,72 @@ public abstract class CommandActionSupport
    */
   @Override
   public Completer getCompleter() {
+    if (completer == null) {
+      completer = discoverCompleter();
+    }
     return completer;
   }
 
   /**
-   * Install raw completer.
+   * All named completer instances registered with the container.  This is a dynamic sisu map.
+   */
+  @Inject
+  private Map<String,Completer> namedCompleters;
+
+  /**
+   * Discover the completer for the command.
    *
    * @since 3.0
    */
-  protected void setCompleter(final Completer completer) {
-    this.completer = checkNotNull(completer);
-  }
+  @Nonnull
+  protected Completer discoverCompleter() {
+    log.debug("Discovering completer");
 
-  /**
-   * Install argument completer for the given completers.
-   *
-   * This will handle translating {@code null} members of completers into {@link NullCompleter#INSTANCE}.
-   */
-  protected void setCompleters(final Completer... completers) {
-    checkNotNull(completers);
-    completer = new ArgumentCompleter(
-      // translate null to NullCompleter.INSTANCE
-      Arrays.stream(completers).map(it -> it == null ? NullCompleter.INSTANCE : it).collect(Collectors.toList())
-    );
+    // TODO: Could probably use CliProcessorAware to avoid re-creating this
+    CliProcessor cli = new CliProcessor();
+    cli.addBean(this);
+
+    List<ArgumentDescriptor> argumentDescriptors = cli.getArgumentDescriptors();
+    Collections.sort(argumentDescriptors);
+
+    if (log.isDebugEnabled()) {
+      log.debug("Argument descriptors:");
+      argumentDescriptors.forEach(descriptor -> log.debug("  {}", descriptor));
+    }
+
+    List<Completer> completers = new LinkedList<>();
+
+    // attempt to resolve @Complete on each argument
+    argumentDescriptors.forEach(descriptor -> {
+      AccessibleObject accessible = descriptor.getSetter().getAccessible();
+      if (accessible != null) {
+        Complete complete = accessible.getAnnotation(Complete.class);
+        if (complete != null) {
+          Completer completer = namedCompleters.get(complete.value());
+          checkState(completer != null, "Missing named completer: %s", complete.value());
+          completers.add(completer);
+        }
+      }
+    });
+
+    // short-circuit if no completers detected
+    if (completers.isEmpty()) {
+      return NullCompleter.INSTANCE;
+    }
+
+    if (log.isDebugEnabled()) {
+      log.debug("Discovered completers:");
+      completers.forEach(completer -> {
+        log.debug("  {}", completer);
+      });
+    }
+
+    // append terminal completer for strict
+    completers.add(NullCompleter.INSTANCE);
+
+    ArgumentCompleter completer = new ArgumentCompleter(completers);
+    completer.setStrict(true);
+    return completer;
   }
 
   /**
@@ -118,7 +170,7 @@ public abstract class CommandActionSupport
 
   @Override
   public String toString() {
-    return "CommandActionSupport{" +
+    return getClass().getSimpleName() + "{" +
       "name='" + name + '\'' +
       '}';
   }

@@ -17,7 +17,6 @@ package com.planet57.gshell.commands.standard;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import com.planet57.gshell.alias.AliasRegistry;
 import com.planet57.gshell.alias.NoSuchAliasException;
@@ -25,7 +24,7 @@ import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
-import org.jline.reader.Completer;
+import com.planet57.gshell.util.jline.Complete;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -42,18 +41,12 @@ public class UnaliasAction
   private final AliasRegistry aliasRegistry;
 
   @Argument(index = 0, required = true, description = "Name of the alias to undefine.", token = "NAME")
+  @Complete("alias-name")
   private String name;
 
   @Inject
   public UnaliasAction(final AliasRegistry aliasRegistry) {
     this.aliasRegistry = checkNotNull(aliasRegistry);
-  }
-
-  @Inject
-  public UnaliasAction installCompleters(@Named("alias-name") final Completer c1) {
-    checkNotNull(c1);
-    setCompleters(c1, null);
-    return this;
   }
 
   @Override

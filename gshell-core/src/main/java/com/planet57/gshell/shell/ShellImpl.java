@@ -32,6 +32,7 @@ import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.help.HelpPageManager;
 import com.planet57.gshell.internal.CommandActionFunction;
 import com.planet57.gshell.internal.CommandProcessorImpl;
+import com.planet57.gshell.internal.VariablesProvider;
 import com.planet57.gshell.util.jline.LoggingCompleter;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
@@ -127,6 +128,9 @@ public class ShellImpl
     this.io = checkNotNull(io);
     this.variables = checkNotNull(variables);
     this.branding = checkNotNull(branding);
+
+    // HACK: more variables shenanigans
+    VariablesProvider.set(variables);
   }
 
   // custom/simplified lifecycle so we can fire do-start and do-started
@@ -240,6 +244,7 @@ public class ShellImpl
     // FIXME: copy session variables back to shell's variables
     variables.asMap().clear();
     variables.asMap().putAll(session.getVariables());
+    VariablesProvider.set(variables);
 
     return result;
   }
@@ -328,7 +333,7 @@ public class ShellImpl
           running = errorHandler.handleError(io.err, e, variables.require(VariableNames.SHELL_ERRORS, Boolean.class, true));
         }
 
-        // TODO: is this the best place for this?
+        // TODO: is this the best place for this?  verify this actually does what its supposed to do
         waitForJobCompletion(session);
 
         // TODO: investigate jline.Shell handling of UserInterruptException and EndOfFileException here
@@ -336,6 +341,7 @@ public class ShellImpl
         // FIXME: copy session variables back to shell's variables
         variables.asMap().clear();
         variables.asMap().putAll(session.getVariables());
+        VariablesProvider.set(variables);
       }
     }
     finally {

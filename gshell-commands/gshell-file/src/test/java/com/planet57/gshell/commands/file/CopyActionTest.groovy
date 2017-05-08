@@ -16,6 +16,7 @@
 package com.planet57.gshell.commands.file
 
 import com.planet57.gshell.testharness.CommandTestSupport
+import org.junit.Test
 
 /**
  * Tests for {@link CopyAction}.
@@ -27,5 +28,36 @@ class CopyActionTest
     super(CopyAction.class)
   }
 
-  // FIXME: add tests
+  @Test
+  void 'copy file'() {
+    File dir = util.createTempDir('copy')
+    assert dir.exists()
+
+    File source = new File(dir, 'source.txt')
+    source.text = System.currentTimeMillis() as String
+    assert source.exists()
+
+    File target = new File(dir, 'target.txt')
+    assert !target.exists()
+
+    assert executeCommand(source.path, target.path) == null
+    assert source.exists()
+    assert target.exists()
+    assert source.text == target.text
+  }
+
+  @Test
+  void 'copy file to directory'() {
+    File source = util.createTempFile('source.txt')
+    source.text = System.currentTimeMillis() as String
+
+    File dir = util.createTempDir('copy')
+    assert dir.exists()
+
+    assert executeCommand(source.path, dir.path) == null
+
+    File target = new File(dir, source.name)
+    assert target.exists()
+    assert source.text == target.text
+  }
 }

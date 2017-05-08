@@ -18,8 +18,6 @@ package com.planet57.gshell.commands.file;
 import java.io.File;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.inject.Named;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
@@ -27,9 +25,7 @@ import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.io.FileAssert;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.io.FileSystemAccess;
-import org.jline.reader.Completer;
-
-import static com.google.common.base.Preconditions.checkNotNull;
+import com.planet57.gshell.util.jline.Complete;
 
 /**
  * Remove a file.
@@ -41,6 +37,7 @@ public class DeleteFileAction
     extends FileCommandActionSupport
 {
   @Argument(required = true, description = "The path of the file remove", token = "PATH")
+  @Complete("file-name")
   private String path;
 
   /**
@@ -48,13 +45,6 @@ public class DeleteFileAction
    */
   @Option(name = "r", longName = "recursive", description = "Remove directories and their contents recursively")
   private boolean recursive;
-
-  @Inject
-  public DeleteFileAction installCompleters(@Named("file-name") final Completer c1) {
-    checkNotNull(c1);
-    setCompleters(c1, null);
-    return this;
-  }
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {

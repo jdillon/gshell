@@ -20,7 +20,6 @@ import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
@@ -35,11 +34,10 @@ import com.planet57.gshell.help.HelpPageUtil;
 import com.planet57.gshell.help.MetaHelpPage;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
+import com.planet57.gshell.util.jline.Complete;
 import com.planet57.gshell.util.predicate.TypePredicate;
 import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.Preferences;
-import org.jline.reader.Completer;
-import org.jline.reader.impl.completer.AggregateCompleter;
 import com.planet57.gshell.util.i18n.I18N;
 import com.planet57.gshell.util.i18n.MessageBundle;
 
@@ -97,19 +95,12 @@ public class HelpAction
   private Boolean includeAll;
 
   @Argument(description = "Display the help page for NAME or list pages matching NAME", token = "NAME")
+  @Complete("help-page-name")
   private String name;
 
   @Inject
   public HelpAction(final HelpPageManager helpPages) {
     this.helpPages = checkNotNull(helpPages);
-  }
-
-  @Inject
-  public void installCompleters(@Named("alias-name") final Completer c1,
-                                @Named("node-path") final Completer c2,
-                                @Named("meta-help-page-name") final Completer c3)
-  {
-    setCompleters(new AggregateCompleter(c1, c2, c3), null);
   }
 
   @Override
