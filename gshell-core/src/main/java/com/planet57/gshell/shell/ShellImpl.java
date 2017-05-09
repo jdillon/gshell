@@ -327,10 +327,11 @@ public class ShellImpl
 
           running = !(result instanceof ExitNotification);
         }
-        catch (Exception e) {
-          log.trace("Work failed", e);
-          setLastResult(session, e);
-          running = errorHandler.handleError(io.err, e, variables.require(VariableNames.SHELL_ERRORS, Boolean.class, true));
+        catch (Throwable failure) {
+          // FIXME: gogo is eating Errors; need to ask gnodet
+          log.trace("Work failed", failure);
+          setLastResult(session, failure);
+          running = errorHandler.handleError(io.err, failure, variables.require(VariableNames.SHELL_ERRORS, Boolean.class, true));
         }
 
         // TODO: is this the best place for this?  verify this actually does what its supposed to do

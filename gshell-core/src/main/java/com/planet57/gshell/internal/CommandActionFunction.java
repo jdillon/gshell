@@ -67,11 +67,22 @@ public class CommandActionFunction
     else {
       this.action = action;
     }
+
+    log.debug("Action: {}", action);
   }
 
   @Override
   public Object execute(final CommandSession session, final List<Object> arguments) throws Exception {
-    return doExecute((CommandSessionImpl)session, arguments);
+    try {
+      return doExecute((CommandSessionImpl) session, arguments);
+    }
+    catch (Throwable failure) {
+      if (failure instanceof Exception) {
+        throw (Exception)failure;
+      }
+      // FIXME: gogo eats Errors; so for now until that is fixed wrap as exception
+      throw new RuntimeException(failure);
+    }
   }
 
   private Object doExecute(final CommandSessionImpl session, final List<Object> arguments) throws Exception {
