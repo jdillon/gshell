@@ -15,10 +15,12 @@
  */
 package com.planet57.gshell.commands.standard
 
-import com.planet57.gshell.command.CommandAction
+import com.planet57.gshell.command.CommandAction.ExitNotification
 import com.planet57.gshell.testharness.CommandTestSupport
 import com.planet57.gshell.util.cli2.ProcessingException
 import org.junit.Test
+
+import static org.junit.Assert.fail
 
 /**
  * Tests for {@link ExitAction}.
@@ -32,9 +34,13 @@ class ExitActionTest
 
   @Test
   void 'exit with code'() {
-    def result = executeCommand('57')
-    assert result instanceof CommandAction.ExitNotification
-    assert result.code == 57
+    try {
+      executeCommand('57')
+      fail()
+    }
+    catch (ExitNotification notification) {
+      assert notification.code == 57
+    }
   }
 
   @Test(expected = ProcessingException.class)

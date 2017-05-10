@@ -338,8 +338,11 @@ public class ShellImpl
         }
 
         try {
-          Object result = execute(parsedLine.program());
-          running = !(result instanceof ExitNotification);
+          execute(parsedLine.program());
+        }
+        catch (ExitNotification notification) {
+          log.trace("Exit requested", notification);
+          running = false;
         }
         catch (Throwable failure) {
           boolean verbose = variables.require(VariableNames.SHELL_ERRORS, Boolean.class, true);

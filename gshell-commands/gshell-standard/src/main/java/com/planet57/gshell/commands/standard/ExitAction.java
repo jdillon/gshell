@@ -40,6 +40,6 @@ public class ExitAction
     log.debug("Exiting w/code: {}", exitCode);
 
     // Do not call System.exit(), ask the shell to exit instead.
-    return new ExitNotification(exitCode);
+    throw new ExitNotification(exitCode);
   }
 }
