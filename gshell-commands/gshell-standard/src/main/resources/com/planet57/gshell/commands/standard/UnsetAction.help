@@ -27,6 +27,7 @@
   Removes a previously set variable or system property.
 
 @{command.details}
+
 @|bold EXAMPLES|@
 
   Remove a variable:
