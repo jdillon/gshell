@@ -135,7 +135,10 @@ public class HelpAction
     }
 
     // if not page matched, complain
-    checkState(page != null, messages.helpNotFound(name));
+    if (page == null) {
+      io.println(messages.helpNotFound(name));
+      return 1;
+    }
 
     page.render(context.getShell(), io.out);
 

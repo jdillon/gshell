@@ -45,10 +45,10 @@ class HelpActionTest
     assert executeCommand('help') == null
   }
 
-  @Test(expected = Exception.class)
+  @Test
   void 'help unknown command'() {
     assert !commandRegistry.containsCommand('foo')
     assert !aliasRegistry.containsAlias('foo')
-    executeCommand('foo')
+    assert executeCommand('foo') == 1
   }
 }
