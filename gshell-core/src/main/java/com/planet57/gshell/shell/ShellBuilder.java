@@ -24,6 +24,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
 /**
@@ -35,16 +36,18 @@ import static com.google.common.base.Preconditions.checkState;
 public class ShellBuilder
   extends ComponentSupport
 {
-  // HACK: using private injection for now; pending refactor
-
-  @Inject
-  private Provider<ShellImpl> shellFactory;
+  private final Provider<ShellImpl> shellFactory;
 
   private Branding branding;
 
   private IO io;
 
   private Variables variables;
+
+  @Inject
+  public ShellBuilder(final Provider<ShellImpl> shellFactory) {
+    this.shellFactory = checkNotNull(shellFactory);
+  }
 
   public ShellBuilder branding(final Branding branding) {
     this.branding = branding;
