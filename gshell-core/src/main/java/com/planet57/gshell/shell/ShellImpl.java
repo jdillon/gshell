@@ -351,7 +351,6 @@ public class ShellImpl
           running = errorHandler.handleError(io.err, failure, verbose);
         }
 
-        // TODO: is this the best place for this?  verify this actually does what its supposed to do
         waitForJobCompletion(session);
 
         // TODO: investigate jline.Shell handling of UserInterruptException and EndOfFileException here
@@ -366,20 +365,20 @@ public class ShellImpl
     renderMessage(io, branding.getGoodbyeMessage());
   }
 
+  /**
+   * Wait for current job, if any, to complete.
+   */
   @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
   private void waitForJobCompletion(final CommandSessionImpl session) throws InterruptedException {
     while (true) {
       Job job = session.foregroundJob();
-      if (job != null) {
-        log.debug("Waiting for job completion: {}", job);
-        synchronized (job) {
-          if (job.status() == Job.Status.Foreground) {
-            job.wait();
-          }
+      if (job == null) break;
+
+      log.debug("Waiting for job completion: {}", job);
+      synchronized (job) {
+        if (job.status() == Job.Status.Foreground) {
+          job.wait();
         }
-      }
-      else {
-        break;
       }
     }
   }
