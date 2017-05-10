@@ -16,23 +16,24 @@
 
 @|bold NAME|@
 
-    @{command.name} - @{command.description}
+  @{command.name} - @{command.description}
 
 @|bold SYNOPSIS|@
 
-    @|bold @{command.name}|@ [options] PATH KEY
+  @|bold @{command.name}|@ [options] PATH KEY
 
 @|bold DESCRIPTION|@
 
-    Get the value of a preference.
+  Get the value of a preference.
 
 @{command.details}
+
 @|bold EXAMPLES|@
 
-    Get the value of a preference:
+  Get the value of a preference:
 
-        @{command.name} /some/path somekey
+    @{command.name} /some/path somekey
 
 @|bold SEE ALSO|@
 
-    @|bold pref/set|@, @|bold pref/unset|@
+  @|bold pref/set|@, @|bold pref/unset|@

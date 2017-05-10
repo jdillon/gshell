@@ -16,35 +16,36 @@
 
 @|bold NAME|@
 
-    @{command.name} - @{command.description}
+  @{command.name} - @{command.description}
 
 @|bold SYNOPSIS|@
 
-    @|bold @{command.name}|@ [options] [PATH]
+  @|bold @{command.name}|@ [options] [PATH]
 
 @|bold DESCRIPTION|@
 
-    List information about files.
+  List information about files.
 
 @{command.details}
+
 @|bold EXAMPLES|@
 
-    List the contents of a directory;
+  List the contents of a directory;
 
-        @{command.name} /tmp
+    @{command.name} /tmp
 
-    List the contents of your home directory:
+  List the contents of your home directory:
 
-        @{command.name} ~
+    @{command.name} ~
 
-    List the current directory in long format:
+  List the current directory in long format:
 
-        @{command.name} -l
+    @{command.name} -l
 
-    List hidden files:
+  List hidden files:
 
-        @{command.name} -a
+    @{command.name} -a
 
 @|bold SEE ALSO|@
 
-    @|bold rm|@, @|bold rmdir|@
+  @|bold rm|@, @|bold rmdir|@

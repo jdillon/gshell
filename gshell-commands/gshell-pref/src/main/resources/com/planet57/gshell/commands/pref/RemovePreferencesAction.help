@@ -16,27 +16,28 @@
 
 @|bold NAME|@
 
-    @{command.name} - @{command.description}
+  @{command.name} - @{command.description}
 
 @|bold SYNOPSIS|@
 
-    @|bold @{command.name}|@ [options] PATH
+  @|bold @{command.name}|@ [options] PATH
 
 @|bold DESCRIPTION|@
 
-    Remove a preferences node or an entire tree of preferences.
+  Remove a preferences node or an entire tree of preferences.
 
 @{command.details}
+
 @|bold EXAMPLES|@
 
-    Remove a preferences node:
+  Remove a preferences node:
 
-        @{command.name} /some/path
+    @{command.name} /some/path
 
-    Remove a tree of preferences:
+  Remove a tree of preferences:
 
-        @{command.name} -r /some/path
+    @{command.name} -r /some/path
 
 @|bold SEE ALSO|@
 
-    @|bold pref/list|@
+  @|bold pref/list|@

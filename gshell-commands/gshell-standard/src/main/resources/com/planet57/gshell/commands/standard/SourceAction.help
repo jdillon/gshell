@@ -16,20 +16,21 @@
 
 @|bold NAME|@
 
-    @{command.name} - @{command.description}
+  @{command.name} - @{command.description}
 
 @|bold SYNOPSIS|@
 
-    @|bold @{command.name}|@ [options] PATH
+  @|bold @{command.name}|@ [options] PATH
 
 @|bold DESCRIPTION|@
 
-    Reads commands from a local file or URL and executes them in the current
-    shell.
+  Reads commands from a local file or URL and executes them in the current
+  shell.
 
 @{command.details}
+
 @|bold EXAMPLES|@
 
-    Execute commands from a local file:
+  Execute commands from a local file:
 
-        @{command.name} /tmp/myscript.txt
+    @{command.name} /tmp/myscript.txt

@@ -16,24 +16,25 @@
 
 @|bold NAME|@
 
-    @{command.name} - @{command.description}
+  @{command.name} - @{command.description}
 
 @|bold SYNOPSIS|@
 
-    @|bold @{command.name}|@ [options] PATH KEY VALUE
+  @|bold @{command.name}|@ [options] PATH KEY VALUE
 
 @|bold DESCRIPTION|@
 
-    Set a preference value.  Preferences are used to persist configuration
-    across shell invocations.
+  Set a preference value.  Preferences are used to persist configuration
+  across shell invocations.
 
 @{command.details}
+
 @|bold EXAMPLES|@
 
-    Set a preference value:
+  Set a preference value:
 
-        @{command.name} /some/path some-key some-value
+    @{command.name} /some/path some-key some-value
 
 @|bold SEE ALSO|@
 
-    @|bold pref/get|@, @|bold pref/unset|@
+  @|bold pref/get|@, @|bold pref/unset|@

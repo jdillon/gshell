@@ -16,32 +16,33 @@
 
 @|bold NAME|@
 
-    @{command.name} - @{command.description}
+  @{command.name} - @{command.description}
 
 @|bold SYNOPSIS|@
 
-    @|bold @{command.name}|@ [options] [RANGE]
+  @|bold @{command.name}|@ [options] [RANGE]
 
 @|bold DESCRIPTION|@
 
-    Displays the command history and optionally allows the history to be
-    cleared.
+  Displays the command history and optionally allows the history to be
+  cleared.
 
 @{command.details}
+
 @|bold EXAMPLES|@
 
-    Display the last 10 history items:
+  Display the last 10 history items:
 
-        @{command.name} 10
+    @{command.name} 10
 
-    Display the full history:
+  Display the full history:
 
-        @{command.name}
+    @{command.name}
 
-    Purge the history:
+  Purge the history:
 
-        @{command.name} -p
+    @{command.name} -p
 
 @|bold SEE ALSO|@
 
-    @|bold recall|@
+  @|bold recall|@

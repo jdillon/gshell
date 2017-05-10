@@ -16,23 +16,24 @@
 
 @|bold NAME|@
 
-    @{command.name} - @{command.description}
+  @{command.name} - @{command.description}
 
 @|bold SYNOPSIS|@
 
-    @|bold @{command.name}|@ [options] NAME
+  @|bold @{command.name}|@ [options] NAME
 
 @{command.details}
+
 @|bold DESCRIPTION|@
 
-    Removes a previously defined alias.
+  Removes a previously defined alias.
 
 @|bold EXAMPLES|@
 
-    Remove an alias:
+  Remove an alias:
 
-        @{command.name} foo
+    @{command.name} foo
 
 @|bold SEE ALSO|@
 
-    @|bold alias|@
+  @|bold alias|@

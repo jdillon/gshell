@@ -16,21 +16,22 @@
 
 @|bold NAME|@
 
-    @{command.name} - @{command.description}
+  @{command.name} - @{command.description}
 
 @|bold SYNOPSIS|@
 
-    @|bold @{command.name}|@ [options] PATH
+  @|bold @{command.name}|@ [options] PATH
 
 @|bold DESCRIPTION|@
 
-    Removes (deletes/unlinks) a file.
+  Removes (deletes/unlinks) a file.
 
 @{command.details}
+
 @|bold EXAMPLES|@
 
-    @{command.name} /tmp/file.txt
+  @{command.name} /tmp/file.txt
 
 @|bold SEE ALSO|@
 
-    @|bold rmdir|@
+  @|bold rmdir|@

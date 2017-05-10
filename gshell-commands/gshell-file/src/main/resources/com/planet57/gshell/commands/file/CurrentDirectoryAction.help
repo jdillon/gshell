@@ -16,17 +16,18 @@
 
 @|bold NAME|@
 
-    @{command.name} - @{command.description}
+  @{command.name} - @{command.description}
 
 @|bold SYNOPSIS|@
 
-    @|bold @{command.name}|@ [options]
+  @|bold @{command.name}|@ [options]
 
 @|bold DESCRIPTION|@
 
-    Displays the current working directory (ie. ${shell.user.dir}).
+  Displays the current working directory (ie. ${shell.user.dir}).
 
 @{command.details}
+
 @|bold SEE ALSO|@
 
-    @|bold cd|@
+  @|bold cd|@

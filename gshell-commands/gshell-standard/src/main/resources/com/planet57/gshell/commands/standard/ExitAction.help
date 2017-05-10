@@ -16,23 +16,23 @@
 
 @|bold NAME|@
 
-    @{command.name} - @{command.description}
+  @{command.name} - @{command.description}
 
 @|bold SYNOPSIS|@
 
-    @|bold @{command.name}|@ [CODE]
+  @|bold @{command.name}|@ [CODE]
 
 @|bold DESCRIPTION|@
 
-    Used to exit the shell normally.
+  Used to exit the shell normally.
 
 @{command.details}
 @|bold EXAMPLES|@
 
-    Exit with the default exit code:
+  Exit with the default exit code:
 
-        @{command.name}
+    @{command.name}
 
-    Exit with a specific exit code:
+  Exit with a specific exit code:
 
-        @{command.name} 1
+    @{command.name} 1

@@ -16,27 +16,28 @@
 
 @|bold NAME|@
 
-    @{command.name} - @{command.description}
+  @{command.name} - @{command.description}
 
 @|bold SYNOPSIS|@
 
-    @|bold @{command.name}|@ [options]
+  @|bold @{command.name}|@ [options]
 
 @|bold DESCRIPTION|@
 
-    Lists all registered components of the underlying logging system.
+  Lists all registered components of the underlying logging system.
 
 @{command.details}
+
 @|bold EXAMPLES|@
 
-    List all components:
+  List all components:
 
-        @{command.name}
+    @{command.name}
 
-    List all components matching name 'foo':
+  List all components matching name 'foo':
 
-        @{command.name} -n foo
+    @{command.name} -n foo
 
 @|bold SEE ALSO|@
 
-    @|bold logging|@
+  @|bold logging|@

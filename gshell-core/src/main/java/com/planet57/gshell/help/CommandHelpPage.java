@@ -17,6 +17,8 @@ package com.planet57.gshell.help;
 
 import java.io.PrintWriter;
 
+import com.google.common.base.CharMatcher;
+import com.google.common.io.CharStreams;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.resolver.Node;
@@ -175,9 +177,6 @@ public class CommandHelpPage
     }
 
     public String getDetails() {
-      // This ugly muck adds a newline as needed if the last section was not empty
-      // and the current section is not empty, so that the page looks correct.
-
       PrintBuffer buff = new PrintBuffer();
       String content, last;
 
@@ -198,9 +197,8 @@ public class CommandHelpPage
       }
       buff.append(content);
 
-      // newline is already in the help stream
-
-      return buff.toString();
+      // strip off any trailing white-space
+      return CharMatcher.whitespace().trimTrailingFrom(buff.toString());
     }
   }
 
