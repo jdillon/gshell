@@ -246,11 +246,13 @@ public class ShellImpl
     }
     catch (Throwable failure) {
       Throwable cause = failure;
+
+      // gogo encodes Error as ExecutionException; decode here
       if (cause instanceof ExecutionException) {
         cause = cause.getCause();
       }
 
-      log.trace("Work failed", cause);
+      log.trace("Failure", cause);
       setLastResult(session, cause);
       Throwables.propagateIfPossible(cause, Exception.class, Error.class);
       throw failure;
