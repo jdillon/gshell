@@ -42,6 +42,8 @@ public class HelpContentLoaderImpl
   extends ComponentSupport
   implements HelpContentLoader
 {
+  private final String DEFAULT_CONTENT = getClass().getPackage().getName() + ".DefaultHelpContent";
+
   @Override
   public String load(final String name, final ClassLoader loader) throws MissingContentException, IOException {
     return load(name, Locale.getDefault(), loader);
@@ -54,7 +56,11 @@ public class HelpContentLoaderImpl
 
     URL resource = findResource(name, locale, loader);
     if (resource == null) {
-      throw new MissingContentException(name);
+      // use default help content if missing
+      resource = findResource(DEFAULT_CONTENT, locale, getClass().getClassLoader());
+      if (resource == null) {
+        throw new MissingContentException(name);
+      }
     }
 
     log.debug("Using resource: {}", resource);
