@@ -16,6 +16,9 @@
 package com.planet57.gshell.commands.shell
 
 import com.planet57.gshell.commands.shell.FailAction.FailException
+import com.planet57.gshell.commands.shell.FailAction.FailRuntimeException
+import com.planet57.gshell.commands.shell.FailAction.FailError
+import com.planet57.gshell.commands.shell.FailAction.FailNotification
 import com.planet57.gshell.testharness.CommandTestSupport
 import org.junit.Test
 
@@ -37,12 +40,56 @@ class FailActionTest
   }
 
   @Test
-  void 'fail with message'() {
+  void 'fail default-type with message'() {
     try {
       executeCommand('foo')
       fail()
     }
     catch (FailException e) {
+      assert e.message == 'foo'
+    }
+  }
+
+  @Test
+  void 'fail exception with message'() {
+    try {
+      executeCommand('-t', 'exception', 'foo')
+      fail()
+    }
+    catch (FailException e) {
+      assert e.message == 'foo'
+    }
+  }
+
+  @Test
+  void 'fail runtime with message'() {
+    try {
+      executeCommand('-t', 'runtime', 'foo')
+      fail()
+    }
+    catch (FailRuntimeException e) {
+      assert e.message == 'foo'
+    }
+  }
+
+  @Test
+  void 'fail error with message'() {
+    try {
+      executeCommand('-t', 'error', 'foo')
+      fail()
+    }
+    catch (FailError e) {
+      assert e.message == 'foo'
+    }
+  }
+
+  @Test
+  void 'fail notification with message'() {
+    try {
+      executeCommand('-t', 'notification', 'foo')
+      fail()
+    }
+    catch (FailNotification e) {
       assert e.message == 'foo'
     }
   }

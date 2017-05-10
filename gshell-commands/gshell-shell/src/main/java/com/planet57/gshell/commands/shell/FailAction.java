@@ -21,6 +21,7 @@ import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
+import org.sonatype.goodies.common.Notification;
 
 import javax.annotation.Nonnull;
 
@@ -41,7 +42,8 @@ public class FailAction
   {
     exception,
     runtime,
-    error
+    error,
+    notification
   }
 
   @Option(name="t", longName = "type", description = "Fail with specific throwable type", token = "TYPE")
@@ -56,6 +58,8 @@ public class FailAction
         throw new FailRuntimeException(message);
       case error:
         throw new FailError(message);
+      case notification:
+        throw new FailNotification(message);
     }
     // unreachable
     throw new Error();
@@ -84,6 +88,15 @@ public class FailAction
     extends Error
   {
     FailError(final String message) {
+      super(message);
+    }
+  }
+
+  @VisibleForTesting
+  static class FailNotification
+    extends Notification
+  {
+    FailNotification(final String message) {
       super(message);
     }
   }
