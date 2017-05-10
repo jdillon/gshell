@@ -35,6 +35,7 @@ import org.apache.felix.service.command.CommandSession;
 import org.apache.felix.service.command.Function;
 import org.jline.terminal.Terminal;
 import org.sonatype.goodies.common.ComponentSupport;
+import org.sonatype.goodies.common.Throwables2;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -73,23 +74,23 @@ public class CommandActionFunction
 
   @Override
   public Object execute(final CommandSession session, final List<Object> arguments) throws Exception {
-    try {
-      return doExecute((CommandSessionImpl) session, arguments);
-    }
-    catch (Throwable failure) {
-      if (failure instanceof Exception) {
-        throw (Exception)failure;
-      }
-      // FIXME: gogo eats Errors; so for now until that is fixed wrap as exception
-      throw new RuntimeException(failure);
-    }
-  }
-
-  private Object doExecute(final CommandSessionImpl session, final List<Object> arguments) throws Exception {
     log.debug("Executing ({}): {}", action.getName(), arguments);
 
     Stopwatch watch = Stopwatch.createStarted();
 
+    try {
+      // adapt api to CommandSessionImpl for simplicity
+      Object result = doExecute((CommandSessionImpl) session, arguments);
+      log.debug("Result: {}; {}", result, watch);
+      return result;
+    }
+    catch (Throwable failure) {
+      log.debug("Failure: {}; {}", Throwables2.explain(failure), watch);
+      throw failure;
+    }
+  }
+
+  private Object doExecute(final CommandSessionImpl session, final List<Object> arguments) throws Exception {
     // capture TCCL to reset; in-case command alters this
     final ClassLoader cl = Thread.currentThread().getContextClassLoader();
 
@@ -174,7 +175,6 @@ public class CommandActionFunction
       Thread.currentThread().setContextClassLoader(cl);
     }
 
-    log.debug("Result: {}; {}", result, watch);
     return result;
   }
 

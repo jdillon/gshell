@@ -109,7 +109,7 @@
     <gossip.version>2.0.0</gossip.version>
     <jline.version>3.3.0-SNAPSHOT</jline.version>
     <slf4j.version>1.7.25</slf4j.version>
-    <felix-gogo.version>1.0.5-SNAPSHOT</felix-gogo.version>
+    <felix-gogo.version>1.0.7-SNAPSHOT</felix-gogo.version>
 
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>

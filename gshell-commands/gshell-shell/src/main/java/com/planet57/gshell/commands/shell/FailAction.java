@@ -20,6 +20,7 @@ import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
+import com.planet57.gshell.util.cli2.Option;
 
 import javax.annotation.Nonnull;
 
@@ -36,9 +37,28 @@ public class FailAction
   @Argument(description = "Failure message", token = "TEXT")
   private String message = "Failed";
 
+  enum Type
+  {
+    exception,
+    runtime,
+    error
+  }
+
+  @Option(name="t", longName = "type", description = "Fail with specific throwable type", token = "TYPE")
+  private Type type = Type.exception;
+
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    throw new FailException(message);
+    switch (type) {
+      case exception:
+        throw new FailException(message);
+      case runtime:
+        throw new FailRuntimeException(message);
+      case error:
+        throw new FailError(message);
+    }
+    // unreachable
+    throw new Error();
   }
 
   @VisibleForTesting
@@ -46,6 +66,24 @@ public class FailAction
       extends Exception
   {
     FailException(final String message) {
+      super(message);
+    }
+  }
+
+  @VisibleForTesting
+  static class FailRuntimeException
+    extends RuntimeException
+  {
+    FailRuntimeException(final String message) {
+      super(message);
+    }
+  }
+
+  @VisibleForTesting
+  static class FailError
+    extends Error
+  {
+    FailError(final String message) {
       super(message);
     }
   }
