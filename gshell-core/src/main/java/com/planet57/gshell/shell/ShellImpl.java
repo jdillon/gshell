@@ -16,6 +16,7 @@
 package com.planet57.gshell.shell;
 
 import java.io.File;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nullable;
@@ -23,6 +24,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.google.common.base.Strings;
+import com.google.common.base.Throwables;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.branding.BrandingSupport;
 import com.planet57.gshell.command.CommandAction.ExitNotification;
@@ -53,7 +55,6 @@ import org.jline.reader.EndOfFileException;
 import org.jline.reader.History;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
-import org.jline.reader.ParsedLine;
 import org.jline.reader.impl.history.DefaultHistory;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.Terminal.Signal;
@@ -238,13 +239,28 @@ public class ShellImpl
 
     CommandSessionImpl session = currentSession;
 
-    Object result = session.execute(line);
-    setLastResult(session, result);
+    Object result;
+    try {
+      result = session.execute(line);
+      setLastResult(session, result);
+    }
+    catch (Throwable failure) {
+      Throwable cause = failure;
+      if (cause instanceof ExecutionException) {
+        cause = cause.getCause();
+      }
 
-    // FIXME: copy session variables back to shell's variables
-    variables.asMap().clear();
-    variables.asMap().putAll(session.getVariables());
-    VariablesProvider.set(variables);
+      log.trace("Work failed", cause);
+      setLastResult(session, cause);
+      Throwables.propagateIfPossible(cause, Exception.class, Error.class);
+      throw failure;
+    }
+    finally {
+      // HACK: copy session variables back to shell's variables
+      variables.asMap().clear();
+      variables.asMap().putAll(session.getVariables());
+      VariablesProvider.set(variables);
+    }
 
     return result;
   }
@@ -255,13 +271,11 @@ public class ShellImpl
 
     log.debug("Starting interactive console");
 
-    CommandSessionImpl session = currentSession;
+    final CommandSessionImpl session = currentSession;
 
     scriptLoader.loadInteractiveScripts(this);
 
-    File historyFile = new File(branding.getUserContextDir(), branding.getHistoryFileName());
-
-    Terminal terminal = io.terminal;
+    final Terminal terminal = io.terminal;
 
     // HACK: testing adjustment to highlighter colors; pending letting users configure this via profile/rc
     int maxColors = terminal.getNumericCapability(InfoCmp.Capability.max_colors);
@@ -271,6 +285,8 @@ public class ShellImpl
     else {
       session.put("HIGHLIGHTER_COLORS","rs=35:st=32:nu=32:co=32:va=36:vn=36:fu=94:bf=91:re=90");
     }
+
+    File historyFile = new File(branding.getUserContextDir(), branding.getHistoryFileName());
 
     lineReader = LineReaderBuilder.builder()
       .appName(branding.getProgramName())
@@ -311,38 +327,29 @@ public class ShellImpl
     boolean running = true;
     try {
       while (running) {
+        String line = lineReader.readLine(prompt(session), rprompt(session), null, null);
+        if (log.isTraceEnabled()) {
+          traceLine(line);
+        }
+
+        ParsedLineImpl parsedLine = (ParsedLineImpl) lineReader.getParsedLine();
+        if (parsedLine == null) {
+          throw new EndOfFileException();
+        }
+
         try {
-          String line = lineReader.readLine(prompt(session), rprompt(session), null, null);
-          if (log.isTraceEnabled()) {
-            traceLine(line);
-          }
-
-          ParsedLine parsedLine = lineReader.getParsedLine();
-          if (parsedLine == null) {
-            throw new EndOfFileException();
-          }
-
-          Object result = session.execute(((ParsedLineImpl) parsedLine).program());
-          setLastResult(session, result);
-
+          Object result = execute(parsedLine.program());
           running = !(result instanceof ExitNotification);
         }
         catch (Throwable failure) {
-          // FIXME: gogo is eating Errors; need to ask gnodet
-          log.trace("Work failed", failure);
-          setLastResult(session, failure);
-          running = errorHandler.handleError(io.err, failure, variables.require(VariableNames.SHELL_ERRORS, Boolean.class, true));
+          boolean verbose = variables.require(VariableNames.SHELL_ERRORS, Boolean.class, true);
+          running = errorHandler.handleError(io.err, failure, verbose);
         }
 
         // TODO: is this the best place for this?  verify this actually does what its supposed to do
         waitForJobCompletion(session);
 
         // TODO: investigate jline.Shell handling of UserInterruptException and EndOfFileException here
-
-        // FIXME: copy session variables back to shell's variables
-        variables.asMap().clear();
-        variables.asMap().putAll(session.getVariables());
-        VariablesProvider.set(variables);
       }
     }
     finally {
