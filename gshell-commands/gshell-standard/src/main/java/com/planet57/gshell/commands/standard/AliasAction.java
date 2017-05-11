@@ -22,7 +22,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
-import com.google.common.base.Joiner;
 import com.planet57.gshell.alias.AliasRegistry;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
@@ -91,52 +90,36 @@ public class AliasAction
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     if (name == null) {
-      return listAliases(context);
+      listAliases(context.getIo());
+    }
+    else {
+      checkArgument(target != null, messages.missinArgument("TARGET"));
+      String alias = String.join(" ", target);
+      log.debug("Defining alias: {} -> {}", name, alias);
+      aliasRegistry.registerAlias(name, alias);
     }
 
-    return defineAlias(context);
+    return null;
   }
 
-  private Object listAliases(final CommandContext context) throws Exception {
-    IO io = context.getIo();
-
+  private void listAliases(final IO io) throws Exception {
     log.debug("Listing defined aliases");
 
     Map<String, String> aliases = aliasRegistry.getAliases();
-
     if (aliases.isEmpty()) {
       io.println(messages.noAliases());
     }
     else {
-      // Determine the maximum name length
-      int maxNameLen = 0;
-      for (String name : aliases.keySet()) {
-        if (name.length() > maxNameLen) {
-          maxNameLen = name.length();
-        }
-      }
-
       io.println(messages.definedAliases());
+
+      // find the maximum length of all alias names
+      int maxNameLen = aliases.keySet().stream().mapToInt(String::length).max().getAsInt();
       String nameFormat = "%-" + maxNameLen + 's';
 
-      for (Map.Entry<String, String> entry : aliases.entrySet()) {
-        String formattedName = String.format(nameFormat, entry.getKey());
-        io.format("  @|bold %s|@ ", formattedName);
-        io.println(messages.aliasTarget(entry.getValue()));
-      }
+      aliases.forEach((key, value) -> {
+        String formattedName = String.format(nameFormat, key);
+        io.format("  @|bold %s|@ %s%n", formattedName, messages.aliasTarget(value));
+      });
     }
-
-    return null;
-  }
-
-  private Object defineAlias(final CommandContext context) throws Exception {
-    checkArgument(target != null, messages.missinArgument("TARGET"));
-
-    String alias = Joiner.on(" ").join(target);
-    log.debug("Defining alias: {} -> {}", name, alias);
-
-    aliasRegistry.registerAlias(name, alias);
-
-    return null;
   }
 }
