@@ -72,9 +72,7 @@ public class HistoryAction
   private void displayEntries(final IO io, final History history) {
     log.debug("History size: {}", history.size());
 
-    for (History.Entry entry : history) {
-      renderEntry(io, entry);
-    }
+    history.forEach(entry -> renderEntry(io, entry));
   }
 
   private void renderEntry(final IO io, final History.Entry entry) {
