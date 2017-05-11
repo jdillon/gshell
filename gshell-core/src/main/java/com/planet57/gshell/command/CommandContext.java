@@ -16,6 +16,7 @@
 package com.planet57.gshell.command;
 
 import com.planet57.gshell.shell.Shell;
+import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.variables.Variables;
 import org.apache.felix.gogo.runtime.CommandSessionImpl;
 

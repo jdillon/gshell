@@ -17,7 +17,7 @@ package com.planet57.gshell.commands.pref;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.IO;
+import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.util.cli2.Argument;
 
 import javax.annotation.Nonnull;

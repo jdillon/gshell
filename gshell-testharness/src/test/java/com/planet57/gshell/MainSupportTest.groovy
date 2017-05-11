@@ -18,7 +18,7 @@ package com.planet57.gshell
 import com.google.common.base.CharMatcher
 import com.planet57.gossip.Level
 import com.planet57.gshell.branding.Branding
-import com.planet57.gshell.command.IO
+import com.planet57.gshell.util.io.IO
 import com.planet57.gshell.shell.Shell
 import com.planet57.gshell.testharness.TestBranding
 import com.planet57.gshell.util.io.StreamSet

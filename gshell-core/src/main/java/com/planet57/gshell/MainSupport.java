@@ -31,7 +31,7 @@ import com.planet57.gossip.Level;
 import com.planet57.gossip.Log;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.branding.BrandingSupport;
-import com.planet57.gshell.command.IO;
+import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.internal.BeanContainer;
 import com.planet57.gshell.internal.ExitCodeDecoder;
 import com.planet57.gshell.shell.Shell;

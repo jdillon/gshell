@@ -28,7 +28,7 @@ import com.google.common.base.Throwables;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.branding.BrandingSupport;
 import com.planet57.gshell.command.CommandAction.ExitNotification;
-import com.planet57.gshell.command.IO;
+import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.command.registry.CommandRegistrar;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.help.HelpPageManager;

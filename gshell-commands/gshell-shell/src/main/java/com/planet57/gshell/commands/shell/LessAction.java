@@ -20,7 +20,7 @@ import java.io.File;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.planet57.gshell.command.IO;
+import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.jline.Complete;
 import org.jline.builtins.Less;
