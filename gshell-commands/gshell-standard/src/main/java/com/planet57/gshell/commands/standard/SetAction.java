@@ -15,6 +15,7 @@
  */
 package com.planet57.gshell.commands.standard;
 
+import java.io.PrintStream;
 import java.util.List;
 import java.util.Properties;
 
@@ -103,38 +104,34 @@ public class SetAction
     IO io = context.getIo();
 
     // using RAW io.stream.out to avoid any ANSI encoding
+    PrintStream out = io.streams.out;
 
     switch (mode) {
       case PROPERTY: {
         Properties props = System.getProperties();
-
-        for (Object o : props.keySet()) {
-          String name = (String) o;
-          String value = props.getProperty(name);
-          io.streams.out.printf("%s='%s'%n", name, value);
-        }
+        props.forEach((name, value) ->
+          out.format("%s='%s'%n", name, value)
+        );
         break;
       }
 
       case VARIABLE: {
-        Variables variables = context.getVariables();
-        for (String name : variables.names()) {
-          Object value = variables.get(name);
-          io.streams.out.printf("%s='%s'", name, value);
+        context.getVariables().asMap().forEach((name, value) -> {
+          out.format("%s='%s'", name, value);
 
           // When --verbose include the class details of the values
           if (verbose && value != null) {
-            io.streams.out.printf(" (%s)", value.getClass());
+            out.format(" (%s)", value.getClass());
           }
 
-          io.streams.out.println();
-        }
+          out.println();
+        });
         break;
       }
     }
 
     // force RAW stream to flush
-    io.streams.out.flush();
+    out.flush();
 
     return null;
   }
