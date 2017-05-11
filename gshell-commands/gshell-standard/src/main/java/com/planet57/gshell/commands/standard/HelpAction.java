@@ -35,14 +35,12 @@ import com.planet57.gshell.help.MetaHelpPage;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.jline.Complete;
-import com.planet57.gshell.util.predicate.TypePredicate;
 import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.Preferences;
 import com.planet57.gshell.util.i18n.I18N;
 import com.planet57.gshell.util.i18n.MessageBundle;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Preconditions.checkState;
 
 /**
  * Display help pages.
@@ -173,5 +171,28 @@ public class HelpAction
     }
 
     return query;
+  }
+
+  //
+  // TypePredicate
+  //
+
+  private static class TypePredicate<T>
+    implements Predicate<T>
+  {
+    private final Class<?> type;
+
+    private TypePredicate(final Class<?> type) {
+      this.type = checkNotNull(type);
+    }
+
+    @Override
+    public boolean test(final T value) {
+      return value != null && type.isAssignableFrom(value.getClass());
+    }
+
+    public static <T> Predicate<T> of(final Class<?> type) {
+      return new TypePredicate<>(type);
+    }
   }
 }
