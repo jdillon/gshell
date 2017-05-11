@@ -15,6 +15,8 @@
  */
 package com.planet57.gshell.command.resolver;
 
+import org.sonatype.goodies.common.ComponentSupport;
+
 import javax.annotation.Nullable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -29,6 +31,7 @@ import static com.planet57.gshell.command.resolver.Node.SEPARATOR;
  * @since 2.5
  */
 public class NodePath
+  extends ComponentSupport
 {
   private static final char SEPARATOR_CHAR = SEPARATOR.charAt(0);
 

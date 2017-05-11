@@ -22,9 +22,7 @@ import javax.annotation.Nullable;
 
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.ChangeGroupAction;
-import com.planet57.gshell.command.CommandHelper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.sonatype.goodies.common.ComponentSupport;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -35,6 +33,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 2.5
  */
 public class Node
+  extends ComponentSupport
 {
   public static final String ROOT = "/";
 
@@ -45,8 +44,6 @@ public class Node
   public static final String SEPARATOR = "/";
 
   public static final String PATH_SEPARATOR = ":";
-
-  private static final Logger log = LoggerFactory.getLogger(Node.class);
 
   private final String name;
 
