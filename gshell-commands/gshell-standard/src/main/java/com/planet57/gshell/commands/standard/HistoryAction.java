@@ -19,20 +19,17 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ListIterator;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.command.CommandActionSupport;
-import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
 import org.jline.reader.History;
 import org.jline.utils.AttributedStringBuilder;
 import org.jline.utils.AttributedStyle;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 /**
  * Display history.
@@ -52,10 +49,6 @@ public class HistoryAction
 
   @Option(name = "t", longName = "timestamps", description = "Display timestamps")
   private boolean timestamps;
-
-  @Argument(description = "Display the last N entries", token = "N")
-  @Nullable
-  private Integer last;
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
@@ -81,20 +74,14 @@ public class HistoryAction
 
     log.debug("History size: {}", history.size());
 
-    int i = 0;
-    log.debug("Starting with entry: {}", i);
-
-    ListIterator<History.Entry> entries = history.iterator(i);
-    while (entries.hasNext()) {
-      renderEntry(io, entries.next());
+    for (History.Entry entry : history) {
+      renderEntry(io, entry);
     }
 
     return null;
   }
 
   private void renderEntry(final IO io, final History.Entry entry) {
-    String index = String.format("%3d", entry.index() + 1);
-
     AttributedStringBuilder buff = new AttributedStringBuilder();
 
     if (timestamps) {
@@ -104,7 +91,7 @@ public class HistoryAction
     }
 
     buff.style(AttributedStyle.BOLD);
-    buff.append(index);
+    buff.append(String.format("%3d", entry.index() + 1));
     buff.style(AttributedStyle.DEFAULT);
     buff.append("  ").append(entry.line());
 

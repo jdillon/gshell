@@ -16,7 +16,6 @@
 package com.planet57.gshell.commands.standard
 
 import com.planet57.gshell.testharness.CommandTestSupport
-import com.planet57.gshell.util.cli2.ProcessingException
 import org.junit.Test
 
 /**
@@ -32,12 +31,8 @@ class HistoryActionTest
   @Override
   void setUp() {
     requiredCommands.put('echo', EchoAction.class)
+    requiredCommands.put('set', SetAction.class)
     super.setUp()
-  }
-
-  @Test(expected = ProcessingException.class)
-  void 'too many arguments'() {
-    executeCommand('1 2')
   }
 
   @Test
@@ -49,33 +44,5 @@ class HistoryActionTest
     // Then purge and expect history to be empty
     assert executeCommand('-p') == null
     assert shell.history.empty
-  }
-
-  @Test
-  void 'list subset'() {
-    // first purge
-    purge()
-
-    // Then seed 10 items
-    10.times {
-      executeLine("echo $it")
-    }
-
-    // And then ask for the last 5
-    assert executeCommand('5') == null
-  }
-
-  @Test
-  void 'list overset'() {
-    // first purge
-    purge()
-
-    // Then seed 10 items
-    10.times {
-      executeLine("echo $it")
-    }
-
-    // And then ask for the last 15
-    assert executeCommand('15') == null
   }
 }
