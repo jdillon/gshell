@@ -49,6 +49,9 @@ public interface CommandAction
    */
   Object execute(@Nonnull CommandContext context) throws Exception;
 
+  /**
+   * Thrown to ask shell to exit.
+   */
   class ExitNotification
     extends Notification
   {
