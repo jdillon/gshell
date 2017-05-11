@@ -41,6 +41,8 @@ class HistoryActionTest
     executeLine('set foo 2')
     assert shell.variables.get('foo', Integer.class) == 2
 
+    // FIXME: this is not really ideal since history is only appended for interactive-shells
+
     // Then purge and expect history to be empty
     assert executeCommand('-p') == null
     assert shell.history.empty
