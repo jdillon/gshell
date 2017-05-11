@@ -57,28 +57,24 @@ public class HistoryAction
     if (purge) {
       history.purge();
       log.debug("History purged");
-      return null;
     }
     else if (save) {
       history.save();
       log.debug("History saved");
-      return null;
+    }
+    else {
+      displayEntries(context.getIo(), history);
     }
 
-    return displayEntries(context);
+    return null;
   }
 
-  private Object displayEntries(final CommandContext context) throws Exception {
-    IO io = context.getIo();
-    History history = context.getShell().getHistory();
-
+  private void displayEntries(final IO io, final History history) {
     log.debug("History size: {}", history.size());
 
     for (History.Entry entry : history) {
       renderEntry(io, entry);
     }
-
-    return null;
   }
 
   private void renderEntry(final IO io, final History.Entry entry) {

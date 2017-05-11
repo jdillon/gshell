@@ -30,7 +30,6 @@ class HistoryActionTest
 
   @Override
   void setUp() {
-    requiredCommands.put('echo', EchoAction.class)
     requiredCommands.put('set', SetAction.class)
     super.setUp()
   }
@@ -38,8 +37,9 @@ class HistoryActionTest
   @Test
   void purge() {
     // Make sure there is going to be more than one item in history
-    executeLine('echo 1')
-    executeLine('echo 2')
+    executeLine('set foo 1')
+    executeLine('set foo 2')
+    assert shell.variables.get('foo', Integer.class) == 2
 
     // Then purge and expect history to be empty
     assert executeCommand('-p') == null
