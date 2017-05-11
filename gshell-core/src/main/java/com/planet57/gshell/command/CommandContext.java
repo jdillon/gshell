@@ -32,13 +32,13 @@ public interface CommandContext
 {
   /**
    * The invoking shell instance.
-   *
-   * @return The invoking shell instance; never null.
    */
   @Nonnull
   Shell getShell();
 
   /**
+   * The current command session.
+   *
    * @since 3.0
    */
   @Nonnull
@@ -46,24 +46,18 @@ public interface CommandContext
 
   /**
    * Provides access to the arguments to the command.
-   *
-   * @return The command arguments; never null.
    */
   @Nonnull
   List<?> getArguments();
 
   /**
    * The input/output for the command.
-   *
-   * @return Command input/output; never null.
    */
   @Nonnull
   IO getIo();
 
   /**
    * The variables for the command.
-   *
-   * @return Command variables; never null.
    */
   @Nonnull
   Variables getVariables();

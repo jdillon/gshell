@@ -21,7 +21,7 @@ import java.util.LinkedHashSet;
 import javax.annotation.Nullable;
 
 import com.planet57.gshell.command.CommandAction;
-import com.planet57.gshell.command.ChangeGroupAction;
+import com.planet57.gshell.internal.ChangeGroupAction;
 import org.sonatype.goodies.common.ComponentSupport;
 
 import static com.google.common.base.Preconditions.checkNotNull;

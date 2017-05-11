@@ -15,8 +15,6 @@
  */
 package com.planet57.gshell.command.registry;
 
-import com.planet57.gshell.command.CommandException;
-
 /**
  * Thrown to indicate that a requested named-command was not found.
  *
@@ -24,7 +22,7 @@ import com.planet57.gshell.command.CommandException;
  * @since 2.5
  */
 public class NoSuchCommandException
-    extends CommandException
+    extends Exception
 {
   private static final long serialVersionUID = 1;
 

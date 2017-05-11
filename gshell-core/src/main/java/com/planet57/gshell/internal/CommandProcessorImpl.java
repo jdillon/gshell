@@ -17,7 +17,6 @@ package com.planet57.gshell.internal;
 
 import com.planet57.gshell.alias.AliasRegistry;
 import com.planet57.gshell.alias.NoSuchAliasException;
-import com.planet57.gshell.command.ExecuteAliasAction;
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.resolver.CommandResolver;
 import com.planet57.gshell.command.resolver.Node;

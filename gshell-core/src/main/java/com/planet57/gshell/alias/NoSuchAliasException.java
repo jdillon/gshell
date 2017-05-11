@@ -15,8 +15,6 @@
  */
 package com.planet57.gshell.alias;
 
-import com.planet57.gshell.command.CommandException;
-
 /**
  * Thrown to indicate that a requested named-alias was not found.
  *
@@ -24,7 +22,7 @@ import com.planet57.gshell.command.CommandException;
  * @since 2.5
  */
 public class NoSuchAliasException
-    extends CommandException
+    extends Exception
 {
   private static final long serialVersionUID = 1;
 

@@ -18,11 +18,10 @@ package com.planet57.gshell.help;
 import java.io.PrintWriter;
 
 import com.google.common.base.CharMatcher;
-import com.google.common.io.CharStreams;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.resolver.Node;
-import com.planet57.gshell.command.CommandHelper;
+import com.planet57.gshell.internal.CommandHelper;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.util.io.PrintBuffer;
 import com.planet57.gshell.util.cli2.CliProcessor;

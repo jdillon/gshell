@@ -20,7 +20,6 @@ import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.CommandAction.Prototype;
 import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.CommandHelper;
 import com.planet57.gshell.command.IO;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.util.cli2.CliProcessor;

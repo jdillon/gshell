@@ -13,32 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.command;
+package com.planet57.gshell.internal;
+
+import com.planet57.gshell.command.CommandAction;
+import com.planet57.gshell.util.cli2.CliProcessor;
+import com.planet57.gshell.util.cli2.Option;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Thrown to indicate a command failure.
+ * Command helper.
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public class CommandException
-    extends Exception
+public class CommandHelper
 {
-  private static final long serialVersionUID = 1;
+  @Option(name = "h", longName = "help", description = "Display usage", override = true)
+  public boolean displayHelp;
 
-  public CommandException(final String msg) {
-    super(msg);
-  }
+  /**
+   * Construct a {@link CliProcessor} for given action.
+   */
+  public CliProcessor createCliProcessor(final CommandAction command) {
+    checkNotNull(command);
 
-  public CommandException(final String msg, final Throwable cause) {
-    super(msg, cause);
-  }
+    CliProcessor clp = new CliProcessor();
+    clp.addBean(command);
+    clp.addBean(this);
 
-  public CommandException(final Throwable cause) {
-    super(cause);
-  }
-
-  public CommandException() {
-    super();
+    return clp;
   }
 }
