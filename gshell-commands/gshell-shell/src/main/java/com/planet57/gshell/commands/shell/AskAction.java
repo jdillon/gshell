@@ -23,8 +23,7 @@ import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
-import org.jline.reader.LineReader;
-import org.jline.reader.LineReaderBuilder;
+import com.planet57.gshell.util.io.PromptHelper;
 
 /**
  * Ask for some input.
@@ -49,16 +48,14 @@ public class AskAction
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    LineReader lineReader = LineReaderBuilder.builder()
-      .terminal(context.getIo().terminal)
-      .build();
+    PromptHelper promptHelper = new PromptHelper(context.getIo().terminal);
 
     String input;
     if (mask != null) {
-      input = lineReader.readLine(prompt, mask);
+      input = promptHelper.readLine(prompt, mask);
     }
     else {
-      input = lineReader.readLine(prompt);
+      input = promptHelper.readLine(prompt);
     }
     log.debug("Read input: {}", input);
 
