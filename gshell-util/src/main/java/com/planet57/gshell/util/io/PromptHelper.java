@@ -18,6 +18,7 @@ package com.planet57.gshell.util.io;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 import org.jline.terminal.Terminal;
+import org.sonatype.goodies.common.ComponentSupport;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -27,6 +28,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 3.0
  */
 public class PromptHelper
+  extends ComponentSupport
 {
   private LineReader lineReader;
 
@@ -38,17 +40,20 @@ public class PromptHelper
   }
 
   public String readLine() {
+    log.trace("Read-line");
     return lineReader.readLine();
   }
 
   public String readLine(final String prompt) {
     checkNotNull(prompt);
+    log.trace("Read-line; prompt={}", prompt);
     return lineReader.readLine(prompt);
   }
 
   public String readLine(final String prompt, final Character mask) {
     checkNotNull(prompt);
     checkNotNull(mask);
+    log.trace("Read-line; prompt={}, mask={}", prompt, mask);
     return lineReader.readLine(prompt, mask);
   }
 
@@ -57,6 +62,7 @@ public class PromptHelper
    */
   public boolean askBoolean(final String question) {
     checkNotNull(question);
+    log.trace("Ask boolean; question={}", question);
     String result = readLine(String.format("%s (yes/no): ", question));
     return result.equalsIgnoreCase("yes");
   }
