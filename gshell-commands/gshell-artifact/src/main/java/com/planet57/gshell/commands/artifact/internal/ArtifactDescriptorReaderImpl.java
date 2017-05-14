@@ -29,7 +29,7 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 /**
- * ???
+ * Default {@link ArtifactDescriptorReader}.
  *
  * @since 3.0
  */

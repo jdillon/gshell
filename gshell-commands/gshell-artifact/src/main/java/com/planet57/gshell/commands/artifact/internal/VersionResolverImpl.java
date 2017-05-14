@@ -26,7 +26,7 @@ import org.eclipse.aether.resolution.VersionResult;
 import org.sonatype.goodies.common.ComponentSupport;
 
 /**
- * ???
+ * Default {@link VersionResolver}.
  * 
  * @since 3.0
  */

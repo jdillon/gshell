@@ -18,7 +18,6 @@ package com.planet57.gshell.commands.artifact.internal;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import com.planet57.gshell.util.cli2.Option;
 import org.eclipse.aether.RepositorySystemSession;
 import org.eclipse.aether.impl.VersionRangeResolver;
 import org.eclipse.aether.resolution.VersionRangeRequest;
@@ -26,13 +25,12 @@ import org.eclipse.aether.resolution.VersionRangeResolutionException;
 import org.eclipse.aether.resolution.VersionRangeResult;
 import org.eclipse.aether.util.version.GenericVersionScheme;
 import org.eclipse.aether.version.InvalidVersionSpecificationException;
-import org.eclipse.aether.version.Version;
 import org.eclipse.aether.version.VersionConstraint;
 import org.eclipse.aether.version.VersionScheme;
 import org.sonatype.goodies.common.ComponentSupport;
 
 /**
- * ???
+ * Default {@link VersionRangeResolver}.
  * 
  * @since 3.0
  */
@@ -51,27 +49,18 @@ public class VersionRangeResolverImpl
     log.debug("Resolving: {}", request);
 
     VersionRangeResult result = new VersionRangeResult(request);
+    VersionConstraint constraint;
     try {
-      VersionConstraint constraint = versionScheme.parseVersionConstraint(request.getArtifact().getVersion());
-      result.setVersionConstraint(constraint);
-      if (constraint.getRange() == null) {
-        result.addVersion(constraint.getVersion());
-      }
-      else {
-        for (int i = 1; i < 10; i++) {
-          Version ver = versionScheme.parseVersion(Integer.toString(i));
-          if (constraint.containsVersion(ver)) {
-            result.addVersion(ver);
-            if (!request.getRepositories().isEmpty()) {
-              result.setRepository(ver, request.getRepositories().get(0));
-            }
-          }
-        }
-      }
+      constraint = versionScheme.parseVersionConstraint(request.getArtifact().getVersion());
     }
     catch (InvalidVersionSpecificationException e) {
       result.addException(e);
       throw new VersionRangeResolutionException(result);
+    }
+
+    result.setVersionConstraint(constraint);
+    if (constraint.getRange() == null) {
+      result.addVersion(constraint.getVersion());
     }
 
     return result;
