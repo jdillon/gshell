@@ -16,6 +16,9 @@
 package com.planet57.gshell.commands.artifact.internal;
 
 import org.eclipse.aether.RepositorySystemSession;
+import org.eclipse.aether.artifact.Artifact;
+import org.eclipse.aether.artifact.DefaultArtifact;
+import org.eclipse.aether.graph.Dependency;
 import org.eclipse.aether.impl.ArtifactDescriptorReader;
 import org.eclipse.aether.resolution.ArtifactDescriptorException;
 import org.eclipse.aether.resolution.ArtifactDescriptorRequest;
@@ -42,6 +45,13 @@ public class ArtifactDescriptorReaderImpl
   {
     log.debug("Reading: {}", request);
 
-    return new ArtifactDescriptorResult(request);
+    ArtifactDescriptorResult result = new ArtifactDescriptorResult(request);
+
+    // HACK: testing
+    Artifact artifact = new DefaultArtifact("javax.inject:javax.inject:1");
+
+    result.addDependency(new Dependency(artifact, null));
+
+    return result;
   }
 }

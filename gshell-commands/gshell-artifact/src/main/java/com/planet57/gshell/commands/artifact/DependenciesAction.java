@@ -15,6 +15,28 @@
  */
 package com.planet57.gshell.commands.artifact;
 
+import java.io.File;
+
+import javax.annotation.Nonnull;
+import javax.inject.Inject;
+
+import org.eclipse.aether.DefaultRepositorySystemSession;
+import org.eclipse.aether.RepositorySystem;
+import org.eclipse.aether.artifact.Artifact;
+import org.eclipse.aether.artifact.DefaultArtifact;
+import org.eclipse.aether.collection.CollectRequest;
+import org.eclipse.aether.collection.CollectResult;
+import org.eclipse.aether.graph.DefaultDependencyNode;
+import org.eclipse.aether.graph.Dependency;
+import org.eclipse.aether.graph.DependencyNode;
+import org.eclipse.aether.repository.LocalRepository;
+import org.eclipse.aether.repository.RemoteRepository;
+import org.eclipse.aether.resolution.ArtifactRequest;
+import org.eclipse.aether.resolution.ArtifactResult;
+import org.eclipse.aether.resolution.DependencyRequest;
+import org.eclipse.aether.resolution.DependencyResult;
+import org.eclipse.aether.spi.localrepo.LocalRepositoryManagerFactory;
+
 import com.google.common.collect.ImmutableList;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.command.Command;
@@ -22,27 +44,14 @@ import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.io.IO;
-import org.eclipse.aether.DefaultRepositorySystemSession;
-import org.eclipse.aether.RepositorySystem;
-import org.eclipse.aether.artifact.Artifact;
-import org.eclipse.aether.artifact.DefaultArtifact;
-import org.eclipse.aether.repository.LocalRepository;
-import org.eclipse.aether.repository.RemoteRepository;
-import org.eclipse.aether.resolution.ArtifactRequest;
-import org.eclipse.aether.resolution.ArtifactResult;
-import org.eclipse.aether.spi.localrepo.LocalRepositoryManagerFactory;
-
-import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import java.io.File;
 
 /**
  * ???
  *
  * @since 3.0
  */
-@Command(name="artifact/resolve", description = "Resolve an artifact")
-public class ResolveAction
+@Command(name="artifact/dependencies", description = "Display dependencies")
+public class DependenciesAction
   extends CommandActionSupport
 {
   @Inject
@@ -70,14 +79,20 @@ public class ResolveAction
     log.debug("Remote-repository: {}", remoteRepository);
 
     Artifact artifact = new DefaultArtifact(coordinates);
-    log.debug("Resolving: {}; from coordinates: {}", artifact, coordinates);
+    Dependency dependency = new Dependency(artifact, null);
+    CollectRequest request = new CollectRequest(dependency, ImmutableList.of(remoteRepository));
+    CollectResult result = repositorySystem.collectDependencies(session, request);
 
-    ArtifactRequest request = new ArtifactRequest(artifact, ImmutableList.of(remoteRepository), null);
-    ArtifactResult result = repositorySystem.resolveArtifact(session, request);
-    log.debug("Result: {}", result);
-
-    io.println(result.getArtifact().getFile());
+    DependencyNode node = result.getRoot();
+    print(io, node, "");
 
     return null;
+  }
+
+  private void print(final IO io, final DependencyNode node, final String indent) {
+    io.format("%s%s%n", indent, node);
+    node.getChildren().forEach( child -> {
+      io.format("  %s%s%n", indent, child);
+    });
   }
 }
