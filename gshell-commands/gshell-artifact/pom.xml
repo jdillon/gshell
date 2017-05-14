@@ -30,39 +30,10 @@
   <artifactId>gshell-artifact</artifactId>
   <name>${project.groupId}:${project.artifactId}</name>
 
-  <properties>
-    <maven-resolver.version>1.0.3</maven-resolver.version>
-  </properties>
-
   <dependencies>
     <dependency>
-      <groupId>org.apache.maven.resolver</groupId>
-      <artifactId>maven-resolver-impl</artifactId>
-      <version>${maven-resolver.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.maven.resolver</groupId>
-      <artifactId>maven-resolver-connector-basic</artifactId>
-      <version>${maven-resolver.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.maven.resolver</groupId>
-      <artifactId>maven-resolver-transport-http</artifactId>
-      <version>${maven-resolver.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-resolver-provider</artifactId>
-      <version>3.5.1-SNAPSHOT</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.codehaus.plexus</groupId>
-          <artifactId>plexus-component-annotations</artifactId>
-        </exclusion>
-      </exclusions>
+      <groupId>com.planet57.gshell.ext</groupId>
+      <artifactId>gshell-repository</artifactId>
     </dependency>
   </dependencies>
 

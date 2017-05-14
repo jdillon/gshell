@@ -13,27 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.commands.artifact.internal;
+package com.planet57.gshell.commands.artifact
 
-import com.google.inject.Binder;
-import com.google.inject.Module;
-import org.apache.maven.repository.internal.MavenResolverModule;
-import org.eclipse.aether.impl.guice.AetherModule;
-
-import javax.inject.Named;
+import com.planet57.gshell.testharness.CommandTestSupport
 
 /**
- * Artifact module.
- *
- * @since 3.0
+ * Tests for {@link DependenciesAction}.
  */
-@Named
-public class ArtifactModule
-  implements Module
+class DependenciesActionTest
+    extends CommandTestSupport
 {
-  @Override
-  public void configure(final Binder binder) {
-    // binder.install(new AetherModule());
-    binder.install(new MavenResolverModule());
+  DependenciesActionTest() {
+    super(DependenciesAction.class)
   }
+
+  // TODO:
 }
