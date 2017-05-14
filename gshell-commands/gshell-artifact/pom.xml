@@ -22,38 +22,37 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>com.planet57.gshell</groupId>
-    <artifactId>gshell</artifactId>
+    <groupId>com.planet57.gshell.commands</groupId>
+    <artifactId>gshell-commands</artifactId>
     <version>3.0.0-SNAPSHOT</version>
   </parent>
 
-  <groupId>com.planet57.gshell.commands</groupId>
-  <artifactId>gshell-commands</artifactId>
+  <artifactId>gshell-artifact</artifactId>
   <name>${project.groupId}:${project.artifactId}</name>
-  <packaging>pom</packaging>
+
+  <properties>
+    <maven-resolver.version>1.0.3</maven-resolver.version>
+  </properties>
 
   <dependencies>
     <dependency>
-      <groupId>com.planet57.gshell</groupId>
-      <artifactId>gshell-core</artifactId>
+      <groupId>org.apache.maven.resolver</groupId>
+      <artifactId>maven-resolver-impl</artifactId>
+      <version>${maven-resolver.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>com.planet57.gshell</groupId>
-      <artifactId>gshell-testharness</artifactId>
-      <scope>test</scope>
+      <groupId>org.apache.maven.resolver</groupId>
+      <artifactId>maven-resolver-connector-basic</artifactId>
+      <version>${maven-resolver.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.maven.resolver</groupId>
+      <artifactId>maven-resolver-transport-http</artifactId>
+      <version>${maven-resolver.version}</version>
     </dependency>
   </dependencies>
-
-  <modules>
-    <module>gshell-artifact</module>
-    <module>gshell-file</module>
-    <module>gshell-logging</module>
-    <module>gshell-pref</module>
-    <module>gshell-script</module>
-    <module>gshell-shell</module>
-    <module>gshell-standard</module>
-  </modules>
 
 </project>
 

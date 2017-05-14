@@ -53,6 +53,11 @@
 
     <dependency>
       <groupId>com.planet57.gshell.commands</groupId>
+      <artifactId>gshell-artifact</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.planet57.gshell.commands</groupId>
       <artifactId>gshell-standard</artifactId>
     </dependency>
 
