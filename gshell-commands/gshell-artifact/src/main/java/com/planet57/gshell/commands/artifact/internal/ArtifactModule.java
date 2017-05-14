@@ -17,6 +17,7 @@ package com.planet57.gshell.commands.artifact.internal;
 
 import com.google.inject.Binder;
 import com.google.inject.Module;
+import org.apache.maven.repository.internal.MavenResolverModule;
 import org.eclipse.aether.impl.guice.AetherModule;
 
 import javax.inject.Named;
@@ -32,6 +33,7 @@ public class ArtifactModule
 {
   @Override
   public void configure(final Binder binder) {
-    binder.install(new AetherModule());
+    // binder.install(new AetherModule());
+    binder.install(new MavenResolverModule());
   }
 }

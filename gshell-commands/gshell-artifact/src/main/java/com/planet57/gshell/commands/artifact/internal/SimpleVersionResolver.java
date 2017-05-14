@@ -26,13 +26,13 @@ import org.eclipse.aether.resolution.VersionResult;
 import org.sonatype.goodies.common.ComponentSupport;
 
 /**
- * Default {@link VersionResolver}.
+ * {@code simple} {@link VersionResolver}.
  * 
  * @since 3.0
  */
-@Named
-@Singleton
-public class VersionResolverImpl
+//@Named("simple")
+//@Singleton
+public class SimpleVersionResolver
   extends ComponentSupport
   implements VersionResolver
 {

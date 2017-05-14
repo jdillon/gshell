@@ -30,13 +30,13 @@ import org.eclipse.aether.version.VersionScheme;
 import org.sonatype.goodies.common.ComponentSupport;
 
 /**
- * Default {@link VersionRangeResolver}.
+ * {@code simple} {@link VersionRangeResolver}.
  * 
  * @since 3.0
  */
-@Named
-@Singleton
-public class VersionRangeResolverImpl
+//@Named("simple")
+//@Singleton
+public class SimpleVersionRangeResolver
   extends ComponentSupport
   implements VersionRangeResolver
 {
