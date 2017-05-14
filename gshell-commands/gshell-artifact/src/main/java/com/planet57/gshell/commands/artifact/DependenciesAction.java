@@ -18,23 +18,20 @@ package com.planet57.gshell.commands.artifact;
 import java.io.File;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 
+import com.planet57.gshell.util.cli2.Option;
 import org.eclipse.aether.DefaultRepositorySystemSession;
 import org.eclipse.aether.RepositorySystem;
 import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.artifact.DefaultArtifact;
 import org.eclipse.aether.collection.CollectRequest;
 import org.eclipse.aether.collection.CollectResult;
-import org.eclipse.aether.graph.DefaultDependencyNode;
 import org.eclipse.aether.graph.Dependency;
 import org.eclipse.aether.graph.DependencyNode;
 import org.eclipse.aether.repository.LocalRepository;
 import org.eclipse.aether.repository.RemoteRepository;
-import org.eclipse.aether.resolution.ArtifactRequest;
-import org.eclipse.aether.resolution.ArtifactResult;
-import org.eclipse.aether.resolution.DependencyRequest;
-import org.eclipse.aether.resolution.DependencyResult;
 import org.eclipse.aether.spi.localrepo.LocalRepositoryManagerFactory;
 
 import com.google.common.collect.ImmutableList;
@@ -60,6 +57,10 @@ public class DependenciesAction
   @Inject
   LocalRepositoryManagerFactory localRepositoryManagerFactory;
 
+  @Nullable
+  @Option(name="s", longName = "scope", description = "Resolution scope", token = "SCOPE")
+  private String scope;
+
   @Argument(required = true)
   private String coordinates;
 
@@ -79,8 +80,10 @@ public class DependenciesAction
     log.debug("Remote-repository: {}", remoteRepository);
 
     Artifact artifact = new DefaultArtifact(coordinates);
-    Dependency dependency = new Dependency(artifact, null);
+    Dependency dependency = new Dependency(artifact, scope);
     CollectRequest request = new CollectRequest(dependency, ImmutableList.of(remoteRepository));
+
+    log.debug("Resolving dependencies: {}", dependency);
     CollectResult result = repositorySystem.collectDependencies(session, request);
 
     DependencyNode node = result.getRoot();
@@ -91,8 +94,6 @@ public class DependenciesAction
 
   private void print(final IO io, final DependencyNode node, final String indent) {
     io.format("%s%s%n", indent, node);
-    node.getChildren().forEach( child -> {
-      io.format("  %s%s%n", indent, child);
-    });
+    node.getChildren().forEach( child -> print(io, child, indent + "  "));
   }
 }

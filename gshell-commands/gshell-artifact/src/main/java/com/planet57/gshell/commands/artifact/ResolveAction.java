@@ -70,7 +70,7 @@ public class ResolveAction
     log.debug("Remote-repository: {}", remoteRepository);
 
     Artifact artifact = new DefaultArtifact(coordinates);
-    log.debug("Resolving: {}; from coordinates: {}", artifact, coordinates);
+    log.debug("Resolving: {}", artifact);
 
     ArtifactRequest request = new ArtifactRequest(artifact, ImmutableList.of(remoteRepository), null);
     ArtifactResult result = repositorySystem.resolveArtifact(session, request);
