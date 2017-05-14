@@ -43,11 +43,11 @@ import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.io.IO;
 
 /**
- * Display dependencies.
+ * Display dependencies of an artifact.
  *
  * @since 3.0
  */
-@Command(name="artifact/dependencies", description = "Display dependencies")
+@Command(name="artifact/dependencies", description = "Display dependencies of an artifact")
 public class DependenciesAction
   extends CommandActionSupport
 {
@@ -75,7 +75,6 @@ public class DependenciesAction
 
     DefaultRepositorySystemSession session = new DefaultRepositorySystemSession();
     session.setSystemProperties(System.getProperties());
-
     session.setLocalRepositoryManager(localRepositoryManagerFactory.newInstance(session, localRepository));
 
     RemoteRepository remoteRepository = new RemoteRepository.Builder("central", "default", "http://repo1.maven.org/maven2").build();
