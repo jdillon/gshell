@@ -74,6 +74,8 @@ public class DependenciesAction
     log.debug("Local-repository: {}", localRepository);
 
     DefaultRepositorySystemSession session = new DefaultRepositorySystemSession();
+    session.setSystemProperties(System.getProperties());
+
     session.setLocalRepositoryManager(localRepositoryManagerFactory.newInstance(session, localRepository));
 
     RemoteRepository remoteRepository = new RemoteRepository.Builder("central", "default", "http://repo1.maven.org/maven2").build();
