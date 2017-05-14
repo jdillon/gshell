@@ -43,7 +43,7 @@ import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.io.IO;
 
 /**
- * ???
+ * Display dependencies.
  *
  * @since 3.0
  */
@@ -61,7 +61,7 @@ public class DependenciesAction
   @Option(name="s", longName = "scope", description = "Resolution scope", token = "SCOPE")
   private String scope;
 
-  @Argument(required = true)
+  @Argument(required = true, description = "Artifact coordinates", token = "COORD")
   private String coordinates;
 
   @Override
@@ -96,6 +96,6 @@ public class DependenciesAction
 
   private void print(final IO io, final DependencyNode node, final String indent) {
     io.format("%s%s%n", indent, node);
-    node.getChildren().forEach( child -> print(io, child, indent + "  "));
+    node.getChildren().forEach(child -> print(io, child, indent + "  "));
   }
 }

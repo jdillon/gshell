@@ -37,7 +37,7 @@ import javax.inject.Inject;
 import java.io.File;
 
 /**
- * ???
+ * Resolve an artifact.
  *
  * @since 3.0
  */
@@ -51,7 +51,7 @@ public class ResolveAction
   @Inject
   LocalRepositoryManagerFactory localRepositoryManagerFactory;
 
-  @Argument(required = true)
+  @Argument(required = true, description = "Artifact coordinates", token = "COORD")
   private String coordinates;
 
   @Override
