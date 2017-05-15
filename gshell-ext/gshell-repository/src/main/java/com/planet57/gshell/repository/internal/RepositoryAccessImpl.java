@@ -29,6 +29,7 @@ import org.eclipse.aether.RepositorySystemSession;
 import org.eclipse.aether.repository.LocalRepository;
 import org.eclipse.aether.repository.NoLocalRepositoryManagerException;
 import org.eclipse.aether.repository.RemoteRepository;
+import org.eclipse.aether.repository.RepositoryPolicy;
 import org.eclipse.aether.spi.localrepo.LocalRepositoryManagerFactory;
 import org.sonatype.goodies.common.ComponentSupport;
 
@@ -93,7 +94,10 @@ public class RepositoryAccessImpl
 
       // TODO: make this configurable and persistent
 
-      RemoteRepository central = new RemoteRepository.Builder("central", "default", "http://repo1.maven.org/maven2").build();
+      RemoteRepository central = new RemoteRepository.Builder("central", "default", "http://repo1.maven.org/maven2")
+        // TODO: how to make this not respond to SNAPSHOT requests?
+        .build();
+
       repositories.add(central);
       remoteRepositories = repositories;
       log.debug("Remote-repositories: {}", remoteRepositories);
