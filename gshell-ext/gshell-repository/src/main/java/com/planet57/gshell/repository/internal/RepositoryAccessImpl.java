@@ -108,8 +108,9 @@ public class RepositoryAccessImpl
   }
 
   @Override
-  public RepositorySystemSession createSession() {
+  public DefaultRepositorySystemSession createSession() {
     DefaultRepositorySystemSession session = new DefaultRepositorySystemSession();
+    session.setRepositoryListener(new LoggingRepositoryListener());
     session.setSystemProperties(System.getProperties());
 
     // TODO: adjust other session configuration

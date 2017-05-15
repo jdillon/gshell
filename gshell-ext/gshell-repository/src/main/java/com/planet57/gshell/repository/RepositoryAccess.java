@@ -15,8 +15,8 @@
  */
 package com.planet57.gshell.repository;
 
+import org.eclipse.aether.DefaultRepositorySystemSession;
 import org.eclipse.aether.RepositorySystem;
-import org.eclipse.aether.RepositorySystemSession;
 import org.eclipse.aether.repository.LocalRepository;
 import org.eclipse.aether.repository.RemoteRepository;
 
@@ -35,5 +35,5 @@ public interface RepositoryAccess
 
   List<RemoteRepository> getRemoteRepositories();
 
-  RepositorySystemSession createSession();
+  DefaultRepositorySystemSession createSession();
 }
