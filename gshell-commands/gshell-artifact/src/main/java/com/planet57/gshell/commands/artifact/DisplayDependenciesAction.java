@@ -20,8 +20,9 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import com.planet57.gshell.repository.RepositoryAccess;
+import com.planet57.gshell.repository.internal.IOTransferListener;
 import com.planet57.gshell.util.cli2.Option;
-import org.eclipse.aether.RepositorySystemSession;
+import org.eclipse.aether.DefaultRepositorySystemSession;
 import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.artifact.DefaultArtifact;
 import org.eclipse.aether.collection.CollectRequest;
@@ -55,7 +56,9 @@ public class DisplayDependenciesAction
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    RepositorySystemSession session = repositoryAccess.createSession();
+    DefaultRepositorySystemSession session = repositoryAccess.createSession();
+    session.setTransferListener(new IOTransferListener(context.getIo()));
+
     Artifact artifact = new DefaultArtifact(coordinates);
     Dependency dependency = new Dependency(artifact, scope);
     CollectRequest request = new CollectRequest(dependency, repositoryAccess.getRemoteRepositories());

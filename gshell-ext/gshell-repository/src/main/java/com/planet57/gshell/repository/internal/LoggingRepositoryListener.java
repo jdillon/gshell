@@ -28,8 +28,8 @@ public class LoggingRepositoryListener
   extends ComponentSupport
   implements RepositoryListener
 {
-  private void log(final String message, final RepositoryEvent event) {
-    log.debug("{}: {}", message, event);
+  private void log(final String format, final Object... args) {
+    log.debug(format, args);
   }
 
   //
@@ -38,12 +38,12 @@ public class LoggingRepositoryListener
 
   @Override
   public void artifactDescriptorInvalid(final RepositoryEvent event) {
-    log("Artifact-descriptor invalid", event);
+    log("Artifact-descriptor invalid: {}", event);
   }
 
   @Override
   public void artifactDescriptorMissing(final RepositoryEvent event) {
-    log("Artifact-descriptor missing", event);
+    log("Artifact-descriptor missing: {}", event);
   }
 
   //
@@ -52,47 +52,47 @@ public class LoggingRepositoryListener
 
   @Override
   public void metadataInvalid(final RepositoryEvent event) {
-    log("Metadata invalid", event);
+    log("Metadata invalid: {}", event);
   }
 
   @Override
   public void metadataResolving(final RepositoryEvent event) {
-    log("Metadata resolving", event);
+    log("Metadata resolving: {}", event);
   }
 
   @Override
   public void metadataResolved(final RepositoryEvent event) {
-    log("Metadata resolved", event);
+    log("Metadata resolved: {}", event);
   }
 
   @Override
   public void metadataDownloading(final RepositoryEvent event) {
-    log("Metadata downloading", event);
+    log("Metadata downloading: {}", event);
   }
 
   @Override
   public void metadataDownloaded(final RepositoryEvent event) {
-    log("Metadata downloaded", event);
+    log("Metadata downloaded: {}", event);
   }
 
   @Override
   public void metadataInstalling(final RepositoryEvent event) {
-    log("Metadata installing", event);
+    log("Metadata installing: {}", event);
   }
 
   @Override
   public void metadataInstalled(final RepositoryEvent event) {
-    log("Metadata installed", event);
+    log("Metadata installed: {}", event);
   }
 
   @Override
   public void metadataDeploying(final RepositoryEvent event) {
-    log("Metadata deploying", event);
+    log("Metadata deploying: {}", event);
   }
 
   @Override
   public void metadataDeployed(final RepositoryEvent event) {
-    log("Metadata deployed", event);
+    log("Metadata deployed: {}", event);
   }
 
   //
@@ -101,41 +101,41 @@ public class LoggingRepositoryListener
 
   @Override
   public void artifactResolving(final RepositoryEvent event) {
-    log("Artifact resolving", event);
+    log("Artifact resolving: {}", event);
   }
 
   @Override
   public void artifactResolved(final RepositoryEvent event) {
-    log("Artifact resolved", event);
+    log("Artifact resolved: {}", event);
   }
 
   @Override
   public void artifactDownloading(final RepositoryEvent event) {
-    log("Artifact downloading", event);
+    log("Artifact downloading: {}", event);
   }
 
   @Override
   public void artifactDownloaded(final RepositoryEvent event) {
-    log("Artifact downloaded", event);
+    log("Artifact downloaded: {}", event);
   }
 
   @Override
   public void artifactInstalling(final RepositoryEvent event) {
-    log("Artifact installing", event);
+    log("Artifact installing: {}", event);
   }
 
   @Override
   public void artifactInstalled(final RepositoryEvent event) {
-    log("Artifact installed", event);
+    log("Artifact installed: {}", event);
   }
 
   @Override
   public void artifactDeploying(final RepositoryEvent event) {
-    log("Artifact deploying", event);
+    log("Artifact deploying: {}", event);
   }
 
   @Override
   public void artifactDeployed(final RepositoryEvent event) {
-    log("Artifact deployed", event);
+    log("Artifact deployed: {}", event);
   }
 }
