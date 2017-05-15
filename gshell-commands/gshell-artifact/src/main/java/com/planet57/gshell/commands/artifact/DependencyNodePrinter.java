@@ -77,13 +77,13 @@ public class DependencyNodePrinter
     node.getChildren().forEach(child -> print(child, indent + "  "));
   }
 
-  private void faint(final AttributedStringBuilder buff, final String text) {
+  private static void faint(final AttributedStringBuilder buff, final String text) {
     buff.style(AttributedStyle.DEFAULT.faint());
     buff.append(text);
     buff.style(AttributedStyle.DEFAULT.faintOff());
   }
 
-  private void bold(final AttributedStringBuilder buff, final String text) {
+  private static void bold(final AttributedStringBuilder buff, final String text) {
     // FIXME: for some reason this is not BOLD as it should be
     buff.style(AttributedStyle.DEFAULT.bold());
     buff.append(text);
