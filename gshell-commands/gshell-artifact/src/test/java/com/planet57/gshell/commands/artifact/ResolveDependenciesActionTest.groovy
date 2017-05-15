@@ -18,13 +18,13 @@ package com.planet57.gshell.commands.artifact
 import com.planet57.gshell.testharness.CommandTestSupport
 
 /**
- * Tests for {@link DependenciesAction}.
+ * Tests for {@link ResolveDependenciesAction}.
  */
-class DependenciesActionTest
+class ResolveDependenciesActionTest
   extends CommandTestSupport
 {
-  DependenciesActionTest() {
-    super(DependenciesAction.class)
+  ResolveDependenciesActionTest() {
+    super(ResolveDependenciesAction.class)
   }
 
   // TODO:

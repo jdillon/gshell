@@ -19,28 +19,30 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
-import com.planet57.gshell.repository.RepositoryAccess;
-import com.planet57.gshell.util.cli2.Option;
 import org.eclipse.aether.RepositorySystemSession;
 import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.artifact.DefaultArtifact;
 import org.eclipse.aether.collection.CollectRequest;
-import org.eclipse.aether.collection.CollectResult;
 import org.eclipse.aether.graph.Dependency;
 import org.eclipse.aether.graph.DependencyNode;
+
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.command.CommandContext;
+import com.planet57.gshell.repository.RepositoryAccess;
 import com.planet57.gshell.util.cli2.Argument;
+import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.io.IO;
+import org.eclipse.aether.resolution.DependencyRequest;
+import org.eclipse.aether.resolution.DependencyResult;
 
 /**
- * Display dependencies of an artifact.
+ * Resolve dependencies of an artifact.
  *
  * @since 3.0
  */
-@Command(name="artifact/dependencies", description = "Display dependencies of an artifact")
-public class DependenciesAction
+@Command(name="artifact/resolve-dependencies", description = "Resolve dependencies of an artifact")
+public class ResolveDependenciesAction
   extends CommandActionSupport
 {
   @Inject
@@ -58,10 +60,12 @@ public class DependenciesAction
     RepositorySystemSession session = repositoryAccess.createSession();
     Artifact artifact = new DefaultArtifact(coordinates);
     Dependency dependency = new Dependency(artifact, scope);
-    CollectRequest request = new CollectRequest(dependency, repositoryAccess.getRemoteRepositories());
+
+    CollectRequest collectRequest = new CollectRequest(dependency, repositoryAccess.getRemoteRepositories());
+    DependencyRequest request = new DependencyRequest(collectRequest, null);
 
     log.debug("Resolving dependencies: {}", dependency);
-    CollectResult result = repositoryAccess.getRepositorySystem().collectDependencies(session, request);
+    DependencyResult result = repositoryAccess.getRepositorySystem().resolveDependencies(session, request);
 
     IO io = context.getIo();
     print(io, result.getRoot(), "");

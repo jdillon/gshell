@@ -35,8 +35,8 @@ import javax.inject.Inject;
  *
  * @since 3.0
  */
-@Command(name="artifact/resolve", description = "Resolve an artifact")
-public class ResolveAction
+@Command(name="artifact/resolve-artifact", description = "Resolve an artifact")
+public class ResolveArtifactAction
   extends CommandActionSupport
 {
   @Inject
