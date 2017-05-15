@@ -34,6 +34,8 @@ public class IOTransferListener
 {
   private final IO io;
 
+  // TODO: resolve how to make a status-bar widget thingy with jline3
+
   public IOTransferListener(final IO io) {
     this.io = checkNotNull(io);
   }
