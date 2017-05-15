@@ -21,7 +21,7 @@ import com.planet57.gshell.testharness.CommandTestSupport
  * Tests for {@link DependenciesAction}.
  */
 class DependenciesActionTest
-    extends CommandTestSupport
+  extends CommandTestSupport
 {
   DependenciesActionTest() {
     super(DependenciesAction.class)

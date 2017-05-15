@@ -21,7 +21,7 @@ import com.planet57.gshell.testharness.CommandTestSupport
  * Tests for {@link ResolveAction}.
  */
 class ResolveActionTest
-    extends CommandTestSupport
+  extends CommandTestSupport
 {
   ResolveActionTest() {
     super(ResolveAction.class)

@@ -55,6 +55,8 @@ import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.sonatype.goodies.testsupport.TestTracer;
 import org.sonatype.goodies.testsupport.TestUtil;
 
+import javax.annotation.Nonnull;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 import static org.hamcrest.Matchers.is;
@@ -133,6 +135,7 @@ public abstract class CommandTestSupport
       binder.bind(Branding.class).toInstance(branding);
     });
     configureModules(modules);
+    modules.add(createSpaceModule());
 
     injector = Guice.createInjector(Stage.DEVELOPMENT, new WireModule(modules));
     container.add(injector, 0);
@@ -169,11 +172,16 @@ public abstract class CommandTestSupport
     injector.injectMembers(this);
   }
 
-  protected void configureModules(final List<Module> modules) {
-    checkNotNull(modules);
-    modules.add(createSpaceModule());
+  /**
+   * Extension-point for sub-class to configure any additional modules for test environment.
+   */
+  protected void configureModules(@Nonnull final List<Module> modules) {
+    // empty
   }
 
+  /**
+   * Expose ability to adjust the {@link SpaceModule}; for most cases this should be left ASIS.
+   */
   protected SpaceModule createSpaceModule() {
     URLClassSpace space = new URLClassSpace(getClass().getClassLoader());
     return new SpaceModule(space, BeanScanning.INDEX);
