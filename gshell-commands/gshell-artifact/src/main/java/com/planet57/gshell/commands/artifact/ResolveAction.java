@@ -46,7 +46,7 @@ public class ResolveAction
   private String coordinates;
 
   @Override
-  public Object execute(final @Nonnull CommandContext context) throws Exception {
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
     RepositorySystemSession session = repositoryAccess.createSession();
 
     Artifact artifact = new DefaultArtifact(coordinates);
