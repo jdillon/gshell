@@ -35,15 +35,12 @@
   </properties>
 
   <dependencies>
+    <!--
+    TODO: need to adjust so we can eventually use gshell-repository from gshell-core.
+    -->
     <dependency>
       <groupId>com.planet57.gshell</groupId>
-      <artifactId>gshell-util</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>com.google.inject</groupId>
-      <artifactId>guice</artifactId>
-      <classifier>no_aop</classifier>
+      <artifactId>gshell-core</artifactId>
     </dependency>
 
     <dependency>

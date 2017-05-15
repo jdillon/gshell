@@ -15,25 +15,25 @@
  */
 package com.planet57.gshell.repository;
 
-import com.google.inject.Binder;
-import com.google.inject.Module;
-import org.apache.maven.repository.internal.MavenResolverModule;
-import org.eclipse.aether.impl.guice.AetherModule;
+import org.eclipse.aether.RepositorySystem;
+import org.eclipse.aether.RepositorySystemSession;
+import org.eclipse.aether.repository.LocalRepository;
+import org.eclipse.aether.repository.RemoteRepository;
 
-import javax.inject.Named;
+import java.util.List;
 
 /**
- * Repository module.
+ * Facade around repository system.
  *
  * @since 3.0
  */
-@Named
-public class RepositoryModule
-  implements Module
+public interface RepositoryAccess
 {
-  @Override
-  public void configure(final Binder binder) {
-    // binder.install(new AetherModule());
-    binder.install(new MavenResolverModule());
-  }
+  RepositorySystem getRepositorySystem();
+
+  LocalRepository getLocalRepository();
+
+  List<RemoteRepository> getRemoteRepositories();
+
+  RepositorySystemSession createSession();
 }

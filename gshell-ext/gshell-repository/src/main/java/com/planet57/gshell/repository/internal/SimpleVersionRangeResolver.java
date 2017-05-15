@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.repository;
+package com.planet57.gshell.repository.internal;
 
 import javax.inject.Named;
 import javax.inject.Singleton;

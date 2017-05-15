@@ -15,26 +15,20 @@
  */
 package com.planet57.gshell.commands.artifact;
 
-import com.google.common.collect.ImmutableList;
-import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.command.CommandContext;
+import com.planet57.gshell.repository.RepositoryAccess;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.io.IO;
-import org.eclipse.aether.DefaultRepositorySystemSession;
-import org.eclipse.aether.RepositorySystem;
+import org.eclipse.aether.RepositorySystemSession;
 import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.artifact.DefaultArtifact;
-import org.eclipse.aether.repository.LocalRepository;
-import org.eclipse.aether.repository.RemoteRepository;
 import org.eclipse.aether.resolution.ArtifactRequest;
 import org.eclipse.aether.resolution.ArtifactResult;
-import org.eclipse.aether.spi.localrepo.LocalRepositoryManagerFactory;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-import java.io.File;
 
 /**
  * Resolve an artifact.
@@ -46,37 +40,23 @@ public class ResolveAction
   extends CommandActionSupport
 {
   @Inject
-  RepositorySystem repositorySystem;
-
-  @Inject
-  LocalRepositoryManagerFactory localRepositoryManagerFactory;
+  private RepositoryAccess repositoryAccess;
 
   @Argument(required = true, description = "Artifact coordinates", token = "COORD")
   private String coordinates;
 
   @Override
   public Object execute(final @Nonnull CommandContext context) throws Exception {
-    IO io = context.getIo();
-    Branding branding = context.getShell().getBranding();
-
-    File repositoryDir = new File(branding.getUserContextDir(), "repository");
-    LocalRepository localRepository = new LocalRepository(repositoryDir);
-    log.debug("Local-repository: {}", localRepository);
-
-    DefaultRepositorySystemSession session = new DefaultRepositorySystemSession();
-    session.setSystemProperties(System.getProperties());
-    session.setLocalRepositoryManager(localRepositoryManagerFactory.newInstance(session, localRepository));
-
-    RemoteRepository remoteRepository = new RemoteRepository.Builder("central", "default", "http://repo1.maven.org/maven2").build();
-    log.debug("Remote-repository: {}", remoteRepository);
+    RepositorySystemSession session = repositoryAccess.createSession();
 
     Artifact artifact = new DefaultArtifact(coordinates);
     log.debug("Resolving: {}", artifact);
 
-    ArtifactRequest request = new ArtifactRequest(artifact, ImmutableList.of(remoteRepository), null);
-    ArtifactResult result = repositorySystem.resolveArtifact(session, request);
+    ArtifactRequest request = new ArtifactRequest(artifact, repositoryAccess.getRemoteRepositories(), null);
+    ArtifactResult result = repositoryAccess.getRepositorySystem().resolveArtifact(session, request);
     log.debug("Result: {}", result);
 
+    IO io = context.getIo();
     io.println(result.getArtifact().getFile());
 
     return null;
