@@ -34,6 +34,8 @@ import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.io.IO;
+import org.jline.utils.AttributedStringBuilder;
+import org.jline.utils.AttributedStyle;
 
 /**
  * Display dependencies of an artifact.
@@ -73,7 +75,41 @@ public class DisplayDependenciesAction
   }
 
   private static void print(final IO io, final DependencyNode node, final String indent) {
-    io.format("%s%s%n", indent, node);
+    AttributedStringBuilder buff = new AttributedStringBuilder();
+    buff.style(AttributedStyle.DEFAULT);
+
+    Dependency dependency = node.getDependency();
+    Artifact artifact = node.getArtifact();
+
+    buff.append(artifact.getGroupId());
+    faint(buff, ":");
+    buff.append(artifact.getArtifactId());
+    faint(buff, ":");
+    buff.append(artifact.getExtension());
+    faint(buff, ":");
+
+    String classifier = artifact.getClassifier();
+    if (classifier.length() > 0) {
+      buff.append(classifier);
+      faint(buff, ":");
+    }
+
+    // FIXME: for some reason this is not BOLD as it should be
+    buff.style(AttributedStyle.DEFAULT.bold());
+    buff.append(artifact.getVersion());
+    buff.style(AttributedStyle.DEFAULT.boldOff());
+
+    if (dependency != null) {
+      faint(buff, " (" + dependency.getScope() + ")");
+    }
+
+    io.format("%s%s%n", indent, buff.toAnsi(io.terminal));
     node.getChildren().forEach(child -> print(io, child, indent + "  "));
+  }
+
+  private static void faint(final AttributedStringBuilder buff, final String text) {
+    buff.style(AttributedStyle.DEFAULT.faint());
+    buff.append(text);
+    buff.style(AttributedStyle.DEFAULT.faintOff());
   }
 }
