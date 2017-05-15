@@ -112,14 +112,15 @@ public class RepositoryAccessImpl
     DefaultRepositorySystemSession session = new DefaultRepositorySystemSession();
     session.setSystemProperties(System.getProperties());
 
+    // TODO: adjust other session configuration
+
     try {
+      // according to the javadocs, this should be done as one of the last steps to setup a new session
       session.setLocalRepositoryManager(localRepositoryManagerFactory.newInstance(session, getLocalRepository()));
     }
     catch (NoLocalRepositoryManagerException e) {
       throw new RuntimeException(e);
     }
-
-    // TODO: adjust other session configuration
 
     return session;
   }
