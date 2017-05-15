@@ -25,7 +25,6 @@ import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.artifact.DefaultArtifact;
 import org.eclipse.aether.collection.CollectRequest;
 import org.eclipse.aether.graph.Dependency;
-import org.eclipse.aether.graph.DependencyNode;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandActionSupport;
@@ -33,7 +32,6 @@ import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.repository.RepositoryAccess;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
-import com.planet57.gshell.util.io.IO;
 import org.eclipse.aether.resolution.DependencyRequest;
 import org.eclipse.aether.resolution.DependencyResult;
 
@@ -70,14 +68,8 @@ public class ResolveDependenciesAction
     log.debug("Resolving dependencies: {}", dependency);
     DependencyResult result = repositoryAccess.getRepositorySystem().resolveDependencies(session, request);
 
-    IO io = context.getIo();
-    print(io, result.getRoot(), "");
+    new DependencyNodePrinter(context.getIo()).print(result.getRoot());
 
     return null;
-  }
-
-  private static void print(final IO io, final DependencyNode node, final String indent) {
-    io.format("%s%s%n", indent, node);
-    node.getChildren().forEach(child -> print(io, child, indent + "  "));
   }
 }
