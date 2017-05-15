@@ -24,6 +24,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.Stage;
+import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.registry.CommandRegistrarImpl;
@@ -101,6 +102,8 @@ public abstract class CommandTestSupport
 
   private Variables variables;
 
+  private Branding branding;
+
   protected final Map<String, Class> requiredCommands = new HashMap<>();
 
   private final ThreadIOImpl threadIO = new ThreadIOImpl();
@@ -120,12 +123,14 @@ public abstract class CommandTestSupport
     terminal = TerminalBuilder.builder().dumb(true).build();
     io = new BufferIO(terminal);
     variables = new VariablesSupport();
+    branding = new TestBranding(util.resolveFile("target/shell-home"));
 
     container = new BeanContainer();
     List<Module> modules = new ArrayList<>();
     modules.add(binder -> {
       binder.bind(BeanContainer.class).toInstance(container);
       binder.bind(ThreadIO.class).toInstance(threadIO);
+      binder.bind(Branding.class).toInstance(branding);
     });
     configureModules(modules);
 
@@ -133,7 +138,7 @@ public abstract class CommandTestSupport
     container.add(injector, 0);
 
     shell = injector.getInstance(ShellBuilder.class)
-      .branding(new TestBranding(util.resolveFile("target/shell-home")))
+      .branding(branding)
       .io(io)
       .variables(variables)
       .build();
