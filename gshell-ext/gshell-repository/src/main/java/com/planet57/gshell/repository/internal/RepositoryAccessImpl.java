@@ -80,6 +80,7 @@ public class RepositoryAccessImpl
   @Override
   public LocalRepository getLocalRepository() {
     if (localRepository == null) {
+      // TODO: expose directly on branding
       File dir = new File(branding.getUserContextDir(), "repository");
       localRepository = new LocalRepository(dir);
       log.debug("Local-repository: {}", localRepository);
@@ -94,8 +95,9 @@ public class RepositoryAccessImpl
 
       // TODO: make this configurable and persistent
 
-      RemoteRepository central = new RemoteRepository.Builder("central", "default", "http://repo1.maven.org/maven2")
-        // TODO: how to make this not respond to SNAPSHOT requests?
+      RemoteRepository central = new RemoteRepository.Builder("central", "default", "https://repo1.maven.org/maven2")
+        // disable snapshots
+        .setSnapshotPolicy(new RepositoryPolicy(false, RepositoryPolicy.UPDATE_POLICY_NEVER, RepositoryPolicy.CHECKSUM_POLICY_IGNORE))
         .build();
 
       repositories.add(central);
