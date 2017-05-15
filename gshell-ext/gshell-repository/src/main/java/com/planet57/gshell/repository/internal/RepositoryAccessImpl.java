@@ -113,7 +113,9 @@ public class RepositoryAccessImpl
     session.setRepositoryListener(new LoggingRepositoryListener());
     session.setSystemProperties(System.getProperties());
 
-    // TODO: adjust other session configuration
+    // TODO: adjust other session configuration, expose for configuration
+    session.setOffline(false);
+    session.setChecksumPolicy(RepositoryPolicy.CHECKSUM_POLICY_WARN);
 
     try {
       // according to the javadocs, this should be done as one of the last steps to setup a new session
