@@ -47,7 +47,7 @@ public class DependencyNodePrinter
     checkNotNull(indent);
 
     AttributedStringBuilder buff = new AttributedStringBuilder();
-    buff.style(AttributedStyle.DEFAULT);
+    buff.append(indent);
 
     Dependency dependency = node.getDependency();
     Artifact artifact = node.getArtifact();
@@ -65,28 +65,28 @@ public class DependencyNodePrinter
       faint(buff, ":");
     }
 
+    buff.append(" ");
     bold(buff, artifact.getVersion());
 
     if (dependency != null) {
       faint(buff, " (" + dependency.getScope() + ")");
     }
 
-    io.out.format("%s%s%n", indent, buff.toAnsi(io.terminal));
+    io.out.println(buff.toAnsi(io.terminal));
 
     // recurse to children with indent
     node.getChildren().forEach(child -> print(child, indent + "  "));
   }
 
   private static void faint(final AttributedStringBuilder buff, final String text) {
-    buff.style(AttributedStyle.DEFAULT.faint());
-    buff.append(text);
-    buff.style(AttributedStyle.DEFAULT.faintOff());
+    buff.style(buff.style().faint())
+      .append(text)
+      .style(buff.style().faintOff());
   }
 
   private static void bold(final AttributedStringBuilder buff, final String text) {
-    // FIXME: for some reason this is not BOLD as it should be
-    buff.style(AttributedStyle.DEFAULT.bold());
-    buff.append(text);
-    buff.style(AttributedStyle.DEFAULT.boldOff());
+    buff.style(buff.style().bold())
+      .append(text)
+      .style(buff.style().boldOff());
   }
 }
