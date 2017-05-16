@@ -37,6 +37,7 @@
     <module>gshell-groovy</module>
     <module>gshell-logback</module>
     <module>gshell-plexus</module>
+    <module>gshell-repository</module>
   </modules>
 
 </project>

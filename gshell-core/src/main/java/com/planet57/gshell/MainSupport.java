@@ -274,6 +274,7 @@ public abstract class MainSupport
     modules.add(binder -> {
       binder.bind(BeanContainer.class).toInstance(container);
       binder.bind(ThreadIO.class).toInstance(threadIO);
+      binder.bind(Branding.class).toInstance(branding);
     });
 
     configure(modules);

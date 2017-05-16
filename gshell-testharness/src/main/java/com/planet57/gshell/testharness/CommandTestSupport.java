@@ -24,6 +24,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.Stage;
+import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.registry.CommandRegistrarImpl;
@@ -53,6 +54,8 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.sonatype.goodies.testsupport.TestTracer;
 import org.sonatype.goodies.testsupport.TestUtil;
+
+import javax.annotation.Nonnull;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
@@ -101,6 +104,8 @@ public abstract class CommandTestSupport
 
   private Variables variables;
 
+  private Branding branding;
+
   protected final Map<String, Class> requiredCommands = new HashMap<>();
 
   private final ThreadIOImpl threadIO = new ThreadIOImpl();
@@ -120,20 +125,23 @@ public abstract class CommandTestSupport
     terminal = TerminalBuilder.builder().dumb(true).build();
     io = new BufferIO(terminal);
     variables = new VariablesSupport();
+    branding = new TestBranding(util.resolveFile("target/shell-home"));
 
     container = new BeanContainer();
     List<Module> modules = new ArrayList<>();
     modules.add(binder -> {
       binder.bind(BeanContainer.class).toInstance(container);
       binder.bind(ThreadIO.class).toInstance(threadIO);
+      binder.bind(Branding.class).toInstance(branding);
     });
     configureModules(modules);
+    modules.add(createSpaceModule());
 
     injector = Guice.createInjector(Stage.DEVELOPMENT, new WireModule(modules));
     container.add(injector, 0);
 
     shell = injector.getInstance(ShellBuilder.class)
-      .branding(new TestBranding(util.resolveFile("target/shell-home")))
+      .branding(branding)
       .io(io)
       .variables(variables)
       .build();
@@ -164,11 +172,16 @@ public abstract class CommandTestSupport
     injector.injectMembers(this);
   }
 
-  protected void configureModules(final List<Module> modules) {
-    checkNotNull(modules);
-    modules.add(createSpaceModule());
+  /**
+   * Extension-point for sub-class to configure any additional modules for test environment.
+   */
+  protected void configureModules(@Nonnull final List<Module> modules) {
+    // empty
   }
 
+  /**
+   * Expose ability to adjust the {@link SpaceModule}; for most cases this should be left ASIS.
+   */
   protected SpaceModule createSpaceModule() {
     URLClassSpace space = new URLClassSpace(getClass().getClassLoader());
     return new SpaceModule(space, BeanScanning.INDEX);
