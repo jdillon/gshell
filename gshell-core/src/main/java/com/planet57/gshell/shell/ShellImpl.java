@@ -28,8 +28,8 @@ import com.google.common.base.Throwables;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.branding.BrandingSupport;
 import com.planet57.gshell.command.CommandAction.ExitNotification;
+import com.planet57.gshell.command.CommandRegistry;
 import com.planet57.gshell.util.io.IO;
-import com.planet57.gshell.command.registry.CommandRegistrar;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.help.HelpPageManager;
 import com.planet57.gshell.internal.CommandActionFunction;
@@ -103,13 +103,13 @@ public class ShellImpl
 
   @Inject
   public ShellImpl(final EventManager events,
-                   final CommandRegistrar commandRegistrar,
+                   final CommandRegistry commandRegistry,
                    final HelpPageManager helpPageManager,
                    final CommandProcessorImpl commandProcessor,
                    @Named("shell") final Completer completer)
   {
     checkNotNull(events);
-    checkNotNull(commandRegistrar);
+    checkNotNull(commandRegistry);
     checkNotNull(helpPageManager);
 
     this.commandProcessor = checkNotNull(commandProcessor);
@@ -119,7 +119,7 @@ public class ShellImpl
     this.history = new DefaultHistory();
     this.scriptLoader = new ShellScriptLoader();
 
-    lifecycles.add(events, commandRegistrar, helpPageManager);
+    lifecycles.add(events, commandRegistry, helpPageManager);
   }
 
   /**

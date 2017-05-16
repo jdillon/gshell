@@ -19,7 +19,6 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import com.planet57.gshell.alias.AliasRegistry;
-import com.planet57.gshell.alias.NoSuchAliasException;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.CommandActionSupport;
@@ -56,7 +55,7 @@ public class UnaliasAction
     try {
       aliasRegistry.removeAlias(name);
     }
-    catch (NoSuchAliasException e) {
+    catch (AliasRegistry.NoSuchAliasException e) {
       log.debug("Alias not defined: {}", name);
     }
 

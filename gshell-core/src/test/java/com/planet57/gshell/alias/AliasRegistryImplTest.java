@@ -148,7 +148,7 @@ public class AliasRegistryImplTest
     try {
       underTest.removeAlias("foo");
     }
-    catch (NoSuchAliasException e) {
+    catch (AliasRegistry.NoSuchAliasException e) {
       // expected
     }
 
@@ -164,7 +164,7 @@ public class AliasRegistryImplTest
     try {
       underTest.getAlias("foo");
     }
-    catch (NoSuchAliasException e) {
+    catch (AliasRegistry.NoSuchAliasException e) {
       // expected
     }
   }

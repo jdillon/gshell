@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.command.registry;
+package com.planet57.gshell.command;
 
 import javax.inject.Inject;
 import javax.inject.Named;

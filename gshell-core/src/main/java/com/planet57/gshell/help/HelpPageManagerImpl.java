@@ -29,11 +29,12 @@ import javax.inject.Singleton;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.inject.Key;
 import com.planet57.gshell.alias.AliasRegistry;
-import com.planet57.gshell.alias.NoSuchAliasException;
 import com.planet57.gshell.command.resolver.CommandResolver;
 import com.planet57.gshell.command.resolver.Node;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.internal.BeanContainer;
+import org.eclipse.sisu.BeanEntry;
+import org.eclipse.sisu.Mediator;
 import org.sonatype.goodies.lifecycle.LifecycleSupport;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -90,14 +91,23 @@ public class HelpPageManagerImpl
   @Override
   protected void doStart() throws Exception {
     if (discoveryEnabled) {
-      discoverMetaPages();
+      log.debug("Watching for meta-help-pages");
+      container.watch(Key.get(MetaHelpPage.class), new MetaHelpPageMediator(), this);
     }
   }
 
-  private void discoverMetaPages() {
-    log.trace("Discovering meta-pages");
+  private static class MetaHelpPageMediator
+    implements Mediator<Named, MetaHelpPage, HelpPageManagerImpl>
+  {
+    @Override
+    public void add(final BeanEntry<Named, MetaHelpPage> entry, final HelpPageManagerImpl watcher) throws Exception {
+      watcher.addMetaPageInternal(entry.getValue());;
+    }
 
-    container.locate(MetaHelpPage.class).forEach(entry -> addMetaPageInternal(entry.getValue()));
+    @Override
+    public void remove(final BeanEntry<Named, MetaHelpPage> entry, final HelpPageManagerImpl watcher) throws Exception {
+      watcher.addMetaPage(entry.getValue());
+    }
   }
 
   @Override
@@ -109,7 +119,7 @@ public class HelpPageManagerImpl
       try {
         return new AliasHelpPage(name, aliases.getAlias(name));
       }
-      catch (NoSuchAliasException e) {
+      catch (AliasRegistry.NoSuchAliasException e) {
         throw new Error(e);
       }
     }
@@ -169,6 +179,16 @@ public class HelpPageManagerImpl
     ensureStarted();
 
     addMetaPageInternal(page);
+  }
+
+  @Override
+  public void removeMetaPage(final MetaHelpPage page) {
+    checkNotNull(page);
+    ensureStarted();
+
+    log.debug("Removing meta-page: {}", page);
+    metaPages.remove(page.getName());
+    events.publish(new MetaHelpPageRemovedEvent(page));
   }
 
   /**

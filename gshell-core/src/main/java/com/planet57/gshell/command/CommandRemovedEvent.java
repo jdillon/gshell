@@ -13,9 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.planet57.gshell.command;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
- * Command registry components.
+ * Event fired once a command has been removed.
  *
+ * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
-package com.planet57.gshell.command.registry;
+public class CommandRemovedEvent
+{
+  private final String name;
+
+  public CommandRemovedEvent(final String name) {
+    this.name = checkNotNull(name);
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  @Override
+  public String toString() {
+    return "CommandRemovedEvent{" +
+      "name='" + name + '\'' +
+      '}';
+  }
+}

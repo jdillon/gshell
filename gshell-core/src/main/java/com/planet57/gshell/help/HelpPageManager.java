@@ -37,5 +37,7 @@ public interface HelpPageManager
 
   void addMetaPage(MetaHelpPage page);
 
+  void removeMetaPage(MetaHelpPage page);
+
   Collection<MetaHelpPage> getMetaPages();
 }

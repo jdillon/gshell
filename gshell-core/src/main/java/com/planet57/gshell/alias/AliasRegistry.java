@@ -34,4 +34,19 @@ public interface AliasRegistry
   boolean containsAlias(String name);
 
   Map<String, String> getAliases();
+
+  /**
+   * Thrown to indicate that a requested named-alias was not found.
+   *
+   * @since 3.0
+   */
+  class NoSuchAliasException
+      extends Exception
+  {
+    private static final long serialVersionUID = 1;
+
+    public NoSuchAliasException(final String msg) {
+      super(msg);
+    }
+  }
 }

@@ -18,7 +18,7 @@ package com.planet57.gshell.commands.standard
 import javax.inject.Inject
 
 import com.planet57.gshell.alias.AliasRegistry
-import com.planet57.gshell.command.registry.CommandRegistry
+import com.planet57.gshell.command.CommandRegistry
 import com.planet57.gshell.testharness.CommandTestSupport
 import org.junit.Test
 

@@ -13,20 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.alias;
+package com.planet57.gshell.help;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Thrown to indicate that a requested named-alias was not found.
+ * Event fired once a help meta page has been removed.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
- * @since 2.5
+ * @since 3.0
  */
-public class NoSuchAliasException
-    extends Exception
+public class MetaHelpPageRemovedEvent
 {
-  private static final long serialVersionUID = 1;
+  private final MetaHelpPage page;
 
-  public NoSuchAliasException(final String msg) {
-    super(msg);
+  public MetaHelpPageRemovedEvent(final MetaHelpPage page) {
+    this.page = checkNotNull(page);
+  }
+
+  public MetaHelpPage getPage() {
+    return page;
+  }
+
+  @Override
+  public String toString() {
+    return "MetaHelpPageRemovedEvent{" +
+      "page=" + page +
+      '}';
   }
 }

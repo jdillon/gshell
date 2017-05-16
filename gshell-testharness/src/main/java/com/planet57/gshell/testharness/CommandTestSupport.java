@@ -27,8 +27,8 @@ import com.google.inject.Stage;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandAction;
-import com.planet57.gshell.command.registry.CommandRegistrarImpl;
-import com.planet57.gshell.command.registry.CommandRegistry;
+import com.planet57.gshell.command.CommandRegistry;
+import com.planet57.gshell.command.CommandRegistryImpl;
 import com.planet57.gshell.help.HelpPageManagerImpl;
 import com.planet57.gshell.internal.BeanContainer;
 import com.planet57.gshell.logging.logback.TargetConsoleAppender;
@@ -100,7 +100,7 @@ public abstract class CommandTestSupport
 
   private Shell shell;
 
-  private CommandRegistry commandRegistry;
+  private CommandRegistryImpl commandRegistry;
 
   private Variables variables;
 
@@ -147,11 +147,8 @@ public abstract class CommandTestSupport
       .build();
 
     variables = shell.getVariables();
-    commandRegistry = injector.getInstance(CommandRegistry.class);
-
-    // disable default command discovery
-    CommandRegistrarImpl registrar = injector.getInstance(CommandRegistrarImpl.class);
-    registrar.setDiscoveryEnabled(false);
+    commandRegistry = injector.getInstance(CommandRegistryImpl.class);
+    commandRegistry.setDiscoveryEnabled(false);
 
     // disable default help-page discovery
     HelpPageManagerImpl helpPageManager = injector.getInstance(HelpPageManagerImpl.class);
@@ -165,7 +162,7 @@ public abstract class CommandTestSupport
 
     // register required commands
     for (Map.Entry<String, Class> entry : requiredCommands.entrySet()) {
-      registrar.registerCommand(entry.getKey(), entry.getValue());
+      commandRegistry.registerCommand(entry.getKey(), entry.getValue());
     }
 
     // allow test to become aware of injection

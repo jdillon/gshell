@@ -26,8 +26,8 @@ import javax.inject.Singleton;
 
 import com.google.common.eventbus.Subscribe;
 import com.planet57.gshell.internal.ChangeGroupAction;
-import com.planet57.gshell.command.registry.CommandRegisteredEvent;
-import com.planet57.gshell.command.registry.CommandRemovedEvent;
+import com.planet57.gshell.command.CommandRegisteredEvent;
+import com.planet57.gshell.command.CommandRemovedEvent;
 import com.planet57.gshell.event.EventAware;
 import org.sonatype.goodies.common.ComponentSupport;
 import com.planet57.gshell.variables.VariableNames;

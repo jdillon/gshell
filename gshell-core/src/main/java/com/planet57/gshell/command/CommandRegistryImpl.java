@@ -13,10 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.command.registry;
+package com.planet57.gshell.command;
 
+import java.lang.annotation.Annotation;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -24,9 +26,13 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import com.planet57.gshell.command.CommandAction;
+import com.google.common.annotations.VisibleForTesting;
+import com.google.inject.Key;
 import com.planet57.gshell.event.EventManager;
-import org.sonatype.goodies.common.ComponentSupport;
+import com.planet57.gshell.internal.BeanContainer;
+import org.eclipse.sisu.BeanEntry;
+import org.eclipse.sisu.Mediator;
+import org.sonatype.goodies.lifecycle.LifecycleSupport;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -39,17 +45,53 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Named
 @Singleton
 public class CommandRegistryImpl
-  extends ComponentSupport
+  extends LifecycleSupport
   implements CommandRegistry
 {
-  private final Map<String, CommandAction> commands = new LinkedHashMap<>();
+  private final BeanContainer container;
 
   private final EventManager events;
 
+  private final Map<String, CommandAction> commands = new LinkedHashMap<>();
+
+  private boolean discoveryEnabled = true;
+
   @Inject
-  public CommandRegistryImpl(final EventManager events) {
+  public CommandRegistryImpl(final BeanContainer container,
+                             final EventManager events)
+  {
+    this.container = checkNotNull(container);
     this.events = checkNotNull(events);
   }
+
+  @VisibleForTesting
+  public void setDiscoveryEnabled(final boolean discoveryEnabled) {
+    log.debug("Discovery enabled: {}", discoveryEnabled);
+    this.discoveryEnabled = discoveryEnabled;
+  }
+
+  @Override
+  protected void doStart() throws Exception {
+    if (discoveryEnabled) {
+      log.debug("Watching for commands");
+      container.watch(Key.get(CommandAction.class, Command.class), new CommandMediator(), this);
+    }
+  }
+
+  private static class CommandMediator
+    implements Mediator<Command, CommandAction, CommandRegistryImpl>
+  {
+    @Override
+    public void add(final BeanEntry<Command, CommandAction> entry, final CommandRegistryImpl watcher) throws Exception {
+      watcher.registerCommand(entry.getKey().name(), entry.getValue());
+    }
+
+    @Override
+    public void remove(final BeanEntry<Command, CommandAction> entry, final CommandRegistryImpl watcher) throws Exception {
+      watcher.removeCommand(entry.getKey().name());
+    }
+  }
+
 
   @Override
   public void registerCommand(final String name, final CommandAction command) throws DuplicateCommandException {
@@ -73,6 +115,25 @@ public class CommandRegistryImpl
 
     commands.put(name, command);
     events.publish(new CommandRegisteredEvent(name, command));
+  }
+
+  @VisibleForTesting
+  public void registerCommand(final String name, final Class type) throws Exception {
+    checkNotNull(name);
+    checkNotNull(type);
+
+    CommandAction action = createAction(type);
+    registerCommand(name, action);
+  }
+
+  @SuppressWarnings({"unchecked"})
+  private CommandAction createAction(final Class<?> type) throws ClassNotFoundException {
+    Iterator<BeanEntry<Annotation, ?>> iter = container.locate((Class)type).iterator();
+    if (iter.hasNext()) {
+      return (CommandAction) iter.next().getValue();
+    }
+    // This should really never happen
+    throw new RuntimeException("Unable to load command action implementation: " + type);
   }
 
   @Override

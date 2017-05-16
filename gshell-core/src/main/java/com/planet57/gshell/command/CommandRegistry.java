@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.command.registry;
+package com.planet57.gshell.command;
+
+import org.sonatype.goodies.lifecycle.Lifecycle;
 
 import java.util.Collection;
-
-import com.planet57.gshell.command.CommandAction;
 
 /**
  * Registry for commands.
@@ -26,6 +26,7 @@ import com.planet57.gshell.command.CommandAction;
  * @since 2.5
  */
 public interface CommandRegistry
+  extends Lifecycle
 {
   void registerCommand(String name, CommandAction command) throws DuplicateCommandException;
 
@@ -36,4 +37,34 @@ public interface CommandRegistry
   boolean containsCommand(String name);
 
   Collection<CommandAction> getCommands();
+
+  /**
+   * Thrown to indicate a duplicate command registration attempt has failed.
+   *
+   * @since 3.0
+   */
+  class DuplicateCommandException
+      extends Exception
+  {
+    private static final long serialVersionUID = 1;
+
+    public DuplicateCommandException(final String msg) {
+      super(msg);
+    }
+  }
+
+  /**
+   * Thrown to indicate that a requested named-command was not found.
+   *
+   * @since 3.0
+   */
+  class NoSuchCommandException
+      extends Exception
+  {
+    private static final long serialVersionUID = 1;
+
+    public NoSuchCommandException(final String msg) {
+      super(msg);
+    }
+  }
 }
