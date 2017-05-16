@@ -107,7 +107,7 @@
     <apache-maven.version>3.5.0</apache-maven.version>
     <sonatype-goodies.version>2.2.3</sonatype-goodies.version>
     <gossip.version>2.0.0</gossip.version>
-    <jline.version>3.3.0-SNAPSHOT</jline.version>
+    <jline.version>3.3.0</jline.version>
     <slf4j.version>1.7.25</slf4j.version>
     <felix-gogo.version>1.0.7-SNAPSHOT</felix-gogo.version>
 
