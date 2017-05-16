@@ -19,7 +19,9 @@ import com.planet57.gshell.util.io.IO;
 import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.graph.Dependency;
 import org.eclipse.aether.graph.DependencyNode;
+import org.eclipse.aether.util.artifact.JavaScopes;
 import org.jline.utils.AttributedStringBuilder;
+import org.jline.utils.AttributedStyle;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -69,7 +71,39 @@ public class DependencyNodePrinter
     bold(buff, artifact.getVersion());
 
     if (dependency != null) {
-      faint(buff, " (" + dependency.getScope() + ")");
+      String scope = dependency.getScope();
+      if (!scope.isEmpty()) {
+        faint(buff, " (");
+
+        Integer color = null;
+        switch (scope) {
+          case JavaScopes.COMPILE:
+            color = AttributedStyle.GREEN;
+            break;
+          case JavaScopes.PROVIDED:
+            color = AttributedStyle.BLUE;
+            break;
+          case JavaScopes.SYSTEM:
+            color = AttributedStyle.RED;
+            break;
+          case JavaScopes.RUNTIME:
+            color = AttributedStyle.CYAN;
+            break;
+          case JavaScopes.TEST:
+            color = AttributedStyle.YELLOW;
+            break;
+        }
+
+        if (color != null) {
+          buff.style(buff.style().foreground(color));
+        }
+        buff.append(scope);
+        if (color != null) {
+          buff.style(buff.style().foregroundOff());
+        }
+
+        faint(buff, ")");
+      }
     }
 
     io.out.println(buff.toAnsi(io.terminal));
