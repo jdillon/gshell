@@ -27,7 +27,6 @@ import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Option;
 import org.jline.reader.History;
 import org.jline.utils.AttributedStringBuilder;
-import org.jline.utils.AttributedStyle;
 
 import javax.annotation.Nonnull;
 
@@ -84,9 +83,9 @@ public class HistoryAction
       buff.append(" ");
     }
 
-    buff.style(AttributedStyle.BOLD);
+    buff.style(buff.style().bold());
     buff.append(String.format("%3d", entry.index() + 1));
-    buff.style(AttributedStyle.DEFAULT);
+    buff.style(buff.style().boldOff());
     buff.append("  ").append(entry.line());
 
     io.println(buff.toAnsi(io.terminal));
