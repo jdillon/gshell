@@ -66,8 +66,6 @@ public class DependencyNodePrinter
       faint(buff, ":");
     }
 
-    // HACK: ATM we need a space to get bold to show up; reported to gnodet
-    buff.append(" ");
     bold(buff, artifact.getVersion());
 
     if (dependency != null) {
