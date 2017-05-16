@@ -102,6 +102,10 @@ public class DependencyNodePrinter
           buff.style(buff.style().foregroundOff());
         }
 
+        if (dependency.isOptional()) {
+          faint(buff, " optional");
+        }
+
         faint(buff, ")");
       }
     }
