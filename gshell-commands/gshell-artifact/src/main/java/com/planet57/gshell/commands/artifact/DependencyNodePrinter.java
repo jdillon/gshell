@@ -20,7 +20,6 @@ import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.graph.Dependency;
 import org.eclipse.aether.graph.DependencyNode;
 import org.jline.utils.AttributedStringBuilder;
-import org.jline.utils.AttributedStyle;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
