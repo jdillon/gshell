@@ -31,12 +31,13 @@
   <name>${project.groupId}:${project.artifactId}</name>
 
   <properties>
-    <maven-resolver.version>1.0.3</maven-resolver.version>
+    <maven-resolver.version>1.1.0-SNAPSHOT</maven-resolver.version>
+    <maven.version>3.5.1-SNAPSHOT</maven.version>
   </properties>
 
   <dependencies>
     <!--
-    TODO: need to adjust so we can eventually use gshell-repository from gshell-core.
+    TODO: need to adjust so we can eventually use gshell-repository from gshell-core; mostly here to access Branding
     -->
     <dependency>
       <groupId>com.planet57.gshell</groupId>
@@ -62,9 +63,15 @@
     </dependency>
 
     <dependency>
+      <groupId>org.apache.maven.resolver</groupId>
+      <artifactId>maven-resolver-transport-file</artifactId>
+      <version>${maven-resolver.version}</version>
+    </dependency>
+
+    <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-resolver-provider</artifactId>
-      <version>3.5.1-SNAPSHOT</version>
+      <version>${maven.version}</version>
       <exclusions>
         <exclusion>
           <groupId>org.codehaus.plexus</groupId>

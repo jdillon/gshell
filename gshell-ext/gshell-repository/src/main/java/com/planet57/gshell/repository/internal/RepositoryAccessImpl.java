@@ -95,12 +95,20 @@ public class RepositoryAccessImpl
 
       // TODO: make this configurable and persistent
 
+      // default add central
       RemoteRepository central = new RemoteRepository.Builder("central", "default", "https://repo1.maven.org/maven2")
         // disable snapshots
         .setSnapshotPolicy(new RepositoryPolicy(false, RepositoryPolicy.UPDATE_POLICY_NEVER, RepositoryPolicy.CHECKSUM_POLICY_IGNORE))
         .build();
-
       repositories.add(central);
+
+      // default add local ~/.m2/repository
+      File homeDir = new File(System.getProperty("user.home"));
+      String location = new File(homeDir, ".m2/repository").toURI().toASCIIString();
+      RemoteRepository mavenLocal = new RemoteRepository.Builder("maven-local", "default", location)
+        .build();
+      repositories.add(mavenLocal);
+
       remoteRepositories = repositories;
       log.debug("Remote-repositories: {}", remoteRepositories);
     }

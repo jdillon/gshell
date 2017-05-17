@@ -19,7 +19,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.Reader;
 
-import com.google.common.io.Flushables;
 import org.fusesource.jansi.AnsiRenderWriter;
 import org.jline.terminal.Terminal;
 
@@ -73,14 +72,14 @@ public class IO
 
     // prepare stream references
     this.in = new InputStreamReader(streams.in);
-    this.out = new AnsiRenderWriter(new PrintWriter(streams.out, true));
+    this.out = new AnsiRenderWriter(streams.out, true);
 
     // Don't rewrite the error stream if we have the same stream for out and error
     if (streams.isOutputCombined()) {
       this.err = this.out;
     }
     else {
-      this.err = new AnsiRenderWriter(new PrintWriter(streams.err, true));
+      this.err = new AnsiRenderWriter(streams.err, true);
     }
   }
 
@@ -88,11 +87,11 @@ public class IO
    * Flush output streams.
    */
   public void flush() {
-    Flushables.flushQuietly(out);
+    out.flush();
 
     // Only attempt to flush the err stream if we aren't sharing it with out
     if (!streams.isOutputCombined()) {
-      Flushables.flushQuietly(err);
+      err.flush();
     }
 
     terminal.flush();
@@ -105,49 +104,60 @@ public class IO
   /**
    * @since 3.0
    */
-  public void print(final String string) {
+  public IO print(final String string) {
     out.print(string);
+    return this;
   }
 
   /**
    * @since 3.0
    */
-  public void print(final Object obj) {
+  public IO print(final Object obj) {
     out.print(obj);
+    return this;
   }
 
   /**
    * @since 3.0
    */
-  public void println() {
+  public IO append(final CharSequence string) {
+    out.append(string);
+    return this;
+  }
+
+  /**
+   * @since 3.0
+   */
+  public IO println() {
     out.println();
+    out.flush();
+    return this;
   }
 
   /**
    * @since 3.0
    */
-  public void println(final String string) {
+  public IO println(final String string) {
     out.println(string);
+    out.flush();
+    return this;
   }
 
   /**
    * @since 3.0
    */
-  public void println(final Object obj) {
+  public IO println(final Object obj) {
     out.println(obj);
+    out.flush();
+    return this;
   }
 
   /**
    * @since 3.0
    */
-  public PrintWriter format(final String format, final Object... args) {
-    return out.format(format, args);
-  }
-
-  /**
-   * @since 3.0
-   */
-  public PrintWriter append(final CharSequence string) {
-    return out.append(string);
+  public IO format(final String format, final Object... args) {
+    out.format(format, args);
+    out.flush();
+    return this;
   }
 }

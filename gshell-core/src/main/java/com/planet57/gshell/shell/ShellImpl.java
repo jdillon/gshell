@@ -16,6 +16,7 @@
 package com.planet57.gshell.shell;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -55,6 +56,7 @@ import org.jline.reader.EndOfFileException;
 import org.jline.reader.History;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
+import org.jline.reader.UserInterruptException;
 import org.jline.reader.impl.history.DefaultHistory;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.Terminal.Signal;
@@ -329,21 +331,25 @@ public class ShellImpl
     boolean running = true;
     try {
       while (running) {
-        String line = lineReader.readLine(prompt(session), rprompt(session), null, null);
-        if (log.isTraceEnabled()) {
-          traceLine(line);
-        }
-
-        ParsedLineImpl parsedLine = (ParsedLineImpl) lineReader.getParsedLine();
-        if (parsedLine == null) {
-          throw new EndOfFileException();
-        }
-
         try {
+          String line = lineReader.readLine(prompt(session), rprompt(session), null, null);
+          if (log.isTraceEnabled()) {
+            traceLine(line);
+          }
+
+          ParsedLineImpl parsedLine = (ParsedLineImpl) lineReader.getParsedLine();
+          if (parsedLine == null) {
+            throw new EndOfFileException();
+          }
+
           execute(parsedLine.program());
         }
-        catch (ExitNotification notification) {
-          log.trace("Exit requested", notification);
+        catch (UserInterruptException e) {
+          log.trace("User interrupted", e);
+          continue;
+        }
+        catch (EndOfFileException | ExitNotification e) {
+          log.trace("Exit requested", e);
           running = false;
         }
         catch (Throwable failure) {
@@ -352,8 +358,14 @@ public class ShellImpl
         }
 
         waitForJobCompletion(session);
+      }
 
-        // TODO: investigate jline.Shell handling of UserInterruptException and EndOfFileException here
+      log.trace("Stopping");
+      try {
+        history.save();
+      }
+      catch (IOException e) {
+        log.warn("Failed to save history", e);
       }
     }
     finally {
