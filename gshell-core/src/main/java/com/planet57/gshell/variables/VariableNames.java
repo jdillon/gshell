@@ -18,39 +18,42 @@ package com.planet57.gshell.variables;
 /**
  * Common shell variable names.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
-public interface VariableNames
+public class VariableNames
 {
-  String SHELL_HOME = "shell.home";
+  private VariableNames() {
+    // empty
+  }
 
-  String SHELL_PROGRAM = "shell.program";
+  public static final String SHELL_HOME = "shell.home";
 
-  String SHELL_VERSION = "shell.version";
+  public static final String SHELL_PROGRAM = "shell.program";
 
-  String SHELL_USER_DIR = "shell.user.dir";
+  public static final String SHELL_VERSION = "shell.version";
 
-  String SHELL_USER_HOME = "shell.user.home";
+  public static final String SHELL_USER_DIR = "shell.user.dir";
 
-  String SHELL_PROMPT = "shell.prompt";
+  public static final String SHELL_USER_HOME = "shell.user.home";
+
+  public static final String SHELL_PROMPT = "shell.prompt";
 
   /**
    * @since 3.0
    */
-  String SHELL_RPROMPT = "shell.rprompt";
+  public static final String SHELL_RPROMPT = "shell.rprompt";
 
-  String SHELL_ERRORS = "shell.errors";
-
-  /**
-   * @since 2.5
-   */
-  String SHELL_GROUP = "shell.group";
+  public static final String SHELL_ERRORS = "shell.errors";
 
   /**
    * @since 2.5
    */
-  String SHELL_GROUP_PATH = "shell.group.path";
+  public static final String SHELL_GROUP = "shell.group";
 
-  String LAST_RESULT = "shell.result";
+  /**
+   * @since 2.5
+   */
+  public static final String SHELL_GROUP_PATH = "shell.group.path";
+
+  public static final String LAST_RESULT = "shell.result";
 }

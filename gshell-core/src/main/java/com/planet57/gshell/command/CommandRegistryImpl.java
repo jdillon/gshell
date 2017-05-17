@@ -142,11 +142,11 @@ public class CommandRegistryImpl
 
     log.trace("Removing command: {}", name);
 
-    if (!containsCommand(name)) {
+    CommandAction action = commands.remove(name);
+    if (action == null) {
       throw new NoSuchCommandException(name);
     }
 
-    commands.remove(name);
     events.publish(new CommandRemovedEvent(name));
   }
 
@@ -154,10 +154,11 @@ public class CommandRegistryImpl
   public CommandAction getCommand(final String name) throws NoSuchCommandException {
     checkNotNull(name);
 
-    if (!containsCommand(name)) {
+    CommandAction action = commands.get(name);
+    if (action == null) {
       throw new NoSuchCommandException(name);
     }
-    return commands.get(name);
+    return action;
   }
 
   @Override
