@@ -22,6 +22,7 @@ import org.eclipse.aether.transfer.TransferListener;
 import org.eclipse.aether.transfer.TransferResource;
 import org.jline.terminal.Terminal;
 import org.jline.utils.AttributedString;
+import org.jline.utils.AttributedStringBuilder;
 import org.jline.utils.Display;
 import org.sonatype.goodies.common.ComponentSupport;
 
@@ -46,8 +47,7 @@ public class TerminalTransferListener
 
   private final Display display;
 
-  private final Map<TransferResource, TransferEvent> transfers =
-    Collections.synchronizedMap(new LinkedHashMap<TransferResource, TransferEvent>());
+  private final Map<TransferResource, TransferEvent> transfers = Collections.synchronizedMap(new LinkedHashMap<TransferResource, TransferEvent>());
 
   public TerminalTransferListener(final Terminal terminal) {
     this.terminal = checkNotNull(terminal);
@@ -64,8 +64,18 @@ public class TerminalTransferListener
       List<AttributedString> messages;
       if (!transfers.isEmpty()) {
         messages = new ArrayList<>(transfers.size());
+        AttributedStringBuilder buff = new AttributedStringBuilder();
         transfers.forEach((transfer, event) -> {
-          messages.add(new AttributedString(transfer.getResourceName() + ": " + event.getTransferredBytes()));
+          buff.append(transfer.getRepositoryUrl());
+          buff.append(transfer.getResourceName());
+
+          long bytes = event.getTransferredBytes();
+          if (bytes > 0) {
+            buff.append(": ").append(String.valueOf(bytes)).append(" bytes");
+          }
+
+          messages.add(buff.toAttributedString());
+          buff.setLength(0);
         });
       }
       else {
