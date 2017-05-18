@@ -24,6 +24,7 @@ import org.jline.terminal.Terminal;
 import org.jline.utils.AttributedString;
 import org.jline.utils.AttributedStringBuilder;
 import org.jline.utils.Display;
+import org.sonatype.goodies.common.ByteSize;
 import org.sonatype.goodies.common.ComponentSupport;
 
 import java.util.ArrayList;
@@ -62,7 +63,10 @@ public class TerminalTransferListener
   private void redisplay() {
     synchronized (transfers) {
       List<AttributedString> messages;
-      if (!transfers.isEmpty()) {
+      if (transfers.isEmpty()) {
+        messages = Collections.emptyList();
+      }
+      else {
         messages = new ArrayList<>(transfers.size());
         AttributedStringBuilder buff = new AttributedStringBuilder();
         transfers.forEach((transfer, event) -> {
@@ -71,19 +75,16 @@ public class TerminalTransferListener
 
           long bytes = event.getTransferredBytes();
           if (bytes > 0) {
-            buff.append(": ").append(String.valueOf(bytes)).append(" bytes");
+            ByteSize size = ByteSize.bytes(bytes);
+            buff.append(": ").append(String.valueOf(size));
           }
 
           messages.add(buff.toAttributedString());
           buff.setLength(0);
         });
       }
-      else {
-        messages = Collections.emptyList();
-      }
 
-      display.update(messages, -1);
-      terminal.flush();
+      display.update(messages, -1, true);
     }
   }
 
