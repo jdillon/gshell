@@ -35,5 +35,7 @@ public interface RepositoryAccess
 
   List<RemoteRepository> getRemoteRepositories();
 
+  void addRemoteRepository(final RemoteRepository repository);
+
   DefaultRepositorySystemSession createSession();
 }

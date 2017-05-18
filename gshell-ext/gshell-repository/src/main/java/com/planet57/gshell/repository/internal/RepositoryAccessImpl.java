@@ -25,7 +25,6 @@ import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.repository.RepositoryAccess;
 import org.eclipse.aether.DefaultRepositorySystemSession;
 import org.eclipse.aether.RepositorySystem;
-import org.eclipse.aether.RepositorySystemSession;
 import org.eclipse.aether.repository.LocalRepository;
 import org.eclipse.aether.repository.NoLocalRepositoryManagerException;
 import org.eclipse.aether.repository.RemoteRepository;
@@ -34,8 +33,8 @@ import org.eclipse.aether.spi.localrepo.LocalRepositoryManagerFactory;
 import org.sonatype.goodies.common.ComponentSupport;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -59,8 +58,7 @@ public class RepositoryAccessImpl
   @Nullable
   private LocalRepository localRepository;
 
-  @Nullable
-  private List<RemoteRepository> remoteRepositories;
+  private final List<RemoteRepository> remoteRepositories = new CopyOnWriteArrayList<>();
 
   @Inject
   public RepositoryAccessImpl(final Branding branding,
@@ -90,31 +88,14 @@ public class RepositoryAccessImpl
 
   @Override
   public List<RemoteRepository> getRemoteRepositories() {
-    if (remoteRepositories == null) {
-      List<RemoteRepository> repositories = new ArrayList<>();
-
-      // TODO: make this configurable and persistent
-
-      // default add central
-      RemoteRepository central = new RemoteRepository.Builder("central", "default", "https://repo1.maven.org/maven2")
-        // disable snapshots
-        .setSnapshotPolicy(new RepositoryPolicy(false, RepositoryPolicy.UPDATE_POLICY_NEVER, RepositoryPolicy.CHECKSUM_POLICY_IGNORE))
-        .build();
-      repositories.add(central);
-
-      // default add local ~/.m2/repository
-      File homeDir = new File(System.getProperty("user.home"));
-      String location = new File(homeDir, ".m2/repository").toURI().toASCIIString();
-      RemoteRepository mavenLocal = new RemoteRepository.Builder("maven-local", "default", location)
-        .setReleasePolicy(new RepositoryPolicy(true, RepositoryPolicy.UPDATE_POLICY_NEVER, RepositoryPolicy.CHECKSUM_POLICY_IGNORE))
-        .setSnapshotPolicy(new RepositoryPolicy(true, RepositoryPolicy.UPDATE_POLICY_NEVER, RepositoryPolicy.CHECKSUM_POLICY_IGNORE))
-        .build();
-      repositories.add(mavenLocal);
-
-      remoteRepositories = repositories;
-      log.debug("Remote-repositories: {}", remoteRepositories);
-    }
     return ImmutableList.copyOf(remoteRepositories);
+  }
+
+  @Override
+  public void addRemoteRepository(final RemoteRepository repository) {
+    checkNotNull(repository);
+    log.debug("Add remote-repository: {}", repository);
+    remoteRepositories.add(repository);
   }
 
   @Override
