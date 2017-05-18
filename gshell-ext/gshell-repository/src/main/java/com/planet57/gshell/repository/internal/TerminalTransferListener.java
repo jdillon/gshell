@@ -16,7 +16,6 @@
 package com.planet57.gshell.repository.internal;
 
 import com.planet57.gshell.util.io.IO;
-import org.eclipse.aether.spi.connector.Transfer;
 import org.eclipse.aether.transfer.TransferCancelledException;
 import org.eclipse.aether.transfer.TransferEvent;
 import org.eclipse.aether.transfer.TransferListener;
