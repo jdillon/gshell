@@ -106,6 +106,8 @@ public class RepositoryAccessImpl
       File homeDir = new File(System.getProperty("user.home"));
       String location = new File(homeDir, ".m2/repository").toURI().toASCIIString();
       RemoteRepository mavenLocal = new RemoteRepository.Builder("maven-local", "default", location)
+        .setReleasePolicy(new RepositoryPolicy(true, RepositoryPolicy.UPDATE_POLICY_NEVER, RepositoryPolicy.CHECKSUM_POLICY_IGNORE))
+        .setSnapshotPolicy(new RepositoryPolicy(true, RepositoryPolicy.UPDATE_POLICY_NEVER, RepositoryPolicy.CHECKSUM_POLICY_IGNORE))
         .build();
       repositories.add(mavenLocal);
 
@@ -123,7 +125,7 @@ public class RepositoryAccessImpl
 
     // TODO: adjust other session configuration, expose for configuration
     session.setOffline(false);
-    session.setChecksumPolicy(RepositoryPolicy.CHECKSUM_POLICY_WARN);
+    session.setChecksumPolicy(RepositoryPolicy.CHECKSUM_POLICY_IGNORE);
 
     try {
       // according to the javadocs, this should be done as one of the last steps to setup a new session

@@ -19,7 +19,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
-import com.planet57.gshell.repository.internal.IOTransferListener;
+import com.planet57.gshell.repository.internal.TerminalTransferListener;
 import org.eclipse.aether.DefaultRepositorySystemSession;
 import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.artifact.DefaultArtifact;
@@ -57,7 +57,7 @@ public class ResolveDependenciesAction
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     DefaultRepositorySystemSession session = repositoryAccess.createSession();
-    session.setTransferListener(new IOTransferListener(context.getIo()));
+    session.setTransferListener(new TerminalTransferListener(context.getIo()));
 
     Artifact artifact = new DefaultArtifact(coordinates);
     Dependency dependency = new Dependency(artifact, scope);

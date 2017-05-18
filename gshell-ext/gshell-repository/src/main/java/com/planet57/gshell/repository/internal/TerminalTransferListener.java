@@ -19,54 +19,90 @@ import com.planet57.gshell.util.io.IO;
 import org.eclipse.aether.transfer.TransferCancelledException;
 import org.eclipse.aether.transfer.TransferEvent;
 import org.eclipse.aether.transfer.TransferListener;
+import org.eclipse.aether.transfer.TransferResource;
+import org.jline.terminal.Terminal;
+import org.jline.utils.AttributedString;
+import org.jline.utils.Display;
 import org.sonatype.goodies.common.ComponentSupport;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * {@link IO} {@link TransferListener}.
+ * {@link Terminal} {@link TransferListener}.
  * 
  * @since 3.0
  */
-public class IOTransferListener
+public class TerminalTransferListener
   extends ComponentSupport
   implements TransferListener
 {
-  private final IO io;
+  private final Terminal terminal;
 
-  // TODO: resolve how to make a status-bar widget thingy with jline3
+  private final Display display;
 
-  public IOTransferListener(final IO io) {
-    this.io = checkNotNull(io);
+  private final Map<TransferResource, Long> transfers =
+    Collections.synchronizedMap(new LinkedHashMap<TransferResource, Long>());
+
+  public TerminalTransferListener(final Terminal terminal) {
+    this.terminal = checkNotNull(terminal);
+    display = new Display(terminal, false);
+    display.resize(terminal.getHeight(), terminal.getWidth());
+  }
+
+  public TerminalTransferListener(final IO io) {
+    this(io.terminal);
+  }
+
+  private void redisplay() {
+    synchronized (transfers) {
+      List<AttributedString> messages = new ArrayList<>(transfers.size() + 1);
+      messages.add(new AttributedString("Transfers: " + transfers.size()));
+      transfers.forEach((key, value) -> {
+        messages.add(new AttributedString(key.getResourceName() + ": " + value));
+      });
+      display.update(messages, -1);
+      terminal.flush();
+    }
   }
 
   @Override
   public void transferInitiated(final TransferEvent event) throws TransferCancelledException {
-    io.format("Transfer initiated: %s%n", event);
+    transfers.put(event.getResource(), event.getTransferredBytes());
+    redisplay();
   }
 
   @Override
   public void transferStarted(final TransferEvent event) throws TransferCancelledException {
-    io.format("Transfer started: %s%n", event);
+    transfers.put(event.getResource(), event.getTransferredBytes());
+    redisplay();
   }
 
   @Override
   public void transferProgressed(final TransferEvent event) throws TransferCancelledException {
-    io.format("Transfer progressed: %s%n", event);
+    transfers.put(event.getResource(), event.getTransferredBytes());
+    redisplay();
   }
 
   @Override
   public void transferCorrupted(final TransferEvent event) throws TransferCancelledException {
-    io.format("Transfer corrupted: %s%n", event);
+    // ???
   }
 
   @Override
   public void transferSucceeded(final TransferEvent event) {
-    io.format("Transfer succeeded: %s%n", event);
+    transfers.remove(event.getResource());
+    redisplay();
   }
 
   @Override
   public void transferFailed(final TransferEvent event) {
-    io.format("Transfer failed: %s%n", event);
+    transfers.remove(event.getResource());
+    redisplay();
   }
 }

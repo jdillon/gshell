@@ -325,7 +325,7 @@ public abstract class MainSupport
         // ignore
       }
     };
-    PrintStream out = new PrintStream(terminal.output())
+    PrintStream out = new PrintStream(terminal.output(), true)
     {
       @Override
       public void close() {

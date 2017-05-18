@@ -19,7 +19,7 @@ import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.repository.RepositoryAccess;
-import com.planet57.gshell.repository.internal.IOTransferListener;
+import com.planet57.gshell.repository.internal.TerminalTransferListener;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.io.IO;
 import org.eclipse.aether.DefaultRepositorySystemSession;
@@ -49,7 +49,7 @@ public class ResolveArtifactAction
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     DefaultRepositorySystemSession session = repositoryAccess.createSession();
-    session.setTransferListener(new IOTransferListener(context.getIo()));
+    session.setTransferListener(new TerminalTransferListener(context.getIo()));
 
     Artifact artifact = new DefaultArtifact(coordinates);
     log.debug("Resolving: {}", artifact);
