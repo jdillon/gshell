@@ -16,6 +16,7 @@
 package com.planet57.gshell.repository.internal;
 
 import com.planet57.gshell.util.io.IO;
+import org.eclipse.aether.spi.connector.Transfer;
 import org.eclipse.aether.transfer.TransferCancelledException;
 import org.eclipse.aether.transfer.TransferEvent;
 import org.eclipse.aether.transfer.TransferListener;
@@ -46,8 +47,8 @@ public class TerminalTransferListener
 
   private final Display display;
 
-  private final Map<TransferResource, Long> transfers =
-    Collections.synchronizedMap(new LinkedHashMap<TransferResource, Long>());
+  private final Map<TransferResource, TransferEvent> transfers =
+    Collections.synchronizedMap(new LinkedHashMap<TransferResource, TransferEvent>());
 
   public TerminalTransferListener(final Terminal terminal) {
     this.terminal = checkNotNull(terminal);
@@ -61,48 +62,63 @@ public class TerminalTransferListener
 
   private void redisplay() {
     synchronized (transfers) {
-      List<AttributedString> messages = new ArrayList<>(transfers.size() + 1);
-      messages.add(new AttributedString("Transfers: " + transfers.size()));
-      transfers.forEach((key, value) -> {
-        messages.add(new AttributedString(key.getResourceName() + ": " + value));
-      });
+      List<AttributedString> messages;
+      if (!transfers.isEmpty()) {
+        messages = new ArrayList<>(transfers.size());
+        transfers.forEach((transfer, event) -> {
+          messages.add(new AttributedString(transfer.getResourceName() + ": " + event.getTransferredBytes()));
+        });
+      }
+      else {
+        messages = Collections.emptyList();
+      }
+
       display.update(messages, -1);
       terminal.flush();
     }
   }
 
+  private void track(final TransferEvent event) {
+    transfers.put(event.getResource(), event);
+  }
+
+  private void untrack(final TransferEvent event) {
+    transfers.remove(event.getResource());
+  }
+
   @Override
   public void transferInitiated(final TransferEvent event) throws TransferCancelledException {
-    transfers.put(event.getResource(), event.getTransferredBytes());
+    track(event);
     redisplay();
   }
 
   @Override
   public void transferStarted(final TransferEvent event) throws TransferCancelledException {
-    transfers.put(event.getResource(), event.getTransferredBytes());
+    track(event);
     redisplay();
   }
 
   @Override
   public void transferProgressed(final TransferEvent event) throws TransferCancelledException {
-    transfers.put(event.getResource(), event.getTransferredBytes());
+    track(event);
     redisplay();
   }
 
   @Override
   public void transferCorrupted(final TransferEvent event) throws TransferCancelledException {
-    // ???
+    track(event);
+    redisplay();
   }
 
   @Override
   public void transferSucceeded(final TransferEvent event) {
-    transfers.remove(event.getResource());
+    untrack(event);
     redisplay();
   }
 
   @Override
   public void transferFailed(final TransferEvent event) {
-    transfers.remove(event.getResource());
+    untrack(event);
     redisplay();
   }
 }
