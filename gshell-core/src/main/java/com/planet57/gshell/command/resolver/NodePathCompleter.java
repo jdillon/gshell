@@ -58,10 +58,9 @@ public class NodePathCompleter
 
     Collection<Node> matches = new LinkedHashSet<>();
 
-    String word = line.word();
-    log.trace("Completing; {}; word: {}, line: {}, words: {}", line, word, line.line(), line.words());
-
-    // TODO: handle ./, ../ and / resolution
+    // TODO: handle ./, ../ and / and general location information
+//    String word = line.word();
+//    log.trace("Completing; {}; word: {}, line: {}, words: {}", line, word, line.line(), line.words());
 
     resolver.searchPath().forEach(parent -> matches.addAll(parent.children()));
 
