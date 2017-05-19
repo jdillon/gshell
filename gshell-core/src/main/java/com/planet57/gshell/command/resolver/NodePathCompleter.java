@@ -22,7 +22,7 @@ import org.jline.reader.LineReader;
 import org.jline.reader.ParsedLine;
 
 import java.util.Collection;
-import java.util.LinkedList;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -56,7 +56,7 @@ public class NodePathCompleter
   public void complete(final LineReader reader, final ParsedLine line, final List<Candidate> candidates) {
     checkNotNull(candidates);
 
-    Collection<Node> matches = new LinkedList<>();
+    Collection<Node> matches = new LinkedHashSet<>();
 
     String word = line.word();
     log.trace("Completing; {}; word: {}, line: {}, words: {}", line, word, line.line(), line.words());
@@ -65,47 +65,48 @@ public class NodePathCompleter
 
     resolver.searchPath().forEach(parent -> matches.addAll(parent.children()));
 
-    buildCandidates(candidates, matches);
-  }
-
-  private void buildCandidates(final List<Candidate> candidates, final Collection<Node> matches) {
-    for (Node node : matches) {
-      log.trace("Matched: {}", node);
+    if (log.isTraceEnabled()) {
+      log.trace("Matched:");
+      for (Node node : matches) {
+        log.trace("  {}", node);
+      }
     }
 
     // append all matching nodes
-    matches.forEach(node -> appendNode(candidates, node));
+    matches.forEach(node -> {
+      if (node.isRoot()) {
+        appendChildren(candidates, node, "");
+      }
+      else if (node.isGroup()) {
+        String name = node.getName() + SEPARATOR;
+        candidates.add(candidate(name, node.getDescription()));
+        appendChildren(candidates, node, "");
+      }
+      else {
+        candidates.add(candidate(node.getName(), node.getDescription()));
+      }
+    });
 
-    log.trace("Candidates: {}", candidates);
+    if (log.isTraceEnabled()) {
+      log.trace("Candidates:");
+      candidates.forEach(candidate -> {
+        log.trace("  {}", candidate);
+      });
+    }
   }
 
-  private static void appendNode(final Collection<Candidate> candidates, final Node node) {
-    if (node.isRoot()) {
-      appendChildren(candidates, node);
-    }
-    else if (node.isGroup()) {
-      String name = node.getName() + SEPARATOR;
-      candidates.add(candidate(name, node.getDescription()));
-      appendChildren(candidates, node);
-    }
-    else {
-      candidates.add(candidate(node.getName(), node.getDescription()));
-    }
-  }
-
-  private static void appendChildren(final Collection<Candidate> candidates, final Node parent) {
+  private static void appendChildren(final Collection<Candidate> candidates, final Node parent, final String prefix) {
     assert parent.isGroup();
 
-    // prefix children with ${parent.name} + SEPARATOR; unless root
-    String prefix = parent.isRoot() ? "" : parent.getName() + SEPARATOR;
+    String path = prefix + (parent.isRoot() ? "" : parent.getName()) + SEPARATOR;
 
     parent.children().forEach(child -> {
       if (child.isGroup()) {
-        candidates.add(candidate(prefix + child.getName() + SEPARATOR, child.getDescription()));
-        appendChildren(candidates, child);
+        candidates.add(candidate(path + child.getName() + SEPARATOR, child.getDescription()));
+        appendChildren(candidates, child, path);
       }
       else {
-        candidates.add(candidate(prefix + child.getName(), child.getDescription()));
+        candidates.add(candidate(path + child.getName(), child.getDescription()));
       }
     });
   }
