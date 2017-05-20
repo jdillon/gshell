@@ -107,9 +107,8 @@ public class RepositoryAccessImpl
   @Override
   public void removeRemoteRepository(final String id) {
     checkNotNull(id);
-    if (remoteRepositories.remove(id) != null) {
-      log.debug("Removed remote-repository: {}", id);
-    }
+    checkState(remoteRepositories.remove(id) != null, "Unknown repository ID: %s", id);
+    log.debug("Removed remote-repository: {}", id);
   }
 
   @Override

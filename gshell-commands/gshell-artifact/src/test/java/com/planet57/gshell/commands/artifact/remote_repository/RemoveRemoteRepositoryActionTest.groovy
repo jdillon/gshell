@@ -15,7 +15,12 @@
  */
 package com.planet57.gshell.commands.artifact.remote_repository
 
+import javax.inject.Inject
+
+import com.planet57.gshell.repository.RepositoryAccess
 import com.planet57.gshell.testharness.CommandTestSupport
+import org.eclipse.aether.repository.RemoteRepository
+import org.junit.Test
 
 /**
  * Tests for {@link RemoveRemoteRepositoryAction}.
@@ -23,9 +28,36 @@ import com.planet57.gshell.testharness.CommandTestSupport
 class RemoveRemoteRepositoryActionTest
   extends CommandTestSupport
 {
+  @Inject
+  RepositoryAccess repositoryAccess
+
   RemoveRemoteRepositoryActionTest() {
     super(RemoveRemoteRepositoryAction.class)
   }
 
-  // TODO:
+  @Test
+  void 'remove repository'() {
+    assert repositoryAccess.remoteRepositories.empty
+
+    def repo = new RemoteRepository.Builder('example', 'default', 'http://example.com/').build()
+    repositoryAccess.addRemoteRepository(repo)
+    assert repositoryAccess.remoteRepositories.size() == 1
+
+    assert executeCommand('example') == null
+
+    assert repositoryAccess.remoteRepositories.empty
+  }
+
+  @Test
+  void 'remove repository unknown-id fails'() {
+    assert repositoryAccess.remoteRepositories.empty
+
+    try {
+      executeCommand('example')
+      assert false
+    }
+    catch (IllegalStateException e) {
+      // expected
+    }
+  }
 }

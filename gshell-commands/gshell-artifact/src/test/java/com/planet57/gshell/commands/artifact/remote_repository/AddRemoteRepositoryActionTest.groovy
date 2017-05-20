@@ -15,7 +15,11 @@
  */
 package com.planet57.gshell.commands.artifact.remote_repository
 
+import javax.inject.Inject
+
+import com.planet57.gshell.repository.RepositoryAccess
 import com.planet57.gshell.testharness.CommandTestSupport
+import org.junit.Test
 
 /**
  * Tests for {@link AddRemoteRepositoryAction}.
@@ -23,9 +27,39 @@ import com.planet57.gshell.testharness.CommandTestSupport
 class AddRemoteRepositoryActionTest
   extends CommandTestSupport
 {
+  @Inject
+  RepositoryAccess repositoryAccess
+
   AddRemoteRepositoryActionTest() {
     super(AddRemoteRepositoryAction.class)
   }
 
-  // TODO:
+  @Test
+  void 'add repository'() {
+    assert repositoryAccess.remoteRepositories.empty
+
+    assert executeCommand('example', 'http://example.com/') == null
+
+    def repos = repositoryAccess.remoteRepositories
+    assert repos.size() == 1
+    def repo = repos[0]
+    assert repo.id == 'example'
+    assert repo.contentType =='default'
+    assert repo.url == 'http://example.com/'
+  }
+
+  @Test
+  void 'add repository with duplicate-id fails'() {
+    assert repositoryAccess.remoteRepositories.empty
+
+    assert executeCommand('example', 'http://example.com/') == null
+
+    try {
+      executeCommand('example', 'http://example.com/')
+      assert false
+    }
+    catch (IllegalStateException e) {
+      // expected
+    }
+  }
 }
