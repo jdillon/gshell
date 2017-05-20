@@ -50,7 +50,7 @@ public class ListRemoteRepositoryAction
     }
     else {
       repositories.forEach(repository -> {
-        io.format("%s (%s): %s", repository.getId(), repository.getContentType(), repository.getUrl());
+        io.format("%s (%s): %s%n", repository.getId(), repository.getContentType(), repository.getUrl());
       });
     }
 
