@@ -29,7 +29,7 @@ import org.eclipse.aether.repository.RemoteRepository;
 import java.util.List;
 
 /**
- * List remote-repositories
+ * List remote-repositories.
  *
  * @since 3.0
  */
