@@ -23,6 +23,8 @@ import javax.inject.Singleton;
 import com.google.common.collect.ImmutableList;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.repository.RepositoryAccess;
+import org.apache.maven.repository.internal.MavenRepositorySystemUtils;
+import org.eclipse.aether.DefaultRepositoryCache;
 import org.eclipse.aether.DefaultRepositorySystemSession;
 import org.eclipse.aether.RepositorySystem;
 import org.eclipse.aether.repository.LocalRepository;
@@ -113,9 +115,10 @@ public class RepositoryAccessImpl
 
   @Override
   public DefaultRepositorySystemSession createSession() {
-    DefaultRepositorySystemSession session = new DefaultRepositorySystemSession();
+    // create new maven-like session; pending if we want to control this impl more or not
+    DefaultRepositorySystemSession session = MavenRepositorySystemUtils.newSession();
     session.setRepositoryListener(new LoggingRepositoryListener());
-    session.setSystemProperties(System.getProperties());
+    session.setCache(new DefaultRepositoryCache());
 
     // TODO: adjust other session configuration, expose for configuration
     session.setOffline(false);

@@ -16,7 +16,6 @@
 package com.planet57.gshell.commands.artifact;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import com.planet57.gshell.repository.internal.TerminalTransferListener;
@@ -31,13 +30,8 @@ import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.repository.RepositoryAccess;
 import com.planet57.gshell.util.cli2.Argument;
-import com.planet57.gshell.util.cli2.Option;
-import org.eclipse.aether.graph.DependencyFilter;
-import org.eclipse.aether.graph.DependencyNode;
 import org.eclipse.aether.resolution.DependencyRequest;
 import org.eclipse.aether.resolution.DependencyResult;
-
-import java.util.List;
 
 /**
  * Resolve dependencies of an artifact.
@@ -51,10 +45,6 @@ public class ResolveDependenciesAction
   @Inject
   private RepositoryAccess repositoryAccess;
 
-  @Nullable
-  @Option(name="s", longName = "scope", description = "Resolution scope", token = "SCOPE")
-  private String scope;
-
   @Argument(required = true, description = "Artifact coordinates", token = "COORD")
   private String coordinates;
 
@@ -64,28 +54,10 @@ public class ResolveDependenciesAction
     session.setTransferListener(new TerminalTransferListener(context.getIo()));
 
     Artifact artifact = new DefaultArtifact(coordinates);
-    Dependency dependency = new Dependency(artifact, scope);
+    Dependency dependency = new Dependency(artifact, null);
 
     CollectRequest collectRequest = new CollectRequest(dependency, repositoryAccess.getRemoteRepositories());
     DependencyRequest request = new DependencyRequest(collectRequest, null);
-
-    if (scope != null) {
-      // FIXME: how do we effectivly filter?
-      // FIXME: This also seems to do a *lot* more work than what is needed for artifacts that have non-trivial dependencies
-      request.setFilter(new DependencyFilter() {
-        @Override
-        public boolean accept(final DependencyNode node, final List<DependencyNode> parents) {
-          Dependency d = node.getDependency();
-          if (d != null) {
-            log.debug("Accept: {}, optional: {}", d, d.getOptional());
-          }
-          else {
-            log.debug("Accept: {}", node);
-          }
-          return true;
-        }
-      });
-    }
 
     log.debug("Resolving dependencies: {}", dependency);
     DependencyResult result = repositoryAccess.getRepositorySystem().resolveDependencies(session, request);
