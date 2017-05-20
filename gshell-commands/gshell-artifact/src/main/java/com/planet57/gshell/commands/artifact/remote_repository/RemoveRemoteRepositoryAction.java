@@ -18,8 +18,6 @@ package com.planet57.gshell.commands.artifact.remote_repository;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
-import com.planet57.gshell.util.cli2.Option;
-import org.eclipse.aether.repository.RemoteRepository;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.command.CommandContext;
@@ -27,36 +25,23 @@ import com.planet57.gshell.repository.RepositoryAccess;
 import com.planet57.gshell.util.cli2.Argument;
 
 /**
- * Add a remote-repository.
+ * Remove a remote-repository.
  *
  * @since 3.0
  */
-@Command(name="artifact/remote-repository/add", description = "Add a remote-repository")
-public class AddRemoteRepositoryAction
+@Command(name="artifact/remote-repository/remove", description = "Remove a remote-repository")
+public class RemoveRemoteRepositoryAction
   extends CommandActionSupport
 {
   @Inject
   private RepositoryAccess repositoryAccess;
 
-  @Option(name="t", longName = "type", description = "Repository type", token = "TYPE")
-  private String type = "default";
-
   @Argument(index = 0, required = true, description = "Repository identifier", token = "ID")
   private String id;
 
-  @Argument(index = 1, required = true, description = "Repository URL", token = "URL")
-  private String url;
-
-  // TODO: release-policy
-  // TODO: snapshot-policy
-  // TODO: proxy
-  // TODO: authentication
-  // TODO: mirrored-repositories
-
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    RemoteRepository.Builder builder = new RemoteRepository.Builder(id, type, url);
-    repositoryAccess.addRemoteRepository(builder.build());
+    repositoryAccess.removeRemoteRepository(id);
     return null;
   }
 }

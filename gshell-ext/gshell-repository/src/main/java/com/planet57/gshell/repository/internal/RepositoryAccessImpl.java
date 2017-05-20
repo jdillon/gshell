@@ -34,9 +34,11 @@ import org.sonatype.goodies.common.ComponentSupport;
 
 import java.io.File;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
 /**
  * Default {@link RepositoryAccess}.
@@ -58,7 +60,7 @@ public class RepositoryAccessImpl
   @Nullable
   private LocalRepository localRepository;
 
-  private final List<RemoteRepository> remoteRepositories = new CopyOnWriteArrayList<>();
+  private final Map<String, RemoteRepository> remoteRepositories = new ConcurrentHashMap<>();
 
   @Inject
   public RepositoryAccessImpl(final Branding branding,
@@ -88,14 +90,26 @@ public class RepositoryAccessImpl
 
   @Override
   public List<RemoteRepository> getRemoteRepositories() {
-    return ImmutableList.copyOf(remoteRepositories);
+    return ImmutableList.copyOf(remoteRepositories.values());
   }
 
   @Override
   public void addRemoteRepository(final RemoteRepository repository) {
     checkNotNull(repository);
-    log.debug("Add remote-repository: {}", repository);
-    remoteRepositories.add(repository);
+    String id = repository.getId();
+    synchronized (remoteRepositories) {
+      checkState(!remoteRepositories.containsKey(id), "Duplicate repository ID: %s", id);
+      remoteRepositories.put(id, repository);
+      log.debug("Added remote-repository: {}", repository);
+    }
+  }
+
+  @Override
+  public void removeRemoteRepository(final String id) {
+    checkNotNull(id);
+    if (remoteRepositories.remove(id) != null) {
+      log.debug("Removed remote-repository: {}", id);
+    }
   }
 
   @Override

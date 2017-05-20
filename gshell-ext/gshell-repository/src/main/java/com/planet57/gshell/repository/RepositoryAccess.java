@@ -37,5 +37,7 @@ public interface RepositoryAccess
 
   void addRemoteRepository(final RemoteRepository repository);
 
+  void removeRemoteRepository(final String id);
+
   DefaultRepositorySystemSession createSession();
 }
