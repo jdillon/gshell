@@ -59,6 +59,8 @@ public class ChangeGroupAction
     return null;
   }
 
+  // TODO: -h and --help probably should work sanely here, but presently do not
+
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     log.debug("Changing group to: {}", name);
