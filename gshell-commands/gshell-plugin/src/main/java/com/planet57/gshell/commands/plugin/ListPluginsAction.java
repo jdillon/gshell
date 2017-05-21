@@ -28,11 +28,11 @@ import com.planet57.gshell.util.io.IO;
 import java.util.Collection;
 
 /**
- * List installed plugins.
+ * List loaded plugins.
  *
  * @since 3.0
  */
-@Command(name="plugin/list", description = "List installed plugins")
+@Command(name="plugin/list", description = "List loaded plugins")
 public class ListPluginsAction
   extends CommandActionSupport
 {

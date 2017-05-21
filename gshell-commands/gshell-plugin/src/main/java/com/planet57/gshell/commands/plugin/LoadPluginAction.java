@@ -20,7 +20,6 @@ import javax.inject.Inject;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.google.inject.Module;
 import com.planet57.gshell.commands.plugin.internal.PluginManager;
 import com.planet57.gshell.commands.plugin.internal.PluginRegistration;
 import com.planet57.gshell.internal.BeanContainer;
@@ -49,8 +48,6 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Load a plugin.
@@ -70,7 +67,7 @@ public class LoadPluginAction
   @Inject
   private PluginManager pluginManager;
 
-  @Argument(required = true, description = "Artifact coordinates", token = "COORD")
+  @Argument(required = true, description = "Plugin artifact coordinates", token = "COORD")
   private String coordinates;
 
   @Option(name="o", longName = "offline")
@@ -99,20 +96,21 @@ public class LoadPluginAction
       .map(artifactResult -> url(artifactResult.getArtifact().getFile()))
       .toArray(URL[]::new);
 
-    log.debug("Class-path:");
-    for (URL url : classPath) {
-      log.debug("  {}", url);
+    if (log.isDebugEnabled()) {
+      log.debug("Class-path:");
+      for (URL url : classPath) {
+        log.debug("  {}", url);
+      }
     }
 
     // TODO: detect which class-path members have components to optimize class-space
     URLClassLoader cl = new URLClassLoader(classPath, Shell.class.getClassLoader());
     URLClassSpace classSpace = new URLClassSpace(cl, classPath);
 
-    List<Module> modules = new ArrayList<>();
-    modules.add(new SpaceModule(classSpace, BeanScanning.INDEX));
-    modules.add(BeanContainer.module(container));
-
-    Injector injector = Guice.createInjector(new WireModule(modules));
+    Injector injector = Guice.createInjector(new WireModule(
+      new SpaceModule(classSpace, BeanScanning.INDEX),
+      BeanContainer.module(container)
+    ));
 
     PluginRegistration registration = new PluginRegistration(artifact, cl, injector);
     pluginManager.add(registration);
