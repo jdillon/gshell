@@ -53,11 +53,6 @@
 
     <dependency>
       <groupId>com.planet57.gshell.commands</groupId>
-      <artifactId>gshell-artifact</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>com.planet57.gshell.commands</groupId>
       <artifactId>gshell-standard</artifactId>
     </dependency>
 
@@ -68,7 +63,7 @@
 
     <dependency>
       <groupId>com.planet57.gshell.commands</groupId>
-      <artifactId>gshell-logging</artifactId>
+      <artifactId>gshell-artifact</artifactId>
     </dependency>
 
     <dependency>
@@ -76,23 +71,29 @@
       <artifactId>gshell-plugin</artifactId>
     </dependency>
 
-    <dependency>
-      <groupId>com.planet57.gshell.commands</groupId>
-      <artifactId>gshell-shell</artifactId>
-    </dependency>
-
     <!--
-    TODO: re-enabled, removed atm for plugin testing
+    TODO: removed for plugin testing
     -->
+
+    <!--<dependency>-->
+      <!--<groupId>com.planet57.gshell.commands</groupId>-->
+      <!--<artifactId>gshell-logging</artifactId>-->
+    <!--</dependency>-->
+
+    <!--<dependency>-->
+      <!--<groupId>com.planet57.gshell.commands</groupId>-->
+      <!--<artifactId>gshell-shell</artifactId>-->
+    <!--</dependency>-->
+
     <!--<dependency>-->
       <!--<groupId>com.planet57.gshell.commands</groupId>-->
       <!--<artifactId>gshell-script</artifactId>-->
     <!--</dependency>-->
 
-    <dependency>
-      <groupId>com.planet57.gshell.commands</groupId>
-      <artifactId>gshell-pref</artifactId>
-    </dependency>
+    <!--<dependency>-->
+      <!--<groupId>com.planet57.gshell.commands</groupId>-->
+      <!--<artifactId>gshell-pref</artifactId>-->
+    <!--</dependency>-->
   </dependencies>
 
   <build>
