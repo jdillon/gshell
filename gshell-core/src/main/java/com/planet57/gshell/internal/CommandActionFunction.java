@@ -90,14 +90,14 @@ public class CommandActionFunction
   }
 
   private Object doExecute(final CommandSessionImpl session, final List<Object> arguments) throws Exception {
-    // capture TCCL to reset; in-case command alters this
-    final ClassLoader cl = Thread.currentThread().getContextClassLoader();
-
     final Shell shell = (Shell) session.get(SHELL_VAR);
     checkState(shell != null);
 
     final Terminal terminal = (Terminal) session.get(TERMINAL_VAR);
     checkState(terminal != null);
+
+    final ClassLoader cl = Thread.currentThread().getContextClassLoader();
+    Thread.currentThread().setContextClassLoader(action.getClass().getClassLoader());
 
     // re-create IO with current streams; which are adjusted by ThreadIO
     final IO io = new IO(StreamSet.system(), terminal);
@@ -170,8 +170,8 @@ public class CommandActionFunction
       }
     }
     finally {
-      io.flush();
       Thread.currentThread().setContextClassLoader(cl);
+      io.flush();
     }
 
     return result;

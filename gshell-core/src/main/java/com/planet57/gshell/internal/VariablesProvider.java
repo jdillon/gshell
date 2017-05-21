@@ -47,7 +47,7 @@ public class VariablesProvider
 
   public static void set(final Variables variables) {
     checkNotNull(variables);
-    log.debug("Variables installed: {}", variables);
+    log.trace("Variables installed: {}", variables);
     holder.set(variables);
   }
 
