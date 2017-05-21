@@ -97,6 +97,11 @@ public class CommandRegistryImpl
   public void registerCommand(final String name, final CommandAction command) throws DuplicateCommandException {
     checkNotNull(name);
 
+    // provide configured command name to action if requested
+    if (command instanceof CommandAction.NameAware) {
+      ((CommandAction.NameAware) command).setName(name);
+    }
+
     if (log.isTraceEnabled()) {
       log.trace("Registering command: {} -> {}", name, command);
     }
@@ -106,11 +111,6 @@ public class CommandRegistryImpl
 
     if (containsCommand(name)) {
       throw new DuplicateCommandException(name);
-    }
-
-    // Inject the name of the command
-    if (command instanceof CommandAction.NameAware) {
-      ((CommandAction.NameAware) command).setName(name);
     }
 
     commands.put(name, command);
