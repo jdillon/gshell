@@ -17,6 +17,7 @@ package com.planet57.gshell.internal;
 
 import com.google.inject.Injector;
 import com.google.inject.Key;
+import com.google.inject.Module;
 import org.eclipse.sisu.BeanEntry;
 import org.eclipse.sisu.Mediator;
 import org.eclipse.sisu.inject.DefaultBeanLocator;
@@ -68,5 +69,16 @@ public class BeanContainer
 
   public void clear() {
     beanLocator.clear();
+  }
+
+  /**
+   * Generate module to bind {@link BeanContainer} and {@link MutableBeanLocator}.
+   */
+  public static Module module(final BeanContainer container) {
+    checkNotNull(container);
+    return (binder -> {
+      binder.bind(BeanContainer.class).toInstance(container);
+      binder.bind(MutableBeanLocator.class).toInstance(container.getBeanLocator());
+    });
   }
 }

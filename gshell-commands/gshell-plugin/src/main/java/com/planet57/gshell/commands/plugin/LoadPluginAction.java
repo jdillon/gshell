@@ -37,7 +37,6 @@ import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.repository.RepositoryAccess;
 import com.planet57.gshell.repository.internal.TerminalTransferListener;
 import com.planet57.gshell.util.cli2.Argument;
-import org.eclipse.sisu.inject.MutableBeanLocator;
 import org.eclipse.sisu.space.BeanScanning;
 import org.eclipse.sisu.space.SpaceModule;
 import org.eclipse.sisu.space.URLClassSpace;
@@ -100,10 +99,7 @@ public class LoadPluginAction
 
     List<Module> modules = new ArrayList<>();
     modules.add(new SpaceModule(classSpace, BeanScanning.INDEX));
-    modules.add(binder -> {
-      binder.bind(BeanContainer.class).toInstance(container);
-      binder.bind(MutableBeanLocator.class).toInstance(container.getBeanLocator());
-    });
+    modules.add(BeanContainer.module(container));
 
     Injector injector = Guice.createInjector(new WireModule(modules));
 

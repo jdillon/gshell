@@ -51,7 +51,6 @@ import com.planet57.gshell.variables.VariablesSupport;
 import org.apache.commons.cli.ParseException;
 import org.apache.felix.gogo.runtime.threadio.ThreadIOImpl;
 import org.apache.felix.service.threadio.ThreadIO;
-import org.eclipse.sisu.inject.MutableBeanLocator;
 import org.eclipse.sisu.space.BeanScanning;
 import org.eclipse.sisu.space.SpaceModule;
 import org.eclipse.sisu.space.URLClassSpace;
@@ -272,9 +271,8 @@ public abstract class MainSupport
     modules.add(new SpaceModule(space, BeanScanning.INDEX));
 
     final BeanContainer container = new BeanContainer();
+    modules.add(BeanContainer.module(container));
     modules.add(binder -> {
-      binder.bind(BeanContainer.class).toInstance(container);
-      binder.bind(MutableBeanLocator.class).toInstance(container.getBeanLocator());
       binder.bind(ThreadIO.class).toInstance(threadIO);
       binder.bind(Branding.class).toInstance(branding);
     });
