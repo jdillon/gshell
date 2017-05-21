@@ -79,12 +79,12 @@ public class BrandingImpl
     return String.format("\\@\\|bold %s\\|\\@\\(${%s}\\):${%s}> ", getProgramName(), SHELL_GROUP, SHELL_USER_DIR);
   }
 
-  @Nullable
-  @Override
-  public String getRightPrompt() {
-    // FIXME: may need to adjust ansi-renderer syntax or pre-render before expanding to avoid needing escapes
-    return "\\@\\|intensity_faint $(date)\\|\\@";
-  }
+//  @Nullable
+//  @Override
+//  public String getRightPrompt() {
+//    // FIXME: may need to adjust ansi-renderer syntax or pre-render before expanding to avoid needing escapes
+//    return "\\@\\|intensity_faint $(date)\\|\\@";
+//  }
 
   @Override
   public License getLicense() {
