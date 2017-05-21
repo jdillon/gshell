@@ -82,7 +82,6 @@ public class RepositoryAccessImpl
   @Override
   public LocalRepository getLocalRepository() {
     if (localRepository == null) {
-      // TODO: expose directly on branding
       File dir = new File(branding.getUserContextDir(), "repository");
       localRepository = new LocalRepository(dir);
       log.debug("Local-repository: {}", localRepository);
