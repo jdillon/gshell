@@ -25,6 +25,7 @@ import com.planet57.gshell.internal.ChangeGroupAction;
 import org.sonatype.goodies.common.ComponentSupport;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
 /**
  * A node for building a {@link CommandAction} tree.
@@ -146,7 +147,7 @@ public class Node
       return children;
     }
 
-    Collection<Node> nodes = new LinkedHashSet<Node>();
+    Collection<Node> nodes = new LinkedHashSet<>();
 
     for (Node child : children) {
       if (child.name.startsWith(name)) {
@@ -235,7 +236,8 @@ public class Node
 
     Node node = find(name);
     if (node != null) {
-      node.children.remove(node);
+      checkState(node.parent != null);
+      node.parent.children.remove(node);
     }
   }
 

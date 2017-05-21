@@ -30,6 +30,8 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 /**
  * Tests for {@link Node}.
@@ -66,6 +68,15 @@ public class NodeTest
     underTest.add("/foo", new DummyAction());
     underTest.add("/bar", new DummyAction());
     assertEquals(2, underTest.children().size());
+  }
+
+  @Test
+  public void removeNode() {
+    underTest.add("foo", new DummyAction());
+    assertThat(underTest.children().size(), is(1));
+
+    underTest.remove("foo");
+    assertThat(underTest.children().size(), is(0));
   }
 
   @Test
