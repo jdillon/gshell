@@ -122,6 +122,9 @@ public class RepositoryAccessImpl
     // TODO: adjust other session configuration, expose for configuration
     session.setOffline(false);
     session.setChecksumPolicy(RepositoryPolicy.CHECKSUM_POLICY_IGNORE);
+    session.setUpdatePolicy(RepositoryPolicy.UPDATE_POLICY_ALWAYS);
+
+    // TODO: install mirror-selector, expose for configuration & likely adjust for concurrent access?  Could not find where this is used in maven3 however.
 
     try {
       // according to the javadocs, this should be done as one of the last steps to setup a new session

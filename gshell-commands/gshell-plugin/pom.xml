@@ -32,8 +32,20 @@
 
   <dependencies>
     <dependency>
+      <groupId>com.planet57.gshell</groupId>
+      <artifactId>gshell-core</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
       <groupId>com.planet57.gshell.ext</groupId>
       <artifactId>gshell-repository</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.planet57.gshell</groupId>
+      <artifactId>gshell-testharness</artifactId>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 

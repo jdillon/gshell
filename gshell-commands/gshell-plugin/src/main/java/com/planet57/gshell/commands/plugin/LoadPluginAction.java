@@ -21,8 +21,11 @@ import javax.inject.Inject;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
+import com.planet57.gshell.commands.plugin.internal.PluginManager;
+import com.planet57.gshell.commands.plugin.internal.PluginRegistration;
 import com.planet57.gshell.internal.BeanContainer;
 import com.planet57.gshell.shell.Shell;
+import com.planet57.gshell.util.cli2.Option;
 import org.eclipse.aether.DefaultRepositorySystemSession;
 import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.artifact.DefaultArtifact;
@@ -64,13 +67,21 @@ public class LoadPluginAction
   @Inject
   private RepositoryAccess repositoryAccess;
 
+  @Inject
+  private PluginManager pluginManager;
+
   @Argument(required = true, description = "Artifact coordinates", token = "COORD")
   private String coordinates;
+
+  @Option(name="o", longName = "offline")
+  private boolean offline = false;
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     DefaultRepositorySystemSession session = repositoryAccess.createSession();
     session.setTransferListener(new TerminalTransferListener(context.getIo()));
+
+    session.setOffline(offline);
 
     Artifact artifact = new DefaultArtifact(coordinates);
     Dependency dependency = new Dependency(artifact, null);
@@ -83,18 +94,18 @@ public class LoadPluginAction
     log.debug("Resolving dependencies: {}", dependency);
     DependencyResult result = repositoryAccess.getRepositorySystem().resolveDependencies(session, request);
 
+    // build class-path for plugin
     URL[] classPath = result.getArtifactResults().stream()
       .map(artifactResult -> url(artifactResult.getArtifact().getFile()))
       .toArray(URL[]::new);
 
-    log.debug("Classpath:");
+    log.debug("Class-path:");
     for (URL url : classPath) {
       log.debug("  {}", url);
     }
 
-    ClassLoader cl = new URLClassLoader(classPath, Shell.class.getClassLoader());
-    log.debug("Class-loader: {}", cl);
-
+    // TODO: detect which class-path members have components to optimize class-space
+    URLClassLoader cl = new URLClassLoader(classPath, Shell.class.getClassLoader());
     URLClassSpace classSpace = new URLClassSpace(cl, classPath);
 
     List<Module> modules = new ArrayList<>();
@@ -103,7 +114,10 @@ public class LoadPluginAction
 
     Injector injector = Guice.createInjector(new WireModule(modules));
 
-    // TODO: track injector to plugin coordinate for listing/removal
+    PluginRegistration registration = new PluginRegistration(artifact, cl, injector);
+    pluginManager.add(registration);
+
+    context.getIo().format("Plugin loaded: %s%n", registration.getId());
 
     return null;
   }
