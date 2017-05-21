@@ -46,10 +46,6 @@ public class DisplayDependenciesAction
   @Inject
   private RepositoryAccess repositoryAccess;
 
-  @Nullable
-  @Option(name="s", longName = "scope", description = "Resolution scope", token = "SCOPE")
-  private String scope;
-
   @Argument(required = true, description = "Artifact coordinates", token = "COORD")
   private String coordinates;
 
@@ -59,7 +55,7 @@ public class DisplayDependenciesAction
     session.setTransferListener(new TerminalTransferListener(context.getIo()));
 
     Artifact artifact = new DefaultArtifact(coordinates);
-    Dependency dependency = new Dependency(artifact, scope);
+    Dependency dependency = new Dependency(artifact, null);
     CollectRequest request = new CollectRequest(dependency, repositoryAccess.getRemoteRepositories());
 
     log.debug("Collecting dependencies: {}", dependency);
