@@ -32,6 +32,18 @@
 
   <dependencies>
     <dependency>
+      <groupId>com.planet57.gshell</groupId>
+      <artifactId>gshell-core</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.planet57.gshell</groupId>
+      <artifactId>gshell-testharness</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
       <groupId>org.sonatype.goodies</groupId>
       <artifactId>goodies-prefs</artifactId>
       <scope>test</scope>

@@ -60,6 +60,15 @@
       <groupId>org.apache.maven.resolver</groupId>
       <artifactId>maven-resolver-transport-http</artifactId>
       <version>${maven-resolver.version}</version>
+      <exclusions>
+        <!--
+        This confuses maven into thinking slf4j-api is scope=runtime
+        -->
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>jcl-over-slf4j</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <dependency>

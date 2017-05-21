@@ -30,5 +30,19 @@
   <artifactId>gshell-standard</artifactId>
   <name>${project.groupId}:${project.artifactId}</name>
 
+  <dependencies>
+    <dependency>
+      <groupId>com.planet57.gshell</groupId>
+      <artifactId>gshell-core</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.planet57.gshell</groupId>
+      <artifactId>gshell-testharness</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
 </project>
 
