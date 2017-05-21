@@ -41,6 +41,7 @@ public class PluginRegistration
 
   public PluginRegistration(final Artifact artifact, final URLClassLoader classLoader, final Injector injector) {
     this.artifact = checkNotNull(artifact);
+    // TODO: id may be better off w/o version
     this.id = String.format("%s:%s:%s", artifact.getGroupId(), artifact.getArtifactId(), artifact.getVersion());
     this.classLoader = checkNotNull(classLoader);
     this.injector = checkNotNull(injector);
