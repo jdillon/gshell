@@ -18,6 +18,7 @@ package com.planet57.gshell.commands.artifact;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
+import com.planet57.gshell.repository.DependencyNodePrinter;
 import com.planet57.gshell.repository.internal.TerminalTransferListener;
 import org.eclipse.aether.DefaultRepositorySystemSession;
 import org.eclipse.aether.artifact.Artifact;

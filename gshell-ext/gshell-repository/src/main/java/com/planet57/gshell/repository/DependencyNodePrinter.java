@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.commands.artifact;
+package com.planet57.gshell.repository;
 
 import com.planet57.gshell.util.io.IO;
 import org.eclipse.aether.artifact.Artifact;

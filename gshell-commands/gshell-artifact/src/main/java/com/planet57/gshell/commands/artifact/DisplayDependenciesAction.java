@@ -19,6 +19,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
+import com.planet57.gshell.repository.DependencyNodePrinter;
 import com.planet57.gshell.repository.RepositoryAccess;
 import com.planet57.gshell.repository.internal.TerminalTransferListener;
 import com.planet57.gshell.util.cli2.Option;
