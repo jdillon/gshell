@@ -73,13 +73,21 @@
 
     <dependency>
       <groupId>com.planet57.gshell.commands</groupId>
-      <artifactId>gshell-shell</artifactId>
+      <artifactId>gshell-plugin</artifactId>
     </dependency>
 
     <dependency>
       <groupId>com.planet57.gshell.commands</groupId>
-      <artifactId>gshell-script</artifactId>
+      <artifactId>gshell-shell</artifactId>
     </dependency>
+
+    <!--
+    TODO: re-enabled, removed atm for plugin testing
+    -->
+    <!--<dependency>-->
+      <!--<groupId>com.planet57.gshell.commands</groupId>-->
+      <!--<artifactId>gshell-script</artifactId>-->
+    <!--</dependency>-->
 
     <dependency>
       <groupId>com.planet57.gshell.commands</groupId>
