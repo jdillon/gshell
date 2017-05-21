@@ -33,11 +33,13 @@ public interface RepositoryAccess
 
   LocalRepository getLocalRepository();
 
+  void setLocalRepository(LocalRepository repository);
+
   List<RemoteRepository> getRemoteRepositories();
 
-  void addRemoteRepository(final RemoteRepository repository);
+  void addRemoteRepository(RemoteRepository repository);
 
-  void removeRemoteRepository(final String id);
+  void removeRemoteRepository(String id);
 
   DefaultRepositorySystemSession createSession();
 }

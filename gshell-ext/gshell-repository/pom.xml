@@ -36,12 +36,20 @@
   </properties>
 
   <dependencies>
-    <!--
-    TODO: need to adjust so we can eventually use gshell-repository from gshell-core; mostly here to access Branding
-    -->
     <dependency>
       <groupId>com.planet57.gshell</groupId>
-      <artifactId>gshell-core</artifactId>
+      <artifactId>gshell-util</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.sisu</groupId>
+      <artifactId>org.eclipse.sisu.inject</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.inject</groupId>
+      <artifactId>guice</artifactId>
+      <classifier>no_aop</classifier>
     </dependency>
 
     <dependency>

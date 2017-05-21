@@ -21,7 +21,6 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import com.google.common.collect.ImmutableList;
-import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.repository.RepositoryAccess;
 import org.apache.maven.repository.internal.MavenRepositorySystemUtils;
 import org.eclipse.aether.DefaultRepositoryCache;
@@ -34,7 +33,6 @@ import org.eclipse.aether.repository.RepositoryPolicy;
 import org.eclipse.aether.spi.localrepo.LocalRepositoryManagerFactory;
 import org.sonatype.goodies.common.ComponentSupport;
 
-import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -53,8 +51,6 @@ public class RepositoryAccessImpl
   extends ComponentSupport
   implements RepositoryAccess
 {
-  private final Branding branding;
-
   private final RepositorySystem repositorySystem;
 
   private final LocalRepositoryManagerFactory localRepositoryManagerFactory;
@@ -65,11 +61,9 @@ public class RepositoryAccessImpl
   private final Map<String, RemoteRepository> remoteRepositories = new ConcurrentHashMap<>();
 
   @Inject
-  public RepositoryAccessImpl(final Branding branding,
-                              final RepositorySystem repositorySystem,
+  public RepositoryAccessImpl(final RepositorySystem repositorySystem,
                               final LocalRepositoryManagerFactory localRepositoryManagerFactory)
   {
-    this.branding = checkNotNull(branding);
     this.repositorySystem = checkNotNull(repositorySystem);
     this.localRepositoryManagerFactory = checkNotNull(localRepositoryManagerFactory);
   }
@@ -81,12 +75,15 @@ public class RepositoryAccessImpl
 
   @Override
   public LocalRepository getLocalRepository() {
-    if (localRepository == null) {
-      File dir = new File(branding.getUserContextDir(), "repository");
-      localRepository = new LocalRepository(dir);
-      log.debug("Local-repository: {}", localRepository);
-    }
+    checkState(localRepository != null, "Local-repository not configured");
     return localRepository;
+  }
+
+  @Override
+  public void setLocalRepository(final LocalRepository repository) {
+    checkNotNull(repository);
+    log.debug("Local-repository: {}", repository);
+    this.localRepository = repository;
   }
 
   @Override

@@ -17,7 +17,6 @@ package com.planet57.gshell.repository.internal
 
 import org.sonatype.goodies.testsupport.TestSupport
 
-import com.planet57.gshell.branding.Branding
 import org.eclipse.aether.RepositorySystem
 import org.eclipse.aether.repository.RemoteRepository
 import org.eclipse.aether.spi.localrepo.LocalRepositoryManagerFactory
@@ -34,9 +33,6 @@ class RepositoryAccessImplTest
   RepositoryAccessImpl underTest
 
   @Mock
-  Branding branding
-
-  @Mock
   RepositorySystem repositorySystem
 
   @Mock
@@ -44,7 +40,7 @@ class RepositoryAccessImplTest
 
   @Before
   void setUp() {
-    underTest = new RepositoryAccessImpl(branding, repositorySystem, localRepositoryManagerFactory)
+    underTest = new RepositoryAccessImpl(repositorySystem, localRepositoryManagerFactory)
   }
 
   @Test
