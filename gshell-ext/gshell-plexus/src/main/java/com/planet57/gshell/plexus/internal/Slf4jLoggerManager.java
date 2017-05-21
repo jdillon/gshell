@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.plexus;
+package com.planet57.gshell.plexus.internal;
 
 import org.codehaus.plexus.logging.AbstractLoggerManager;
 import org.slf4j.Logger;
@@ -25,7 +25,6 @@ import static org.codehaus.plexus.logging.Logger.LEVEL_DEBUG;
 /**
  * Adapts the Plexus logging system to <a href="http://slf4j.org">SLF4J</a>.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 3.0
  */
 public class Slf4jLoggerManager
