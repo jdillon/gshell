@@ -40,6 +40,12 @@
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>com.planet57.gshell</groupId>
+      <artifactId>gshell-testsupport</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
 </project>

@@ -42,8 +42,8 @@
     </dependency>
 
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>jcl-over-slf4j</artifactId>
+      <groupId>com.planet57.gshell</groupId>
+      <artifactId>gshell-testsupport</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
