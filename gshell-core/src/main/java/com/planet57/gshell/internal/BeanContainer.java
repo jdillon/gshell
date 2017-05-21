@@ -28,7 +28,7 @@ import java.lang.annotation.Annotation;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Guice container abstraction.
+ * Guice container facade.
  *
  * @since 3.0
  */
@@ -63,8 +63,14 @@ public class BeanContainer
     beanLocator.watch(key, mediator, watcher);
   }
 
+  @SuppressWarnings("deprecation")
   public void add(final Injector injector, final int rank) {
     beanLocator.add(injector, rank);
+  }
+
+  @SuppressWarnings("deprecation")
+  public void remove(final Injector injector) {
+    beanLocator.remove(injector);
   }
 
   public void clear() {
