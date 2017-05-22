@@ -33,7 +33,8 @@
   <dependencies>
     <dependency>
       <groupId>com.planet57.gshell</groupId>
-      <artifactId>gshell-util</artifactId>
+      <artifactId>gshell-api</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>

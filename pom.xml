@@ -116,17 +116,18 @@
   </properties>
 
   <modules>
-    <module>gshell-launcher</module>
-    <module>gshell-util</module>
-    <module>gshell-ext</module>
-    <module>gshell-core</module>
-    <module>gshell-commands</module>
-    <module>gshell-maven-plugin</module>
-    <module>gshell-testsupport</module>
-    <module>gshell-testharness</module>
-    <module>gshell-bootstrap</module>
-    <module>gshell-personality</module>
+    <module>gshell-api</module>
     <module>gshell-assembly</module>
+    <module>gshell-bootstrap</module>
+    <module>gshell-commands</module>
+    <module>gshell-core</module>
+    <module>gshell-ext</module>
+    <module>gshell-launcher</module>
+    <module>gshell-maven-plugin</module>
+    <module>gshell-personality</module>
+    <module>gshell-testharness</module>
+    <module>gshell-testsupport</module>
+    <module>gshell-util</module>
   </modules>
 
   <dependencyManagement>
@@ -341,6 +342,12 @@
       </dependency>
 
       <!-- INTERNAL -->
+
+      <dependency>
+        <groupId>com.planet57.gshell</groupId>
+        <artifactId>gshell-api</artifactId>
+        <version>3.0.0-SNAPSHOT</version>
+      </dependency>
 
       <dependency>
         <groupId>com.planet57.gshell</groupId>

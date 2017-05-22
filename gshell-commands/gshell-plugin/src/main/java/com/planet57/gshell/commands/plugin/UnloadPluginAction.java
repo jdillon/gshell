@@ -23,7 +23,7 @@ import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.commands.plugin.internal.PluginManager;
 import com.planet57.gshell.commands.plugin.internal.PluginRegistration;
-import com.planet57.gshell.internal.BeanContainer;
+import com.planet57.gshell.guice.BeanContainer;
 import com.planet57.gshell.util.cli2.Argument;
 
 import static com.google.common.base.Preconditions.checkState;

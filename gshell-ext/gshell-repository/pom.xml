@@ -38,18 +38,8 @@
   <dependencies>
     <dependency>
       <groupId>com.planet57.gshell</groupId>
-      <artifactId>gshell-util</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.eclipse.sisu</groupId>
-      <artifactId>org.eclipse.sisu.inject</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>com.google.inject</groupId>
-      <artifactId>guice</artifactId>
-      <classifier>no_aop</classifier>
+      <artifactId>gshell-api</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>

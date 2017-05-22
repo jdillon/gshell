@@ -21,6 +21,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import com.planet57.gshell.guice.BeanContainer;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.functions.FunctionRegistry;
 import com.planet57.gshell.functions.Functions;

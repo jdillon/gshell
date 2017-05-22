@@ -28,9 +28,10 @@ import javax.inject.Singleton;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.inject.Key;
+import com.planet57.gshell.guice.BeanContainer;
 import com.planet57.gshell.alias.AliasRegistry;
-import com.planet57.gshell.command.resolver.CommandResolver;
-import com.planet57.gshell.command.resolver.Node;
+import com.planet57.gshell.command.CommandResolver;
+import com.planet57.gshell.command.Node;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.help.AliasHelpPage;
 import com.planet57.gshell.help.HelpContentLoader;

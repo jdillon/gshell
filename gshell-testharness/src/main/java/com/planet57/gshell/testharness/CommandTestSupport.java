@@ -31,7 +31,8 @@ import com.planet57.gshell.command.CommandRegistry;
 import com.planet57.gshell.internal.CommandRegistryImpl;
 import com.planet57.gshell.internal.FunctionRegistryImpl;
 import com.planet57.gshell.internal.HelpPageManagerImpl;
-import com.planet57.gshell.internal.BeanContainer;
+import com.planet57.gshell.guice.BeanContainer;
+import com.planet57.gshell.internal.ShellBuilderImpl;
 import com.planet57.gshell.logging.logback.TargetConsoleAppender;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.shell.ShellBuilder;
@@ -132,6 +133,7 @@ public abstract class CommandTestSupport
       binder.bind(BeanContainer.class).toInstance(container);
       binder.bind(ThreadIO.class).toInstance(threadIO);
       binder.bind(Branding.class).toInstance(branding);
+      binder.bind(ShellBuilder.class).to(ShellBuilderImpl.class);
     });
     configureModules(modules);
     modules.add(createSpaceModule());

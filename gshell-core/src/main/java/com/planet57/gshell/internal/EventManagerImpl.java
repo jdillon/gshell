@@ -21,6 +21,7 @@ import javax.inject.Singleton;
 
 import com.google.common.eventbus.EventBus;
 import com.google.inject.Key;
+import com.planet57.gshell.guice.BeanContainer;
 import com.planet57.gshell.event.EventAware;
 import com.planet57.gshell.event.EventManager;
 import org.eclipse.sisu.BeanEntry;

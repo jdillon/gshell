@@ -33,6 +33,11 @@
   <dependencies>
     <dependency>
       <groupId>com.planet57.gshell</groupId>
+      <artifactId>gshell-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.planet57.gshell</groupId>
       <artifactId>gshell-util</artifactId>
     </dependency>
 

@@ -22,7 +22,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.planet57.gshell.commands.plugin.internal.PluginManager;
 import com.planet57.gshell.commands.plugin.internal.PluginRegistration;
-import com.planet57.gshell.internal.BeanContainer;
+import com.planet57.gshell.guice.BeanContainer;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.util.cli2.Option;
 import org.eclipse.aether.DefaultRepositorySystemSession;

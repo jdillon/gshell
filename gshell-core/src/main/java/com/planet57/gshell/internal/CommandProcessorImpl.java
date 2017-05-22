@@ -17,8 +17,9 @@ package com.planet57.gshell.internal;
 
 import com.planet57.gshell.alias.AliasRegistry;
 import com.planet57.gshell.command.CommandAction;
-import com.planet57.gshell.command.resolver.CommandResolver;
-import com.planet57.gshell.command.resolver.Node;
+import com.planet57.gshell.command.CommandResolver;
+import com.planet57.gshell.command.ExecuteAliasAction;
+import com.planet57.gshell.command.Node;
 import com.planet57.gshell.functions.Functions;
 import org.apache.felix.service.command.CommandProcessor;
 import org.apache.felix.service.command.Function;

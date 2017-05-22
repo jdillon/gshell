@@ -31,11 +31,12 @@ import com.planet57.gossip.Level;
 import com.planet57.gossip.Log;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.branding.BrandingSupport;
+import com.planet57.gshell.guice.BeanContainer;
+import com.planet57.gshell.internal.ShellBuilderImpl;
+import com.planet57.gshell.shell.ShellBuilder;
 import com.planet57.gshell.util.io.IO;
-import com.planet57.gshell.internal.BeanContainer;
 import com.planet57.gshell.internal.ExitCodeDecoder;
 import com.planet57.gshell.shell.Shell;
-import com.planet57.gshell.shell.ShellBuilder;
 import com.planet57.gshell.util.NameValue;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.CliProcessor;
@@ -274,6 +275,7 @@ public abstract class MainSupport
     modules.add(binder -> {
       binder.bind(ThreadIO.class).toInstance(threadIO);
       binder.bind(Branding.class).toInstance(branding);
+      binder.bind(ShellBuilder.class).to(ShellBuilderImpl.class);
     });
 
     configure(modules);
