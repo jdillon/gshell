@@ -36,8 +36,8 @@ public class VariableUnsetEvent
 
   @Override
   public String toString() {
-    return "VariableUnsetEvent{" +
-      "name='" + name + '\'' +
-      '}';
+    return getClass().getSimpleName() + "{" +
+        "name='" + name + '\'' +
+        '}';
   }
 }

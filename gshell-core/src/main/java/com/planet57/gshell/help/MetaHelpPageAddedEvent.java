@@ -36,8 +36,8 @@ public class MetaHelpPageAddedEvent
 
   @Override
   public String toString() {
-    return "MetaHelpPageAddedEvent{" +
-      "page=" + page +
-      '}';
+    return getClass().getSimpleName() + "{" +
+        "page=" + page +
+        '}';
   }
 }

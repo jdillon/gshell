@@ -79,9 +79,9 @@ public class ExecuteAliasAction
 
   @Override
   public String toString() {
-    return "ExecuteAliasAction{" +
-      "name='" + name + '\'' +
-      ", target='" + target + '\'' +
-      '}';
+    return getClass().getSimpleName() + "{" +
+        "name='" + name + '\'' +
+        ", target='" + target + '\'' +
+        '}';
   }
 }

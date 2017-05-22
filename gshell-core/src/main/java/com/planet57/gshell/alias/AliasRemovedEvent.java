@@ -36,8 +36,8 @@ public class AliasRemovedEvent
 
   @Override
   public String toString() {
-    return "AliasRemovedEvent{" +
-      "name='" + name + '\'' +
-      '}';
+    return getClass().getSimpleName() + "{" +
+        "name='" + name + '\'' +
+        '}';
   }
 }

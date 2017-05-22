@@ -38,8 +38,8 @@ public class FunctionsRegisteredEvent
 
   @Override
   public String toString() {
-    return "FunctionsRegisteredEvent{" +
-      "functions=" + functions +
-      '}';
+    return getClass().getSimpleName() + "{" +
+        "functions=" + functions +
+        '}';
   }
 }

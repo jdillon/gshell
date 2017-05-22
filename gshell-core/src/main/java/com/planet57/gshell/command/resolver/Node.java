@@ -247,7 +247,7 @@ public class Node
 
   @Override
   public String toString() {
-    return "Node{" +
+    return getClass().getSimpleName() + "{" +
         "name='" + name + '\'' +
         ", path=" + getPath() +
         ", root=" + isRoot() +

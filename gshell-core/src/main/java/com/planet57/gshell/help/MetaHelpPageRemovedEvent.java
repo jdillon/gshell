@@ -36,8 +36,8 @@ public class MetaHelpPageRemovedEvent
 
   @Override
   public String toString() {
-    return "MetaHelpPageRemovedEvent{" +
-      "page=" + page +
-      '}';
+    return getClass().getSimpleName() + "{" +
+        "page=" + page +
+        '}';
   }
 }

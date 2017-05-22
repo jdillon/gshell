@@ -119,8 +119,8 @@ public class OptionDescriptor
 
   @Override
   public String toString() {
-    return "OptionDescriptor{" +
-      "spec=" + spec +
-      '}';
+    return getClass().getSimpleName() + "{" +
+        "spec=" + spec +
+        '}';
   }
 }

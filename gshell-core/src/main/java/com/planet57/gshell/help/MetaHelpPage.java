@@ -82,9 +82,9 @@ public abstract class MetaHelpPage
 
   @Override
   public String toString() {
-    return "MetaHelpPage{" +
-      "name='" + name + '\'' +
-      ", resource='" + resource + '\'' +
-      '}';
+    return getClass().getSimpleName() + "{" +
+        "name='" + name + '\'' +
+        ", resource='" + resource + '\'' +
+        '}';
   }
 }

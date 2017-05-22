@@ -179,7 +179,7 @@ public class CommandActionFunction
 
   @Override
   public String toString() {
-    return "CommandActionFunction{" +
+    return getClass().getSimpleName() + "{" +
       "action=" + action.getName() +
       '}';
   }

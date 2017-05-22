@@ -62,9 +62,9 @@ public interface CommandAction
 
     @Override
     public String toString() {
-      return "ExitNotification{" +
-        "code=" + code +
-        '}';
+      return getClass().getSimpleName() + "{" +
+          "code=" + code +
+          '}';
     }
   }
 

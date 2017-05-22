@@ -62,8 +62,8 @@ public class ArgumentDescriptor
 
   @Override
   public String toString() {
-    return "ArgumentDescriptor{" +
-      "spec=" + spec +
-      '}';
+    return getClass().getSimpleName() + "{" +
+        "spec=" + spec +
+        '}';
   }
 }

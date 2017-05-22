@@ -36,8 +36,8 @@ public class FunctionsRemovedEvent
 
   @Override
   public String toString() {
-    return "FunctionsRemovedEvent{" +
-      "functions=" + functions +
-      '}';
+    return getClass().getSimpleName() + "{" +
+        "functions=" + functions +
+        '}';
   }
 }

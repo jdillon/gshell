@@ -46,9 +46,9 @@ public class VariableSetEvent
 
   @Override
   public String toString() {
-    return "VariableSetEvent{" +
-      "name='" + name + '\'' +
-      ", previous=" + previous +
-      '}';
+    return getClass().getSimpleName() + "{" +
+        "name='" + name + '\'' +
+        ", previous=" + previous +
+        '}';
   }
 }

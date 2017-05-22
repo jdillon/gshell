@@ -69,8 +69,8 @@ public class ChangeGroupAction
 
   @Override
   public String toString() {
-    return "ChangeGroupAction{" +
-      "name='" + name + '\'' +
-      '}';
+    return getClass().getSimpleName() + "{" +
+        "name='" + name + '\'' +
+        '}';
   }
 }

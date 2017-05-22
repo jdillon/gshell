@@ -52,8 +52,8 @@ public class FieldSetter
 
   @Override
   public String toString() {
-    return "FieldSetter{" +
-      "field=" + field +
-      '}';
+    return getClass().getSimpleName() + "{" +
+        "field=" + field +
+        '}';
   }
 }

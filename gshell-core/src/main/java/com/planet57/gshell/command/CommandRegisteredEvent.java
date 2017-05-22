@@ -43,9 +43,9 @@ public class CommandRegisteredEvent
 
   @Override
   public String toString() {
-    return "CommandRegisteredEvent{" +
-      "name='" + name + '\'' +
-      ", command=" + command +
-      '}';
+    return getClass().getSimpleName() + "{" +
+        "name='" + name + '\'' +
+        ", command=" + command +
+        '}';
   }
 }

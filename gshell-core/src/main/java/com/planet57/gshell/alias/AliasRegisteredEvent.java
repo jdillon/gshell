@@ -43,9 +43,9 @@ public class AliasRegisteredEvent
 
   @Override
   public String toString() {
-    return "AliasRegisteredEvent{" +
-      "name='" + name + '\'' +
-      ", alias='" + alias + '\'' +
-      '}';
+    return getClass().getSimpleName() + "{" +
+        "name='" + name + '\'' +
+        ", alias='" + alias + '\'' +
+        '}';
   }
 }

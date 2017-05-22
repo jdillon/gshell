@@ -71,8 +71,8 @@ public class MethodSetter
 
   @Override
   public String toString() {
-    return "MethodSetter{" +
-      "method=" + method +
-      '}';
+    return getClass().getSimpleName() + "{" +
+        "method=" + method +
+        '}';
   }
 }
