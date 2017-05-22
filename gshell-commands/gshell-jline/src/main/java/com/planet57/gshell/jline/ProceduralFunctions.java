@@ -13,35 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.functions.internal;
+package com.planet57.gshell.jline;
 
 import com.planet57.gshell.functions.Functions;
-import org.apache.felix.gogo.jline.Posix;
-import org.apache.felix.service.command.CommandProcessor;
+import org.apache.felix.gogo.jline.Procedural;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
- * ???
+ * Jline procedural functions.
  *
  * @since 3.0
  */
 @Named
 @Singleton
-public class PosixFunctions
+public class ProceduralFunctions
   implements Functions
 {
-  private final Posix target;
-
-  @Inject
-  public PosixFunctions(final CommandProcessor commandProcessor) {
-    checkNotNull(commandProcessor);
-    this.target = new Posix(commandProcessor);
-  }
+  private final Procedural target = new Procedural();
 
   @Override
   public Object target() {
@@ -51,7 +41,7 @@ public class PosixFunctions
   @Override
   public String[] names() {
     return new String[] {
-      "cat", "wc", "grep", "head", "tail", "sort", "watch"
+      "each", "if", "not", "throw", "try", "until", "while", "break", "continue"
     };
   }
 }

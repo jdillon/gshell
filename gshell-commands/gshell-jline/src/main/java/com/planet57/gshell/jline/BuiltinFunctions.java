@@ -13,25 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.functions.internal;
+package com.planet57.gshell.jline;
 
 import com.planet57.gshell.functions.Functions;
-import org.apache.felix.gogo.jline.Procedural;
+import org.apache.felix.gogo.jline.Builtin;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
 
 /**
- * ???
+ * Jline built-in functions.
  *
  * @since 3.0
  */
 @Named
 @Singleton
-public class ProceduralFunctions
+public class BuiltinFunctions
   implements Functions
 {
-  private final Procedural target = new Procedural();
+  private final Builtin target = new Builtin();
 
   @Override
   public Object target() {
@@ -41,7 +41,7 @@ public class ProceduralFunctions
   @Override
   public String[] names() {
     return new String[] {
-      "each", "if", "not", "throw", "try", "until", "while", "break", "continue"
+      "jobs", "bg", "fg", "new", "type", "tac"
     };
   }
 }

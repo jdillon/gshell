@@ -58,6 +58,11 @@
 
     <dependency>
       <groupId>com.planet57.gshell.commands</groupId>
+      <artifactId>gshell-jline</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.planet57.gshell.commands</groupId>
       <artifactId>gshell-file</artifactId>
     </dependency>
 

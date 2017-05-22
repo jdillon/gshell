@@ -13,25 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.functions.internal;
+package com.planet57.gshell.jline;
 
 import com.planet57.gshell.functions.Functions;
-import org.apache.felix.gogo.jline.Builtin;
+import org.apache.felix.gogo.jline.Posix;
+import org.apache.felix.service.command.CommandProcessor;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
- * ???
+ * Jline built-in posix.
  *
  * @since 3.0
  */
 @Named
 @Singleton
-public class BuiltinFunctions
+public class PosixFunctions
   implements Functions
 {
-  private final Builtin target = new Builtin();
+  private final Posix target;
+
+  @Inject
+  public PosixFunctions(final CommandProcessor commandProcessor) {
+    checkNotNull(commandProcessor);
+    this.target = new Posix(commandProcessor);
+  }
 
   @Override
   public Object target() {
@@ -41,7 +51,7 @@ public class BuiltinFunctions
   @Override
   public String[] names() {
     return new String[] {
-      "jobs", "bg", "fg", "new", "type", "tac"
+      "cat", "wc", "grep", "head", "tail", "sort", "watch"
     };
   }
 }
