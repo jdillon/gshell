@@ -279,9 +279,7 @@ public abstract class MainSupport
     configure(modules);
 
     Injector injector = Guice.createInjector(new WireModule(modules));
-
-    // TODO: check if this is required or not?
-    container.add(injector, 0);
+    // injector is automatically bound to BeanLocator by sisu
 
     return injector.getInstance(ShellBuilder.class)
       .branding(branding)

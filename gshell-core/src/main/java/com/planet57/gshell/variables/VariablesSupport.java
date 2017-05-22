@@ -29,7 +29,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
 /**
- * Provides a nested-namespace for command variables.
+ * Default {@link Variables}.
  *
  * @since 2.0
  */

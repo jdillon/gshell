@@ -19,7 +19,7 @@ import javax.annotation.Nullable;
 import java.util.Map;
 
 /**
- * Provides a nested-namespace for command variables.
+ * Container for shell variables.
  *
  * @since 2.0
  */

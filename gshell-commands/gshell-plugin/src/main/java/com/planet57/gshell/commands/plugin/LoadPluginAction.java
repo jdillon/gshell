@@ -111,6 +111,7 @@ public class LoadPluginAction
       new SpaceModule(classSpace, BeanScanning.INDEX),
       BeanContainer.module(container)
     ));
+    // injector is automatically bound to BeanLocator by sisu
 
     PluginRegistration registration = new PluginRegistration(artifact, cl, injector);
     pluginManager.add(registration);
