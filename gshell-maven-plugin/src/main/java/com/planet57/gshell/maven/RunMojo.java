@@ -51,7 +51,7 @@ import java.util.List;
 /**
  * Run shell.
  *
- * @since ???
+ * @since 2.6
  */
 @Mojo(name="run", requiresProject=false)
 public class RunMojo
