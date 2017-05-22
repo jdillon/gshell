@@ -30,6 +30,7 @@ import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.branding.BrandingSupport;
 import com.planet57.gshell.command.CommandAction.ExitNotification;
 import com.planet57.gshell.command.CommandRegistry;
+import com.planet57.gshell.functions.FunctionRegistry;
 import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.help.HelpPageManager;
@@ -106,12 +107,14 @@ public class ShellImpl
   @Inject
   public ShellImpl(final EventManager events,
                    final CommandRegistry commandRegistry,
+                   final FunctionRegistry functionRegistry,
                    final HelpPageManager helpPageManager,
                    final CommandProcessorImpl commandProcessor,
                    @Named("shell") final Completer completer)
   {
     checkNotNull(events);
     checkNotNull(commandRegistry);
+    checkNotNull(functionRegistry);
     checkNotNull(helpPageManager);
 
     this.commandProcessor = checkNotNull(commandProcessor);
@@ -121,7 +124,12 @@ public class ShellImpl
     this.history = new DefaultHistory();
     this.scriptLoader = new ShellScriptLoader();
 
-    lifecycles.add(events, commandRegistry, helpPageManager);
+    lifecycles.add(
+      events,
+      commandRegistry,
+      functionRegistry,
+      helpPageManager
+    );
   }
 
   /**
@@ -180,17 +188,6 @@ public class ShellImpl
   }
 
   private void doStarted() throws Exception {
-    // HACK: register some gogo functions
-    commandProcessor.registerFunction(new Builtin(),
-      "jobs", "bg", "fg", "new", "type", "tac"
-    );
-    commandProcessor.registerFunction(new Posix(commandProcessor),
-      "cat", "wc", "grep", "head", "tail", "sort", "watch"
-    );
-    commandProcessor.registerFunction(new Procedural(),
-      "each", "if", "not", "throw", "try", "until", "while", "break", "continue"
-    );
-
     CommandSessionImpl session = commandProcessor.createSession(io.streams.in, io.streams.out, io.streams.err);
     session.put(CommandActionFunction.SHELL_VAR, this);
     session.put(CommandActionFunction.TERMINAL_VAR, io.terminal);
@@ -280,15 +277,6 @@ public class ShellImpl
     scriptLoader.loadInteractiveScripts(this);
 
     final Terminal terminal = io.terminal;
-
-    // HACK: testing adjustment to highlighter colors; pending letting users configure this via profile/rc
-    int maxColors = terminal.getNumericCapability(InfoCmp.Capability.max_colors);
-    if (maxColors >= 256) {
-      session.put("HIGHLIGHTER_COLORS","rs=35:st=32:nu=32:co=32:va=36:vn=36:fu=1;38;5;69:bf=1;38;5;197:re=90");
-    }
-    else {
-      session.put("HIGHLIGHTER_COLORS","rs=35:st=32:nu=32:co=32:va=36:vn=36:fu=94:bf=91:re=90");
-    }
 
     File historyFile = new File(branding.getUserContextDir(), branding.getHistoryFileName());
 

@@ -92,7 +92,6 @@ public class CommandRegistryImpl
     }
   }
 
-
   @Override
   public void registerCommand(final String name, final CommandAction command) throws DuplicateCommandException {
     checkNotNull(name);

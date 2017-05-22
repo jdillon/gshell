@@ -29,6 +29,7 @@ import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.CommandRegistry;
 import com.planet57.gshell.command.CommandRegistryImpl;
+import com.planet57.gshell.functions.internal.FunctionRegistryImpl;
 import com.planet57.gshell.help.HelpPageManagerImpl;
 import com.planet57.gshell.internal.BeanContainer;
 import com.planet57.gshell.logging.logback.TargetConsoleAppender;
@@ -62,8 +63,6 @@ import static com.google.common.base.Preconditions.checkState;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
-
-// FIXME: Goodies TestSupport initMocks() is causing some issues in mvnsh
 
 /**
  * Support for testing {@link CommandAction} instances.
@@ -149,6 +148,10 @@ public abstract class CommandTestSupport
     variables = shell.getVariables();
     commandRegistry = injector.getInstance(CommandRegistryImpl.class);
     commandRegistry.setDiscoveryEnabled(false);
+
+    // disable function discovery by default
+    FunctionRegistryImpl functionRegistry = injector.getInstance(FunctionRegistryImpl.class);
+    functionRegistry.setDiscoveryEnabled(false);
 
     // disable default help-page discovery
     HelpPageManagerImpl helpPageManager = injector.getInstance(HelpPageManagerImpl.class);

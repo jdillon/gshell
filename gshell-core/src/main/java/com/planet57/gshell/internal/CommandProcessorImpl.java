@@ -19,6 +19,7 @@ import com.planet57.gshell.alias.AliasRegistry;
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.resolver.CommandResolver;
 import com.planet57.gshell.command.resolver.Node;
+import com.planet57.gshell.functions.Functions;
 import org.apache.felix.service.command.CommandProcessor;
 import org.apache.felix.service.command.Function;
 import org.apache.felix.service.threadio.ThreadIO;
@@ -108,13 +109,23 @@ public class CommandProcessorImpl
 
   // TODO: consider how we want to generally cope with functions and the registry
 
-  public void registerFunction(final Object target, final String... functions) {
-    checkNotNull(target);
+  public void addFunctions(final Functions functions) {
     checkNotNull(functions);
-    checkArgument(functions.length > 0);
+    log.debug("Adding functions: {}", functions);
 
-    Arrays.stream(functions).forEach(function -> {
-      addCommand(null, target, function);
-    });
+    Object target = functions.target();
+    for (String name : functions.names()) {
+      addCommand(null, target, name);
+    }
+  }
+
+  public void removeFunctions(final Functions functions) {
+    checkNotNull(functions);
+    log.debug("Removing functions: {}", functions);
+
+    Object target = functions.target();
+    for (String name : functions.names()) {
+      removeCommand(null, name, target);
+    }
   }
 }
