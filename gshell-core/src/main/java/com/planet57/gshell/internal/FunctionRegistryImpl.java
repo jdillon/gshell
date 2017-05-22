@@ -53,7 +53,9 @@ public class FunctionRegistryImpl
   private boolean discoveryEnabled = true;
 
   @Inject
-  public FunctionRegistryImpl(final BeanContainer container, final EventManager eventManager, final CommandProcessorImpl commandProcessor)
+  public FunctionRegistryImpl(final BeanContainer container,
+                              final EventManager eventManager,
+                              final CommandProcessorImpl commandProcessor)
   {
     this.container = checkNotNull(container);
     this.eventManager = checkNotNull(eventManager);

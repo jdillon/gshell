@@ -18,7 +18,7 @@ package com.planet57.gshell.functions;
 import org.sonatype.goodies.lifecycle.Lifecycle;
 
 /**
- * ???
+ * Functions registry.
  *
  * @since 3.0
  */
