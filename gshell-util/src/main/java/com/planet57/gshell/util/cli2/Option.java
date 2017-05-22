@@ -29,7 +29,6 @@ import static com.planet57.gshell.util.AnnotationDescriptor.UNINITIALIZED_STRING
 /**
  * Configures a field or method for processing as a command-line option.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.3
  */
 @Retention(RetentionPolicy.RUNTIME)

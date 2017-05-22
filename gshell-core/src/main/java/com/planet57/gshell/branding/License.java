@@ -18,12 +18,10 @@ package com.planet57.gshell.branding;
 import javax.annotation.Nullable;
 import java.io.IOException;
 import java.net.URI;
-import java.net.URL;
 
 /**
  * Details about the shell's licensing.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
 public interface License

@@ -21,7 +21,6 @@ import java.util.Map;
 /**
  * Provides a nested-namespace for command variables.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 public interface Variables

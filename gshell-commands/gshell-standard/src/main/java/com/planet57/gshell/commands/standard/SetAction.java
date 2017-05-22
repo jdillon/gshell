@@ -38,7 +38,6 @@ import static com.google.common.base.Preconditions.checkArgument;
 /**
  * Set a variable or property.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
 @Command(name = "set", description = "Set a variable or property")

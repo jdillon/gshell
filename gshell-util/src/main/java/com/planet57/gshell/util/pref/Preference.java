@@ -25,7 +25,6 @@ import static com.planet57.gshell.util.AnnotationDescriptor.UninitializedClass;
 /**
  * Configures a field or method for processing as a preference.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Retention(RetentionPolicy.RUNTIME)

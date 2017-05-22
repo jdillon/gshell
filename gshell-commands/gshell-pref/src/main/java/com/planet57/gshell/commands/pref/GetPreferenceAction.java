@@ -25,7 +25,6 @@ import javax.annotation.Nonnull;
 /**
  * Get a preference value.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Command(name = "pref/get", description = "Get a preference")

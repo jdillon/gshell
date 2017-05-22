@@ -39,7 +39,6 @@ import javax.annotation.Nullable;
 /**
  * Fetch a file from a URL.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.3
  */
 @Command(name = "wget", description = "Fetch a file from a URL")

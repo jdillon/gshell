@@ -18,7 +18,6 @@ package com.planet57.gshell.util.cli2;
 /**
  * Thrown to indicate a problem processing command line arguments and options.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.3
  */
 public class ProcessingException

@@ -35,7 +35,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * {@link Completer} for variable names.
  * Keeps up to date automatically by handling variable-related events.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Named("variable-name")

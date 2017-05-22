@@ -21,7 +21,6 @@ import javax.inject.Singleton;
 
 import com.google.common.eventbus.Subscribe;
 import com.planet57.gshell.event.EventAware;
-import com.planet57.gshell.util.jline.Candidates;
 import com.planet57.gshell.util.jline.DynamicCompleter;
 import com.planet57.gshell.util.jline.StringsCompleter2;
 import org.jline.reader.Candidate;
@@ -36,7 +35,6 @@ import static com.planet57.gshell.util.jline.Candidates.candidate;
  * {@link Completer} for meta help page names.
  * Keeps up to date automatically by handling meta-page-related events.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
 @Named("meta-help-page-name")

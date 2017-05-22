@@ -27,7 +27,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Base-class for CLI descriptors.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.3
  */
 public abstract class CliDescriptor

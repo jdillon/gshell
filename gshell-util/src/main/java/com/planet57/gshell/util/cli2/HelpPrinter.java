@@ -32,7 +32,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Helper to print formatted help and usage text.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.3
  */
 public class HelpPrinter

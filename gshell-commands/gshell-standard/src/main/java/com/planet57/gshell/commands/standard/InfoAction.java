@@ -56,7 +56,6 @@ import javax.annotation.Nonnull;
 /**
  * Display shell information.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
 @Command(name = "info", description = "Display information about the shell and environment")

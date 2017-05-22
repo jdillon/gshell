@@ -36,7 +36,6 @@ import com.planet57.gshell.util.jline.Complete;
 /**
  * Read and execute commands from a file in the current shell.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
 @Command(name = "source", description = "Execute commands from a source into the current shell")

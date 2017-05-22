@@ -20,7 +20,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Event fired once a help meta page has been added.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
 public class MetaHelpPageAddedEvent

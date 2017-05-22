@@ -22,7 +22,6 @@ import com.planet57.gshell.util.cli2.Argument;
 /**
  * Support for preference node commands.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 public abstract class PreferenceNodeActionSupport

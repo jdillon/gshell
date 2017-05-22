@@ -22,7 +22,6 @@ import java.util.Collection;
 /**
  * Registry for commands.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
 public interface CommandRegistry

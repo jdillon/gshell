@@ -22,7 +22,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * {@link Option} descriptor.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.3
  */
 public class OptionDescriptor

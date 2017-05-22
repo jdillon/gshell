@@ -34,8 +34,6 @@ import org.sonatype.goodies.testsupport.TestSupport;
 
 /**
  * Tests for {@link NodePathCompleter}.
- *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class NodePathCompleterTest
   extends TestSupport

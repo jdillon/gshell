@@ -20,7 +20,6 @@ package com.planet57.gshell.event;
  *
  * Such components are automatically registered via {@link EventManager#register(Object)}.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 public interface EventAware

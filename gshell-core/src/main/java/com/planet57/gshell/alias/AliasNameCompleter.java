@@ -34,7 +34,6 @@ import static com.planet57.gshell.util.jline.Candidates.candidate;
 /**
  * {@link Completer} for alias names.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
 @Named("alias-name")

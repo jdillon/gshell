@@ -30,7 +30,6 @@ import com.planet57.gshell.variables.Variables;
 /**
  * Unset a variable or property.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
 @Command(name = "unset", description = "Unset a variable or property")

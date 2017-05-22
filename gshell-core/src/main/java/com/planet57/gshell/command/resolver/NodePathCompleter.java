@@ -36,7 +36,6 @@ import static com.planet57.gshell.util.jline.Candidates.candidate;
 /**
  * {@link Completer} for node path names.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
 @Named("node-path")

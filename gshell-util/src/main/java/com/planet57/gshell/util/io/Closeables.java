@@ -26,7 +26,6 @@ import javax.annotation.Nullable;
 /**
  * Quietly closes {@link Closeable} objects.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 public class Closeables

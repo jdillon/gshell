@@ -27,7 +27,6 @@ import javax.annotation.Nonnull;
 /**
  * Clear the screen.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Command(name = "clear", description = "Clear the screen")

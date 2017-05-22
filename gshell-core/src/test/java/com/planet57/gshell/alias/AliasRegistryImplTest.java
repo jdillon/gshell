@@ -34,8 +34,6 @@ import static org.junit.Assert.fail;
 
 /**
  * Tests for the {@link AliasRegistryImpl}.
- *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
 public class AliasRegistryImplTest
   extends TestSupport

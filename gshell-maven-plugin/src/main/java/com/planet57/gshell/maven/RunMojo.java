@@ -51,7 +51,7 @@ import java.util.List;
 /**
  * Run shell.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ * @since ???
  */
 @Mojo(name="run", requiresProject=false)
 public class RunMojo

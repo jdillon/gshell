@@ -34,7 +34,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Default {@link AliasRegistry}.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
 @Named

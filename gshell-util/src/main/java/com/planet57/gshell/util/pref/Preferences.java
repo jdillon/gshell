@@ -23,7 +23,6 @@ import java.lang.annotation.Target;
 /**
  * Configures a class as containing preferences under a specific path.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.2
  */
 @Retention(RetentionPolicy.RUNTIME)

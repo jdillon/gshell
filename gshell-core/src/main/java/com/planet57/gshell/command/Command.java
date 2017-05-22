@@ -28,7 +28,6 @@ import static com.planet57.gshell.util.AnnotationDescriptor.UNINITIALIZED_STRING
 /**
  * Marker for commands.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Documented

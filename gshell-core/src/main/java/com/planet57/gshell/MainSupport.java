@@ -69,7 +69,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Support for booting shell applications.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Preferences(path = "cli")

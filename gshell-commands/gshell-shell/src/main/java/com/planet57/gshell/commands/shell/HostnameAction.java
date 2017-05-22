@@ -28,7 +28,6 @@ import javax.annotation.Nonnull;
 /**
  * Displays the name of the current host.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Command(name = "hostname", description = "Displays the name of the current host")

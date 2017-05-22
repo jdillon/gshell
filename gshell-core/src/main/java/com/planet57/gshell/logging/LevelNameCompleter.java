@@ -27,12 +27,9 @@ import javax.inject.Singleton;
 
 import java.util.Collection;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * {@link Completer} for {@link LevelComponent} names.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
 @Named("level-name")

@@ -23,7 +23,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Setter for methods.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 public class MethodSetter

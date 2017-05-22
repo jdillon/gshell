@@ -25,7 +25,6 @@ import javax.annotation.Nonnull;
 /**
  * Exit the current shell.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
 @Command(name = "exit", description = "Exit the current shell")

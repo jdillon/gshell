@@ -25,7 +25,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Descriptor for {@link Preference} annotations.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 public class PreferenceDescriptor

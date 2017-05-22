@@ -18,7 +18,6 @@ package com.planet57.gshell.util.i18n;
 /**
  * Provides simple access to i18n messages.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 public interface MessageSource

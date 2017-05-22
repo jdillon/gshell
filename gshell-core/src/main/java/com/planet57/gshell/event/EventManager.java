@@ -20,7 +20,6 @@ import org.sonatype.goodies.lifecycle.Lifecycle;
 /**
  * Manages event subscriptions and publishes events.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 3.0
  */
 public interface EventManager

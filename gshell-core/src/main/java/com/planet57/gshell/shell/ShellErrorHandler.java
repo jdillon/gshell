@@ -25,7 +25,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Shell error-handler which renders errors with ANSI codes.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 public class ShellErrorHandler

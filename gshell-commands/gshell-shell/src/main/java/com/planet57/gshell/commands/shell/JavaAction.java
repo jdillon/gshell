@@ -30,11 +30,10 @@ import javax.annotation.Nullable;
 /**
  * Execute a Java standard application.
  *
- * <p>By default looks for static main(String[]) to execute, but
+ * By default looks for static main(String[]) to execute, but
  * you can specify a different static method that takes a String[]
  * to execute instead.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Command(name = "java", description = "Execute a Java standard application")

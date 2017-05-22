@@ -42,7 +42,6 @@ import static com.planet57.gshell.variables.VariableNames.SHELL_VERSION;
 /**
  * Support for {@link Branding} implementations.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 public class BrandingSupport

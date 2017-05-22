@@ -23,7 +23,6 @@ import com.planet57.gshell.util.i18n.MessageBundle;
 /**
  * Handler which uses a {@link Converter} to coerce types.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.3
  */
 public class DefaultHandler

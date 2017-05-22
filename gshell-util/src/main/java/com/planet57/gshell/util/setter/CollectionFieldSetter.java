@@ -27,7 +27,6 @@ import java.util.Set;
 /**
  * Setter for fields of collection types.  Currently supports lists and sets.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 public class CollectionFieldSetter

@@ -20,7 +20,6 @@ import java.io.IOException;
 /**
  * Loads help page contents.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
 public interface HelpContentLoader

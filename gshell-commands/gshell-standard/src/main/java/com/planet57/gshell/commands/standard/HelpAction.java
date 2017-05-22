@@ -45,7 +45,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Display help pages.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
 @Command(name = "help", description = "Display help pages")

@@ -20,7 +20,6 @@ import java.util.Map;
 /**
  * Registry for command aliases.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
 public interface AliasRegistry

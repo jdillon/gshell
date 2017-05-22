@@ -33,7 +33,6 @@ import javax.annotation.Nonnull;
 /**
  * Import preference nodes from a file.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Command(name = "pref/import", description = "Import preferences")

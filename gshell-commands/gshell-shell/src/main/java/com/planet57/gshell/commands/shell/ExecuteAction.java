@@ -34,7 +34,6 @@ import javax.annotation.Nullable;
 /**
  * Execute system processes.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Command(name = "exec", description = "Execute system processes")
