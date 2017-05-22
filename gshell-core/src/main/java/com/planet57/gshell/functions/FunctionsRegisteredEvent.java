@@ -15,18 +15,31 @@
  */
 package com.planet57.gshell.functions;
 
-// FIXME: this is not super ideal, but for now to avoid hard-coded hacks in ShellImpl
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import com.planet57.gshell.command.CommandAction;
 
 /**
- * A set of functions.
+ * Event fired once a function-set has has been registered.
  *
  * @since 3.0
- * 
- * @see com.planet57.gshell.internal.CommandProcessorImpl#addFunctions(Functions) 
  */
-public interface Functions
+public class FunctionsRegisteredEvent
 {
-  Object target();
+  private final Functions functions;
 
-  String[] names();
+  public FunctionsRegisteredEvent(final Functions functions) {
+    this.functions = checkNotNull(functions);
+  }
+
+  public Functions getFunctions() {
+    return functions;
+  }
+
+  @Override
+  public String toString() {
+    return "FunctionsRegisteredEvent{" +
+      "functions=" + functions +
+      '}';
+  }
 }

@@ -21,8 +21,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.functions.FunctionRegistry;
 import com.planet57.gshell.functions.Functions;
+import com.planet57.gshell.functions.FunctionsRegisteredEvent;
+import com.planet57.gshell.functions.FunctionsRemovedEvent;
 import org.eclipse.sisu.BeanEntry;
 import org.eclipse.sisu.Mediator;
 import org.sonatype.goodies.lifecycle.LifecycleSupport;
@@ -43,15 +46,17 @@ public class FunctionRegistryImpl
 {
   private final BeanContainer container;
 
+  private final EventManager eventManager;
+
   private final CommandProcessorImpl commandProcessor;
 
   private boolean discoveryEnabled = true;
 
   @Inject
-  public FunctionRegistryImpl(final BeanContainer container,
-                          final CommandProcessorImpl commandProcessor)
+  public FunctionRegistryImpl(final BeanContainer container, final EventManager eventManager, final CommandProcessorImpl commandProcessor)
   {
     this.container = checkNotNull(container);
+    this.eventManager = checkNotNull(eventManager);
     this.commandProcessor = checkNotNull(commandProcessor);
   }
 
@@ -88,6 +93,7 @@ public class FunctionRegistryImpl
     checkNotNull(functions);
     log.debug("Add: {}", functions);
     commandProcessor.addFunctions(functions);
+    eventManager.publish(new FunctionsRegisteredEvent(functions));
   }
 
   @Override
@@ -95,5 +101,6 @@ public class FunctionRegistryImpl
     checkNotNull(functions);
     log.debug("Remove: {}", functions);
     commandProcessor.removeFunctions(functions);
+    eventManager.publish(new FunctionsRemovedEvent(functions));
   }
 }

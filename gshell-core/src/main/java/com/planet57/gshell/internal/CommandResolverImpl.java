@@ -28,7 +28,6 @@ import com.google.common.eventbus.Subscribe;
 import com.planet57.gshell.command.resolver.CommandResolver;
 import com.planet57.gshell.command.resolver.Node;
 import com.planet57.gshell.command.resolver.NodePath;
-import com.planet57.gshell.internal.ChangeGroupAction;
 import com.planet57.gshell.command.CommandRegisteredEvent;
 import com.planet57.gshell.command.CommandRemovedEvent;
 import com.planet57.gshell.event.EventAware;
