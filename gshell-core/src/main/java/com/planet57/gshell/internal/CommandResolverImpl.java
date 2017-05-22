@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.command.resolver;
+package com.planet57.gshell.internal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +25,9 @@ import javax.inject.Provider;
 import javax.inject.Singleton;
 
 import com.google.common.eventbus.Subscribe;
+import com.planet57.gshell.command.resolver.CommandResolver;
+import com.planet57.gshell.command.resolver.Node;
+import com.planet57.gshell.command.resolver.NodePath;
 import com.planet57.gshell.internal.ChangeGroupAction;
 import com.planet57.gshell.command.CommandRegisteredEvent;
 import com.planet57.gshell.command.CommandRemovedEvent;

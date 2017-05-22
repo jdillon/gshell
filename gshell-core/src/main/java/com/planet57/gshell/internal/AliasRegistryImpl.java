@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.alias;
+package com.planet57.gshell.internal;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -23,6 +23,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import com.planet57.gshell.alias.AliasRegisteredEvent;
+import com.planet57.gshell.alias.AliasRegistry;
+import com.planet57.gshell.alias.AliasRemovedEvent;
 import com.planet57.gshell.event.EventManager;
 import org.sonatype.goodies.common.ComponentSupport;
 

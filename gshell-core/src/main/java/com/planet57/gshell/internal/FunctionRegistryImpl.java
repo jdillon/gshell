@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.functions;
+package com.planet57.gshell.internal;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -21,14 +21,14 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import com.planet57.gshell.functions.FunctionRegistry;
+import com.planet57.gshell.functions.Functions;
 import org.eclipse.sisu.BeanEntry;
 import org.eclipse.sisu.Mediator;
 import org.sonatype.goodies.lifecycle.LifecycleSupport;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.inject.Key;
-import com.planet57.gshell.internal.BeanContainer;
-import com.planet57.gshell.internal.CommandProcessorImpl;
 
 /**
  * Default {@link FunctionRegistry}.

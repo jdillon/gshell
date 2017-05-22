@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.command;
+package com.planet57.gshell.internal;
 
 import java.lang.annotation.Annotation;
 import java.util.Collection;
@@ -28,8 +28,12 @@ import javax.inject.Singleton;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.inject.Key;
+import com.planet57.gshell.command.Command;
+import com.planet57.gshell.command.CommandAction;
+import com.planet57.gshell.command.CommandRegisteredEvent;
+import com.planet57.gshell.command.CommandRegistry;
+import com.planet57.gshell.command.CommandRemovedEvent;
 import com.planet57.gshell.event.EventManager;
-import com.planet57.gshell.internal.BeanContainer;
 import org.eclipse.sisu.BeanEntry;
 import org.eclipse.sisu.Mediator;
 import org.sonatype.goodies.lifecycle.LifecycleSupport;

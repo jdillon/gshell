@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.help;
+package com.planet57.gshell.internal;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.MissingResourceException;
 
+import com.planet57.gshell.help.HelpContentLoader;
 import org.sonatype.goodies.common.ComponentSupport;
 import com.planet57.gshell.util.io.PrintBuffer;
 

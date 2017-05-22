@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.event;
+package com.planet57.gshell.internal;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -21,7 +21,8 @@ import javax.inject.Singleton;
 
 import com.google.common.eventbus.EventBus;
 import com.google.inject.Key;
-import com.planet57.gshell.internal.BeanContainer;
+import com.planet57.gshell.event.EventAware;
+import com.planet57.gshell.event.EventManager;
 import org.eclipse.sisu.BeanEntry;
 import org.eclipse.sisu.Mediator;
 import org.sonatype.goodies.lifecycle.LifecycleSupport;

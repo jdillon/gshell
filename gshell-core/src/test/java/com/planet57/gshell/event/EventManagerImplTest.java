@@ -20,6 +20,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.Stage;
+import com.planet57.gshell.internal.EventManagerImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

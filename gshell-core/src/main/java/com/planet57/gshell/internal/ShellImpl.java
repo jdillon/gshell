@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.shell;
+package com.planet57.gshell.internal;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,6 +31,9 @@ import com.planet57.gshell.branding.BrandingSupport;
 import com.planet57.gshell.command.CommandAction.ExitNotification;
 import com.planet57.gshell.command.CommandRegistry;
 import com.planet57.gshell.functions.FunctionRegistry;
+import com.planet57.gshell.shell.Shell;
+import com.planet57.gshell.shell.ShellErrorHandler;
+import com.planet57.gshell.shell.ShellScriptLoader;
 import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.help.HelpPageManager;

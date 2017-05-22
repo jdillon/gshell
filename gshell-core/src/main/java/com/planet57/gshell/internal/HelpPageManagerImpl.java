@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.help;
+package com.planet57.gshell.internal;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -32,7 +32,14 @@ import com.planet57.gshell.alias.AliasRegistry;
 import com.planet57.gshell.command.resolver.CommandResolver;
 import com.planet57.gshell.command.resolver.Node;
 import com.planet57.gshell.event.EventManager;
-import com.planet57.gshell.internal.BeanContainer;
+import com.planet57.gshell.help.AliasHelpPage;
+import com.planet57.gshell.help.HelpContentLoader;
+import com.planet57.gshell.help.HelpPage;
+import com.planet57.gshell.help.HelpPageManager;
+import com.planet57.gshell.help.HelpPageUtil;
+import com.planet57.gshell.help.MetaHelpPage;
+import com.planet57.gshell.help.MetaHelpPageAddedEvent;
+import com.planet57.gshell.help.MetaHelpPageRemovedEvent;
 import org.eclipse.sisu.BeanEntry;
 import org.eclipse.sisu.Mediator;
 import org.sonatype.goodies.lifecycle.LifecycleSupport;
