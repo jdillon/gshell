@@ -56,7 +56,7 @@ public class BrandingSupport
 
   private final Properties props;
 
-  public BrandingSupport(final Properties props) {
+  public BrandingSupport(@Nullable final Properties props) {
     if (props == null) {
       this.props = System.getProperties();
     }

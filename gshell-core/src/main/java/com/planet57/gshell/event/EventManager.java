@@ -25,9 +25,18 @@ import org.sonatype.goodies.lifecycle.Lifecycle;
 public interface EventManager
   extends Lifecycle
 {
+  /**
+   * Register event listener.
+   */
   void register(Object listener);
 
+  /**
+   * Remove event listener.
+   */
   void unregister(Object listener);
 
+  /**
+   * Publish an event.
+   */
   void publish(Object event);
 }
