@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.command;
+package com.planet57.gshell.internal;
 
 import com.google.common.base.Joiner;
+import org.sonatype.goodies.common.ComponentSupport;
+
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.CommandContext;
-import org.sonatype.goodies.common.ComponentSupport;
 import com.planet57.gshell.util.cli2.OpaqueArguments;
 
 import javax.annotation.Nonnull;

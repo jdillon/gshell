@@ -20,6 +20,8 @@ import org.sonatype.goodies.common.ComponentSupport;
 import javax.annotation.Nullable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.planet57.gshell.command.Node.CURRENT_CHAR;
+import static com.planet57.gshell.command.Node.SEPARATOR_CHAR;
 
 /**
  * Representation of a {@link Node}'s path.
@@ -29,10 +31,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class NodePath
   extends ComponentSupport
 {
-  private static final char SEPARATOR_CHAR = Node.SEPARATOR.charAt(0);
-
-  private static final char CURRENT_CHAR = Node.CURRENT.charAt(0);
-
   private final StringBuilder path;
 
   public NodePath(final String path) {
@@ -53,7 +51,6 @@ public class NodePath
     return elements[elements.length - 1];
   }
 
-  // FIXME: Should be like base() or something
   @Nullable
   public NodePath parent() {
     int i = path.lastIndexOf(Node.SEPARATOR);

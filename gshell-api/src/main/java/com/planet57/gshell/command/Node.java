@@ -39,7 +39,17 @@ public class Node
 
   public static final String CURRENT = ".";
 
+  /**
+   * @since 3.0
+   */
+  public static final char CURRENT_CHAR = '.';
+
   public static final String SEPARATOR = "/";
+
+  /**
+   * @since 3.0
+   */
+  public static final char SEPARATOR_CHAR = '/';
 
   public static final String PATH_SEPARATOR = ":";
 
@@ -221,7 +231,6 @@ public class Node
         else if (!node.isGroup()) {
           throw new RuntimeException("Invalid path; found non-group action: " + elements[i] + " in middle of: " + name);
         }
-
       }
 
       current = node;

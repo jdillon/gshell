@@ -15,9 +15,6 @@
  */
 package com.planet57.gshell.command;
 
-import com.planet57.gshell.command.CommandAction;
-import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.NodePath;
 import org.sonatype.goodies.common.ComponentSupport;
 import com.planet57.gshell.util.cli2.OpaqueArguments;
 import com.planet57.gshell.variables.VariableNames;
@@ -26,6 +23,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+
+// FIXME: This would be better off in gshell-core, but is Node impl depends on this
 
 /**
  * {@link CommandAction} to change groups.
