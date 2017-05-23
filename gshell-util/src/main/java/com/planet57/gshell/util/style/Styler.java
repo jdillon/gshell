@@ -21,6 +21,7 @@ import java.lang.reflect.Proxy;
 
 import javax.annotation.Nullable;
 
+import com.google.common.base.Strings;
 import com.planet57.gossip.Log;
 import com.planet57.gshell.util.style.StyleBundle.DefaultStyle;
 import com.planet57.gshell.util.style.StyleBundle.StyleGroup;
@@ -77,7 +78,12 @@ public class Styler
   @SuppressWarnings("unchecked")
   public static < T extends StyleBundle> T bundle(final Class<T> type) {
     checkNotNull(type);
-    return (T) Proxy.newProxyInstance(type.getClassLoader(), new Class[]{type}, new Handler(type));
+
+    String group = getStyleGroup(type);
+    checkState(group != null, "Style-bundle missing @StyleGroup: %s", type.getName());
+    log.debug("Using style-group: {} for type: {}", group, type.getName());
+
+    return (T) Proxy.newProxyInstance(type.getClassLoader(), new Class[]{type}, new Handler(group));
   }
 
   /**
@@ -88,13 +94,8 @@ public class Styler
   {
     private final String group;
 
-    public Handler(final Class<? extends StyleBundle> type) {
-      checkNotNull(type);
-
-      // resolve the style-group and style-factory
-      this.group = getStyleGroup(type);
-      checkState(group != null, "Style-bundle missing @StyleGroup: %s", type.getName());
-      log.debug("Using style-group: {} for type: {}", group, type.getName());
+    public Handler(final String group) {
+      this.group = checkNotNull(group);
     }
 
     @Override
@@ -109,38 +110,48 @@ public class Styler
         throw new Error("Illegal StyleBundle method: " + method);
       }
 
-      // resolve the style name for method
+      // resolve the style-name for method
       String styleName = getStyleName(method);
 
-      // resolve the configured style, or use the default
+      // resolve the sourced-style, or use the default
       String style = source.get(group, styleName);
       if (style == null) {
         style = getDefaultStyle(method);
-        // if configured style was missing and default-style is missing complain
+        // if sourced-style was missing and default-style is missing complain
         checkState(style != null, "Style-bundle method missing @DefaultStyle: %s", method);
       }
       log.debug("Using style: {} -> {}", styleName, style);
 
-      // TODO: need to resolve issues with expression vs factory exposed style lookup
-
-      return null;
+      // TODO:
+      AttributedString result = null;
+      return result;
     }
+  }
 
-    @Nullable
-    private static String getStyleGroup(final Class<?> type) {
-      StyleGroup group = type.getAnnotation(StyleGroup.class);
-      return group != null ? group.value() : null;
-    }
+  /**
+   * Returns the style group-name for given type, or {@code null} if unable to determine.
+   */
+  @Nullable
+  private static String getStyleGroup(final Class<?> type) {
+    StyleGroup styleGroup = type.getAnnotation(StyleGroup.class);
+    return styleGroup != null ? Strings.emptyToNull(styleGroup.value().trim()) : null;
+  }
 
-    private static String getStyleName(final Method method) {
-      StyleName name = method.getAnnotation(StyleName.class);
-      return name != null ? name.value() : method.getName();
-    }
+  /**
+   * Returns the style-name for given method, or {@code null} if unable to determine.
+   */
+  private static String getStyleName(final Method method) {
+    StyleName styleName = method.getAnnotation(StyleName.class);
+    return styleName != null ? Strings.emptyToNull(styleName.value().trim()) : null;
+  }
 
-    @Nullable
-    private static String getDefaultStyle(final Method method) {
-      DefaultStyle style = method.getAnnotation(DefaultStyle.class);
-      return style != null ? style.value() : null;
-    }
+  /**
+   * Returns the default-style for given method, or {@code null} if unable to determine.
+   */
+  @Nullable
+  private static String getDefaultStyle(final Method method) {
+    DefaultStyle defaultStyle = method.getAnnotation(DefaultStyle.class);
+    // allow whitespace in default-style.value
+    return defaultStyle != null ? Strings.emptyToNull(defaultStyle.value()) : null;
   }
 }
