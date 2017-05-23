@@ -65,7 +65,6 @@ public abstract class MetaHelpPage
     final Variables variables = shell.getVariables();
 
     Interpolator interp = new StringSearchInterpolator("@{", "}");
-    interp.addValueSource(new PrefixedObjectValueSource("command.", this));
     interp.addValueSource(new PrefixedObjectValueSource("branding.", branding));
     interp.addValueSource(new AbstractValueSource(false)
     {
