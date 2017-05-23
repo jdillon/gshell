@@ -17,8 +17,6 @@ package com.planet57.gshell.util.style;
 
 import javax.annotation.Nullable;
 
-import org.jline.utils.AttributedStyle;
-
 /**
  * {@link StyleSource} which always returns {@code null}.
  *
@@ -32,7 +30,7 @@ public class NopStyleSource
    */
   @Nullable
   @Override
-  public AttributedStyle get(final String group, final String name) {
+  public String get(final String group, final String name) {
     return null;
   }
 }
