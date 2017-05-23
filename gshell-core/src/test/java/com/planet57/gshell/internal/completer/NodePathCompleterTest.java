@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.internal;
+package com.planet57.gshell.internal.completer;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -23,6 +23,9 @@ import com.planet57.gshell.command.CommandRegistry;
 import com.planet57.gshell.command.CommandResolver;
 import com.planet57.gshell.command.Node;
 import com.planet57.gshell.event.EventManager;
+import com.planet57.gshell.internal.CommandRegistryImpl;
+import com.planet57.gshell.internal.CommandResolverImpl;
+import com.planet57.gshell.internal.EventManagerImpl;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
 import com.planet57.gshell.variables.VariablesSupport;

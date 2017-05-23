@@ -13,52 +13,51 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.internal;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.inject.Singleton;
-
-import com.google.common.eventbus.Subscribe;
-import com.planet57.gshell.alias.AliasRegisteredEvent;
-import com.planet57.gshell.alias.AliasRegistry;
-import com.planet57.gshell.alias.AliasRemovedEvent;
-import com.planet57.gshell.event.EventAware;
-import com.planet57.gshell.util.jline.DynamicCompleter;
-import com.planet57.gshell.util.jline.StringsCompleter2;
-import org.jline.reader.Candidate;
-import org.jline.reader.Completer;
+package com.planet57.gshell.internal.completer;
 
 import java.util.Collection;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Provider;
+import javax.inject.Singleton;
+
+import com.google.common.eventbus.Subscribe;
+import com.planet57.gshell.event.EventAware;
+import com.planet57.gshell.util.jline.DynamicCompleter;
+import com.planet57.gshell.util.jline.StringsCompleter2;
+import com.planet57.gshell.variables.VariableSetEvent;
+import com.planet57.gshell.variables.VariableUnsetEvent;
+import com.planet57.gshell.variables.Variables;
+import org.jline.reader.Candidate;
+import org.jline.reader.Completer;
+
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.planet57.gshell.util.jline.Candidates.candidate;
 
 /**
- * {@link Completer} for alias names.
+ * {@link Completer} for variable names.
+ * Keeps up to date automatically by handling variable-related events.
  *
- * @since 2.5
+ * @since 2.0
  */
-@Named("alias-name")
+@Named("variable-name")
 @Singleton
-public class AliasNameCompleter
+public class VariableNameCompleter
   extends DynamicCompleter
   implements EventAware
 {
   private final StringsCompleter2 delegate = new StringsCompleter2();
 
-  private final AliasRegistry aliases;
+  private final Provider<Variables> variables;
 
   @Inject
-  public AliasNameCompleter(final AliasRegistry aliases) {
-    this.aliases = checkNotNull(aliases);
+  public VariableNameCompleter(final Provider<Variables> variables) {
+    this.variables = checkNotNull(variables);
   }
 
   @Override
   protected void init() {
-    aliases.getAliases().forEach((name, target) -> {
-      delegate.add(name, candidate(name, target));
-    });
+    delegate.set(variables.get().names());
   }
 
   @Override
@@ -67,13 +66,12 @@ public class AliasNameCompleter
   }
 
   @Subscribe
-  void on(final AliasRegisteredEvent event) {
-    String name = event.getName();
-    delegate.add(name, candidate(name, event.getAlias()));
+  void on(final VariableSetEvent event) {
+    delegate.add(event.getName());
   }
 
   @Subscribe
-  void on(final AliasRemovedEvent event) {
+  void on(final VariableUnsetEvent event) {
     delegate.remove(event.getName());
   }
 }

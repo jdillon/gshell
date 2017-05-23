@@ -13,17 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.internal;
+package com.planet57.gshell.internal.completer;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
 import com.google.common.eventbus.Subscribe;
-import com.planet57.gshell.command.CommandRegisteredEvent;
-import com.planet57.gshell.command.CommandRegistry;
-import com.planet57.gshell.command.CommandRemovedEvent;
 import com.planet57.gshell.event.EventAware;
+import com.planet57.gshell.help.HelpPage;
+import com.planet57.gshell.help.HelpPageManager;
+import com.planet57.gshell.help.MetaHelpPageAddedEvent;
 import com.planet57.gshell.util.jline.DynamicCompleter;
 import com.planet57.gshell.util.jline.StringsCompleter2;
 import org.jline.reader.Candidate;
@@ -35,32 +35,29 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static com.planet57.gshell.util.jline.Candidates.candidate;
 
 /**
- * {@link Completer} for command names.
- * Keeps up to date automatically by handling command-related events.
+ * {@link Completer} for meta help page names.
+ * Keeps up to date automatically by handling meta-page-related events.
  *
  * @since 2.5
  */
-@Named("command-name")
+@Named("meta-help-page-name")
 @Singleton
-public class CommandNameCompleter
+public class MetaHelpPageNameCompleter
   extends DynamicCompleter
   implements EventAware
 {
   private final StringsCompleter2 delegate = new StringsCompleter2();
 
-  private final CommandRegistry commands;
+  private final HelpPageManager helpPages;
 
   @Inject
-  public CommandNameCompleter(final CommandRegistry commands) {
-    this.commands = checkNotNull(commands);
+  public MetaHelpPageNameCompleter(final HelpPageManager helpPages) {
+    this.helpPages = checkNotNull(helpPages);
   }
 
   @Override
   protected void init() {
-    commands.getCommands().forEach(action -> {
-      String name = action.getName();
-      delegate.add(name, candidate(name, action.getDescription()));
-    });
+    helpPages.getMetaPages().forEach(this::add);
   }
 
   @Override
@@ -69,13 +66,12 @@ public class CommandNameCompleter
   }
 
   @Subscribe
-  void on(final CommandRegisteredEvent event) {
-    String name = event.getName();
-    delegate.add(name, candidate(name, event.getCommand().getDescription()));
+  void on(final MetaHelpPageAddedEvent event) {
+    add(event.getPage());
   }
 
-  @Subscribe
-  void on(final CommandRemovedEvent event) {
-    delegate.remove(event.getName());
+  private void add(final HelpPage page) {
+    String name = page.getName();
+    delegate.add(name, candidate(name, page.getDescription()));
   }
 }

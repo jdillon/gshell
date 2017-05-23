@@ -13,51 +13,54 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.internal;
-
-import java.util.Collection;
+package com.planet57.gshell.internal.completer;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.inject.Provider;
 import javax.inject.Singleton;
 
 import com.google.common.eventbus.Subscribe;
+import com.planet57.gshell.command.CommandRegisteredEvent;
+import com.planet57.gshell.command.CommandRegistry;
+import com.planet57.gshell.command.CommandRemovedEvent;
 import com.planet57.gshell.event.EventAware;
 import com.planet57.gshell.util.jline.DynamicCompleter;
 import com.planet57.gshell.util.jline.StringsCompleter2;
-import com.planet57.gshell.variables.VariableSetEvent;
-import com.planet57.gshell.variables.VariableUnsetEvent;
-import com.planet57.gshell.variables.Variables;
 import org.jline.reader.Candidate;
 import org.jline.reader.Completer;
 
+import java.util.Collection;
+
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.planet57.gshell.util.jline.Candidates.candidate;
 
 /**
- * {@link Completer} for variable names.
- * Keeps up to date automatically by handling variable-related events.
+ * {@link Completer} for command names.
+ * Keeps up to date automatically by handling command-related events.
  *
- * @since 2.0
+ * @since 2.5
  */
-@Named("variable-name")
+@Named("command-name")
 @Singleton
-public class VariableNameCompleter
+public class CommandNameCompleter
   extends DynamicCompleter
   implements EventAware
 {
   private final StringsCompleter2 delegate = new StringsCompleter2();
 
-  private final Provider<Variables> variables;
+  private final CommandRegistry commands;
 
   @Inject
-  public VariableNameCompleter(final Provider<Variables> variables) {
-    this.variables = checkNotNull(variables);
+  public CommandNameCompleter(final CommandRegistry commands) {
+    this.commands = checkNotNull(commands);
   }
 
   @Override
   protected void init() {
-    delegate.set(variables.get().names());
+    commands.getCommands().forEach(action -> {
+      String name = action.getName();
+      delegate.add(name, candidate(name, action.getDescription()));
+    });
   }
 
   @Override
@@ -66,12 +69,13 @@ public class VariableNameCompleter
   }
 
   @Subscribe
-  void on(final VariableSetEvent event) {
-    delegate.add(event.getName());
+  void on(final CommandRegisteredEvent event) {
+    String name = event.getName();
+    delegate.add(name, candidate(name, event.getCommand().getDescription()));
   }
 
   @Subscribe
-  void on(final VariableUnsetEvent event) {
+  void on(final CommandRemovedEvent event) {
     delegate.remove(event.getName());
   }
 }

@@ -33,13 +33,7 @@
   <dependencies>
     <dependency>
       <groupId>com.planet57.gshell</groupId>
-      <artifactId>gshell-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.felix</groupId>
-      <artifactId>org.apache.felix.gogo.jline</artifactId>
+      <artifactId>gshell-core</artifactId>
       <scope>provided</scope>
     </dependency>
 

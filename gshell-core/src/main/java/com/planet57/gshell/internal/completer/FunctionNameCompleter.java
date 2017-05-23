@@ -13,54 +13,53 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.internal;
+package com.planet57.gshell.internal.completer;
 
-import javax.annotation.Nullable;
-import javax.inject.Inject;
+import java.util.Collection;
+
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import com.planet57.gshell.logging.LoggerComponent;
-import com.planet57.gshell.logging.LoggingSystem;
+import com.google.common.eventbus.Subscribe;
+import com.planet57.gshell.event.EventAware;
+import com.planet57.gshell.functions.FunctionsRegisteredEvent;
+import com.planet57.gshell.functions.FunctionsRemovedEvent;
 import com.planet57.gshell.util.jline.DynamicCompleter;
 import com.planet57.gshell.util.jline.StringsCompleter2;
 import org.jline.reader.Candidate;
 import org.jline.reader.Completer;
 
-import java.util.Collection;
+import static com.planet57.gshell.util.jline.Candidates.candidate;
 
 /**
- * {@link Completer} for {@link LoggerComponent} names.
+ * {@link Completer} for function names.
  *
- * @since 2.5
+ * @since 3.0
  */
-@Named("logger-name")
+@Named("function-name")
 @Singleton
-public class LoggerNameCompleter
-    extends DynamicCompleter
+public class FunctionNameCompleter
+  extends DynamicCompleter
+  implements EventAware
 {
   private final StringsCompleter2 delegate = new StringsCompleter2();
-
-  @Nullable
-  private final LoggingSystem logging;
-
-  @Inject
-  public LoggerNameCompleter(@Nullable final LoggingSystem logging) {
-    this.logging = logging;
-  }
-
-  /**
-   * Re-adjusted completions each attempt to complete; loggers could change dynamically.
-   */
-  @Override
-  protected void prepare() {
-    if (logging != null) {
-      delegate.set(logging.getLoggerNames());
-    }
-  }
 
   @Override
   protected Collection<Candidate> getCandidates() {
     return delegate.getCandidates();
+  }
+
+  @Subscribe
+  void on(final FunctionsRegisteredEvent event) {
+    for (String name : event.getFunctions().names()) {
+      delegate.add(name, candidate(name));
+    }
+  }
+
+  @Subscribe
+  void on(final FunctionsRemovedEvent event) {
+    for (String name : event.getFunctions().names()) {
+      delegate.remove(name);
+    }
   }
 }

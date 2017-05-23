@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.internal;
+package com.planet57.gshell.internal.completer;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -54,10 +54,15 @@ public class ShellCompleter
   @Inject
   public ShellCompleter(final CommandResolver commandResolver,
                         @Named("alias-name") final Completer aliasNameCompleter,
+                        @Named("function-name") final Completer functionNameCompleter,
                         @Named("node-path") final Completer nodePathCompleter)
   {
     this.commandResolver = checkNotNull(commandResolver);
-    this.commandCompleter = new AggregateCompleter(aliasNameCompleter, nodePathCompleter);
+    this.commandCompleter = new AggregateCompleter(
+        aliasNameCompleter,
+        functionNameCompleter,
+        nodePathCompleter
+    );
   }
 
   @Override

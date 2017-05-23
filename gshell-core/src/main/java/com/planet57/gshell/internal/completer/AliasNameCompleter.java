@@ -13,17 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.internal;
+package com.planet57.gshell.internal.completer;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
 import com.google.common.eventbus.Subscribe;
+import com.planet57.gshell.alias.AliasRegisteredEvent;
+import com.planet57.gshell.alias.AliasRegistry;
+import com.planet57.gshell.alias.AliasRemovedEvent;
 import com.planet57.gshell.event.EventAware;
-import com.planet57.gshell.help.HelpPage;
-import com.planet57.gshell.help.HelpPageManager;
-import com.planet57.gshell.help.MetaHelpPageAddedEvent;
 import com.planet57.gshell.util.jline.DynamicCompleter;
 import com.planet57.gshell.util.jline.StringsCompleter2;
 import org.jline.reader.Candidate;
@@ -35,29 +35,30 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static com.planet57.gshell.util.jline.Candidates.candidate;
 
 /**
- * {@link Completer} for meta help page names.
- * Keeps up to date automatically by handling meta-page-related events.
+ * {@link Completer} for alias names.
  *
  * @since 2.5
  */
-@Named("meta-help-page-name")
+@Named("alias-name")
 @Singleton
-public class MetaHelpPageNameCompleter
+public class AliasNameCompleter
   extends DynamicCompleter
   implements EventAware
 {
   private final StringsCompleter2 delegate = new StringsCompleter2();
 
-  private final HelpPageManager helpPages;
+  private final AliasRegistry aliases;
 
   @Inject
-  public MetaHelpPageNameCompleter(final HelpPageManager helpPages) {
-    this.helpPages = checkNotNull(helpPages);
+  public AliasNameCompleter(final AliasRegistry aliases) {
+    this.aliases = checkNotNull(aliases);
   }
 
   @Override
   protected void init() {
-    helpPages.getMetaPages().forEach(this::add);
+    aliases.getAliases().forEach((name, target) -> {
+      delegate.add(name, candidate(name, target));
+    });
   }
 
   @Override
@@ -66,12 +67,13 @@ public class MetaHelpPageNameCompleter
   }
 
   @Subscribe
-  void on(final MetaHelpPageAddedEvent event) {
-    add(event.getPage());
+  void on(final AliasRegisteredEvent event) {
+    String name = event.getName();
+    delegate.add(name, candidate(name, event.getAlias()));
   }
 
-  private void add(final HelpPage page) {
-    String name = page.getName();
-    delegate.add(name, candidate(name, page.getDescription()));
+  @Subscribe
+  void on(final AliasRemovedEvent event) {
+    delegate.remove(event.getName());
   }
 }
