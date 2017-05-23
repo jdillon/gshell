@@ -41,10 +41,13 @@ public class Styler
 
   public static StyleSource source(final Class type) {
     checkNotNull(type);
-
     // TODO:
-    
     return null;
+  }
+
+  public static StyleFactory factory(final String prefix) {
+    checkNotNull(prefix);
+    return new StyleFactory(prefix);
   }
 
   @SuppressWarnings("unchecked")

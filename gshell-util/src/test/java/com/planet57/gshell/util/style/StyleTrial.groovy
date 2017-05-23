@@ -34,25 +34,26 @@ class StyleTrial
       extends StyleBundle
   {
     @DefaultStyle('@{bold,yellow %3d}')
-    AttributedString history_index(int index)
+    AttributedString history_index(int index) // maps to '.history_index'
   }
 
   @Test
-  void 'various options'() {
+  void 'styler style-bundle'() {
     int index = 1
     def styles = Styler.bundle(Styles.class)
-
     AttributedStringBuilder buff = new AttributedStringBuilder()
 
-    // from interface
     buff.append(styles.history_index(index))
+  }
 
-    // or:
-    def builder = new StyleBuilder('test')
-    buff.append(builder.style('@{bold,yellow %3d}', index))
+  @Test
+  void 'styler style-factory'() {
+    int index = 1
+    def styles = Styler.factory('test')
+    AttributedStringBuilder buff = new AttributedStringBuilder()
 
-    // or:
-    buff.append(builder.style('@{.history_index %3d}', index))
+    buff.append(styles.style('@{bold,yellow %3d}', index))
+    buff.append(styles.style('@{.history_index %3d}', index))
     // ^^^ .history_index=bold,yellow (from resource or other transparent configuration)
   }
 }

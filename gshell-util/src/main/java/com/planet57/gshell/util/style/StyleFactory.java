@@ -23,11 +23,11 @@ import org.jline.utils.AttributedStringBuilder;
  *
  * @since 3.0
  */
-public class StyleBuilder
+public class StyleFactory
 {
   private final AttributedStringBuilder buff = new AttributedStringBuilder();
 
-  public StyleBuilder(final String prefix) {
+  public StyleFactory(final String prefix) {
     // empty
   }
 
