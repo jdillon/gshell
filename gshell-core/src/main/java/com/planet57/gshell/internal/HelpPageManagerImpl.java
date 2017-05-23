@@ -103,6 +103,8 @@ public class HelpPageManagerImpl
     }
   }
 
+  // TODO: cope with function help-pages
+
   private static class MetaHelpPageMediator
     implements Mediator<Named, MetaHelpPage, HelpPageManagerImpl>
   {
