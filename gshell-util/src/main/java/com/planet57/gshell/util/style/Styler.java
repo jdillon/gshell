@@ -80,7 +80,7 @@ public class Styler
     checkNotNull(type);
 
     String group = getStyleGroup(type);
-    checkState(group != null, "Style-bundle missing @StyleGroup: %s", type.getName());
+    checkState(group != null, "Style-bundle missing or invalid @StyleGroup: %s", type.getName());
     log.debug("Using style-group: {} for type: {}", group, type.getName());
 
     return (T) Proxy.newProxyInstance(type.getClassLoader(), new Class[]{type}, new Handler(group));
@@ -151,7 +151,7 @@ public class Styler
   @Nullable
   private static String getDefaultStyle(final Method method) {
     DefaultStyle defaultStyle = method.getAnnotation(DefaultStyle.class);
-    // allow whitespace in default-style.value
+    // allow whitespace in default-style.value, but disallow empty-string
     return defaultStyle != null ? Strings.emptyToNull(defaultStyle.value()) : null;
   }
 }
