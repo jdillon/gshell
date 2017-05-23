@@ -142,7 +142,7 @@ public class Styler
    */
   private static String getStyleName(final Method method) {
     StyleName styleName = method.getAnnotation(StyleName.class);
-    return styleName != null ? Strings.emptyToNull(styleName.value().trim()) : null;
+    return styleName != null ? Strings.emptyToNull(styleName.value().trim()) : method.getName();
   }
 
   /**
