@@ -19,6 +19,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.eventbus.EventBus;
 import com.google.inject.Key;
 import com.planet57.gshell.guice.BeanContainer;
@@ -49,15 +50,29 @@ public class EventManagerImpl
 
   private final EventBus eventBus;
 
+  private boolean discoveryEnabled = true;
+
   @Inject
   public EventManagerImpl(final BeanContainer container) {
     this.container = checkNotNull(container);
     this.eventBus = new EventBus();
   }
 
+  /**
+   * Exposed to allow event discovery to be disabled for testing.
+   */
+  @VisibleForTesting
+  public void setDiscoveryEnabled(final boolean discoveryEnabled) {
+    log.debug("Discovery enabled: {}", discoveryEnabled);
+    this.discoveryEnabled = discoveryEnabled;
+  }
+
   @Override
   protected void doStart() throws Exception {
-    container.watch(Key.get(EventAware.class, Named.class), new EventAwareMediator(), this);
+    if (discoveryEnabled) {
+      log.debug("Watching for event-aware components");
+      container.watch(Key.get(EventAware.class, Named.class), new EventAwareMediator(), this);
+    }
   }
 
   private static class EventAwareMediator

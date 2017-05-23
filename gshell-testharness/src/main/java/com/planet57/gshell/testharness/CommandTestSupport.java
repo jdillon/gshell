@@ -150,7 +150,7 @@ public abstract class CommandTestSupport
     commandRegistry = injector.getInstance(CommandRegistryImpl.class);
     commandRegistry.setDiscoveryEnabled(false);
 
-    // disable function discovery by default
+    // disable function discovery
     FunctionRegistryImpl functionRegistry = injector.getInstance(FunctionRegistryImpl.class);
     functionRegistry.setDiscoveryEnabled(false);
 
