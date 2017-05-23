@@ -45,9 +45,9 @@ public class Styler
     return null;
   }
 
-  public static StyleFactory factory(final String prefix) {
-    checkNotNull(prefix);
-    return new StyleFactory(prefix);
+  public static StyleFactory factory(final String group) {
+    checkNotNull(group);
+    return new StyleFactory(group);
   }
 
   @SuppressWarnings("unchecked")

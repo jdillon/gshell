@@ -18,9 +18,10 @@ package com.planet57.gshell.util.style
 import org.sonatype.goodies.testsupport.TestSupport
 
 import com.planet57.gshell.util.style.StyleBundle.DefaultStyle
-import com.planet57.gshell.util.style.StyleBundle.Prefix
+import com.planet57.gshell.util.style.StyleBundle.Group
 import org.jline.utils.AttributedString
 import org.jline.utils.AttributedStringBuilder
+import org.jline.utils.AttributedStyle
 import org.junit.Test
 
 /**
@@ -29,11 +30,11 @@ import org.junit.Test
 class StyleTrial
   extends TestSupport
 {
-  @Prefix('test')
+  @Group('test')
   private interface Styles
       extends StyleBundle
   {
-    @DefaultStyle('@{bold,yellow %3d}')
+    @DefaultStyle('@{bold,fg:yellow %3d}')
     AttributedString history_index(int index) // maps to '.history_index'
   }
 
@@ -43,7 +44,12 @@ class StyleTrial
     def styles = Styler.bundle(Styles.class)
     AttributedStringBuilder buff = new AttributedStringBuilder()
 
-    buff.append(styles.history_index(index))
+    def string = styles.history_index(index)
+    buff.append(string)
+
+    def style = AttributedStyle.DEFAULT.bold().foreground(AttributedStyle.YELLOW)
+    def string2 = new AttributedString(String.format('%3d', index), style)
+    assert string == string2
   }
 
   @Test
@@ -52,8 +58,8 @@ class StyleTrial
     def styles = Styler.factory('test')
     AttributedStringBuilder buff = new AttributedStringBuilder()
 
-    buff.append(styles.style('@{bold,yellow %3d}', index))
+    buff.append(styles.style('@{bold,fg:yellow %3d}', index))
     buff.append(styles.style('@{.history_index %3d}', index))
-    // ^^^ .history_index=bold,yellow (from resource or other transparent configuration)
+    // ^^^ .history_index=bold,fg:yellow (from resource or other transparent configuration)
   }
 }

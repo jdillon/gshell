@@ -28,13 +28,10 @@ import java.lang.annotation.Target;
  */
 public interface StyleBundle
 {
-  // FIXME: Find better name for this, or sort out if its needed or not
-  // FIXME: Maybe @StyleGroup is better?
-
   @Retention(RetentionPolicy.RUNTIME)
   @Target(ElementType.TYPE)
   @Documented
-  @interface Prefix
+  @interface Group
   {
     String value();
   }

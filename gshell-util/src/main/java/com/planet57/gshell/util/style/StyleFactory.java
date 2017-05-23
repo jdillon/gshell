@@ -27,7 +27,7 @@ public class StyleFactory
 {
   private final AttributedStringBuilder buff = new AttributedStringBuilder();
 
-  public StyleFactory(final String prefix) {
+  public StyleFactory(final String group) {
     // empty
   }
 
