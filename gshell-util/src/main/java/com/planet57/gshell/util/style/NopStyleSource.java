@@ -20,15 +20,19 @@ import javax.annotation.Nullable;
 import org.jline.utils.AttributedStyle;
 
 /**
- * Provides the source of style configuration.
+ * {@link StyleSource} which always returns {@code null}.
  *
  * @since 3.0
  */
-public interface StyleSource
+public class NopStyleSource
+  implements StyleSource
 {
   /**
-   * Returns the appropriate style for the given group and name.
+   * Always returns {@code null}.
    */
   @Nullable
-  AttributedStyle get(String group, String name);
+  @Override
+  public AttributedStyle get(final String group, final String name) {
+    return null;
+  }
 }

@@ -28,8 +28,11 @@ public class StyleFactory
 {
   private final StyleSource source;
 
-  public StyleFactory(final StyleSource source) {
+  private final String group;
+
+  public StyleFactory(final StyleSource source, final String group) {
     this.source = checkNotNull(source);
+    this.group = checkNotNull(group);
   }
 
   /**
@@ -38,6 +41,10 @@ public class StyleFactory
    * Supports {@code @{style format}} syntax.
    */
   public AttributedString style(final String expression, final Object... params) {
+    checkNotNull(expression);
+    checkNotNull(params);
+    // params could be empty
+
     // TODO:
     return null;
   }
@@ -46,6 +53,11 @@ public class StyleFactory
    * Encode string with style applying to formatted string.
    */
   public AttributedString style(final String style, final String format, final Object... params) {
+    checkNotNull(style);
+    checkNotNull(format);
+    checkNotNull(params);
+    // params could be empty
+
     // TODO:
     return null;
   }

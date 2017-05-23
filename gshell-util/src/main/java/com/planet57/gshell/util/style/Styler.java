@@ -19,11 +19,17 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
+import javax.annotation.Nullable;
+
 import com.planet57.gossip.Log;
+import com.planet57.gshell.util.style.StyleBundle.DefaultStyle;
+import com.planet57.gshell.util.style.StyleBundle.StyleGroup;
+import com.planet57.gshell.util.style.StyleBundle.StyleName;
 import org.jline.utils.AttributedString;
 import org.slf4j.Logger;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
 /**
  * Style facade.
@@ -37,7 +43,7 @@ public class Styler
 {
   private static final Logger log = Log.getLogger(Styler.class);
 
-  private static StyleSource source = new DefaultStyleSource();
+  private static StyleSource source = new NopStyleSource();
 
   private Styler() {
     // empty
@@ -59,11 +65,10 @@ public class Styler
   }
 
   /**
-   * Create a factory for the given style group.
+   * Create a factory for the given style-group.
    */
   public static StyleFactory factory(final String group) {
-    checkNotNull(group);
-    return new StyleFactory(null);
+    return new StyleFactory(source, group);
   }
 
   /**
@@ -81,12 +86,15 @@ public class Styler
   private static class Handler
       implements InvocationHandler
   {
-    private final Class<? extends StyleBundle> type;
+    private final StyleFactory factory;
 
     public Handler(final Class<? extends StyleBundle> type) {
-      this.type = checkNotNull(type);
+      checkNotNull(type);
 
-      // TODO: resolve group and style-source
+      // resolve the style-group and style-factory
+      String group = getStyleGroup(type);
+      checkState(group != null, "Style-bundle missing @StyleGroup: %s", type.getName());
+      this.factory = factory(group);
     }
 
     @Override
@@ -94,13 +102,34 @@ public class Styler
       if (method.getDeclaringClass() == Object.class) {
         return method.invoke(this, args);
       }
-      else if (method.getReturnType() != AttributedString.class) {
+
+      // All StyleBundle methods must return an AttributeString
+      if (method.getReturnType() != AttributedString.class) {
         throw new Error("Illegal StyleBundle method: " + method);
       }
 
-      // TODO:
+      String styleName = getStyleName(method);
+
+      // TODO: need to resolve issues with expression vs factory exposed style lookup
 
       return null;
+    }
+
+    @Nullable
+    private static String getStyleGroup(final Class<?> type) {
+      StyleGroup group = type.getAnnotation(StyleGroup.class);
+      return group != null ? group.value() : null;
+    }
+
+    private static String getStyleName(final Method method) {
+      StyleName name = method.getAnnotation(StyleName.class);
+      return name != null ? name.value() : method.getName();
+    }
+
+    @Nullable
+    private static String getDefaultStyle(final Method method) {
+      DefaultStyle style = method.getAnnotation(DefaultStyle.class);
+      return style != null ? style.value() : null;
     }
   }
 }
