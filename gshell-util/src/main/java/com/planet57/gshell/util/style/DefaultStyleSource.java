@@ -15,38 +15,21 @@
  */
 package com.planet57.gshell.util.style;
 
-import org.jline.utils.AttributedString;
-
-import static com.google.common.base.Preconditions.checkNotNull;
+import org.jline.utils.AttributedStyle;
 
 /**
- * Factory to create styled strings.
+ * Default {@link StyleSource} which always returns {@link AttributedStyle#DEFAULT}.
  *
  * @since 3.0
  */
-public class StyleFactory
+public class DefaultStyleSource
+  implements StyleSource
 {
-  private final StyleSource source;
-
-  public StyleFactory(final StyleSource source) {
-    this.source = checkNotNull(source);
-  }
-
   /**
-   * Encode string with style.
-   *
-   * Supports {@code @{style format}} syntax.
+   * Always returns {@link AttributedStyle#DEFAULT}.
    */
-  public AttributedString style(final String expression, final Object... params) {
-    // TODO:
-    return null;
-  }
-
-  /**
-   * Encode string with style applying to formatted string.
-   */
-  public AttributedString style(final String style, final String format, final Object... params) {
-    // TODO:
-    return null;
+  @Override
+  public AttributedStyle get(final String group, final String name) {
+    return AttributedStyle.DEFAULT;
   }
 }

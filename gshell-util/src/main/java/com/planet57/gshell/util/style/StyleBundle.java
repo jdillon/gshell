@@ -22,28 +22,41 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * ???
+ * Marker for proxy-based style bundles.
  *
  * @since 3.0
  */
 public interface StyleBundle
 {
+  /**
+   * Provides the style group name.
+   */
   @Retention(RetentionPolicy.RUNTIME)
   @Target(ElementType.TYPE)
   @Documented
-  @interface Group
+  @interface StyleGroup
   {
     String value();
   }
 
+  /**
+   * Allows overriding the style name.
+   *
+   * Default style-name is determined from method-name.
+   */
   @Retention(RetentionPolicy.RUNTIME)
   @Target(ElementType.METHOD)
   @Documented
-  @interface Key
+  @interface StyleName
   {
     String value();
   }
 
+  /**
+   * Provide default style.
+   *
+   * Supports {@code @{style format}} syntax.
+   */
   @Retention(RetentionPolicy.RUNTIME)
   @Target(ElementType.METHOD)
   @Documented

@@ -18,11 +18,14 @@ package com.planet57.gshell.util.style;
 import org.jline.utils.AttributedStyle;
 
 /**
- * ???
+ * Provides the source of style configuration.
  *
  * @since 3.0
  */
 public interface StyleSource
 {
-  AttributedStyle get(String name);
+  /**
+   * Returns the appropriate style for the given group and name.
+   */
+  AttributedStyle get(String group, String name);
 }

@@ -18,7 +18,7 @@ package com.planet57.gshell.util.style
 import org.sonatype.goodies.testsupport.TestSupport
 
 import com.planet57.gshell.util.style.StyleBundle.DefaultStyle
-import com.planet57.gshell.util.style.StyleBundle.Group
+import com.planet57.gshell.util.style.StyleBundle.StyleGroup
 import org.jline.utils.AttributedString
 import org.jline.utils.AttributedStringBuilder
 import org.jline.utils.AttributedStyle
@@ -30,7 +30,7 @@ import org.junit.Test
 class StyleTrial
   extends TestSupport
 {
-  @Group('test')
+  @StyleGroup('test')
   private interface Styles
       extends StyleBundle
   {

@@ -26,30 +26,49 @@ import org.slf4j.Logger;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * ???
+ * Style facade.
  *
  * @since 3.0
  * @see StyleBundle
+ * @see StyleFactory
+ * @see StyleSource
  */
 public class Styler
 {
   private static final Logger log = Log.getLogger(Styler.class);
 
+  private static StyleSource source = new DefaultStyleSource();
+
   private Styler() {
     // empty
   }
 
-  public static StyleSource source(final Class type) {
-    checkNotNull(type);
-    // TODO:
-    return null;
+  /**
+   * Install global {@link StyleSource}.
+   */
+  public static void setSource(final StyleSource source) {
+    Styler.source = checkNotNull(source);
+    log.debug("Source: {}", source);
   }
 
+  /**
+   * Returns previously configured {@link StyleSource}.
+   */
+  public static StyleSource getSource() {
+    return source;
+  }
+
+  /**
+   * Create a factory for the given style group.
+   */
   public static StyleFactory factory(final String group) {
     checkNotNull(group);
-    return new StyleFactory(group);
+    return new StyleFactory(null);
   }
 
+  /**
+   * Create a style-bundle proxy.
+   */
   @SuppressWarnings("unchecked")
   public static < T extends StyleBundle> T bundle(final Class<T> type) {
     checkNotNull(type);
@@ -64,11 +83,10 @@ public class Styler
   {
     private final Class<? extends StyleBundle> type;
 
-    private final StyleSource styleSource;
-
     public Handler(final Class<? extends StyleBundle> type) {
       this.type = checkNotNull(type);
-      this.styleSource = source(type);
+
+      // TODO: resolve group and style-source
     }
 
     @Override
