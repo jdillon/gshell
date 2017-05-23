@@ -29,7 +29,7 @@ import java.lang.annotation.Target;
 public interface StyleBundle
 {
   /**
-   * Provides the style group name.
+   * Provides the style group-name.
    */
   @Retention(RetentionPolicy.RUNTIME)
   @Target(ElementType.TYPE)
@@ -40,7 +40,7 @@ public interface StyleBundle
   }
 
   /**
-   * Allows overriding the style name.
+   * Allows overriding the style-name.
    *
    * Default style-name is determined from method-name.
    */
