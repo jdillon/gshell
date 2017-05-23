@@ -43,7 +43,7 @@ public class Styler
 {
   private static final Logger log = Log.getLogger(Styler.class);
 
-  private static StyleSource source = new NopStyleSource();
+  private static volatile StyleSource source = new NopStyleSource();
 
   private Styler() {
     // empty
@@ -58,7 +58,7 @@ public class Styler
   }
 
   /**
-   * Returns previously configured {@link StyleSource}.
+   * Returns global {@link StyleSource}.
    */
   public static StyleSource getSource() {
     return source;
@@ -86,16 +86,15 @@ public class Styler
   private static class Handler
       implements InvocationHandler
   {
-    private final StyleFactory factory;
+    private final String group;
 
     public Handler(final Class<? extends StyleBundle> type) {
       checkNotNull(type);
 
       // resolve the style-group and style-factory
-      String group = getStyleGroup(type);
+      this.group = getStyleGroup(type);
       checkState(group != null, "Style-bundle missing @StyleGroup: %s", type.getName());
       log.debug("Using style-group: {} for type: {}", group, type.getName());
-      this.factory = factory(group);
     }
 
     @Override
@@ -110,7 +109,17 @@ public class Styler
         throw new Error("Illegal StyleBundle method: " + method);
       }
 
+      // resolve the style name for method
       String styleName = getStyleName(method);
+
+      // resolve the configured style, or use the default
+      String style = source.get(group, styleName);
+      if (style == null) {
+        style = getDefaultStyle(method);
+        // if configured style was missing and default-style is missing complain
+        checkState(style != null, "Style-bundle method missing @DefaultStyle: %s", method);
+      }
+      log.debug("Using style: {} -> {}", styleName, style);
 
       // TODO: need to resolve issues with expression vs factory exposed style lookup
 

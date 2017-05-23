@@ -17,8 +17,6 @@ package com.planet57.gshell.util.style;
 
 import javax.annotation.Nullable;
 
-import org.jline.utils.AttributedStyle;
-
 /**
  * Provides the source of style configuration.
  *
@@ -30,5 +28,5 @@ public interface StyleSource
    * Returns the appropriate style for the given group and name.
    */
   @Nullable
-  AttributedStyle get(String group, String name);
+  String get(String group, String name);
 }
