@@ -13,33 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.functions;
+package com.planet57.gshell.jline;
+
+import com.planet57.gshell.functions.FunctionSetSupport;
+import org.apache.felix.gogo.jline.Posix;
+import org.apache.felix.service.command.CommandProcessor;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import com.planet57.gshell.command.CommandAction;
-
 /**
- * Event fired once a function-set has has been registered.
+ * Jline built-in posix.
  *
  * @since 3.0
  */
-public class FunctionsRegisteredEvent
+@Named
+@Singleton
+public class PosixFunctionSet
+    extends FunctionSetSupport
 {
-  private final Functions functions;
-
-  public FunctionsRegisteredEvent(final Functions functions) {
-    this.functions = checkNotNull(functions);
-  }
-
-  public Functions getFunctions() {
-    return functions;
-  }
-
-  @Override
-  public String toString() {
-    return getClass().getSimpleName() + "{" +
-        "functions=" + functions +
-        '}';
+  @Inject
+  public PosixFunctionSet(final CommandProcessor commandProcessor) {
+    super(new Posix(checkNotNull(commandProcessor)), "cat", "wc", "grep", "head", "tail", "sort", "watch");
   }
 }

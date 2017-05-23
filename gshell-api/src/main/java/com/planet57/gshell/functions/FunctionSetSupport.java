@@ -13,25 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.jline;
+package com.planet57.gshell.functions;
 
-import com.planet57.gshell.functions.Functions;
-import org.apache.felix.gogo.jline.Builtin;
+import java.util.Arrays;
 
-import javax.inject.Named;
-import javax.inject.Singleton;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Jline built-in functions.
+ * Support for {@link FunctionSet} implementations.
  *
  * @since 3.0
  */
-@Named
-@Singleton
-public class BuiltinFunctions
-  implements Functions
+public class FunctionSetSupport
+  implements FunctionSet
 {
-  private final Builtin target = new Builtin();
+  private final Object target;
+
+  private final String[] names;
+
+  public FunctionSetSupport(final Object target, final String... names) {
+    this.target = checkNotNull(target);
+    checkNotNull(names);
+    checkArgument(names.length != 0);
+    this.names = names;
+  }
 
   @Override
   public Object target() {
@@ -40,8 +46,13 @@ public class BuiltinFunctions
 
   @Override
   public String[] names() {
-    return new String[] {
-      "jobs", "bg", "fg", "new", "type", "tac"
-    };
+    return names;
+  }
+
+  @Override
+  public String toString() {
+    return getClass().getSimpleName() + "{" +
+        "names=" + Arrays.toString(names) +
+        '}';
   }
 }

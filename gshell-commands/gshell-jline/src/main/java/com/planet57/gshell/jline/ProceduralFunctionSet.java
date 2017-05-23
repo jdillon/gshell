@@ -13,20 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.functions;
+package com.planet57.gshell.jline;
 
-// FIXME: this is not super ideal, but for now to avoid hard-coded hacks in ShellImpl
+import com.planet57.gshell.functions.FunctionSetSupport;
+import org.apache.felix.gogo.jline.Procedural;
+
+import javax.inject.Named;
+import javax.inject.Singleton;
 
 /**
- * A set of functions.
+ * Jline procedural functions.
  *
  * @since 3.0
- * 
- * @see com.planet57.gshell.internal.CommandProcessorImpl#addFunctions(Functions) 
  */
-public interface Functions
+@Named
+@Singleton
+public class ProceduralFunctionSet
+    extends FunctionSetSupport
 {
-  Object target();
-
-  String[] names();
+  public ProceduralFunctionSet() {
+    super(new Procedural(), "each", "if", "not", "throw", "try", "until", "while", "break", "continue");
+  }
 }

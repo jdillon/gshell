@@ -21,12 +21,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import com.planet57.gshell.functions.FunctionSet;
 import com.planet57.gshell.guice.BeanContainer;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.functions.FunctionRegistry;
-import com.planet57.gshell.functions.Functions;
-import com.planet57.gshell.functions.FunctionsRegisteredEvent;
-import com.planet57.gshell.functions.FunctionsRemovedEvent;
+import com.planet57.gshell.functions.FunctionSetRegisteredEvent;
+import com.planet57.gshell.functions.FunctionSetRemovedEvent;
 import org.eclipse.sisu.BeanEntry;
 import org.eclipse.sisu.Mediator;
 import org.sonatype.goodies.lifecycle.LifecycleSupport;
@@ -73,37 +73,37 @@ public class FunctionRegistryImpl
   protected void doStart() throws Exception {
     if (discoveryEnabled) {
       log.debug("Watching for functions");
-      container.watch(Key.get(Functions.class), new FunctionsMediator(), this);
+      container.watch(Key.get(FunctionSet.class), new FunctionsMediator(), this);
     }
   }
 
   private static class FunctionsMediator
-    implements Mediator<Named, Functions, FunctionRegistryImpl>
+    implements Mediator<Named, FunctionSet, FunctionRegistryImpl>
   {
     @Override
-    public void add(final BeanEntry<Named, Functions> entry, final FunctionRegistryImpl watcher) throws Exception {
+    public void add(final BeanEntry<Named, FunctionSet> entry, final FunctionRegistryImpl watcher) throws Exception {
       watcher.add(entry.getValue());
     }
 
     @Override
-    public void remove(final BeanEntry<Named, Functions> entry, final FunctionRegistryImpl watcher) throws Exception {
+    public void remove(final BeanEntry<Named, FunctionSet> entry, final FunctionRegistryImpl watcher) throws Exception {
       watcher.remove(entry.getValue());
     }
   }
 
   @Override
-  public void add(final Functions functions) {
+  public void add(final FunctionSet functions) {
     checkNotNull(functions);
     log.debug("Add: {}", functions);
     commandProcessor.addFunctions(functions);
-    eventManager.publish(new FunctionsRegisteredEvent(functions));
+    eventManager.publish(new FunctionSetRegisteredEvent(functions));
   }
 
   @Override
-  public void remove(final Functions functions) {
+  public void remove(final FunctionSet functions) {
     checkNotNull(functions);
     log.debug("Remove: {}", functions);
     commandProcessor.removeFunctions(functions);
-    eventManager.publish(new FunctionsRemovedEvent(functions));
+    eventManager.publish(new FunctionSetRemovedEvent(functions));
   }
 }

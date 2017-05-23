@@ -15,29 +15,24 @@
  */
 package com.planet57.gshell.functions;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+// FIXME: this is not super ideal, but for now to avoid hard-coded hacks in ShellImpl
 
 /**
- * Event fired once a function-set has has been removed.
+ * A set of functions.
+ *
+ * This is based on GOGO function registration, where it can use reflection to bind a named function to a target instance.
  *
  * @since 3.0
  */
-public class FunctionsRemovedEvent
+public interface FunctionSet
 {
-  private final Functions functions;
+  /**
+   * Target object which function is bound.
+   */
+  Object target();
 
-  public FunctionsRemovedEvent(final Functions functions) {
-    this.functions = checkNotNull(functions);
-  }
-
-  public Functions getFunctions() {
-    return functions;
-  }
-
-  @Override
-  public String toString() {
-    return getClass().getSimpleName() + "{" +
-        "functions=" + functions +
-        '}';
-  }
+  /**
+   * Names of methods on {@link #target()} to expose as functions.
+   */
+  String[] names();
 }

@@ -19,7 +19,7 @@ import com.planet57.gshell.alias.AliasRegistry;
 import com.planet57.gshell.command.CommandAction;
 import com.planet57.gshell.command.CommandResolver;
 import com.planet57.gshell.command.Node;
-import com.planet57.gshell.functions.Functions;
+import com.planet57.gshell.functions.FunctionSet;
 import org.apache.felix.service.command.CommandProcessor;
 import org.apache.felix.service.command.Function;
 import org.apache.felix.service.threadio.ThreadIO;
@@ -106,7 +106,7 @@ public class CommandProcessorImpl
 
   // TODO: consider how we want to generally cope with functions and the registry
 
-  public void addFunctions(final Functions functions) {
+  public void addFunctions(final FunctionSet functions) {
     checkNotNull(functions);
     log.debug("Adding functions: {}", functions);
 
@@ -116,7 +116,7 @@ public class CommandProcessorImpl
     }
   }
 
-  public void removeFunctions(final Functions functions) {
+  public void removeFunctions(final FunctionSet functions) {
     checkNotNull(functions);
     log.debug("Removing functions: {}", functions);
 

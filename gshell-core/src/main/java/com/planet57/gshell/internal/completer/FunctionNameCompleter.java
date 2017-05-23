@@ -22,8 +22,8 @@ import javax.inject.Singleton;
 
 import com.google.common.eventbus.Subscribe;
 import com.planet57.gshell.event.EventAware;
-import com.planet57.gshell.functions.FunctionsRegisteredEvent;
-import com.planet57.gshell.functions.FunctionsRemovedEvent;
+import com.planet57.gshell.functions.FunctionSetRegisteredEvent;
+import com.planet57.gshell.functions.FunctionSetRemovedEvent;
 import com.planet57.gshell.util.jline.DynamicCompleter;
 import com.planet57.gshell.util.jline.StringsCompleter2;
 import org.jline.reader.Candidate;
@@ -50,14 +50,14 @@ public class FunctionNameCompleter
   }
 
   @Subscribe
-  void on(final FunctionsRegisteredEvent event) {
+  void on(final FunctionSetRegisteredEvent event) {
     for (String name : event.getFunctions().names()) {
       delegate.add(name, candidate(name));
     }
   }
 
   @Subscribe
-  void on(final FunctionsRemovedEvent event) {
+  void on(final FunctionSetRemovedEvent event) {
     for (String name : event.getFunctions().names()) {
       delegate.remove(name);
     }

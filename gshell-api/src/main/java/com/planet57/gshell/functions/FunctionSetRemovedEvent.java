@@ -15,23 +15,31 @@
  */
 package com.planet57.gshell.functions;
 
-import org.sonatype.goodies.lifecycle.Lifecycle;
+import java.util.Arrays;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * FunctionSet registry.
+ * Event fired once a {@link FunctionSet} has been removed.
  *
  * @since 3.0
  */
-public interface FunctionRegistry
-  extends Lifecycle
+public class FunctionSetRemovedEvent
 {
-  /**
-   * Add a new {@link FunctionSet}.
-   */
-  void add(FunctionSet functions);
+  private final FunctionSet functions;
 
-  /**
-   * Remove a {@link FunctionSet}.
-   */
-  void remove(FunctionSet functions);
+  public FunctionSetRemovedEvent(final FunctionSet functions) {
+    this.functions = checkNotNull(functions);
+  }
+
+  public FunctionSet getFunctions() {
+    return functions;
+  }
+
+  @Override
+  public String toString() {
+    return getClass().getSimpleName() + "{" +
+        "functions=" + Arrays.asList(functions.names()) +
+        '}';
+  }
 }

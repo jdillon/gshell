@@ -13,35 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.jline;
+package com.planet57.gshell.functions;
 
-import com.planet57.gshell.functions.Functions;
-import org.apache.felix.gogo.jline.Procedural;
+import java.util.Arrays;
 
-import javax.inject.Named;
-import javax.inject.Singleton;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Jline procedural functions.
+ * Event fired once a {@link FunctionSet} has been registered.
  *
  * @since 3.0
  */
-@Named
-@Singleton
-public class ProceduralFunctions
-  implements Functions
+public class FunctionSetRegisteredEvent
 {
-  private final Procedural target = new Procedural();
+  private final FunctionSet functions;
 
-  @Override
-  public Object target() {
-    return target;
+  public FunctionSetRegisteredEvent(final FunctionSet functions) {
+    this.functions = checkNotNull(functions);
+  }
+
+  public FunctionSet getFunctions() {
+    return functions;
   }
 
   @Override
-  public String[] names() {
-    return new String[] {
-      "each", "if", "not", "throw", "try", "until", "while", "break", "continue"
-    };
+  public String toString() {
+    return getClass().getSimpleName() + "{" +
+        "functions=" + Arrays.asList(functions.names()) +
+        '}';
   }
 }
