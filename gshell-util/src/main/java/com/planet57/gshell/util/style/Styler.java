@@ -94,11 +94,13 @@ public class Styler
       // resolve the style-group and style-factory
       String group = getStyleGroup(type);
       checkState(group != null, "Style-bundle missing @StyleGroup: %s", type.getName());
+      log.debug("Using style-group: {} for type: {}", group, type.getName());
       this.factory = factory(group);
     }
 
     @Override
     public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
+      // Allow invocations to Object methods to pass-through
       if (method.getDeclaringClass() == Object.class) {
         return method.invoke(this, args);
       }
