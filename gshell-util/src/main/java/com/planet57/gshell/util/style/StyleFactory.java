@@ -35,4 +35,9 @@ public class StyleFactory
     // TODO:
     return null;
   }
+
+  public AttributedString style(final String style, final String format, final Object... params) {
+    // TODO:
+    return null;
+  }
 }

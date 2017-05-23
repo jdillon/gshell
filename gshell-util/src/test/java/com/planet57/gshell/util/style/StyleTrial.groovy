@@ -58,8 +58,8 @@ class StyleTrial
     def styles = Styler.factory('test')
     AttributedStringBuilder buff = new AttributedStringBuilder()
 
-    buff.append(styles.style('@{bold,fg:yellow %3d}', index))
-    buff.append(styles.style('@{.history_index %3d}', index))
+    buff.append(styles.style('bold,fg:yellow', '%3d', index))
+    buff.append(styles.style('.history_index', '%3d', index))
     // ^^^ .history_index=bold,fg:yellow (from resource or other transparent configuration)
   }
 }
