@@ -51,7 +51,7 @@ public class UnloadPluginAction
     PluginRegistration registration = pluginManager.remove(id);
     checkState(registration != null, "Missing plugin: %s", id);
 
-    container.remove(registration.getInjector());
+    container.getBeanLocator().remove(registration.getInjector());
     registration.getClassLoader().close();
 
     context.getIo().format("Plugin unloaded: %s%n", id);

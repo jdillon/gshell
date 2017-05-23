@@ -129,8 +129,8 @@ public abstract class CommandTestSupport
 
     container = new BeanContainer();
     List<Module> modules = new ArrayList<>();
+    modules.add(BeanContainer.module(container));
     modules.add(binder -> {
-      binder.bind(BeanContainer.class).toInstance(container);
       binder.bind(ThreadIO.class).toInstance(threadIO);
       binder.bind(Branding.class).toInstance(branding);
       binder.bind(ShellBuilder.class).to(ShellBuilderImpl.class);
@@ -139,7 +139,6 @@ public abstract class CommandTestSupport
     modules.add(createSpaceModule());
 
     injector = Guice.createInjector(Stage.DEVELOPMENT, new WireModule(modules));
-    container.add(injector, 0);
 
     shell = injector.getInstance(ShellBuilder.class)
       .branding(branding)
@@ -204,7 +203,7 @@ public abstract class CommandTestSupport
     }
 
     if (container != null) {
-      container.clear();
+      container.getBeanLocator().clear();
       container = null;
     }
 

@@ -15,7 +15,6 @@
  */
 package com.planet57.gshell.guice;
 
-import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.Module;
 import org.eclipse.sisu.BeanEntry;
@@ -61,20 +60,6 @@ public class BeanContainer
 
   public <Q extends Annotation, T, W> void watch(final Key<T> key, Mediator<Q, T, W> mediator, final W watcher) {
     beanLocator.watch(key, mediator, watcher);
-  }
-
-  @SuppressWarnings("deprecation")
-  public void add(final Injector injector, final int rank) {
-    beanLocator.add(injector, rank);
-  }
-
-  @SuppressWarnings("deprecation")
-  public void remove(final Injector injector) {
-    beanLocator.remove(injector);
-  }
-
-  public void clear() {
-    beanLocator.clear();
   }
 
   /**
