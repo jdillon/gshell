@@ -48,7 +48,7 @@ public class StyleResolver
   }
 
   private AttributedStyle apply(AttributedStyle style, final String spec) {
-    for (String item : Splitter.on(',').omitEmptyStrings().split(spec)) {
+    for (String item : Splitter.on(',').omitEmptyStrings().trimResults().split(spec)) {
       if (item.startsWith(".")) {
         style = applyReference(style, item);
       }

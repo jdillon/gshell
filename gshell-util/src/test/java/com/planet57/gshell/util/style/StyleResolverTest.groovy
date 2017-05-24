@@ -39,44 +39,50 @@ class StyleResolverTest
 
   @Test
   void 'resolve bold'() {
-    AttributedStyle style = underTest.resolve('bold')
+    def style = underTest.resolve('bold')
     assert style == AttributedStyle.BOLD
   }
 
   @Test
   void 'resolve fg:red'() {
-    AttributedStyle style = underTest.resolve('fg:red')
+    def style = underTest.resolve('fg:red')
     assert style == AttributedStyle.DEFAULT.foreground(AttributedStyle.RED)
   }
 
   @Test
   void 'resolve bg:red'() {
-    AttributedStyle style = underTest.resolve('bg:red')
+    def style = underTest.resolve('bg:red')
     assert style == AttributedStyle.DEFAULT.background(AttributedStyle.RED)
   }
 
   @Test
   void 'resolve invalid color-mode'() {
-    AttributedStyle style = underTest.resolve('invalid:red')
+    def style = underTest.resolve('invalid:red')
     assert style == AttributedStyle.DEFAULT
   }
 
   @Test
   void 'resolve invalid color-name'() {
-    AttributedStyle style = underTest.resolve('fg:invalid')
+    def style = underTest.resolve('fg:invalid')
     assert style == AttributedStyle.DEFAULT
   }
 
   @Test
   void 'resolve bold,fg:red'() {
-    AttributedStyle style = underTest.resolve('bold,fg:red')
+    def style = underTest.resolve('bold,fg:red')
+    assert style == AttributedStyle.BOLD.foreground(AttributedStyle.RED)
+  }
+
+  @Test
+  void 'resolve with whitespace'() {
+    def style = underTest.resolve('  bold ,   fg:red   ')
     assert style == AttributedStyle.BOLD.foreground(AttributedStyle.RED)
   }
 
   @Test
   void 'resolve referenced style'() {
     source.group('test').put('.very-red', 'bold,fg:red')
-    AttributedStyle style = underTest.resolve('.very-red')
+    def style = underTest.resolve('.very-red')
     assert style == AttributedStyle.BOLD.foreground(AttributedStyle.RED)
   }
 }
