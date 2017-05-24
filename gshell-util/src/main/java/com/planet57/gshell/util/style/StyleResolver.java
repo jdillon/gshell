@@ -50,7 +50,7 @@ public class StyleResolver
   private AttributedStyle apply(AttributedStyle style, final String spec) {
     for (String item : Splitter.on(',').omitEmptyStrings().split(spec)) {
       if (item.startsWith(".")) {
-        style = applySourced(style, item);
+        style = applyReference(style, item);
       }
       else if (item.contains(":")) {
         style = applyColor(style, item);
@@ -63,9 +63,15 @@ public class StyleResolver
     return style;
   }
 
-  private AttributedStyle applySourced(final AttributedStyle style, final String name) {
+  private AttributedStyle applyReference(final AttributedStyle style, final String name) {
     String spec = source.get(group, name);
-    return apply(style, spec);
+    if (spec != null) {
+      // FIXME: this could presently be an @{...} expression, which isn't valid here
+      return apply(style, spec);
+    }
+
+    log.warn("Invalid style-reference: {}", name);
+    return style;
   }
 
   private AttributedStyle applyNamed(final AttributedStyle style, final String name) {
