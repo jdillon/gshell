@@ -109,12 +109,16 @@ public class StyleResolver
   }
 
   private AttributedStyle applyColor(final AttributedStyle style, final String spec) {
+    // extract color-mode:color-name
     String[] parts = spec.split(":", 2);
+
+    // resolve the color-name
     Integer color = color(parts[1]);
     if (color == null) {
       log.warn("Invalid color-name: {}", parts[1]);
     }
     else {
+      // resolve and apply color-mode
       switch (parts[0].toLowerCase(Locale.US)) {
         case "fg":
           return style.foreground(color);
