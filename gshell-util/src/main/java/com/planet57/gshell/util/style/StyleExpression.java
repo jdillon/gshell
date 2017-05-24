@@ -34,8 +34,11 @@ public class StyleExpression
 
   private final StyleSource source;
 
-  public StyleExpression(final StyleSource source) {
+  private final String group;
+
+  public StyleExpression(final StyleSource source, final String group) {
     this.source = checkNotNull(source);
+    this.group = checkNotNull(group);
   }
 
   public AttributedString evaluate(final String expression, final Object... params) {

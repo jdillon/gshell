@@ -45,8 +45,7 @@ public class StyleFactory
     checkNotNull(params);
     // params could be empty
 
-    // TODO:
-    return null;
+    return new StyleExpression(source, group).evaluate(expression, params);
   }
 
   /**
@@ -57,6 +56,9 @@ public class StyleFactory
     checkNotNull(format);
     checkNotNull(params);
     // params could be empty
+
+    String _style = source.get(group, style);
+    String value = String.format(format, params);
 
     // TODO:
     return null;
