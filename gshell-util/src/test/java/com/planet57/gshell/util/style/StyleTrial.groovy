@@ -78,7 +78,7 @@ class StyleTrial
     def string = styles.style('bold,fg:yellow', '%3d', 11)
 
     def style = AttributedStyle.DEFAULT.bold().foreground(AttributedStyle.YELLOW)
-    def string2 = new AttributedString(String.format('%3d', index), style)
+    def string2 = new AttributedString(String.format('%3d', 1), style)
     assert string == string2
   }
 
