@@ -52,7 +52,9 @@ class StyleTrial
     AttributedString whatever(int index) // maps to '.history_index' due to @StyleName
   }
 
+  //
   // StyleBundle
+  //
 
   @Test
   void 'styler style-bundle default-style'() {
@@ -65,7 +67,9 @@ class StyleTrial
     assert string == string2
   }
 
+  //
   // StyleFactory
+  //
 
   @Test
   void 'styler style-factory style-format direct'() {
