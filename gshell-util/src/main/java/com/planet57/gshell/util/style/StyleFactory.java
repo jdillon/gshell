@@ -16,6 +16,7 @@
 package com.planet57.gshell.util.style;
 
 import org.jline.utils.AttributedString;
+import org.jline.utils.AttributedStyle;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -28,10 +29,13 @@ public class StyleFactory
 {
   private final StyleSource source;
 
+  private final StyleResolver resolver;
+
   private final String group;
 
   public StyleFactory(final StyleSource source, final String group) {
     this.source = checkNotNull(source);
+    this.resolver = new StyleResolver(source);
     this.group = checkNotNull(group);
   }
 
@@ -57,10 +61,9 @@ public class StyleFactory
     checkNotNull(params);
     // params could be empty
 
-    String _style = source.get(group, style);
     String value = String.format(format, params);
-
-    // TODO:
-    return null;
+    String _style = source.get(group, style);
+    AttributedStyle astyle = resolver.resolve(_style);
+    return new AttributedString(value, astyle);
   }
 }
