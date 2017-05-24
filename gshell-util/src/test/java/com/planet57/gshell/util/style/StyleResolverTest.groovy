@@ -50,6 +50,24 @@ class StyleResolverTest
   }
 
   @Test
+  void 'resolve bg:red'() {
+    AttributedStyle style = underTest.resolve('bg:red')
+    assert style == AttributedStyle.DEFAULT.background(AttributedStyle.RED)
+  }
+
+  @Test
+  void 'resolve invalid color-mode'() {
+    AttributedStyle style = underTest.resolve('invalid:red')
+    assert style == AttributedStyle.DEFAULT
+  }
+
+  @Test
+  void 'resolve invalid color-name'() {
+    AttributedStyle style = underTest.resolve('fg:invalid')
+    assert style == AttributedStyle.DEFAULT
+  }
+
+  @Test
   void 'resolve bold,fg:red'() {
     AttributedStyle style = underTest.resolve('bold,fg:red')
     assert style == AttributedStyle.BOLD.foreground(AttributedStyle.RED)
