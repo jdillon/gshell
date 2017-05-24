@@ -76,6 +76,9 @@ public class StyleResolver
 
   private AttributedStyle applyNamed(final AttributedStyle style, final String name) {
     switch (name.toLowerCase(Locale.US)) {
+      case "default":
+        return AttributedStyle.DEFAULT;
+
       case "bold":
         return style.bold();
 
