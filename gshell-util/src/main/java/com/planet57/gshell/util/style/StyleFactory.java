@@ -29,14 +29,14 @@ public class StyleFactory
 {
   private final StyleSource source;
 
-  private final StyleResolver resolver;
-
   private final String group;
+
+  private final StyleResolver resolver;
 
   public StyleFactory(final StyleSource source, final String group) {
     this.source = checkNotNull(source);
-    this.resolver = new StyleResolver(source);
     this.group = checkNotNull(group);
+    this.resolver = new StyleResolver(source, group);
   }
 
   /**
