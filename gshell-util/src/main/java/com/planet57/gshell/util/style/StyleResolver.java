@@ -17,6 +17,8 @@ package com.planet57.gshell.util.style;
 
 import java.util.Locale;
 
+import javax.annotation.Nullable;
+
 import com.google.common.base.Splitter;
 import com.planet57.gossip.Log;
 import org.jline.utils.AttributedStyle;
@@ -144,6 +146,7 @@ public class StyleResolver
     return style;
   }
 
+  @Nullable
   private static Integer color(final String name) {
     switch (name.toLowerCase(Locale.US)) {
       case "black":
