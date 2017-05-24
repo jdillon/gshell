@@ -110,22 +110,24 @@ public class StyleResolver
 
       default:
         log.warn("Unknown style: {}", name);
+        return style;
     }
-    return style;
   }
 
   private AttributedStyle applyColor(final AttributedStyle style, final String spec) {
     // extract color-mode:color-name
     String[] parts = spec.split(":", 2);
+    String colorMode = parts[0];
+    String colorName = parts[1];
 
     // resolve the color-name
-    Integer color = color(parts[1]);
+    Integer color = color(colorName);
     if (color == null) {
-      log.warn("Invalid color-name: {}", parts[1]);
+      log.warn("Invalid color-name: {}", colorName);
     }
     else {
       // resolve and apply color-mode
-      switch (parts[0].toLowerCase(Locale.US)) {
+      switch (colorMode.toLowerCase(Locale.US)) {
         case "fg":
           return style.foreground(color);
 
@@ -133,7 +135,7 @@ public class StyleResolver
           return style.background(color);
 
         default:
-          log.warn("Invalid color-mode: {}", parts[0]);
+          log.warn("Invalid color-mode: {}", colorMode);
       }
     }
     return style;

@@ -54,4 +54,11 @@ class StyleResolverTest
     AttributedStyle style = underTest.resolve('bold,fg:red')
     assert style == AttributedStyle.BOLD.foreground(AttributedStyle.RED)
   }
+
+  @Test
+  void 'resolve referenced style'() {
+    source.group('test').put('.very-red', 'bold,fg:red')
+    AttributedStyle style = underTest.resolve('.very-red')
+    assert style == AttributedStyle.BOLD.foreground(AttributedStyle.RED)
+  }
 }
