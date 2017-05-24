@@ -17,10 +17,12 @@ package com.planet57.gshell.repository.internal;
 
 import com.google.inject.Binder;
 import com.google.inject.Module;
+import org.apache.maven.repository.internal.DefaultArtifactDescriptorReader2;
 import org.apache.maven.repository.internal.MavenResolverModule;
-import org.eclipse.aether.impl.guice.AetherModule;
+import org.eclipse.aether.impl.ArtifactDescriptorReader;
 
 import javax.inject.Named;
+import javax.inject.Singleton;
 
 /**
  * Repository module.
@@ -33,7 +35,9 @@ public class RepositoryModule
 {
   @Override
   public void configure(final Binder binder) {
-    // binder.install(new AetherModule());
+    // HACK: install custom ArtifactDescriptorReader to work-around bug in Maven implementation
+    binder.bind(ArtifactDescriptorReader.class).to(DefaultArtifactDescriptorReader2.class).in(Singleton.class);
+    // HACK: following will also install this binding, so bind first so ^^^ wins?
     binder.install(new MavenResolverModule());
   }
 }
