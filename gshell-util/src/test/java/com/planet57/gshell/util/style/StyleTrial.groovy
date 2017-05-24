@@ -19,9 +19,11 @@ import org.sonatype.goodies.testsupport.TestSupport
 
 import com.planet57.gshell.util.style.StyleBundle.DefaultStyle
 import com.planet57.gshell.util.style.StyleBundle.StyleGroup
+import com.planet57.gshell.util.style.StyleBundle.StyleName
 import org.jline.utils.AttributedString
 import org.jline.utils.AttributedStringBuilder
 import org.jline.utils.AttributedStyle
+import org.junit.Before
 import org.junit.Test
 
 /**
@@ -30,22 +32,46 @@ import org.junit.Test
 class StyleTrial
   extends TestSupport
 {
+  private MemoryStyleSource source
+
+  @Before
+  void setUp() {
+    this.source = new MemoryStyleSource()
+    Styler.source = source
+  }
+
   @StyleGroup('test')
   private interface Styles
       extends StyleBundle
   {
     @DefaultStyle('@{bold,fg:yellow %3d}')
     AttributedString history_index(int index) // maps to '.history_index'
+
+    @StyleName('history_index')
+    @DefaultStyle('@{bold,fg:yellow %3d}')
+    AttributedString whatever(int index) // maps to '.history_index' due to @StyleName
   }
 
-  @Test
-  void 'styler style-bundle'() {
-    int index = 1
-    def styles = Styler.bundle(Styles.class)
-    AttributedStringBuilder buff = new AttributedStringBuilder()
+  // StyleBundle
 
-    def string = styles.history_index(index)
-    buff.append(string)
+  @Test
+  void 'styler style-bundle default-style'() {
+    def styles = Styler.bundle(Styles.class)
+
+    def string = styles.history_index(1)
+
+    def style = AttributedStyle.DEFAULT.bold().foreground(AttributedStyle.YELLOW)
+    def string2 = new AttributedString(String.format('%3d', 1), style)
+    assert string == string2
+  }
+
+  // StyleFactory
+
+  @Test
+  void 'styler style-factory style-format direct'() {
+    def styles = Styler.factory('test')
+
+    def string = styles.style('bold,fg:yellow', '%3d', 11)
 
     def style = AttributedStyle.DEFAULT.bold().foreground(AttributedStyle.YELLOW)
     def string2 = new AttributedString(String.format('%3d', index), style)
@@ -53,13 +79,22 @@ class StyleTrial
   }
 
   @Test
-  void 'styler style-factory'() {
-    int index = 1
+  void 'styler style-factory style-format sourced'() {
+    def styles = Styler.factory('test')
+
+    def string = styles.style('.history_index', '%3d', 1)
+
+    def style = AttributedStyle.DEFAULT.bold().foreground(AttributedStyle.YELLOW)
+    def string2 = new AttributedString(String.format('%3d', 1), style)
+    assert string == string2
+  }
+
+  @Test
+  void 'styler style-factory expression'() {
     def styles = Styler.factory('test')
     AttributedStringBuilder buff = new AttributedStringBuilder()
 
-    buff.append(styles.style('bold,fg:yellow', '%3d', index))
-    buff.append(styles.style('.history_index', '%3d', index))
-    // ^^^ .history_index=bold,fg:yellow (from resource or other transparent configuration)
+    buff.append(styles.style('@{bold,fg:yellow %3d}', 1))
+    buff.append(styles.style('@{.history_index %3d}', 1))
   }
 }

@@ -53,9 +53,9 @@ public interface StyleBundle
   }
 
   /**
-   * Provide default style.
+   * Provide default style-expression.
    *
-   * Supports {@code @{style format}} syntax.
+   * @see StyleExpression
    */
   @Retention(RetentionPolicy.RUNTIME)
   @Target(ElementType.METHOD)

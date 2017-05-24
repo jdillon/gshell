@@ -122,9 +122,7 @@ public class Styler
       }
       log.debug("Using style: {} -> {}", styleName, style);
 
-      // TODO:
-      AttributedString result = null;
-      return result;
+      return new StyleExpression(source).evaluate(style, args);
     }
   }
 

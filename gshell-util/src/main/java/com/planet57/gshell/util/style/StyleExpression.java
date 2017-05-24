@@ -15,50 +15,41 @@
  */
 package com.planet57.gshell.util.style;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.jline.utils.AttributedString;
+import org.jline.utils.AttributedStringBuilder;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Factory to create styled strings.
+ * Provides {@code @{style format}} expression evaluation.
  *
  * @since 3.0
  */
-public class StyleFactory
+public class StyleExpression
 {
+  private static final Pattern PATTERN = Pattern.compile("\\@\\{([^}]+)\\}");
+
   private final StyleSource source;
 
-  private final String group;
-
-  public StyleFactory(final StyleSource source, final String group) {
+  public StyleExpression(final StyleSource source) {
     this.source = checkNotNull(source);
-    this.group = checkNotNull(group);
   }
 
-  /**
-   * Encode string with style expression.
-   *
-   * @see StyleExpression
-   */
-  public AttributedString style(final String expression, final Object... params) {
+  public AttributedString evaluate(final String expression, final Object... params) {
     checkNotNull(expression);
     checkNotNull(params);
     // params could be empty
 
-    // TODO:
-    return null;
-  }
+    String value = String.format(expression, params);
+    Matcher matcher = PATTERN.matcher(value);
+    AttributedStringBuilder buff = new AttributedStringBuilder();
+    while (matcher.find()) {
+      // TODO:
+    }
 
-  /**
-   * Encode string with style applying to formatted string.
-   */
-  public AttributedString style(final String style, final String format, final Object... params) {
-    checkNotNull(style);
-    checkNotNull(format);
-    checkNotNull(params);
-    // params could be empty
-
-    // TODO:
-    return null;
+    return buff.toAttributedString();
   }
 }

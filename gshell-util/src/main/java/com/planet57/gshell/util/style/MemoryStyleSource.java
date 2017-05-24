@@ -15,18 +15,31 @@
  */
 package com.planet57.gshell.util.style;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Nullable;
 
 /**
- * Provides the source of style configuration.
+ * In-memory {@link StyleSource}.
  *
  * @since 3.0
  */
-public interface StyleSource
+public class MemoryStyleSource
+  implements StyleSource
 {
+  private final Map<String,Map<String,String>> styles = new HashMap<>();
+
   /**
-   * Returns the appropriate style for the given style-group and style-name.
+   * Returns group mapping (or creating if missing) for given group-name.
    */
+  public Map<String,String> group(final String name) {
+    return styles.computeIfAbsent(name, k -> new HashMap<>());
+  }
+
   @Nullable
-  String get(String group, String name);
+  @Override
+  public String get(final String group, final String name) {
+    return group(group).get(name);
+  }
 }
