@@ -144,7 +144,7 @@ public class StyleResolver
   }
 
   /**
-   * Apply {@code <mode>:<color>} styles specification.
+   * Apply {@code <colore-mode>:<color-name>} styles specification.
    */
   private AttributedStyle applyColor(final AttributedStyle style, final String spec) {
     // extract color-mode:color-name
