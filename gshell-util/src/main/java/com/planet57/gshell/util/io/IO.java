@@ -100,6 +100,8 @@ public class IO
   // Output helpers; by default everything should use {@link #out}.
   //
 
+  // TODO: consider adding helpers for AttributedStringBuilder to automatically invoke toAnsi(terminal)
+
   /**
    * @since 3.0
    */
