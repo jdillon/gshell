@@ -44,11 +44,19 @@ public class StyleResolver
     this.group = checkNotNull(group);
   }
 
+  /**
+   * Resolve the given style specification.
+   *
+   * If for some reason the specification is invalid, then {@link AttributedStyle#DEFAULT} will be used.
+   */
   public AttributedStyle resolve(final String spec) {
     checkNotNull(spec);
     return apply(AttributedStyle.DEFAULT, spec);
   }
 
+  /**
+   * Apply style specification.
+   */
   private AttributedStyle apply(AttributedStyle style, final String spec) {
     for (String item : Splitter.on(',').omitEmptyStrings().trimResults().split(spec)) {
       if (item.startsWith(".")) {
@@ -65,6 +73,9 @@ public class StyleResolver
     return style;
   }
 
+  /**
+   * Apply source-referenced named style.
+   */
   private AttributedStyle applyReference(final AttributedStyle style, final String name) {
     if (name.length() == 1) {
       log.warn("Invalid style-reference; missing discriminator: {}", name);
@@ -72,6 +83,7 @@ public class StyleResolver
     else {
       String ref = name.substring(1, name.length());
       String spec = source.get(group, ref);
+      // TODO: this does not protect against circular styles references; beware
       if (spec == null) {
         log.warn("Missing style-reference: {}", ref);
       }
@@ -84,6 +96,9 @@ public class StyleResolver
     return style;
   }
 
+  /**
+   * Apply default named styles.
+   */
   private AttributedStyle applyNamed(final AttributedStyle style, final String name) {
     switch (name.toLowerCase(Locale.US)) {
       case "default":
@@ -127,6 +142,9 @@ public class StyleResolver
     }
   }
 
+  /**
+   * Apply {@code <mode>:<color>} styles specification.
+   */
   private AttributedStyle applyColor(final AttributedStyle style, final String spec) {
     // extract color-mode:color-name
     String[] parts = spec.split(":", 2);
@@ -156,6 +174,9 @@ public class StyleResolver
     return style;
   }
 
+  /**
+   * Returns the color identifier for the given name.
+   */
   @Nullable
   private static Integer color(final String name) {
     switch (name.toLowerCase(Locale.US)) {
