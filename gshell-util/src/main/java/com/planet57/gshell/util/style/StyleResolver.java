@@ -76,6 +76,8 @@ public class StyleResolver
 
   /**
    * Apply source-referenced named style.
+   *
+   * @param name Source reference: {@code .<discriminator>}.  {@code discriminator} is used to consult {@link StyleSource}.
    */
   private AttributedStyle applyReference(final AttributedStyle style, final String name) {
     if (name.length() == 1) {
@@ -144,7 +146,9 @@ public class StyleResolver
   }
 
   /**
-   * Apply {@code <colore-mode>:<color-name>} styles specification.
+   * Apply color styles specification.
+   *
+   * @param spec Color specification: {@code <color-mode>:<color-name>}
    */
   private AttributedStyle applyColor(final AttributedStyle style, final String spec) {
     // extract color-mode:color-name
@@ -205,6 +209,7 @@ public class StyleResolver
       case "white":
         return AttributedStyle.WHITE;
 
+      // FIXME: bright usage here may be invalid; do we need a flag to indicate bright color style?
       case "bright":
         return AttributedStyle.BRIGHT;
     }
