@@ -140,9 +140,11 @@ public class StyleResolver
     else {
       // resolve and apply color-mode
       switch (colorMode.toLowerCase(Locale.US)) {
+        case "foreground":
         case "fg":
           return style.foreground(color);
 
+        case "background":
         case "bg":
           return style.background(color);
 
