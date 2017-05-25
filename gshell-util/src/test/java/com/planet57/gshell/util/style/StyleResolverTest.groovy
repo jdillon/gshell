@@ -80,6 +80,12 @@ class StyleResolverTest
   }
 
   @Test
+  void 'resolve with missing values'() {
+    def style = underTest.resolve('bold,,,,,fg:red')
+    assert style == AttributedStyle.BOLD.foreground(AttributedStyle.RED)
+  }
+
+  @Test
   void 'resolve referenced style'() {
     source.group('test').put('.very-red', 'bold,fg:red')
     def style = underTest.resolve('.very-red')

@@ -72,7 +72,7 @@ public class StyleResolver
       return apply(style, spec);
     }
 
-    log.warn("Invalid style-reference: {}", name);
+    log.warn("Missing style-reference: {}", name);
     return style;
   }
 
