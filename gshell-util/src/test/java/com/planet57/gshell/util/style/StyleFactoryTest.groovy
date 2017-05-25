@@ -47,7 +47,7 @@ class StyleFactoryTest
 
   @Test
   void 'referenced style'() {
-    source.group('test').put('.very-red', 'bold,fg:red')
+    source.group('test').put('very-red', 'bold,fg:red')
     def string = underTest.style('.very-red', 'foo %s', 'bar')
     def style = AttributedStyle.BOLD.foreground(AttributedStyle.RED)
     assert string == new AttributedString('foo bar', style)

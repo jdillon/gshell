@@ -66,13 +66,20 @@ public class StyleResolver
   }
 
   private AttributedStyle applyReference(final AttributedStyle style, final String name) {
-    String spec = source.get(group, name);
-    if (spec != null) {
-      // FIXME: this could presently be an @{...} expression, which isn't valid here
-      return apply(style, spec);
+    if (name.length() == 1) {
+      log.warn("Invalid style-reference; missing discriminator: {}", name);
+    }
+    else {
+      String spec = source.get(group, name.substring(1, name.length()));
+      if (spec == null) {
+        log.warn("Missing style-reference: {}", name);
+      }
+      else {
+        // FIXME: this could presently be an @{...} expression, which isn't valid here
+        return apply(style, spec);
+      }
     }
 
-    log.warn("Missing style-reference: {}", name);
     return style;
   }
 
