@@ -62,8 +62,7 @@ public class StyleFactory
     // params could be empty
 
     String value = String.format(format, params);
-    String _style = source.get(group, style);
-    AttributedStyle astyle = resolver.resolve(_style);
+    AttributedStyle astyle = resolver.resolve(style);
     return new AttributedString(value, astyle);
   }
 }
