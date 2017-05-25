@@ -51,6 +51,7 @@ public class StyleResolver
    */
   public AttributedStyle resolve(final String spec) {
     checkNotNull(spec);
+    // apply style specification based on DEFAULT style
     return apply(AttributedStyle.DEFAULT, spec);
   }
 
