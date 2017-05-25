@@ -70,9 +70,10 @@ public class StyleResolver
       log.warn("Invalid style-reference; missing discriminator: {}", name);
     }
     else {
-      String spec = source.get(group, name.substring(1, name.length()));
+      String ref = name.substring(1, name.length());
+      String spec = source.get(group, ref);
       if (spec == null) {
-        log.warn("Missing style-reference: {}", name);
+        log.warn("Missing style-reference: {}", ref);
       }
       else {
         // FIXME: this could presently be an @{...} expression, which isn't valid here
