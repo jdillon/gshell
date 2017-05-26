@@ -48,6 +48,8 @@ public class StyleResolver
 
   // TODO: debug -> trace
 
+  // TODO: could consider a small cache to reduce style calculations?
+
   /**
    * Resolve the given style specification.
    *
