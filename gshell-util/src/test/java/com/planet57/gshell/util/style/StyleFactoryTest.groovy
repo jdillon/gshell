@@ -17,10 +17,12 @@ package com.planet57.gshell.util.style
 
 import org.sonatype.goodies.testsupport.TestSupport
 
+import com.planet57.gossip.Log
 import org.jline.utils.AttributedString
 import org.jline.utils.AttributedStyle
 import org.junit.Before
 import org.junit.Test
+import org.slf4j.LoggerFactory
 
 /**
  * Tests for {@link StyleFactory}.
@@ -34,6 +36,9 @@ class StyleFactoryTest
 
   @Before
   void setUp() {
+    // force bootstrap gossip logger to adapt to runtime logger-factory
+    Log.configure(LoggerFactory.getILoggerFactory())
+
     this.source = new MemoryStyleSource()
     this.underTest = new StyleFactory(source, 'test')
   }
@@ -50,6 +55,23 @@ class StyleFactoryTest
     source.group('test').put('very-red', 'bold,fg:red')
     def string = underTest.style('.very-red', 'foo %s', 'bar')
     def style = AttributedStyle.BOLD.foreground(AttributedStyle.RED)
+    assert string == new AttributedString('foo bar', style)
+  }
+
+  // FIXME: -: syntax doesn't work due to split being done before this gets handled
+
+  @Test
+  void 'missing referenced style with default'() {
+    def string = underTest.style('.very-red:-bold,fg:red', 'foo %s', 'bar')
+    def style = AttributedStyle.BOLD.foreground(AttributedStyle.RED)
+    assert string == new AttributedString('foo bar', style)
+  }
+
+  @Test
+  void 'missing referenced style with customized'() {
+    source.group('test').put('very-red', 'bold,fg:yellow')
+    def string = underTest.style('.very-red:-bold,fg:red', 'foo %s', 'bar')
+    def style = AttributedStyle.BOLD.foreground(AttributedStyle.YELLOW)
     assert string == new AttributedString('foo bar', style)
   }
 }

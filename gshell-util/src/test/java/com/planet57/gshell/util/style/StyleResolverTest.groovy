@@ -17,9 +17,11 @@ package com.planet57.gshell.util.style
 
 import org.sonatype.goodies.testsupport.TestSupport
 
+import com.planet57.gossip.Log
 import org.jline.utils.AttributedStyle
 import org.junit.Before
 import org.junit.Test
+import org.slf4j.LoggerFactory
 
 /**
  * Tests for {@link StyleResolver}.
@@ -33,6 +35,9 @@ class StyleResolverTest
 
   @Before
   void setUp() {
+    // force bootstrap gossip logger to adapt to runtime logger-factory
+    Log.configure(LoggerFactory.getILoggerFactory())
+
     this.source = new MemoryStyleSource()
     this.underTest = new StyleResolver(source, 'test')
   }
@@ -46,6 +51,12 @@ class StyleResolverTest
   @Test
   void 'resolve fg:red'() {
     def style = underTest.resolve('fg:red')
+    assert style == AttributedStyle.DEFAULT.foreground(AttributedStyle.RED)
+  }
+
+  @Test
+  void 'resolve fg:red with whitespace'() {
+    def style = underTest.resolve(' fg:  red ')
     assert style == AttributedStyle.DEFAULT.foreground(AttributedStyle.RED)
   }
 
@@ -89,6 +100,25 @@ class StyleResolverTest
   void 'resolve referenced style'() {
     source.group('test').put('very-red', 'bold,fg:red')
     def style = underTest.resolve('.very-red')
+    assert style == AttributedStyle.BOLD.foreground(AttributedStyle.RED)
+  }
+
+  @Test
+  void 'resolve referenced style-missing with default direct'() {
+    def style = underTest.resolve('.very-red:-bold,fg:red')
+    assert style == AttributedStyle.BOLD.foreground(AttributedStyle.RED)
+  }
+
+  @Test
+  void 'resolve referenced style-missing with default direct and whitespace'() {
+    def style = underTest.resolve('.very-red   :-   bold,fg:red')
+    assert style == AttributedStyle.BOLD.foreground(AttributedStyle.RED)
+  }
+
+  @Test
+  void 'resolve referenced style-missing with default referenced'() {
+    source.group('test').put('more-red', 'bold,fg:red')
+    def style = underTest.resolve('.very-red:-.more-red')
     assert style == AttributedStyle.BOLD.foreground(AttributedStyle.RED)
   }
 }

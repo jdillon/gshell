@@ -26,6 +26,8 @@ import org.slf4j.Logger;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+// TODO: document style specification
+
 /**
  * Resolves named (or source-referenced) {@link AttributedStyle}.
  *
@@ -44,6 +46,8 @@ public class StyleResolver
     this.group = checkNotNull(group);
   }
 
+  // TODO: debug -> trace
+
   /**
    * Resolve the given style specification.
    *
@@ -51,14 +55,41 @@ public class StyleResolver
    */
   public AttributedStyle resolve(final String spec) {
     checkNotNull(spec);
-    // apply style specification based on DEFAULT style
+
+    log.debug("Resolve: {}", spec);
+
+    int i = spec.indexOf(":-");
+    if (i != -1) {
+      String[] parts = spec.split(":-");
+      return resolve(parts[0].trim(), parts[1].trim());
+    }
+
     return apply(AttributedStyle.DEFAULT, spec);
+  }
+
+  /**
+   * Resolve the given style specification.
+   *
+   * If this resolves to {@link AttributedStyle#DEFAULT} then given default specification is used if non-null.
+   */
+  public AttributedStyle resolve(final String spec, @Nullable final String defaultSpec) {
+    checkNotNull(spec);
+
+    log.debug("Resolve: {}; default: {}", spec, defaultSpec);
+
+    AttributedStyle style = apply(AttributedStyle.DEFAULT, spec);
+    if (style == AttributedStyle.DEFAULT && defaultSpec != null) {
+      style = apply(style, defaultSpec);
+    }
+    return style;
   }
 
   /**
    * Apply style specification.
    */
   private AttributedStyle apply(AttributedStyle style, final String spec) {
+    log.debug("Apply: {}", spec);
+
     for (String item : Splitter.on(',').omitEmptyStrings().trimResults().split(spec)) {
       if (item.startsWith(".")) {
         style = applyReference(style, item);
@@ -76,23 +107,22 @@ public class StyleResolver
 
   /**
    * Apply source-referenced named style.
-   *
-   * @param name Source reference: {@code .<discriminator>}.  {@code discriminator} is used to consult {@link StyleSource}.
    */
-  private AttributedStyle applyReference(final AttributedStyle style, final String name) {
-    if (name.length() == 1) {
-      log.warn("Invalid style-reference; missing discriminator: {}", name);
+  private AttributedStyle applyReference(final AttributedStyle style, final String spec) {
+    log.debug("Apply-reference: {}", spec);
+
+    if (spec.length() == 1) {
+      log.warn("Invalid style-reference; missing discriminator: {}", spec);
     }
     else {
-      String ref = name.substring(1, name.length());
-      String spec = source.get(group, ref);
+      String name = spec.substring(1, spec.length());
+      String _spec = source.get(group, name);
       // TODO: this does not protect against circular styles references; beware
-      if (spec == null) {
-        log.warn("Missing style-reference: {}", ref);
+      if (_spec == null) {
+        log.warn("Missing style-reference: {}", name);
       }
       else {
-        // FIXME: this could presently be an @{...} expression, which isn't valid here
-        return apply(style, spec);
+        return apply(style, _spec);
       }
     }
 
@@ -103,6 +133,8 @@ public class StyleResolver
    * Apply default named styles.
    */
   private AttributedStyle applyNamed(final AttributedStyle style, final String name) {
+    log.debug("Apply-named: {}", name);
+
     switch (name.toLowerCase(Locale.US)) {
       case "default":
         return AttributedStyle.DEFAULT;
@@ -151,10 +183,12 @@ public class StyleResolver
    * @param spec Color specification: {@code <color-mode>:<color-name>}
    */
   private AttributedStyle applyColor(final AttributedStyle style, final String spec) {
+    log.debug("Apply-color: {}", spec);
+
     // extract color-mode:color-name
     String[] parts = spec.split(":", 2);
-    String colorMode = parts[0];
-    String colorName = parts[1];
+    String colorMode = parts[0].trim();
+    String colorName = parts[1].trim();
 
     // resolve the color-name
     Integer color = color(colorName);

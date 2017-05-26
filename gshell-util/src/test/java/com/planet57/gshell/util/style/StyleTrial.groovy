@@ -17,6 +17,7 @@ package com.planet57.gshell.util.style
 
 import org.sonatype.goodies.testsupport.TestSupport
 
+import com.planet57.gossip.Log
 import com.planet57.gshell.util.style.StyleBundle.DefaultStyle
 import com.planet57.gshell.util.style.StyleBundle.StyleGroup
 import com.planet57.gshell.util.style.StyleBundle.StyleName
@@ -25,6 +26,7 @@ import org.jline.utils.AttributedStringBuilder
 import org.jline.utils.AttributedStyle
 import org.junit.Before
 import org.junit.Test
+import org.slf4j.LoggerFactory
 
 /**
  * Various style trials.
@@ -36,6 +38,9 @@ class StyleTrial
 
   @Before
   void setUp() {
+    // force bootstrap gossip logger to adapt to runtime logger-factory
+    Log.configure(LoggerFactory.getILoggerFactory())
+
     this.source = new MemoryStyleSource()
     Styler.source = source
   }
