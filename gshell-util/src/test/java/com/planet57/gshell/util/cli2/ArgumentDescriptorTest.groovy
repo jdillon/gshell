@@ -17,6 +17,8 @@ package com.planet57.gshell.util.cli2
 
 import java.lang.annotation.Annotation
 
+import javax.annotation.Nullable
+
 import org.sonatype.goodies.testsupport.TestSupport
 
 import com.planet57.gossip.Log
@@ -36,9 +38,8 @@ class ArgumentDescriptorTest
     Log.configure(LoggerFactory.getILoggerFactory())
   }
 
-  @Test
-  void 'test render-syntax with default token'() {
-    def desc = new Argument() {
+  private static Argument createArgumentWithToken(@Nullable final String token) {
+    return new Argument() {
       @Override
       int index() {
         return 0
@@ -46,7 +47,7 @@ class ArgumentDescriptorTest
 
       @Override
       String token() {
-        return null
+        return token
       }
 
       @Override
@@ -69,43 +70,18 @@ class ArgumentDescriptorTest
         return null
       }
     }
+  }
+
+  @Test
+  void 'test render-syntax with default token'() {
+    def desc = createArgumentWithToken(null)
     def underTest = new ArgumentDescriptor(desc, new NopSetter())
     assert underTest.getToken() == 'ARG'
   }
 
   @Test
   void 'test render-syntax with specified token'() {
-    def desc = new Argument() {
-      @Override
-      int index() {
-        return 0
-      }
-
-      @Override
-      String token() {
-        return 'FOO'
-      }
-
-      @Override
-      boolean required() {
-        return false
-      }
-
-      @Override
-      String description() {
-        return null
-      }
-
-      @Override
-      Class<? extends Handler> handler() {
-        return null
-      }
-
-      @Override
-      Class<? extends Annotation> annotationType() {
-        return null
-      }
-    }
+    def desc = createArgumentWithToken('FOO')
     def underTest = new ArgumentDescriptor(desc, new NopSetter())
     assert underTest.getToken() == 'FOO'
   }
