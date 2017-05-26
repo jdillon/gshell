@@ -31,9 +31,22 @@
   <name>${project.groupId}:${project.artifactId}</name>
 
   <dependencies>
+    <!--
+    HACK: specifically NOT using gshell-testsupport here as it pollutes the desired logback-test.xml needed for the harness.
+    -->
+    <!--<dependency>-->
+    <!--<groupId>com.planet57.gshell</groupId>-->
+    <!--<artifactId>gshell-testsupport</artifactId>-->
+    <!--</dependency>-->
+
     <dependency>
-      <groupId>com.planet57.gshell</groupId>
-      <artifactId>gshell-testsupport</artifactId>
+      <groupId>org.sonatype.goodies</groupId>
+      <artifactId>goodies-testsupport</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.codehaus.groovy</groupId>
+      <artifactId>groovy-all</artifactId>
     </dependency>
 
     <dependency>
