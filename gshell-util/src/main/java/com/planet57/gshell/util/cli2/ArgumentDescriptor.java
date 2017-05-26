@@ -18,6 +18,7 @@ package com.planet57.gshell.util.cli2;
 import com.planet57.gshell.util.setter.Setter;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -45,14 +46,19 @@ public class ArgumentDescriptor
     return spec.index();
   }
 
+  @Nullable
   @Override
-  public String getSyntax() {
-    String tmp = getToken();
-    if (!UNINITIALIZED_STRING.equals(tmp) && tmp.length() != 0) {
-      return tmp;
+  public String getToken() {
+    String token = super.getToken();
+    if (token == null) {
+      return "ARG";
     }
+    return token;
+  }
 
-    return "ARG";
+  @Override
+  public String renderSyntax() {
+    return getToken();
   }
 
   @Override
