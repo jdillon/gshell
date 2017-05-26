@@ -44,13 +44,13 @@ public class StyleFactory
    *
    * @see StyleExpression
    */
-  public AttributedString style(final String expression, final Object... params) {
-    checkNotNull(expression);
-    checkNotNull(params);
-    // params could be empty
-
-    return new StyleExpression(source, group).evaluate(expression, params);
-  }
+  //public AttributedString style(final String expression, final Object... params) {
+  //  checkNotNull(expression);
+  //  checkNotNull(params);
+  //  // params could be empty
+  //
+  //  return new StyleExpression(source, group).evaluate(expression, params);
+  //}
 
   /**
    * Encode string with style applying to formatted string.

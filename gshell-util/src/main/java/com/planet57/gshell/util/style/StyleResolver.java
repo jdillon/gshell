@@ -119,7 +119,8 @@ public class StyleResolver
       String _spec = source.get(group, name);
       // TODO: this does not protect against circular styles references; beware
       if (_spec == null) {
-        log.warn("Missing style-reference: {}", name);
+        // debug here instead of warn, this is normal
+        log.debug("Missing style-reference: {}", name);
       }
       else {
         return apply(style, _spec);
