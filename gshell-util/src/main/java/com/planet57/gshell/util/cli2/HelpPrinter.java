@@ -19,6 +19,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.common.base.Strings;
 import com.planet57.gshell.util.i18n.AggregateMessageSource;
 import com.planet57.gshell.util.i18n.MessageSource;
 import com.planet57.gshell.util.i18n.I18N;
@@ -239,8 +240,6 @@ public class HelpPrinter
   private void indent(final PrintWriter out, int i) {
     assert out != null;
 
-    for (; i > 0; i--) {
-      out.print(' ');
-    }
+    out.print(Strings.repeat(" ", i));
   }
 }

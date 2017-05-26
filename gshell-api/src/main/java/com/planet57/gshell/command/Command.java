@@ -42,4 +42,6 @@ public @interface Command
    * @since 3.0
    */
   String description() default UNINITIALIZED_STRING;
+
+  // TODO: consider adding syntax() to allow command to expose a more detailed syntax summary
 }
