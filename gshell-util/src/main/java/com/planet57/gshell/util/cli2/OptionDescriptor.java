@@ -103,7 +103,9 @@ public class OptionDescriptor
     return spec.override();
   }
 
-  @Override
+  /**
+   * Returns the option syntax, sans optional token if option takes an argument.
+   */
   public String getSyntax() {
     if (name != null && longName != null) {
       return String.format("-%s (--%s)", name, longName);
@@ -115,6 +117,16 @@ public class OptionDescriptor
       return String.format("--%s", longName);
     }
     throw new Error();
+  }
+
+  @Override
+  public String renderSyntax() {
+    String result = getSyntax();
+    String token = getToken();
+    if (token != null) {
+      result += " " + token;
+    }
+    return result;
   }
 
   @Override

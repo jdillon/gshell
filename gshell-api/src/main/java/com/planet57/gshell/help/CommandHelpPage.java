@@ -140,7 +140,7 @@ public class CommandHelpPage
 
       PrintBuffer buff = new PrintBuffer();
       printHeader(buff, CommandHelpPage.messages.arguments());
-      printer.printArguments(buff, clp.getArgumentDescriptors());
+      printer.printDescriptors(buff, clp.getArgumentDescriptors());
 
       return buff.toString();
     }
@@ -152,7 +152,7 @@ public class CommandHelpPage
 
       PrintBuffer buff = new PrintBuffer();
       printHeader(buff, CommandHelpPage.messages.options());
-      printer.printOptions(buff, clp.getOptionDescriptors());
+      printer.printDescriptors(buff, clp.getOptionDescriptors());
 
       return buff.toString();
     }

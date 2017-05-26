@@ -112,18 +112,5 @@ public abstract class CliDescriptor
     return this instanceof OptionDescriptor;
   }
 
-  public abstract String getSyntax();
-
-  public String renderSyntax() {
-    String str = isArgument() ? "" : getSyntax();
-
-    if (!UNINITIALIZED_STRING.equals(token)) {
-      if (str.length() > 0) {
-        str += " ";
-      }
-      str += token;
-    }
-
-    return str;
-  }
+  public abstract String renderSyntax();
 }
