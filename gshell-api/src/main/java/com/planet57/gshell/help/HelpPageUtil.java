@@ -45,7 +45,7 @@ public class HelpPageUtil
     checkArgument(!pages.isEmpty(), "No help pages to render index");
 
     // construct a printf format with sizing for showing columns
-    int max = pages.stream().mapToInt(page -> page.getName().length()).max().getAsInt();
+    int max = pages.stream().mapToInt(page -> page.getName().length()).max().orElse(0);
     String nameFormat = "%-" + max + 's';
 
     for (HelpPage page : pages) {

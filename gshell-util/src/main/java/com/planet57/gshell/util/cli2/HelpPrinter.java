@@ -129,27 +129,15 @@ public class HelpPrinter
       out.println();
     }
 
-    // Compute the maximum length of the syntax column
-    int len = 0;
-
-    for (ArgumentDescriptor arg : arguments) {
-      len = Math.max(len, arg.renderSyntax().length());
-    }
-
-    for (OptionDescriptor opt : options) {
-      len = Math.max(len, opt.renderSyntax().length());
-    }
-
-    // And then render usage
     if (!arguments.isEmpty()) {
       out.println(messages.argumentsHeader());
-      printArguments(out, arguments, len);
+      printDescriptors(out, arguments);
       out.println();
     }
 
     if (!options.isEmpty()) {
       out.println(messages.optionsHeader());
-      printOptions(out, options, len);
+      printDescriptors(out, options);
       out.println();
     }
 
@@ -157,45 +145,15 @@ public class HelpPrinter
   }
 
   /**
-   * @since 2.4
+   * @since 3.0
    */
-  private void printArguments(final PrintWriter out, final List<ArgumentDescriptor> arguments, final int len) {
-    for (ArgumentDescriptor arg : arguments) {
-      printDescriptor(out, arg, len);
-    }
-  }
+  public void printDescriptors(final PrintWriter out, final List<? extends CliDescriptor> descriptors) {
+    checkNotNull(out);
+    checkNotNull(descriptors);
+    checkArgument(!descriptors.isEmpty());
 
-  /**
-   * @since 2.4
-   */
-  public void printArguments(final PrintWriter out, final List<ArgumentDescriptor> arguments) {
-    int len = 0;
-    for (ArgumentDescriptor arg : arguments) {
-      len = Math.max(len, arg.renderSyntax().length());
-    }
-
-    printArguments(out, arguments, len);
-  }
-
-  /**
-   * @since 2.4
-   */
-  private void printOptions(final PrintWriter out, final List<OptionDescriptor> options, final int len) {
-    for (OptionDescriptor opt : options) {
-      printDescriptor(out, opt, len);
-    }
-  }
-
-  /**
-   * @since 2.4
-   */
-  public void printOptions(final PrintWriter out, final List<OptionDescriptor> options) {
-    int len = 0;
-    for (OptionDescriptor opt : options) {
-      len = Math.max(len, opt.renderSyntax().length());
-    }
-
-    printOptions(out, options, len);
+    int len = descriptors.stream().mapToInt(desc -> desc.renderSyntax().length()).max().orElse(0);
+    descriptors.forEach(desc -> printDescriptor(out, desc, len));
   }
 
   private void printDescriptor(final PrintWriter out, final CliDescriptor desc, final int len) {
@@ -237,9 +195,7 @@ public class HelpPrinter
     out.println(buff);
   }
 
-  private void indent(final PrintWriter out, int i) {
-    assert out != null;
-
+  private static void indent(final PrintWriter out, int i) {
     out.print(Strings.repeat(" ", i));
   }
 }

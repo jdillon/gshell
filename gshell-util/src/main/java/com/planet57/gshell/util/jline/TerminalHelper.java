@@ -47,7 +47,7 @@ public class TerminalHelper
     List<AttributedString> strings = values.map(AttributedString::fromAnsi).collect(Collectors.toList());
 
     if (!strings.isEmpty()) {
-      int max = strings.stream().mapToInt(AttributedString::columnLength).max().getAsInt();
+      int max = strings.stream().mapToInt(AttributedString::columnLength).max().orElse(0);
       int c = Math.max(1, width / max);
       while (c > 1 && c * max + (c - 1) >= width) {
         c--;

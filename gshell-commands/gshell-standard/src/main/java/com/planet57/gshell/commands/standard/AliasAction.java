@@ -112,7 +112,7 @@ public class AliasAction
       io.println(messages.definedAliases());
 
       // find the maximum length of all alias names
-      int maxNameLen = aliases.keySet().stream().mapToInt(String::length).max().getAsInt();
+      int maxNameLen = aliases.keySet().stream().mapToInt(String::length).max().orElse(0);
       String nameFormat = "%-" + maxNameLen + 's';
 
       aliases.forEach((key, value) -> {
