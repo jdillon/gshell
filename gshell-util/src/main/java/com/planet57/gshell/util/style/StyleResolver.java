@@ -118,15 +118,11 @@ public class StyleResolver
     }
     else {
       String name = spec.substring(1, spec.length());
-      String _spec = source.get(group, name);
-      // TODO: this does not protect against circular styles references; beware
-      if (_spec == null) {
-        // debug here instead of warn, this is normal
-        log.debug("Missing style-reference: {}", name);
+      String resolvedSpec = source.get(group, name);
+      if (resolvedSpec != null) {
+        return apply(style, resolvedSpec);
       }
-      else {
-        return apply(style, _spec);
-      }
+      // null is normal if source has not be configured with named style
     }
 
     return style;
