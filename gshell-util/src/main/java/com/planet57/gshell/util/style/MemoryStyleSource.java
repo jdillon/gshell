@@ -20,6 +20,9 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
+import com.planet57.gossip.Log;
+import org.slf4j.Logger;
+
 /**
  * In-memory {@link StyleSource}.
  *
@@ -28,6 +31,8 @@ import javax.annotation.Nullable;
 public class MemoryStyleSource
   implements StyleSource
 {
+  private static final Logger log = Log.getLogger(MemoryStyleSource.class);
+
   private final Map<String,Map<String,String>> styles = new HashMap<>();
 
   /**
@@ -40,6 +45,8 @@ public class MemoryStyleSource
   @Nullable
   @Override
   public String get(final String group, final String name) {
-    return group(group).get(name);
+    String result = group(group).get(name);
+    log.debug("Get: {}={} -> {}", group, name, result);
+    return result;
   }
 }
