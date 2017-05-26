@@ -19,8 +19,11 @@ import java.lang.annotation.Annotation
 
 import org.sonatype.goodies.testsupport.TestSupport
 
+import com.planet57.gossip.Log
 import com.planet57.gshell.util.cli2.handler.Handler
+import org.junit.Before
 import org.junit.Test
+import org.slf4j.LoggerFactory
 
 /**
  * Tests for {@link ArgumentDescriptor}.
@@ -28,6 +31,11 @@ import org.junit.Test
 class ArgumentDescriptorTest
   extends TestSupport
 {
+  @Before
+  void setUp() {
+    Log.configure(LoggerFactory.getILoggerFactory())
+  }
+
   @Test
   void 'test render-syntax with default token'() {
     def desc = new Argument() {
