@@ -27,6 +27,7 @@ import com.planet57.gshell.util.style.StyleBundle.DefaultStyle;
 import com.planet57.gshell.util.style.StyleBundle.StyleGroup;
 import com.planet57.gshell.util.style.StyleBundle.StyleName;
 import org.jline.utils.AttributedString;
+import org.jline.utils.AttributedStyle;
 import org.slf4j.Logger;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -94,8 +95,11 @@ public class Styler
   {
     private final String group;
 
+    private final StyleResolver resolver;
+
     public Handler(final String group) {
       this.group = checkNotNull(group);
+      this.resolver = new StyleResolver(source, group);
     }
 
     @Override
@@ -105,9 +109,14 @@ public class Styler
         return method.invoke(this, args);
       }
 
+      // All StyleBundle methods must take exactly 1 parameter
+      if (method.getParameterCount() != 1) {
+        throw new RuntimeException("Illegal StyleBundle method; invalid parameters: " + method);
+      }
+
       // All StyleBundle methods must return an AttributeString
       if (method.getReturnType() != AttributedString.class) {
-        throw new Error("Illegal StyleBundle method: " + method);
+        throw new RuntimeException("Illegal StyleBundle method; invalid return-type: " + method);
       }
 
       // resolve the style-name for method
@@ -115,14 +124,19 @@ public class Styler
 
       // resolve the sourced-style, or use the default
       String style = source.get(group, styleName);
+      log.debug("Sourced-style: {} -> {}", styleName, style);
+
       if (style == null) {
         style = getDefaultStyle(method);
         // if sourced-style was missing and default-style is missing complain
         checkState(style != null, "Style-bundle method missing @DefaultStyle: %s", method);
       }
-      log.debug("Using style: {} -> {}", styleName, style);
 
-      return new StyleExpression(source, group).evaluate(style, args);
+      String value  = String.valueOf(args[0]);
+      log.debug("Applying style: {} -> {} to: {}", styleName, style, value);
+
+      AttributedStyle astyle = resolver.resolve(style);
+      return new AttributedString(value, astyle);
     }
   }
 
