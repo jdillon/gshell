@@ -18,7 +18,7 @@ package com.planet57.gshell.testharness;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import com.planet57.gshell.command.IO;
+import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.util.io.StreamSet;
 import org.jline.terminal.Terminal;
 import org.slf4j.Logger;

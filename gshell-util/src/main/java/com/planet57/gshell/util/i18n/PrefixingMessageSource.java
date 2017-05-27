@@ -20,7 +20,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * A message source which prefixes message codes.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 public class PrefixingMessageSource

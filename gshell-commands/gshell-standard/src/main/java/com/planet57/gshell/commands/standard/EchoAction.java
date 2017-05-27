@@ -20,7 +20,7 @@ import java.util.List;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.IO;
+import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
@@ -33,7 +33,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Print all arguments to the commands standard output.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
 @Command(name = "echo", description = "Print arguments to standard output")
@@ -57,15 +56,15 @@ public class EchoAction
       Iterator iter = args.iterator();
 
       while (iter.hasNext()) {
-        io.out.print(iter.next());
+        io.print(iter.next());
         if (iter.hasNext()) {
-          io.out.print(" ");
+          io.print(" ");
         }
       }
     }
 
     if (!noTrailingNewline) {
-      io.out.println();
+      io.println();
     }
 
     return null;

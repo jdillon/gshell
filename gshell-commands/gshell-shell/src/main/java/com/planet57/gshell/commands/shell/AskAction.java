@@ -23,13 +23,11 @@ import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
-import org.jline.reader.LineReader;
-import org.jline.reader.LineReaderBuilder;
+import com.planet57.gshell.util.io.PromptHelper;
 
 /**
  * Ask for some input.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Command(name = "ask", description = "Ask for some input")
@@ -49,17 +47,14 @@ public class AskAction
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    // TODO: look into if there is a better way to do this to create a light-weight LineReader
-    LineReader lineReader = LineReaderBuilder.builder()
-      .terminal(context.getIo().terminal)
-      .build();
+    PromptHelper promptHelper = new PromptHelper(context.getIo().terminal);
 
     String input;
     if (mask != null) {
-      input = lineReader.readLine(prompt, mask);
+      input = promptHelper.readLine(prompt, mask);
     }
     else {
-      input = lineReader.readLine(prompt);
+      input = promptHelper.readLine(prompt);
     }
     log.debug("Read input: {}", input);
 

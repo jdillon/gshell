@@ -18,23 +18,18 @@ package com.planet57.gshell.commands.standard;
 import java.util.List;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.inject.Named;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
+import com.planet57.gshell.util.jline.Complete;
 import com.planet57.gshell.variables.Variables;
-import org.jline.reader.Completer;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Unset a variable or property.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
 @Command(name = "unset", description = "Unset a variable or property")
@@ -45,45 +40,27 @@ public class UnsetAction
   private SetAction.Mode mode = SetAction.Mode.VARIABLE;
 
   @Argument(required = true, description = "Variable name", token = "NAME")
+  @Complete("variable-name")
   private List<String> args;
-
-  @Inject
-  public UnsetAction installCompleters(@Named("variable-name") final Completer c1) {
-    checkNotNull(c1);
-    setCompleters(c1, null);
-    return this;
-  }
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     Variables variables = context.getVariables();
 
-    for (String arg : args) {
-      String name = String.valueOf(arg);
-
+    for (String name : args) {
       switch (mode) {
         case PROPERTY:
-          unsetProperty(name);
+          log.debug("Un-setting system property: {}", name);
+          System.getProperties().remove(name);
           break;
 
         case VARIABLE:
-          unsetVariable(variables, name);
+          log.debug("Un-setting variable: {}", name);
+          variables.unset(name);
           break;
       }
     }
 
     return null;
-  }
-
-  private void unsetProperty(final String name) {
-    log.debug("Un-setting system property: {}", name);
-
-    System.getProperties().remove(name);
-  }
-
-  private void unsetVariable(final Variables vars, final String name) {
-    log.debug("Un-setting variable: {}", name);
-
-    vars.unset(name);
   }
 }

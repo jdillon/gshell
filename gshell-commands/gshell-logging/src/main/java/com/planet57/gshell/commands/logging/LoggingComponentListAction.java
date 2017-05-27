@@ -20,14 +20,13 @@ import javax.annotation.Nullable;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.IO;
+import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.logging.LoggingComponent;
 import com.planet57.gshell.util.cli2.Option;
 
 /**
  * List components.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
 @Command(name = "logging/components", description = "List logging components")
@@ -52,9 +51,9 @@ public class LoggingComponentListAction
     for (LoggingComponent component : getLogging().getComponents()) {
       if ((typeQuery == null || component.getType().contains(typeQuery)) &&
           (nameQuery == null || component.getName().contains(nameQuery))) {
-        io.out.println(component);
+        io.println(component);
         if (verbose) {
-          io.out.printf("  %s%n", component.getTarget());
+          io.format("  %s%n", component.getTarget());
         }
       }
     }

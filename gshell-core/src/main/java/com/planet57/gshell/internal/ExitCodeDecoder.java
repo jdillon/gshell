@@ -35,7 +35,10 @@ public class ExitCodeDecoder
   }
 
   public static int decode(@Nullable final Object result) {
-    log.debug("Decoding: {}", result);
+    // show 'null' when result is null in logs instead of {}
+    if (log.isDebugEnabled()) {
+      log.debug("Decoding: {}", String.valueOf(result));
+    }
 
     if (result instanceof ExitNotification) {
       return ((ExitNotification)result).code;

@@ -16,6 +16,8 @@
 package com.planet57.gshell.commands.file
 
 import com.planet57.gshell.testharness.CommandTestSupport
+import com.planet57.gshell.util.io.FileAssert
+import org.junit.Test
 
 /**
  * Tests for {@link DeleteFileAction}.
@@ -25,5 +27,31 @@ class DeleteFileActionTest
 {
   DeleteFileActionTest() {
     super(DeleteFileAction.class)
+  }
+
+  @Test
+  void 'delete file'() {
+    File file = util.createTempFile('delete-file')
+    assert file.exists()
+    assert executeCommand(file.path) == null
+    assert !file.exists()
+  }
+
+  @Test
+  void 'delete directory recursive'() {
+    File dir = util.createTempDir('delete-file')
+    10.times {
+      new File(dir, "child${it}.txt").text = System.currentTimeMillis() as String
+    }
+    assert dir.exists()
+    assert executeCommand('-r', dir.path) == null
+    assert !dir.exists()
+  }
+
+  @Test(expected = FileAssert.AssertionException.class)
+  void 'delete directory non-recursive fails'() {
+    File dir = util.createTempDir('delete-file')
+    assert dir.exists()
+    executeCommand(dir.path)
   }
 }

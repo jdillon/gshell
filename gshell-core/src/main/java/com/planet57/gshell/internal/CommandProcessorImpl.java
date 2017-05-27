@@ -16,11 +16,10 @@
 package com.planet57.gshell.internal;
 
 import com.planet57.gshell.alias.AliasRegistry;
-import com.planet57.gshell.alias.NoSuchAliasException;
-import com.planet57.gshell.command.ExecuteAliasAction;
 import com.planet57.gshell.command.CommandAction;
-import com.planet57.gshell.command.resolver.CommandResolver;
-import com.planet57.gshell.command.resolver.Node;
+import com.planet57.gshell.command.CommandResolver;
+import com.planet57.gshell.command.Node;
+import com.planet57.gshell.functions.FunctionSet;
 import org.apache.felix.service.command.CommandProcessor;
 import org.apache.felix.service.command.Function;
 import org.apache.felix.service.threadio.ThreadIO;
@@ -32,9 +31,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import java.util.Arrays;
-
-import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -62,48 +58,71 @@ public class CommandProcessorImpl
     this.resolver = checkNotNull(resolver);
   }
 
+  @Nullable
   @Override
-  protected Function getCommand(final String name, final Object path) {
+  protected Function getCommand(final String name, @Nullable final Object path) {
     assert name != null;
-    // ignore path (ie. gogo scope)
 
-    CommandAction action = null;
-    if (aliases.containsAlias(name)) {
-      try {
-        action = new ExecuteAliasAction(name, aliases.getAlias(name));
-      }
-      catch (NoSuchAliasException e) {
-        // should never happen
-        throw new Error();
-      }
-    }
-    else {
-      Node node = resolver.resolve(name);
-      if (node != null) {
-        action = node.getAction();
-      }
+    // gogo commands resolve with "*:" syntax; if colon missing skip
+    int colon = name.indexOf(':');
+    if (colon < 0) {
+      return null;
     }
 
+    // strip off colon for resolution of gshell command actions
+    CommandAction action = lookupAction(name.substring(colon + 1));
     if (action != null) {
-      if (action instanceof CommandAction.Prototype) {
-        action = ((CommandAction.Prototype)action).create();
-      }
-
       return new CommandActionFunction(action);
     }
 
     return super.getCommand(name, path);
   }
 
+  @Nullable
+  private CommandAction lookupAction(final String name) {
+    log.debug("Lookup action: {}", name);
+
+    CommandAction action = null;
+
+    // first attempt to resolve alias
+    try {
+      String target = aliases.getAlias(name);
+      action = new ExecuteAliasAction(name, target);
+    }
+    catch (AliasRegistry.NoSuchAliasException e) {
+      // ignore
+    }
+
+    // then attempt to resolve node
+    if (action == null) {
+      Node node = resolver.resolve(name);
+      if (node != null) {
+        action = node.getAction();
+      }
+    }
+
+    return action;
+  }
+
   // TODO: consider how we want to generally cope with functions and the registry
 
-  public void registerFunction(final Object target, final String... functions) {
-    checkNotNull(target);
+  public void addFunctions(final FunctionSet functions) {
     checkNotNull(functions);
-    checkArgument(functions.length > 0);
+    log.debug("Adding functions: {}", functions);
 
-    Arrays.stream(functions).forEach(function -> {
-      addCommand(null, target, function);
-    });
+    Object target = functions.target();
+    for (String name : functions.names()) {
+      addCommand(null, target, name);
+    }
+  }
+
+  public void removeFunctions(final FunctionSet functions) {
+    checkNotNull(functions);
+    log.debug("Removing functions: {}", functions);
+
+    Object target = functions.target();
+    for (String name : functions.names()) {
+      removeCommand(null, name, target);
+    }
   }
 }

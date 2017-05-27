@@ -26,4 +26,6 @@ class ClearActionTest
   ClearActionTest() {
     super(ClearAction.class)
   }
+
+  // FIXME: add tests
 }

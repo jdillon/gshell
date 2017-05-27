@@ -32,8 +32,15 @@
 
   <dependencies>
     <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
+      <groupId>com.planet57.gshell</groupId>
+      <artifactId>gshell-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.planet57.gshell</groupId>
+      <artifactId>gshell-testharness</artifactId>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 

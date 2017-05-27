@@ -58,31 +58,52 @@
 
     <dependency>
       <groupId>com.planet57.gshell.commands</groupId>
+      <artifactId>gshell-jline</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.planet57.gshell.commands</groupId>
       <artifactId>gshell-file</artifactId>
     </dependency>
 
     <dependency>
       <groupId>com.planet57.gshell.commands</groupId>
-      <artifactId>gshell-logging</artifactId>
+      <artifactId>gshell-artifact</artifactId>
     </dependency>
 
     <dependency>
       <groupId>com.planet57.gshell.commands</groupId>
-      <artifactId>gshell-shell</artifactId>
+      <artifactId>gshell-plugin</artifactId>
     </dependency>
 
-    <dependency>
-      <groupId>com.planet57.gshell.commands</groupId>
-      <artifactId>gshell-script</artifactId>
-    </dependency>
+    <!--
+    TODO: removed for plugin testing
+    -->
 
-    <dependency>
-      <groupId>com.planet57.gshell.commands</groupId>
-      <artifactId>gshell-pref</artifactId>
-    </dependency>
+    <!--<dependency>-->
+      <!--<groupId>com.planet57.gshell.commands</groupId>-->
+      <!--<artifactId>gshell-logging</artifactId>-->
+    <!--</dependency>-->
+
+    <!--<dependency>-->
+      <!--<groupId>com.planet57.gshell.commands</groupId>-->
+      <!--<artifactId>gshell-shell</artifactId>-->
+    <!--</dependency>-->
+
+    <!--<dependency>-->
+      <!--<groupId>com.planet57.gshell.commands</groupId>-->
+      <!--<artifactId>gshell-script</artifactId>-->
+    <!--</dependency>-->
+
+    <!--<dependency>-->
+      <!--<groupId>com.planet57.gshell.commands</groupId>-->
+      <!--<artifactId>gshell-pref</artifactId>-->
+    <!--</dependency>-->
   </dependencies>
 
   <build>
+    <finalName>gshell-${project.version}</finalName>
+
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -94,8 +115,7 @@
               <goal>single</goal>
             </goals>
             <configuration>
-              <finalName>gshell-${project.version}</finalName>
-              <tarLongFileMode>gnu</tarLongFileMode>
+              <tarLongFileMode>posix</tarLongFileMode>
               <descriptors>
                 <descriptor>src/main/assembly/bin.xml</descriptor>
               </descriptors>

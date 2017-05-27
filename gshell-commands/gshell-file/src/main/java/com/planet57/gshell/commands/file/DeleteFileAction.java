@@ -18,23 +18,18 @@ package com.planet57.gshell.commands.file;
 import java.io.File;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.inject.Named;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.io.FileAssert;
 import com.planet57.gshell.util.cli2.Argument;
-import org.apache.commons.io.FileUtils;
-import org.jline.reader.Completer;
-
-import static com.google.common.base.Preconditions.checkNotNull;
+import com.planet57.gshell.util.io.FileSystemAccess;
+import com.planet57.gshell.util.jline.Complete;
 
 /**
  * Remove a file.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Command(name = "rm", description = "Remove a file")
@@ -42,6 +37,7 @@ public class DeleteFileAction
     extends FileCommandActionSupport
 {
   @Argument(required = true, description = "The path of the file remove", token = "PATH")
+  @Complete("file-name")
   private String path;
 
   /**
@@ -50,30 +46,22 @@ public class DeleteFileAction
   @Option(name = "r", longName = "recursive", description = "Remove directories and their contents recursively")
   private boolean recursive;
 
-  @Inject
-  public DeleteFileAction installCompleters(final @Named("file-name") Completer c1) {
-    checkNotNull(c1);
-    setCompleters(c1, null);
-    return this;
-  }
-
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    File file = getFileSystem().resolveFile(path);
+    FileSystemAccess fs = getFileSystem();
+    File file = fs.resolveFile(path);
 
     new FileAssert(file).exists();
 
     if (recursive) {
       log.debug("Deleting directory: {}", file);
       new FileAssert((file)).isDirectory();
-      FileUtils.deleteDirectory(file);
+      fs.deleteDirectory(file);
     }
     else {
       log.debug("Deleting file: {}", file);
       new FileAssert(file).isFile();
-      if (!file.delete()) {
-        throw new RuntimeException(String.format("Failed to remove file: %s", file));
-      }
+      fs.deleteFile(file);
     }
 
     return null;

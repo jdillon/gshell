@@ -40,42 +40,34 @@ class SetActionTest
   @Test
   void 'define variable'() {
     assert !variables.contains('foo')
-    Object result = executeCommand('foo bar')
-    assert result == null
+    assert executeCommand('foo bar') == null
 
     assert variables.contains('foo')
-    Object value = variables.get('foo')
-    assert value == 'bar'
+    assert variables.get('foo') == 'bar'
   }
 
   @Test
   void 'redefine variable'() {
     assert !variables.contains('foo')
-    Object result = executeCommand('foo bar')
-    assert result == null
+    assert executeCommand('foo bar') == null
 
     assert variables.contains('foo')
-    Object value = variables.get('foo')
-    assert value == 'bar'
-
+    assert variables.get('foo') == 'bar'
     assert variables.contains('foo')
 
-    result = executeCommand('foo baz')
-    assert result == null
+    assert executeCommand('foo baz') == null
 
     assert variables.contains('foo')
-    value = variables.get('foo')
-    assert value == 'baz'
+    assert variables.get('foo') == 'baz'
   }
 
   @Test
   void 'define variable with expression'() {
     assert !variables.contains('foo')
-    Object result = executeCommand('foo ${shell.home}')
-    assert result == null
+    assert executeCommand('foo ${shell.home}') == null
 
     assert variables.contains('foo')
-    Object value = variables.get('foo')
+    def value = variables.get('foo')
     assert variables.get('shell.home', String.class) == value
   }
 }

@@ -15,15 +15,28 @@
  */
 package com.planet57.gshell.commands.pref
 
-import com.planet57.gshell.testharness.CommandTestSupport
+import org.junit.Ignore
+import org.junit.Test
 
 /**
  * Tests for {@link RemovePreferencesAction}.
  */
 class RemovePreferencesActionTest
-    extends CommandTestSupport
+    extends PreferenceActionTestSupport
 {
   RemovePreferencesActionTest() {
     super(RemovePreferencesAction.class)
+  }
+
+  @Test
+  @Ignore("FIXME: pref/remove does not quite work as expected")
+  void 'remove user preference'() {
+    def root = userRoot()
+    def node = root.node(PATH)
+    node.put('foo', 'bar')
+    node.sync()
+
+    assert executeCommand(PATH) == null
+    assert !root.nodeExists(PATH)
   }
 }

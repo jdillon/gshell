@@ -26,4 +26,6 @@ class DateActionTest
   DateActionTest() {
     super(DateAction.class)
   }
+
+  // FIXME: add tests
 }

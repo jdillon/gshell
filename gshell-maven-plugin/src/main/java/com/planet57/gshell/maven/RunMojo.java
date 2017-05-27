@@ -22,8 +22,9 @@ import com.planet57.gshell.branding.Asl2License;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.branding.BrandingSupport;
 import com.planet57.gshell.branding.License;
-import com.planet57.gshell.command.IO;
-import com.planet57.gshell.internal.BeanContainer;
+import com.planet57.gshell.internal.ShellBuilderImpl;
+import com.planet57.gshell.util.io.IO;
+import com.planet57.gshell.guice.BeanContainer;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.shell.ShellBuilder;
 import com.planet57.gshell.util.io.PrintBuffer;
@@ -51,7 +52,7 @@ import java.util.List;
 /**
  * Run shell.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
+ * @since 2.6
  */
 @Mojo(name="run", requiresProject=false)
 public class RunMojo
@@ -156,12 +157,14 @@ public class RunMojo
     URLClassSpace space = new URLClassSpace(getClass().getClassLoader());
     modules.add(new SpaceModule(space, BeanScanning.INDEX));
 
+    modules.add(BeanContainer.module(container));
     modules.add(binder -> {
-      binder.bind(BeanContainer.class).toInstance(container);
+      binder.bind(Branding.class).toInstance(branding);
+      binder.bind(ShellBuilder.class).to(ShellBuilderImpl.class);
     });
 
     Injector injector = Guice.createInjector(new WireModule(modules));
-    container.add(injector, 0);
+    // injector is automatically bound to BeanLocator by sisu
 
     Shell shell = injector.getInstance(ShellBuilder.class)
       .branding(branding)

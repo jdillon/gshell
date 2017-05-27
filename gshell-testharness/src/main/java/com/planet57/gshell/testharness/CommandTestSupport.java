@@ -24,11 +24,15 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.Stage;
+import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandAction;
-import com.planet57.gshell.command.registry.CommandRegistrarImpl;
-import com.planet57.gshell.command.registry.CommandRegistry;
-import com.planet57.gshell.internal.BeanContainer;
+import com.planet57.gshell.command.CommandRegistry;
+import com.planet57.gshell.internal.CommandRegistryImpl;
+import com.planet57.gshell.internal.FunctionRegistryImpl;
+import com.planet57.gshell.internal.HelpPageManagerImpl;
+import com.planet57.gshell.guice.BeanContainer;
+import com.planet57.gshell.internal.ShellBuilderImpl;
 import com.planet57.gshell.logging.logback.TargetConsoleAppender;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.shell.ShellBuilder;
@@ -40,6 +44,7 @@ import org.eclipse.sisu.space.BeanScanning;
 import org.eclipse.sisu.space.SpaceModule;
 import org.eclipse.sisu.space.URLClassSpace;
 import org.eclipse.sisu.wire.WireModule;
+import org.fusesource.jansi.Ansi;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 import org.junit.After;
@@ -52,13 +57,13 @@ import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.sonatype.goodies.testsupport.TestTracer;
 import org.sonatype.goodies.testsupport.TestUtil;
 
+import javax.annotation.Nonnull;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
-
-// FIXME: Goodies TestSupport initMocks() is causing some issues in mvnsh
 
 /**
  * Support for testing {@link CommandAction} instances.
@@ -70,6 +75,7 @@ public abstract class CommandTestSupport
   static {
     SLF4JBridgeHandler.removeHandlersForRootLogger();
     SLF4JBridgeHandler.install();
+    Ansi.setEnabled(false);
   }
 
   protected final TestUtil util = new TestUtil(getClass());
@@ -94,9 +100,11 @@ public abstract class CommandTestSupport
 
   private Shell shell;
 
-  private CommandRegistry commandRegistry;
+  private CommandRegistryImpl commandRegistry;
 
   private Variables variables;
+
+  private Branding branding;
 
   protected final Map<String, Class> requiredCommands = new HashMap<>();
 
@@ -117,32 +125,38 @@ public abstract class CommandTestSupport
     terminal = TerminalBuilder.builder().dumb(true).build();
     io = new BufferIO(terminal);
     variables = new VariablesSupport();
+    branding = new TestBranding(util.resolveFile("target/shell-home"));
 
     container = new BeanContainer();
     List<Module> modules = new ArrayList<>();
+    modules.add(BeanContainer.module(container));
     modules.add(binder -> {
-      binder.bind(BeanContainer.class).toInstance(container);
       binder.bind(ThreadIO.class).toInstance(threadIO);
+      binder.bind(Branding.class).toInstance(branding);
+      binder.bind(ShellBuilder.class).to(ShellBuilderImpl.class);
     });
     configureModules(modules);
+    modules.add(createSpaceModule());
 
     injector = Guice.createInjector(Stage.DEVELOPMENT, new WireModule(modules));
-    container.add(injector, 0);
 
     shell = injector.getInstance(ShellBuilder.class)
-      .branding(new TestBranding(util.resolveFile("target/shell-home")))
+      .branding(branding)
       .io(io)
       .variables(variables)
       .build();
 
     variables = shell.getVariables();
-    commandRegistry = injector.getInstance(CommandRegistry.class);
+    commandRegistry = injector.getInstance(CommandRegistryImpl.class);
+    commandRegistry.setDiscoveryEnabled(false);
 
-    // TODO: disable meta-page discovery, and any other discovery?
+    // disable function discovery
+    FunctionRegistryImpl functionRegistry = injector.getInstance(FunctionRegistryImpl.class);
+    functionRegistry.setDiscoveryEnabled(false);
 
-    // disable default command discovery
-    CommandRegistrarImpl registrar = injector.getInstance(CommandRegistrarImpl.class);
-    registrar.setDiscoveryEnabled(false);
+    // disable default help-page discovery
+    HelpPageManagerImpl helpPageManager = injector.getInstance(HelpPageManagerImpl.class);
+    helpPageManager.setDiscoveryEnabled(false);
 
     // force logging to resolve to specific stream and not re-resolve System.out
     TargetConsoleAppender.setTarget(System.out);
@@ -152,18 +166,23 @@ public abstract class CommandTestSupport
 
     // register required commands
     for (Map.Entry<String, Class> entry : requiredCommands.entrySet()) {
-      registrar.registerCommand(entry.getKey(), entry.getValue());
+      commandRegistry.registerCommand(entry.getKey(), entry.getValue());
     }
 
     // allow test to become aware of injection
     injector.injectMembers(this);
   }
 
-  protected void configureModules(final List<Module> modules) {
-    checkNotNull(modules);
-    modules.add(createSpaceModule());
+  /**
+   * Extension-point for sub-class to configure any additional modules for test environment.
+   */
+  protected void configureModules(@Nonnull final List<Module> modules) {
+    // empty
   }
 
+  /**
+   * Expose ability to adjust the {@link SpaceModule}; for most cases this should be left ASIS.
+   */
   protected SpaceModule createSpaceModule() {
     URLClassSpace space = new URLClassSpace(getClass().getClassLoader());
     return new SpaceModule(space, BeanScanning.INDEX);
@@ -184,7 +203,7 @@ public abstract class CommandTestSupport
     }
 
     if (container != null) {
-      container.clear();
+      container.getBeanLocator().clear();
       container = null;
     }
 
@@ -234,18 +253,6 @@ public abstract class CommandTestSupport
     finally {
       io.dump(log);
     }
-  }
-
-  //
-  // Assertion helpers
-  //
-
-  protected void assertOutputEquals(final String expected) {
-    assertThat(getIo().getOutputString(), is(expected));
-  }
-
-  protected void assertErrorOutputEquals(final String expected) {
-    assertThat(getIo().getErrorString(), is(expected));
   }
 
   //

@@ -48,6 +48,7 @@ interface CliParser
       throw new Error();
     }
 
+    @SuppressWarnings("deprecation")
     private static class GnuParser
       extends org.apache.commons.cli.GnuParser
       implements CliParser
@@ -66,6 +67,7 @@ interface CliParser
       }
     }
 
+    @SuppressWarnings("deprecation")
     private static class PosixParser
       extends org.apache.commons.cli.PosixParser
       implements CliParser

@@ -26,7 +26,6 @@ import java.util.List;
 /**
  * Bootstrap launcher.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 public final class Launcher
@@ -68,7 +67,7 @@ public final class Launcher
 
     Thread.currentThread().setContextClassLoader(cl);
 
-    Log.debug("Invoking: ", method, ", with args: ", Arrays.asList(args));
+    Log.debug("Invoking: ", method, ", with args: ", Arrays.toString(args));
 
     try {
       method.invoke(null, new Object[]{args});

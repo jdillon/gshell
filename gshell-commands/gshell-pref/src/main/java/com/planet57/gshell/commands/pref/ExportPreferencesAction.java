@@ -18,27 +18,26 @@ package com.planet57.gshell.commands.pref;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 
 import com.google.common.io.Flushables;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.IO;
+import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
-import com.planet57.gshell.util.io.Closeables;
+import com.planet57.gshell.util.i18n.I18N;
+import com.planet57.gshell.util.i18n.MessageBundle;
 import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.Preferences;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Export preference nodes to a file.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Command(name = "pref/export", description = "Export preferences")
@@ -46,6 +45,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class ExportPreferencesAction
     extends PreferenceNodeActionSupport
 {
+  private interface Messages
+    extends MessageBundle
+  {
+    @DefaultMessage("Exporting preferences to: %s")
+    String exportingTo(File file);
+  }
+
+  private static final Messages messages = I18N.create(Messages.class);
+
   @Preference
   @Option(name = "t", longName = "subtree", description = "Include sub-tree preferences")
   private boolean subTree;
@@ -59,16 +67,7 @@ public class ExportPreferencesAction
     IO io = context.getIo();
     java.util.prefs.Preferences prefs = node();
 
-    OutputStream out;
-    if (file == null) {
-      out = io.streams.out;
-    }
-    else {
-      io.out.printf("Exporting preferences to: %s%n", file); // TODO: i18n
-      out = new BufferedOutputStream(new FileOutputStream(file));
-    }
-
-    try {
+   try (OutputStream out = openStream(io)) {
       if (subTree) {
         prefs.exportSubtree(out);
       }
@@ -78,12 +77,19 @@ public class ExportPreferencesAction
 
       Flushables.flushQuietly(out);
     }
-    finally {
-      Closeables.close(out);
-    }
 
     prefs.sync();
 
     return null;
+  }
+
+  private OutputStream openStream(final IO io) throws IOException {
+    if (file == null) {
+      return io.streams.out;
+    }
+    else {
+      io.println(messages.exportingTo(file));
+      return new BufferedOutputStream(new FileOutputStream(file));
+    }
   }
 }

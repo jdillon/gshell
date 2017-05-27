@@ -16,14 +16,14 @@
 
 @|bold NAME|@
 
-    @{command.name} - @{command.description}
+  @{command.name} - @{command.description}
 
 @|bold SYNOPSIS|@
 
-    @|bold @{command.name}|@ [options]
+  @|bold @{command.name}|@ [options]
 
 @|bold DESCRIPTION|@
 
-    Execute a script.
+  Execute a script.
 
 @{command.details}

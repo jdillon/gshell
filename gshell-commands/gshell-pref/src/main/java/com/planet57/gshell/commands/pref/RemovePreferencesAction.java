@@ -23,12 +23,9 @@ import com.planet57.gshell.util.cli2.Option;
 
 import javax.annotation.Nonnull;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Remove a tree of preferences.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Command(name = "pref/remove", description = "Remove preferences")
@@ -43,6 +40,8 @@ public class RemovePreferencesAction
     Preferences prefs = node();
 
     log.debug("Removing preferences: {}", prefs);
+
+    // FIXME: this doesn't seem to actually do what was intended and leaves the node around, and maybe even confusing the clear vs. removeNode semantics
 
     if (tree) {
       prefs.clear();

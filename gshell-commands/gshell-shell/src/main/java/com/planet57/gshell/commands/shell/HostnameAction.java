@@ -19,7 +19,7 @@ import java.net.InetAddress;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.IO;
+import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Option;
 
@@ -28,7 +28,6 @@ import javax.annotation.Nonnull;
 /**
  * Displays the name of the current host.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Command(name = "hostname", description = "Displays the name of the current host")
@@ -43,9 +42,9 @@ public class HostnameAction
     IO io = context.getIo();
 
     InetAddress localhost = InetAddress.getLocalHost();
-    io.out.println(localhost.getHostName());
+    io.println(localhost.getHostName());
     if (verbose) {
-      io.out.println(localhost.getHostAddress());
+      io.println(localhost.getHostAddress());
     }
 
     return null;

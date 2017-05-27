@@ -33,12 +33,19 @@
   <dependencies>
     <dependency>
       <groupId>com.planet57.gshell</groupId>
-      <artifactId>gshell-core</artifactId>
+      <artifactId>gshell-api</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
       <groupId>com.planet57.gossip</groupId>
       <artifactId>gossip-slf4j</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.planet57.gshell</groupId>
+      <artifactId>gshell-testsupport</artifactId>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 

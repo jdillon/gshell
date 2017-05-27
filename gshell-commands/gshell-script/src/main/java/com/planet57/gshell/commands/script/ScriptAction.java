@@ -34,7 +34,6 @@ import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
-import com.planet57.gshell.util.io.Closeables;
 import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.Preferences;
 
@@ -90,16 +89,12 @@ public class ScriptAction
     scriptContext.set("log", log);
     scriptContext.set("args", args);
 
-    Reader source = createSource();
-    try {
+    try (Reader source = createSource()) {
       log.debug("Source: {}", source);
       Object result = engine.eval(source, scriptContext);
       log.debug("Result: {}", result);
 
       return result;
-    }
-    finally {
-      Closeables.close(source);
     }
   }
 

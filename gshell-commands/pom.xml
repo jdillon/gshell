@@ -32,22 +32,12 @@
   <name>${project.groupId}:${project.artifactId}</name>
   <packaging>pom</packaging>
 
-  <dependencies>
-    <dependency>
-      <groupId>com.planet57.gshell</groupId>
-      <artifactId>gshell-core</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>com.planet57.gshell</groupId>
-      <artifactId>gshell-testharness</artifactId>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-
   <modules>
+    <module>gshell-artifact</module>
     <module>gshell-file</module>
+    <module>gshell-jline</module>
     <module>gshell-logging</module>
+    <module>gshell-plugin</module>
     <module>gshell-pref</module>
     <module>gshell-script</module>
     <module>gshell-shell</module>

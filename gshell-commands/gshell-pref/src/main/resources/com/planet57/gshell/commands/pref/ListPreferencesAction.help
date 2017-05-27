@@ -16,23 +16,24 @@
 
 @|bold NAME|@
 
-    @{command.name} - @{command.description}
+  @{command.name} - @{command.description}
 
 @|bold SYNOPSIS|@
 
-    @|bold @{command.name}|@ [options] PATH
+  @|bold @{command.name}|@ [options] PATH
 
 @|bold DESCRIPTION|@
 
-    List the contents of preferences.
+  List the contents of preferences.
 
 @{command.details}
+
 @|bold EXAMPLES|@
 
-    List all user preferences:
+  List all user preferences:
 
-        @{command.name} -r /
+    @{command.name} -r /
 
 @|bold SEE ALSO|@
 
-    @|bold pref/get|@, @|bold pref/set|@, @|bold pref/unset|@
+  @|bold pref/get|@, @|bold pref/set|@, @|bold pref/unset|@

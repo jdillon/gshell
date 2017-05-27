@@ -21,13 +21,13 @@ import javax.annotation.Nonnull;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.IO;
+import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.util.io.FileAssert;
+import com.planet57.gshell.util.io.FileSystemAccess;
 
 /**
  * Displays the current directory.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Command(name = "pwd", description = "Displays the current directory")
@@ -37,12 +37,11 @@ public class CurrentDirectoryAction
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
+    FileSystemAccess fs = getFileSystem();
 
-    File dir = getFileSystem().getUserDir();
+    File dir = fs.getUserDir();
     new FileAssert(dir).exists().isDirectory();
-
-    io.out.println(dir.getPath());
-
+    io.println(dir.getPath());
     return null;
   }
 }

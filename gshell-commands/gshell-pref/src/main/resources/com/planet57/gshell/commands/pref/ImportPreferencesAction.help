@@ -16,27 +16,28 @@
 
 @|bold NAME|@
 
-    @{command.name} - @{command.description}
+  @{command.name} - @{command.description}
 
 @|bold SYNOPSIS|@
 
-    @|bold @{command.name}|@ [options] FILE
+  @|bold @{command.name}|@ [options] FILE
 
 @|bold DESCRIPTION|@
 
-    Import preferences from XML.
+  Import preferences from XML.
 
 @{command.details}
+
 @|bold EXAMPLES|@
 
-    Import as user preferences:
+  Import as user preferences:
 
-        @{command.name} prefs.xml
+    @{command.name} prefs.xml
 
-    Import as system preferences:
+  Import as system preferences:
 
-        @{command.name} -s prefs.xml
+    @{command.name} -s prefs.xml
 
 @|bold SEE ALSO|@
 
-    @|bold pref/export|@
+  @|bold pref/export|@

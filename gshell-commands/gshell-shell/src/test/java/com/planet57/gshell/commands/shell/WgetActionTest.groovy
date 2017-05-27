@@ -26,4 +26,6 @@ class WgetActionTest
   WgetActionTest() {
     super(WgetAction.class)
   }
+
+  // FIXME: add tests
 }

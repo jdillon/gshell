@@ -23,42 +23,42 @@ import java.util.prefs.Preferences;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.IO;
+import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.util.cli2.Argument;
-import com.planet57.gshell.util.io.Closeables;
+import com.planet57.gshell.util.i18n.I18N;
+import com.planet57.gshell.util.i18n.MessageBundle;
 
 import javax.annotation.Nonnull;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Import preference nodes from a file.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Command(name = "pref/import", description = "Import preferences")
 public class ImportPreferencesAction
     extends PreferenceActionSupport
 {
+  private interface Messages
+    extends MessageBundle
+  {
+    @DefaultMessage("Importing preferences from: %s")
+    String importingFrom(File file);
+  }
+
+  private static final Messages messages = I18N.create(Messages.class);
+
   @Argument(index = 0, required = true, description = "Preferences file to import", token = "FILE")
   private File source;
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
+    io.println(messages.importingFrom(source));
 
-    io.out.printf("Importing preferences from: %s%n", source); // TODO: i18n
-
-    InputStream in = new BufferedInputStream(new FileInputStream(source));
-
-    try {
+    try (InputStream in = new BufferedInputStream(new FileInputStream(source))) {
       Preferences.importPreferences(in);
     }
-    finally {
-      Closeables.close(in);
-    }
-
     return null;
   }
 }

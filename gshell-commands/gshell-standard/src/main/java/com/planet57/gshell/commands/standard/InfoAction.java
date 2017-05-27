@@ -39,14 +39,13 @@ import com.planet57.gshell.branding.License;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.CommandActionSupport;
-import com.planet57.gshell.command.IO;
+import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.i18n.I18N;
 import com.planet57.gshell.util.i18n.MessageBundle;
 import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.Preferences;
-import org.jline.reader.impl.completer.EnumCompleter;
 
 import javax.annotation.Nonnull;
 
@@ -57,7 +56,6 @@ import javax.annotation.Nonnull;
 /**
  * Display shell information.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
 @Command(name = "info", description = "Display information about the shell and environment")
@@ -117,10 +115,6 @@ public class InfoAction
 
   @Option(name = "a", longName = "all", description = "Display all sections")
   private boolean all;
-
-  public InfoAction() {
-    this.setCompleters(new EnumCompleter(Section.class));
-  }
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
@@ -253,7 +247,7 @@ public class InfoAction
     // HACK: trip off any trailing whitespace
     String info = CharMatcher.whitespace().trimTrailingFrom(buff.toString());
 
-    io.out.println(info);
+    io.println(info);
 
     return null;
   }

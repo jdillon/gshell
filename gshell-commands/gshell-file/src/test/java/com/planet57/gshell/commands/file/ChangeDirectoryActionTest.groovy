@@ -16,6 +16,8 @@
 package com.planet57.gshell.commands.file
 
 import com.planet57.gshell.testharness.CommandTestSupport
+import com.planet57.gshell.variables.VariableNames
+import org.junit.Test
 
 /**
  * Tests for {@link ChangeDirectoryAction}.
@@ -25,5 +27,12 @@ class ChangeDirectoryActionTest
 {
   ChangeDirectoryActionTest() {
     super(ChangeDirectoryAction.class)
+  }
+
+  @Test
+  void 'change directory'() {
+    String path = util.resolvePath('src/test')
+    assert executeCommand(path) == null
+    assert shell.variables.get(VariableNames.SHELL_USER_DIR, String.class) == path
   }
 }

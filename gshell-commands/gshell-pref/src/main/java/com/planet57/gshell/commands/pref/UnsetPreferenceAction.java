@@ -23,12 +23,9 @@ import com.planet57.gshell.util.cli2.Argument;
 
 import javax.annotation.Nonnull;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Unset a preference value.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Command(name = "pref/unset", description = "Unset a preference")

@@ -19,13 +19,12 @@ import javax.annotation.Nonnull;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.IO;
+import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.logging.LevelComponent;
 
 /**
  * List valid logger levels.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
 @Command(name = "logging/levels", description = "List logger levels")
@@ -37,7 +36,7 @@ public class LoggerLevelsAction
     IO io = context.getIo();
 
     for (LevelComponent level : getLogging().getLevels()) {
-      io.out.println(level);
+      io.println(level);
     }
 
     return null;

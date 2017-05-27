@@ -18,7 +18,6 @@ package com.planet57.gshell.util.cli2;
 /**
  * Allows beans to become aware of their {@link CliProcessor}
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.3
  */
 public interface CliProcessorAware

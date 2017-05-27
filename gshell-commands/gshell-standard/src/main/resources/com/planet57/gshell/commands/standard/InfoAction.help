@@ -16,41 +16,42 @@
 
 @|bold NAME|@
 
-    @{command.name} - @{command.description}
+  @{command.name} - @{command.description}
 
 @|bold SYNOPSIS|@
 
-    @|bold @{command.name}|@ [options] [section]
+  @|bold @{command.name}|@ [options] [section]
 
 @|bold DESCRIPTION|@
 
-    Displays various information about the shell.  Information is split up
-    into sections.  The follow sections are available:
+  Displays various information about the shell.  Information is split up
+  into sections.  The follow sections are available:
 
-        SHELL
-        TERMINAL
-        JVM
-        THREADS
-        MEMORY
-        CLASSES
-        OS
-        LICENSE
+      SHELL
+      TERMINAL
+      JVM
+      THREADS
+      MEMORY
+      CLASSES
+      OS
+      LICENSE
 
 @{command.details}
+
 @|bold EXAMPLES|@
 
-    Display the JVM section:
+  Display the JVM section:
 
-        @{command.name} jvm
+    @{command.name} jvm
 
-    Display the JVM and OS sections:
+  Display the JVM and OS sections:
 
-        @{command.name} jvm os
+    @{command.name} jvm os
 
-    Display all sections:
+  Display all sections:
 
-        @{command.name} -a
+    @{command.name} -a
 
 @|bold SEE ALSO|@
 
-    @|bold pref/set|@
+  @|bold pref/set|@

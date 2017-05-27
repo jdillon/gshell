@@ -26,4 +26,6 @@ class InfoActionTest
   InfoActionTest() {
     super(InfoAction.class)
   }
+
+  // FIXME: add tests
 }

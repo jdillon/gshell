@@ -16,31 +16,32 @@
 
 @|bold NAME|@
 
-    @{command.name} - @{command.description}
+  @{command.name} - @{command.description}
 
 @|bold SYNOPSIS|@
 
-    @|bold @{command.name}|@ [options]
+  @|bold @{command.name}|@ [options]
 
 @|bold DESCRIPTION|@
 
-    Lists all registered loggers.
+  Lists all registered loggers.
 
 @{command.details}
+
 @|bold EXAMPLES|@
 
-    List all loggers, which have a level set on them:
+  List all loggers, which have a level set on them:
 
-        @{command.name}
+    @{command.name}
 
-    List all loggers, even those using an inherited level:
+  List all loggers, even those using an inherited level:
 
-        @{command.name} -a
+    @{command.name} -a
 
-    List all loggers with names matching 'gshell':
+  List all loggers with names matching 'gshell':
 
-        @{command.name} -n gshell
+    @{command.name} -n gshell
 
 @|bold SEE ALSO|@
 
-    @|bold logging|@, @|bold logging/logger|@
+  @|bold logging|@, @|bold logging/logger|@

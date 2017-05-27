@@ -26,7 +26,6 @@ import javax.annotation.Nonnull;
 /**
  * Sleep for a period.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Command(name = "sleep", description = "Sleep for a period")

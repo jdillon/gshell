@@ -15,10 +15,12 @@
  */
 package com.planet57.gshell.util.setter;
 
+import javax.annotation.Nullable;
+import java.lang.reflect.AccessibleObject;
+
 /**
  * Provides the basic mechanism to set values.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 public interface Setter
@@ -30,6 +32,12 @@ public interface Setter
   String getName();
 
   Class<?> getType();
+
+  /**
+   * Returns the underlying {@link AccessibleObject} if supported or {@code null}.
+   */
+  @Nullable
+  AccessibleObject getAccessible();
 
   /**
    * Whether this setter is intrinsically multi-valued.

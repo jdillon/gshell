@@ -39,6 +39,6 @@ public class ShellEnvHelpPage
 
   @Override
   public String getDescription() {
-    return "Shell environment overview.";
+    return "Shell environment overview";
   }
 }

@@ -33,13 +33,32 @@ public class Candidates
     // empty
   }
 
+  /**
+   * Customized {@link Candidate} impl to expose {@link #toString()}.
+   */
+  private static class CandidateImpl
+    extends Candidate
+  {
+    public CandidateImpl(final String value) {
+      super(value);
+    }
+
+    public CandidateImpl(final String value, final String displ, final String group, final String descr, final String suffix, final String key, final boolean complete) {
+      super(value, displ, group, descr, suffix, key, complete);
+    }
+
+    public String toString() {
+      return value();
+    }
+  }
+
   public static Candidate candidate(final String value) {
     checkNotNull(value);
-    return new Candidate(AttributedString.stripAnsi(value), value, null, null, null, null, true);
+    return new CandidateImpl(AttributedString.stripAnsi(value), value, null, null, null, null, true);
   }
 
   public static Candidate candidate(final String name, @Nullable final String description) {
     checkNotNull(name);
-    return new Candidate(AttributedString.stripAnsi(name), name, null, description, null, null, true);
+    return new CandidateImpl(AttributedString.stripAnsi(name), name, null, description, null, null, true);
   }
 }

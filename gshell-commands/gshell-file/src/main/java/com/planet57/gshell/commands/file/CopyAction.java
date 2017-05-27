@@ -18,22 +18,17 @@ package com.planet57.gshell.commands.file;
 import java.io.File;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.inject.Named;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
-import org.apache.commons.io.FileUtils;
-import org.jline.reader.Completer;
-
-import static com.google.common.base.Preconditions.checkNotNull;
+import com.planet57.gshell.util.io.FileSystemAccess;
+import com.planet57.gshell.util.jline.Complete;
 
 /**
- * Copy file or directory
+ * Copy file or directory.
  *
- * @author <a href="mailto:olamy@apache.org">Olivier Lamy</a>
  * @since 2.6.3
  */
 @Command(name = "cp", description = "Copy files")
@@ -41,35 +36,30 @@ public class CopyAction
     extends FileCommandActionSupport
 {
   @Argument(required = true, index = 0, description = "The path to the file or directory to copy", token = "SOURCE")
+  @Complete("file-name")
   private String source;
 
   @Argument(required = true, index = 1, description = "The path to the target file or directory", token = "TARGET")
+  @Complete("file-name")
   private String target;
 
   @Option(name = "r", longName = "recursive")
   private boolean recursive;
 
-  @Inject
-  public CopyAction installCompleters(final @Named("file-name") Completer c1) {
-    checkNotNull(c1);
-    // Add completer for source and target
-    setCompleters(c1, c1, null);
-    return this;
-  }
-
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    File sourceFile = getFileSystem().resolveFile(source);
-    File targetFile = getFileSystem().resolveFile(target);
+    FileSystemAccess fs = getFileSystem();
+    File sourceFile = fs.resolveFile(source);
+    File targetFile = fs.resolveFile(target);
 
     if (sourceFile.isDirectory()) {
       // for cp -r /tmp/foo /home : we must create first the directory /home/foo
       targetFile = new File(targetFile, sourceFile.getName());
       if (!targetFile.exists()) {
-        targetFile.mkdirs();
+        fs.mkdir(targetFile);
       }
       if (recursive) {
-        FileUtils.copyDirectory(sourceFile, targetFile);
+        fs.copyDirectory(sourceFile, targetFile);
       }
       else {
         throw new RuntimeException("--recursive not specified; omitting directory: " + sourceFile);
@@ -77,10 +67,10 @@ public class CopyAction
     }
     else {
       if (targetFile.isDirectory()) {
-        FileUtils.copyFileToDirectory(sourceFile, targetFile);
+        fs.copyToDirectory(sourceFile, targetFile);
       }
       else {
-        FileUtils.copyFile(sourceFile, targetFile);
+        fs.copyFile(sourceFile, targetFile);
       }
     }
 

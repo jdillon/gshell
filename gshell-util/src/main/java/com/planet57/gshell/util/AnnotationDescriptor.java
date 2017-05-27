@@ -18,7 +18,6 @@ package com.planet57.gshell.util;
 /**
  * Base-class for annotation descriptors.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.3
  */
 public abstract class AnnotationDescriptor

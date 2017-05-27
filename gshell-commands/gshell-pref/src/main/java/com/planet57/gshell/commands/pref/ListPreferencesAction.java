@@ -17,7 +17,7 @@ package com.planet57.gshell.commands.pref;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.IO;
+import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.Preferences;
@@ -27,7 +27,6 @@ import javax.annotation.Nonnull;
 /**
  * List preferences.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Command(name = "pref/list", description = "List preferences")
@@ -42,19 +41,16 @@ public class ListPreferencesAction
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
-
     list(io, node());
-
     node().sync();
-
     return null;
   }
 
   private void list(final IO io, final java.util.prefs.Preferences node) throws Exception {
-    io.out.format("@|green %s|@%n", node.absolutePath());
+    io.format("@|green %s|@%n", node.absolutePath());
 
     for (String key : node.keys()) {
-      io.out.format("  @|bold %s|@: %s%n", key, node.get(key, null));
+      io.format("  @|bold %s|@: %s%n", key, node.get(key, null));
     }
 
     if (recursive) {

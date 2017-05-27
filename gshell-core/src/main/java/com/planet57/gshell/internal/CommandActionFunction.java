@@ -16,12 +16,12 @@
 package com.planet57.gshell.internal;
 
 import com.google.common.base.Stopwatch;
-import com.google.common.collect.ImmutableList;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.command.CommandAction;
+import com.planet57.gshell.command.CommandAction.Prototype;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.CommandHelper;
-import com.planet57.gshell.command.IO;
+import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.util.cli2.CliProcessor;
 import com.planet57.gshell.util.cli2.HelpPrinter;
@@ -35,6 +35,7 @@ import org.apache.felix.service.command.CommandSession;
 import org.apache.felix.service.command.Function;
 import org.jline.terminal.Terminal;
 import org.sonatype.goodies.common.ComponentSupport;
+import org.sonatype.goodies.common.Throwables2;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -58,7 +59,17 @@ public class CommandActionFunction
   private final CommandAction action;
 
   public CommandActionFunction(final CommandAction action) {
-    this.action = checkNotNull(action);
+    checkNotNull(action);
+
+    // create copies for actions that implement prototype pattern
+    if (action instanceof Prototype) {
+      this.action = ((Prototype) action).create();
+    }
+    else {
+      this.action = action;
+    }
+
+    log.debug("Action: {}", action);
   }
 
   @Override
@@ -67,14 +78,27 @@ public class CommandActionFunction
 
     Stopwatch watch = Stopwatch.createStarted();
 
-    // capture TCCL to reset; in-case command alters this
-    final ClassLoader cl = Thread.currentThread().getContextClassLoader();
+    try {
+      // adapt api to CommandSessionImpl for simplicity
+      Object result = doExecute((CommandSessionImpl) session, arguments);
+      log.debug("Result: {}; {}", result, watch);
+      return result;
+    }
+    catch (Throwable failure) {
+      log.debug("Failure: {}; {}", Throwables2.explain(failure), watch);
+      throw failure;
+    }
+  }
 
+  private Object doExecute(final CommandSessionImpl session, final List<Object> arguments) throws Exception {
     final Shell shell = (Shell) session.get(SHELL_VAR);
     checkState(shell != null);
 
     final Terminal terminal = (Terminal) session.get(TERMINAL_VAR);
     checkState(terminal != null);
+
+    final ClassLoader cl = Thread.currentThread().getContextClassLoader();
+    Thread.currentThread().setContextClassLoader(action.getClass().getClassLoader());
 
     // re-create IO with current streams; which are adjusted by ThreadIO
     final IO io = new IO(StreamSet.system(), terminal);
@@ -98,9 +122,7 @@ public class CommandActionFunction
 
         // Render command-line usage
         if (help.displayHelp) {
-          io.out.println(CommandHelper.getDescription(action));
-          io.out.println();
-
+          io.format("%s%n%n", action.getDescription());
           HelpPrinter printer = new HelpPrinter(clp, terminal.getWidth());
           printer.printUsage(io.out, action.getSimpleName());
 
@@ -109,35 +131,39 @@ public class CommandActionFunction
         }
       }
 
-      // re-create variables with session as basis
-      final Variables variables = new VariablesSupport(((CommandSessionImpl)session).getVariables());
-
-      // wrap arguments into immutable for context
-      final List<Object> args = ImmutableList.copyOf(arguments);
+      // HACK: re-create variables with session as basis
+      final Variables variables = new VariablesSupport(session.getVariables());
+      VariablesProvider.set(variables);
 
       if (execute) {
         result = action.execute(new CommandContext()
         {
-          @Override
           @Nonnull
+          @Override
           public Shell getShell() {
             return shell;
           }
 
-          @Override
           @Nonnull
-          public List<?> getArguments() {
-            return args;
+          @Override
+          public CommandSessionImpl getSession() {
+            return session;
           }
 
-          @Override
           @Nonnull
+          @Override
+          public List<?> getArguments() {
+            return arguments;
+          }
+
+          @Nonnull
+          @Override
           public IO getIo() {
             return io;
           }
 
-          @Override
           @Nonnull
+          @Override
           public Variables getVariables() {
             return variables;
           }
@@ -145,17 +171,16 @@ public class CommandActionFunction
       }
     }
     finally {
-      io.flush();
       Thread.currentThread().setContextClassLoader(cl);
+      io.flush();
     }
 
-    log.debug("Result: {}; {}", result, watch);
     return result;
   }
 
   @Override
   public String toString() {
-    return "CommandActionFunction{" +
+    return getClass().getSimpleName() + "{" +
       "action=" + action.getName() +
       '}';
   }

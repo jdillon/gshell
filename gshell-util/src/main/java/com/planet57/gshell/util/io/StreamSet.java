@@ -29,7 +29,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * A set of input, output and error streams.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 public class StreamSet

@@ -20,7 +20,7 @@ import java.util.Date;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.IO;
+import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.command.CommandActionSupport;
 
 import javax.annotation.Nonnull;
@@ -28,7 +28,6 @@ import javax.annotation.Nonnull;
 /**
  * Displays the current time and date.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Command(name = "date", description = "Displays the current time and date")
@@ -38,7 +37,7 @@ public class DateAction
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
-    io.out.println(DateFormat.getInstance().format(new Date()));
+    io.println(DateFormat.getInstance().format(new Date()));
     return null;
   }
 }

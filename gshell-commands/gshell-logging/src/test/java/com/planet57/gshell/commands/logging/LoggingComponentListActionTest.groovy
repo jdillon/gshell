@@ -15,15 +15,15 @@
  */
 package com.planet57.gshell.commands.logging
 
-import com.planet57.gshell.testharness.CommandTestSupport
-
 /**
  * Tests for {@link LoggingComponentListAction}.
  */
 class LoggingComponentListActionTest
-    extends CommandTestSupport
+    extends LoggingActionTestSupport
 {
   LoggingComponentListActionTest() {
     super(LoggingComponentListAction.class)
   }
+
+  // FIXME: add tests; highly dependent on logging impl; need to customize for these tests
 }

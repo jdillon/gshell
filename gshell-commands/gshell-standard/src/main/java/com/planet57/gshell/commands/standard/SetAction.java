@@ -15,32 +15,29 @@
  */
 package com.planet57.gshell.commands.standard;
 
+import java.io.PrintStream;
 import java.util.List;
 import java.util.Properties;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.inject.Inject;
-import javax.inject.Named;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.IO;
+import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
+import com.planet57.gshell.util.jline.Complete;
 import com.planet57.gshell.variables.Variables;
-import org.jline.reader.Completer;
 import com.planet57.gshell.util.i18n.I18N;
 import com.planet57.gshell.util.i18n.MessageBundle;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Set a variable or property.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
 @Command(name = "set", description = "Set a variable or property")
@@ -74,14 +71,8 @@ public class SetAction
 
   @Nullable
   @Argument(index = 1, description = "Variable or property value or expression to evaluate", token = "VALUE")
+  @Complete("variable-name")
   private List<String> values;
-
-  @Inject
-  public SetAction installCompleters(@Named("variable-name") final Completer c1) {
-    checkNotNull(c1);
-    setCompleters(c1, null);
-    return this;
-  }
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
@@ -112,38 +103,34 @@ public class SetAction
     IO io = context.getIo();
 
     // using RAW io.stream.out to avoid any ANSI encoding
+    PrintStream out = io.streams.out;
 
     switch (mode) {
       case PROPERTY: {
         Properties props = System.getProperties();
-
-        for (Object o : props.keySet()) {
-          String name = (String) o;
-          String value = props.getProperty(name);
-          io.streams.out.printf("%s='%s'%n", name, value);
-        }
+        props.forEach((name, value) ->
+          out.format("%s='%s'%n", name, value)
+        );
         break;
       }
 
       case VARIABLE: {
-        Variables variables = context.getVariables();
-        for (String name : variables.names()) {
-          Object value = variables.get(name);
-          io.streams.out.printf("%s='%s'", name, value);
+        context.getVariables().asMap().forEach((name, value) -> {
+          out.format("%s='%s'", name, value);
 
           // When --verbose include the class details of the values
           if (verbose && value != null) {
-            io.streams.out.printf(" (%s)", value.getClass());
+            out.format(" (%s)", value.getClass());
           }
 
-          io.streams.out.println();
-        }
+          out.println();
+        });
         break;
       }
     }
 
     // force RAW stream to flush
-    io.streams.out.flush();
+    out.flush();
 
     return null;
   }

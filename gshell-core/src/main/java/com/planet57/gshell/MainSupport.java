@@ -31,11 +31,12 @@ import com.planet57.gossip.Level;
 import com.planet57.gossip.Log;
 import com.planet57.gshell.branding.Branding;
 import com.planet57.gshell.branding.BrandingSupport;
-import com.planet57.gshell.command.IO;
-import com.planet57.gshell.internal.BeanContainer;
+import com.planet57.gshell.guice.BeanContainer;
+import com.planet57.gshell.internal.ShellBuilderImpl;
+import com.planet57.gshell.shell.ShellBuilder;
+import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.internal.ExitCodeDecoder;
 import com.planet57.gshell.shell.Shell;
-import com.planet57.gshell.shell.ShellBuilder;
 import com.planet57.gshell.util.NameValue;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.CliProcessor;
@@ -69,7 +70,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Support for booting shell applications.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Preferences(path = "cli")
@@ -146,7 +146,7 @@ public abstract class MainSupport
     checkNotNull(args);
 
     if (log.isDebugEnabled()) {
-      log.debug("Booting w/args: {}", Arrays.asList(args));
+      log.debug("Booting w/args: {}", Arrays.toString(args));
     }
 
     // Register default handler for uncaught exceptions
@@ -189,7 +189,7 @@ public abstract class MainSupport
     }
 
     if (version) {
-      io.out.format("%s %s%n", branding.getDisplayName(), branding.getVersion());
+      io.format("%s %s%n", branding.getDisplayName(), branding.getVersion());
       io.flush();
       exit(0);
     }
@@ -271,15 +271,17 @@ public abstract class MainSupport
     modules.add(new SpaceModule(space, BeanScanning.INDEX));
 
     final BeanContainer container = new BeanContainer();
+    modules.add(BeanContainer.module(container));
     modules.add(binder -> {
-      binder.bind(BeanContainer.class).toInstance(container);
       binder.bind(ThreadIO.class).toInstance(threadIO);
+      binder.bind(Branding.class).toInstance(branding);
+      binder.bind(ShellBuilder.class).to(ShellBuilderImpl.class);
     });
 
     configure(modules);
 
     Injector injector = Guice.createInjector(new WireModule(modules));
-    container.add(injector, 0);
+    // injector is automatically bound to BeanLocator by sisu
 
     return injector.getInstance(ShellBuilder.class)
       .branding(branding)
@@ -324,7 +326,7 @@ public abstract class MainSupport
         // ignore
       }
     };
-    PrintStream out = new PrintStream(terminal.output())
+    PrintStream out = new PrintStream(terminal.output(), true)
     {
       @Override
       public void close() {

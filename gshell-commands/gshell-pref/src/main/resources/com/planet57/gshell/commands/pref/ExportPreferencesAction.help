@@ -16,27 +16,28 @@
 
 @|bold NAME|@
 
-    @{command.name} - @{command.description}
+  @{command.name} - @{command.description}
 
 @|bold SYNOPSIS|@
 
-    @|bold @{command.name}|@ [options] PATH [FILE]
+  @|bold @{command.name}|@ [options] PATH [FILE]
 
 @|bold DESCRIPTION|@
 
-    Export preferences as XML.  When no file is given the XML is displayed.
+  Export preferences as XML.  When no file is given the XML is displayed.
 
 @{command.details}
+
 @|bold EXAMPLES|@
 
-    Export all preferences:
+  Export all preferences:
 
-        @{command.name} -t / prefs.xml
+    @{command.name} -t / prefs.xml
 
-    Export all system preferences:
+  Export all system preferences:
 
-        @{command.name} -s -t / prefs.xml
+    @{command.name} -s -t / prefs.xml
 
 @|bold SEE ALSO|@
 
-    @|bold pref/import|@
+  @|bold pref/import|@

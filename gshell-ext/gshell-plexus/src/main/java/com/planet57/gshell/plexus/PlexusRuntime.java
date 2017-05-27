@@ -15,77 +15,19 @@
  */
 package com.planet57.gshell.plexus;
 
-import org.sonatype.goodies.common.ComponentSupport;
-import org.codehaus.plexus.ContainerConfiguration;
-import org.codehaus.plexus.DefaultContainerConfiguration;
-import org.codehaus.plexus.DefaultPlexusContainer;
 import org.codehaus.plexus.PlexusContainer;
-import org.codehaus.plexus.PlexusContainerException;
-import org.codehaus.plexus.classworlds.ClassWorld;
 import org.codehaus.plexus.component.repository.exception.ComponentLookupException;
-import org.codehaus.plexus.logging.Logger;
-
-import javax.annotation.Nullable;
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.inject.Provider;
-import javax.inject.Singleton;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Provides access to Plexus components.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 3.0
  */
-@Named
-@Singleton
-public class PlexusRuntime
-  extends ComponentSupport
+public interface PlexusRuntime
 {
-  private final Provider<ClassWorld> classWorld;
+  PlexusContainer getContainer();
 
-  @Nullable
-  private PlexusContainer container;
+  <T> T lookup(Class<T> role) throws ComponentLookupException;
 
-  @Inject
-  public PlexusRuntime(final Provider<ClassWorld> classWorld) {
-    this.classWorld = checkNotNull(classWorld);
-  }
-
-  // TODO: consider exposing container for provider-based customization?
-
-  private PlexusContainer createContainer() throws PlexusContainerException {
-    ContainerConfiguration config = new DefaultContainerConfiguration()
-        .setClassWorld(classWorld.get())
-        .setName("plexus-runtime");
-
-    DefaultPlexusContainer container = new DefaultPlexusContainer(config);
-    container.setLoggerManager(new Slf4jLoggerManager());
-    container.getLoggerManager().setThresholds(Logger.LEVEL_DEBUG);
-
-    return container;
-  }
-
-  public PlexusContainer getContainer() {
-    if (container == null) {
-      try {
-        container = createContainer();
-        log.debug("Created container: {}", container);
-      }
-      catch (PlexusContainerException e) {
-        throw new RuntimeException(e);
-      }
-    }
-    return container;
-  }
-
-  public <T> T lookup(final Class<T> role) throws ComponentLookupException {
-    return getContainer().lookup(role);
-  }
-
-  public <T> T lookup(final Class<T> role, final String hint) throws ComponentLookupException {
-    return getContainer().lookup(role, hint);
-  }
+  <T> T lookup(Class<T> role, String hint) throws ComponentLookupException;
 }

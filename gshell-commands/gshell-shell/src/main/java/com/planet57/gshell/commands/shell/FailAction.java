@@ -15,17 +15,19 @@
  */
 package com.planet57.gshell.commands.shell;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
+import com.planet57.gshell.util.cli2.Option;
+import org.sonatype.goodies.common.Notification;
 
 import javax.annotation.Nonnull;
 
 /**
  * Fail with an exception.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Command(name = "fail", description = "Fail with an exception")
@@ -35,15 +37,65 @@ public class FailAction
   @Argument(description = "Failure message", token = "TEXT")
   private String message = "Failed";
 
-  @Override
-  public Object execute(@Nonnull final CommandContext context) throws Exception {
-    throw new FailException(message);
+  enum Type
+  {
+    exception,
+    runtime,
+    error,
+    notification
   }
 
-  private static class FailException
+  @Option(name="t", longName = "type", description = "Fail with specific throwable type", token = "TYPE")
+  private Type type = Type.exception;
+
+  @Override
+  public Object execute(@Nonnull final CommandContext context) throws Exception {
+    switch (type) {
+      case exception:
+        throw new FailException(message);
+      case runtime:
+        throw new FailRuntimeException(message);
+      case error:
+        throw new FailError(message);
+      case notification:
+        throw new FailNotification(message);
+    }
+    // unreachable
+    throw new Error();
+  }
+
+  @VisibleForTesting
+  static class FailException
       extends Exception
   {
-    public FailException(final String message) {
+    FailException(final String message) {
+      super(message);
+    }
+  }
+
+  @VisibleForTesting
+  static class FailRuntimeException
+    extends RuntimeException
+  {
+    FailRuntimeException(final String message) {
+      super(message);
+    }
+  }
+
+  @VisibleForTesting
+  static class FailError
+    extends Error
+  {
+    FailError(final String message) {
+      super(message);
+    }
+  }
+
+  @VisibleForTesting
+  static class FailNotification
+    extends Notification
+  {
+    FailNotification(final String message) {
       super(message);
     }
   }

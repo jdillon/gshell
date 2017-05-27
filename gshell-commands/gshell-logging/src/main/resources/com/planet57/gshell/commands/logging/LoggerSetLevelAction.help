@@ -16,23 +16,24 @@
 
 @|bold NAME|@
 
-    @{command.name} - @{command.description}
+  @{command.name} - @{command.description}
 
 @|bold SYNOPSIS|@
 
-    @|bold @{command.name}|@ [options] LOGGER LEVEL
+  @|bold @{command.name}|@ [options] LOGGER LEVEL
 
 @|bold DESCRIPTION|@
 
-    Set the logging level of a specific logger.
+  Set the logging level of a specific logger.
 
 @{command.details}
+
 @|bold EXAMPLES|@
 
-    Set the level of the 'com.planet57' logger to DEBUG:
+  Set the level of the 'com.planet57' logger to DEBUG:
 
-        @{command.name} com.planet57 DEBUG
+    @{command.name} com.planet57 DEBUG
 
 @|bold SEE ALSO|@
 
-    @|bold logging|@, @|bold logging/logger|@
+  @|bold logging|@, @|bold logging/logger|@

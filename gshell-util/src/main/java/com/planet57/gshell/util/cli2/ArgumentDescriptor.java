@@ -17,16 +17,19 @@ package com.planet57.gshell.util.cli2;
 
 import com.planet57.gshell.util.setter.Setter;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * {@link Argument} descriptor.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.3
  */
 public class ArgumentDescriptor
     extends CliDescriptor
+    implements Comparable<ArgumentDescriptor>
 {
   private final Argument spec;
 
@@ -43,13 +46,30 @@ public class ArgumentDescriptor
     return spec.index();
   }
 
+  @Nullable
   @Override
-  public String getSyntax() {
-    String tmp = getToken();
-    if (!UNINITIALIZED_STRING.equals(tmp) && tmp.length() != 0) {
-      return tmp;
+  public String getToken() {
+    String token = super.getToken();
+    if (token == null) {
+      return "ARG";
     }
+    return token;
+  }
 
-    return "ARG";
+  @Override
+  public String renderSyntax() {
+    return getToken();
+  }
+
+  @Override
+  public int compareTo(@Nonnull final ArgumentDescriptor descriptor) {
+    return Integer.compare(spec.index(), descriptor.spec.index());
+  }
+
+  @Override
+  public String toString() {
+    return getClass().getSimpleName() + "{" +
+        "spec=" + spec +
+        '}';
   }
 }

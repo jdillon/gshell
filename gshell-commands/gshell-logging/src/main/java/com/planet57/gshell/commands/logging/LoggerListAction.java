@@ -24,14 +24,13 @@ import javax.annotation.Nullable;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.IO;
+import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.logging.LoggerComponent;
 import com.planet57.gshell.util.cli2.Option;
 
 /**
  * List loggers.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
 @Command(name = "logging/loggers", description = "List loggers")
@@ -62,7 +61,7 @@ public class LoggerListAction
         LoggerComponent logger = getLogging().getLogger(name);
         if (all || logger.getLevel() != null &&
             (levelQuery == null || logger.getLevel().toString().contains(levelQuery.toUpperCase()))) {
-          io.out.printf("%s: %s%n", logger.getName(), logger.getLevel());
+          io.format("%s: %s%n", logger.getName(), logger.getLevel());
         }
       }
     }

@@ -27,7 +27,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Base-class for CLI descriptors.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.3
  */
 public abstract class CliDescriptor
@@ -113,18 +112,5 @@ public abstract class CliDescriptor
     return this instanceof OptionDescriptor;
   }
 
-  public abstract String getSyntax();
-
-  public String renderSyntax() {
-    String str = isArgument() ? "" : getSyntax();
-
-    if (!UNINITIALIZED_STRING.equals(token)) {
-      if (str.length() > 0) {
-        str += " ";
-      }
-      str += token;
-    }
-
-    return str;
-  }
+  public abstract String renderSyntax();
 }

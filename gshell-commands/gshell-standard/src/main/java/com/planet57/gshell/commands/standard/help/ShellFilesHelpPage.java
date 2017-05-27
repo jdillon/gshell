@@ -39,6 +39,6 @@ public class ShellFilesHelpPage
 
   @Override
   public String getDescription() {
-    return "Shell configuration files overview.";
+    return "Shell configuration files overview";
   }
 }

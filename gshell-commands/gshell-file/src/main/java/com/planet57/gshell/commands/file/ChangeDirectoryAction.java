@@ -19,25 +19,19 @@ import java.io.File;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.inject.Inject;
-import javax.inject.Named;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.IO;
+import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.util.io.FileAssert;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
-import com.planet57.gshell.variables.Variables;
-import org.jline.reader.Completer;
-
-import static com.google.common.base.Preconditions.checkNotNull;
-import static com.planet57.gshell.variables.VariableNames.SHELL_USER_DIR;
+import com.planet57.gshell.util.io.FileSystemAccess;
+import com.planet57.gshell.util.jline.Complete;
 
 /**
  * Changes the current directory.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Command(name = "cd", description = "Changes the current directory")
@@ -49,33 +43,26 @@ public class ChangeDirectoryAction
 
   @Nullable
   @Argument(description = "The path of the directory to change to", token = "PATH")
+  @Complete("directory-name")
   private String path;
-
-  @Inject
-  public ChangeDirectoryAction installCompleters(final @Named("directory-name") Completer c1) {
-    checkNotNull(c1);
-    setCompleters(c1, null);
-    return this;
-  }
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
-    Variables vars = context.getVariables();
+    FileSystemAccess fs = getFileSystem();
 
     File file;
     if (path == null) {
-      file = getFileSystem().getUserHomeDir();
+      file = fs.getUserHomeDir();
     }
     else {
-      file = getFileSystem().resolveFile(path);
+      file = fs.resolveFile(path);
     }
 
     new FileAssert(file).exists().isDirectory();
-
-    vars.set(SHELL_USER_DIR, file.getPath());
+    fs.setUserDir(file);
     if (verbose) {
-      io.out.println(file.getPath());
+      io.println(file.getPath());
     }
 
     return null;

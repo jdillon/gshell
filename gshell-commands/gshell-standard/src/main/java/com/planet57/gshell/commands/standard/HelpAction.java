@@ -20,11 +20,10 @@ import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.IO;
+import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.help.AliasHelpPage;
 import com.planet57.gshell.help.CommandHelpPage;
@@ -35,21 +34,17 @@ import com.planet57.gshell.help.HelpPageUtil;
 import com.planet57.gshell.help.MetaHelpPage;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
-import com.planet57.gshell.util.predicate.TypePredicate;
+import com.planet57.gshell.util.jline.Complete;
 import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.Preferences;
-import org.jline.reader.Completer;
-import org.jline.reader.impl.completer.AggregateCompleter;
 import com.planet57.gshell.util.i18n.I18N;
 import com.planet57.gshell.util.i18n.MessageBundle;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Preconditions.checkState;
 
 /**
  * Display help pages.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
 @Command(name = "help", description = "Display help pages")
@@ -97,19 +92,12 @@ public class HelpAction
   private Boolean includeAll;
 
   @Argument(description = "Display the help page for NAME or list pages matching NAME", token = "NAME")
+  @Complete("help-page-name")
   private String name;
 
   @Inject
   public HelpAction(final HelpPageManager helpPages) {
     this.helpPages = checkNotNull(helpPages);
-  }
-
-  @Inject
-  public void installCompleters(@Named("alias-name") final Completer c1,
-                                @Named("node-path") final Completer c2,
-                                @Named("meta-help-page-name") final Completer c3)
-  {
-    setCompleters(new AggregateCompleter(c1, c2, c3), null);
   }
 
   @Override
@@ -137,14 +125,17 @@ public class HelpAction
       }
       else if (pages.size() > 1) {
         // else show matching pages
-        io.out.println(messages.matchingPages());
+        io.println(messages.matchingPages());
         HelpPageUtil.renderIndex(io.out, pages);
         return null;
       }
     }
 
     // if not page matched, complain
-    checkState(page != null, messages.helpNotFound(name));
+    if (page == null) {
+      io.println(messages.helpNotFound(name));
+      return 1;
+    }
 
     page.render(context.getShell(), io.out);
 
@@ -154,7 +145,7 @@ public class HelpAction
   private void displayAvailable(final CommandContext context) {
     Collection<HelpPage> pages = helpPages.getPages(query(helpPage -> true));
     IO io = context.getIo();
-    io.out.println(messages.availablePages());
+    io.println(messages.availablePages());
     HelpPageUtil.renderIndex(io.out, pages);
   }
 
@@ -179,5 +170,28 @@ public class HelpAction
     }
 
     return query;
+  }
+
+  //
+  // TypePredicate
+  //
+
+  private static class TypePredicate<T>
+    implements Predicate<T>
+  {
+    private final Class<?> type;
+
+    private TypePredicate(final Class<?> type) {
+      this.type = checkNotNull(type);
+    }
+
+    @Override
+    public boolean test(final T value) {
+      return value != null && type.isAssignableFrom(value.getClass());
+    }
+
+    public static <T> Predicate<T> of(final Class<?> type) {
+      return new TypePredicate<>(type);
+    }
   }
 }

@@ -19,25 +19,20 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ListIterator;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.IO;
+import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.command.CommandActionSupport;
-import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
 import org.jline.reader.History;
 import org.jline.utils.AttributedStringBuilder;
-import org.jline.utils.AttributedStyle;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 /**
  * Display history.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
 @Command(name = "history", description = "Display history")
@@ -53,10 +48,6 @@ public class HistoryAction
   @Option(name = "t", longName = "timestamps", description = "Display timestamps")
   private boolean timestamps;
 
-  @Argument(description = "Display the last N entries", token = "N")
-  @Nullable
-  private Integer last;
-
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     History history = context.getShell().getHistory();
@@ -64,37 +55,25 @@ public class HistoryAction
     if (purge) {
       history.purge();
       log.debug("History purged");
-      return null;
     }
     else if (save) {
       history.save();
       log.debug("History saved");
-      return null;
     }
-
-    return displayEntries(context);
-  }
-
-  private Object displayEntries(final CommandContext context) throws Exception {
-    IO io = context.getIo();
-    History history = context.getShell().getHistory();
-
-    log.debug("History size: {}", history.size());
-
-    int i = 0;
-    log.debug("Starting with entry: {}", i);
-
-    ListIterator<History.Entry> entries = history.iterator(i);
-    while (entries.hasNext()) {
-      renderEntry(io, entries.next());
+    else {
+      displayEntries(context.getIo(), history);
     }
 
     return null;
   }
 
-  private void renderEntry(final IO io, final History.Entry entry) {
-    String index = String.format("%3d", entry.index() + 1);
+  private void displayEntries(final IO io, final History history) {
+    log.debug("History size: {}", history.size());
 
+    history.forEach(entry -> renderEntry(io, entry));
+  }
+
+  private void renderEntry(final IO io, final History.Entry entry) {
     AttributedStringBuilder buff = new AttributedStringBuilder();
 
     if (timestamps) {
@@ -103,11 +82,11 @@ public class HistoryAction
       buff.append(" ");
     }
 
-    buff.style(AttributedStyle.BOLD);
-    buff.append(index);
-    buff.style(AttributedStyle.DEFAULT);
+    buff.style(buff.style().bold());
+    buff.append(String.format("%3d", entry.index() + 1));
+    buff.style(buff.style().boldOff());
     buff.append("  ").append(entry.line());
 
-    io.out.println(buff.toAnsi(io.terminal));
+    io.println(buff.toAnsi(io.terminal));
   }
 }

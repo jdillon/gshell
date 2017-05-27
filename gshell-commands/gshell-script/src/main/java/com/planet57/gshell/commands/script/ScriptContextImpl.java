@@ -23,7 +23,7 @@ import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.SimpleScriptContext;
 
-import com.planet57.gshell.command.IO;
+import com.planet57.gshell.util.io.IO;
 
 /**
  * Custom {@link ScriptContext}.

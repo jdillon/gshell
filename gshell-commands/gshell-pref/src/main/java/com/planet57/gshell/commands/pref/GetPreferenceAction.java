@@ -17,17 +17,14 @@ package com.planet57.gshell.commands.pref;
 
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.IO;
+import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.util.cli2.Argument;
 
 import javax.annotation.Nonnull;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Get a preference value.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 @Command(name = "pref/get", description = "Get a preference")
@@ -42,9 +39,8 @@ public class GetPreferenceAction
     IO io = context.getIo();
 
     log.debug("Getting preference: {}", key);
-
     Object value = node().get(key, null);
-    io.out.println(value);
+    io.println(value);
 
     return value;
   }

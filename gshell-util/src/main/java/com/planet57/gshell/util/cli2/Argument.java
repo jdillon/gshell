@@ -28,7 +28,6 @@ import static com.planet57.gshell.util.AnnotationDescriptor.UNINITIALIZED_STRING
 /**
  * Configures a field or method for processing as a command-line argument.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.3
  */
 @Retention(RetentionPolicy.RUNTIME)
@@ -44,6 +43,4 @@ public @interface Argument
   String description() default UNINITIALIZED_STRING;
 
   Class<? extends Handler> handler() default DefaultHandler.class;
-
-  // TODO: Add completer; could also introduce another annotation for this
 }

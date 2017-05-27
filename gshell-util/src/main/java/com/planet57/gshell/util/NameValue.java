@@ -20,7 +20,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Container and parser for <tt>name=value</tt> bits.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 public class NameValue

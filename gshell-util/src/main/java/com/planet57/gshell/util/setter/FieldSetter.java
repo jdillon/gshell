@@ -22,7 +22,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Setter for fields.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
 public class FieldSetter
@@ -49,5 +48,12 @@ public class FieldSetter
 
   protected void doSet(final Object value) throws IllegalAccessException {
     field.set(getBean(), value);
+  }
+
+  @Override
+  public String toString() {
+    return getClass().getSimpleName() + "{" +
+        "field=" + field +
+        '}';
   }
 }

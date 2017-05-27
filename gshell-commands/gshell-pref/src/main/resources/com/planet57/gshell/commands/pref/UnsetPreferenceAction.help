@@ -16,23 +16,24 @@
 
 @|bold NAME|@
 
-    @{command.name} - @{command.description}
+  @{command.name} - @{command.description}
 
 @|bold SYNOPSIS|@
 
-    @|bold @{command.name}|@ [options] PATH KEY
+  @|bold @{command.name}|@ [options] PATH KEY
 
 @|bold DESCRIPTION|@
 
-    Unset (delete) a preference.
+  Unset (delete) a preference.
 
 @{command.details}
+
 @|bold EXAMPLES|@
 
-    Unset a preference:
+  Unset a preference:
 
-        @{command.name} /some/path some-key
+    @{command.name} /some/path some-key
 
 @|bold SEE ALSO|@
 
-    @|bold pref/set|@, @|bold pref/get|@, @|bold pref/remove|@
+  @|bold pref/set|@, @|bold pref/get|@, @|bold pref/remove|@

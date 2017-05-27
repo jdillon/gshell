@@ -29,6 +29,18 @@ class ScriptActionTest
     super(ScriptAction.class)
   }
 
+  private File resolveFile(final String name) {
+    def file = util.resolveFile("src/test/resources/${getClass().package.name.replace('.', '/')}/$name")
+    assert file != null
+    return file
+  }
+
+  private URL resolveUrl(final String name) {
+    def url = getClass().getResource(name)
+    assert url != null
+    return url
+  }
+
   @Test(expected = ProcessingException.class)
   void 'language required'() {
     executeCommand('-e "57;"')
@@ -41,25 +53,45 @@ class ScriptActionTest
     executeCommand('-l javascript -u "http://localhost/script.js" -f foo.js')
   }
 
+  //
+  // javascript; standard on jvm
+  //
+
   @Test
   void 'evaluate javascript'() {
-    def result = executeCommand('-l javascript -e "57;"')
-    assert result == 57
+    assert executeCommand('-l javascript -e "57;"') == 57
   }
 
   @Test
   void 'url javascript'() {
-    def url = getClass().getResource('test.js')
-    assert url != null
-    def result = executeCommand("-l javascript -u $url")
-    assert result == 57
+    def url = resolveUrl('test.js')
+    assert executeCommand("-l javascript -u $url") == 57
   }
 
   @Test
   void 'file javascript'() {
-    def url = util.resolveFile("src/test/resources/${getClass().package.name.replace('.', '/')}/test.js")
-    assert url != null
-    def result = executeCommand("-l javascript -f $url")
-    assert result == 57
+    def file = resolveFile('test.js')
+    assert executeCommand("-l javascript -f $file") == 57
+  }
+
+  //
+  // groovy via gshell-groovy
+  //
+
+  @Test
+  void 'evaluate groovy'() {
+    assert executeCommand('-l groovy -e "return 57"') == 57
+  }
+
+  @Test
+  void 'url groovy'() {
+    def url = resolveUrl('test.groovy')
+    assert executeCommand("-l groovy -u $url") == 57
+  }
+
+  @Test
+  void 'file groovy'() {
+    def file = resolveFile('test.groovy')
+    assert executeCommand("-l groovy -f $file") == 57
   }
 }

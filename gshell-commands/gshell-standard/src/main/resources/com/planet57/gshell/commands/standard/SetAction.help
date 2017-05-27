@@ -16,41 +16,42 @@
 
 @|bold NAME|@
 
-    @{command.name} - @{command.description}
+  @{command.name} - @{command.description}
 
 @|bold SYNOPSIS|@
 
-    @|bold @{command.name}|@ [options] [NAME VALUE]
+  @|bold @{command.name}|@ [options] [NAME VALUE]
 
 @|bold DESCRIPTION|@
 
-    Set a shell variable or a system property.
+  Set a shell variable or a system property.
 
 @{command.details}
+
 @|bold EXAMPLES|@
 
-    List all defined variables:
+  List all defined variables:
 
-        @{command.name}
-    
-    Set a variable:
+    @{command.name}
 
-        @{command.name} FOO BAR
+  Set a variable:
 
-    Set a variable with quotes:
+    @{command.name} FOO BAR
 
-        @{command.name} FOO "this is foo"
+  Set a variable with quotes:
 
-    List all system properties:
+    @{command.name} FOO "this is foo"
 
-        @{command.name} -m property
+  List all system properties:
 
-    Set a system property:
+    @{command.name} -m property
 
-        @{command.name} -m property tmp.dir /tmp
+  Set a system property:
 
-    Some variables are @|bold immutable|@ and can not be changed.
+    @{command.name} -m property tmp.dir /tmp
+
+  Some variables are @|bold immutable|@ and can not be changed.
 
 @|bold SEE ALSO|@
 
-    @|bold unset|@
+  @|bold unset|@

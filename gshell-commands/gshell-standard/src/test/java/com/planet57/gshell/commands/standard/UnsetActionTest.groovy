@@ -16,7 +16,6 @@
 package com.planet57.gshell.commands.standard
 
 import com.planet57.gshell.testharness.CommandTestSupport
-import com.planet57.gshell.variables.Variables
 import org.junit.Test
 
 /**
@@ -31,22 +30,17 @@ class UnsetActionTest
 
   @Test
   void 'undefine variable'() {
-    Variables variables = shell.variables
-
+    def variables = shell.variables
     variables.set('foo', 'bar')
     assert variables.contains('foo')
 
-    Object result = executeCommand('foo')
-    assert result == null
+    assert executeCommand('foo') == null
     assert !variables.contains('foo')
   }
 
   @Test
   void 'undefine undefined variable'() {
-    Variables variables = shell.variables
-
-    assert !variables.contains('foo')
-    Object result = executeCommand('foo')
-    assert result == null
+    assert !shell.variables.contains('foo')
+    assert executeCommand('foo') == null
   }
 }

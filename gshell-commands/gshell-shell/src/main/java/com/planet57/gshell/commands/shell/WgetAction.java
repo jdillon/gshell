@@ -27,7 +27,7 @@ import com.google.common.io.ByteStreams;
 import com.google.common.io.Flushables;
 import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandContext;
-import com.planet57.gshell.command.IO;
+import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Argument;
 import com.planet57.gshell.util.cli2.Option;
@@ -39,7 +39,6 @@ import javax.annotation.Nullable;
 /**
  * Fetch a file from a URL.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.3
  */
 @Command(name = "wget", description = "Fetch a file from a URL")
@@ -60,16 +59,16 @@ public class WgetAction
   public Object execute(@Nonnull final CommandContext context) throws Exception {
     IO io = context.getIo();
 
-    io.out.printf("Downloading: %s%n", source);
+    io.format("Downloading: %s%n", source);
     if (verbose) {
-      io.out.printf("Connecting to: %s:%s%n", source.getHost(),
+      io.format("Connecting to: %s:%s%n", source.getHost(),
           source.getPort() != -1 ? source.getPort() : source.getDefaultPort());
     }
 
     URLConnection conn = source.openConnection();
 
     if (verbose) {
-      io.out.printf("Length: %s [%s]%n", conn.getContentLength(), conn.getContentType());
+      io.format("Length: %s [%s]%n", conn.getContentLength(), conn.getContentType());
     }
 
     InputStream in = conn.getInputStream();
@@ -77,7 +76,7 @@ public class WgetAction
     OutputStream out;
     if (outputFile != null) {
       if (verbose) {
-        io.out.printf("Saving to file: %s%n", outputFile);
+        io.format("Saving to file: %s%n", outputFile);
       }
       out = new BufferedOutputStream(new FileOutputStream(outputFile));
     }
@@ -90,7 +89,7 @@ public class WgetAction
     // if we write a file, close it then return the file
     if (outputFile != null) {
       Closeables.close(out);
-      io.out.printf("Saved %s [%s]%n", outputFile, outputFile.length());
+      io.format("Saved %s [%s]%n", outputFile, outputFile.length());
       return outputFile;
     }
 

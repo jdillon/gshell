@@ -16,29 +16,30 @@
 
 @|bold NAME|@
 
-    @{command.name} - @{command.description}
+  @{command.name} - @{command.description}
 
 @|bold SYNOPSIS|@
 
-    @|bold @{command.name}|@ [options] NAME [NAME...]
+  @|bold @{command.name}|@ [options] NAME [NAME...]
 
 @|bold DESCRIPTION|@
 
-    Removes a previously set variable or system property.
+  Removes a previously set variable or system property.
 
 @{command.details}
+
 @|bold EXAMPLES|@
 
-    Remove a variable:
+  Remove a variable:
 
-        @{command.name} FOO
+    @{command.name} FOO
 
-    Remove a system property:
+  Remove a system property:
 
-        @{command.name} -m property tmp.dir
+    @{command.name} -m property tmp.dir
 
-    Some variables are @|bold immutable|@ and can not be removed.
+  Some variables are @|bold immutable|@ and can not be removed.
 
 @|bold SEE ALSO|@
 
-    @|bold set|@
+  @|bold set|@

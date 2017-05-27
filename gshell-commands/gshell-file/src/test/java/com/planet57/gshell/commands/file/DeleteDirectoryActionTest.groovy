@@ -16,6 +16,8 @@
 package com.planet57.gshell.commands.file
 
 import com.planet57.gshell.testharness.CommandTestSupport
+import com.planet57.gshell.util.io.FileAssert
+import org.junit.Test
 
 /**
  * Tests for {@link DeleteDirectoryAction}.
@@ -25,5 +27,19 @@ class DeleteDirectoryActionTest
 {
   DeleteDirectoryActionTest() {
     super(DeleteDirectoryAction.class)
+  }
+
+  @Test
+  void 'delete directory'() {
+    File dir = util.createTempDir('delete-directory')
+    assert dir.exists()
+    assert executeCommand(dir.path) == null
+    assert !dir.exists()
+  }
+
+  @Test(expected = FileAssert.AssertionException.class)
+  void 'unable to delete directory which is a file'() {
+    File file = util.createTempFile('delete-directory')
+    executeCommand(file.path)
   }
 }

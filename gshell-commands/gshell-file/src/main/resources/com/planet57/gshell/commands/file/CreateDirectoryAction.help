@@ -16,23 +16,24 @@
 
 @|bold NAME|@
 
-    @{command.name} - @{command.description}
+  @{command.name} - @{command.description}
 
 @|bold SYNOPSIS|@
 
-    @|bold @{command.name}|@ [options] PATH
+  @|bold @{command.name}|@ [options] PATH
 
 @|bold DESCRIPTION|@
 
-    Creates a new directory if it does not already exist.
+  Creates a new directory if it does not already exist.
 
 @{command.details}
+
 @|bold EXAMPLES|@
 
-    Create a new directory:
+  Create a new directory:
 
-        @{command.name} /tmp/foo
+    @{command.name} /tmp/foo
 
 @|bold SEE ALSO|@
 
-    @|bold cd|@, @|bold rm|@, @|bold rmdir|@
+  @|bold cd|@, @|bold rm|@, @|bold rmdir|@

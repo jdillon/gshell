@@ -16,31 +16,32 @@
 
 @|bold NAME|@
 
-    @{command.name} - @{command.description}
+  @{command.name} - @{command.description}
 
 @|bold SYNOPSIS|@
 
-    @|bold @{command.name}|@ [options] [PATH]
+  @|bold @{command.name}|@ [options] [PATH]
 
 @|bold DESCRIPTION|@
 
-    Change the current working directory to a specific directory.
+  Change the current working directory to a specific directory.
 
 @{command.details}
+
 @|bold EXAMPLES|@
 
-    Change to /tmp:
+  Change to /tmp:
 
-        @{command.name} /tmp
+    @{command.name} /tmp
 
-    Change to ${shell.user.home):
+  Change to ${shell.user.home):
 
-        @{command.name}
+    @{command.name}
 
-    Change to parent directory:
+  Change to parent directory:
 
-        @{command.name} ..
+    @{command.name} ..
 
 @|bold SEE ALSO|@
 
-    @|bold pwd|@ 
+  @|bold pwd|@

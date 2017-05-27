@@ -45,7 +45,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Processes an object for cli annotations.
  *
- * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.3
  */
 public class CliProcessor
@@ -225,7 +224,7 @@ public class CliProcessor
   public void process(final String... args) throws Exception {
     checkNotNull(args);
     if (log.isTraceEnabled()) {
-      log.trace("Processing: {}", Arrays.asList(args));
+      log.trace("Processing: {}", Arrays.toString(args));
     }
 
     CliParser parser = flavor.create();
@@ -250,7 +249,7 @@ public class CliProcessor
     boolean override = false;
 
     if (log.isTraceEnabled()) {
-      log.trace("Parsed options: {}", Arrays.asList(cl.getOptions()));
+      log.trace("Parsed options: {}", Arrays.toString(cl.getOptions()));
     }
 
     for (Object tmp : cl.getOptions()) {

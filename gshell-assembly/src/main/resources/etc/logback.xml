@@ -29,6 +29,7 @@
 
   <logger name="Sisu" level="${shell.logging.logger.Sisu.level:-INFO}"/>
   <logger name="org.jline" level="${shell.logging.logger.org.jline.level:-INFO}"/>
+  <logger name="org.apache.http" level="${shell.logging.logger.org.apache.http:-INFO}"/>
 
   <root level="${shell.logging.root-level:-INFO}">
     <appender-ref ref="console"/>
