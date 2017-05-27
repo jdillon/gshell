@@ -53,15 +53,11 @@ public class StyleFactory
   //}
 
   /**
-   * Encode string with style applying to formatted string.
+   * Encode string with style applying value.
    */
-  public AttributedString style(final String style, final String format, final Object... params) {
+  public AttributedString style(final String style, final String value) {
     checkNotNull(style);
-    checkNotNull(format);
-    checkNotNull(params);
-    // params could be empty
-
-    String value = String.format(format, params);
+    checkNotNull(value);
     AttributedStyle astyle = resolver.resolve(style);
     return new AttributedString(value, astyle);
   }

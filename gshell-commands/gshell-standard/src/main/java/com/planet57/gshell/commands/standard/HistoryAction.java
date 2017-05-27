@@ -87,7 +87,7 @@ public class HistoryAction
     }
 
     int index = entry.index() + 1;
-    buff.append(styles.style(".index:-bold", "%3d", index))
+    buff.append(styles.style(".index:-bold", String.format("%3d", index)))
         .append("  ")
         .append(entry.line());
 

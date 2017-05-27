@@ -45,7 +45,7 @@ class StyleFactoryTest
 
   @Test
   void 'direct style'() {
-    def string = underTest.style('bold,fg:red', 'foo %s', 'bar')
+    def string = underTest.style('bold,fg:red', 'foo bar')
     def style = AttributedStyle.BOLD.foreground(AttributedStyle.RED)
     assert string == new AttributedString('foo bar', style)
   }
@@ -53,7 +53,7 @@ class StyleFactoryTest
   @Test
   void 'referenced style'() {
     source.group('test').put('very-red', 'bold,fg:red')
-    def string = underTest.style('.very-red', 'foo %s', 'bar')
+    def string = underTest.style('.very-red', 'foo bar')
     def style = AttributedStyle.BOLD.foreground(AttributedStyle.RED)
     assert string == new AttributedString('foo bar', style)
   }
@@ -62,7 +62,7 @@ class StyleFactoryTest
 
   @Test
   void 'missing referenced style with default'() {
-    def string = underTest.style('.very-red:-bold,fg:red', 'foo %s', 'bar')
+    def string = underTest.style('.very-red:-bold,fg:red', 'foo bar')
     def style = AttributedStyle.BOLD.foreground(AttributedStyle.RED)
     assert string == new AttributedString('foo bar', style)
   }
@@ -70,7 +70,7 @@ class StyleFactoryTest
   @Test
   void 'missing referenced style with customized'() {
     source.group('test').put('very-red', 'bold,fg:yellow')
-    def string = underTest.style('.very-red:-bold,fg:red', 'foo %s', 'bar')
+    def string = underTest.style('.very-red:-bold,fg:red', 'foo bar')
     def style = AttributedStyle.BOLD.foreground(AttributedStyle.YELLOW)
     assert string == new AttributedString('foo bar', style)
   }
