@@ -21,7 +21,7 @@ import com.planet57.gossip.Log
 import com.planet57.gshell.util.style.StyleBundle.DefaultStyle
 import com.planet57.gshell.util.style.StyleBundle.StyleGroup
 import com.planet57.gshell.util.style.StyleBundle.StyleName
-import com.planet57.gshell.util.style.Styler.InvalidStyleBundleException
+import com.planet57.gshell.util.style.Styler.InvalidStyleBundleMethodException
 import org.jline.utils.AttributedString
 import org.jline.utils.AttributedStyle
 import org.junit.Before
@@ -98,21 +98,21 @@ class StyleBundleTest
     try {
       styles.invalidReturn('foo')
     }
-    catch (InvalidStyleBundleException e) {
+    catch (InvalidStyleBundleMethodException e) {
       // expected
     }
 
     try {
       styles.notEnoughArguments()
     }
-    catch (InvalidStyleBundleException e) {
+    catch (InvalidStyleBundleMethodException e) {
       // expected
     }
 
     try {
       styles.tooManyArguments(1, 2)
     }
-    catch (InvalidStyleBundleException e) {
+    catch (InvalidStyleBundleMethodException e) {
       // expected
     }
   }

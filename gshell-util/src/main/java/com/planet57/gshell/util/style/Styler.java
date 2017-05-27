@@ -112,12 +112,12 @@ public class Styler
 
       // All StyleBundle methods must take exactly 1 parameter
       if (method.getParameterCount() != 1) {
-        throw new InvalidStyleBundleException("Illegal StyleBundle method; invalid parameters: " + method);
+        throw new InvalidStyleBundleMethodException(method, "Invalid parameters");
       }
 
       // All StyleBundle methods must return an AttributeString
       if (method.getReturnType() != AttributedString.class) {
-        throw new InvalidStyleBundleException("Illegal StyleBundle method; invalid return-type: " + method);
+        throw new InvalidStyleBundleMethodException(method, "Invalid return-type");
       }
 
       // resolve the style-name for method
@@ -145,11 +145,11 @@ public class Styler
    * Thrown when processing {@link StyleBundle} method is found to be invalid.
    */
   @VisibleForTesting
-  static class InvalidStyleBundleException
+  static class InvalidStyleBundleMethodException
     extends RuntimeException
   {
-    public InvalidStyleBundleException(final String message) {
-      super(message);
+    public InvalidStyleBundleMethodException(final Method method, final String message) {
+      super(message + ": " + method);
     }
   }
 
