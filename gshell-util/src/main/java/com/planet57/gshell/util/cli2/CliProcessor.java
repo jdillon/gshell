@@ -83,8 +83,7 @@ public class CliProcessor
 
   private MessageSource userMessages;
 
-  // TODO: change to Flavor.DEFAULT; but have to sort out control/handling of required-options which are delayed for Option.override handling
-  private CliParser.Flavor flavor = CliParser.Flavor.POSIX;
+  private CliParser.Flavor flavor = CliParser.Flavor.DEFAULT;
 
   public CliProcessor() {
     // empty
