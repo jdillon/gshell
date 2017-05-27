@@ -21,6 +21,7 @@ import java.lang.reflect.Proxy;
 
 import javax.annotation.Nullable;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
 import com.planet57.gossip.Log;
 import com.planet57.gshell.util.style.StyleBundle.DefaultStyle;
@@ -111,12 +112,12 @@ public class Styler
 
       // All StyleBundle methods must take exactly 1 parameter
       if (method.getParameterCount() != 1) {
-        throw new RuntimeException("Illegal StyleBundle method; invalid parameters: " + method);
+        throw new InvalidStyleBundleException("Illegal StyleBundle method; invalid parameters: " + method);
       }
 
       // All StyleBundle methods must return an AttributeString
       if (method.getReturnType() != AttributedString.class) {
-        throw new RuntimeException("Illegal StyleBundle method; invalid return-type: " + method);
+        throw new InvalidStyleBundleException("Illegal StyleBundle method; invalid return-type: " + method);
       }
 
       // resolve the style-name for method
@@ -137,6 +138,18 @@ public class Styler
 
       AttributedStyle astyle = resolver.resolve(style);
       return new AttributedString(value, astyle);
+    }
+  }
+
+  /**
+   * Thrown when processing {@link StyleBundle} method is found to be invalid.
+   */
+  @VisibleForTesting
+  static class InvalidStyleBundleException
+    extends RuntimeException
+  {
+    public InvalidStyleBundleException(final String message) {
+      super(message);
     }
   }
 

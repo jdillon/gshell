@@ -21,6 +21,7 @@ import com.planet57.gossip.Log
 import com.planet57.gshell.util.style.StyleBundle.DefaultStyle
 import com.planet57.gshell.util.style.StyleBundle.StyleGroup
 import com.planet57.gshell.util.style.StyleBundle.StyleName
+import com.planet57.gshell.util.style.Styler.InvalidStyleBundleException
 import org.jline.utils.AttributedString
 import org.jline.utils.AttributedStyle
 import org.junit.Before
@@ -28,9 +29,9 @@ import org.junit.Test
 import org.slf4j.LoggerFactory
 
 /**
- * Tests for {@link Styler}.
+ * Tests for {@link StyleBundle}.
  */
-class StylerTest
+class StyleBundleTest
   extends TestSupport
 {
   private MemoryStyleSource source
@@ -45,7 +46,7 @@ class StylerTest
   }
 
   @StyleGroup('test')
-  static interface TestBundle
+  static interface Styles
     extends StyleBundle
   {
     @DefaultStyle('bold,fg:red')
@@ -64,7 +65,7 @@ class StylerTest
 
   @Test
   void 'bundle default-style'() {
-    def styles = Styler.bundle(TestBundle.class)
+    def styles = Styler.bundle(Styles.class)
     def string = styles.boldRed('foo bar')
 
     def style = AttributedStyle.BOLD.foreground(AttributedStyle.RED)
@@ -73,7 +74,7 @@ class StylerTest
 
   @Test
   void 'bundle style-name with default-style'() {
-    def styles = Styler.bundle(TestBundle.class)
+    def styles = Styler.bundle(Styles.class)
     def string = styles.boldRedObjectWithStyleName('foo bar')
 
     def style = AttributedStyle.BOLD.foreground(AttributedStyle.RED)
@@ -83,7 +84,7 @@ class StylerTest
   @Test
   void 'bundle sourced-style'() {
     source.group('test').put('boldRed', 'bold,fg:yellow')
-    def styles = Styler.bundle(TestBundle.class)
+    def styles = Styler.bundle(Styles.class)
     def string = styles.boldRed('foo bar')
 
     def style = AttributedStyle.BOLD.foreground(AttributedStyle.YELLOW)
@@ -92,29 +93,26 @@ class StylerTest
 
   @Test
   void 'bundle method validation'() {
-    def styles = Styler.bundle(TestBundle.class)
+    def styles = Styler.bundle(Styles.class)
 
     try {
       styles.invalidReturn('foo')
     }
-    catch (e) {
-      e.printStackTrace()
+    catch (InvalidStyleBundleException e) {
       // expected
     }
 
     try {
       styles.notEnoughArguments()
     }
-    catch (e) {
-      e.printStackTrace()
+    catch (InvalidStyleBundleException e) {
       // expected
     }
 
     try {
       styles.tooManyArguments(1, 2)
     }
-    catch (e) {
-      e.printStackTrace()
+    catch (InvalidStyleBundleException e) {
       // expected
     }
   }
