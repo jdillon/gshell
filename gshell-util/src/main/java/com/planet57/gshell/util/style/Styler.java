@@ -75,7 +75,7 @@ public class Styler
   }
 
   /**
-   * Create a style-bundle proxy.
+   * Create a {@link StyleBundle} proxy.
    */
   @SuppressWarnings("unchecked")
   public static < T extends StyleBundle> T bundle(final Class<T> type) {
