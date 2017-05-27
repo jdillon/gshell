@@ -53,9 +53,12 @@ interface CliParser
       extends org.apache.commons.cli.GnuParser
       implements CliParser
     {
+      /**
+       * Default required options check delayed for {@link Option#override()} support.
+       */
       @Override
       protected void checkRequiredOptions() {
-        // delay, need to check for required options after processing to support override
+        // empty
       }
 
       @Override
@@ -69,9 +72,12 @@ interface CliParser
       extends org.apache.commons.cli.PosixParser
       implements CliParser
     {
+      /**
+       * Default required options check delayed for {@link Option#override()} support.
+       */
       @Override
       protected void checkRequiredOptions() {
-        // delay, need to check for required options after processing to support override
+        // empty
       }
 
       @Override
@@ -84,17 +90,17 @@ interface CliParser
       extends org.apache.commons.cli.DefaultParser
       implements CliParser
     {
-      // FIXME: DefaultParser.checkRequiredOptions() is private; so we can't control its behavior
-
-      // @Override
-      // protected void checkRequiredOptions() {
-      //  // delay, need to check for required options after processing to support override
-      // }
+      /**
+       * Default required options check delayed for {@link Option#override()} support.
+       */
+      @Override
+      protected void checkRequiredOptions() {
+        // empty
+      }
 
       @Override
       public void ensureRequiredOptionsPresent() throws MissingOptionException {
-        // FIXME: DefaultParser.checkRequiredOptions() is private; so we can't control its behavior
-        // super.checkRequiredOptions();
+         super.checkRequiredOptions();
       }
     }
   }
