@@ -293,7 +293,7 @@ public class ShellImpl
     renderMessage(io, branding.getWelcomeMessage());
 
     // handle CTRL-C
-    SignalHandler interruptHandler = terminal.handle(Signal.INT, s -> {
+    final SignalHandler previousInterruptHandler = terminal.handle(Signal.INT, s -> {
       Job current = session.foregroundJob();
       if (current != null) {
         log.debug("Interrupting task: {}", current);
@@ -302,7 +302,7 @@ public class ShellImpl
     });
 
     // handle CTRL-Z
-    SignalHandler suspendHandler = terminal.handle(Signal.TSTP, s -> {
+    final SignalHandler previousSuspendHandler = terminal.handle(Signal.TSTP, s -> {
       Job current = session.foregroundJob();
       if (current != null) {
         log.debug("Suspending task: {}", current);
@@ -352,8 +352,8 @@ public class ShellImpl
       }
     }
     finally {
-      terminal.handle(Signal.INT, interruptHandler);
-      terminal.handle(Signal.TSTP, suspendHandler);
+      terminal.handle(Signal.INT, previousInterruptHandler);
+      terminal.handle(Signal.TSTP, previousSuspendHandler);
     }
     log.trace("Stopped");
 
