@@ -32,7 +32,6 @@ import org.jline.utils.AttributedStyle;
 import org.slf4j.Logger;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Preconditions.checkState;
 
 /**
  * {@link StyleBundle} proxy invocation-handler to convert method calls into string styling.
@@ -111,34 +110,6 @@ class StyleBundleInvocationHandler
   }
 
   /**
-   * Thrown when {@link StyleBundle} method has missing {@link DefaultStyle}.
-   */
-  @VisibleForTesting
-  static class StyleBundleMethodMissingDefaultStyleException
-    extends RuntimeException
-  {
-    public StyleBundleMethodMissingDefaultStyleException(final Method method) {
-      super(String.format("%s method missing @%s: %s",
-          StyleBundle.class.getSimpleName(),
-          DefaultStyle.class.getSimpleName(),
-          method
-      ));
-    }
-  }
-
-  /**
-   * Thrown when processing {@link StyleBundle} method is found to be invalid.
-   */
-  @VisibleForTesting
-  static class InvalidStyleBundleMethodException
-      extends RuntimeException
-  {
-    public InvalidStyleBundleMethodException(final Method method, final String message) {
-      super(message + ": " + method);
-    }
-  }
-
-  /**
    * Returns the style group-name for given type, or {@code null} if unable to determine.
    */
   @Nullable
@@ -182,16 +153,67 @@ class StyleBundleInvocationHandler
     return (T) Proxy.newProxyInstance(type.getClassLoader(), new Class[]{type}, handler);
   }
 
+  /**
+   * Internal factory-method.
+   *
+   * @see Styler#bundle(String,Class)
+   */
   static <T extends StyleBundle> T create(final StyleSource source, final Class<T> type) {
     checkNotNull(type);
 
     String group = getStyleGroup(type);
-    checkState(group != null, "%s missing or invalid @%s: %s",
-        StyleBundle.class.getSimpleName(),
-        StyleGroup.class.getSimpleName(),
-        type.getName()
-    );
+    if (group == null) {
+      throw new InvalidStyleGroupException(type);
+    }
 
     return create(source, type, group);
+  }
+
+  //
+  // Exceptions
+  //
+
+  /**
+   * Thrown when {@link StyleBundle} method has missing {@link DefaultStyle}.
+   */
+  @VisibleForTesting
+  static class StyleBundleMethodMissingDefaultStyleException
+      extends RuntimeException
+  {
+    public StyleBundleMethodMissingDefaultStyleException(final Method method) {
+      super(String.format("%s method missing @%s: %s",
+          StyleBundle.class.getSimpleName(),
+          DefaultStyle.class.getSimpleName(),
+          method
+      ));
+    }
+  }
+
+  /**
+   * Thrown when processing {@link StyleBundle} method is found to be invalid.
+   */
+  @VisibleForTesting
+  static class InvalidStyleBundleMethodException
+      extends RuntimeException
+  {
+    public InvalidStyleBundleMethodException(final Method method, final String message) {
+      super(message + ": " + method);
+    }
+  }
+
+  /**
+   * Thrown when looking up {@link StyleGroup} on a type found to be missing or invalid.
+   */
+  @VisibleForTesting
+  static class InvalidStyleGroupException
+      extends RuntimeException
+  {
+    public InvalidStyleGroupException(final Class type) {
+      super(String.format("%s missing or invalid @%s: %s",
+          StyleBundle.class.getSimpleName(),
+          StyleGroup.class.getSimpleName(),
+          type.getName()
+      ));
+    }
   }
 }

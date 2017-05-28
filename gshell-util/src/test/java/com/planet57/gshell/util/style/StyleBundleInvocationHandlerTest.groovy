@@ -22,6 +22,7 @@ import com.planet57.gshell.util.style.StyleBundle.DefaultStyle
 import com.planet57.gshell.util.style.StyleBundle.StyleGroup
 import com.planet57.gshell.util.style.StyleBundle.StyleName
 import com.planet57.gshell.util.style.StyleBundleInvocationHandler.InvalidStyleBundleMethodException
+import com.planet57.gshell.util.style.StyleBundleInvocationHandler.InvalidStyleGroupException
 import com.planet57.gshell.util.style.StyleBundleInvocationHandler.StyleBundleMethodMissingDefaultStyleException
 import org.jline.utils.AttributedString
 import org.jline.utils.AttributedStyle
@@ -63,6 +64,24 @@ class StyleBundleInvocationHandlerTest
     AttributedString notEnoughArguments()
 
     AttributedString tooManyArguments(int a, int b)
+  }
+
+  static interface MissingStyleGroupStyles
+    extends StyleBundle
+  {
+    @DefaultStyle('bold,fg:red')
+    AttributedString boldRed(String value)
+  }
+
+  @Test
+  void 'bundle missing style-group'() {
+    try {
+      StyleBundleInvocationHandler.create(source, MissingStyleGroupStyles.class)
+      assert false
+    }
+    catch (InvalidStyleGroupException e) {
+      // expected
+    }
   }
 
   @Test
