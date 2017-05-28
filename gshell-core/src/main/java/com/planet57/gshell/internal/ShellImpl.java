@@ -437,14 +437,14 @@ public class ShellImpl
 
     String prompt = expand(session, value);
 
-    // fail-safe prompt
-    if (prompt == null) {
-      prompt = String.format("%s> ", branding.getProgramName());
-    }
-
     // post-expand render prompt for style
     if (prompt != null) {
       prompt = Styler.factory("shell").evaluate(prompt).toAnsi(io.terminal);
+    }
+
+    // fail-safe prompt
+    if (prompt == null) {
+      prompt = String.format("%s> ", branding.getProgramName());
     }
 
     return prompt;
