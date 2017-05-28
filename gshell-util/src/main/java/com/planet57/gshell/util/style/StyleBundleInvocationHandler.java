@@ -73,12 +73,11 @@ class StyleBundleInvocationHandler
 
     if (style == null) {
       style = getDefaultStyle(method);
+
       // if sourced-style was missing and default-style is missing barf
-      checkState(style != null, "%s method missing @%s: %s",
-          StyleBundle.class.getSimpleName(),
-          DefaultStyle.class.getSimpleName(),
-          method
-      );
+      if (style == null) {
+        throw new StyleBundleMethodMissingDefaultStyleException(method);
+      }
     }
 
     String value  = String.valueOf(args[0]);
@@ -112,21 +111,30 @@ class StyleBundleInvocationHandler
   }
 
   /**
+   * Thrown when {@link StyleBundle} method has missing {@link DefaultStyle}.
+   */
+  @VisibleForTesting
+  static class StyleBundleMethodMissingDefaultStyleException
+    extends RuntimeException
+  {
+    public StyleBundleMethodMissingDefaultStyleException(final Method method) {
+      super(String.format("%s method missing @%s: %s",
+          StyleBundle.class.getSimpleName(),
+          DefaultStyle.class.getSimpleName(),
+          method
+      ));
+    }
+  }
+
+  /**
    * Thrown when processing {@link StyleBundle} method is found to be invalid.
    */
   @VisibleForTesting
   static class InvalidStyleBundleMethodException
       extends RuntimeException
   {
-    private final Method method;
-
     public InvalidStyleBundleMethodException(final Method method, final String message) {
       super(message + ": " + method);
-      this.method = method;
-    }
-
-    public Method getMethod() {
-      return method;
     }
   }
 

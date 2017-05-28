@@ -22,6 +22,7 @@ import com.planet57.gshell.util.style.StyleBundle.DefaultStyle
 import com.planet57.gshell.util.style.StyleBundle.StyleGroup
 import com.planet57.gshell.util.style.StyleBundle.StyleName
 import com.planet57.gshell.util.style.StyleBundleInvocationHandler.InvalidStyleBundleMethodException
+import com.planet57.gshell.util.style.StyleBundleInvocationHandler.StyleBundleMethodMissingDefaultStyleException
 import org.jline.utils.AttributedString
 import org.jline.utils.AttributedStyle
 import org.junit.Before
@@ -55,6 +56,8 @@ class StyleBundleInvocationHandlerTest
     @DefaultStyle('bold,fg:red')
     AttributedString boldRedObjectWithStyleName(Object value)
 
+    AttributedString missingDefaultStyle(String value)
+
     void invalidReturn(String value)
 
     AttributedString notEnoughArguments()
@@ -63,11 +66,36 @@ class StyleBundleInvocationHandlerTest
   }
 
   @Test
+  void 'bundle proxy-toString'() {
+    def styles = StyleBundleInvocationHandler.create(source, Styles.class)
+    assert styles.toString() == Styles.class.getName()
+  }
+
+  @Test
   void 'bundle default-style'() {
     def styles = StyleBundleInvocationHandler.create(source, Styles.class)
-    println styles
     def string = styles.boldRed('foo bar')
     assert string == new AttributedString('foo bar', AttributedStyle.BOLD.foreground(AttributedStyle.RED))
+  }
+
+  @Test
+  void 'bundle default-style missing'() {
+    def styles = StyleBundleInvocationHandler.create(source, Styles.class)
+    try {
+      styles.missingDefaultStyle('foo bar')
+      assert false
+    }
+    catch (StyleBundleMethodMissingDefaultStyleException e) {
+      // expected
+    }
+  }
+
+  @Test
+  void 'bundle default-style missing but source-referenced'() {
+    source.group('test').put('missingDefaultStyle', 'bold')
+    def styles = StyleBundleInvocationHandler.create(source, Styles.class)
+    def string = styles.missingDefaultStyle('foo bar')
+    assert string == new AttributedString('foo bar', AttributedStyle.BOLD)
   }
 
   @Test
@@ -81,6 +109,14 @@ class StyleBundleInvocationHandlerTest
   void 'bundle sourced-style'() {
     source.group('test').put('boldRed', 'bold,fg:yellow')
     def styles = StyleBundleInvocationHandler.create(source, Styles.class)
+    def string = styles.boldRed('foo bar')
+    assert string == new AttributedString('foo bar', AttributedStyle.BOLD.foreground(AttributedStyle.YELLOW))
+  }
+
+  @Test
+  void 'bundle explicit style-group'() {
+    source.group('test2').put('boldRed', 'bold,fg:yellow')
+    def styles = StyleBundleInvocationHandler.create(source, Styles.class, 'test2')
     def string = styles.boldRed('foo bar')
     assert string == new AttributedString('foo bar', AttributedStyle.BOLD.foreground(AttributedStyle.YELLOW))
   }
