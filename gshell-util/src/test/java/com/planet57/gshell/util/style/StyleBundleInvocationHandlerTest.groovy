@@ -15,9 +15,6 @@
  */
 package com.planet57.gshell.util.style
 
-import org.sonatype.goodies.testsupport.TestSupport
-
-import com.planet57.gossip.Log
 import com.planet57.gshell.util.style.StyleBundle.DefaultStyle
 import com.planet57.gshell.util.style.StyleBundle.StyleGroup
 import com.planet57.gshell.util.style.StyleBundle.StyleName
@@ -25,27 +22,18 @@ import com.planet57.gshell.util.style.StyleBundleInvocationHandler.InvalidStyleB
 import com.planet57.gshell.util.style.StyleBundleInvocationHandler.InvalidStyleGroupException
 import com.planet57.gshell.util.style.StyleBundleInvocationHandler.StyleBundleMethodMissingDefaultStyleException
 import org.jline.utils.AttributedString
-import org.jline.utils.AttributedStyle
-import org.junit.Before
 import org.junit.Test
-import org.slf4j.LoggerFactory
+
+import static org.jline.utils.AttributedStyle.BOLD
+import static org.jline.utils.AttributedStyle.RED
+import static org.jline.utils.AttributedStyle.YELLOW
 
 /**
  * Tests for {@link StyleBundleInvocationHandler}.
  */
 class StyleBundleInvocationHandlerTest
-  extends TestSupport
+  extends StyleTestSupport
 {
-  private MemoryStyleSource source
-
-  @Before
-  void setUp() {
-    // force bootstrap gossip logger to adapt to runtime logger-factory
-    Log.configure(LoggerFactory.getILoggerFactory())
-
-    this.source = new MemoryStyleSource()
-  }
-
   @StyleGroup('test')
   static interface Styles
     extends StyleBundle
@@ -94,7 +82,8 @@ class StyleBundleInvocationHandlerTest
   void 'bundle default-style'() {
     def styles = StyleBundleInvocationHandler.create(source, Styles.class)
     def string = styles.boldRed('foo bar')
-    assert string == new AttributedString('foo bar', AttributedStyle.BOLD.foreground(AttributedStyle.RED))
+    println string.toAnsi()
+    assert string == new AttributedString('foo bar', BOLD.foreground(RED))
   }
 
   @Test
@@ -114,14 +103,16 @@ class StyleBundleInvocationHandlerTest
     source.group('test').put('missingDefaultStyle', 'bold')
     def styles = StyleBundleInvocationHandler.create(source, Styles.class)
     def string = styles.missingDefaultStyle('foo bar')
-    assert string == new AttributedString('foo bar', AttributedStyle.BOLD)
+    println string.toAnsi()
+    assert string == new AttributedString('foo bar', BOLD)
   }
 
   @Test
   void 'bundle style-name with default-style'() {
     def styles = StyleBundleInvocationHandler.create(source, Styles.class)
     def string = styles.boldRedObjectWithStyleName('foo bar')
-    assert string == new AttributedString('foo bar', AttributedStyle.BOLD.foreground(AttributedStyle.RED))
+    println string.toAnsi()
+    assert string == new AttributedString('foo bar', BOLD.foreground(RED))
   }
 
   @Test
@@ -129,15 +120,17 @@ class StyleBundleInvocationHandlerTest
     source.group('test').put('boldRed', 'bold,fg:yellow')
     def styles = StyleBundleInvocationHandler.create(source, Styles.class)
     def string = styles.boldRed('foo bar')
-    assert string == new AttributedString('foo bar', AttributedStyle.BOLD.foreground(AttributedStyle.YELLOW))
+    println string.toAnsi()
+    assert string == new AttributedString('foo bar', BOLD.foreground(YELLOW))
   }
 
   @Test
   void 'bundle explicit style-group'() {
     source.group('test2').put('boldRed', 'bold,fg:yellow')
-    def styles = StyleBundleInvocationHandler.create(source, Styles.class, 'test2')
+    def styles = StyleBundleInvocationHandler.create(new StyleResolver(source, 'test2'), Styles.class)
     def string = styles.boldRed('foo bar')
-    assert string == new AttributedString('foo bar', AttributedStyle.BOLD.foreground(AttributedStyle.YELLOW))
+    println string.toAnsi()
+    assert string == new AttributedString('foo bar', BOLD.foreground(YELLOW))
   }
 
   @Test

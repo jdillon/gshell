@@ -38,6 +38,7 @@ import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.help.HelpPageManager;
 import com.planet57.gshell.util.jline.LoggingCompleter;
+import com.planet57.gshell.util.style.Styler;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
 import org.apache.felix.gogo.jline.Expander;
@@ -441,10 +442,10 @@ public class ShellImpl
       prompt = String.format("%s> ", branding.getProgramName());
     }
 
-    // FIXME: may need to adjust ansi-renderer syntax or pre-render before expanding to avoid needing escapes
-    //if (prompt != null) {
-    //  prompt = Styler.evaluate("shell", prompt).toAnsi(io.terminal);
-    //}
+    // post-expand render prompt for style
+    if (prompt != null) {
+      prompt = Styler.factory("shell").evaluate(prompt).toAnsi(io.terminal);
+    }
 
     return prompt;
   }
@@ -459,10 +460,10 @@ public class ShellImpl
     if (value != null) {
       String prompt = expand(session, value);
 
-      // FIXME: may need to adjust ansi-renderer syntax or pre-render before expanding to avoid needing escapes
-      //if (prompt != null) {
-      //  prompt = Styler.evaluate("shell", prompt).toAnsi(io.terminal);
-      //}
+      // post-expand render prompt for style
+      if (prompt != null) {
+        prompt = Styler.factory("shell").evaluate(prompt).toAnsi(io.terminal);
+      }
 
       return prompt;
     }

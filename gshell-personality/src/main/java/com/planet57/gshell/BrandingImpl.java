@@ -22,7 +22,6 @@ import com.planet57.gshell.branding.BrandingSupport;
 import com.planet57.gshell.branding.License;
 import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.util.io.PrintBuffer;
-import com.planet57.gshell.util.style.Styler;
 import com.planet57.gshell.variables.Variables;
 import org.jline.terminal.Terminal;
 import org.jline.utils.InfoCmp;
@@ -77,14 +76,7 @@ public class  BrandingImpl
 
   @Override
   public String getPrompt() {
-    // FIXME: may need to adjust ansi-renderer syntax or pre-render before expanding to avoid needing escapes
-    // return String.format("\\@\\{bold %s\\}(${%s}):${%s}> ", getProgramName(), SHELL_GROUP, SHELL_USER_DIR);
-
-    //return Styler.factory("shell")
-    //    .evaluate("@{bold %s} ${%s} : ${%s} > ", getProgramName(), SHELL_GROUP, SHELL_USER_DIR)
-    //    .toAnsi();
-
-    return String.format("%s ${%s}:${%s}> ", getProgramName(), SHELL_GROUP, SHELL_USER_DIR);
+    return String.format("\\@\\{bold,fg:cyan %s\\}\\(${%s}\\):${%s}> ", getProgramName(), SHELL_GROUP, SHELL_USER_DIR);
   }
 
   @Override

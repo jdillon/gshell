@@ -15,110 +15,104 @@
  */
 package com.planet57.gshell.util.style
 
-import org.sonatype.goodies.testsupport.TestSupport
-
-import com.planet57.gossip.Log
-import org.jline.utils.AttributedStyle
 import org.junit.Before
 import org.junit.Test
-import org.slf4j.LoggerFactory
+
+import static org.jline.utils.AttributedStyle.BOLD
+import static org.jline.utils.AttributedStyle.DEFAULT
+import static org.jline.utils.AttributedStyle.RED
 
 /**
  * Tests for {@link StyleResolver}.
  */
 class StyleResolverTest
-  extends TestSupport
+  extends StyleTestSupport
 {
-  private MemoryStyleSource source
-
   private StyleResolver underTest
 
   @Before
   void setUp() {
-    // force bootstrap gossip logger to adapt to runtime logger-factory
-    Log.configure(LoggerFactory.getILoggerFactory())
-
-    this.source = new MemoryStyleSource()
+    super.setUp()
     this.underTest = new StyleResolver(source, 'test')
   }
 
   @Test
   void 'resolve bold'() {
     def style = underTest.resolve('bold')
-    assert style == AttributedStyle.BOLD
+    assert style == BOLD
   }
 
   @Test
   void 'resolve fg:red'() {
     def style = underTest.resolve('fg:red')
-    assert style == AttributedStyle.DEFAULT.foreground(AttributedStyle.RED)
+    assert style == DEFAULT.foreground(RED)
   }
 
   @Test
   void 'resolve fg:red with whitespace'() {
     def style = underTest.resolve(' fg:  red ')
-    assert style == AttributedStyle.DEFAULT.foreground(AttributedStyle.RED)
+    assert style == DEFAULT.foreground(RED)
   }
 
   @Test
   void 'resolve bg:red'() {
     def style = underTest.resolve('bg:red')
-    assert style == AttributedStyle.DEFAULT.background(AttributedStyle.RED)
+    assert style == DEFAULT.background(RED)
   }
 
   @Test
   void 'resolve invalid color-mode'() {
     def style = underTest.resolve('invalid:red')
-    assert style == AttributedStyle.DEFAULT
+    assert style == DEFAULT
   }
 
   @Test
   void 'resolve invalid color-name'() {
     def style = underTest.resolve('fg:invalid')
-    assert style == AttributedStyle.DEFAULT
+    assert style == DEFAULT
   }
 
   @Test
   void 'resolve bold,fg:red'() {
     def style = underTest.resolve('bold,fg:red')
-    assert style == AttributedStyle.BOLD.foreground(AttributedStyle.RED)
+    assert style == BOLD.foreground(RED)
   }
 
   @Test
   void 'resolve with whitespace'() {
     def style = underTest.resolve('  bold ,   fg:red   ')
-    assert style == AttributedStyle.BOLD.foreground(AttributedStyle.RED)
+    assert style == BOLD.foreground(RED)
   }
 
   @Test
   void 'resolve with missing values'() {
     def style = underTest.resolve('bold,,,,,fg:red')
-    assert style == AttributedStyle.BOLD.foreground(AttributedStyle.RED)
+    assert style == BOLD.foreground(RED)
   }
 
   @Test
   void 'resolve referenced style'() {
     source.group('test').put('very-red', 'bold,fg:red')
     def style = underTest.resolve('.very-red')
-    assert style == AttributedStyle.BOLD.foreground(AttributedStyle.RED)
+    assert style == BOLD.foreground(RED)
   }
 
   @Test
   void 'resolve referenced style-missing with default direct'() {
     def style = underTest.resolve('.very-red:-bold,fg:red')
-    assert style == AttributedStyle.BOLD.foreground(AttributedStyle.RED)
+    assert style == BOLD.foreground(RED)
   }
 
   @Test
   void 'resolve referenced style-missing with default direct and whitespace'() {
     def style = underTest.resolve('.very-red   :-   bold,fg:red')
-    assert style == AttributedStyle.BOLD.foreground(AttributedStyle.RED)
+    assert style == BOLD.foreground(RED)
   }
 
   @Test
   void 'resolve referenced style-missing with default referenced'() {
     source.group('test').put('more-red', 'bold,fg:red')
     def style = underTest.resolve('.very-red:-.more-red')
-    assert style == AttributedStyle.BOLD.foreground(AttributedStyle.RED)
+    assert style == BOLD.foreground(RED)
   }
 }

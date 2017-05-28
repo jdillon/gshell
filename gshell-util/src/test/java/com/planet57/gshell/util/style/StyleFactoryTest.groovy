@@ -15,75 +15,76 @@
  */
 package com.planet57.gshell.util.style
 
-import org.sonatype.goodies.testsupport.TestSupport
-
-import com.planet57.gossip.Log
 import org.jline.utils.AttributedString
-import org.jline.utils.AttributedStyle
 import org.junit.Before
 import org.junit.Test
-import org.slf4j.LoggerFactory
+
+import static org.jline.utils.AttributedStyle.BOLD
+import static org.jline.utils.AttributedStyle.RED
+import static org.jline.utils.AttributedStyle.YELLOW
 
 /**
  * Tests for {@link StyleFactory}.
  */
 class StyleFactoryTest
-  extends TestSupport
+  extends StyleTestSupport
 {
-  private MemoryStyleSource source
-
   private StyleFactory underTest
 
   @Before
   void setUp() {
-    // force bootstrap gossip logger to adapt to runtime logger-factory
-    Log.configure(LoggerFactory.getILoggerFactory())
-
-    this.source = new MemoryStyleSource()
+    super.setUp()
     this.underTest = new StyleFactory(new StyleResolver(source, 'test'))
   }
 
   @Test
   void 'style direct'() {
     def string = underTest.style('bold,fg:red', 'foo bar')
-    assert string == new AttributedString('foo bar', AttributedStyle.BOLD.foreground(AttributedStyle.RED))
+    println string.toAnsi()
+    assert string == new AttributedString('foo bar', BOLD.foreground(RED))
   }
 
   @Test
   void 'style referenced'() {
     source.group('test').put('very-red', 'bold,fg:red')
     def string = underTest.style('.very-red', 'foo bar')
-    assert string == new AttributedString('foo bar', AttributedStyle.BOLD.foreground(AttributedStyle.RED))
+    println string.toAnsi()
+    assert string == new AttributedString('foo bar', BOLD.foreground(RED))
   }
 
   @Test
   void 'missing referenced style with default'() {
     def string = underTest.style('.very-red:-bold,fg:red', 'foo bar')
-    assert string == new AttributedString('foo bar', AttributedStyle.BOLD.foreground(AttributedStyle.RED))
+    println string.toAnsi()
+    assert string == new AttributedString('foo bar', BOLD.foreground(RED))
   }
 
   @Test
   void 'missing referenced style with customized'() {
     source.group('test').put('very-red', 'bold,fg:yellow')
     def string = underTest.style('.very-red:-bold,fg:red', 'foo bar')
-    assert string == new AttributedString('foo bar', AttributedStyle.BOLD.foreground(AttributedStyle.YELLOW))
+    println string.toAnsi()
+    assert string == new AttributedString('foo bar', BOLD.foreground(YELLOW))
   }
 
   @Test
   void 'style format'() {
-    def result = underTest.style('bold', '%s', 'foo')
-    assert result == new AttributedString('foo', AttributedStyle.BOLD)
+    def string = underTest.style('bold', '%s', 'foo')
+    println string.toAnsi()
+    assert string == new AttributedString('foo', BOLD)
   }
 
   @Test
   void 'evaluate expression'() {
-    def result = underTest.evaluate('@{bold foo}')
-    assert result == new AttributedString('foo', AttributedStyle.BOLD)
+    def string = underTest.evaluate('@{bold foo}')
+    println string.toAnsi()
+    assert string == new AttributedString('foo', BOLD)
   }
 
   @Test
   void 'evaluate expression with format'() {
-    def result = underTest.evaluate('@{bold %s}', 'foo')
-    assert result == new AttributedString('foo', AttributedStyle.BOLD)
+    def string = underTest.evaluate('@{bold %s}', 'foo')
+    println string.toAnsi()
+    assert string == new AttributedString('foo', BOLD)
   }
 }
