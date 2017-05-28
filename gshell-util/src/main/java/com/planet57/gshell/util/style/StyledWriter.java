@@ -28,7 +28,7 @@ import org.jline.utils.AttributedString;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * ???
+ * Styled {@link PrintWriter} which is aware of {@link StyleExpression} syntax.
  *
  * @since 3.0
  */
