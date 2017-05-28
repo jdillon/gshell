@@ -34,7 +34,7 @@ public class StyleExpression
   /**
    * Regular-expression to match {@code @{style value}}.
    */
-  private static final Pattern PATTERN = Pattern.compile("@\\{([^\\s]+)\\s+([^}]+)\\}");
+  private static final Pattern PATTERN = Pattern.compile("@\\{([^ ]+) ([^}]+)\\}");
 
   private final StyleResolver resolver;
 

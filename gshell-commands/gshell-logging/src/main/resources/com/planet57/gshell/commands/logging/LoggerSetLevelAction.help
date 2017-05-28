@@ -14,26 +14,26 @@
 # limitations under the License.
 #
 
-@|bold NAME|@
+@{bold NAME}
 
-  @{command.name} - @{command.description}
+  %{command.name} - %{command.description}
 
-@|bold SYNOPSIS|@
+@{bold SYNOPSIS}
 
-  @|bold @{command.name}|@ [options] LOGGER LEVEL
+  @{bold %{command.name}} [options] LOGGER LEVEL
 
-@|bold DESCRIPTION|@
+@{bold DESCRIPTION}
 
   Set the logging level of a specific logger.
 
-@{command.details}
+%{command.details}
 
-@|bold EXAMPLES|@
+@{bold EXAMPLES}
 
   Set the level of the 'com.planet57' logger to DEBUG:
 
-    @{command.name} com.planet57 DEBUG
+    %{command.name} com.planet57 DEBUG
 
-@|bold SEE ALSO|@
+@{bold SEE ALSO}
 
-  @|bold logging|@, @|bold logging/logger|@
+  @{bold logging}, @{bold logging/logger}

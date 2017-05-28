@@ -61,7 +61,7 @@ public class HelpAction
     @DefaultMessage("Matching pages:")
     String matchingPages();
 
-    @DefaultMessage("No help page available for @|bold %s|@.  Try @|bold help|@ for a list of available pages.")
+    @DefaultMessage("No help page available for @{bold %s}.  Try @{bold help} for a list of available pages.")
     String helpNotFound(String page);
   }
 

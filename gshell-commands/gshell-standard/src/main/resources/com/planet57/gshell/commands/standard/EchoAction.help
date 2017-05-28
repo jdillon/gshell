@@ -14,27 +14,27 @@
 # limitations under the License.
 #
 
-@|bold NAME|@
+@{bold NAME}
 
-  @{command.name} - @{command.description}
+  %{command.name} - %{command.description}
 
-@|bold SYNOPSIS|@
+@{bold SYNOPSIS}
 
-  @|bold @{command.name}|@ [options] [value...]
+  @{bold %{command.name}} [options] [value...]
 
-@|bold DESCRIPTION|@
+@{bold DESCRIPTION}
 
   Displays the given text to the console.  By default a new-line will be
-  sent at the end of the text, unless the @|bold -n|@ flag is specified.
+  sent at the end of the text, unless the @{bold -n} flag is specified.
 
-@{command.details}
+%{command.details}
 
-@|bold EXAMPLES|@
+@{bold EXAMPLES}
 
   Display a raw string:
 
-    @{command.name} hello
+    %{command.name} hello
 
   Display a variable:
 
-    @{command.name} ${shell.version}
+    %{command.name} ${shell.version}

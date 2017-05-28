@@ -40,7 +40,7 @@ public class HelpPrinter
   private interface Messages
     extends MessageBundle
   {
-    @DefaultMessage("@|bold syntax|@: %s")
+    @DefaultMessage("@{bold syntax}: %s")
     String syntax(String name);
 
     @DefaultMessage("%s [options]")
@@ -49,10 +49,10 @@ public class HelpPrinter
     @DefaultMessage("%s [arguments]")
     String syntaxHasArguments(String syntax);
 
-    @DefaultMessage("@|bold arguments|@:")
+    @DefaultMessage("@{bold arguments}:")
     String argumentsHeader();
 
-    @DefaultMessage("@|bold options|@:")
+    @DefaultMessage("@{bold options}:")
     String optionsHeader();
   }
 

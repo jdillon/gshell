@@ -125,13 +125,13 @@ public class ListDirectoryAction
 
     PrintBuffer buff = new PrintBuffer();
     if (file.isDirectory()) {
-      buff.format("@|blue %s%s|@", name, File.separator);
+      buff.format("@{fg:blue %s%s}", name, File.separator);
     }
     else if (file.canExecute()) {
-      buff.format("@|green %s|@", name);
+      buff.format("@{fg:green %s}", name);
     }
     else if (file.isHidden()) {
-      buff.format("@|intensity_faint %s|@", name);
+      buff.format("@{faint %s}", name);
     }
     else {
       // not styled

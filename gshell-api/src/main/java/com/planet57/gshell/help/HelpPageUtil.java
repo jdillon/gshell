@@ -50,7 +50,7 @@ public class HelpPageUtil
 
     for (HelpPage page : pages) {
       String formattedName = String.format(nameFormat, page.getName());
-      out.format("  @|bold %s|@", formattedName);
+      out.format("  @{bold %s}", formattedName);
 
       String description = page.getDescription();
       if (description != null) {

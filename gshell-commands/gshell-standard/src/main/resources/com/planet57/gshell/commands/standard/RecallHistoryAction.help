@@ -14,26 +14,26 @@
 # limitations under the License.
 #
 
-@|bold NAME|@
+@{bold NAME}
 
-  @{command.name} - @{command.description}
+  %{command.name} - %{command.description}
 
-@|bold SYNOPSIS|@
+@{bold SYNOPSIS}
 
-  @|bold @{command.name}|@ [options] INDEX
+  @{bold %{command.name}} [options] INDEX
 
-@|bold DESCRIPTION|@
+@{bold DESCRIPTION}
 
   Recalls (and executes) a command from history.
 
-@{command.details}
+%{command.details}
 
-@|bold EXAMPLES|@
+@{bold EXAMPLES}
 
   Recall the first item from history:
 
-    @{command.name} 1
+    %{command.name} 1
 
-@|bold SEE ALSO|@
+@{bold SEE ALSO}
 
-  @|bold history|@
+  @{bold history}

@@ -14,27 +14,27 @@
 # limitations under the License.
 #
 
-@|bold NAME|@
+@{bold NAME}
 
-  @{command.name} - @{command.description}
+  %{command.name} - %{command.description}
 
-@|bold SYNOPSIS|@
+@{bold SYNOPSIS}
 
-  @|bold @{command.name}|@ [options] SOURCE TARGET
+  @{bold %{command.name}} [options] SOURCE TARGET
 
-@|bold DESCRIPTION|@
+@{bold DESCRIPTION}
 
   Copy directory or file
 
-@{command.details}
+%{command.details}
 
-@|bold EXAMPLES|@
+@{bold EXAMPLES}
 
   Copy ./foo.txt to /tmp/:
 
-    @{command.name} ./foo.txt /tmp/
-    @{command.name} ./foo.txt /tmp/foo.txt
+    %{command.name} ./foo.txt /tmp/
+    %{command.name} ./foo.txt /tmp/foo.txt
 
   Copy directory ./foo to directory /tmp with recursive content
 
-    @{command.name} -r ./foo /tmp
+    %{command.name} -r ./foo /tmp

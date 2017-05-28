@@ -34,10 +34,10 @@ public class AliasHelpPage
   private interface Messages
     extends MessageBundle
   {
-    @DefaultMessage("Alias to: @|bold %s|@")
+    @DefaultMessage("Alias to: @{bold %s}")
     String description(String target);
 
-    @DefaultMessage("The @|bold %s|@ command is an alias to: @|bold %s|@")
+    @DefaultMessage("The @{bold %s} command is an alias to: @{bold %s}")
     String content(String name, String target);
   }
 

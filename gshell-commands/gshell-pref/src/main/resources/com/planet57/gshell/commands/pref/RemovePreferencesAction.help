@@ -14,30 +14,30 @@
 # limitations under the License.
 #
 
-@|bold NAME|@
+@{bold NAME}
 
-  @{command.name} - @{command.description}
+  %{command.name} - %{command.description}
 
-@|bold SYNOPSIS|@
+@{bold SYNOPSIS}
 
-  @|bold @{command.name}|@ [options] PATH
+  @{bold %{command.name}} [options] PATH
 
-@|bold DESCRIPTION|@
+@{bold DESCRIPTION}
 
   Remove a preferences node or an entire tree of preferences.
 
-@{command.details}
+%{command.details}
 
-@|bold EXAMPLES|@
+@{bold EXAMPLES}
 
   Remove a preferences node:
 
-    @{command.name} /some/path
+    %{command.name} /some/path
 
   Remove a tree of preferences:
 
-    @{command.name} -r /some/path
+    %{command.name} -r /some/path
 
-@|bold SEE ALSO|@
+@{bold SEE ALSO}
 
-  @|bold pref/list|@
+  @{bold pref/list}

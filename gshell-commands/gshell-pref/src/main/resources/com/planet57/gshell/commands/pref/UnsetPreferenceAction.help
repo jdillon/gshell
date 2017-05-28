@@ -14,26 +14,26 @@
 # limitations under the License.
 #
 
-@|bold NAME|@
+@{bold NAME}
 
-  @{command.name} - @{command.description}
+  %{command.name} - %{command.description}
 
-@|bold SYNOPSIS|@
+@{bold SYNOPSIS}
 
-  @|bold @{command.name}|@ [options] PATH KEY
+  @{bold %{command.name}} [options] PATH KEY
 
-@|bold DESCRIPTION|@
+@{bold DESCRIPTION}
 
   Unset (delete) a preference.
 
-@{command.details}
+%{command.details}
 
-@|bold EXAMPLES|@
+@{bold EXAMPLES}
 
   Unset a preference:
 
-    @{command.name} /some/path some-key
+    %{command.name} /some/path some-key
 
-@|bold SEE ALSO|@
+@{bold SEE ALSO}
 
-  @|bold pref/set|@, @|bold pref/get|@, @|bold pref/remove|@
+  @{bold pref/set}, @{bold pref/get}, @{bold pref/remove}

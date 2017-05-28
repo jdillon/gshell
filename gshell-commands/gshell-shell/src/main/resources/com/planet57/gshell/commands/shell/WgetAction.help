@@ -14,26 +14,26 @@
 # limitations under the License.
 #
 
-@|bold NAME|@
+@{bold NAME}
 
-  @{command.name} - @{command.description}
+  %{command.name} - %{command.description}
 
-@|bold SYNOPSIS|@
+@{bold SYNOPSIS}
 
-  @|bold @{command.name}|@ [options] URL
+  @{bold %{command.name}} [options] URL
 
-@|bold DESCRIPTION|@
+@{bold DESCRIPTION}
 
   Downloads a file from a URL and optionally saves to a local file.
 
-@{command.details}
+%{command.details}
 
-@|bold EXAMPLES|@
+@{bold EXAMPLES}
 
   Display a file:
 
-    @{command.name} http://google.com
+    %{command.name} http://google.com
 
   Save to a local file:
 
-    @{command.name} http://google.com -o /tmp/google.html
+    %{command.name} http://google.com -o /tmp/google.html

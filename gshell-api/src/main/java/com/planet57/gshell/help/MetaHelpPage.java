@@ -64,7 +64,7 @@ public abstract class MetaHelpPage
     final Branding branding = shell.getBranding();
     final Variables variables = shell.getVariables();
 
-    Interpolator interp = new StringSearchInterpolator("@{", "}");
+    Interpolator interp = new StringSearchInterpolator("%{", "}");
     interp.addValueSource(new PrefixedObjectValueSource("branding.", branding));
     interp.addValueSource(new AbstractValueSource(false)
     {

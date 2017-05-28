@@ -14,35 +14,35 @@
 # limitations under the License.
 #
 
-@|bold NAME|@
+@{bold NAME}
 
-  @{command.name} - @{command.description}
+  %{command.name} - %{command.description}
 
-@|bold SYNOPSIS|@
+@{bold SYNOPSIS}
 
-  @|bold @{command.name}|@ [options] [NAME [TARGET]...]
+  @{bold %{command.name}} [options] [NAME [TARGET]...]
 
-@|bold DESCRIPTION|@
+@{bold DESCRIPTION}
 
   Aliases are like short-cuts.  Define an alias to replace common
   commands and command arguments.
 
-@{command.details}
+%{command.details}
 
-@|bold EXAMPLES|@
+@{bold EXAMPLES}
 
   List all defined aliases:
 
-    @{command.name}
+    %{command.name}
 
   Set a system property:
 
-    @{command.name} setprop set -m property
+    %{command.name} setprop set -m property
 
   Invoke the alias:
 
     setprop foo bar
 
-@|bold SEE ALSO|@
+@{bold SEE ALSO}
 
-  @|bold unalias|@
+  @{bold unalias}

@@ -99,7 +99,7 @@ public class RunMojo
     @Override
     public String getDisplayName() {
       // TODO: expose for configuration
-      return "@|bold GShell|@";
+      return "@{bold GShell}";
     }
 
     @Override
@@ -131,7 +131,7 @@ public class RunMojo
     public String getWelcomeMessage() {
       // TODO: expose for configuration
       PrintBuffer buff = new PrintBuffer();
-      buff.format("%nType '@|bold help|@' for more information.%n");
+      buff.format("%nType '@{bold help}' for more information.%n");
       buff.print(LINE_TOKEN);
       return buff.toString();
     }
@@ -139,7 +139,7 @@ public class RunMojo
     @Override
     public String getGoodbyeMessage() {
       // TODO: expose for configuration
-      return "@|green Goodbye!|@\n";
+      return "@{fg:green Goodbye!}\n";
     }
   }
 

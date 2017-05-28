@@ -253,7 +253,7 @@ public class InfoAction
   }
 
   private void printlnHeader(final PrintWriter writer, final String name) {
-    writer.format("@|bold,green %s|@%n", name);
+    writer.format("@{bold,fg:green %s}%n", name);
   }
 
   private long getSunOsValueAsLong(final OperatingSystemMXBean os, final String name) throws Exception {
@@ -300,6 +300,6 @@ public class InfoAction
   }
 
   private void println(final PrintWriter writer, final String name, final Object value) {
-    writer.format("  @|bold %s|@: %s%n", name, value);
+    writer.format("  @{bold %s}: %s%n", name, value);
   }
 }

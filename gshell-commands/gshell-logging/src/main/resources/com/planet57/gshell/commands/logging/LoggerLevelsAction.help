@@ -14,20 +14,20 @@
 # limitations under the License.
 #
 
-@|bold NAME|@
+@{bold NAME}
 
-  @{command.name} - @{command.description}
+  %{command.name} - %{command.description}
 
-@|bold SYNOPSIS|@
+@{bold SYNOPSIS}
 
-  @|bold @{command.name}|@ [options]
+  @{bold %{command.name}} [options]
 
-@|bold DESCRIPTION|@
+@{bold DESCRIPTION}
 
   Lists the valid logger levels.
 
-@{command.details}
+%{command.details}
 
-@|bold SEE ALSO|@
+@{bold SEE ALSO}
 
-  @|bold logging|@, @|bold logging/logger|@
+  @{bold logging}, @{bold logging/logger}

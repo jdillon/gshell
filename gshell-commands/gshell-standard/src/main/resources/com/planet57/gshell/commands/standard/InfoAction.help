@@ -14,15 +14,15 @@
 # limitations under the License.
 #
 
-@|bold NAME|@
+@{bold NAME}
 
-  @{command.name} - @{command.description}
+  %{command.name} - %{command.description}
 
-@|bold SYNOPSIS|@
+@{bold SYNOPSIS}
 
-  @|bold @{command.name}|@ [options] [section]
+  @{bold %{command.name}} [options] [section]
 
-@|bold DESCRIPTION|@
+@{bold DESCRIPTION}
 
   Displays various information about the shell.  Information is split up
   into sections.  The follow sections are available:
@@ -36,22 +36,22 @@
       OS
       LICENSE
 
-@{command.details}
+%{command.details}
 
-@|bold EXAMPLES|@
+@{bold EXAMPLES}
 
   Display the JVM section:
 
-    @{command.name} jvm
+    %{command.name} jvm
 
   Display the JVM and OS sections:
 
-    @{command.name} jvm os
+    %{command.name} jvm os
 
   Display all sections:
 
-    @{command.name} -a
+    %{command.name} -a
 
-@|bold SEE ALSO|@
+@{bold SEE ALSO}
 
-  @|bold pref/set|@
+  @{bold pref/set}
