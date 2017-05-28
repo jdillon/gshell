@@ -79,6 +79,18 @@ class StyleExpressionTest
   }
 
   @Test
+  void 'evaluate expression with multiple replacements'() {
+    def result = underTest.evaluate('@{bold foo} @{fg:red bar} @{underline baz}')
+    assert result == new AttributedStringBuilder()
+        .append('foo', AttributedStyle.BOLD)
+        .append(' ')
+        .append('bar', AttributedStyle.DEFAULT.foreground(AttributedStyle.RED))
+        .append(' ')
+        .append('baz', AttributedStyle.DEFAULT.underline())
+        .toAttributedString()
+  }
+
+  @Test
   void 'evaluate expression missing value'() {
     def result = underTest.evaluate('@{bold}')
     assert result == new AttributedString('@{bold}', AttributedStyle.DEFAULT)
