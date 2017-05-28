@@ -101,6 +101,7 @@ public class CommandActionFunction
     final ClassLoader cl = Thread.currentThread().getContextClassLoader();
     Thread.currentThread().setContextClassLoader(action.getClass().getClassLoader());
 
+    // FIXME: Need to provide a means to create non-styled for testing?
     // re-create IO with current streams; which are adjusted by ThreadIO
     final IO io = StyledIO.create("shell", StreamSet.system(), terminal);
 
