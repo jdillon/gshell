@@ -71,7 +71,7 @@ public class IO
     this.streams = checkNotNull(streams);
     this.terminal = checkNotNull(terminal);
 
-    // TODO: add a styled factory method to provide this aspect
+    // TODO: add a styled factory method to provide this aspect, or helper factory-method to Styler
     StyleResolver styleResolver = Styler.resolver("io");
 
     // prepare stream references
