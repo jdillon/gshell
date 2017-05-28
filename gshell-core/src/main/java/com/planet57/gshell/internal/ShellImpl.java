@@ -48,7 +48,6 @@ import org.apache.felix.gogo.runtime.Closure;
 import org.apache.felix.gogo.runtime.CommandSessionImpl;
 import org.apache.felix.service.command.CommandSession;
 import org.apache.felix.service.command.Job;
-import org.fusesource.jansi.AnsiRenderer;
 import org.jline.reader.Completer;
 import org.jline.reader.EndOfFileException;
 import org.jline.reader.History;
@@ -443,9 +442,9 @@ public class ShellImpl
     }
 
     // FIXME: may need to adjust ansi-renderer syntax or pre-render before expanding to avoid needing escapes
-    if (AnsiRenderer.test(prompt)) {
-      prompt = AnsiRenderer.render(prompt);
-    }
+    //if (prompt != null) {
+    //  prompt = Styler.evaluate("shell", prompt).toAnsi(io.terminal);
+    //}
 
     return prompt;
   }
@@ -457,13 +456,17 @@ public class ShellImpl
       value = branding.getRightPrompt();
     }
 
-    String prompt = expand(session, value);
+    if (value != null) {
+      String prompt = expand(session, value);
 
-    // FIXME: may need to adjust ansi-renderer syntax or pre-render before expanding to avoid needing escapes
-    if (AnsiRenderer.test(prompt)) {
-      prompt = AnsiRenderer.render(prompt);
+      // FIXME: may need to adjust ansi-renderer syntax or pre-render before expanding to avoid needing escapes
+      //if (prompt != null) {
+      //  prompt = Styler.evaluate("shell", prompt).toAnsi(io.terminal);
+      //}
+
+      return prompt;
     }
 
-    return prompt;
+    return null;
   }
 }

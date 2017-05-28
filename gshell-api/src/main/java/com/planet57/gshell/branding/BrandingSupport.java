@@ -109,7 +109,8 @@ public class BrandingSupport
   @Override
   public String getPrompt() {
     // FIXME: may need to adjust ansi-renderer syntax or pre-render before expanding to avoid needing escapes
-    return String.format("\\@\\|bold %s\\|\\@> ", getProgramName());
+    //return String.format("\\@\\{bold %s\\}> ", getProgramName());
+    return String.format("%s> ", getProgramName());
   }
 
   @Override
