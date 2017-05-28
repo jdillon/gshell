@@ -163,8 +163,18 @@ class StyleBundleInvocationHandler
    * @see Styler#bundle(Class)
    */
   @SuppressWarnings("unchecked")
-  static <T extends StyleBundle> T create(final StyleSource source, final Class<T> type) {
+  static <T extends StyleBundle> T create(final StyleSource source, final Class<T> type, final String group) {
     checkNotNull(source);
+    checkNotNull(type);
+    checkNotNull(group);
+
+    log.debug("Using style-group: {} for type: {}", group, type.getName());
+
+    StyleBundleInvocationHandler handler = new StyleBundleInvocationHandler(type, new StyleResolver(source, group));
+    return (T) Proxy.newProxyInstance(type.getClassLoader(), new Class[]{type}, handler);
+  }
+
+  static <T extends StyleBundle> T create(final StyleSource source, final Class<T> type) {
     checkNotNull(type);
 
     String group = getStyleGroup(type);
@@ -174,9 +184,6 @@ class StyleBundleInvocationHandler
         type.getName()
     );
 
-    log.debug("Using style-group: {} for type: {}", group, type.getName());
-
-    StyleBundleInvocationHandler handler = new StyleBundleInvocationHandler(type, new StyleResolver(source, group));
-    return (T) Proxy.newProxyInstance(type.getClassLoader(), new Class[]{type}, handler);
+    return create(source, type, group);
   }
 }
