@@ -57,9 +57,12 @@ class StyleBundleInvocationHandler
 
     if (style == null) {
       style = getDefaultStyle(method);
-      // if sourced-style was missing and default-style is missing complain
-      checkState(style != null, "Style-bundle method missing @%s: %s",
-          DefaultStyle.class.getSimpleName(), method);
+      // if sourced-style was missing and default-style is missing barf
+      checkState(style != null, "%s method missing @%s: %s",
+          StyleBundle.class.getSimpleName(),
+          DefaultStyle.class.getSimpleName(),
+          method
+      );
     }
 
     String value  = String.valueOf(args[0]);
@@ -149,8 +152,11 @@ class StyleBundleInvocationHandler
     checkNotNull(type);
 
     String group = getStyleGroup(type);
-    checkState(group != null, "Style-bundle missing or invalid @%s: %s",
-        StyleGroup.class.getSimpleName(), type.getName());
+    checkState(group != null, "%s missing or invalid @%s: %s",
+        StyleBundle.class.getSimpleName(),
+        StyleGroup.class.getSimpleName(),
+        type.getName()
+    );
 
     log.debug("Using style-group: {} for type: {}", group, type.getName());
 

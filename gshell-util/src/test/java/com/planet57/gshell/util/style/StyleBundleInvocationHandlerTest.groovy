@@ -29,9 +29,9 @@ import org.junit.Test
 import org.slf4j.LoggerFactory
 
 /**
- * Tests for {@link StyleBundle}.
+ * Tests for {@link StyleBundleInvocationHandler}.
  */
-class StyleBundleTest
+class StyleBundleInvocationHandlerTest
   extends TestSupport
 {
   private MemoryStyleSource source
@@ -42,7 +42,6 @@ class StyleBundleTest
     Log.configure(LoggerFactory.getILoggerFactory())
 
     this.source = new MemoryStyleSource()
-    Styler.source = this.source
   }
 
   @StyleGroup('test')
@@ -65,39 +64,34 @@ class StyleBundleTest
 
   @Test
   void 'bundle default-style'() {
-    def styles = Styler.bundle(Styles.class)
+    def styles = StyleBundleInvocationHandler.create(source, Styles.class)
     println styles
     def string = styles.boldRed('foo bar')
-
-    def style = AttributedStyle.BOLD.foreground(AttributedStyle.RED)
-    assert string == new AttributedString('foo bar', style)
+    assert string == new AttributedString('foo bar', AttributedStyle.BOLD.foreground(AttributedStyle.RED))
   }
 
   @Test
   void 'bundle style-name with default-style'() {
-    def styles = Styler.bundle(Styles.class)
+    def styles = StyleBundleInvocationHandler.create(source, Styles.class)
     def string = styles.boldRedObjectWithStyleName('foo bar')
-
-    def style = AttributedStyle.BOLD.foreground(AttributedStyle.RED)
-    assert string == new AttributedString('foo bar', style)
+    assert string == new AttributedString('foo bar', AttributedStyle.BOLD.foreground(AttributedStyle.RED))
   }
 
   @Test
   void 'bundle sourced-style'() {
     source.group('test').put('boldRed', 'bold,fg:yellow')
-    def styles = Styler.bundle(Styles.class)
+    def styles = StyleBundleInvocationHandler.create(source, Styles.class)
     def string = styles.boldRed('foo bar')
-
-    def style = AttributedStyle.BOLD.foreground(AttributedStyle.YELLOW)
-    assert string == new AttributedString('foo bar', style)
+    assert string == new AttributedString('foo bar', AttributedStyle.BOLD.foreground(AttributedStyle.YELLOW))
   }
 
   @Test
   void 'bundle method validation'() {
-    def styles = Styler.bundle(Styles.class)
+    def styles = StyleBundleInvocationHandler.create(source, Styles.class)
 
     try {
       styles.invalidReturn('foo')
+      assert false
     }
     catch (InvalidStyleBundleMethodException e) {
       // expected
@@ -105,6 +99,7 @@ class StyleBundleTest
 
     try {
       styles.notEnoughArguments()
+      assert false
     }
     catch (InvalidStyleBundleMethodException e) {
       // expected
@@ -112,6 +107,7 @@ class StyleBundleTest
 
     try {
       styles.tooManyArguments(1, 2)
+      assert false
     }
     catch (InvalidStyleBundleMethodException e) {
       // expected
