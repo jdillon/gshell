@@ -53,9 +53,7 @@ public interface StyleBundle
   }
 
   /**
-   * Provide default style-expression.
-   *
-   * @see StyleExpression
+   * Provide default style-specification.
    */
   @Retention(RetentionPolicy.RUNTIME)
   @Target(ElementType.METHOD)

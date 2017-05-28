@@ -46,6 +46,14 @@ public class StyleResolver
     this.group = checkNotNull(group);
   }
 
+  public StyleSource getSource() {
+    return source;
+  }
+
+  public String getGroup() {
+    return group;
+  }
+
   // TODO: debug -> trace
 
   // TODO: could consider a small cache to reduce style calculations?

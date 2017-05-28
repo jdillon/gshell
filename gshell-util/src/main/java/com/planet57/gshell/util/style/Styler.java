@@ -15,24 +15,10 @@
  */
 package com.planet57.gshell.util.style;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
-
-import javax.annotation.Nullable;
-
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Strings;
 import com.planet57.gossip.Log;
-import com.planet57.gshell.util.style.StyleBundle.DefaultStyle;
-import com.planet57.gshell.util.style.StyleBundle.StyleGroup;
-import com.planet57.gshell.util.style.StyleBundle.StyleName;
-import org.jline.utils.AttributedString;
-import org.jline.utils.AttributedStyle;
 import org.slf4j.Logger;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Preconditions.checkState;
 
 /**
  * Style facade.
@@ -68,115 +54,23 @@ public class Styler
   }
 
   /**
+   * Create a resolver for the given style-group.
+   */
+  public static StyleResolver resolver(final String group) {
+    return new StyleResolver(source, group);
+  }
+
+  /**
    * Create a factory for the given style-group.
    */
   public static StyleFactory factory(final String group) {
-    return new StyleFactory(source, group);
+    return new StyleFactory(resolver(group));
   }
 
   /**
    * Create a {@link StyleBundle} proxy.
    */
-  @SuppressWarnings("unchecked")
   public static < T extends StyleBundle> T bundle(final Class<T> type) {
-    checkNotNull(type);
-
-    String group = getStyleGroup(type);
-    checkState(group != null, "Style-bundle missing or invalid @StyleGroup: %s", type.getName());
-    log.debug("Using style-group: {} for type: {}", group, type.getName());
-
-    return (T) Proxy.newProxyInstance(type.getClassLoader(), new Class[]{type}, new Handler(group));
-  }
-
-  /**
-   * Proxy invocation-handler to convert method calls into string styling.
-   */
-  private static class Handler
-      implements InvocationHandler
-  {
-    private final String group;
-
-    private final StyleResolver resolver;
-
-    public Handler(final String group) {
-      this.group = checkNotNull(group);
-      this.resolver = new StyleResolver(source, group);
-    }
-
-    @Override
-    public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
-      // Allow invocations to Object methods to pass-through
-      if (method.getDeclaringClass() == Object.class) {
-        return method.invoke(this, args);
-      }
-
-      // All StyleBundle methods must take exactly 1 parameter
-      if (method.getParameterCount() != 1) {
-        throw new InvalidStyleBundleMethodException(method, "Invalid parameters");
-      }
-
-      // All StyleBundle methods must return an AttributeString
-      if (method.getReturnType() != AttributedString.class) {
-        throw new InvalidStyleBundleMethodException(method, "Invalid return-type");
-      }
-
-      // resolve the style-name for method
-      String styleName = getStyleName(method);
-
-      // resolve the sourced-style, or use the default
-      String style = source.get(group, styleName);
-      log.debug("Sourced-style: {} -> {}", styleName, style);
-
-      if (style == null) {
-        style = getDefaultStyle(method);
-        // if sourced-style was missing and default-style is missing complain
-        checkState(style != null, "Style-bundle method missing @DefaultStyle: %s", method);
-      }
-
-      String value  = String.valueOf(args[0]);
-      log.debug("Applying style: {} -> {} to: {}", styleName, style, value);
-
-      AttributedStyle astyle = resolver.resolve(style);
-      return new AttributedString(value, astyle);
-    }
-  }
-
-  /**
-   * Thrown when processing {@link StyleBundle} method is found to be invalid.
-   */
-  @VisibleForTesting
-  static class InvalidStyleBundleMethodException
-    extends RuntimeException
-  {
-    public InvalidStyleBundleMethodException(final Method method, final String message) {
-      super(message + ": " + method);
-    }
-  }
-
-  /**
-   * Returns the style group-name for given type, or {@code null} if unable to determine.
-   */
-  @Nullable
-  private static String getStyleGroup(final Class<?> type) {
-    StyleGroup styleGroup = type.getAnnotation(StyleGroup.class);
-    return styleGroup != null ? Strings.emptyToNull(styleGroup.value().trim()) : null;
-  }
-
-  /**
-   * Returns the style-name for given method, or {@code null} if unable to determine.
-   */
-  private static String getStyleName(final Method method) {
-    StyleName styleName = method.getAnnotation(StyleName.class);
-    return styleName != null ? Strings.emptyToNull(styleName.value().trim()) : method.getName();
-  }
-
-  /**
-   * Returns the default-style for given method, or {@code null} if unable to determine.
-   */
-  @Nullable
-  private static String getDefaultStyle(final Method method) {
-    DefaultStyle defaultStyle = method.getAnnotation(DefaultStyle.class);
-    // allow whitespace in default-style.value, but disallow empty-string
-    return defaultStyle != null ? Strings.emptyToNull(defaultStyle.value()) : null;
+    return StyleBundleInvocationHandler.create(source, type);
   }
 }

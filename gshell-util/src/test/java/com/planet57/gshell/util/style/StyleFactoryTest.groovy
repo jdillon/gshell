@@ -40,38 +40,50 @@ class StyleFactoryTest
     Log.configure(LoggerFactory.getILoggerFactory())
 
     this.source = new MemoryStyleSource()
-    this.underTest = new StyleFactory(source, 'test')
+    this.underTest = new StyleFactory(new StyleResolver(source, 'test'))
   }
 
   @Test
-  void 'direct style'() {
+  void 'style direct'() {
     def string = underTest.style('bold,fg:red', 'foo bar')
-    def style = AttributedStyle.BOLD.foreground(AttributedStyle.RED)
-    assert string == new AttributedString('foo bar', style)
+    assert string == new AttributedString('foo bar', AttributedStyle.BOLD.foreground(AttributedStyle.RED))
   }
 
   @Test
-  void 'referenced style'() {
+  void 'style referenced'() {
     source.group('test').put('very-red', 'bold,fg:red')
     def string = underTest.style('.very-red', 'foo bar')
-    def style = AttributedStyle.BOLD.foreground(AttributedStyle.RED)
-    assert string == new AttributedString('foo bar', style)
+    assert string == new AttributedString('foo bar', AttributedStyle.BOLD.foreground(AttributedStyle.RED))
   }
-
-  // FIXME: -: syntax doesn't work due to split being done before this gets handled
 
   @Test
   void 'missing referenced style with default'() {
     def string = underTest.style('.very-red:-bold,fg:red', 'foo bar')
-    def style = AttributedStyle.BOLD.foreground(AttributedStyle.RED)
-    assert string == new AttributedString('foo bar', style)
+    assert string == new AttributedString('foo bar', AttributedStyle.BOLD.foreground(AttributedStyle.RED))
   }
 
   @Test
   void 'missing referenced style with customized'() {
     source.group('test').put('very-red', 'bold,fg:yellow')
     def string = underTest.style('.very-red:-bold,fg:red', 'foo bar')
-    def style = AttributedStyle.BOLD.foreground(AttributedStyle.YELLOW)
-    assert string == new AttributedString('foo bar', style)
+    assert string == new AttributedString('foo bar', AttributedStyle.BOLD.foreground(AttributedStyle.YELLOW))
+  }
+
+  @Test
+  void 'style format'() {
+    def result = underTest.style('bold', '%s', 'foo')
+    assert result == new AttributedString('foo', AttributedStyle.BOLD)
+  }
+
+  @Test
+  void 'evaluate expression'() {
+    def result = underTest.evaluate('@{bold foo}')
+    assert result == new AttributedString('foo', AttributedStyle.BOLD)
+  }
+
+  @Test
+  void 'evaluate expression with format'() {
+    def result = underTest.evaluate('@{bold %s}', 'foo')
+    assert result == new AttributedString('foo', AttributedStyle.BOLD)
   }
 }

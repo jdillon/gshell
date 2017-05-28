@@ -21,7 +21,7 @@ import com.planet57.gossip.Log
 import com.planet57.gshell.util.style.StyleBundle.DefaultStyle
 import com.planet57.gshell.util.style.StyleBundle.StyleGroup
 import com.planet57.gshell.util.style.StyleBundle.StyleName
-import com.planet57.gshell.util.style.Styler.InvalidStyleBundleMethodException
+import com.planet57.gshell.util.style.StyleBundleInvocationHandler.InvalidStyleBundleMethodException
 import org.jline.utils.AttributedString
 import org.jline.utils.AttributedStyle
 import org.junit.Before
@@ -66,6 +66,7 @@ class StyleBundleTest
   @Test
   void 'bundle default-style'() {
     def styles = Styler.bundle(Styles.class)
+    println styles
     def string = styles.boldRed('foo bar')
 
     def style = AttributedStyle.BOLD.foreground(AttributedStyle.RED)

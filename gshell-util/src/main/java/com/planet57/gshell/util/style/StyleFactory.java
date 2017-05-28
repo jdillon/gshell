@@ -27,30 +27,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class StyleFactory
 {
-  private final StyleSource source;
-
-  private final String group;
-
   private final StyleResolver resolver;
 
-  public StyleFactory(final StyleSource source, final String group) {
-    this.source = checkNotNull(source);
-    this.group = checkNotNull(group);
-    this.resolver = new StyleResolver(source, group);
+  public StyleFactory(final StyleResolver resolver) {
+    this.resolver = checkNotNull(resolver);
   }
-
-  /**
-   * Encode string with style expression.
-   *
-   * @see StyleExpression
-   */
-  //public AttributedString style(final String expression, final Object... params) {
-  //  checkNotNull(expression);
-  //  checkNotNull(params);
-  //  // params could be empty
-  //
-  //  return new StyleExpression(source, group).evaluate(expression, params);
-  //}
 
   /**
    * Encode string with style applying value.
@@ -60,5 +41,39 @@ public class StyleFactory
     checkNotNull(value);
     AttributedStyle astyle = resolver.resolve(style);
     return new AttributedString(value, astyle);
+  }
+
+  /**
+   * Encode string with style formatted value.
+   *
+   * @see #style(String, String)
+   */
+  public AttributedString style(final String style, final String format, final Object... params) {
+    checkNotNull(style);
+    checkNotNull(format);
+    checkNotNull(params);
+    // params may be empty
+    String value = String.format(format, params);
+    return style(style, value);
+  }
+
+  /**
+   * Evaluate a style expression.
+   */
+  public AttributedString evaluate(final String expression) {
+    checkNotNull(expression);
+    return new StyleExpression(resolver).evaluate(expression);
+  }
+
+  /**
+   * Evaluate a style expression with format.
+   *
+   * @see #evaluate(String)
+   */
+  public AttributedString evaluate(final String expression, final Object... params) {
+    checkNotNull(params);
+    // params may be empty
+    String formatted = String.format(expression, params);
+    return evaluate(formatted);
   }
 }
