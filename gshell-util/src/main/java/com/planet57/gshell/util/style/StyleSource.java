@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
 public interface StyleSource
 {
   /**
-   * Returns the appropriate style for the given style-group and style-name.
+   * Returns the appropriate style for the given style-group and style-name, or {@code null} if missing.
    */
   @Nullable
   String get(String group, String name);
