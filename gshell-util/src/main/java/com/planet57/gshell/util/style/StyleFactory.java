@@ -37,7 +37,6 @@ public class StyleFactory
    * Encode string with style applying value.
    */
   public AttributedString style(final String style, final String value) {
-    checkNotNull(style);
     checkNotNull(value);
     AttributedStyle astyle = resolver.resolve(style);
     return new AttributedString(value, astyle);
@@ -49,7 +48,6 @@ public class StyleFactory
    * @see #style(String, String)
    */
   public AttributedString style(final String style, final String format, final Object... params) {
-    checkNotNull(style);
     checkNotNull(format);
     checkNotNull(params);
     // params may be empty
