@@ -29,6 +29,7 @@ import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.shell.ShellBuilder;
 import com.planet57.gshell.util.io.PrintBuffer;
 import com.planet57.gshell.util.io.StreamSet;
+import com.planet57.gshell.util.style.StyledIO;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
 import com.planet57.gshell.variables.VariablesSupport;
@@ -147,7 +148,7 @@ public class RunMojo
     // TODO: check if we can get a reference to the maven containers BeanLocator?
     final BeanContainer container = new BeanContainer();
     final Terminal terminal = TerminalBuilder.builder().build();
-    final IO io = new IO(StreamSet.SYSTEM_FD, terminal);
+    final IO io = StyledIO.create("shell", StreamSet.SYSTEM_FD, terminal);
     final Variables variables = new VariablesSupport();
     // TODO: adapt variables to maven context
     variables.set(VariableNames.SHELL_ERRORS, shellErrors);

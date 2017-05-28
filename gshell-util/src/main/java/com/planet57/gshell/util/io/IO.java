@@ -19,9 +19,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.Reader;
 
-import com.planet57.gshell.util.style.StyleResolver;
-import com.planet57.gshell.util.style.StyledWriter;
-import com.planet57.gshell.util.style.Styler;
 import org.jline.terminal.Terminal;
 
 import javax.annotation.Nonnull;
@@ -71,20 +68,25 @@ public class IO
     this.streams = checkNotNull(streams);
     this.terminal = checkNotNull(terminal);
 
-    // TODO: add a styled factory method to provide this aspect, or helper factory-method to Styler
-    StyleResolver styleResolver = Styler.resolver("io");
-
     // prepare stream references
     this.in = new InputStreamReader(streams.in);
-    this.out = new StyledWriter(streams.out, terminal, styleResolver, true);
+    this.out = new PrintWriter(streams.out, true);
 
     // Don't rewrite the error stream if we have the same stream for out and error
     if (streams.isOutputCombined()) {
       this.err = this.out;
     }
     else {
-      this.err = new StyledWriter(streams.err, terminal, styleResolver, true);
+      this.err = new PrintWriter(streams.out, true);
     }
+  }
+
+  protected IO(final StreamSet streams, final Terminal terminal, final Reader in, final PrintWriter out, final PrintWriter err) {
+    this.streams = checkNotNull(streams);
+    this.terminal = checkNotNull(terminal);
+    this.in = checkNotNull(in);
+    this.out = checkNotNull(out);
+    this.err = checkNotNull(err);
   }
 
   /**

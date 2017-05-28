@@ -46,6 +46,7 @@ import com.planet57.gshell.util.io.StreamSet;
 import com.planet57.gshell.util.pref.Preference;
 import com.planet57.gshell.util.pref.PreferenceProcessor;
 import com.planet57.gshell.util.pref.Preferences;
+import com.planet57.gshell.util.style.StyledIO;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
 import com.planet57.gshell.variables.VariablesSupport;
@@ -179,7 +180,7 @@ public abstract class MainSupport
     setupLogging(loggingLevel);
 
     Terminal terminal = createTerminal(branding);
-    IO io = new IO(createStreamSet(terminal), terminal);
+    IO io = StyledIO.create("shell", createStreamSet(terminal), terminal);
 
     if (help) {
       HelpPrinter printer = new HelpPrinter(clp, terminal.getWidth());
