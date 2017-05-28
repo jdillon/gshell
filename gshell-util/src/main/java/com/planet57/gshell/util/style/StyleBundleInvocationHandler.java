@@ -109,6 +109,10 @@ class StyleBundleInvocationHandler
     return type.getName();
   }
 
+  //
+  // Helpers
+  //
+
   /**
    * Returns the style group-name for given type, or {@code null} if unable to determine.
    */
@@ -135,6 +139,10 @@ class StyleBundleInvocationHandler
     // allow whitespace in default-style.value, but disallow empty-string
     return defaultStyle != null ? Strings.emptyToNull(defaultStyle.value()) : null;
   }
+
+  //
+  // Factory access
+  //
 
   /**
    * Internal factory-method.
