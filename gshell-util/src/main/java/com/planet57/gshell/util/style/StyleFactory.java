@@ -70,10 +70,11 @@ public class StyleFactory
    *
    * @see #evaluate(String)
    */
-  public AttributedString evaluate(final String expression, final Object... params) {
+  public AttributedString evaluate(final String format, final Object... params) {
+    checkNotNull(format);
     checkNotNull(params);
     // params may be empty
-    String formatted = String.format(expression, params);
+    String formatted = String.format(format, params);
     return evaluate(formatted);
   }
 }
