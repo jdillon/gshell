@@ -23,6 +23,7 @@ import static com.google.common.base.Preconditions.checkState;
  * {@link StyleBundle} proxy invocation-handler to convert method calls into string styling.
  *
  * @since 3.0
+ * @see StyleBundle
  */
 class StyleBundleInvocationHandler
     implements InvocationHandler
