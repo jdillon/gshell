@@ -68,7 +68,7 @@ class StyleBundleInvocationHandler
 
     // resolve the sourced-style, or use the default
     String style = resolver.getSource().get(resolver.getGroup(), styleName);
-    log.debug("Sourced-style: {} -> {}", styleName, style);
+    log.trace("Sourced-style: {} -> {}", styleName, style);
 
     if (style == null) {
       style = getDefaultStyle(method);
@@ -80,7 +80,7 @@ class StyleBundleInvocationHandler
     }
 
     String value  = String.valueOf(args[0]);
-    log.debug("Applying style: {} -> {} to: {}", styleName, style, value);
+    log.trace("Applying style: {} -> {} to: {}", styleName, style, value);
 
     AttributedStyle astyle = resolver.resolve(style);
     return new AttributedString(value, astyle);
@@ -150,14 +150,13 @@ class StyleBundleInvocationHandler
    * @see Styler#bundle(Class)
    */
   @SuppressWarnings("unchecked")
-  static <T extends StyleBundle> T create(final StyleSource source, final Class<T> type, final String group) {
-    checkNotNull(source);
+  static <T extends StyleBundle> T create(final StyleResolver resolver, final Class<T> type) {
+    checkNotNull(resolver);
     checkNotNull(type);
-    checkNotNull(group);
 
-    log.debug("Using style-group: {} for type: {}", group, type.getName());
+    log.trace("Using style-group: {} for type: {}", resolver.getGroup(), type.getName());
 
-    StyleBundleInvocationHandler handler = new StyleBundleInvocationHandler(type, new StyleResolver(source, group));
+    StyleBundleInvocationHandler handler = new StyleBundleInvocationHandler(type, resolver);
     return (T) Proxy.newProxyInstance(type.getClassLoader(), new Class[]{type}, handler);
   }
 
@@ -174,7 +173,7 @@ class StyleBundleInvocationHandler
       throw new InvalidStyleGroupException(type);
     }
 
-    return create(source, type, group);
+    return create(new StyleResolver(source, group), type);
   }
 
   //

@@ -54,8 +54,6 @@ public class StyleResolver
     return group;
   }
 
-  // TODO: debug -> trace
-
   // TODO: could consider a small cache to reduce style calculations?
 
   /**
@@ -66,7 +64,7 @@ public class StyleResolver
   public AttributedStyle resolve(final String spec) {
     checkNotNull(spec);
 
-    log.debug("Resolve: {}", spec);
+    log.trace("Resolve: {}", spec);
 
     int i = spec.indexOf(":-");
     if (i != -1) {
@@ -85,7 +83,7 @@ public class StyleResolver
   public AttributedStyle resolve(final String spec, @Nullable final String defaultSpec) {
     checkNotNull(spec);
 
-    log.debug("Resolve: {}; default: {}", spec, defaultSpec);
+    log.trace("Resolve: {}; default: {}", spec, defaultSpec);
 
     AttributedStyle style = apply(AttributedStyle.DEFAULT, spec);
     if (style == AttributedStyle.DEFAULT && defaultSpec != null) {
@@ -98,7 +96,7 @@ public class StyleResolver
    * Apply style specification.
    */
   private AttributedStyle apply(AttributedStyle style, final String spec) {
-    log.debug("Apply: {}", spec);
+    log.trace("Apply: {}", spec);
 
     for (String item : Splitter.on(',').omitEmptyStrings().trimResults().split(spec)) {
       if (item.startsWith(".")) {
@@ -119,7 +117,7 @@ public class StyleResolver
    * Apply source-referenced named style.
    */
   private AttributedStyle applyReference(final AttributedStyle style, final String spec) {
-    log.debug("Apply-reference: {}", spec);
+    log.trace("Apply-reference: {}", spec);
 
     if (spec.length() == 1) {
       log.warn("Invalid style-reference; missing discriminator: {}", spec);
@@ -140,7 +138,7 @@ public class StyleResolver
    * Apply default named styles.
    */
   private AttributedStyle applyNamed(final AttributedStyle style, final String name) {
-    log.debug("Apply-named: {}", name);
+    log.trace("Apply-named: {}", name);
 
     switch (name.toLowerCase(Locale.US)) {
       case "default":
@@ -190,7 +188,7 @@ public class StyleResolver
    * @param spec Color specification: {@code <color-mode>:<color-name>}
    */
   private AttributedStyle applyColor(final AttributedStyle style, final String spec) {
-    log.debug("Apply-color: {}", spec);
+    log.trace("Apply-color: {}", spec);
 
     // extract color-mode:color-name
     String[] parts = spec.split(":", 2);

@@ -78,6 +78,6 @@ public class Styler
    * Create a {@link StyleBundle} proxy with explicit style-group.
    */
   public static < T extends StyleBundle> T bundle(final String group, final Class<T> type) {
-    return StyleBundleInvocationHandler.create(source, type, group);
+    return StyleBundleInvocationHandler.create(resolver(group), type);
   }
 }

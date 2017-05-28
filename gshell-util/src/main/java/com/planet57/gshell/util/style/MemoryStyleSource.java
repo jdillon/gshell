@@ -46,7 +46,7 @@ public class MemoryStyleSource
   @Override
   public String get(final String group, final String name) {
     String result = group(group).get(name);
-    log.debug("Get: {}={} -> {}", group, name, result);
+    log.trace("Get: {}={} -> {}", group, name, result);
     return result;
   }
 }
