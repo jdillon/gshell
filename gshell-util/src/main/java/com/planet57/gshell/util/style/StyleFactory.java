@@ -53,8 +53,7 @@ public class StyleFactory
     checkNotNull(format);
     checkNotNull(params);
     // params may be empty
-    String value = String.format(format, params);
-    return style(style, value);
+    return style(style, String.format(format, params));
   }
 
   /**
@@ -74,7 +73,6 @@ public class StyleFactory
     checkNotNull(format);
     checkNotNull(params);
     // params may be empty
-    String formatted = String.format(format, params);
-    return evaluate(formatted);
+    return evaluate(String.format(format, params));
   }
 }
