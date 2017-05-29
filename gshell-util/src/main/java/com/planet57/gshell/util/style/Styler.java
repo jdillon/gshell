@@ -16,6 +16,7 @@
 package com.planet57.gshell.util.style;
 
 import com.planet57.gossip.Log;
+import com.planet57.gshell.util.style.StyleBundle.StyleGroup;
 import org.slf4j.Logger;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -69,6 +70,8 @@ public class Styler
 
   /**
    * Create a {@link StyleBundle} proxy.
+   *
+   * Target class must be annotated with {@link StyleGroup}.
    */
   public static < T extends StyleBundle> T bundle(final Class<T> type) {
     return StyleBundleInvocationHandler.create(source, type);
