@@ -232,6 +232,8 @@ public class StyleResolver
 
   /**
    * Returns the color identifier for the given name.
+   *
+   * Bright color can be specified with: {@code !<color>} or {@code bright-<color>}.
    */
   @Nullable
   private static Integer color(String name) {
