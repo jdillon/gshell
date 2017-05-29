@@ -248,7 +248,6 @@ public class StyleResolver
 
     switch (name) {
       case "black":
-      case "bk":
       case "k":
         return flags + BLACK;
 
@@ -265,7 +264,6 @@ public class StyleResolver
         return flags + YELLOW;
 
       case "blue":
-      case "bl":
       case "u":
         return flags + BLUE;
 
