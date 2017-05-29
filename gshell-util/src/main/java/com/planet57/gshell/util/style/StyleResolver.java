@@ -264,7 +264,7 @@ public class StyleResolver
         return flags + YELLOW;
 
       case "blue":
-      case "u":
+      case "b":
         return flags + BLUE;
 
       case "magenta":
