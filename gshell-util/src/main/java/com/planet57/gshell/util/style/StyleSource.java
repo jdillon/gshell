@@ -54,11 +54,15 @@ public interface StyleSource
 
   /**
    * Returns configured style-group names.
+   *
+   * @return Immutable collection.
    */
   Iterable<String> groups();
 
   /**
    * Returns configured styles for given style-group.
+   *
+   * @return Immutable map.
    */
   Map<String,String> styles(String group);
 }
