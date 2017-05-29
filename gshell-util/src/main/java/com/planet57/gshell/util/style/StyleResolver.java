@@ -25,6 +25,16 @@ import org.jline.utils.AttributedStyle;
 import org.slf4j.Logger;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static org.jline.utils.AttributedStyle.BLACK;
+import static org.jline.utils.AttributedStyle.BLUE;
+import static org.jline.utils.AttributedStyle.BRIGHT;
+import static org.jline.utils.AttributedStyle.CYAN;
+import static org.jline.utils.AttributedStyle.DEFAULT;
+import static org.jline.utils.AttributedStyle.GREEN;
+import static org.jline.utils.AttributedStyle.MAGENTA;
+import static org.jline.utils.AttributedStyle.RED;
+import static org.jline.utils.AttributedStyle.WHITE;
+import static org.jline.utils.AttributedStyle.YELLOW;
 
 // TODO: document style specification
 
@@ -72,7 +82,7 @@ public class StyleResolver
       return resolve(parts[0].trim(), parts[1].trim());
     }
 
-    return apply(AttributedStyle.DEFAULT, spec);
+    return apply(DEFAULT, spec);
   }
 
   /**
@@ -85,8 +95,8 @@ public class StyleResolver
 
     log.trace("Resolve: {}; default: {}", spec, defaultSpec);
 
-    AttributedStyle style = apply(AttributedStyle.DEFAULT, spec);
-    if (style == AttributedStyle.DEFAULT && defaultSpec != null) {
+    AttributedStyle style = apply(DEFAULT, spec);
+    if (style == DEFAULT && defaultSpec != null) {
       style = apply(style, defaultSpec);
     }
     return style;
@@ -142,7 +152,7 @@ public class StyleResolver
 
     switch (name.toLowerCase(Locale.US)) {
       case "default":
-        return AttributedStyle.DEFAULT;
+        return DEFAULT;
 
       case "bold":
         return style.bold();
@@ -222,35 +232,54 @@ public class StyleResolver
    * Returns the color identifier for the given name.
    */
   @Nullable
-  private static Integer color(final String name) {
-    switch (name.toLowerCase(Locale.US)) {
+  private static Integer color(String name) {
+    int flags = 0;
+    name = name.toLowerCase(Locale.US);
+
+    // extract bright flag from color name
+    if (name.charAt(0) == '!') {
+      name = name.substring(1, name.length());
+      flags = BRIGHT;
+    }
+    else if (name.startsWith("bright-")) {
+      name = name.substring(7, name.length());
+      flags = BRIGHT;
+    }
+
+    switch (name) {
       case "black":
-        return AttributedStyle.BLACK;
+      case "bk":
+      case "k":
+        return flags + BLACK;
 
       case "red":
-        return AttributedStyle.RED;
+      case "r":
+        return flags + RED;
 
       case "green":
-        return AttributedStyle.GREEN;
+      case "g":
+        return flags + GREEN;
 
       case "yellow":
-        return AttributedStyle.YELLOW;
+      case "y":
+        return flags + YELLOW;
 
       case "blue":
-        return AttributedStyle.BLUE;
+      case "bl":
+      case "u":
+        return flags + BLUE;
 
       case "magenta":
-        return AttributedStyle.MAGENTA;
+      case "m":
+        return flags + MAGENTA;
 
       case "cyan":
-        return AttributedStyle.CYAN;
+      case "c":
+        return flags + CYAN;
 
       case "white":
-        return AttributedStyle.WHITE;
-
-      // FIXME: bright usage here may be invalid; do we need a flag to indicate bright color style?
-      case "bright":
-        return AttributedStyle.BRIGHT;
+      case "w":
+        return flags + WHITE;
     }
 
     return null;

@@ -18,6 +18,7 @@ package com.planet57.gshell.util.style
 import org.junit.Before
 import org.junit.Test
 
+import static org.jline.utils.AttributedStyle.*
 import static org.jline.utils.AttributedStyle.BOLD
 import static org.jline.utils.AttributedStyle.DEFAULT
 import static org.jline.utils.AttributedStyle.RED
@@ -114,5 +115,17 @@ class StyleResolverTest
     source.set('test', 'more-red', 'bold,fg:red')
     def style = underTest.resolve('.very-red:-.more-red')
     assert style == BOLD.foreground(RED)
+  }
+
+  @Test
+  void 'resolve fg:bright-red'() {
+    def style = underTest.resolve('fg:bright-red')
+    assert style == DEFAULT.foreground(BRIGHT + RED)
+  }
+
+  @Test
+  void 'resolve fg:!red'() {
+    def style = underTest.resolve('fg:!red')
+    assert style == DEFAULT.foreground(BRIGHT + RED)
   }
 }
