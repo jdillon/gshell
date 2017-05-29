@@ -30,8 +30,6 @@ import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.util.style.StyleSource;
 import com.planet57.gshell.util.style.Styler;
 
-// HACK: primitive action to manage styles, not ideal and should be refined further
-
 /**
  * Manage styles.
  *
