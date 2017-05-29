@@ -62,7 +62,7 @@ public class ShellErrorHandler
 
     Throwable cause = error;
 
-    out.format("@{bold,fg:red %s}", cause.getClass().getName());
+    out.format("@{bold,fg:!red %s}", cause.getClass().getName());
     if (cause.getMessage() != null) {
       out.format(": @{bold,fg:red %s}", cause.getMessage());
     }
