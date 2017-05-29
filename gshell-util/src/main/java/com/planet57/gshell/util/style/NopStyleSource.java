@@ -38,6 +38,38 @@ public class NopStyleSource
   }
 
   /**
+   * Non-operation.
+   */
+  @Override
+  public void set(final String group, final String name, final String style) {
+    // empty
+  }
+
+  /**
+   * Non-operation.
+   */
+  @Override
+  public void remove(final String group) {
+    // empty
+  }
+
+  /**
+   * Non-operation.
+   */
+  @Override
+  public void remove(final String group, final String name) {
+    // empty
+  }
+
+  /**
+   * Non-operation.
+   */
+  @Override
+  public void clear() {
+    // empty
+  }
+
+  /**
    * Always returns empty list.
    */
   @Override

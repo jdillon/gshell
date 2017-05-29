@@ -79,7 +79,7 @@ public class StyleAction
     }
     else if (spec == null) {
       // display specific style
-      String spec = source.styles(group).get(name);
+      String spec = source.get(group, name);
       if (spec == null) {
         io.println("Style not defined");
       }
@@ -89,7 +89,7 @@ public class StyleAction
     }
     else {
       // set a style
-      source.styles(group).put(name, spec);
+      source.set(group, name, spec);
     }
 
     return null;

@@ -33,6 +33,26 @@ public interface StyleSource
   String get(String group, String name);
 
   /**
+   * Set a specific style in a style-group.
+   */
+  void set(String group, String name, String style);
+
+  /**
+   * Remove all styles for given style-group.
+   */
+  void remove(String group);
+
+  /**
+   * Remove a specific style from style-group.
+   */
+  void remove(String group, String name);
+
+  /**
+   * Clear all styles.
+   */
+  void clear();
+
+  /**
    * Returns configured style-group names.
    */
   Iterable<String> groups();

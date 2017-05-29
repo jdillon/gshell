@@ -92,7 +92,7 @@ class StyleResolverTest
 
   @Test
   void 'resolve referenced style'() {
-    source.styles('test').put('very-red', 'bold,fg:red')
+    source.set('test', 'very-red', 'bold,fg:red')
     def style = underTest.resolve('.very-red')
     assert style == BOLD.foreground(RED)
   }
@@ -111,7 +111,7 @@ class StyleResolverTest
 
   @Test
   void 'resolve referenced style-missing with default referenced'() {
-    source.styles('test').put('more-red', 'bold,fg:red')
+    source.set('test', 'more-red', 'bold,fg:red')
     def style = underTest.resolve('.very-red:-.more-red')
     assert style == BOLD.foreground(RED)
   }

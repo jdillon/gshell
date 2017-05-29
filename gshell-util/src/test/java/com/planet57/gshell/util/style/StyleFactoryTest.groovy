@@ -46,7 +46,7 @@ class StyleFactoryTest
 
   @Test
   void 'style referenced'() {
-    source.styles('test').put('very-red', 'bold,fg:red')
+    source.set('test', 'very-red', 'bold,fg:red')
     def string = underTest.style('.very-red', 'foo bar')
     println string.toAnsi()
     assert string == new AttributedString('foo bar', BOLD.foreground(RED))
@@ -61,7 +61,7 @@ class StyleFactoryTest
 
   @Test
   void 'missing referenced style with customized'() {
-    source.styles('test').put('very-red', 'bold,fg:yellow')
+    source.set('test', 'very-red', 'bold,fg:yellow')
     def string = underTest.style('.very-red:-bold,fg:red', 'foo bar')
     println string.toAnsi()
     assert string == new AttributedString('foo bar', BOLD.foreground(YELLOW))
