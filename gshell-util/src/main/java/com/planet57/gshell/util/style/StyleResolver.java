@@ -150,6 +150,8 @@ public class StyleResolver
   private AttributedStyle applyNamed(final AttributedStyle style, final String name) {
     log.trace("Apply-named: {}", name);
 
+    // TODO: consider short aliases for named styles
+
     switch (name.toLowerCase(Locale.US)) {
       case "default":
         return DEFAULT;
