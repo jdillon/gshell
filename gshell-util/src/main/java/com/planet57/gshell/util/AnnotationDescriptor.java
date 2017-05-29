@@ -22,11 +22,19 @@ package com.planet57.gshell.util;
  */
 public abstract class AnnotationDescriptor
 {
+  /**
+   * Value used for annotation of type {@link String} which is non-default but needs an uninitialized/default value.
+   */
   public static final String UNINITIALIZED_STRING = "__EMPTY__";
 
+  /**
+   * Value used for annotation of type {@link Character} which is non-default but needs an uninitialized/default value.
+   */
   public static final char UNINITIALIZED_CHAR = '\u0000';
 
   /**
+   * Value used for annotation of type {@link Class} which is non-default but needs an uninitialized/default value.
+   *
    * @since 3.0
    */
   public static final class UninitializedClass
