@@ -215,10 +215,12 @@ public class StyleResolver
       switch (colorMode.toLowerCase(Locale.US)) {
         case "foreground":
         case "fg":
+        case "f":
           return style.foreground(color);
 
         case "background":
         case "bg":
+        case "b":
           return style.background(color);
 
         default:
