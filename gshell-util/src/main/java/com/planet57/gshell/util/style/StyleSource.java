@@ -32,7 +32,13 @@ public interface StyleSource
   @Nullable
   String get(String group, String name);
 
+  /**
+   * Returns configured style-group names.
+   */
   Iterable<String> groups();
 
+  /**
+   * Returns configured styles for given style-group.
+   */
   Map<String,String> styles(String group);
 }
