@@ -38,15 +38,15 @@ public class MemoryStyleSource
 {
   private static final Logger log = Log.getLogger(MemoryStyleSource.class);
 
-  private final Map<String,Map<String,String>> styles = new ConcurrentHashMap<>();
+  private final Map<String,Map<String,String>> backing = new ConcurrentHashMap<>();
 
   @Nullable
   @Override
   public String get(final String group, final String name) {
     String style = null;
-    Map<String,String> groupStyles = styles.get(group);
-    if (groupStyles != null) {
-      style = groupStyles.get(name);
+    Map<String,String> styles = backing.get(group);
+    if (styles != null) {
+      style = styles.get(name);
     }
     log.trace("Get: [{}] {} -> {}", group, name, style);
     return style;
@@ -57,14 +57,14 @@ public class MemoryStyleSource
     checkNotNull(group);
     checkNotNull(name);
     checkNotNull(style);
-    styles.computeIfAbsent(group, k -> new ConcurrentHashMap<>()).put(name, style);
+    backing.computeIfAbsent(group, k -> new ConcurrentHashMap<>()).put(name, style);
     log.trace("Set: [{}] {} -> {}", group, name, style);
   }
 
   @Override
   public void remove(final String group) {
     checkNotNull(group);
-    if (styles.remove(group) != null) {
+    if (backing.remove(group) != null) {
       log.debug("Removed: [{}]");
     }
   }
@@ -73,31 +73,28 @@ public class MemoryStyleSource
   public void remove(final String group, final String name) {
     checkNotNull(group);
     checkNotNull(name);
-    Map<String,String> groupStyles = styles.get(group);
-    if (groupStyles != null) {
-      groupStyles.remove(name);
+    Map<String,String> styles = backing.get(group);
+    if (styles != null) {
+      styles.remove(name);
       log.debug("Removed: [{}] {}", group, name);
     }
   }
 
   @Override
   public void clear() {
-    styles.clear();
+    backing.clear();
     log.trace("Cleared");
   }
 
   @Override
   public Iterable<String> groups() {
-    return ImmutableSet.copyOf(styles.keySet());
+    return ImmutableSet.copyOf(backing.keySet());
   }
 
-  /**
-   * Returns styles mapping (or creating if missing) for given style-group.
-   */
   @Override
   public Map<String,String> styles(final String group) {
     checkNotNull(group);
-    Map<String,String> result = styles.get(group);
+    Map<String,String> result = backing.get(group);
     if (result == null) {
       result = Collections.emptyMap();
     }

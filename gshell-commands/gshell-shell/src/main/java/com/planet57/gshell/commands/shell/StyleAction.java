@@ -25,6 +25,7 @@ import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.util.cli2.Argument;
+import com.planet57.gshell.util.cli2.Option;
 import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.util.style.StyleSource;
 import com.planet57.gshell.util.style.Styler;
@@ -40,6 +41,9 @@ import com.planet57.gshell.util.style.Styler;
 public class StyleAction
     extends CommandActionSupport
 {
+  @Option(name="r", longName = "remove", description = "Remove styles")
+  private boolean remove;
+
   @Nullable
   @Argument(index = 0, description = "Style group", token = "GROUP")
   private String group;
@@ -58,36 +62,58 @@ public class StyleAction
     IO io = context.getIo();
 
     if (group == null) {
-      // display all styles in all groups
-      Iterator<String> iter = source.groups().iterator();
-      if (!iter.hasNext()) {
-        io.println("No styles defined");
-        return null;
+      if (remove) {
+        source.clear();
+        io.println("All styles removed");
       }
+      else {
+        // display all styles in all groups
+        Iterator<String> iter = source.groups().iterator();
+        if (!iter.hasNext()) {
+          io.println("No styles defined");
+          return null;
+        }
 
-      while (iter.hasNext()) {
-        String group = iter.next();
-        displayGroup(io, group, source.styles(group));
-        if (iter.hasNext()) {
-          io.println();
+        while (iter.hasNext()) {
+          String group = iter.next();
+          displayGroup(io, group, source.styles(group));
+          if (iter.hasNext()) {
+            io.println();
+          }
         }
       }
     }
     else if (name == null) {
-      // displays styles in group
-      displayGroup(io, group, source.styles(group));
-    }
-    else if (spec == null) {
-      // display specific style
-      String spec = source.get(group, name);
-      if (spec == null) {
-        io.println("Style not defined");
+      if (remove) {
+        source.remove(group);
+        io.format("All styles removed: @{fg:green [%s]}%n", group);
       }
       else {
-        io.format("@{fg:green [%s]} @{bold %s}: %s%n", group, name, spec);
+        // displays styles in group
+        displayGroup(io, group, source.styles(group));
+      }
+    }
+    else if (spec == null) {
+      if (remove) {
+        source.remove(group, name);
+        io.format("Style removed: @{fg:green [%s]} %s%n", group, name);
+      }
+      else {
+        // display specific style
+        String spec = source.get(group, name);
+        if (spec == null) {
+          io.println("Style not defined");
+        }
+        else {
+          io.format("@{fg:green [%s]} @{bold %s}: %s%n", group, name, spec);
+        }
       }
     }
     else {
+      if (remove) {
+        throw new RuntimeException("Invalid use of --remove option");
+      }
+
       // set a style
       source.set(group, name, spec);
     }
