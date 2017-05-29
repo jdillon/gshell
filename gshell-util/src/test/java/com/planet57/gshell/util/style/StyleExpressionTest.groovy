@@ -79,6 +79,13 @@ class StyleExpressionTest
   }
 
   @Test
+  void 'evaluate expression with default'() {
+    def result = underTest.evaluate('@{.foo:-bold foo}')
+    println result.toAnsi()
+    assert result == new AttributedString('foo', BOLD)
+  }
+
+  @Test
   void 'evaluate expression with multiple replacements'() {
     def result = underTest.evaluate('@{bold foo} @{fg:red bar} @{underline baz}')
     println result.toAnsi()
