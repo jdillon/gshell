@@ -25,15 +25,15 @@ public class IllegalAnnotationError
 {
   private static final long serialVersionUID = 1;
 
-  public IllegalAnnotationError(String msg) {
+  public IllegalAnnotationError(final String msg) {
     super(msg);
   }
 
-  public IllegalAnnotationError(String msg, Throwable cause) {
+  public IllegalAnnotationError(final String msg, final Throwable cause) {
     super(msg, cause);
   }
 
-  public IllegalAnnotationError(Throwable cause) {
+  public IllegalAnnotationError(final Throwable cause) {
     super(cause);
   }
 }
