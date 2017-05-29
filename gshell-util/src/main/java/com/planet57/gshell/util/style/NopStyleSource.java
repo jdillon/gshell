@@ -15,6 +15,9 @@
  */
 package com.planet57.gshell.util.style;
 
+import java.util.Collections;
+import java.util.Map;
+
 import javax.annotation.Nullable;
 
 /**
@@ -32,5 +35,21 @@ public class NopStyleSource
   @Override
   public String get(final String group, final String name) {
     return null;
+  }
+
+  /**
+   * Always returns empty list.
+   */
+  @Override
+  public Iterable<String> groups() {
+    return Collections.emptyList();
+  }
+
+  /**
+   * Always returns empty map.
+   */
+  @Override
+  public Map<String, String> styles(final String group) {
+    return Collections.emptyMap();
   }
 }

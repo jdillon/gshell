@@ -15,6 +15,9 @@
  */
 package com.planet57.gshell.commands.shell;
 
+import java.util.Iterator;
+import java.util.Map;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -22,7 +25,8 @@ import com.planet57.gshell.command.Command;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.util.cli2.Argument;
-import com.planet57.gshell.util.style.MemoryStyleSource;
+import com.planet57.gshell.util.io.IO;
+import com.planet57.gshell.util.style.StyleSource;
 import com.planet57.gshell.util.style.Styler;
 
 // HACK: primitive action to manage styles, not ideal and should be refined further
@@ -36,15 +40,12 @@ import com.planet57.gshell.util.style.Styler;
 public class StyleAction
     extends CommandActionSupport
 {
-  static {
-    // HACK: for now adjust to use memory-source instead of default nop-source
-    Styler.setSource(new MemoryStyleSource());
-  }
-
-  @Argument(index = 0, required = true, description = "Style group", token = "GROUP")
+  @Nullable
+  @Argument(index = 0, description = "Style group", token = "GROUP")
   private String group;
 
-  @Argument(index = 1, required = true, description = "Style name", token = "NAME")
+  @Nullable
+  @Argument(index = 1, description = "Style name", token = "NAME")
   private String name;
 
   @Nullable
@@ -53,17 +54,54 @@ public class StyleAction
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
-    // HACK:
-    MemoryStyleSource source = (MemoryStyleSource)Styler.getSource();
+    StyleSource source = Styler.getSource();
+    IO io = context.getIo();
 
-    if (spec == null) {
-      String spec = source.group(group).get(name);
-      context.getIo().format("[%s] %s=%s", group, name, spec);
+    if (group == null) {
+      // display all styles in all groups
+      Iterator<String> iter = source.groups().iterator();
+      if (!iter.hasNext()) {
+        io.println("No styles defined");
+        return null;
+      }
+
+      while (iter.hasNext()) {
+        String group = iter.next();
+        displayGroup(io, group, source.styles(group));
+        if (iter.hasNext()) {
+          io.println();
+        }
+      }
+    }
+    else if (name == null) {
+      // displays styles in group
+      displayGroup(io, group, source.styles(group));
+    }
+    else if (spec == null) {
+      // display specific style
+      String spec = source.styles(group).get(name);
+      if (spec == null) {
+        io.println("Style not defined");
+      }
+      else {
+        io.format("@{fg:green [%s]} @{bold %s}: %s%n", group, name, spec);
+      }
     }
     else {
-      source.group(group).put(name, spec);
+      // set a style
+      source.styles(group).put(name, spec);
     }
 
     return null;
+  }
+
+  private void displayGroup(final IO io, final String group, final Map<String,String> styles) {
+    io.format("@{fg:green [%s]}%n", group);
+    if (styles.isEmpty()) {
+      io.println("  No styles defined");
+    }
+    else {
+      styles.forEach((key, value) -> io.format("  @{bold %s}: %s%n", key, value));
+    }
   }
 }

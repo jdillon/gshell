@@ -15,6 +15,8 @@
  */
 package com.planet57.gshell.util.style;
 
+import java.util.Map;
+
 import javax.annotation.Nullable;
 
 /**
@@ -29,4 +31,8 @@ public interface StyleSource
    */
   @Nullable
   String get(String group, String name);
+
+  Iterable<String> groups();
+
+  Map<String,String> styles(String group);
 }

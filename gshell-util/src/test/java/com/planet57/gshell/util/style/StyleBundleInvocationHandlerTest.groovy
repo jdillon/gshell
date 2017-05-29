@@ -100,7 +100,7 @@ class StyleBundleInvocationHandlerTest
 
   @Test
   void 'bundle default-style missing but source-referenced'() {
-    source.group('test').put('missingDefaultStyle', 'bold')
+    source.styles('test').put('missingDefaultStyle', 'bold')
     def styles = StyleBundleInvocationHandler.create(source, Styles.class)
     def string = styles.missingDefaultStyle('foo bar')
     println string.toAnsi()
@@ -117,7 +117,7 @@ class StyleBundleInvocationHandlerTest
 
   @Test
   void 'bundle sourced-style'() {
-    source.group('test').put('boldRed', 'bold,fg:yellow')
+    source.styles('test').put('boldRed', 'bold,fg:yellow')
     def styles = StyleBundleInvocationHandler.create(source, Styles.class)
     def string = styles.boldRed('foo bar')
     println string.toAnsi()
@@ -126,7 +126,7 @@ class StyleBundleInvocationHandlerTest
 
   @Test
   void 'bundle explicit style-group'() {
-    source.group('test2').put('boldRed', 'bold,fg:yellow')
+    source.styles('test2').put('boldRed', 'bold,fg:yellow')
     def styles = StyleBundleInvocationHandler.create(new StyleResolver(source, 'test2'), Styles.class)
     def string = styles.boldRed('foo bar')
     println string.toAnsi()

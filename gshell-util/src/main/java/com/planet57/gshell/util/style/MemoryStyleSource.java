@@ -23,6 +23,8 @@ import javax.annotation.Nullable;
 import com.planet57.gossip.Log;
 import org.slf4j.Logger;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * In-memory {@link StyleSource}.
  *
@@ -35,18 +37,25 @@ public class MemoryStyleSource
 
   private final Map<String,Map<String,String>> styles = new HashMap<>();
 
-  /**
-   * Returns group mapping (or creating if missing) for given group-name.
-   */
-  public Map<String,String> group(final String name) {
-    return styles.computeIfAbsent(name, k -> new HashMap<>());
-  }
-
   @Nullable
   @Override
   public String get(final String group, final String name) {
-    String result = group(group).get(name);
+    String result = styles(group).get(name);
     log.trace("Get: {}={} -> {}", group, name, result);
     return result;
+  }
+
+  @Override
+  public Iterable<String> groups() {
+    return styles.keySet();
+  }
+
+  /**
+   * Returns styles mapping (or creating if missing) for given style-group.
+   */
+  @Override
+  public Map<String,String> styles(final String group) {
+    checkNotNull(group);
+    return styles.computeIfAbsent(group, k -> new HashMap<>());
   }
 }
