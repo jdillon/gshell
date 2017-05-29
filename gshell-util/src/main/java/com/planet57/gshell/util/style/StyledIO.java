@@ -29,6 +29,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Style-aware {@link IO}.
  *
  * @since 3.0
+ * @see StyledWriter
  */
 public class StyledIO
     extends IO
