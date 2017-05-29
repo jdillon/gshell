@@ -42,6 +42,6 @@ class NameValueTest
   @Test
   void 'name=value toString'() {
     def nv = NameValue.parse('foo=bar')
-    assert nv.toString() == 'foo=\'bar\''
+    assert nv.toString() == "foo='bar'"
   }
 }
