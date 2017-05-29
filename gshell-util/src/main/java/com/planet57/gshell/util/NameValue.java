@@ -24,7 +24,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class NameValue
 {
-  public static final String SEPARATOR = "=";
+  private static final char SEPARATOR = '=';
 
   public final String name;
 
