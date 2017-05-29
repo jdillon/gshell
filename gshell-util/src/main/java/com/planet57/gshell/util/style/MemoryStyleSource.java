@@ -65,7 +65,7 @@ public class MemoryStyleSource
   public void remove(final String group) {
     checkNotNull(group);
     if (backing.remove(group) != null) {
-      log.debug("Removed: [{}]");
+      log.trace("Removed: [{}]");
     }
   }
 
@@ -76,7 +76,7 @@ public class MemoryStyleSource
     Map<String,String> styles = backing.get(group);
     if (styles != null) {
       styles.remove(name);
-      log.debug("Removed: [{}] {}", group, name);
+      log.trace("Removed: [{}] {}", group, name);
     }
   }
 
