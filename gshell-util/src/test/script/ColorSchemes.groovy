@@ -8,7 +8,9 @@ class ColorSchemes
 
   static {
     def parser = new JsonSlurper()
-    def obj = parser.parse(DisplayColors.class.getResource('xterm256.json'))
+    def dir = new File(this.protectionDomain.codeSource.location.file).parentFile
+
+    def obj = parser.parse(new File(dir, 'xterm256.json'))
     obj.each {
       xterm256[it.hexString[1..-1]] = it.name
     }

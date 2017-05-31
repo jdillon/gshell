@@ -1,0 +1,308 @@
+#!/usr/bin/env python
+
+# The MIT License (MIT)
+#
+# Copyright (c) 2015 Tommy Allen
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+# FROM: https://github.com/tweekmonster/shellcolors
+
+from __future__ import print_function, division
+
+import re
+import math
+import argparse
+
+
+RESET = 0
+BOLD = 1
+DIM = 2
+ITALIC = 3
+UNDERLINE = 4
+BLINK = 5
+REVERSE = 7
+
+
+_colors_8 = [
+    (0x00, 0x00, 0x00),
+    (0x80, 0x00, 0x00),
+    (0x00, 0x80, 0x00),
+    (0x80, 0x80, 0x00),
+    (0x80, 0x00, 0x80),
+    (0x00, 0x80, 0x80),
+    (0xc0, 0xc0, 0xc0),
+    (0x80, 0x80, 0x80),
+]
+
+_cube_6 = (0x00, 0x5f, 0x87, 0xaf, 0xd7, 0xff)
+
+
+class GenericError(Exception):
+    pass
+
+
+def term_to_rgb(n):
+    '''Get the R/G/B values for a terminal color index
+
+    0 - 15 are the basic colors
+    16 - 231 are the 6x6 RGB colors
+    232 - 255 are the gray scale colors
+    '''
+    if n < 16:
+        rgb = _colors_8[n % 8]
+        if n > 7:
+            return tuple(map(lambda i: min(255, i + 0x80), rgb))
+        return rgb
+
+    if n < 232:
+        n -= 16
+        if n == 0:
+            return (0x00, 0x00, 0x00)
+        return (_cube_6[n // 36], _cube_6[(n // 6) % 6], _cube_6[n % 6])
+
+    n -= 232
+    c = 8 + (n * 10)
+    return (c, c, c)
+
+
+def rgb(s, fg=None, bg=None, styles=None):
+    '''RGB tuples to escape sequence
+    '''
+    escape = '\x1b[0'
+    if fg is not None:
+        escape += ';38;2;%d;%d;%d' % fg
+    if bg is not None:
+        escape += ';48;2;%d;%d;%d' % bg
+    if styles is not None:
+        if not isinstance(styles, (list, tuple)):
+            styles = [styles]
+        for style in styles:
+            escape += ';%d' % style
+
+    return escape + 'm' + s + '\x1b[m'
+
+
+def term_rgb(s, fg=None, bg=None, styles=None):
+    '''Color index to RGB tuple to escape sequence
+    '''
+    if fg is not None:
+        fg = term_to_rgb(fg)
+    if bg is not None:
+        bg = term_to_rgb(bg)
+    return rgb(s, fg, bg, styles)
+
+
+def term(s, fg=None, bg=None, styles=None):
+    '''Simple escape sequence
+    '''
+    escape = '\x1b[0'
+    if fg is not None:
+        escape += ';38;5;%d' % fg
+    if bg is not None:
+        escape += ';48;5;%d' % bg
+    if styles is not None:
+        if not isinstance(styles, (list, tuple)):
+            styles = [styles]
+        for style in styles:
+            escape += ';%d' % style
+
+    return escape + 'm' + s + '\x1b[m'
+
+
+def parse_hex_str(s):
+    '''RGB hexadecimal string to RGB tuple
+    '''
+    s = s.strip('# ')
+    if len(s) == 6:
+        return tuple(map(lambda x: int(x, 16), (s[:2], s[2:4], s[4:])))
+    elif len(s) == 3:
+        return tuple(map(lambda x: int(x * 2, 16), s))
+    raise GenericError('Can\'t parse "%s"' % s)
+
+
+def rgb_to_lab(r, g, b):
+    # http://www.easyrgb.com/index.php?X=MATH&H=02#text2
+    # http://www.easyrgb.com/index.php?X=MATH&H=07#text7
+    r /= 255
+    g /= 255
+    b /= 255
+
+    def normalize_xyz(n):
+        if n > 0.04045:
+            return ((n + 0.055) / 1.055) ** 2.4
+        return n / 12.92
+
+    def normalize_lab(n):
+        if n > 0.008856:
+            return n ** (1 / 3)
+        return (7.787 * n) + (16 / 116)
+
+    r = normalize_xyz(r) * 100
+    g = normalize_xyz(g) * 100
+    b = normalize_xyz(b) * 100
+
+    x = normalize_lab((r * 0.4124 + g * 0.3576 + b * 0.1805) / 95.047)
+    y = normalize_lab((r * 0.2126 + g * 0.7152 + b * 0.0722) / 100.000)
+    z = normalize_lab((r * 0.0193 + g * 0.1192 + b * 0.9505) / 108.833)
+
+    return (
+        (116 * y) - 16,  # l
+        500 * (x - y),   # a
+        200 * (y - z),   # b
+    )
+
+
+def color_similarity(rgb1, rgb2):
+    # Delta-E cie1994
+    # http://stackoverflow.com/a/14216548/4932879
+    l1 = rgb_to_lab(*rgb1)
+    l2 = rgb_to_lab(*rgb2)
+
+    textile = True
+    k2 = 0.014 if textile else 0.015
+    k1 = 0.048 if textile else 0.048
+    kh = 1
+    kc = 1
+    kl = 2 if textile else 1
+
+    c1 = math.sqrt(l1[1] ** 2 + l1[2] ** 2)
+    c2 = math.sqrt(l2[1] ** 2 + l2[2] ** 2)
+
+    sh = 1 + k2 * c1
+    sc = 1 + k1 * c1
+    sl = 1
+
+    da = l1[1] - l2[1]
+    db = l1[2] - l2[2]
+    dc = c1 - c2
+
+    dl = l1[0] - l2[0]
+    dh = math.sqrt(da ** 2 + db ** 2 + dc ** 2)
+    cie1994 = math.sqrt((dl / (kl * sl)) ** 2 + (dc / (kc * sc)) ** 2 + (dh / (kh * sh)) ** 2)
+
+    return cie1994
+
+
+def strlen(x):
+    '''String length without the escape sequence
+    '''
+    return len(re.sub(r'\x1b[^m]+m', '', x))
+
+
+def pad(s, w):
+    l = strlen(s)
+    return s + ((w - l) * ' ')
+
+
+if __name__ == "__main__":
+    colors = [term_to_rgb(i) for i in range(0, 256)]
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('hex', nargs='*')
+    parser.add_argument('-q', '--shutup', action='store_true')
+    parser.add_argument('-p', '--palette', action='store_true')
+    parser.add_argument('--rgb', action='store_true')
+
+    args = parser.parse_args()
+
+    if args.palette:
+        pixel = '   '
+        print('Default')
+        for i in range(16):
+            if i and i % 8 == 0:
+                print('')
+            p1 = term(pixel, None, i)
+            p2 = p1
+            if args.rgb:
+                p2 = term_rgb(pixel, None, i)
+            print('%s%s %3s  ' % (p1, p2, i), end='')
+
+        print('\n\nRGB 6x6')
+        for i, c in enumerate(range(16, 232)):
+            if i and i % 6 == 0:
+                print('')
+            p1 = term(pixel, None, c)
+            p2 = p1
+            if args.rgb:
+                p2 = term_rgb(pixel, None, c)
+            print('%s%s %3s  ' % (p1, p2, c), end='')
+
+        print('\n\nGrayscale')
+        for i, c in enumerate(range(232, 256)):
+            if i and i % 6 == 0:
+                print('')
+            p1 = term(pixel, None, c)
+            p2 = p1
+            if args.rgb:
+                p2 = term_rgb(pixel, None, c)
+            print('%s%s %3s  ' % (p1, p2, c), end='')
+
+        print('\n\n')
+
+    palette = []
+    maxlen = 0
+
+    for h in args.hex:
+        try:
+            rgb_val = parse_hex_str(h)
+        except GenericError as e:
+            if not args.shutup:
+                print(e)
+            continue
+
+        scored = {}
+        for i, c in enumerate(colors):
+            s = color_similarity(rgb_val, c)
+            scored[s] = (i, c)
+
+        results = sorted(scored.items(), key=lambda x: x[0])
+        best = results[0][1]
+
+        if args.shutup:
+            print(best[0])
+            continue
+
+        swatch = []
+        hex_str = '%02x%02x%02x' % rgb_val
+        swatch.append('  USER  %s  #%s' % (rgb('   ', colors[232], rgb_val, UNDERLINE), hex_str))
+        swatch.append('  TERM  %s  %3d' % (term('   ', 232, best[0], UNDERLINE), best[0]))
+        best_rgb = '%d/%d/%d' % best[1]
+        best_hex = '%02x%02x%02x' % best[1]
+        preview = term_rgb('   ', 232, best[0], UNDERLINE)
+        swatch.append('   HEX  %s  #%s' % (preview, best_hex))
+        swatch.append('   RGB  %s  %s' % (preview, best_rgb))
+
+        maxlen = max(maxlen, max(map(strlen, swatch)))
+        palette.append(swatch)
+
+    if palette:
+        print('Matches:')
+        maxlen += 4
+        cols = 2
+        per_row = 4
+
+        print('')
+        for i in range(0, len(palette), cols):
+            p = palette[i:i+cols]
+            for j in range(per_row):
+                for k in range(len(p)):
+                    print(pad(p[k][j], maxlen), end='')
+                print('')
+            print('')
