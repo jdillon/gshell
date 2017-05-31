@@ -30,26 +30,32 @@ class DisplayColors
       codeNames.put(color.code, color.name)
       hexNames.put(color.hex, color.name)
     }
+
+//    def dir = new File(this.protectionDomain.codeSource.location.file).parentFile
+//    new RgbParser().parse(new File(dir, 'rgb.txt')).asMap().each { hex, values ->
+//      values.each {
+//        hexNames.put(hex, it.name)
+//        int code = GenerateColorsDatabase.codeForHex(hex)
+//        codeNames.put(code, it.name)
+//      }
+//    }
   }
 
   static String selectName(int code, String hex) {
-//    Collection names = codeNames.get(code)
-//    if (names == null || names.empty) {
-//      names = hexNames.get(hex)
-//    }
+    Collection names = codeNames.get(code)
+    if (names == null || names.empty) {
+      names = hexNames.get(hex)
+    }
 
-//    if (names == null || names.empty) {
-//      code = GenerateColorsDatabase.codeForHex(hex)
-//      names = codeNames.get(code)
-//    }
+    String name
+    if (names != null && !names.empty) {
+      name = names[0]
+    }
+    else {
+      unknownMapping++
+      name = ColorSchemes.xterm256[hex].toLowerCase(Locale.US)
+    }
 
-//    if (names != null && !names.empty) {
-//      // pick the first
-//      return names[0]
-//    }
-
-    unknownMapping++
-    String name = ColorSchemes.xterm256[hex].toLowerCase(Locale.US)
     if (uniqueNames.contains(name)) {
       duplicateNames++
     }

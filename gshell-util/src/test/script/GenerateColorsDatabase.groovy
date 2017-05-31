@@ -19,9 +19,6 @@ class GenerateColorsDatabase
   }
 
   static void main(String[] args) {
-    def dir = new File(this.protectionDomain.codeSource.location.file).parentFile
-    def script = new File(dir, 'shellcolors')
-
     println 'class ColorsDatabase'
     println '{'
 
