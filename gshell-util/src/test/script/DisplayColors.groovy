@@ -1,5 +1,8 @@
 @Grab('com.google.guava:guava:20.0')
 
+import com.google.common.collect.Multimap
+import com.google.common.collect.HashMultimap
+
 /**
  * Display xterm-256 color pallet, with ANSI color codes and RGB.
  *
@@ -8,20 +11,50 @@
  */
 class DisplayColors
 {
-  static String selectName(String hex) {
-    return ColorSchemes.xterm256[hex]
+  static Multimap<Integer,String> codeNames = HashMultimap.create()
 
-//    def name = ColorSchemes.x11[hex]
-//    if (!name) {
-//      name = ColorSchemes.svg[hex]
+  static Multimap<String,String> hexNames = HashMultimap.create()
+
+  static int unknownMapping = 0
+
+  static int duplicateNames = 0
+
+  static Set<String> uniqueNames = []
+
+  static {
+    ColorsDatabase.x11.each { Map color ->
+      codeNames.put(color.code, color.name)
+      hexNames.put(color.hex, color.name)
+    }
+    ColorsDatabase.svg.each { Map color ->
+      codeNames.put(color.code, color.name)
+      hexNames.put(color.hex, color.name)
+    }
+  }
+
+  static String selectName(int code, String hex) {
+//    Collection names = codeNames.get(code)
+//    if (names == null || names.empty) {
+//      names = hexNames.get(hex)
 //    }
-//    if (!name) {
-//      name = ColorSchemes.xterm256[hex]
+
+//    if (names == null || names.empty) {
+//      code = GenerateColorsDatabase.codeForHex(hex)
+//      names = codeNames.get(code)
 //    }
-//    if (!name) {
-//      name = '???'
+
+//    if (names != null && !names.empty) {
+//      // pick the first
+//      return names[0]
 //    }
-//    return name
+
+    unknownMapping++
+    String name = ColorSchemes.xterm256[hex].toLowerCase(Locale.US)
+    if (uniqueNames.contains(name)) {
+      duplicateNames++
+    }
+    uniqueNames.add(name)
+    return name
   }
 
   static void main(String[] args) {
@@ -47,17 +80,17 @@ class DisplayColors
     ]
     for (int color = 0; color < 8; color++) {
       String hex = system[color]
-      def name = selectName(hex)
-      print "\033[48;5;${color}m ${String.format('%3s %s %10s', color, hex, name)} \033[0m "
+      def name = selectName(color, hex)
+      print "\033[48;5;${color}m ${String.format('%3s %s %12s', color, hex, name)} \033[0m "
     }
     println()
 
     // bright
     for (int color = 8; color < 16; color++) {
       String hex = system[color]
-      def name = selectName(hex)
+      def name = selectName(color, hex)
       print "\033[38;5;0m" // darker fg
-      print "\033[48;5;${color}m ${String.format('%3s %s %10s', color, hex, name)} \033[0m "
+      print "\033[48;5;${color}m ${String.format('%3s %s %12s', color, hex, name)} \033[0m "
     }
     println()
 
@@ -72,7 +105,7 @@ class DisplayColors
           int g = (green ? (green * 40 + 55) : 0)
           int b = (blue ? (blue * 40 + 55) : 0)
           String hex = String.format('%02x%02x%02x', r, g, b)
-          def name = selectName(hex)
+          def name = selectName(color, hex)
 
           if (green > 2) {
             print "\033[38;5;0m" // darker fg
@@ -92,13 +125,17 @@ class DisplayColors
       int g = level
       int b = level
       String hex = String.format('%02x%02x%02x', r, g, b)
-      def name = selectName(hex)
+      def name = selectName(color, hex)
 
       if (gray > 11) {
         print "\033[38;5;0m" // darker fg
       }
       print "\033[48;5;${color}m ${String.format('%3s %s %10s', color, hex, name)} \033[0m\n"
     }
+
+    println()
+    println "Unknown color name mappings: $unknownMapping"
+    println "Duplicate colors names: $duplicateNames"
   }
 }
 

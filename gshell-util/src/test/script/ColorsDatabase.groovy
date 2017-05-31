@@ -1,6 +1,6 @@
 class ColorsDatabase
 {
-  static Map<String,Object> x11 = [
+  static List<Map> x11 = [
     [ hex: 'f0f8ff', name: 'aliceblue', code: 231 ],
     [ hex: 'faebd7', name: 'antiquewhite', code: 224 ],
     [ hex: 'ffefdb', name: 'antiquewhite1', code: 224 ],
@@ -507,7 +507,7 @@ class ColorsDatabase
     [ hex: '8b8b00', name: 'yellow4', code: 100 ],
   ]
 
-  static Map<String,Object> svg = [
+  static List<Map> svg = [
     [ hex: 'f0f8ff', name: 'aliceblue', code: 231 ],
     [ hex: 'faebd7', name: 'antiquewhite', code: 224 ],
     [ hex: '00ffff', name: 'cyan', code: 51 ],
