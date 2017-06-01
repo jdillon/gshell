@@ -15,29 +15,26 @@ class DisplayColors
 
   static Multimap<String,String> hexNames = HashMultimap.create()
 
-  static int unknownMapping = 0
+  static Set<String> unknownMapping = []
 
-  static int duplicateNames = 0
+  static Set<String> duplicateNames = []
 
   static Set<String> uniqueNames = []
 
   static {
-    ColorsDatabase.x11.each { Map color ->
-      codeNames.put(color.code, color.name)
-      hexNames.put(color.hex, color.name)
-    }
-    ColorsDatabase.svg.each { Map color ->
-      codeNames.put(color.code, color.name)
-      hexNames.put(color.hex, color.name)
-    }
+    def lower = { it.toLowerCase(Locale.US) }
 
-//    def dir = new File(this.protectionDomain.codeSource.location.file).parentFile
-//    new RgbParser().parse(new File(dir, 'rgb.txt')).asMap().each { hex, values ->
-//      values.each {
-//        hexNames.put(hex, it.name)
-//        int code = GenerateColorsDatabase.codeForHex(hex)
-//        codeNames.put(code, it.name)
-//      }
+    ColorsDatabase.xterm256.each { Map color ->
+      codeNames.put(color.code, lower(color.name))
+      hexNames.put(color.hex, lower(color.name))
+    }
+//    ColorsDatabase.x11.each { Map color ->
+//      codeNames.put(color.code, lower(color.name))
+//      hexNames.put(color.hex, lower(color.name))
+//    }
+//    ColorsDatabase.svg.each { Map color ->
+//      codeNames.put(color.code, lower(color.name))
+//      hexNames.put(color.hex, lower(color.name))
 //    }
   }
 
@@ -52,12 +49,12 @@ class DisplayColors
       name = names[0]
     }
     else {
-      unknownMapping++
+      unknownMapping.add(hex)
       name = ColorSchemes.xterm256[hex].toLowerCase(Locale.US)
     }
 
     if (uniqueNames.contains(name)) {
-      duplicateNames++
+      duplicateNames.add(name)
     }
     uniqueNames.add(name)
     return name
@@ -86,7 +83,7 @@ class DisplayColors
     ]
     for (int color = 0; color < 8; color++) {
       String hex = system[color]
-      def name = selectName(color, hex)
+      def name = ColorSchemes.system[hex].toLowerCase(Locale.US)
       print "\033[48;5;${color}m ${String.format('%3s %s %12s', color, hex, name)} \033[0m "
     }
     println()
@@ -94,7 +91,7 @@ class DisplayColors
     // bright
     for (int color = 8; color < 16; color++) {
       String hex = system[color]
-      def name = selectName(color, hex)
+      def name = ColorSchemes.system[hex].toLowerCase(Locale.US)
       print "\033[38;5;0m" // darker fg
       print "\033[48;5;${color}m ${String.format('%3s %s %12s', color, hex, name)} \033[0m "
     }
@@ -140,8 +137,14 @@ class DisplayColors
     }
 
     println()
-    println "Unknown color name mappings: $unknownMapping"
-    println "Duplicate colors names: $duplicateNames"
+    println "Unknown color name mappings: ${unknownMapping.size()}"
+    if (!unknownMapping.empty) {
+      unknownMapping.each { println "  $it" }
+    }
+    println "Duplicate colors names: ${duplicateNames.size()}"
+    if (!duplicateNames.empty) {
+      duplicateNames.sort().each { println "  $it" }
+    }
   }
 }
 

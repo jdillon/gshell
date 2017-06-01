@@ -16,6 +16,26 @@ class ColorSchemes
     }
   }
 
+  // The system color scheme
+  static Map<String,String> system = [
+    '000000': 'Black',
+    '800000': 'Maroon',
+    '008000': 'Green',
+    '808000': 'Olive',
+    '000080': 'Navy',
+    '800080': 'Purple',
+    '008080': 'Teal',
+    'c0c0c0': 'Silver',
+    '808080': 'Grey',
+    'ff0000': 'Red',
+    '00ff00': 'Lime',
+    'ffff00': 'Yellow',
+    '0000ff': 'Blue',
+    'ff00ff': 'Fuchsia',
+    '00ffff': 'Aqua',
+    'ffffff': 'White'
+  ]
+
   // The X11 color scheme
   static Map<String,String> x11 = [
       'f0f8ff': 'aliceblue',
