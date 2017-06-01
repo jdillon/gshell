@@ -39,22 +39,22 @@ class GenerateColorsDatabase
 
   private static void generateSystem() {
     println """  static List<Map> system = [
-    [ hex: '000000', name: 'Black', code: 0 ],
-    [ hex: '800000', name: 'Maroon', code: 1 ],
-    [ hex: '008000', name: 'Green', code: 2 ],
-    [ hex: '808000', name: 'Olive', code: 3 ],
-    [ hex: '000080', name: 'Navy', code: 4 ],
-    [ hex: '800080', name: 'Purple', code: 5 ],
-    [ hex: '008080', name: 'Teal', code: 6 ],
-    [ hex: 'c0c0c0', name: 'Silver', code: 7 ],
-    [ hex: '808080', name: 'Grey', code: 8 ],
-    [ hex: 'ff0000', name: 'Red', code: 9 ],
-    [ hex: '00ff00', name: 'Lime', code: 10 ],
-    [ hex: 'ffff00', name: 'Yellow', code: 11 ],
-    [ hex: '0000ff', name: 'Blue', code: 12 ],
-    [ hex: 'ff00ff', name: 'Fuchsia', code: 13 ],
-    [ hex: '00ffff', name: 'Aqua', code: 14 ],
-    [ hex: 'ffffff', name: 'White', code: 15 ]
+    [ hex: '000000', name: 'black', code: 0 ],
+    [ hex: '800000', name: 'maroon', code: 1 ],
+    [ hex: '008000', name: 'green', code: 2 ],
+    [ hex: '808000', name: 'olive', code: 3 ],
+    [ hex: '000080', name: 'navy', code: 4 ],
+    [ hex: '800080', name: 'purple', code: 5 ],
+    [ hex: '008080', name: 'teal', code: 6 ],
+    [ hex: 'c0c0c0', name: 'silver', code: 7 ],
+    [ hex: '808080', name: 'grey', code: 8 ],
+    [ hex: 'ff0000', name: 'red', code: 9 ],
+    [ hex: '00ff00', name: 'lime', code: 10 ],
+    [ hex: 'ffff00', name: 'yellow', code: 11 ],
+    [ hex: '0000ff', name: 'blue', code: 12 ],
+    [ hex: 'ff00ff', name: 'fuchsia', code: 13 ],
+    [ hex: '00ffff', name: 'aqua', code: 14 ],
+    [ hex: 'ffffff', name: 'white', code: 15 ]
   ]"""
   }
 
@@ -89,7 +89,7 @@ class GenerateColorsDatabase
     def iter = obj.iterator()
     while (iter.hasNext()) {
       def it = iter.next()
-      print "    [ hex: '${it.hexString[1..-1]}', name: '${it.name}', code: $it.colorId ]"
+      print "    [ hex: '${it.hexString[1..-1]}', name: '${it.name.toLowerCase(Locale.US)}', code: $it.colorId ]"
       if (iter.hasNext()) {
         print ","
       }
@@ -106,7 +106,7 @@ class GenerateColorsDatabase
       def hex = entry.key
       def name = entry.value
       int code = codeForHex(hex)
-      print "    [ hex: '$hex', name: '$name', code: $code ]"
+      print "    [ hex: '$hex', name: '${name.toLowerCase(Locale.US)}', code: $code ]"
       if (iter.hasNext()) {
         print ","
       }
