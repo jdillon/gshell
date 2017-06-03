@@ -79,17 +79,43 @@ class GenerateColorsDatabase
   ]"""
   }
 
+  static class UniqueNames
+  {
+    Map<String,Integer> nameCounts = [:]
+
+    String get(String name) {
+      def count = nameCounts[name]
+      if (count == null) {
+        count = 0
+      }
+      else {
+        ++count
+      }
+      nameCounts[name] = count
+      if (count != 0) {
+        name = "${name}${count + 96 as char}" // suffix a..z
+      }
+      return name
+    }
+  }
+
   private static void generateXterm256() {
     def parser = new JsonSlurper()
     def dir = new File(this.protectionDomain.codeSource.location.file).parentFile
 
     def obj = parser.parse(new File(dir, 'xterm256.json'))
 
+    def uniqueNames = new UniqueNames()
+
     println '  static List<Map> xterm256 = ['
     def iter = obj.iterator()
     while (iter.hasNext()) {
       def it = iter.next()
-      print "    [ hex: '${it.hexString[1..-1]}', name: '${it.name.toLowerCase(Locale.US)}', code: $it.colorId ]"
+
+      // make unique names
+      def name = uniqueNames.get(it.name.toLowerCase(Locale.US))
+
+      print "    [ hex: '${it.hexString[1..-1]}', name: '$name', code: ${it.colorId} ]"
       if (iter.hasNext()) {
         print ","
       }
@@ -99,14 +125,19 @@ class GenerateColorsDatabase
   }
 
   private static void generateBestMatch(String fname, Map<String,String> input) {
+    def uniqueNames = new UniqueNames()
+
     println "  static List<Map> $fname = ["
     def iter = input.entrySet().iterator()
     while (iter.hasNext()) {
       def entry = iter.next()
       def hex = entry.key
-      def name = entry.value
       int code = codeForHex(hex)
-      print "    [ hex: '$hex', name: '${name.toLowerCase(Locale.US)}', code: $code ]"
+
+      // make unique names
+      def name = uniqueNames.get(entry.value.toLowerCase(Locale.US))
+
+      print "    [ hex: '$hex', name: '${name}', code: $code ]"
       if (iter.hasNext()) {
         print ","
       }

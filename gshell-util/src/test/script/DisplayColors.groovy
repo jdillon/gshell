@@ -84,7 +84,7 @@ class DisplayColors
     for (int color = 0; color < 8; color++) {
       String hex = system[color]
       def name = ColorSchemes.system[hex].toLowerCase(Locale.US)
-      print "\033[48;5;${color}m ${String.format('%3s %s %12s', color, hex, name)} \033[0m "
+      print "\033[48;5;${color}m ${String.format('%3s %s %8s', color, hex, name)} \033[0m "
     }
     println()
 
@@ -93,7 +93,7 @@ class DisplayColors
       String hex = system[color]
       def name = ColorSchemes.system[hex].toLowerCase(Locale.US)
       print "\033[38;5;0m" // darker fg
-      print "\033[48;5;${color}m ${String.format('%3s %s %12s', color, hex, name)} \033[0m "
+      print "\033[48;5;${color}m ${String.format('%3s %s %8s', color, hex, name)} \033[0m "
     }
     println()
 
@@ -133,7 +133,7 @@ class DisplayColors
       if (gray > 11) {
         print "\033[38;5;0m" // darker fg
       }
-      print "\033[48;5;${color}m ${String.format('%3s %s %10s', color, hex, name)} \033[0m\n"
+      print "\033[48;5;${color}m ${String.format('%3s %s %8s', color, hex, name)} \033[0m\n"
     }
 
     println()
