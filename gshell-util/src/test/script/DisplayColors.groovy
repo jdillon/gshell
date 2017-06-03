@@ -28,6 +28,12 @@ class DisplayColors
       codeNames.put(color.code, lower(color.name))
       hexNames.put(color.hex, lower(color.name))
     }
+
+    // include system names in unique map to complain if there are duplicates
+    ColorsDatabase.system.each { Map color ->
+      uniqueNames.add(lower(color.name))
+    }
+
 //    ColorsDatabase.x11.each { Map color ->
 //      codeNames.put(color.code, lower(color.name))
 //      hexNames.put(color.hex, lower(color.name))
