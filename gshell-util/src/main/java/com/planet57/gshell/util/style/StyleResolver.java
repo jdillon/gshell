@@ -175,14 +175,14 @@ public class StyleResolver
         return style.inverse();
 
       case "inverse-neg":
-      case "inverseNeg":
+      case "inverseneg":
         return style.inverseNeg();
 
       case "conceal":
         return style.conceal();
 
       case "crossed-out":
-      case "crossedOut":
+      case "crossedout":
         return style.crossedOut();
 
       case "hidden":
