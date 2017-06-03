@@ -240,6 +240,8 @@ public class StyleResolver
    * Bright color can be specified with: {@code !<color>} or {@code bright-<color>}.
    *
    * Full xterm256 color can be specified with: {@code ~<color>}.
+   *
+   * @return color code, or {@code null} if unable to determine.
    */
   @Nullable
   private static Integer color(String name) {
