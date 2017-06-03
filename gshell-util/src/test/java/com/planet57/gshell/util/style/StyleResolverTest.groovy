@@ -128,4 +128,10 @@ class StyleResolverTest
     def style = underTest.resolve('fg:!red')
     assert style == DEFAULT.foreground(BRIGHT + RED)
   }
+
+  @Test
+  void 'resolve fg:~olive'() {
+    def style = underTest.resolve('fg:~olive')
+    assert style == DEFAULT.foreground(StyleColor.olive.code)
+  }
 }
