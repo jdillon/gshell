@@ -1,24 +1,24 @@
-import groovy.json.*
-
+/**
+ * Generate StyleColor enum.
+ */
 class GenerateStyleColor
 {
   static void main(String[] args) {
-    def parser = new JsonSlurper()
-    def obj = parser.parse(new File('xterm256.json'))
 
     println "public enum StyleColor"
     println "{"
 
-    def iter = obj.iterator()
+    def iter = ColorsDatabase.xterm256.iterator()
     while (iter.hasNext()) {
-      def color = iter.next()
-      print "  ${color.name.toLowerCase(Locale.US)}(${color.colorId})"
+      Map color = iter.next()
+      print "  ${color.name}(${color.code})"
       if (iter.hasNext()) {
-        println(",")
+        print(",")
       }
       else {
-        println(";")
+        print(";")
       }
+      println(" // #${color.hex}")
     }
 
     print """
