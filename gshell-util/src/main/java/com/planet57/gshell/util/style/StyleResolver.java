@@ -232,10 +232,14 @@ public class StyleResolver
     return style;
   }
 
+  // TODO: consider simplify and always using StyleColor, for now for compat with other bits leaving syntax complexity
+
   /**
    * Returns the color identifier for the given name.
    *
    * Bright color can be specified with: {@code !<color>} or {@code bright-<color>}.
+   *
+   * Full xterm256 color can be specified with: {@code ~<color>}.
    */
   @Nullable
   private static Integer color(String name) {
@@ -250,6 +254,17 @@ public class StyleResolver
     else if (name.startsWith("bright-")) {
       name = name.substring(7, name.length());
       flags = BRIGHT;
+    }
+    else if (name.charAt(0) == '~') {
+      try {
+        name = name.substring(1, name.length());
+        StyleColor color = StyleColor.valueOf(name);
+        return color.code;
+      }
+      catch (IllegalArgumentException e) {
+        log.warn("Invalid style-color name: {}", name);
+        return null;
+      }
     }
 
     switch (name) {
