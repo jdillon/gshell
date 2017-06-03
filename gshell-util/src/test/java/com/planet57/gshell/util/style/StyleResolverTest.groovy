@@ -134,4 +134,16 @@ class StyleResolverTest
     def style = underTest.resolve('fg:~olive')
     assert style == DEFAULT.foreground(StyleColor.olive.code)
   }
+
+  @Test
+  void 'resolve invalid xterm256 syntax'() {
+    def style = underTest.resolve('fg:~')
+    assert style == DEFAULT
+  }
+
+  @Test
+  void 'resolve invalid xterm256 color name'() {
+    def style = underTest.resolve('fg:~foo')
+    assert style == DEFAULT
+  }
 }
