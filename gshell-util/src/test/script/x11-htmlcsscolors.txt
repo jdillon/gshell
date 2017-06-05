@@ -1,0 +1,504 @@
+f0f8ff: HEX color #f0f8ff, Color name: AliceBlue, RGB(240,248,255), Windows: 16775408.
+faebd7: HEX color #faebd7, Color name: AntiqueWhite, RGB(250,235,215), Windows: 14150650.
+ffefdb: HEX color #ffefdb, Color name: Forget Me Not, RGB(255,239,219), Windows: 14413823.
+eedfcc: HEX color #eedfcc, Color name: Bleach White, RGB(238,223,204), Windows: 13426670.
+cdc0b0: HEX color #cdc0b0, Color name: Stark White, RGB(205,192,176), Windows: 11583693.
+8b8378: HEX color #8b8378, Color name: Schooner, RGB(139,131,120), Windows: 7897995.
+7fffd4: HEX color #7fffd4, Color name: Aquamarine, RGB(127,255,212), Windows: 13959039.
+76eec6: HEX color #76eec6, Color name: Aquamarine, RGB(118,238,198), Windows: 13037174.
+66cdaa: HEX color #66cdaa, Color name: MediumAquamarine, RGB(102,205,170), Windows: 11193702.
+458b74: HEX color #458b74, Color name: Viridian, RGB(69,139,116), Windows: 7637829.
+f0ffff: HEX color #f0ffff, Color name: Azure, RGB(240,255,255), Windows: 16777200.
+e0eeee: HEX color #e0eeee, Color name: Zircon, RGB(224,238,238), Windows: 15658720.
+c1cdcd: HEX color #c1cdcd, Color name: Iron, RGB(193,205,205), Windows: 13487553.
+838b8b: HEX color #838b8b, Color name: Oslo Grey, RGB(131,139,139), Windows: 9145219.
+f5f5dc: HEX color #f5f5dc, Color name: Beige, RGB(245,245,220), Windows: 14480885.
+ffe4c4: HEX color #ffe4c4, Color name: Bisque, RGB(255,228,196), Windows: 12903679.
+eed5b7: HEX color #eed5b7, Color name: Pink Lady, RGB(238,213,183), Windows: 12047854.
+cdb79e: HEX color #cdb79e, Color name: Vanilla, RGB(205,183,158), Windows: 10401741.
+8b7d6b: HEX color #8b7d6b, Color name: Squirrel, RGB(139,125,107), Windows: 7044491.
+000000: HEX color #000000, Color name: Black, RGB(0,0,0), Windows: 0.
+ffebcd: HEX color #ffebcd, Color name: BlanchedAlmond, RGB(255,235,205), Windows: 13495295.
+0000ff: HEX color #0000ff, Color name: Blue, RGB(0,0,255), Windows: 16711680.
+0000ee: HEX color #0000ee, Color name: Blue, RGB(0,0,238), Windows: 15597568.
+0000cd: HEX color #0000cd, Color name: MediumBlue, RGB(0,0,205), Windows: 13434880.
+00008b: HEX color #00008b, Color name: DarkBlue, RGB(0,0,139), Windows: 9109504.
+8a2be2: HEX color #8a2be2, Color name: BlueViolet, RGB(138,43,226), Windows: 14822282.
+a52a2a: HEX color #a52a2a, Color name: Brown, RGB(165,42,42), Windows: 2763429.
+ff4040: HEX color #ff4040, Color name: Coral Red, RGB(255,64,64), Windows: 4210943.
+ee3b3b: HEX color #ee3b3b, Color name: Cinnabar, RGB(238,59,59), Windows: 3881966.
+cd3333: HEX color #cd3333, Color name: Persian Red, RGB(205,51,51), Windows: 3355597.
+8b2323: HEX color #8b2323, Color name: Mandarian Orange, RGB(139,35,35), Windows: 2302859.
+deb887: HEX color #deb887, Color name: BurlyWood, RGB(222,184,135), Windows: 8894686.
+ffd39b: HEX color #ffd39b, Color name: Caramel, RGB(255,211,155), Windows: 10212351.
+eec591: HEX color #eec591, Color name: New Tan, RGB(238,197,145), Windows: 9553390.
+cdaa7d: HEX color #cdaa7d, Color name: Cameo, RGB(205,170,125), Windows: 8235725.
+8b7355: HEX color #8b7355, Color name: Cement, RGB(139,115,85), Windows: 5600139.
+5f9ea0: HEX color #5f9ea0, Color name: CadetBlue, RGB(95,158,160), Windows: 10526303.
+98f5ff: HEX color #98f5ff, Color name: Electric Blue, RGB(152,245,255), Windows: 16774552.
+8ee5ee: HEX color #8ee5ee, Color name: Blizzard Blue, RGB(142,229,238), Windows: 15656334.
+7ac5cd: HEX color #7ac5cd, Color name: Spray, RGB(122,197,205), Windows: 13485434.
+53868b: HEX color #53868b, Color name: Half Baked, RGB(83,134,139), Windows: 9143891.
+7fff00: HEX color #7fff00, Color name: Chartreuse, RGB(127,255,0), Windows: 65407.
+76ee00: HEX color #76ee00, Color name: Lawn Green, RGB(118,238,0), Windows: 61046.
+66cd00: HEX color #66cd00, Color name: Kelly Green, RGB(102,205,0), Windows: 52582.
+458b00: HEX color #458b00, Color name: La Palma, RGB(69,139,0), Windows: 35653.
+d2691e: HEX color #d2691e, Color name: Chocolate, RGB(210,105,30), Windows: 1993170.
+ff7f24: HEX color #ff7f24, Color name: Pumpkin, RGB(255,127,36), Windows: 2392063.
+ee7621: HEX color #ee7621, Color name: Pumpkin, RGB(238,118,33), Windows: 2193134.
+cd661d: HEX color #cd661d, Color name: Chocolate, RGB(205,102,29), Windows: 1926861.
+8b4513: HEX color #8b4513, Color name: SaddleBrown, RGB(139,69,19), Windows: 1262987.
+ff7f50: HEX color #ff7f50, Color name: Coral, RGB(255,127,80), Windows: 5275647.
+ff7256: HEX color #ff7256, Color name: Bittersweet, RGB(255,114,86), Windows: 5665535.
+ee6a50: HEX color #ee6a50, Color name: Burnt Sienna, RGB(238,106,80), Windows: 5270254.
+cd5b45: HEX color #cd5b45, Color name: Dark Coral, RGB(205,91,69), Windows: 4545485.
+8b3e2f: HEX color #8b3e2f, Color name: Prairie Sand, RGB(139,62,47), Windows: 3096203.
+6495ed: HEX color #6495ed, Color name: CornflowerBlue, RGB(100,149,237), Windows: 15570276.
+fff8dc: HEX color #fff8dc, Color name: Cornsilk, RGB(255,248,220), Windows: 14481663.
+eee8cd: HEX color #eee8cd, Color name: Scotch Mist, RGB(238,232,205), Windows: 13494510.
+cdc8b1: HEX color #cdc8b1, Color name: Parchment, RGB(205,200,177), Windows: 11651277.
+8b8878: HEX color #8b8878, Color name: Friar Grey, RGB(139,136,120), Windows: 7899275.
+dc143c: HEX color #dc143c, Color name: Crimson, RGB(220,20,60), Windows: 3937500.
+00ffff: HEX color #00ffff, Color name: Aqua, RGB(0,255,255), Windows: 16776960.
+00eeee: HEX color #00eeee, Color name: Bright Turquoise, RGB(0,238,238), Windows: 15658496.
+00cdcd: HEX color #00cdcd, Color name: Robin's Egg Blue, RGB(0,205,205), Windows: 13487360.
+008b8b: HEX color #008b8b, Color name: DarkCyan, RGB(0,139,139), Windows: 9145088.
+b8860b: HEX color #b8860b, Color name: DarkGoldenrod, RGB(184,134,11), Windows: 755384.
+ffb90f: HEX color #ffb90f, Color name: Selective Yellow, RGB(255,185,15), Windows: 1030655.
+eead0e: HEX color #eead0e, Color name: Dark Tangerine, RGB(238,173,14), Windows: 962030.
+cd950c: HEX color #cd950c, Color name: Gamboge, RGB(205,149,12), Windows: 824781.
+8b6508: HEX color #8b6508, Color name: Golden Brown, RGB(139,101,8), Windows: 550283.
+006400: HEX color #006400, Color name: DarkGreen, RGB(0,100,0), Windows: 25600.
+bdb76b: HEX color #bdb76b, Color name: DarkKhaki, RGB(189,183,107), Windows: 7059389.
+556b2f: HEX color #556b2f, Color name: DarkOliveGreen, RGB(85,107,47), Windows: 3107669.
+caff70: HEX color #caff70, Color name: Sulu, RGB(202,255,112), Windows: 7405514.
+bcee68: HEX color #bcee68, Color name: Sulu, RGB(188,238,104), Windows: 6876860.
+a2cd5a: HEX color #a2cd5a, Color name: Conifer, RGB(162,205,90), Windows: 5950882.
+6e8b3d: HEX color #6e8b3d, Color name: Dingley, RGB(110,139,61), Windows: 4033390.
+ff8c00: HEX color #ff8c00, Color name: DarkOrange, RGB(255,140,0), Windows: 36095.
+ff7f00: HEX color #ff7f00, Color name: Dark Orange, RGB(255,127,0), Windows: 32767.
+ee7600: HEX color #ee7600, Color name: Mango Tango, RGB(238,118,0), Windows: 30446.
+cd6600: HEX color #cd6600, Color name: Tenne (Tawny), RGB(205,102,0), Windows: 26317.
+8b4500: HEX color #8b4500, Color name: Saddle Brown, RGB(139,69,0), Windows: 17803.
+9932cc: HEX color #9932cc, Color name: DarkOrchid, RGB(153,50,204), Windows: 13382297.
+bf3eff: HEX color #bf3eff, Color name: Medium Orchid, RGB(191,62,255), Windows: 16727743.
+b23aee: HEX color #b23aee, Color name: Medium Orchid, RGB(178,58,238), Windows: 15612594.
+9a32cd: HEX color #9a32cd, Color name: Dark Orchid, RGB(154,50,205), Windows: 13447834.
+68228b: HEX color #68228b, Color name: Kingfisher Daisy, RGB(104,34,139), Windows: 9118312.
+e9967a: HEX color #e9967a, Color name: DarkSalmon, RGB(233,150,122), Windows: 8034025.
+8fbc8f: HEX color #8fbc8f, Color name: Dark Sea Green, RGB(143,188,143), Windows: 9419919.
+c1ffc1: HEX color #c1ffc1, Color name: Granny Apple, RGB(193,255,193), Windows: 12713921.
+b4eeb4: HEX color #b4eeb4, Color name: Celadon, RGB(180,238,180), Windows: 11857588.
+9bcd9b: HEX color #9bcd9b, Color name: Chinook, RGB(155,205,155), Windows: 10210715.
+698b69: HEX color #698b69, Color name: Laurel, RGB(105,139,105), Windows: 6916969.
+483d8b: HEX color #483d8b, Color name: DarkSlateBlue, RGB(72,61,139), Windows: 9125192.
+2f4f4f: HEX color #2f4f4f, Color name: DarkSlateGray, RGB(47,79,79), Windows: 5197615.
+97ffff: HEX color #97ffff, Color name: Electric Blue, RGB(151,255,255), Windows: 16777111.
+8deeee: HEX color #8deeee, Color name: Electric Blue, RGB(141,238,238), Windows: 15658637.
+79cdcd: HEX color #79cdcd, Color name: Spray, RGB(121,205,205), Windows: 13487481.
+528b8b: HEX color #528b8b, Color name: Half Baked, RGB(82,139,139), Windows: 9145170.
+00ced1: HEX color #00ced1, Color name: DarkTurquoise, RGB(0,206,209), Windows: 13749760.
+9400d3: HEX color #9400d3, Color name: DarkViolet, RGB(148,0,211), Windows: 13828244.
+ff1493: HEX color #ff1493, Color name: DeepPink, RGB(255,20,147), Windows: 9639167.
+ee1289: HEX color #ee1289, Color name: Deep Pink, RGB(238,18,137), Windows: 8983278.
+cd1076: HEX color #cd1076, Color name: Medium Violet Red, RGB(205,16,118), Windows: 7737549.
+8b0a50: HEX color #8b0a50, Color name: Jazzberry Jam, RGB(139,10,80), Windows: 5245579.
+00bfff: HEX color #00bfff, Color name: DeepSkyBlue, RGB(0,191,255), Windows: 16760576.
+00b2ee: HEX color #00b2ee, Color name: Deep Sky Blue, RGB(0,178,238), Windows: 15643136.
+009acd: HEX color #009acd, Color name: Pacific Blue, RGB(0,154,205), Windows: 13474304.
+00688b: HEX color #00688b, Color name: Blue Lagoon, RGB(0,104,139), Windows: 9136128.
+696969: HEX color #696969, Color name: DimGray, RGB(105,105,105), Windows: 6908265.
+1e90ff: HEX color #1e90ff, Color name: DodgerBlue, RGB(30,144,255), Windows: 16748574.
+1c86ee: HEX color #1c86ee, Color name: Dodger Blue, RGB(28,134,238), Windows: 15631900.
+1874cd: HEX color #1874cd, Color name: Denim, RGB(24,116,205), Windows: 13464600.
+104e8b: HEX color #104e8b, Color name: Dark Cerulean, RGB(16,78,139), Windows: 9129488.
+b22222: HEX color #b22222, Color name: Firebrick, RGB(178,34,34), Windows: 2237106.
+ff3030: HEX color #ff3030, Color name: Red Orange, RGB(255,48,48), Windows: 3158271.
+ee2c2c: HEX color #ee2c2c, Color name: Cinnabar, RGB(238,44,44), Windows: 2895086.
+cd2626: HEX color #cd2626, Color name: Persian Red, RGB(205,38,38), Windows: 2500301.
+8b1a1a: HEX color #8b1a1a, Color name: Falu Red, RGB(139,26,26), Windows: 1710731.
+fffaf0: HEX color #fffaf0, Color name: FloralWhite, RGB(255,250,240), Windows: 15792895.
+228b22: HEX color #228b22, Color name: ForestGreen, RGB(34,139,34), Windows: 2263842.
+dcdcdc: HEX color #dcdcdc, Color name: Gainsboro, RGB(220,220,220), Windows: 14474460.
+f8f8ff: HEX color #f8f8ff, Color name: GhostWhite, RGB(248,248,255), Windows: 16775416.
+ffd700: HEX color #ffd700, Color name: Gold, RGB(255,215,0), Windows: 55295.
+eec900: HEX color #eec900, Color name: Golden Poppy, RGB(238,201,0), Windows: 51694.
+cdad00: HEX color #cdad00, Color name: Bird Flower, RGB(205,173,0), Windows: 44493.
+8b7500: HEX color #8b7500, Color name: Olive, RGB(139,117,0), Windows: 30091.
+daa520: HEX color #daa520, Color name: Goldenrod, RGB(218,165,32), Windows: 2139610.
+ffc125: HEX color #ffc125, Color name: Saffron, RGB(255,193,37), Windows: 2474495.
+eeb422: HEX color #eeb422, Color name: Gold Tips, RGB(238,180,34), Windows: 2274542.
+cd9b1d: HEX color #cd9b1d, Color name: Galliano, RGB(205,155,29), Windows: 1940429.
+8b6914: HEX color #8b6914, Color name: Yukon Gold, RGB(139,105,20), Windows: 1337739.
+c0c0c0: HEX color #c0c0c0, Color name: Silver, RGB(192,192,192), Windows: 12632256.
+030303: HEX color #030303, Color name: Black, RGB(3,3,3), Windows: 197379.
+1a1a1a: HEX color #1a1a1a, Color name: Nero, RGB(26,26,26), Windows: 1710618.
+ffffff: HEX color #ffffff, Color name: White, RGB(255,255,255), Windows: 16777215.
+1c1c1c: HEX color #1c1c1c, Color name: Nero, RGB(28,28,28), Windows: 1842204.
+1f1f1f: HEX color #1f1f1f, Color name: Nero, RGB(31,31,31), Windows: 2039583.
+212121: HEX color #212121, Color name: Nero, RGB(33,33,33), Windows: 2171169.
+242424: HEX color #242424, Color name: Nero, RGB(36,36,36), Windows: 2368548.
+262626: HEX color #262626, Color name: Nero, RGB(38,38,38), Windows: 2500134.
+292929: HEX color #292929, Color name: Nero, RGB(41,41,41), Windows: 2697513.
+2b2b2b: HEX color #2b2b2b, Color name: Night Rider, RGB(43,43,43), Windows: 2829099.
+2e2e2e: HEX color #2e2e2e, Color name: Night Rider, RGB(46,46,46), Windows: 3026478.
+303030: HEX color #303030, Color name: Night Rider, RGB(48,48,48), Windows: 3158064.
+050505: HEX color #050505, Color name: Black, RGB(5,5,5), Windows: 328965.
+333333: HEX color #333333, Color name: Night Rider, RGB(51,51,51), Windows: 3355443.
+363636: HEX color #363636, Color name: Eclipse, RGB(54,54,54), Windows: 3552822.
+383838: HEX color #383838, Color name: Eclipse, RGB(56,56,56), Windows: 3684408.
+3b3b3b: HEX color #3b3b3b, Color name: Eclipse, RGB(59,59,59), Windows: 3881787.
+3d3d3d: HEX color #3d3d3d, Color name: Eclipse, RGB(61,61,61), Windows: 4013373.
+404040: HEX color #404040, Color name: Eclipse, RGB(64,64,64), Windows: 4210752.
+424242: HEX color #424242, Color name: Charcoal, RGB(66,66,66), Windows: 4342338.
+454545: HEX color #454545, Color name: Charcoal, RGB(69,69,69), Windows: 4539717.
+474747: HEX color #474747, Color name: Charcoal, RGB(71,71,71), Windows: 4671303.
+4a4a4a: HEX color #4a4a4a, Color name: Charcoal, RGB(74,74,74), Windows: 4868682.
+080808: HEX color #080808, Color name: Black, RGB(8,8,8), Windows: 526344.
+4d4d4d: HEX color #4d4d4d, Color name: Matterhorn, RGB(77,77,77), Windows: 5066061.
+4f4f4f: HEX color #4f4f4f, Color name: Matterhorn, RGB(79,79,79), Windows: 5197647.
+525252: HEX color #525252, Color name: Matterhorn, RGB(82,82,82), Windows: 5395026.
+545454: HEX color #545454, Color name: Matterhorn, RGB(84,84,84), Windows: 5526612.
+575757: HEX color #575757, Color name: Matterhorn, RGB(87,87,87), Windows: 5723991.
+595959: HEX color #595959, Color name: Zambezi, RGB(89,89,89), Windows: 5855577.
+5c5c5c: HEX color #5c5c5c, Color name: Zambezi, RGB(92,92,92), Windows: 6052956.
+5e5e5e: HEX color #5e5e5e, Color name: Zambezi, RGB(94,94,94), Windows: 6184542.
+616161: HEX color #616161, Color name: Dim Gray, RGB(97,97,97), Windows: 6381921.
+636363: HEX color #636363, Color name: Dim Gray, RGB(99,99,99), Windows: 6513507.
+0a0a0a: HEX color #0a0a0a, Color name: Black, RGB(10,10,10), Windows: 657930.
+666666: HEX color #666666, Color name: Dim Gray, RGB(102,102,102), Windows: 6710886.
+6b6b6b: HEX color #6b6b6b, Color name: Dim Gray, RGB(107,107,107), Windows: 7039851.
+6e6e6e: HEX color #6e6e6e, Color name: Dim Gray, RGB(110,110,110), Windows: 7237230.
+707070: HEX color #707070, Color name: Dim Gray, RGB(112,112,112), Windows: 7368816.
+737373: HEX color #737373, Color name: Dim Gray, RGB(115,115,115), Windows: 7566195.
+757575: HEX color #757575, Color name: Grey, RGB(117,117,117), Windows: 7697781.
+787878: HEX color #787878, Color name: Grey, RGB(120,120,120), Windows: 7895160.
+7a7a7a: HEX color #7a7a7a, Color name: Grey, RGB(122,122,122), Windows: 8026746.
+7d7d7d: HEX color #7d7d7d, Color name: Grey, RGB(125,125,125), Windows: 8224125.
+0d0d0d: HEX color #0d0d0d, Color name: Black, RGB(13,13,13), Windows: 855309.
+7f7f7f: HEX color #7f7f7f, Color name: Grey, RGB(127,127,127), Windows: 8355711.
+828282: HEX color #828282, Color name: Grey, RGB(130,130,130), Windows: 8553090.
+858585: HEX color #858585, Color name: Grey, RGB(133,133,133), Windows: 8750469.
+878787: HEX color #878787, Color name: Grey, RGB(135,135,135), Windows: 8882055.
+8a8a8a: HEX color #8a8a8a, Color name: Suva Grey, RGB(138,138,138), Windows: 9079434.
+8c8c8c: HEX color #8c8c8c, Color name: Suva Grey, RGB(140,140,140), Windows: 9211020.
+8f8f8f: HEX color #8f8f8f, Color name: Suva Grey, RGB(143,143,143), Windows: 9408399.
+919191: HEX color #919191, Color name: Suva Grey, RGB(145,145,145), Windows: 9539985.
+949494: HEX color #949494, Color name: Nobel, RGB(148,148,148), Windows: 9737364.
+969696: HEX color #969696, Color name: Nobel, RGB(150,150,150), Windows: 9868950.
+0f0f0f: HEX color #0f0f0f, Color name: Black, RGB(15,15,15), Windows: 986895.
+999999: HEX color #999999, Color name: Nobel, RGB(153,153,153), Windows: 10066329.
+9c9c9c: HEX color #9c9c9c, Color name: Nobel, RGB(156,156,156), Windows: 10263708.
+9e9e9e: HEX color #9e9e9e, Color name: Nobel, RGB(158,158,158), Windows: 10395294.
+a1a1a1: HEX color #a1a1a1, Color name: Nobel, RGB(161,161,161), Windows: 10592673.
+a3a3a3: HEX color #a3a3a3, Color name: Dark Gray, RGB(163,163,163), Windows: 10724259.
+a6a6a6: HEX color #a6a6a6, Color name: Dark Gray, RGB(166,166,166), Windows: 10921638.
+a8a8a8: HEX color #a8a8a8, Color name: Dark Gray, RGB(168,168,168), Windows: 11053224.
+ababab: HEX color #ababab, Color name: Dark Gray, RGB(171,171,171), Windows: 11250603.
+adadad: HEX color #adadad, Color name: Dark Gray, RGB(173,173,173), Windows: 11382189.
+b0b0b0: HEX color #b0b0b0, Color name: Dark Gray, RGB(176,176,176), Windows: 11579568.
+121212: HEX color #121212, Color name: Black, RGB(18,18,18), Windows: 1184274.
+b3b3b3: HEX color #b3b3b3, Color name: Pink Swan, RGB(179,179,179), Windows: 11776947.
+b5b5b5: HEX color #b5b5b5, Color name: Pink Swan, RGB(181,181,181), Windows: 11908533.
+b8b8b8: HEX color #b8b8b8, Color name: Pink Swan, RGB(184,184,184), Windows: 12105912.
+bababa: HEX color #bababa, Color name: Silver, RGB(186,186,186), Windows: 12237498.
+bdbdbd: HEX color #bdbdbd, Color name: Silver, RGB(189,189,189), Windows: 12434877.
+bfbfbf: HEX color #bfbfbf, Color name: Silver, RGB(191,191,191), Windows: 12566463.
+c2c2c2: HEX color #c2c2c2, Color name: Silver, RGB(194,194,194), Windows: 12763842.
+c4c4c4: HEX color #c4c4c4, Color name: Silver, RGB(196,196,196), Windows: 12895428.
+c7c7c7: HEX color #c7c7c7, Color name: Very Light Grey, RGB(199,199,199), Windows: 13092807.
+c9c9c9: HEX color #c9c9c9, Color name: Very Light Grey, RGB(201,201,201), Windows: 13224393.
+141414: HEX color #141414, Color name: Nero, RGB(20,20,20), Windows: 1315860.
+cccccc: HEX color #cccccc, Color name: Very Light Grey, RGB(204,204,204), Windows: 13421772.
+cfcfcf: HEX color #cfcfcf, Color name: Very Light Grey, RGB(207,207,207), Windows: 13619151.
+d1d1d1: HEX color #d1d1d1, Color name: Light Grey, RGB(209,209,209), Windows: 13750737.
+d4d4d4: HEX color #d4d4d4, Color name: Light Grey, RGB(212,212,212), Windows: 13948116.
+d6d6d6: HEX color #d6d6d6, Color name: Light Grey, RGB(214,214,214), Windows: 14079702.
+d9d9d9: HEX color #d9d9d9, Color name: Gainsboro, RGB(217,217,217), Windows: 14277081.
+dbdbdb: HEX color #dbdbdb, Color name: Gainsboro, RGB(219,219,219), Windows: 14408667.
+dedede: HEX color #dedede, Color name: Gainsboro, RGB(222,222,222), Windows: 14606046.
+e0e0e0: HEX color #e0e0e0, Color name: Gainsboro, RGB(224,224,224), Windows: 14737632.
+e3e3e3: HEX color #e3e3e3, Color name: Gainsboro, RGB(227,227,227), Windows: 14935011.
+171717: HEX color #171717, Color name: Nero, RGB(23,23,23), Windows: 1513239.
+e5e5e5: HEX color #e5e5e5, Color name: Whisper, RGB(229,229,229), Windows: 15066597.
+e8e8e8: HEX color #e8e8e8, Color name: Whisper, RGB(232,232,232), Windows: 15263976.
+ebebeb: HEX color #ebebeb, Color name: Whisper, RGB(235,235,235), Windows: 15461355.
+ededed: HEX color #ededed, Color name: Whisper, RGB(237,237,237), Windows: 15592941.
+f0f0f0: HEX color #f0f0f0, Color name: White Smoke, RGB(240,240,240), Windows: 15790320.
+f2f2f2: HEX color #f2f2f2, Color name: White Smoke, RGB(242,242,242), Windows: 15921906.
+f5f5f5: HEX color #f5f5f5, Color name: WhiteSmoke, RGB(245,245,245), Windows: 16119285.
+f7f7f7: HEX color #f7f7f7, Color name: White Smoke, RGB(247,247,247), Windows: 16250871.
+fafafa: HEX color #fafafa, Color name: Snow, RGB(250,250,250), Windows: 16448250.
+fcfcfc: HEX color #fcfcfc, Color name: Snow, RGB(252,252,252), Windows: 16579836.
+00ff00: HEX color #00ff00, Color name: Lime, RGB(0,255,0), Windows: 65280.
+00ee00: HEX color #00ee00, Color name: Lime, RGB(0,238,0), Windows: 60928.
+00cd00: HEX color #00cd00, Color name: Free Speech Green, RGB(0,205,0), Windows: 52480.
+008b00: HEX color #008b00, Color name: Green, RGB(0,139,0), Windows: 35584.
+adff2f: HEX color #adff2f, Color name: GreenYellow, RGB(173,255,47), Windows: 3145645.
+f0fff0: HEX color #f0fff0, Color name: Honeydew, RGB(240,255,240), Windows: 15794160.
+e0eee0: HEX color #e0eee0, Color name: Tara, RGB(224,238,224), Windows: 14741216.
+c1cdc1: HEX color #c1cdc1, Color name: Paris White, RGB(193,205,193), Windows: 12701121.
+838b83: HEX color #838b83, Color name: Stack, RGB(131,139,131), Windows: 8620931.
+ff69b4: HEX color #ff69b4, Color name: HotPink, RGB(255,105,180), Windows: 11823615.
+ff6eb4: HEX color #ff6eb4, Color name: Hot Pink, RGB(255,110,180), Windows: 11824895.
+ee6aa7: HEX color #ee6aa7, Color name: Hot Pink, RGB(238,106,167), Windows: 10971886.
+cd6090: HEX color #cd6090, Color name: Hopbush, RGB(205,96,144), Windows: 9461965.
+8b3a62: HEX color #8b3a62, Color name: Rose Bud Cherry, RGB(139,58,98), Windows: 6437515.
+cd5c5c: HEX color #cd5c5c, Color name: IndianRed, RGB(205,92,92), Windows: 6053069.
+ff6a6a: HEX color #ff6a6a, Color name: Bittersweet, RGB(255,106,106), Windows: 6974207.
+ee6363: HEX color #ee6363, Color name: Bittersweet, RGB(238,99,99), Windows: 6513646.
+cd5555: HEX color #cd5555, Color name: Fuzzy Wuzzy Brown, RGB(205,85,85), Windows: 5592525.
+8b3a3a: HEX color #8b3a3a, Color name: Tall Poppy, RGB(139,58,58), Windows: 3816075.
+4b0082: HEX color #4b0082, Color name: Indigo, RGB(75,0,130), Windows: 8519755.
+fffffe: HEX color #fffffe, Color name: Ivory, RGB(255,255,254), Windows: 16711679.
+fffff0: HEX color #fffff0, Color name: Ivory, RGB(255,255,240), Windows: 15794175.
+eeeee0: HEX color #eeeee0, Color name: Sugar Cane, RGB(238,238,224), Windows: 14741230.
+cdcdc1: HEX color #cdcdc1, Color name: Celeste, RGB(205,205,193), Windows: 12701133.
+8b8b83: HEX color #8b8b83, Color name: Jumbo, RGB(139,139,131), Windows: 8620939.
+f0e68c: HEX color #f0e68c, Color name: Khaki, RGB(240,230,140), Windows: 9234160.
+fff68f: HEX color #fff68f, Color name: Milan, RGB(255,246,143), Windows: 9434879.
+eee685: HEX color #eee685, Color name: Texas, RGB(238,230,133), Windows: 8775406.
+cdc673: HEX color #cdc673, Color name: Winter Hazel, RGB(205,198,115), Windows: 7587533.
+8b864e: HEX color #8b864e, Color name: Clay Creek, RGB(139,134,78), Windows: 5146251.
+e6e6fa: HEX color #e6e6fa, Color name: Lavender, RGB(230,230,250), Windows: 16443110.
+fff0f5: HEX color #fff0f5, Color name: LavenderBlush, RGB(255,240,245), Windows: 16118015.
+eee0e5: HEX color #eee0e5, Color name: Amour, RGB(238,224,229), Windows: 15065326.
+cdc1c5: HEX color #cdc1c5, Color name: Twilight, RGB(205,193,197), Windows: 12960205.
+8b8386: HEX color #8b8386, Color name: Venus, RGB(139,131,134), Windows: 8815499.
+7cfc00: HEX color #7cfc00, Color name: LawnGreen, RGB(124,252,0), Windows: 64636.
+fffacd: HEX color #fffacd, Color name: LemonChiffon, RGB(255,250,205), Windows: 13499135.
+eee9bf: HEX color #eee9bf, Color name: Half And Half, RGB(238,233,191), Windows: 12577262.
+cdc9a5: HEX color #cdc9a5, Color name: Kangaroo, RGB(205,201,165), Windows: 10865101.
+8b8970: HEX color #8b8970, Color name: Schist, RGB(139,137,112), Windows: 7375243.
+add8e6: HEX color #add8e6, Color name: LightBlue, RGB(173,216,230), Windows: 15128749.
+bfefff: HEX color #bfefff, Color name: Onahau, RGB(191,239,255), Windows: 16773055.
+b2dfee: HEX color #b2dfee, Color name: Light Blue, RGB(178,223,238), Windows: 15654834.
+9ac0cd: HEX color #9ac0cd, Color name: Regent St Blue, RGB(154,192,205), Windows: 13484186.
+68838b: HEX color #68838b, Color name: Gothic, RGB(104,131,139), Windows: 9143144.
+f08080: HEX color #f08080, Color name: LightCoral, RGB(240,128,128), Windows: 8421616.
+e0ffff: HEX color #e0ffff, Color name: LightCyan, RGB(224,255,255), Windows: 16777184.
+d1eeee: HEX color #d1eeee, Color name: Oyster Bay, RGB(209,238,238), Windows: 15658705.
+b4cdcd: HEX color #b4cdcd, Color name: Jungle Mist, RGB(180,205,205), Windows: 13487540.
+7a8b8b: HEX color #7a8b8b, Color name: Juniper, RGB(122,139,139), Windows: 9145210.
+eedd82: HEX color #eedd82, Color name: Light Goldenrod, RGB(238,221,130), Windows: 8576494.
+ffec8b: HEX color #ffec8b, Color name: Picasso, RGB(255,236,139), Windows: 9170175.
+eedc82: HEX color #eedc82, Color name: Flax, RGB(238,220,130), Windows: 8576238.
+cdbe70: HEX color #cdbe70, Color name: Tacha, RGB(205,190,112), Windows: 7388877.
+8b814c: HEX color #8b814c, Color name: Clay Creek, RGB(139,129,76), Windows: 5013899.
+fafad2: HEX color #fafad2, Color name: LightGoldenrodYellow, RGB(250,250,210), Windows: 13826810.
+d3d3d3: HEX color #d3d3d3, Color name: LightGray, RGB(211,211,211), Windows: 13882323.
+ffb6c1: HEX color #ffb6c1, Color name: LightPink, RGB(255,182,193), Windows: 12695295.
+ffaeb9: HEX color #ffaeb9, Color name: Light Pink, RGB(255,174,185), Windows: 12168959.
+eea2ad: HEX color #eea2ad, Color name: Illusion, RGB(238,162,173), Windows: 11379438.
+cd8c95: HEX color #cd8c95, Color name: Puce, RGB(205,140,149), Windows: 9800909.
+8b5f65: HEX color #8b5f65, Color name: Mauve Taupe, RGB(139,95,101), Windows: 6643595.
+ffa07a: HEX color #ffa07a, Color name: LightSalmon, RGB(255,160,122), Windows: 8036607.
+ee9572: HEX color #ee9572, Color name: Dark Salmon, RGB(238,149,114), Windows: 7509486.
+cd8162: HEX color #cd8162, Color name: Burning Sand, RGB(205,129,98), Windows: 6455757.
+8b5742: HEX color #8b5742, Color name: Rope, RGB(139,87,66), Windows: 4347787.
+20b2aa: HEX color #20b2aa, Color name: LightSeaGreen, RGB(32,178,170), Windows: 11186720.
+87cefa: HEX color #87cefa, Color name: LightSkyBlue, RGB(135,206,250), Windows: 16436871.
+b0e2ff: HEX color #b0e2ff, Color name: Columbia Blue, RGB(176,226,255), Windows: 16769712.
+a4d3ee: HEX color #a4d3ee, Color name: Sail, RGB(164,211,238), Windows: 15651748.
+8db6cd: HEX color #8db6cd, Color name: Polo Blue, RGB(141,182,205), Windows: 13481613.
+607b8b: HEX color #607b8b, Color name: Lynch, RGB(96,123,139), Windows: 9141088.
+8470ff: HEX color #8470ff, Color name: Light Slate Blue, RGB(132,112,255), Windows: 16740484.
+778899: HEX color #778899, Color name: LightSlateGray, RGB(119,136,153), Windows: 10061943.
+b0c4de: HEX color #b0c4de, Color name: LightSteelBlue, RGB(176,196,222), Windows: 14599344.
+cae1ff: HEX color #cae1ff, Color name: Hawkes Blue, RGB(202,225,255), Windows: 16769482.
+bcd2ee: HEX color #bcd2ee, Color name: Tropical Blue, RGB(188,210,238), Windows: 15651516.
+a2b5cd: HEX color #a2b5cd, Color name: Echo Blue, RGB(162,181,205), Windows: 13481378.
+6e7b8b: HEX color #6e7b8b, Color name: Slate Grey, RGB(110,123,139), Windows: 9141102.
+ffffe0: HEX color #ffffe0, Color name: LightYellow, RGB(255,255,224), Windows: 14745599.
+eeeed1: HEX color #eeeed1, Color name: Moon Glow, RGB(238,238,209), Windows: 13758190.
+cdcdb4: HEX color #cdcdb4, Color name: Moon Mist, RGB(205,205,180), Windows: 11849165.
+8b8b7a: HEX color #8b8b7a, Color name: Schist, RGB(139,139,122), Windows: 8031115.
+32cd32: HEX color #32cd32, Color name: LimeGreen, RGB(50,205,50), Windows: 3329330.
+faf0e6: HEX color #faf0e6, Color name: Linen, RGB(250,240,230), Windows: 15134970.
+ff00ff: HEX color #ff00ff, Color name: Fuchsia, RGB(255,0,255), Windows: 16711935.
+ee00ee: HEX color #ee00ee, Color name: Magenta, RGB(238,0,238), Windows: 15597806.
+cd00cd: HEX color #cd00cd, Color name: Deep Magenta, RGB(205,0,205), Windows: 13435085.
+8b008b: HEX color #8b008b, Color name: DarkMagenta, RGB(139,0,139), Windows: 9109643.
+b03060: HEX color #b03060, Color name: Rouge, RGB(176,48,96), Windows: 6303920.
+ff34b3: HEX color #ff34b3, Color name: Persian Rose, RGB(255,52,179), Windows: 11744511.
+ee30a7: HEX color #ee30a7, Color name: Persian Rose, RGB(238,48,167), Windows: 10957038.
+cd2990: HEX color #cd2990, Color name: Deep Cerise, RGB(205,41,144), Windows: 9447885.
+8b1c62: HEX color #8b1c62, Color name: Dark Purple, RGB(139,28,98), Windows: 6429835.
+ba55d3: HEX color #ba55d3, Color name: MediumOrchid, RGB(186,85,211), Windows: 13850042.
+e066ff: HEX color #e066ff, Color name: Heliotrope, RGB(224,102,255), Windows: 16738016.
+d15fee: HEX color #d15fee, Color name: Heliotrope, RGB(209,95,238), Windows: 15622097.
+b452cd: HEX color #b452cd, Color name: Medium Orchid, RGB(180,82,205), Windows: 13456052.
+7a378b: HEX color #7a378b, Color name: Vivid Violet, RGB(122,55,139), Windows: 9123706.
+9370db: HEX color #9370db, Color name: MediumPurple, RGB(147,112,219), Windows: 14381203.
+ab82ff: HEX color #ab82ff, Color name: Light Slate Blue, RGB(171,130,255), Windows: 16745131.
+9f79ee: HEX color #9f79ee, Color name: Medium Purple, RGB(159,121,238), Windows: 15628703.
+8968cd: HEX color #8968cd, Color name: True V, RGB(137,104,205), Windows: 13461641.
+5d478b: HEX color #5d478b, Color name: Daisy Bush, RGB(93,71,139), Windows: 9127773.
+3cb371: HEX color #3cb371, Color name: MediumSeaGreen, RGB(60,179,113), Windows: 7451452.
+7b68ee: HEX color #7b68ee, Color name: MediumSlateBlue, RGB(123,104,238), Windows: 15624315.
+00fa9a: HEX color #00fa9a, Color name: MediumSpringGreen, RGB(0,250,154), Windows: 10156544.
+48d1cc: HEX color #48d1cc, Color name: MediumTurquoise, RGB(72,209,204), Windows: 13422920.
+c71585: HEX color #c71585, Color name: MediumVioletRed, RGB(199,21,133), Windows: 8721863.
+191970: HEX color #191970, Color name: MidnightBlue, RGB(25,25,112), Windows: 7346457.
+f5fffa: HEX color #f5fffa, Color name: MintCream, RGB(245,255,250), Windows: 16449525.
+ffe4e1: HEX color #ffe4e1, Color name: MistyRose, RGB(255,228,225), Windows: 14804223.
+eed5d2: HEX color #eed5d2, Color name: Vanilla Ice, RGB(238,213,210), Windows: 13817326.
+cdb7b5: HEX color #cdb7b5, Color name: Cold Turkey, RGB(205,183,181), Windows: 11909069.
+8b7d7b: HEX color #8b7d7b, Color name: Bazaar, RGB(139,125,123), Windows: 8093067.
+ffe4b5: HEX color #ffe4b5, Color name: Moccasin, RGB(255,228,181), Windows: 11920639.
+ffdead: HEX color #ffdead, Color name: NavajoWhite, RGB(255,222,173), Windows: 11394815.
+eecfa1: HEX color #eecfa1, Color name: Dairy Cream, RGB(238,207,161), Windows: 10604526.
+cdb38b: HEX color #cdb38b, Color name: Tan, RGB(205,179,139), Windows: 9155533.
+8b795e: HEX color #8b795e, Color name: Sand Dune, RGB(139,121,94), Windows: 6191499.
+000080: HEX color #000080, Color name: Navy, RGB(0,0,128), Windows: 8388608.
+fdf5e6: HEX color #fdf5e6, Color name: OldLace, RGB(253,245,230), Windows: 15136253.
+6b8e23: HEX color #6b8e23, Color name: OliveDrab, RGB(107,142,35), Windows: 2330219.
+c0ff3e: HEX color #c0ff3e, Color name: Green Yellow, RGB(192,255,62), Windows: 4128704.
+b3ee3a: HEX color #b3ee3a, Color name: Green Yellow, RGB(179,238,58), Windows: 3862195.
+9acd32: HEX color #9acd32, Color name: YellowGreen, RGB(154,205,50), Windows: 3329434.
+698b22: HEX color #698b22, Color name: Olive Drab, RGB(105,139,34), Windows: 2263913.
+ffa500: HEX color #ffa500, Color name: Orange, RGB(255,165,0), Windows: 42495.
+ee9a00: HEX color #ee9a00, Color name: Gamboge, RGB(238,154,0), Windows: 39662.
+cd8500: HEX color #cd8500, Color name: Dark Goldenrod, RGB(205,133,0), Windows: 34253.
+8b5a00: HEX color #8b5a00, Color name: Golden Brown, RGB(139,90,0), Windows: 23179.
+ff4500: HEX color #ff4500, Color name: OrangeRed, RGB(255,69,0), Windows: 17919.
+ee4000: HEX color #ee4000, Color name: Orange Red, RGB(238,64,0), Windows: 16622.
+cd3700: HEX color #cd3700, Color name: Harley Davidson Orange, RGB(205,55,0), Windows: 14285.
+8b2500: HEX color #8b2500, Color name: Falu Red, RGB(139,37,0), Windows: 9611.
+da70d6: HEX color #da70d6, Color name: Orchid, RGB(218,112,214), Windows: 14053594.
+ff83fa: HEX color #ff83fa, Color name: Fuchsia Pink, RGB(255,131,250), Windows: 16417791.
+ee7ae9: HEX color #ee7ae9, Color name: Violet, RGB(238,122,233), Windows: 15301358.
+cd69c9: HEX color #cd69c9, Color name: Orchid, RGB(205,105,201), Windows: 13199821.
+8b4789: HEX color #8b4789, Color name: Trendy Pink, RGB(139,71,137), Windows: 8996747.
+eee8aa: HEX color #eee8aa, Color name: PaleGoldenrod, RGB(238,232,170), Windows: 11200750.
+98fb98: HEX color #98fb98, Color name: PaleGreen, RGB(152,251,152), Windows: 10025880.
+9aff9a: HEX color #9aff9a, Color name: Mint Green, RGB(154,255,154), Windows: 10157978.
+90ee90: HEX color #90ee90, Color name: LightGreen, RGB(144,238,144), Windows: 9498256.
+7ccd7c: HEX color #7ccd7c, Color name: De York, RGB(124,205,124), Windows: 8179068.
+548b54: HEX color #548b54, Color name: Hippie Green, RGB(84,139,84), Windows: 5540692.
+afeeee: HEX color #afeeee, Color name: PaleTurquoise, RGB(175,238,238), Windows: 15658671.
+bbffff: HEX color #bbffff, Color name: Pale Turquoise, RGB(187,255,255), Windows: 16777147.
+aeeeee: HEX color #aeeeee, Color name: Pale Turquoise, RGB(174,238,238), Windows: 15658670.
+96cdcd: HEX color #96cdcd, Color name: Morning Glory, RGB(150,205,205), Windows: 13487510.
+668b8b: HEX color #668b8b, Color name: Juniper, RGB(102,139,139), Windows: 9145190.
+db7093: HEX color #db7093, Color name: PaleVioletRed, RGB(219,112,147), Windows: 9662683.
+ff82ab: HEX color #ff82ab, Color name: Tickle Me Pink, RGB(255,130,171), Windows: 11240191.
+ee799f: HEX color #ee799f, Color name: Tickle Me Pink, RGB(238,121,159), Windows: 10451438.
+cd6889: HEX color #cd6889, Color name: Hopbush, RGB(205,104,137), Windows: 9005261.
+8b475d: HEX color #8b475d, Color name: Cannon Pink, RGB(139,71,93), Windows: 6113163.
+ffefd5: HEX color #ffefd5, Color name: PapayaWhip, RGB(255,239,213), Windows: 14020607.
+ffdab9: HEX color #ffdab9, Color name: PeachPuff, RGB(255,218,185), Windows: 12180223.
+eecbad: HEX color #eecbad, Color name: Desert Sand, RGB(238,203,173), Windows: 11389934.
+cdaf95: HEX color #cdaf95, Color name: Cashmere, RGB(205,175,149), Windows: 9809869.
+8b7765: HEX color #8b7765, Color name: Sand Dune, RGB(139,119,101), Windows: 6649739.
+cd853f: HEX color #cd853f, Color name: Peru, RGB(205,133,63), Windows: 4163021.
+ffc0cb: HEX color #ffc0cb, Color name: Pink, RGB(255,192,203), Windows: 13353215.
+ffb5c5: HEX color #ffb5c5, Color name: Light Pink, RGB(255,181,197), Windows: 12957183.
+eea9b8: HEX color #eea9b8, Color name: Cupid, RGB(238,169,184), Windows: 12102126.
+cd919e: HEX color #cd919e, Color name: Can Can, RGB(205,145,158), Windows: 10392013.
+8b636c: HEX color #8b636c, Color name: Mauve Taupe, RGB(139,99,108), Windows: 7103371.
+dda0dd: HEX color #dda0dd, Color name: Plum, RGB(221,160,221), Windows: 14524637.
+ffbbff: HEX color #ffbbff, Color name: Lavender Rose, RGB(255,187,255), Windows: 16759807.
+eeaeee: HEX color #eeaeee, Color name: Plum, RGB(238,174,238), Windows: 15642350.
+cd96cd: HEX color #cd96cd, Color name: Lilac, RGB(205,150,205), Windows: 13473485.
+8b668b: HEX color #8b668b, Color name: Trendy Pink, RGB(139,102,139), Windows: 9135755.
+b0e0e6: HEX color #b0e0e6, Color name: PowderBlue, RGB(176,224,230), Windows: 15130800.
+a020f0: HEX color #a020f0, Color name: Blue Violet, RGB(160,32,240), Windows: 15736992.
+9b30ff: HEX color #9b30ff, Color name: Blue Violet, RGB(155,48,255), Windows: 16724123.
+912cee: HEX color #912cee, Color name: Blue Violet, RGB(145,44,238), Windows: 15608977.
+7d26cd: HEX color #7d26cd, Color name: Blue Violet, RGB(125,38,205), Windows: 13444733.
+551a8b: HEX color #551a8b, Color name: Indigo, RGB(85,26,139), Windows: 9116245.
+ff0000: HEX color #ff0000, Color name: Red, RGB(255,0,0), Windows: 255.
+ee0000: HEX color #ee0000, Color name: Red, RGB(238,0,0), Windows: 238.
+cd0000: HEX color #cd0000, Color name: Free Speech Red, RGB(205,0,0), Windows: 205.
+8b0000: HEX color #8b0000, Color name: DarkRed, RGB(139,0,0), Windows: 139.
+bc8f8f: HEX color #bc8f8f, Color name: RosyBrown, RGB(188,143,143), Windows: 9408444.
+ffc1c1: HEX color #ffc1c1, Color name: Your Pink, RGB(255,193,193), Windows: 12698111.
+eeb4b4: HEX color #eeb4b4, Color name: Beauty Bush, RGB(238,180,180), Windows: 11842798.
+cd9b9b: HEX color #cd9b9b, Color name: Eunry, RGB(205,155,155), Windows: 10197965.
+8b6969: HEX color #8b6969, Color name: Ferra, RGB(139,105,105), Windows: 6908299.
+4169e1: HEX color #4169e1, Color name: RoyalBlue, RGB(65,105,225), Windows: 14772545.
+4876ff: HEX color #4876ff, Color name: Royal Blue, RGB(72,118,255), Windows: 16741960.
+436eee: HEX color #436eee, Color name: Royal Blue, RGB(67,110,238), Windows: 15625795.
+3a5fcd: HEX color #3a5fcd, Color name: Free Speech Blue, RGB(58,95,205), Windows: 13459258.
+27408b: HEX color #27408b, Color name: Tory Blue, RGB(39,64,139), Windows: 9125927.
+fa8072: HEX color #fa8072, Color name: Salmon, RGB(250,128,114), Windows: 7504122.
+ff8c69: HEX color #ff8c69, Color name: Atomic Tangerine, RGB(255,140,105), Windows: 6917375.
+ee8262: HEX color #ee8262, Color name: Crusta, RGB(238,130,98), Windows: 6456046.
+cd7054: HEX color #cd7054, Color name: Japonica, RGB(205,112,84), Windows: 5533901.
+8b4c39: HEX color #8b4c39, Color name: Paarl, RGB(139,76,57), Windows: 3755147.
+f4a460: HEX color #f4a460, Color name: SandyBrown, RGB(244,164,96), Windows: 6333684.
+2e8b57: HEX color #2e8b57, Color name: SeaGreen, RGB(46,139,87), Windows: 5737262.
+54ff9f: HEX color #54ff9f, Color name: Medium Aquamarine, RGB(84,255,159), Windows: 10485588.
+4eee94: HEX color #4eee94, Color name: Shamrock, RGB(78,238,148), Windows: 9760334.
+43cd80: HEX color #43cd80, Color name: Emerald, RGB(67,205,128), Windows: 8441155.
+fff5ee: HEX color #fff5ee, Color name: SeaShell, RGB(255,245,238), Windows: 15660543.
+eee5de: HEX color #eee5de, Color name: Fantasy, RGB(238,229,222), Windows: 14607854.
+cdc5bf: HEX color #cdc5bf, Color name: Pale Slate, RGB(205,197,191), Windows: 12568013.
+8b8682: HEX color #8b8682, Color name: Schooner, RGB(139,134,130), Windows: 8554123.
+a0522d: HEX color #a0522d, Color name: Sienna, RGB(160,82,45), Windows: 2970272.
+ff8247: HEX color #ff8247, Color name: Coral, RGB(255,130,71), Windows: 4686591.
+ee7942: HEX color #ee7942, Color name: Jaffa, RGB(238,121,66), Windows: 4356590.
+cd6839: HEX color #cd6839, Color name: Ecstasy, RGB(205,104,57), Windows: 3762381.
+8b4726: HEX color #8b4726, Color name: Alert Tan, RGB(139,71,38), Windows: 2508683.
+87ceeb: HEX color #87ceeb, Color name: SkyBlue, RGB(135,206,235), Windows: 15453831.
+87ceff: HEX color #87ceff, Color name: Light Sky Blue, RGB(135,206,255), Windows: 16764551.
+7ec0ee: HEX color #7ec0ee, Color name: Maya Blue, RGB(126,192,238), Windows: 15646846.
+6ca6cd: HEX color #6ca6cd, Color name: Picton Blue, RGB(108,166,205), Windows: 13477484.
+4a708b: HEX color #4a708b, Color name: Wedgewood, RGB(74,112,139), Windows: 9138250.
+6a5acd: HEX color #6a5acd, Color name: SlateBlue, RGB(106,90,205), Windows: 13458026.
+836fff: HEX color #836fff, Color name: Light Slate Blue, RGB(131,111,255), Windows: 16740227.
+7a67ee: HEX color #7a67ee, Color name: Medium Slate Blue, RGB(122,103,238), Windows: 15624058.
+6959cd: HEX color #6959cd, Color name: Slate Blue, RGB(105,89,205), Windows: 13457769.
+473c8b: HEX color #473c8b, Color name: Dark Slate Blue, RGB(71,60,139), Windows: 9124935.
+708090: HEX color #708090, Color name: SlateGray, RGB(112,128,144), Windows: 9470064.
+c6e2ff: HEX color #c6e2ff, Color name: Pattens Blue, RGB(198,226,255), Windows: 16769734.
+b9d3ee: HEX color #b9d3ee, Color name: Pale Cornflower Blue, RGB(185,211,238), Windows: 15651769.
+9fb6cd: HEX color #9fb6cd, Color name: Echo Blue, RGB(159,182,205), Windows: 13481631.
+6c7b8b: HEX color #6c7b8b, Color name: Slate Grey, RGB(108,123,139), Windows: 9141100.
+fffafa: HEX color #fffafa, Color name: Snow, RGB(255,250,250), Windows: 16448255.
+eee9e9: HEX color #eee9e9, Color name: Whisper, RGB(238,233,233), Windows: 15329774.
+cdc9c9: HEX color #cdc9c9, Color name: Very Light Grey, RGB(205,201,201), Windows: 13224397.
+8b8989: HEX color #8b8989, Color name: Suva Grey, RGB(139,137,137), Windows: 9013643.
+00ff7f: HEX color #00ff7f, Color name: SpringGreen, RGB(0,255,127), Windows: 8388352.
+00ee76: HEX color #00ee76, Color name: Spring Green, RGB(0,238,118), Windows: 7794176.
+00cd66: HEX color #00cd66, Color name: Malachite, RGB(0,205,102), Windows: 6737152.
+008b45: HEX color #008b45, Color name: Pigment Green, RGB(0,139,69), Windows: 4557568.
+4682b4: HEX color #4682b4, Color name: SteelBlue, RGB(70,130,180), Windows: 11829830.
+63b8ff: HEX color #63b8ff, Color name: Maya Blue, RGB(99,184,255), Windows: 16758883.
+5cacee: HEX color #5cacee, Color name: Malibu, RGB(92,172,238), Windows: 15641692.
+4f94cd: HEX color #4f94cd, Color name: Picton Blue, RGB(79,148,205), Windows: 13472847.
+36648b: HEX color #36648b, Color name: Matisse, RGB(54,100,139), Windows: 9135158.
+d2b48c: HEX color #d2b48c, Color name: Tan, RGB(210,180,140), Windows: 9221330.
+ffa54f: HEX color #ffa54f, Color name: Sunshade, RGB(255,165,79), Windows: 5219839.
+ee9a49: HEX color #ee9a49, Color name: Sea Buckthorn, RGB(238,154,73), Windows: 4823790.
+8b5a2b: HEX color #8b5a2b, Color name: Rusty Nail, RGB(139,90,43), Windows: 2841227.
+d8bfd8: HEX color #d8bfd8, Color name: Thistle, RGB(216,191,216), Windows: 14204888.
+ffe1ff: HEX color #ffe1ff, Color name: Selago, RGB(255,225,255), Windows: 16769535.
+eed2ee: HEX color #eed2ee, Color name: Snuff, RGB(238,210,238), Windows: 15651566.
+cdb5cd: HEX color #cdb5cd, Color name: Thistle, RGB(205,181,205), Windows: 13481421.
+8b7b8b: HEX color #8b7b8b, Color name: Taupe Grey, RGB(139,123,139), Windows: 9141131.
+ff6347: HEX color #ff6347, Color name: Tomato, RGB(255,99,71), Windows: 4678655.
+ee5c42: HEX color #ee5c42, Color name: Tomato, RGB(238,92,66), Windows: 4349166.
+cd4f39: HEX color #cd4f39, Color name: Trinidad, RGB(205,79,57), Windows: 3755981.
+8b3626: HEX color #8b3626, Color name: Burnt Umber, RGB(139,54,38), Windows: 2504331.
+40e0d0: HEX color #40e0d0, Color name: Turquoise, RGB(64,224,208), Windows: 13688896.
+00f5ff: HEX color #00f5ff, Color name: Aqua, RGB(0,245,255), Windows: 16774400.
+00e5ee: HEX color #00e5ee, Color name: Bright Turquoise, RGB(0,229,238), Windows: 15656192.
+00c5cd: HEX color #00c5cd, Color name: Robin's Egg Blue, RGB(0,197,205), Windows: 13485312.
+00868b: HEX color #00868b, Color name: Dark Cyan, RGB(0,134,139), Windows: 9143808.
+ee82ee: HEX color #ee82ee, Color name: Violet, RGB(238,130,238), Windows: 15631086.
+d02090: HEX color #d02090, Color name: Medium Violet Red, RGB(208,32,144), Windows: 9445584.
+ff3e96: HEX color #ff3e96, Color name: Wild Strawberry, RGB(255,62,150), Windows: 9846527.
+ee3a8c: HEX color #ee3a8c, Color name: Violet Red, RGB(238,58,140), Windows: 9190126.
+cd3278: HEX color #cd3278, Color name: Deep Cerise, RGB(205,50,120), Windows: 7877325.
+8b2252: HEX color #8b2252, Color name: Rose Bud Cherry, RGB(139,34,82), Windows: 5382795.
+f5deb3: HEX color #f5deb3, Color name: Wheat, RGB(245,222,179), Windows: 11788021.
+ffe7ba: HEX color #ffe7ba, Color name: Moccasin, RGB(255,231,186), Windows: 12249087.
+eed8ae: HEX color #eed8ae, Color name: Givry, RGB(238,216,174), Windows: 11458798.
+cdba96: HEX color #cdba96, Color name: Sour Dough, RGB(205,186,150), Windows: 9878221.
+8b7e66: HEX color #8b7e66, Color name: Granite Green, RGB(139,126,102), Windows: 6717067.
+ffff00: HEX color #ffff00, Color name: Yellow, RGB(255,255,0), Windows: 65535.
+eeee00: HEX color #eeee00, Color name: Lemon, RGB(238,238,0), Windows: 61166.
+cdcd00: HEX color #cdcd00, Color name: Bird Flower, RGB(205,205,0), Windows: 52685.
+8b8b00: HEX color #8b8b00, Color name: Olive, RGB(139,139,0), Windows: 35723.
