@@ -26,7 +26,7 @@ import javax.inject.Singleton;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Jline built-in posix.
+ * Jline posix functions.
  *
  * @since 3.0
  */

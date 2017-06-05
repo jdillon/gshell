@@ -14,16 +14,16 @@
 # limitations under the License.
 #
 
-@|bold NAME|@
+@{bold NAME}
 
-  @{command.name}
+  %{command.name}
 
-@|bold SYNOPSIS|@
+@{bold SYNOPSIS}
 
-  @|bold @{command.name}|@ [options]
+  @{bold %{command.name}} [options]
 
-@|bold DESCRIPTION|@
+@{bold DESCRIPTION}
 
-  @{command.description}
+  %{command.description}
 
-@{command.details}
+%{command.details}

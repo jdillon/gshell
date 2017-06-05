@@ -14,38 +14,38 @@
 # limitations under the License.
 #
 
-@|bold NAME|@
+@{bold NAME}
 
-  @{command.name} - @{command.description}
+  %{command.name} - %{command.description}
 
-@|bold SYNOPSIS|@
+@{bold SYNOPSIS}
 
-  @|bold @{command.name}|@ [options] [NAME]
+  @{bold %{command.name}} [options] [NAME]
     
-@|bold DESCRIPTION|@
+@{bold DESCRIPTION}
 
   Displays help pages.  When no argument is given, displays all pages
   available in the current context.  When an argument is given that matches
   a page name, the help page is displayed, else a list of matching pages
   is displayed.
 
-@{command.details}
+%{command.details}
 
-@|bold EXAMPLES|@
+@{bold EXAMPLES}
 
   Display the list of help pages:
 
-    @{command.name}
+    %{command.name}
 
-  Display the help page for the @|bold exit|@ command:
+  Display the help page for the @{bold exit} command:
 
-    @{command.name} exit
+    %{command.name} exit
 
-  Display help pages for the @|bold pref|@ group:
+  Display help pages for the @{bold pref} group:
 
-    @{command.name} pref
+    %{command.name} pref
 
   Display help pages for the current group:
 
-    @{command.name} .
+    %{command.name} .
 

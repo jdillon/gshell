@@ -56,7 +56,7 @@ public class AliasAction
     @DefaultMessage("Defined aliases:")
     String definedAliases();
 
-    @DefaultMessage("Alias to: @|bold %s|@")
+    @DefaultMessage("Alias to: @{bold %s}")
     String aliasTarget(String target);
 
     @DefaultMessage("Missing argument: %s")
@@ -117,7 +117,7 @@ public class AliasAction
 
       aliases.forEach((key, value) -> {
         String formattedName = String.format(nameFormat, key);
-        io.format("  @|bold %s|@ %s%n", formattedName, messages.aliasTarget(value));
+        io.format("  @{bold %s} %s%n", formattedName, messages.aliasTarget(value));
       });
     }
   }

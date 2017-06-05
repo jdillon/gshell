@@ -75,6 +75,8 @@ public abstract class CommandTestSupport
   static {
     SLF4JBridgeHandler.removeHandlersForRootLogger();
     SLF4JBridgeHandler.install();
+
+    // TODO: Sort out if this actually works or if jline3 has a different option to disable
     Ansi.setEnabled(false);
   }
 

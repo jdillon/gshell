@@ -14,34 +14,34 @@
 # limitations under the License.
 #
 
-@|bold NAME|@
+@{bold NAME}
 
-  @{command.name} - @{command.description}
+  %{command.name} - %{command.description}
 
-@|bold SYNOPSIS|@
+@{bold SYNOPSIS}
 
-  @|bold @{command.name}|@ [options] [PATH]
+  @{bold %{command.name}} [options] [PATH]
 
-@|bold DESCRIPTION|@
+@{bold DESCRIPTION}
 
   Change the current working directory to a specific directory.
 
-@{command.details}
+%{command.details}
 
-@|bold EXAMPLES|@
+@{bold EXAMPLES}
 
   Change to /tmp:
 
-    @{command.name} /tmp
+    %{command.name} /tmp
 
   Change to ${shell.user.home):
 
-    @{command.name}
+    %{command.name}
 
   Change to parent directory:
 
-    @{command.name} ..
+    %{command.name} ..
 
-@|bold SEE ALSO|@
+@{bold SEE ALSO}
 
-  @|bold pwd|@
+  @{bold pwd}

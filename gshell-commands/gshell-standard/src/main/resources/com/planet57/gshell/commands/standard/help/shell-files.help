@@ -14,43 +14,43 @@
 # limitations under the License.
 #
 
-@|bold CONFIGURATION FILES|@
+@{bold CONFIGURATION FILES}
 
-  @|underline @{branding.userContextDir}/@{branding.programName}.boot|@ (and @|underline @{branding.programName}.boot.bat|@)
+  %{underline %{branding.userContextDir}/%{branding.programName}.boot} (and %{underline %{branding.programName}.boot.bat})
 
-    Platform specific (use @{branding.programName}.boot on unix, @{branding.programName}.boot.bat on windows)
+    Platform specific (use %{branding.programName}.boot on unix, %{branding.programName}.boot.bat on windows)
     configuration of launcher scripts. Define environment variables or
     other platform specific configuration needed to launch the shell here.
 
-  @|underline @{branding.userContextDir}/@{branding.profileScriptName}|@
+  %{underline %{branding.userContextDir}/%{branding.profileScriptName}}
 
     A user-specific shell script loaded when the shell starts up. Here is
     a good place to define variables needed to control command behavior.
 
-  @|underline @{branding.shellContextDir}/@{branding.profileScriptName}|@
+  %{underline %{branding.shellContextDir}/%{branding.profileScriptName}}
 
     An installation-specific shell script loaded when the shell starts up.
 
-  @|underline $HOME/@{branding.userContextDir}/@{branding.interactiveScriptName}|@
+  %{underline $HOME/%{branding.userContextDir}/%{branding.interactiveScriptName}}
 
     A user-specific shell script loaded when the shell starts in
     interactive mode. Here is a good place to define aliases.
 
-  @|underline @{branding.shellContextDir}/@{branding.interactiveScriptName}|@
+  %{underline %{branding.shellContextDir}/%{branding.interactiveScriptName}}
 
     An installation-specific shell script loaded when the shell starts in
     interactive mode.
 
-@|bold OTHER FILES|@
+@{bold OTHER FILES}
 
-  @|underline @{branding.shellHomeDir}/log/shell.log|@
+  %{underline %{branding.shellHomeDir}/log/shell.log}
 
     Logging output is captured to this file.
 
-  @|underline @{branding.userContextDir}/@{branding.historyFileName}|@
+  %{underline %{branding.userContextDir}/%{branding.historyFileName}}
 
     Interactive shell history is stored in this file.
 
-@|bold SEE ALSO|@
+@{bold SEE ALSO}
 
-  @|bold shell-env|@
+  @{bold shell-env}

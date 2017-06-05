@@ -34,7 +34,7 @@ import static com.planet57.gshell.variables.VariableNames.SHELL_USER_DIR;
  *
  * @since 2.0
  */
-public class BrandingImpl
+public class  BrandingImpl
     extends BrandingSupport
 {
   // Figlet font name: ???
@@ -50,23 +50,23 @@ public class BrandingImpl
   public String getWelcomeMessage() {
     PrintBuffer buff = new PrintBuffer();
     for (String line : BANNER) {
-      buff.format("@|cyan %s|@%n", line);
+      buff.format("@{fg:cyan %s}%n", line);
     }
     buff.println();
     buff.format("%s (%s)%n%n", getDisplayName(), getVersion());
-    buff.println("Type '@|bold help|@' for more information.");
-    buff.format("@|intensity_faint %s|@", LINE_TOKEN);
+    buff.println("Type '@{bold help}' for more information.");
+    buff.format("@{faint %s}", LINE_TOKEN);
     return buff.toString();
   }
 
   @Override
   public String getDisplayName() {
-    return "@|cyan GShell|@";
+    return "@{fg:cyan GShell}";
   }
 
   @Override
   public String getGoodbyeMessage() {
-    return "@|green Goodbye!|@";
+    return "@{fg:green Goodbye!}";
   }
 
   @Override
@@ -76,16 +76,8 @@ public class BrandingImpl
 
   @Override
   public String getPrompt() {
-    // FIXME: may need to adjust ansi-renderer syntax or pre-render before expanding to avoid needing escapes
-    return String.format("\\@\\|bold %s\\|\\@\\(${%s}\\):${%s}> ", getProgramName(), SHELL_GROUP, SHELL_USER_DIR);
+    return String.format("\\@\\{bold,fg:cyan %s\\}\\(${%s}\\):${%s}> ", getProgramName(), SHELL_GROUP, SHELL_USER_DIR);
   }
-
-//  @Nullable
-//  @Override
-//  public String getRightPrompt() {
-//    // FIXME: may need to adjust ansi-renderer syntax or pre-render before expanding to avoid needing escapes
-//    return "\\@\\|intensity_faint $(date)\\|\\@";
-//  }
 
   @Override
   public License getLicense() {

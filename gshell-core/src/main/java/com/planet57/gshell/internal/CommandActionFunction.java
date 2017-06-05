@@ -28,6 +28,7 @@ import com.planet57.gshell.util.cli2.HelpPrinter;
 import com.planet57.gshell.util.cli2.OpaqueArguments;
 import com.planet57.gshell.util.io.StreamSet;
 import com.planet57.gshell.util.pref.PreferenceProcessor;
+import com.planet57.gshell.util.style.StyledIO;
 import com.planet57.gshell.variables.Variables;
 import com.planet57.gshell.variables.VariablesSupport;
 import org.apache.felix.gogo.runtime.CommandSessionImpl;
@@ -100,8 +101,9 @@ public class CommandActionFunction
     final ClassLoader cl = Thread.currentThread().getContextClassLoader();
     Thread.currentThread().setContextClassLoader(action.getClass().getClassLoader());
 
+    // FIXME: Need to provide a means to create non-styled for testing?
     // re-create IO with current streams; which are adjusted by ThreadIO
-    final IO io = new IO(StreamSet.system(), terminal);
+    final IO io = StyledIO.create("shell", StreamSet.system(), terminal);
 
     Object result = null;
     try {

@@ -16,7 +16,7 @@
 
 Variables can be referenced using ${variable} syntax.
 
-@|bold QUOTING|@
+@{bold QUOTING}
 
   Single quotes are opaque.
 
@@ -42,12 +42,12 @@ Variables can be referenced using ${variable} syntax.
 
   Single or double quotes may be escaped with a preceding '\' char.
 
-@|bold COMMENTS|@
+@{bold COMMENTS}
 
   A line that begins with '#' is considered to be a comment; all
   content until a new-line is ignored.
 
-@|bold COMPOUND COMMANDS|@
+@{bold COMPOUND COMMANDS}
 
   Multiple commands can be executed on the same line by separating each
   command (and it's options and arguments) with ';':

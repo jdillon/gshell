@@ -14,26 +14,26 @@
 # limitations under the License.
 #
 
-@|bold NAME|@
+@{bold NAME}
 
-  @{command.name} - @{command.description}
+  %{command.name} - %{command.description}
 
-@|bold SYNOPSIS|@
+@{bold SYNOPSIS}
 
-  @|bold @{command.name}|@ [options] PATH
+  @{bold %{command.name}} [options] PATH
 
-@|bold DESCRIPTION|@
+@{bold DESCRIPTION}
 
   List the contents of preferences.
 
-@{command.details}
+%{command.details}
 
-@|bold EXAMPLES|@
+@{bold EXAMPLES}
 
   List all user preferences:
 
-    @{command.name} -r /
+    %{command.name} -r /
 
-@|bold SEE ALSO|@
+@{bold SEE ALSO}
 
-  @|bold pref/get|@, @|bold pref/set|@, @|bold pref/unset|@
+  @{bold pref/get}, @{bold pref/set}, @{bold pref/unset}

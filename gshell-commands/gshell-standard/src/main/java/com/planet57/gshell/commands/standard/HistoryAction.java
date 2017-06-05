@@ -25,6 +25,8 @@ import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Option;
+import com.planet57.gshell.util.style.StyleFactory;
+import com.planet57.gshell.util.style.Styler;
 import org.jline.reader.History;
 import org.jline.utils.AttributedStringBuilder;
 
@@ -47,6 +49,8 @@ public class HistoryAction
 
   @Option(name = "t", longName = "timestamps", description = "Display timestamps")
   private boolean timestamps;
+
+  private final StyleFactory styles = Styler.factory("command.history");
 
   @Override
   public Object execute(@Nonnull final CommandContext context) throws Exception {
@@ -82,10 +86,9 @@ public class HistoryAction
       buff.append(" ");
     }
 
-    buff.style(buff.style().bold());
-    buff.append(String.format("%3d", entry.index() + 1));
-    buff.style(buff.style().boldOff());
-    buff.append("  ").append(entry.line());
+    int index = entry.index() + 1;
+    buff.append(styles.style(".index:-bold", "%3d  ", index))
+        .append(entry.line());
 
     io.println(buff.toAnsi(io.terminal));
   }

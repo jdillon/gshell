@@ -17,13 +17,13 @@
 Several environment variables are used to control the basic environment
 exposed to a shell.
 
-@|underline JAVACMD|@
+%{underline JAVACMD}
 
   JAVACMD defines the fully qualified path to the JVM executable to be
   used by the shell. If this is not set, then JAVA_HOME will be
   consulted.
 
-@|underline JAVA_HOME|@
+%{underline JAVA_HOME}
 
   JAVA_HOME is the location of the JVM installation to be used to run
   the shell. If this value is not set, then JAVACMD will default to java
@@ -31,19 +31,19 @@ exposed to a shell.
   Best practice is to always define JAVA_HOME to the JVM which is
   intended to be used to run the shell.
 
-@|underline JAVA_OPTS|@
+%{underline JAVA_OPTS}
 
   Optional flags to pass to the JVM.
 
-@|underline SHELL_HOME|@
+%{underline SHELL_HOME}
 
   The location of the shell installation. This is auto-detected if not
   configured. Best practice is to leave this unset.
 
-@|underline SHELL_OPTS|@
+%{underline SHELL_OPTS}
 
   Optional flags to pass to the shell.
 
-@|bold SEE ALSO|@
+@{bold SEE ALSO}
 
-  @|bold shell-files|@
+  @{bold shell-files}

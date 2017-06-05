@@ -36,10 +36,10 @@ public class GroupHelpPage
   private interface Messages
     extends MessageBundle
   {
-    @DefaultMessage("Command group: @|bold %s|@")
+    @DefaultMessage("Command group: @{bold %s}")
     String description(String name);
 
-    @DefaultMessage("Help pages in group @|bold %s|@:")
+    @DefaultMessage("Help pages in group @{bold %s}:")
     String header(String name);
   }
 

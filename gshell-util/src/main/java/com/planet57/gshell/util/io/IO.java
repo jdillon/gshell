@@ -19,7 +19,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.Reader;
 
-import org.fusesource.jansi.AnsiRenderWriter;
 import org.jline.terminal.Terminal;
 
 import javax.annotation.Nonnull;
@@ -71,15 +70,23 @@ public class IO
 
     // prepare stream references
     this.in = new InputStreamReader(streams.in);
-    this.out = new AnsiRenderWriter(streams.out, true);
+    this.out = new PrintWriter(streams.out, true);
 
     // Don't rewrite the error stream if we have the same stream for out and error
     if (streams.isOutputCombined()) {
       this.err = this.out;
     }
     else {
-      this.err = new AnsiRenderWriter(streams.err, true);
+      this.err = new PrintWriter(streams.out, true);
     }
+  }
+
+  protected IO(final StreamSet streams, final Terminal terminal, final Reader in, final PrintWriter out, final PrintWriter err) {
+    this.streams = checkNotNull(streams);
+    this.terminal = checkNotNull(terminal);
+    this.in = checkNotNull(in);
+    this.out = checkNotNull(out);
+    this.err = checkNotNull(err);
   }
 
   /**
@@ -99,6 +106,8 @@ public class IO
   //
   // Output helpers; by default everything should use {@link #out}.
   //
+
+  // TODO: consider adding helpers for AttributedStringBuilder to automatically invoke toAnsi(terminal)
 
   /**
    * @since 3.0

@@ -29,6 +29,7 @@ import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.shell.ShellBuilder;
 import com.planet57.gshell.util.io.PrintBuffer;
 import com.planet57.gshell.util.io.StreamSet;
+import com.planet57.gshell.util.style.StyledIO;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
 import com.planet57.gshell.variables.VariablesSupport;
@@ -99,7 +100,7 @@ public class RunMojo
     @Override
     public String getDisplayName() {
       // TODO: expose for configuration
-      return "@|bold GShell|@";
+      return "@{bold GShell}";
     }
 
     @Override
@@ -131,7 +132,7 @@ public class RunMojo
     public String getWelcomeMessage() {
       // TODO: expose for configuration
       PrintBuffer buff = new PrintBuffer();
-      buff.format("%nType '@|bold help|@' for more information.%n");
+      buff.format("%nType '@{bold help}' for more information.%n");
       buff.print(LINE_TOKEN);
       return buff.toString();
     }
@@ -139,7 +140,7 @@ public class RunMojo
     @Override
     public String getGoodbyeMessage() {
       // TODO: expose for configuration
-      return "@|green Goodbye!|@\n";
+      return "@{fg:green Goodbye!}\n";
     }
   }
 
@@ -147,7 +148,7 @@ public class RunMojo
     // TODO: check if we can get a reference to the maven containers BeanLocator?
     final BeanContainer container = new BeanContainer();
     final Terminal terminal = TerminalBuilder.builder().build();
-    final IO io = new IO(StreamSet.SYSTEM_FD, terminal);
+    final IO io = StyledIO.create("shell", StreamSet.SYSTEM_FD, terminal);
     final Variables variables = new VariablesSupport();
     // TODO: adapt variables to maven context
     variables.set(VariableNames.SHELL_ERRORS, shellErrors);

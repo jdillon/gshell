@@ -525,6 +525,7 @@
               Thirdparty sources
               -->
               <exclude>gshell-util/src/main/java/org/apache/tools/ant/**</exclude>
+              <exclude>gshell-util/src/test/script/**</exclude>
             </excludes>
           </configuration>
         </plugin>

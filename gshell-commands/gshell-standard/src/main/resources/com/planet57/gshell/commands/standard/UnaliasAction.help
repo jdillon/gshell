@@ -14,26 +14,26 @@
 # limitations under the License.
 #
 
-@|bold NAME|@
+@{bold NAME}
 
-  @{command.name} - @{command.description}
+  %{command.name} - %{command.description}
 
-@|bold SYNOPSIS|@
+@{bold SYNOPSIS}
 
-  @|bold @{command.name}|@ [options] NAME
+  @{bold %{command.name}} [options] NAME
 
-@{command.details}
+%{command.details}
 
-@|bold DESCRIPTION|@
+@{bold DESCRIPTION}
 
   Removes a previously defined alias.
 
-@|bold EXAMPLES|@
+@{bold EXAMPLES}
 
   Remove an alias:
 
-    @{command.name} foo
+    %{command.name} foo
 
-@|bold SEE ALSO|@
+@{bold SEE ALSO}
 
-  @|bold alias|@
+  @{bold alias}

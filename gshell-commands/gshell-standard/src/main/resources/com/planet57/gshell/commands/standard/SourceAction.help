@@ -14,23 +14,23 @@
 # limitations under the License.
 #
 
-@|bold NAME|@
+@{bold NAME}
 
-  @{command.name} - @{command.description}
+  %{command.name} - %{command.description}
 
-@|bold SYNOPSIS|@
+@{bold SYNOPSIS}
 
-  @|bold @{command.name}|@ [options] PATH
+  @{bold %{command.name}} [options] PATH
 
-@|bold DESCRIPTION|@
+@{bold DESCRIPTION}
 
   Reads commands from a local file or URL and executes them in the current
   shell.
 
-@{command.details}
+%{command.details}
 
-@|bold EXAMPLES|@
+@{bold EXAMPLES}
 
   Execute commands from a local file:
 
-    @{command.name} /tmp/myscript.txt
+    %{command.name} /tmp/myscript.txt

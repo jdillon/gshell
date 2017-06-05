@@ -14,44 +14,44 @@
 # limitations under the License.
 #
 
-@|bold NAME|@
+@{bold NAME}
 
-  @{command.name} - @{command.description}
+  %{command.name} - %{command.description}
 
-@|bold SYNOPSIS|@
+@{bold SYNOPSIS}
 
-  @|bold @{command.name}|@ [options] [NAME VALUE]
+  @{bold %{command.name}} [options] [NAME VALUE]
 
-@|bold DESCRIPTION|@
+@{bold DESCRIPTION}
 
   Set a shell variable or a system property.
 
-@{command.details}
+%{command.details}
 
-@|bold EXAMPLES|@
+@{bold EXAMPLES}
 
   List all defined variables:
 
-    @{command.name}
+    %{command.name}
 
   Set a variable:
 
-    @{command.name} FOO BAR
+    %{command.name} FOO BAR
 
   Set a variable with quotes:
 
-    @{command.name} FOO "this is foo"
+    %{command.name} FOO "this is foo"
 
   List all system properties:
 
-    @{command.name} -m property
+    %{command.name} -m property
 
   Set a system property:
 
-    @{command.name} -m property tmp.dir /tmp
+    %{command.name} -m property tmp.dir /tmp
 
-  Some variables are @|bold immutable|@ and can not be changed.
+  Some variables are @{bold immutable} and can not be changed.
 
-@|bold SEE ALSO|@
+@{bold SEE ALSO}
 
-  @|bold unset|@
+  @{bold unset}

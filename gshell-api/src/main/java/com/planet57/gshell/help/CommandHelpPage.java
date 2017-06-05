@@ -129,7 +129,7 @@ public class CommandHelpPage
     }
 
     private void printHeader(final PrintBuffer buff, final String name) {
-      buff.format("@|bold %s|@%n", name);
+      buff.format("@{bold %s}%n", name);
       buff.println();
     }
 
@@ -166,7 +166,7 @@ public class CommandHelpPage
       printHeader(buff, CommandHelpPage.messages.preferences());
 
       for (PreferenceDescriptor pd : pp.getDescriptors()) {
-        String text = String.format("    %s @|bold %s|@ (%s)",
+        String text = String.format("  %s @{bold %s} (%s)",
             pd.getPreferences().absolutePath(), pd.getId(), pd.getSetter().getType().getSimpleName());
         buff.println(text);
       }
@@ -209,7 +209,7 @@ public class CommandHelpPage
     final Terminal terminal = shell.getTerminal();
     final Variables variables = shell.getVariables();
 
-    Interpolator interp = new StringSearchInterpolator("@{", "}");
+    Interpolator interp = new StringSearchInterpolator("%{", "}");
     interp.addValueSource(new PrefixedObjectValueSource("command.", new Helper(branding, terminal.getWidth())));
     interp.addValueSource(new PrefixedObjectValueSource("branding.", branding));
     interp.addValueSource(new AbstractValueSource(false)

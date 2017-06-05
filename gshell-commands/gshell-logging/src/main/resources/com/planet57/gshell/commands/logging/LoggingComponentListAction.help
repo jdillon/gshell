@@ -14,30 +14,30 @@
 # limitations under the License.
 #
 
-@|bold NAME|@
+@{bold NAME}
 
-  @{command.name} - @{command.description}
+  %{command.name} - %{command.description}
 
-@|bold SYNOPSIS|@
+@{bold SYNOPSIS}
 
-  @|bold @{command.name}|@ [options]
+  @{bold %{command.name}} [options]
 
-@|bold DESCRIPTION|@
+@{bold DESCRIPTION}
 
   Lists all registered components of the underlying logging system.
 
-@{command.details}
+%{command.details}
 
-@|bold EXAMPLES|@
+@{bold EXAMPLES}
 
   List all components:
 
-    @{command.name}
+    %{command.name}
 
   List all components matching name 'foo':
 
-    @{command.name} -n foo
+    %{command.name} -n foo
 
-@|bold SEE ALSO|@
+@{bold SEE ALSO}
 
-  @|bold logging|@
+  @{bold logging}

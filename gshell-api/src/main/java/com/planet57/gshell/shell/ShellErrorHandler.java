@@ -62,16 +62,16 @@ public class ShellErrorHandler
 
     Throwable cause = error;
 
-    out.format("@|bold,red %s|@", cause.getClass().getName());
+    out.format("@{bold,fg:!red %s}", cause.getClass().getName());
     if (cause.getMessage() != null) {
-      out.format(": @|bold,red %s|@", cause.getMessage());
+      out.format(": @{bold,fg:red %s}", cause.getMessage());
     }
     out.println();
 
     if (verbose) {
       while (cause != null) {
         for (StackTraceElement e : cause.getStackTrace()) {
-          out.format("     @|bold %s|@ %s.%s (@|bold %s|@)%n",
+          out.format("     @{bold %s} %s.%s (@{bold %s})%n",
             messages.at(),
             e.getClassName(),
             e.getMethodName(),
@@ -81,7 +81,7 @@ public class ShellErrorHandler
 
         cause = cause.getCause();
         if (cause != null) {
-          out.format("@|bold %s|@ %s%n", messages.causedBy(), cause.getClass().getName());
+          out.format("@{bold %s} %s%n", messages.causedBy(), cause.getClass().getName());
         }
       }
     }

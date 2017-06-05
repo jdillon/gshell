@@ -38,6 +38,7 @@ import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.event.EventManager;
 import com.planet57.gshell.help.HelpPageManager;
 import com.planet57.gshell.util.jline.LoggingCompleter;
+import com.planet57.gshell.util.style.Styler;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
 import org.apache.felix.gogo.jline.Expander;
@@ -48,7 +49,6 @@ import org.apache.felix.gogo.runtime.Closure;
 import org.apache.felix.gogo.runtime.CommandSessionImpl;
 import org.apache.felix.service.command.CommandSession;
 import org.apache.felix.service.command.Job;
-import org.fusesource.jansi.AnsiRenderer;
 import org.jline.reader.Completer;
 import org.jline.reader.EndOfFileException;
 import org.jline.reader.History;
@@ -293,7 +293,7 @@ public class ShellImpl
     renderMessage(io, branding.getWelcomeMessage());
 
     // handle CTRL-C
-    SignalHandler interruptHandler = terminal.handle(Signal.INT, s -> {
+    final SignalHandler previousInterruptHandler = terminal.handle(Signal.INT, s -> {
       Job current = session.foregroundJob();
       if (current != null) {
         log.debug("Interrupting task: {}", current);
@@ -302,7 +302,7 @@ public class ShellImpl
     });
 
     // handle CTRL-Z
-    SignalHandler suspendHandler = terminal.handle(Signal.TSTP, s -> {
+    final SignalHandler previousSuspendHandler = terminal.handle(Signal.TSTP, s -> {
       Job current = session.foregroundJob();
       if (current != null) {
         log.debug("Suspending task: {}", current);
@@ -352,8 +352,8 @@ public class ShellImpl
       }
     }
     finally {
-      terminal.handle(Signal.INT, interruptHandler);
-      terminal.handle(Signal.TSTP, suspendHandler);
+      terminal.handle(Signal.INT, previousInterruptHandler);
+      terminal.handle(Signal.TSTP, previousSuspendHandler);
     }
     log.trace("Stopped");
 
@@ -437,14 +437,14 @@ public class ShellImpl
 
     String prompt = expand(session, value);
 
+    // post-expand render prompt for style
+    if (prompt != null) {
+      prompt = Styler.factory("shell").evaluate(prompt).toAnsi(io.terminal);
+    }
+
     // fail-safe prompt
     if (prompt == null) {
       prompt = String.format("%s> ", branding.getProgramName());
-    }
-
-    // FIXME: may need to adjust ansi-renderer syntax or pre-render before expanding to avoid needing escapes
-    if (AnsiRenderer.test(prompt)) {
-      prompt = AnsiRenderer.render(prompt);
     }
 
     return prompt;
@@ -457,13 +457,17 @@ public class ShellImpl
       value = branding.getRightPrompt();
     }
 
-    String prompt = expand(session, value);
+    if (value != null) {
+      String prompt = expand(session, value);
 
-    // FIXME: may need to adjust ansi-renderer syntax or pre-render before expanding to avoid needing escapes
-    if (AnsiRenderer.test(prompt)) {
-      prompt = AnsiRenderer.render(prompt);
+      // post-expand render prompt for style
+      if (prompt != null) {
+        prompt = Styler.factory("shell").evaluate(prompt).toAnsi(io.terminal);
+      }
+
+      return prompt;
     }
 
-    return prompt;
+    return null;
   }
 }

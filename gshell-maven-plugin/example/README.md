@@ -45,7 +45,7 @@ Run a command; 'set' to list all defined variables:
     shell.home='/Users/jason/ws/planet57/gshell/gshell-maven-plugin/example/.gshell'
     shell.version='1'
     shell.user.home='/Users/jason'
-    shell.prompt='@|bold example-shell|@> '
+    shell.prompt='@{bold example-shell}> '
     shell.user.dir='/Users/jason/ws/planet57/gshell/gshell-maven-plugin/example'
     shell.group='/'
     shell.group.path='.:/'
