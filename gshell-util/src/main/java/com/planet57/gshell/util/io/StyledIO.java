@@ -13,14 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.planet57.gshell.util.style;
+package com.planet57.gshell.util.io;
 
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.Reader;
 
-import com.planet57.gshell.util.io.IO;
-import com.planet57.gshell.util.io.StreamSet;
+import org.jline.style.StyleResolver;
+import org.jline.style.StyledWriter;
+import org.jline.style.Styler;
 import org.jline.terminal.Terminal;
 
 import static com.google.common.base.Preconditions.checkNotNull;

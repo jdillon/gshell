@@ -25,9 +25,9 @@ import com.planet57.gshell.command.CommandContext;
 import com.planet57.gshell.util.io.IO;
 import com.planet57.gshell.command.CommandActionSupport;
 import com.planet57.gshell.util.cli2.Option;
-import com.planet57.gshell.util.style.StyleFactory;
-import com.planet57.gshell.util.style.Styler;
 import org.jline.reader.History;
+import org.jline.style.StyleFactory;
+import org.jline.style.Styler;
 import org.jline.utils.AttributedStringBuilder;
 
 import javax.annotation.Nonnull;
