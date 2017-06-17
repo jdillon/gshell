@@ -28,7 +28,7 @@ import com.planet57.gshell.util.cli2.HelpPrinter;
 import com.planet57.gshell.util.cli2.OpaqueArguments;
 import com.planet57.gshell.util.io.StreamSet;
 import com.planet57.gshell.util.pref.PreferenceProcessor;
-import com.planet57.gshell.util.style.StyledIO;
+import com.planet57.gshell.util.io.StyledIO;
 import com.planet57.gshell.variables.Variables;
 import com.planet57.gshell.variables.VariablesSupport;
 import org.apache.felix.gogo.runtime.CommandSessionImpl;

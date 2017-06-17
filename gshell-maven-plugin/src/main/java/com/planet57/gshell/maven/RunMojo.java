@@ -29,7 +29,7 @@ import com.planet57.gshell.shell.Shell;
 import com.planet57.gshell.shell.ShellBuilder;
 import com.planet57.gshell.util.io.PrintBuffer;
 import com.planet57.gshell.util.io.StreamSet;
-import com.planet57.gshell.util.style.StyledIO;
+import com.planet57.gshell.util.io.StyledIO;
 import com.planet57.gshell.variables.VariableNames;
 import com.planet57.gshell.variables.Variables;
 import com.planet57.gshell.variables.VariablesSupport;

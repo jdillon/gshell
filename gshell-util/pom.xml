@@ -63,6 +63,11 @@
 
     <dependency>
       <groupId>org.jline</groupId>
+      <artifactId>jline-style</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jline</groupId>
       <artifactId>jline-reader</artifactId>
     </dependency>
 
