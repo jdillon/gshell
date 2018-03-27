@@ -31,8 +31,8 @@
   <name>${project.groupId}:${project.artifactId}</name>
 
   <properties>
-    <maven-resolver.version>1.1.0-SNAPSHOT</maven-resolver.version>
-    <maven.version>3.5.1-SNAPSHOT</maven.version>
+    <maven-resolver.version>1.1.1</maven-resolver.version>
+    <maven.version>3.5.3</maven.version>
   </properties>
 
   <dependencies>
