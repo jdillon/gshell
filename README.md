@@ -20,6 +20,7 @@
 GShell - A command-line shell framework.
 
 [![Build Status](https://travis-ci.org/jdillon/gshell.svg?branch=master)](https://travis-ci.org/jdillon/gshell)
+[![DepShield Badge](https://depshield.sonatype.org/badges/jdillon/gshell/depshield.svg)](https://depshield.github.io)
 
 # License
 
